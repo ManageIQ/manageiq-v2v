@@ -1,0 +1,14 @@
+.bundle/
+.yardoc
+yarn.lock
+Gemfile.lock
+_yardoc/
+coverage/
+doc/
+pkg/
+spec/reports/
+tmp/
+.rubocop-*
+.idea/
+.ruby-version
+/node_modules

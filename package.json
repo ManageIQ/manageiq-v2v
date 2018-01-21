@@ -1,0 +1,52 @@
+{
+  "name": "miq_v2v_ui",
+  "version": "0.0.0",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watchAll",
+    "test:current": "jest --watch",
+    "prettier": "prettier --single-quote --trailing-comma es5 --write 'app/javascript/**/*.js' '*.{js,json}'",
+    "build": "yarn run prettier && yarn run lint",
+    "stylelint": "stylelint 'app/**/*.scss'",
+    "lint": "eslint --fix app/javascript || exit 0"
+  },
+  "devDependencies": {
+    "babel-jest": "^22.0.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-assign": "^6.8.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-react": "^6.24.1",
+    "enzyme": "^3.2.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "enzyme-to-json": "^3.3.0",
+    "eslint": "^4.14.0",
+    "eslint-config-airbnb": "^16.0.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jest": "^21.5.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.5.1",
+    "jest": "^22.0.6",
+    "jest-cli": "^22.0.0",
+    "prettier": "^1.9.2",
+    "react-test-renderer": "^16.2.0",
+    "stylelint": "^8.4.0",
+    "stylelint-config-standard": "^18.0.0"
+  },
+  "dependencies": {
+    "cx": "^18.1.11",
+    "patternfly": "^3.35.1",
+    "patternfly-react": "^1.0.0",
+    "react": "^16.2.0",
+    "react-bootstrap": "^0.32.0",
+    "react-dom": "^16.2.0",
+    "react-router-dom": "^4.2.2"
+  },
+  "jest": {
+    "setupFiles": [
+      "raf/polyfill",
+      "./.jest-setup.js"
+    ]
+  },
+  "license": "Apache-2.0"
+}
