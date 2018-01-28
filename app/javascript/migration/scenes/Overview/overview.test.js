@@ -1,11 +1,11 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
-import Welcome from './index';
+import Overview from './index';
 
-describe('Nav component', () => {
-  it('renders the navigation', () => {
-    const wrapper = mount(<Welcome />);
+describe('Overview component', () => {
+  it('renders the overview', () => {
+    const wrapper = mount(<Overview />);
     expect(toJson(wrapper)).toMatchSnapshot();
   });
 });

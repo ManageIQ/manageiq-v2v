@@ -3,8 +3,8 @@ import { mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import Dashboard from './index';
 
-describe('Nav component', () => {
-  it('renders the navigation', () => {
+describe('Dashboard component', () => {
+  it('renders the dashboard', () => {
     const wrapper = mount(<Dashboard />);
     expect(toJson(wrapper)).toMatchSnapshot();
   });

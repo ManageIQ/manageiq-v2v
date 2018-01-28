@@ -4,7 +4,7 @@ import { Row, Col } from 'react-bootstrap';
 import {
   mockListItems,
   renderActions,
-  renderAdditionalInfoItems,
+  renderAdditionalInfoItems
 } from './__mocks__/mockListItems';
 
 export default () => (

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Nav component renders the navigation 1`] = `
+exports[`Dashboard component renders the dashboard 1`] = `
 <Component>
   <div>
     <h1>
@@ -77,6 +77,7 @@ exports[`Nav component renders the navigation 1`] = `
           }
           description="This is Item 1 description"
           heading="Item 1"
+          hideCloseIcon={false}
           key="0"
           leftContent={
             <ListViewIcon
@@ -85,6 +86,9 @@ exports[`Nav component renders the navigation 1`] = `
               type="fa"
             />
           }
+          onCloseCompoundExpand={[Function]}
+          onExpand={[Function]}
+          onExpandClose={[Function]}
           stacked={true}
         >
           <ListViewGroupItem
@@ -456,6 +460,7 @@ exports[`Nav component renders the navigation 1`] = `
           }
           description="This is Item 2 description"
           heading="Item 2"
+          hideCloseIcon={false}
           key="1"
           leftContent={
             <ListViewIcon
@@ -464,6 +469,9 @@ exports[`Nav component renders the navigation 1`] = `
               type="fa"
             />
           }
+          onCloseCompoundExpand={[Function]}
+          onExpand={[Function]}
+          onExpandClose={[Function]}
           stacked={true}
         >
           <ListViewGroupItem
@@ -835,6 +843,7 @@ exports[`Nav component renders the navigation 1`] = `
           }
           description="This is Item 3 description"
           heading="Item 3"
+          hideCloseIcon={false}
           key="2"
           leftContent={
             <ListViewIcon
@@ -843,6 +852,9 @@ exports[`Nav component renders the navigation 1`] = `
               type="fa"
             />
           }
+          onCloseCompoundExpand={[Function]}
+          onExpand={[Function]}
+          onExpandClose={[Function]}
           stacked={true}
         >
           <ListViewGroupItem
@@ -1161,6 +1173,7 @@ exports[`Nav component renders the navigation 1`] = `
             />
           }
           description="This is Item without heading"
+          hideCloseIcon={false}
           key="3"
           leftContent={
             <ListViewIcon
@@ -1169,6 +1182,9 @@ exports[`Nav component renders the navigation 1`] = `
               type="fa"
             />
           }
+          onCloseCompoundExpand={[Function]}
+          onExpand={[Function]}
+          onExpandClose={[Function]}
           stacked={true}
         >
           <ListViewGroupItem
@@ -1400,6 +1416,7 @@ exports[`Nav component renders the navigation 1`] = `
               type="checkbox"
             />
           }
+          hideCloseIcon={false}
           key="4"
           leftContent={
             <ListViewIcon
@@ -1408,6 +1425,9 @@ exports[`Nav component renders the navigation 1`] = `
               type="fa"
             />
           }
+          onCloseCompoundExpand={[Function]}
+          onExpand={[Function]}
+          onExpandClose={[Function]}
           stacked={true}
         >
           <ListViewGroupItem
@@ -1704,6 +1724,7 @@ exports[`Nav component renders the navigation 1`] = `
             />
           }
           heading="Item without description"
+          hideCloseIcon={false}
           key="5"
           leftContent={
             <ListViewIcon
@@ -1712,6 +1733,9 @@ exports[`Nav component renders the navigation 1`] = `
               type="fa"
             />
           }
+          onCloseCompoundExpand={[Function]}
+          onExpand={[Function]}
+          onExpandClose={[Function]}
           stacked={true}
         >
           <ListViewGroupItem
