@@ -5,6 +5,7 @@ import { Button, ListView } from 'patternfly-react';
 
 export const mockListItems = [
   {
+    id: 1,
     title: 'Item 1',
     description: 'This is Item 1 description',
     properties: {
@@ -17,6 +18,7 @@ export const mockListItems = [
       'Lorem Ipsum is simply dummy text of the printing and typesetting industry'
   },
   {
+    id: 2,
     title: 'Item 2',
     description: 'This is Item 2 description',
     properties: {
@@ -29,6 +31,7 @@ export const mockListItems = [
       'Lorem Ipsum is simply dummy text of the printing and typesetting industry'
   },
   {
+    id: 3,
     title: 'Item 3',
     description: 'This is Item 3 description',
     properties: {
@@ -41,11 +44,13 @@ export const mockListItems = [
       'Lorem Ipsum is simply dummy text of the printing and typesetting industry'
   },
   {
+    id: 4,
     description: 'This is Item without heading',
     expandedContentText:
       'Lorem Ipsum is simply dummy text of the printing and typesetting industry'
   },
   {
+    id: 5,
     properties: {
       hosts: 4,
       clusters: 2,
@@ -56,6 +61,7 @@ export const mockListItems = [
       'Lorem Ipsum is simply dummy text of the printing and typesetting industry'
   },
   {
+    id: 6,
     title: 'Item without description',
     expandedContentText:
       'Lorem Ipsum is simply dummy text of the printing and typesetting industry'

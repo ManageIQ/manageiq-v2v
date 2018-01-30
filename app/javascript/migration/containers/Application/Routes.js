@@ -1,12 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Route } from 'react-router-dom';
 import { links } from './config';
-import { Grid } from 'patternfly-react';
-import Toolbar from './Toolbar';
 import { componentSettings } from '../../../components';
+import Toolbar from './Toolbar';
 import componentRegistry from '../../../components/componentRegistry';
 
-export default ({ store }) => (
+const Routes = ({ store }) => (
   <React.Fragment>
     <Toolbar />
     {links.map(({ path, component }) => {
@@ -25,3 +25,10 @@ export default ({ store }) => (
     })}
   </React.Fragment>
 );
+Routes.propTypes = {
+  store: PropTypes.object
+};
+Routes.defaultProps = {
+  store: {}
+};
+export default Routes;

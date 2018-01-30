@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as MappingWizardActions from '../../redux/actions/mappingWizard';
 import { connect } from 'react-redux';
 import {
   Button,
@@ -10,7 +9,8 @@ import {
   Spinner,
   Wizard
 } from 'patternfly-react';
-import { bindMethods, noop } from '../../common/helpers';
+import * as MappingWizardActions from '../../redux/actions/mappingWizard';
+import { noop } from '../../common/helpers';
 
 const loadingContents = () => (
   <EmptyState>
@@ -28,9 +28,6 @@ const loadingContents = () => (
 );
 
 class MappingWizardContainer extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   componentDidMount() {
     const { url, fetchSourceClusters } = this.props;
 
@@ -81,14 +78,21 @@ class MappingWizardContainer extends React.Component {
     );
   }
 }
-MappingWizardContainer.propTyes = {
+MappingWizardContainer.propTypes = {
   onHide: PropTypes.func,
   onExited: PropTypes.func,
-  showWizard: PropTypes.bool
+  showWizard: PropTypes.bool,
+  url: PropTypes.string,
+  fetchSourceClusters: PropTypes.func,
+  sourceClusters: PropTypes.arrayOf(PropTypes.object)
 };
 MappingWizardContainer.defaultProps = {
   onHide: noop,
-  onExited: noop
+  onExited: noop,
+  showWizard: false,
+  url: '',
+  fetchSourceClusters: noop,
+  sourceClusters: []
 };
 
 const mapStateToProps = (state, ownProps) => ({

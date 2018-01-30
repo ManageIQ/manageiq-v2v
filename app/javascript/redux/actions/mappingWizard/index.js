@@ -5,7 +5,6 @@ import {
   FETCH_V2V_SOURCE_CLUSTERS_FULFILLED
 } from '../../consts';
 import { requestData } from './mappingWizard.fixtures';
-import store from '../../index';
 
 const _getSourceClustersActionCreator = url => dispatch =>
   dispatch({

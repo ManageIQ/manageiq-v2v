@@ -2,11 +2,8 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import promiseMiddleware from 'redux-promise-middleware';
 import * as actions from './index';
-import * as types from '../../consts';
 import { initialState, requestData } from './mappingWizard.fixtures';
-import API from '../../../API';
 import { mockRequest, mockReset } from '../../../mockRequests';
-import { fetchSourceClusters } from './index';
 
 const middlewares = [thunk, promiseMiddleware()];
 const mockStore = configureMockStore(middlewares);

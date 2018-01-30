@@ -78,7 +78,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
           description="This is Item 1 description"
           heading="Item 1"
           hideCloseIcon={false}
-          key="0"
+          key="1"
           leftContent={
             <ListViewIcon
               name="plane"
@@ -461,7 +461,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
           description="This is Item 2 description"
           heading="Item 2"
           hideCloseIcon={false}
-          key="1"
+          key="2"
           leftContent={
             <ListViewIcon
               name="plane"
@@ -844,7 +844,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
           description="This is Item 3 description"
           heading="Item 3"
           hideCloseIcon={false}
-          key="2"
+          key="3"
           leftContent={
             <ListViewIcon
               name="plane"
@@ -1174,7 +1174,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
           }
           description="This is Item without heading"
           hideCloseIcon={false}
-          key="3"
+          key="4"
           leftContent={
             <ListViewIcon
               name="plane"
@@ -1417,7 +1417,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
             />
           }
           hideCloseIcon={false}
-          key="4"
+          key="5"
           leftContent={
             <ListViewIcon
               name="plane"
@@ -1725,7 +1725,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
           }
           heading="Item without description"
           hideCloseIcon={false}
-          key="5"
+          key="6"
           leftContent={
             <ListViewIcon
               name="plane"

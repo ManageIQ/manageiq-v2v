@@ -14,7 +14,7 @@ const Dashboard = () => (
     <ListView>
       {mockListItems.map((item, index) => (
         <ListView.Item
-          key={index}
+          key={item.id}
           actions={renderActions(item.actions)}
           checkboxInput={<input type="checkbox" />}
           leftContent={<ListView.Icon name="plane" />}

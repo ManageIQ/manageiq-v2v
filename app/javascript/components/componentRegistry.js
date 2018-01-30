@@ -1,4 +1,4 @@
-const componentRegistry = window.MiqReact.componentRegistry;
+const componentRegistry = { ...window.MiqReact.componentRegistry };
 
 // todo: should component registry `markup` actually merge {data} instead?
 // it would be nice to account for `ownProps` (assuming props are not always coming from store)

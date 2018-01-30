@@ -9,7 +9,7 @@ import {
   Spinner,
   Wizard
 } from 'patternfly-react';
-import { bindMethods, noop } from '../../common/helpers';
+import { noop } from '../../common/helpers';
 
 const loadingContents = () => (
   <EmptyState>
@@ -27,9 +27,6 @@ const loadingContents = () => (
 );
 
 class PlanWizardContainer extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     const { showWizard, onHide, onExited } = this.props;
 
@@ -80,7 +77,8 @@ PlanWizardContainer.propTypes = {
 };
 PlanWizardContainer.defaultProps = {
   onHide: noop,
-  onExited: noop
+  onExited: noop,
+  showWizard: false
 };
 
 const mapStateToProps = (state, ownProps) => ({
