@@ -1,53 +1,73 @@
 import React from 'react';
 import Equalizer from 'react-equalizer';
-import MappingWizardContainer from '../../../components/MappingWizard';
-import PlanWizardContainer from '../../../components/PlanWizard';
 import { Button, EmptyState, Grid } from 'patternfly-react';
 import { bindMethods } from '../../../common/helpers';
+import componentRegistry from '../../../components/componentRegistry';
 
 class Overview extends React.Component {
   constructor() {
     super();
-    this.state = { showMappingWizard: false, showPlanWizard: false };
+    this.state = {
+      showMappingWizard: false,
+      mappingWizardVisible: false,
+      showPlanWizard: false,
+      planWizardVisible: false
+    };
     bindMethods(this, [
       'getNodes',
-      'openMappingWizard',
-      'closeMappingWizard',
-      'openPlanWizard',
-      'closePlanWizard',
-      'openPlanWizard'
+      'mappingWizardOpened',
+      'mappingWizardClosed',
+      'mappingWizardExited',
+      'planWizardOpened',
+      'planWizardClosed',
+      'planWizardExited'
     ]);
   }
   getNodes(equalizerComponent, equalizerElement) {
     return [this.node1, this.node2];
   }
-  openMappingWizard() {
-    this.setState({ showMappingWizard: true });
+  mappingWizardOpened() {
+    this.setState({ showMappingWizard: true, mappingWizardVisible: true });
   }
-  closeMappingWizard() {
+  mappingWizardClosed() {
     this.setState({ showMappingWizard: false });
   }
-  openPlanWizard() {
-    this.setState({ showPlanWizard: true });
+  mappingWizardExited() {
+    this.setState({ mappingWizardVisible: false });
   }
-  closePlanWizard() {
+  planWizardOpened() {
+    this.setState({ showPlanWizard: true, planWizardVisible: true });
+  }
+  planWizardClosed() {
     this.setState({ showPlanWizard: false });
   }
+  planWizardExited() {
+    this.setState({ planWizardVisible: false });
+  }
   render() {
-    const { showMappingWizard, showPlanWizard } = this.state;
+    const {
+      showMappingWizard,
+      mappingWizardVisible,
+      showPlanWizard,
+      planWizardVisible
+    } = this.state;
 
-    const mappingWizard = (
-      <MappingWizardContainer
-        showWizard={showMappingWizard}
-        onHide={this.closeMappingWizard}
-      />
+    const mappingWizard = componentRegistry.markupWithProps(
+      'MappingWizardContainer',
+      {
+        showWizard: showMappingWizard,
+        onHide: this.mappingWizardClosed,
+        onExit: this.mappingWizardExited
+      }
     );
 
-    const planWizard = (
-      <PlanWizardContainer
-        showWizard={showPlanWizard}
-        onHide={this.closePlanWizard}
-      />
+    const planWizard = componentRegistry.markupWithProps(
+      'PlanWizardContainer',
+      {
+        showWizard: showPlanWizard,
+        onHide: this.planWizardClosed,
+        onExit: this.planWizardExited
+      }
     );
 
     const overviewCards = (
@@ -75,7 +95,7 @@ class Overview extends React.Component {
                         <Button
                           bsStyle="primary"
                           bsSize="large"
-                          onClick={this.openMappingWizard}
+                          onClick={this.mappingWizardOpened}
                         >
                           Create Infrastructure Mapping
                         </Button>
@@ -98,7 +118,7 @@ class Overview extends React.Component {
                         <Button
                           bsStyle="primary"
                           bsSize="large"
-                          onClick={this.openPlanWizard}
+                          onClick={this.planWizardOpened}
                         >
                           Create Migration Plan
                         </Button>
@@ -143,8 +163,8 @@ class Overview extends React.Component {
     return (
       <React.Fragment>
         {overviewCards}
-        {showMappingWizard && mappingWizard}
-        {showPlanWizard && planWizard}
+        {mappingWizardVisible && mappingWizard}
+        {planWizardVisible && planWizard}
       </React.Fragment>
     );
   }

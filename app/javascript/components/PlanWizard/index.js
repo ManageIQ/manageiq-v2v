@@ -1,17 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Icon, Modal, Wizard } from 'patternfly-react';
+import { connect } from 'react-redux';
+import {
+  Button,
+  EmptyState,
+  Icon,
+  Modal,
+  Spinner,
+  Wizard
+} from 'patternfly-react';
 import { bindMethods, noop } from '../../common/helpers';
 
-const mockLoadingContents = () => (
-  <div className="blank-slate-pf">
-    <div className="spinner spinner-lg blank-slate-pf-icon" />
-    <h3 className="blank-slate-pf-main-action">Loading Wizard</h3>
-    <p className="blank-slate-pf-secondary-action">
-      Lorem ipsum dolor sit amet, porta at suspendisse ac, ut wisi vivamus,
-      lorem sociosqu eget nunc amet.{' '}
-    </p>
-  </div>
+const loadingContents = () => (
+  <EmptyState>
+    <Spinner size="lg" className="blank-slate-pf-icon" loading />
+    <EmptyState.Action>
+      <h3>Loading Wizard</h3>
+    </EmptyState.Action>
+    <EmptyState.Action secondary>
+      <p>
+        Lorem ipsum dolor sit amet, porta at suspendisse ac, ut wisi vivamus,
+        lorem sociosqu eget nunc amet.{' '}
+      </p>
+    </EmptyState.Action>
+  </EmptyState>
 );
 
 class PlanWizardContainer extends React.Component {
@@ -19,12 +31,13 @@ class PlanWizardContainer extends React.Component {
     super(props);
   }
   render() {
-    const { showWizard, onHide } = this.props;
+    const { showWizard, onHide, onExited } = this.props;
 
     return (
       <Modal
         show={showWizard}
         onHide={onHide}
+        onExited={onExited}
         dialogClassName="modal-lg wizard-pf"
       >
         <Wizard>
@@ -41,7 +54,7 @@ class PlanWizardContainer extends React.Component {
           </Modal.Header>
           <Modal.Body className="wizard-pf-body clearfix">
             <Wizard.Row>
-              <Wizard.Main>{mockLoadingContents()}</Wizard.Main>
+              <Wizard.Main>{loadingContents()}</Wizard.Main>
             </Wizard.Row>
           </Modal.Body>
           <Modal.Footer className="wizard-pf-footer">
@@ -62,9 +75,20 @@ class PlanWizardContainer extends React.Component {
 }
 PlanWizardContainer.propTypes = {
   onHide: PropTypes.func,
+  onExited: PropTypes.func,
   showWizard: PropTypes.bool
 };
 PlanWizardContainer.defaultProps = {
-  onHide: noop
+  onHide: noop,
+  onExited: noop
 };
-export default PlanWizardContainer;
+
+const mapStateToProps = (state, ownProps) => ({
+  ...state.planWizard,
+  ...ownProps.data
+});
+
+const mergeProps = (stateProps, dispatchProps, ownProps) =>
+  Object.assign(stateProps, ownProps.data, dispatchProps);
+
+export default connect(mapStateToProps, {}, mergeProps)(PlanWizardContainer);

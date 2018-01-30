@@ -7,7 +7,7 @@ import {
   renderAdditionalInfoItems
 } from './__mocks__/mockListItems';
 
-export default () => (
+const Dashboard = () => (
   <div>
     <h1>Dashboard Page</h1>
 
@@ -31,3 +31,4 @@ export default () => (
     </ListView>
   </div>
 );
+export default Dashboard;

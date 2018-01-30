@@ -9,7 +9,7 @@ import store from '../../../redux';
 export default () => (
   <Provider store={store}>
     <Router>
-      <Routes />
+      <Routes store={store} />
     </Router>
   </Provider>
 );

@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Dashboard component renders the dashboard 1`] = `
-<Component>
+<Dashboard>
   <div>
     <h1>
       Dashboard Page
@@ -1905,5 +1905,5 @@ exports[`Dashboard component renders the dashboard 1`] = `
       </div>
     </ListView>
   </div>
-</Component>
+</Dashboard>
 `;
