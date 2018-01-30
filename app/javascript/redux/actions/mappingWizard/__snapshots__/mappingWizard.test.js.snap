@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mappingWizard actions should fetch source clusters and return PENDING and FULFILLED action 1`] = `
+Array [
+  Object {
+    "type": "FETCH_V2V_SOURCE_CLUSTERS_PENDING",
+  },
+  Object {
+    "payload": Object {
+      "config": Object {
+        "adapter": null,
+        "data": undefined,
+        "headers": Object {
+          "Accept": "application/json, text/plain, */*",
+          "X-CSRF-Token": "",
+          "X-Requested-With": "XMLHttpRequest",
+        },
+        "maxContentLength": -1,
+        "method": "get",
+        "params": Object {},
+        "timeout": 0,
+        "transformRequest": Object {
+          "0": [Function],
+        },
+        "transformResponse": Object {
+          "0": [Function],
+        },
+        "url": "/api/sourceClusters",
+        "validateStatus": [Function],
+        "xsrfCookieName": "XSRF-TOKEN",
+        "xsrfHeaderName": "X-XSRF-TOKEN",
+      },
+      "data": null,
+      "headers": undefined,
+      "status": 200,
+    },
+    "type": "FETCH_V2V_SOURCE_CLUSTERS_FULFILLED",
+  },
+]
+`;
+
+exports[`mappingWizard actions should fetch source clusters and return PENDING and REJECTED action 1`] = `
+Array [
+  Object {
+    "type": "FETCH_V2V_SOURCE_CLUSTERS_PENDING",
+  },
+  Object {
+    "error": true,
+    "payload": [Error: Request failed with status code 404],
+    "type": "FETCH_V2V_SOURCE_CLUSTERS_REJECTED",
+  },
+  Object {
+    "payload": Object {
+      "sourceClusters": Array [
+        Object {
+          "dummy": "clusters",
+        },
+      ],
+    },
+    "type": "FETCH_V2V_SOURCE_CLUSTERS_FULFILLED",
+  },
+]
+`;

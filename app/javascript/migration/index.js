@@ -1,9 +1,7 @@
-import MiqV2vUi from '../migration/containers/Application';
+import componentRegistry from '../components/componentRegistry';
+import { coreComponents } from '../components';
 
-window.MiqReact.componentRegistry.register({
-  name: 'v2v_ui_plugin',
-  type: MiqV2vUi,
-});
+componentRegistry.registerMultiple(coreComponents);
 
 // Another way to mount the component is via JS - e.g.
 // ManageIQ.react.mount('v2v_ui_plugin', '#reactRoot');

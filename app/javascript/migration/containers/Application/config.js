@@ -1,16 +1,16 @@
-import Welcome from '../../scenes/Welcome';
+import Overview from '../../scenes/Overview';
 import Dashboard from '../../scenes/Dashboard';
 
 // eslint-disable-next-line import/prefer-default-export
 export const links = [
   {
-    text: 'Welcome',
+    text: 'Overview',
     path: 'migration/',
-    component: Welcome,
+    component: Overview
   },
   {
     text: 'Dashboard',
     path: 'migration/dashboard',
-    component: Dashboard,
-  },
+    component: Dashboard
+  }
 ];

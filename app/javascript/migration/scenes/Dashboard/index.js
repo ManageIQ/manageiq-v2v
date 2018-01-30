@@ -4,17 +4,17 @@ import { Row, Col } from 'react-bootstrap';
 import {
   mockListItems,
   renderActions,
-  renderAdditionalInfoItems,
+  renderAdditionalInfoItems
 } from './__mocks__/mockListItems';
 
-export default () => (
+const Dashboard = () => (
   <div>
     <h1>Dashboard Page</h1>
 
     <ListView>
       {mockListItems.map((item, index) => (
         <ListView.Item
-          key={index}
+          key={item.id}
           actions={renderActions(item.actions)}
           checkboxInput={<input type="checkbox" />}
           leftContent={<ListView.Icon name="plane" />}
@@ -31,3 +31,4 @@ export default () => (
     </ListView>
   </div>
 );
+export default Dashboard;
