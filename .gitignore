@@ -1,6 +1,7 @@
 .bundle/
 .yardoc
 yarn.lock
+package-lock.json
 Gemfile.lock
 _yardoc/
 coverage/
@@ -23,7 +24,3 @@ tmp/
 
 # IDE - VSCode
 .vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
