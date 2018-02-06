@@ -21,6 +21,7 @@ module.exports = {
     'react/jsx-filename-extension': 'off',
     'react/prefer-stateless-function': 'warn',
     'react/forbid-prop-types': 'off',
+    'react/require-default-props': 'off',
     'import/prefer-default-export': 'off',
     'no-underscore-dangle': 'off',
     'no-param-reassign': 'off',

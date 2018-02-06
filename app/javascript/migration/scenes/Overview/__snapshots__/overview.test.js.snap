@@ -1,306 +1,373 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Overview component renders the overview 1`] = `
-<Overview>
-  <div
-    className="row cards-pf"
-    style={
+<I18nProviderWrapper(Overview)
+  data={Object {}}
+>
+  <IntlProvider
+    initialNow={2017-10-13T11:54:55.000Z}
+    locale="en"
+    messages={
       Object {
-        "height": "100%",
-        "overflow": "auto",
-        "paddingBottom": 100,
+        "mappingWizard.back": "Back",
+        "mappingWizard.cancel": "Cancel",
+        "mappingWizard.next": "Next",
+        "mappingWizard.title": "Infrastructure Mapping Wizard",
+        "overview.emptyMappingCardButton": "Create Infrastructure Mapping",
+        "overview.emptyMappingCardInfo": "Create mapping to later be used by a migration plan.",
+        "overview.emptyMappingCardTitle": "Infrastructure Mappings",
+        "overview.emptyPlanCardButton": "Create Migration Plan",
+        "overview.emptyPlanCardInfo": "Create a migration plan to start migrating.",
+        "overview.emptyPlanCardTitle": "Migration Plans",
       }
     }
   >
-    <Col
-      bsClass="col"
-      componentClass="div"
-      md={12}
+    <Overview
+      data={Object {}}
     >
       <div
-        className="col-md-12"
+        className="row cards-pf"
+        style={
+          Object {
+            "height": "100%",
+            "overflow": "auto",
+            "paddingBottom": 100,
+          }
+        }
       >
-        <Row
-          bsClass="row"
+        <Col
+          bsClass="col"
           componentClass="div"
+          md={12}
         >
           <div
-            className="row"
+            className="col-md-12"
           >
-            <Equalizer
-              byRow={true}
-              enabled={[Function]}
-              nodes={[Function]}
-              property="height"
+            <Row
+              bsClass="row"
+              componentClass="div"
             >
               <div
-                onLoad={[Function]}
+                className="row"
+              >
+                <Equalizer
+                  byRow={true}
+                  enabled={[Function]}
+                  nodes={[Function]}
+                  property="height"
+                >
+                  <div
+                    onLoad={[Function]}
+                  >
+                    <Col
+                      bsClass="col"
+                      componentClass="div"
+                      xs={6}
+                    >
+                      <div
+                        className="col-xs-6"
+                      >
+                        <div
+                          className="spacer"
+                        />
+                        <div
+                          className="card-pf"
+                        >
+                          <div
+                            className="card-pf-body"
+                          >
+                            <div
+                              className="blank-slate-pf"
+                            >
+                              <EmptyStateIcon
+                                name="add-circle-o"
+                                type="pf"
+                              >
+                                <div
+                                  className="blank-slate-pf-icon"
+                                >
+                                  <Icon
+                                    name="add-circle-o"
+                                    type="pf"
+                                  >
+                                    <PatternflyIcon
+                                      name="add-circle-o"
+                                    >
+                                      <span
+                                        aria-hidden="true"
+                                        className="pficon pficon-add-circle-o"
+                                      />
+                                    </PatternflyIcon>
+                                  </Icon>
+                                </div>
+                              </EmptyStateIcon>
+                              <EmptyStateTitle>
+                                <h4
+                                  className="h1 blank-slate-pf-title"
+                                >
+                                  <FormattedMessage
+                                    id="overview.emptyMappingCardTitle"
+                                    values={Object {}}
+                                  >
+                                    <span>
+                                      Infrastructure Mappings
+                                    </span>
+                                  </FormattedMessage>
+                                </h4>
+                              </EmptyStateTitle>
+                              <EmptyStateInfo>
+                                <p
+                                  className="blank-slate-pf-info"
+                                >
+                                  <FormattedMessage
+                                    id="overview.emptyMappingCardInfo"
+                                    values={Object {}}
+                                  >
+                                    <span>
+                                      Create mapping to later be used by a migration plan.
+                                    </span>
+                                  </FormattedMessage>
+                                </p>
+                              </EmptyStateInfo>
+                              <EmptyStateAction>
+                                <div
+                                  className="blank-slate-pf-main-action"
+                                >
+                                  <Button
+                                    bsSize="large"
+                                    bsStyle="primary"
+                                    onClick={[Function]}
+                                  >
+                                    <Button
+                                      active={false}
+                                      block={false}
+                                      bsClass="btn"
+                                      bsSize="large"
+                                      bsStyle="primary"
+                                      disabled={false}
+                                      onClick={[Function]}
+                                    >
+                                      <button
+                                        className="btn btn-lg btn-primary"
+                                        disabled={false}
+                                        onClick={[Function]}
+                                        type="button"
+                                      >
+                                        <FormattedMessage
+                                          id="overview.emptyMappingCardButton"
+                                          values={Object {}}
+                                        >
+                                          <span>
+                                            Create Infrastructure Mapping
+                                          </span>
+                                        </FormattedMessage>
+                                      </button>
+                                    </Button>
+                                  </Button>
+                                </div>
+                              </EmptyStateAction>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </Col>
+                    <Col
+                      bsClass="col"
+                      componentClass="div"
+                      xs={6}
+                    >
+                      <div
+                        className="col-xs-6"
+                      >
+                        <div
+                          className="spacer"
+                        />
+                        <div
+                          className="card-pf"
+                        >
+                          <div
+                            className="card-pf-body"
+                          >
+                            <div
+                              className="blank-slate-pf"
+                            >
+                              <EmptyStateIcon
+                                name="add-circle-o"
+                                type="pf"
+                              >
+                                <div
+                                  className="blank-slate-pf-icon"
+                                >
+                                  <Icon
+                                    name="add-circle-o"
+                                    type="pf"
+                                  >
+                                    <PatternflyIcon
+                                      name="add-circle-o"
+                                    >
+                                      <span
+                                        aria-hidden="true"
+                                        className="pficon pficon-add-circle-o"
+                                      />
+                                    </PatternflyIcon>
+                                  </Icon>
+                                </div>
+                              </EmptyStateIcon>
+                              <EmptyStateTitle>
+                                <h4
+                                  className="h1 blank-slate-pf-title"
+                                >
+                                  <FormattedMessage
+                                    id="overview.emptyPlanCardTitle"
+                                    values={Object {}}
+                                  >
+                                    <span>
+                                      Migration Plans
+                                    </span>
+                                  </FormattedMessage>
+                                </h4>
+                              </EmptyStateTitle>
+                              <EmptyStateInfo>
+                                <p
+                                  className="blank-slate-pf-info"
+                                >
+                                  <FormattedMessage
+                                    id="overview.emptyPlanCardInfo"
+                                    values={Object {}}
+                                  >
+                                    <span>
+                                      Create a migration plan to start migrating.
+                                    </span>
+                                  </FormattedMessage>
+                                </p>
+                              </EmptyStateInfo>
+                              <EmptyStateAction>
+                                <div
+                                  className="blank-slate-pf-main-action"
+                                >
+                                  <Button
+                                    bsSize="large"
+                                    bsStyle="primary"
+                                    onClick={[Function]}
+                                  >
+                                    <Button
+                                      active={false}
+                                      block={false}
+                                      bsClass="btn"
+                                      bsSize="large"
+                                      bsStyle="primary"
+                                      disabled={false}
+                                      onClick={[Function]}
+                                    >
+                                      <button
+                                        className="btn btn-lg btn-primary"
+                                        disabled={false}
+                                        onClick={[Function]}
+                                        type="button"
+                                      >
+                                        <FormattedMessage
+                                          id="overview.emptyPlanCardButton"
+                                          values={Object {}}
+                                        >
+                                          <span>
+                                            Create Migration Plan
+                                          </span>
+                                        </FormattedMessage>
+                                      </button>
+                                    </Button>
+                                  </Button>
+                                </div>
+                              </EmptyStateAction>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </Col>
+                  </div>
+                </Equalizer>
+              </div>
+            </Row>
+            <Row
+              bsClass="row"
+              componentClass="div"
+            >
+              <div
+                className="row"
               >
                 <Col
                   bsClass="col"
                   componentClass="div"
-                  xs={6}
+                  xs={12}
                 >
                   <div
-                    className="col-xs-6"
+                    className="col-xs-12"
                   >
-                    <div
-                      className="spacer"
-                    />
                     <div
                       className="card-pf"
                     >
                       <div
+                        className="card-pf-heading"
+                      >
+                        <h2>
+                          0 Migrations in Progress
+                        </h2>
+                      </div>
+                      <div
                         className="card-pf-body"
                       >
-                        <div
-                          className="blank-slate-pf"
-                        >
-                          <EmptyStateIcon
-                            name="add-circle-o"
-                            type="pf"
-                          >
-                            <div
-                              className="blank-slate-pf-icon"
-                            >
-                              <Icon
-                                name="add-circle-o"
-                                type="pf"
-                              >
-                                <PatternflyIcon
-                                  name="add-circle-o"
-                                >
-                                  <span
-                                    aria-hidden="true"
-                                    className="pficon pficon-add-circle-o"
-                                  />
-                                </PatternflyIcon>
-                              </Icon>
-                            </div>
-                          </EmptyStateIcon>
-                          <EmptyStateTitle>
-                            <h4
-                              className="h1 blank-slate-pf-title"
-                            >
-                              Infrastructure Mappings
-                            </h4>
-                          </EmptyStateTitle>
-                          <EmptyStateInfo>
-                            <p
-                              className="blank-slate-pf-info"
-                            >
-                              Create mapping to later be used by a migration plan.
-                            </p>
-                          </EmptyStateInfo>
-                          <EmptyStateAction>
-                            <div
-                              className="blank-slate-pf-main-action"
-                            >
-                              <Button
-                                bsSize="large"
-                                bsStyle="primary"
-                                onClick={[Function]}
-                              >
-                                <Button
-                                  active={false}
-                                  block={false}
-                                  bsClass="btn"
-                                  bsSize="large"
-                                  bsStyle="primary"
-                                  disabled={false}
-                                  onClick={[Function]}
-                                >
-                                  <button
-                                    className="btn btn-lg btn-primary"
-                                    disabled={false}
-                                    onClick={[Function]}
-                                    type="button"
-                                  >
-                                    Create Infrastructure Mapping
-                                  </button>
-                                </Button>
-                              </Button>
-                            </div>
-                          </EmptyStateAction>
-                        </div>
+                        <p>
+                          content
+                        </p>
                       </div>
                     </div>
                   </div>
                 </Col>
+              </div>
+            </Row>
+            <Row
+              bsClass="row"
+              componentClass="div"
+            >
+              <div
+                className="row"
+              >
                 <Col
                   bsClass="col"
                   componentClass="div"
-                  xs={6}
+                  xs={12}
                 >
                   <div
-                    className="col-xs-6"
+                    className="col-xs-12"
                   >
-                    <div
-                      className="spacer"
-                    />
                     <div
                       className="card-pf"
                     >
                       <div
+                        className="card-pf-heading"
+                      >
+                        <h2>
+                          0 Completed Migrations
+                        </h2>
+                      </div>
+                      <div
                         className="card-pf-body"
                       >
-                        <div
-                          className="blank-slate-pf"
-                        >
-                          <EmptyStateIcon
-                            name="add-circle-o"
-                            type="pf"
-                          >
-                            <div
-                              className="blank-slate-pf-icon"
-                            >
-                              <Icon
-                                name="add-circle-o"
-                                type="pf"
-                              >
-                                <PatternflyIcon
-                                  name="add-circle-o"
-                                >
-                                  <span
-                                    aria-hidden="true"
-                                    className="pficon pficon-add-circle-o"
-                                  />
-                                </PatternflyIcon>
-                              </Icon>
-                            </div>
-                          </EmptyStateIcon>
-                          <EmptyStateTitle>
-                            <h4
-                              className="h1 blank-slate-pf-title"
-                            >
-                              Migration Plans
-                            </h4>
-                          </EmptyStateTitle>
-                          <EmptyStateInfo>
-                            <p
-                              className="blank-slate-pf-info"
-                            >
-                              Create a migration plan to start migrating.
-                            </p>
-                          </EmptyStateInfo>
-                          <EmptyStateAction>
-                            <div
-                              className="blank-slate-pf-main-action"
-                            >
-                              <Button
-                                bsSize="large"
-                                bsStyle="primary"
-                                onClick={[Function]}
-                              >
-                                <Button
-                                  active={false}
-                                  block={false}
-                                  bsClass="btn"
-                                  bsSize="large"
-                                  bsStyle="primary"
-                                  disabled={false}
-                                  onClick={[Function]}
-                                >
-                                  <button
-                                    className="btn btn-lg btn-primary"
-                                    disabled={false}
-                                    onClick={[Function]}
-                                    type="button"
-                                  >
-                                    Create Migration Plan
-                                  </button>
-                                </Button>
-                              </Button>
-                            </div>
-                          </EmptyStateAction>
-                        </div>
+                        <p>
+                          content
+                        </p>
                       </div>
                     </div>
+                    <div
+                      className="spacer"
+                    />
                   </div>
                 </Col>
               </div>
-            </Equalizer>
+            </Row>
           </div>
-        </Row>
-        <Row
-          bsClass="row"
-          componentClass="div"
-        >
-          <div
-            className="row"
-          >
-            <Col
-              bsClass="col"
-              componentClass="div"
-              xs={12}
-            >
-              <div
-                className="col-xs-12"
-              >
-                <div
-                  className="card-pf"
-                >
-                  <div
-                    className="card-pf-heading"
-                  >
-                    <h2>
-                      0 Migrations in Progress
-                    </h2>
-                  </div>
-                  <div
-                    className="card-pf-body"
-                  >
-                    <p>
-                      content
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </Col>
-          </div>
-        </Row>
-        <Row
-          bsClass="row"
-          componentClass="div"
-        >
-          <div
-            className="row"
-          >
-            <Col
-              bsClass="col"
-              componentClass="div"
-              xs={12}
-            >
-              <div
-                className="col-xs-12"
-              >
-                <div
-                  className="card-pf"
-                >
-                  <div
-                    className="card-pf-heading"
-                  >
-                    <h2>
-                      0 Completed Migrations
-                    </h2>
-                  </div>
-                  <div
-                    className="card-pf-body"
-                  >
-                    <p>
-                      content
-                    </p>
-                  </div>
-                </div>
-                <div
-                  className="spacer"
-                />
-              </div>
-            </Col>
-          </div>
-        </Row>
+        </Col>
       </div>
-    </Col>
-  </div>
-</Overview>
+    </Overview>
+  </IntlProvider>
+</I18nProviderWrapper(Overview)>
 `;

@@ -1,5 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Equalizer from 'react-equalizer';
+import { FormattedMessage } from 'react-intl';
 import { Button, EmptyState, Grid } from 'patternfly-react';
 import { bindMethods } from '../../../common/helpers';
 import componentRegistry from '../../../components/componentRegistry';
@@ -52,22 +54,26 @@ class Overview extends React.Component {
       planWizardVisible
     } = this.state;
 
-    const mappingWizard = componentRegistry.markupWithProps(
+    const { store } = this.props;
+
+    const mappingWizard = componentRegistry.markup(
       'MappingWizardContainer',
       {
         showWizard: showMappingWizard,
         onHide: this.mappingWizardClosed,
         onExit: this.mappingWizardExited
-      }
+      },
+      store
     );
 
-    const planWizard = componentRegistry.markupWithProps(
+    const planWizard = componentRegistry.markup(
       'PlanWizardContainer',
       {
         showWizard: showPlanWizard,
         onHide: this.planWizardClosed,
         onExit: this.planWizardExited
-      }
+      },
+      store
     );
 
     const overviewCards = (
@@ -86,10 +92,10 @@ class Overview extends React.Component {
                     <div className="blank-slate-pf" ref={n => (this.node1 = n)}>
                       <EmptyState.Icon />
                       <EmptyState.Title>
-                        Infrastructure Mappings
+                        <FormattedMessage id="overview.emptyMappingCardTitle" />
                       </EmptyState.Title>
                       <EmptyState.Info>
-                        Create mapping to later be used by a migration plan.
+                        <FormattedMessage id="overview.emptyMappingCardInfo" />
                       </EmptyState.Info>
                       <EmptyState.Action>
                         <Button
@@ -97,7 +103,7 @@ class Overview extends React.Component {
                           bsSize="large"
                           onClick={this.mappingWizardOpened}
                         >
-                          Create Infrastructure Mapping
+                          <FormattedMessage id="overview.emptyMappingCardButton" />
                         </Button>
                       </EmptyState.Action>
                     </div>
@@ -110,9 +116,11 @@ class Overview extends React.Component {
                   <div className="card-pf-body">
                     <div className="blank-slate-pf" ref={n => (this.node2 = n)}>
                       <EmptyState.Icon />
-                      <EmptyState.Title>Migration Plans</EmptyState.Title>
+                      <EmptyState.Title>
+                        <FormattedMessage id="overview.emptyPlanCardTitle" />
+                      </EmptyState.Title>
                       <EmptyState.Info>
-                        Create a migration plan to start migrating.
+                        <FormattedMessage id="overview.emptyPlanCardInfo" />
                       </EmptyState.Info>
                       <EmptyState.Action>
                         <Button
@@ -120,7 +128,7 @@ class Overview extends React.Component {
                           bsSize="large"
                           onClick={this.planWizardOpened}
                         >
-                          Create Migration Plan
+                          <FormattedMessage id="overview.emptyPlanCardButton" />
                         </Button>
                       </EmptyState.Action>
                     </div>
@@ -169,4 +177,7 @@ class Overview extends React.Component {
     );
   }
 }
+Overview.propTypes = {
+  store: PropTypes.object
+};
 export default Overview;
