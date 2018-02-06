@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
 import {
   Button,
   Icon,
@@ -55,7 +56,9 @@ class MappingWizardContainer extends React.Component {
             >
               <Icon type="pf" name="close" />
             </button>
-            <Modal.Title>Infrastructure Mapping Wizard</Modal.Title>
+            <Modal.Title>
+              <FormattedMessage id="mappingWizard.title" />
+            </Modal.Title>
           </Modal.Header>
           <Modal.Body className="wizard-pf-body clearfix">
             <Wizard.Row>
@@ -64,13 +67,15 @@ class MappingWizardContainer extends React.Component {
           </Modal.Body>
           <Modal.Footer className="wizard-pf-footer">
             <Button bsStyle="default" className="btn-cancel" onClick={onHide}>
-              Cancel
+              <FormattedMessage id="mappingWizard.cancel" />
             </Button>
             <Button bsStyle="default" disabled>
-              <Icon type="fa" name="angle-left" />Back
+              <Icon type="fa" name="angle-left" />
+              <FormattedMessage id="mappingWizard.back" />
             </Button>
             <Button bsStyle="primary" disabled>
-              Next<Icon type="fa" name="angle-right" />
+              <FormattedMessage id="mappingWizard.next" />
+              <Icon type="fa" name="angle-right" />
             </Button>
           </Modal.Footer>
         </Wizard>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { i18nProviderWrapperFactory } from '../../common/i18nProviderWrapperFactory';
 
 const componentRegistry = {
   registry: {},
@@ -30,28 +31,24 @@ const componentRegistry = {
   },
 
   markup(name, data, store) {
-    const currentComponent = this.getComponent(name);
+    const currentComponent = componentRegistry.getComponent(name);
 
     if (!currentComponent) {
       throw new Error(
         `Component not found:  ${name} among ${this.registeredComponents()}`
       );
     }
-    const ComponentName = currentComponent.type;
+    const WrappedComponent = i18nProviderWrapperFactory(
+      new Date('2017-10-13 00:54:55 -1100')
+    )(currentComponent.type);
 
+    // todo: should component registry `markup` actually merge {data} instead?
+    // it would be nice to account for `ownProps` (assuming props are not always coming from store)
     return (
-      <ComponentName
-        data={currentComponent.data ? data : undefined}
+      <WrappedComponent
+        data={Object.assign({}, data, currentComponent.data)}
         store={currentComponent.store ? store : undefined}
       />
-    );
-  },
-
-  markupWithProps(name, data, store) {
-    const currentComponent = this.getComponent(name);
-    return componentRegistry.markup(
-      name,
-      Object.assign({}, data, currentComponent.data)
     );
   }
 };
