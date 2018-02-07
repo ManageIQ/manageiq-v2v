@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { bindMethods } from '../../common/helpers';
+import { bindMethods } from 'patternfly-react';
 
 class ModalWizardStateProvider extends React.Component {
   constructor() {

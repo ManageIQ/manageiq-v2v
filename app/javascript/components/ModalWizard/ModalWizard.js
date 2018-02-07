@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Modal, Wizard, Icon, Button } from 'patternfly-react';
-import { noop } from '../../common/helpers';
+import { noop, Modal, Wizard, Icon, Button } from 'patternfly-react';
 
 const ModalWizard = props => {
   const {

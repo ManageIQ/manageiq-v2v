@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, FormattedMessage } from 'react-intl';
-import { EmptyState, Spinner, Wizard } from 'patternfly-react';
-import { bindMethods, noop } from '../../common/helpers';
+import { bindMethods, noop, EmptyState, Spinner, Wizard } from 'patternfly-react';
 
 class ModalWizardBody extends React.Component {
   constructor() {

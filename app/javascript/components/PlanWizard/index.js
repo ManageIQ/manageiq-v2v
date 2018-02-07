@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { noop, selectKeys } from '../../common/helpers';
+import { noop, selectKeys } from 'patternfly-react';
 import ModalWizard from '../ModalWizard';
 import PlanWizardBody from './PlanWizardBody';
 
@@ -19,6 +19,7 @@ class PlanWizardContainer extends React.Component {
   }
 
   render() {
+    console.log('planwizprops!!!!', this.props);
     const { loaded } = this.state;
     const modalProps = selectKeys(this.props, [
       'showWizard',

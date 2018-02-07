@@ -53,7 +53,7 @@
     "cx": "^18.1.11",
     "intl": "~1.2.5",
     "patternfly": "^3.35.1",
-    "patternfly-react": "^1.4.0",
+    "patternfly-react": "^1.7.0",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
     "react-bootstrap": "^0.31.5",
