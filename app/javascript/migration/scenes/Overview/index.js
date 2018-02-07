@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Equalizer from 'react-equalizer';
 import { FormattedMessage } from 'react-intl';
-import { Button, EmptyState, Grid } from 'patternfly-react';
-import { bindMethods } from '../../../common/helpers';
+import { bindMethods, Button, EmptyState, Grid } from 'patternfly-react';
 import componentRegistry from '../../../components/componentRegistry';
 
 class Overview extends React.Component {
