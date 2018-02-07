@@ -1,75 +1,43 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import {
-  Button,
-  EmptyState,
-  Icon,
-  Modal,
-  Spinner,
-  Wizard
-} from 'patternfly-react';
-import { noop } from '../../common/helpers';
-
-const loadingContents = () => (
-  <EmptyState>
-    <Spinner size="lg" className="blank-slate-pf-icon" loading />
-    <EmptyState.Action>
-      <h3>Loading Wizard</h3>
-    </EmptyState.Action>
-    <EmptyState.Action secondary>
-      <p>
-        Lorem ipsum dolor sit amet, porta at suspendisse ac, ut wisi vivamus,
-        lorem sociosqu eget nunc amet.{' '}
-      </p>
-    </EmptyState.Action>
-  </EmptyState>
-);
+import { FormattedMessage } from 'react-intl';
+import { noop, selectKeys } from '../../common/helpers';
+import ModalWizard from '../ModalWizard';
+import PlanWizardBody from './PlanWizardBody';
 
 class PlanWizardContainer extends React.Component {
-  render() {
-    const { showWizard, onHide, onExited } = this.props;
+  constructor() {
+    super();
+    this.state = { loaded: false };
+  }
+  componentDidMount() {
+    const that = this;
+    setTimeout(() => {
+      that.setState({ loaded: true }); // TODO replace me with a real API request
+    }, 1000);
+  }
 
+  render() {
+    const { loaded } = this.state;
+    const modalProps = selectKeys(this.props, [
+      'showWizard',
+      'onHide',
+      'onExited'
+    ]);
     return (
-      <Modal
-        show={showWizard}
-        onHide={onHide}
-        onExited={onExited}
-        dialogClassName="modal-lg wizard-pf"
-      >
-        <Wizard>
-          <Modal.Header>
-            <button
-              className="close"
-              onClick={onHide}
-              aria-hidden="true"
-              aria-label="Close"
-            >
-              <Icon type="pf" name="close" />
-            </button>
-            <Modal.Title>Infrastructure Mapping Wizard</Modal.Title>
-          </Modal.Header>
-          <Modal.Body className="wizard-pf-body clearfix">
-            <Wizard.Row>
-              <Wizard.Main>{loadingContents()}</Wizard.Main>
-            </Wizard.Row>
-          </Modal.Body>
-          <Modal.Footer className="wizard-pf-footer">
-            <Button bsStyle="default" className="btn-cancel" onClick={onHide}>
-              Cancel
-            </Button>
-            <Button bsStyle="default" disabled>
-              <Icon type="fa" name="angle-left" />Back
-            </Button>
-            <Button bsStyle="primary" disabled>
-              Next<Icon type="fa" name="angle-right" />
-            </Button>
-          </Modal.Footer>
-        </Wizard>
-      </Modal>
+      <ModalWizard.StateProvider numSteps={3}>
+        <ModalWizard
+          {...modalProps}
+          title={<FormattedMessage id="planWizard.title" />}
+        >
+          <PlanWizardBody loaded={loaded} />
+        </ModalWizard>
+      </ModalWizard.StateProvider>
     );
   }
 }
+
 PlanWizardContainer.propTypes = {
   onHide: PropTypes.func,
   onExited: PropTypes.func,

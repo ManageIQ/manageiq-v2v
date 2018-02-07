@@ -2,31 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import {
-  Button,
-  Icon,
-  EmptyState,
-  Modal,
-  Spinner,
-  Wizard
-} from 'patternfly-react';
+import { noop, selectKeys } from '../../common/helpers';
 import * as MappingWizardActions from '../../redux/actions/mappingWizard';
-import { noop } from '../../common/helpers';
-
-const loadingContents = () => (
-  <EmptyState>
-    <Spinner size="lg" className="blank-slate-pf-icon" loading />
-    <EmptyState.Action>
-      <h3>Loading Wizard</h3>
-    </EmptyState.Action>
-    <EmptyState.Action secondary>
-      <p>
-        Lorem ipsum dolor sit amet, porta at suspendisse ac, ut wisi vivamus,
-        lorem sociosqu eget nunc amet.{' '}
-      </p>
-    </EmptyState.Action>
-  </EmptyState>
-);
+import ModalWizard from '../ModalWizard';
+import MappingWizardBody from './MappingWizardBody';
 
 class MappingWizardContainer extends React.Component {
   componentDidMount() {
@@ -34,52 +13,28 @@ class MappingWizardContainer extends React.Component {
 
     fetchSourceClusters(url);
   }
-  render() {
-    const { showWizard, onHide, onExited, sourceClusters } = this.props;
 
-    console.log(sourceClusters);
+  render() {
+    const { sourceClusters } = this.props;
+    const loaded = sourceClusters && sourceClusters.length > 0;
+    const modalProps = selectKeys(this.props, [
+      'showWizard',
+      'onHide',
+      'onExited'
+    ]);
+
+    console.log('Source Clusters:', sourceClusters);
+    console.log('Loaded:', loaded);
 
     return (
-      <Modal
-        show={showWizard}
-        onHide={onHide}
-        onExited={onExited}
-        dialogClassName="modal-lg wizard-pf"
-      >
-        <Wizard>
-          <Modal.Header>
-            <button
-              className="close"
-              onClick={onHide}
-              aria-hidden="true"
-              aria-label="Close"
-            >
-              <Icon type="pf" name="close" />
-            </button>
-            <Modal.Title>
-              <FormattedMessage id="mappingWizard.title" />
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body className="wizard-pf-body clearfix">
-            <Wizard.Row>
-              <Wizard.Main>{loadingContents()}</Wizard.Main>
-            </Wizard.Row>
-          </Modal.Body>
-          <Modal.Footer className="wizard-pf-footer">
-            <Button bsStyle="default" className="btn-cancel" onClick={onHide}>
-              <FormattedMessage id="mappingWizard.cancel" />
-            </Button>
-            <Button bsStyle="default" disabled>
-              <Icon type="fa" name="angle-left" />
-              <FormattedMessage id="mappingWizard.back" />
-            </Button>
-            <Button bsStyle="primary" disabled>
-              <FormattedMessage id="mappingWizard.next" />
-              <Icon type="fa" name="angle-right" />
-            </Button>
-          </Modal.Footer>
-        </Wizard>
-      </Modal>
+      <ModalWizard.StateProvider numSteps={5}>
+        <ModalWizard
+          {...modalProps}
+          title={<FormattedMessage id="mappingWizard.title" />}
+        >
+          <MappingWizardBody loaded={loaded} />
+        </ModalWizard>
+      </ModalWizard.StateProvider>
     );
   }
 }
@@ -92,9 +47,6 @@ MappingWizardContainer.propTypes = {
   sourceClusters: PropTypes.arrayOf(PropTypes.object)
 };
 MappingWizardContainer.defaultProps = {
-  onHide: noop,
-  onExited: noop,
-  showWizard: false,
   url: '',
   fetchSourceClusters: noop,
   sourceClusters: []

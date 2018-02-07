@@ -9,9 +9,13 @@ exports[`Overview component renders the overview 1`] = `
     locale="en"
     messages={
       Object {
-        "mappingWizard.back": "Back",
-        "mappingWizard.cancel": "Cancel",
-        "mappingWizard.next": "Next",
+        "mappingWizard.clusters": "Clusters",
+        "mappingWizard.datastores": "Datastores",
+        "mappingWizard.general": "General",
+        "mappingWizard.loadingMessage": "Just a sec.",
+        "mappingWizard.loadingTitle": "Loading Infrastructure Mappings...",
+        "mappingWizard.networks": "Networks",
+        "mappingWizard.results": "Results",
         "mappingWizard.title": "Infrastructure Mapping Wizard",
         "overview.emptyMappingCardButton": "Create Infrastructure Mapping",
         "overview.emptyMappingCardInfo": "Create mapping to later be used by a migration plan.",
@@ -19,6 +23,14 @@ exports[`Overview component renders the overview 1`] = `
         "overview.emptyPlanCardButton": "Create Migration Plan",
         "overview.emptyPlanCardInfo": "Create a migration plan to start migrating.",
         "overview.emptyPlanCardTitle": "Migration Plans",
+        "planWizard.loadingMessage": "This may take a minute.",
+        "planWizard.loadingTitle": "Loading Clusters...",
+        "planWizard.title": "Migration Plan Wizard",
+        "planWizard.vms": "VMs",
+        "wizard.back": "Back",
+        "wizard.cancel": "Cancel",
+        "wizard.close": "Close",
+        "wizard.next": "Next",
       }
     }
   >
