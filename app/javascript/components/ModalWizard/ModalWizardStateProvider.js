@@ -6,7 +6,7 @@ class ModalWizardStateProvider extends React.Component {
   constructor() {
     super();
     this.state = { activeStepIndex: 0 };
-    bindMethods(this, ['prevStep', 'nextStep']);
+    bindMethods(this, ['prevStep', 'nextStep', 'goToStep']);
   }
 
   prevStep() {
@@ -22,6 +22,10 @@ class ModalWizardStateProvider extends React.Component {
     });
   }
 
+  goToStep(activeStepIndex) {
+    this.setState({ activeStepIndex });
+  }
+
   render() {
     const { numSteps, children } = this.props;
     const { activeStepIndex } = this.state;
@@ -34,7 +38,8 @@ class ModalWizardStateProvider extends React.Component {
             activeStepIndex,
             activeStep,
             onBack: this.prevStep,
-            onNext: this.nextStep
+            onNext: this.nextStep,
+            goToStep: this.goToStep,
           })
         )}
       </React.Fragment>

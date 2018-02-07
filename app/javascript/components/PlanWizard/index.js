@@ -9,18 +9,18 @@ import PlanWizardBody from './PlanWizardBody';
 class PlanWizardContainer extends React.Component {
   constructor() {
     super();
-    this.state = { loaded: false };
+    this.state = { isFetching: true };
   }
   componentDidMount() {
     const that = this;
     setTimeout(() => {
-      that.setState({ loaded: true }); // TODO replace me with a real API request
+      // TODO replace me with a real API request
+      that.setState({ isFetching: false });
     }, 1000);
   }
 
   render() {
-    console.log('planwizprops!!!!', this.props);
-    const { loaded } = this.state;
+    const { isFetching } = this.state;
     const modalProps = selectKeys(this.props, [
       'showWizard',
       'onHide',
@@ -32,7 +32,7 @@ class PlanWizardContainer extends React.Component {
           {...modalProps}
           title={<FormattedMessage id="planWizard.title" />}
         >
-          <PlanWizardBody loaded={loaded} />
+          <PlanWizardBody loaded={!isFetching} />
         </ModalWizard>
       </ModalWizard.StateProvider>
     );

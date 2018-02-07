@@ -14,6 +14,7 @@ const ModalWizard = props => {
     activeStepIndex,
     activeStep,
     numSteps,
+    goToStep,
     children
   } = props;
   const onFirstStep = activeStepIndex === 0;
@@ -41,7 +42,8 @@ const ModalWizard = props => {
           {React.Children.map(children, child =>
             React.cloneElement(child, {
               activeStepIndex,
-              activeStep
+              activeStep,
+              goToStep
             })
           )}
         </Modal.Body>
@@ -77,6 +79,7 @@ ModalWizard.propTypes = {
   activeStepIndex: PropTypes.number,
   activeStep: PropTypes.string,
   numSteps: PropTypes.number,
+  goToStep: PropTypes.func,
   children: PropTypes.node
 };
 
@@ -90,6 +93,7 @@ ModalWizard.defaultProps = {
   activeStepIndex: 0,
   activeStep: '1',
   numSteps: 1,
+  goToStep: PropTypes.func,
   children: null
 };
 
