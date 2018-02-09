@@ -1,10 +1,7 @@
 import React from 'react';
 import { IntlProvider } from 'react-intl';
-import { getDisplayName, flattenMessages } from './helpers';
+import { getDisplayName } from './helpers';
 import i18n from './i18n';
-
-// todo: load messages async
-import messages from './messages';
 
 const i18nProviderWrapperFactory = initialNow => WrappedComponent => {
   const wrappedName = getDisplayName(WrappedComponent);
@@ -31,7 +28,6 @@ const i18nProviderWrapperFactory = initialNow => WrappedComponent => {
         <IntlProvider
           locale={i18n.locale}
           initialNow={initialNow}
-          messages={flattenMessages(messages[i18n.locale])}
         >
           <WrappedComponent {...this.props} />
         </IntlProvider>
