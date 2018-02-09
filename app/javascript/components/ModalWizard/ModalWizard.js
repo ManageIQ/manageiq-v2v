@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
 import { noop, Modal, Wizard, Icon, Button } from 'patternfly-react';
 
 const ModalWizard = props => {
@@ -49,18 +48,14 @@ const ModalWizard = props => {
         </Modal.Body>
         <Modal.Footer className="wizard-pf-footer">
           <Button bsStyle="default" className="btn-cancel" onClick={onHide}>
-            <FormattedMessage id="wizard.cancel" />
+            {__('Cancel')}
           </Button>
           <Button bsStyle="default" onClick={onBack} disabled={onFirstStep}>
             <Icon type="fa" name="angle-left" />
-            <FormattedMessage id="wizard.back" />
+            {__('Back')}
           </Button>
           <Button bsStyle="primary" onClick={onFinalStep ? onHide : onNext}>
-            {onFinalStep ? (
-              <FormattedMessage id="wizard.close" />
-            ) : (
-              <FormattedMessage id="wizard.next" />
-            )}
+            {onFinalStep ? __('Close') : __('Next')}
             <Icon type="fa" name="angle-right" />
           </Button>
         </Modal.Footer>

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Equalizer from 'react-equalizer';
-import { FormattedMessage } from 'react-intl';
 import { bindMethods, Button, EmptyState, Grid } from 'patternfly-react';
 import componentRegistry from '../../../components/componentRegistry';
 
@@ -91,10 +90,10 @@ class Overview extends React.Component {
                     <div className="blank-slate-pf" ref={n => (this.node1 = n)}>
                       <EmptyState.Icon />
                       <EmptyState.Title>
-                        <FormattedMessage id="overview.emptyMappingCardTitle" />
+                        {__('Infrastructure Mappings')}
                       </EmptyState.Title>
                       <EmptyState.Info>
-                        <FormattedMessage id="overview.emptyMappingCardInfo" />
+                        {__('Create mapping to later be used by a migration plan.')}
                       </EmptyState.Info>
                       <EmptyState.Action>
                         <Button
@@ -102,7 +101,7 @@ class Overview extends React.Component {
                           bsSize="large"
                           onClick={this.mappingWizardOpened}
                         >
-                          <FormattedMessage id="overview.emptyMappingCardButton" />
+                          {__('Create Infrastructure Mapping')}
                         </Button>
                       </EmptyState.Action>
                     </div>
@@ -116,10 +115,10 @@ class Overview extends React.Component {
                     <div className="blank-slate-pf" ref={n => (this.node2 = n)}>
                       <EmptyState.Icon />
                       <EmptyState.Title>
-                        <FormattedMessage id="overview.emptyPlanCardTitle" />
+                        {__('Migration Plans')}
                       </EmptyState.Title>
                       <EmptyState.Info>
-                        <FormattedMessage id="overview.emptyPlanCardInfo" />
+                        {__('Create a migration plan to start migrating.')}
                       </EmptyState.Info>
                       <EmptyState.Action>
                         <Button
@@ -127,7 +126,7 @@ class Overview extends React.Component {
                           bsSize="large"
                           onClick={this.planWizardOpened}
                         >
-                          <FormattedMessage id="overview.emptyPlanCardButton" />
+                          {__('Create Migration Plan')}
                         </Button>
                       </EmptyState.Action>
                     </div>

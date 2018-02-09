@@ -25,27 +25,27 @@ const MappingWizardBody = props => (
     loadingMessage="planWizard.loadingMessage"
     steps={[
       {
-        title: 'mappingWizard.general',
+        title: __('General'),
         render: () => todo('Name and Description Fields'),
         onClick: () => console.log('on step 1 click')
       },
       {
-        title: 'mappingWizard.clusters',
+        title: __('Clusters'),
         render: () => todo('Cluster Mappings Form'),
         onClick: () => console.log('on step 2 click')
       },
       {
-        title: 'mappingWizard.datastores',
+        title: __('Datastores'),
         render: () => todo('Datastore Mappings Form'),
         onClick: () => console.log('on step 3 click')
       },
       {
-        title: 'mappingWizard.networks',
+        title: __('Networks'),
         render: () => todo('Network Mappings Form'),
         onClick: () => console.log('on step 4 click')
       },
       {
-        title: 'mappingWizard.results',
+        title: __('Results'),
         render: () => todo('Display Progress and Results'),
         onClick: () => console.log('on step 5 click')
       }

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
 import { noop, selectKeys } from 'patternfly-react';
 import * as MappingWizardActions from '../../redux/actions/mappingWizard';
 import ModalWizard from '../ModalWizard';
@@ -28,7 +27,7 @@ class MappingWizardContainer extends React.Component {
       <ModalWizard.StateProvider numSteps={5}>
         <ModalWizard
           {...modalProps}
-          title={<FormattedMessage id="mappingWizard.title" />}
+          title={__('Infrastructure Mapping Wizard')}
         >
           <MappingWizardBody loaded={!isFetching} />
         </ModalWizard>
