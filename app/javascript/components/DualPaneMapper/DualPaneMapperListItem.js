@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-const DualPaneMapperListItem = ({ displayText }) => {
-  const classes = cx('dual-pane-mapper-item', { selected: true });
+const DualPaneMapperListItem = ({ item, selected, handleClick }) => {
+  const classes = cx('dual-pane-mapper-item', { selected: selected });
 
   return (
-    <div className={classes}>
+    <div className={classes} onClick={() => handleClick(item)}>
       <div className="dual-pane-mapper-info">
-        <span className="dual-pane-mapper-item-container">{displayText}</span>
+        <span className="dual-pane-mapper-item-container">{item.name}</span>
         <span className="dual-pane-mapper-item-select-indicator fa fa-check" />
       </div>
     </div>
@@ -16,7 +16,9 @@ const DualPaneMapperListItem = ({ displayText }) => {
 };
 
 DualPaneMapperListItem.propTypes = {
-  displayText: PropTypes.string
+  item: PropTypes.object,
+  selected: PropTypes.bool,
+  handleClick: PropTypes.func
 };
 
 export default DualPaneMapperListItem;
