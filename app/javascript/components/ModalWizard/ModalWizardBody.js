@@ -1,6 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { bindMethods, noop, EmptyState, Spinner, Wizard } from 'patternfly-react';
+import {
+  bindMethods,
+  noop,
+  EmptyState,
+  Spinner,
+  Wizard
+} from 'patternfly-react';
 
 class ModalWizardBody extends React.Component {
   constructor() {
@@ -39,14 +45,10 @@ class ModalWizardBody extends React.Component {
           <EmptyState>
             <Spinner size="lg" className="blank-slate-pf-icon" loading />
             <EmptyState.Action>
-              <h3>
-                {loadingTitle}
-              </h3>
+              <h3>{loadingTitle}</h3>
             </EmptyState.Action>
             <EmptyState.Action secondary>
-              <p>
-                {loadingMessage}
-              </p>
+              <p>{loadingMessage}</p>
             </EmptyState.Action>
           </EmptyState>
         </Wizard.Main>
@@ -99,7 +101,7 @@ ModalWizardBody.propTypes = {
   activeStepIndex: PropTypes.number,
   activeStep: PropTypes.string,
   onClick: PropTypes.func,
-  goToStep: PropTypes.func,
+  goToStep: PropTypes.func
 };
 
 ModalWizardBody.defaultProps = {

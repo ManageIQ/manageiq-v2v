@@ -93,7 +93,9 @@ class Overview extends React.Component {
                         {__('Infrastructure Mappings')}
                       </EmptyState.Title>
                       <EmptyState.Info>
-                        {__('Create mapping to later be used by a migration plan.')}
+                        {__(
+                          'Create mapping to later be used by a migration plan.'
+                        )}
                       </EmptyState.Info>
                       <EmptyState.Action>
                         <Button

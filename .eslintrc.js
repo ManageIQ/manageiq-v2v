@@ -3,6 +3,9 @@ module.exports = {
     browser: true,
     'jest/globals': true
   },
+  globals: {
+    __: true
+  },
   extends: [
     'standard',
     'standard-react',

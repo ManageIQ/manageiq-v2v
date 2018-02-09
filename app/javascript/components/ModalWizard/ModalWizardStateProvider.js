@@ -39,7 +39,7 @@ class ModalWizardStateProvider extends React.Component {
             activeStep,
             onBack: this.prevStep,
             onNext: this.nextStep,
-            goToStep: this.goToStep,
+            goToStep: this.goToStep
           })
         )}
       </React.Fragment>

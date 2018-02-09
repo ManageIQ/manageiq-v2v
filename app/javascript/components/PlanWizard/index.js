@@ -27,10 +27,7 @@ class PlanWizardContainer extends React.Component {
     ]);
     return (
       <ModalWizard.StateProvider numSteps={3}>
-        <ModalWizard
-          {...modalProps}
-          title={__('Migration Plan Wizard')}
-        >
+        <ModalWizard {...modalProps} title={__('Migration Plan Wizard')}>
           <PlanWizardBody loaded={!isFetching} />
         </ModalWizard>
       </ModalWizard.StateProvider>

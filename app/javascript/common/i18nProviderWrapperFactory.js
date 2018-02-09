@@ -25,10 +25,7 @@ const i18nProviderWrapperFactory = initialNow => WrappedComponent => {
         return <span />;
       }
       return (
-        <IntlProvider
-          locale={i18n.locale}
-          initialNow={initialNow}
-        >
+        <IntlProvider locale={i18n.locale} initialNow={initialNow}>
           <WrappedComponent {...this.props} />
         </IntlProvider>
       );
