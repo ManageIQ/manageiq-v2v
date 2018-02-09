@@ -48,6 +48,7 @@ class DualPaneMapperContainer extends React.Component {
 
     this.selectSourceCluster = this.selectSourceCluster.bind(this);
     this.selectTargetCluster = this.selectTargetCluster.bind(this);
+    this.addMapping = this.addMapping.bind(this);
   }
 
   componentDidMount() {
@@ -57,16 +58,12 @@ class DualPaneMapperContainer extends React.Component {
   selectSourceCluster(sourceCluster) {
     this.setState(prevState => {
       const isAlreadySelected = prevState.selectedSourceClusters.some(
-        cluster => {
-          return cluster.id === sourceCluster.id;
-        }
+        cluster => cluster.id === sourceCluster.id
       );
       if (isAlreadySelected) {
         return {
           selectedSourceClusters: prevState.selectedSourceClusters.filter(
-            cluster => {
-              return cluster.id !== sourceCluster.id;
-            }
+            cluster => cluster.id !== sourceCluster.id
           )
         };
       }
@@ -83,6 +80,37 @@ class DualPaneMapperContainer extends React.Component {
     this.setState(() => ({ selectedTargetCluster: targetCluster }));
   }
 
+  addMapping() {
+    this.setState(prevState => {
+      const sourceClusters = {
+        ...prevState.sourceClusters,
+        resources: prevState.sourceClusters.resources.filter(
+          cluster =>
+            !prevState.selectedSourceClusters.some(
+              clusterToRemove => cluster.id === clusterToRemove.id
+            )
+        )
+      };
+      const targetClusters = {
+        ...prevState.targetClusters,
+        resources: prevState.targetClusters.resources.filter(
+          cluster => cluster.id !== prevState.selectedTargetCluster.id
+        )
+      };
+      return {
+        sourceClusters,
+        targetClusters,
+        mappings: [
+          ...prevState.mappings,
+          {
+            ...prevState.selectedTargetCluster,
+            nodes: prevState.selectedSourceClusters
+          }
+        ]
+      };
+    });
+  }
+
   render() {
     const {
       sourceClusters,
@@ -91,7 +119,15 @@ class DualPaneMapperContainer extends React.Component {
       selectedSourceClusters
     } = this.state;
     return (
-      <DualPaneMapper>
+      <DualPaneMapper
+        handleButtonClick={this.addMapping}
+        validMapping={
+          !(
+            selectedTargetCluster &&
+            (selectedSourceClusters && selectedSourceClusters.length > 0)
+          )
+        }
+      >
         {sourceClusters && (
           <DualPaneMapperList listTitle={sourceClusters.name}>
             {sourceClusters.resources.map(item => (
@@ -100,9 +136,9 @@ class DualPaneMapperContainer extends React.Component {
                 key={item.id}
                 selected={
                   selectedSourceClusters &&
-                  selectedSourceClusters.some(sourceCluster => {
-                    return sourceCluster.id === item.id;
-                  })
+                  selectedSourceClusters.some(
+                    sourceCluster => sourceCluster.id === item.id
+                  )
                 }
                 handleClick={this.selectSourceCluster}
               />

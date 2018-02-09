@@ -3,15 +3,19 @@ import PropTypes from 'prop-types';
 
 import { Button } from 'patternfly-react';
 
-const DualPaneMapper = ({ children }) => (
+const DualPaneMapper = ({ children, handleButtonClick, validMapping }) => (
   <div className="dual-pane-mapper-container">
     <div className="dual-pane-mapper">{children}</div>
-    <Button>Add Mapping</Button>
+    <Button disabled={validMapping} onClick={handleButtonClick}>
+      Add Mapping
+    </Button>
   </div>
 );
 
 DualPaneMapper.propTypes = {
-  children: PropTypes.node
+  children: PropTypes.node,
+  handleButtonClick: PropTypes.func,
+  validMapping: PropTypes.bool
 };
 
 export default DualPaneMapper;

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 const DualPaneMapperListItem = ({ item, selected, handleClick }) => {
-  const classes = cx('dual-pane-mapper-item', { selected: selected });
+  const classes = cx('dual-pane-mapper-item', { selected });
 
   return (
     <div className={classes} onClick={() => handleClick(item)}>
