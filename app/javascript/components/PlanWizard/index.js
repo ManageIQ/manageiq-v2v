@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
 import { noop, selectKeys } from 'patternfly-react';
 import ModalWizard from '../ModalWizard';
 import PlanWizardBody from './PlanWizardBody';
@@ -28,10 +27,7 @@ class PlanWizardContainer extends React.Component {
     ]);
     return (
       <ModalWizard.StateProvider numSteps={3}>
-        <ModalWizard
-          {...modalProps}
-          title={<FormattedMessage id="planWizard.title" />}
-        >
+        <ModalWizard {...modalProps} title={__('Migration Plan Wizard')}>
           <PlanWizardBody loaded={!isFetching} />
         </ModalWizard>
       </ModalWizard.StateProvider>

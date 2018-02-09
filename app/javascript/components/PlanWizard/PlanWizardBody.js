@@ -21,21 +21,21 @@ const todo = str => (
 const PlanWizardBody = props => (
   <ModalWizard.Body
     {...props}
-    loadingTitle="mappingWizard.loadingTitle"
-    loadingMessage="mappingWizard.loadingMessage"
+    loadingTitle={__('Loading Clusters...')}
+    loadingMessage={__('This may take a minute.')}
     steps={[
       {
-        title: 'mappingWizard.general',
+        title: __('General'),
         render: () => todo('Name and Description Fields'),
         onClick: () => console.log('on step 1 click')
       },
       {
-        title: 'planWizard.vms',
+        title: __('VMs'),
         render: () => todo('VM CSV Upload Form'),
         onClick: () => console.log('on step 2 click')
       },
       {
-        title: 'mappingWizard.results',
+        title: __('Results'),
         render: () => todo('Display Progress and Results'),
         onClick: () => console.log('on step 3 click')
       }

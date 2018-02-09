@@ -1,7 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, FormattedMessage } from 'react-intl';
-import { bindMethods, noop, EmptyState, Spinner, Wizard } from 'patternfly-react';
+import {
+  bindMethods,
+  noop,
+  EmptyState,
+  Spinner,
+  Wizard
+} from 'patternfly-react';
 
 class ModalWizardBody extends React.Component {
   constructor() {
@@ -19,10 +24,9 @@ class ModalWizardBody extends React.Component {
     console.log('on step index click: ', stepIndex);
   }
 
-  stepProps(stepIndex, titleId) {
+  stepProps(stepIndex, title) {
     const { activeStep } = this.props;
     const label = (stepIndex + 1).toString();
-    const title = this.props.intl.formatMessage({ id: titleId });
     return {
       key: `wizard-step-${title}`,
       stepIndex,
@@ -41,14 +45,10 @@ class ModalWizardBody extends React.Component {
           <EmptyState>
             <Spinner size="lg" className="blank-slate-pf-icon" loading />
             <EmptyState.Action>
-              <h3>
-                <FormattedMessage id={loadingTitle} />
-              </h3>
+              <h3>{loadingTitle}</h3>
             </EmptyState.Action>
             <EmptyState.Action secondary>
-              <p>
-                <FormattedMessage id={loadingMessage} />
-              </p>
+              <p>{loadingMessage}</p>
             </EmptyState.Action>
           </EmptyState>
         </Wizard.Main>
@@ -101,19 +101,18 @@ ModalWizardBody.propTypes = {
   activeStepIndex: PropTypes.number,
   activeStep: PropTypes.string,
   onClick: PropTypes.func,
-  goToStep: PropTypes.func,
-  intl: PropTypes.object.isRequired
+  goToStep: PropTypes.func
 };
 
 ModalWizardBody.defaultProps = {
-  loadingTitle: 'Loading Wizard...',
-  loadingMessage: 'Lorem ipsum dolor sit amet...',
+  loadingTitle: __('Loading Wizard...'),
+  loadingMessage: __('Loading...'),
   loaded: false,
-  steps: [{ title: 'General', render: () => <p>General</p> }],
+  steps: [{ title: __('General'), render: () => <p>{__('General')}</p> }],
   activeStepIndex: 0,
   activeStep: '1',
   onClick: noop,
   goToStep: noop
 };
 
-export default injectIntl(ModalWizardBody);
+export default ModalWizardBody;
