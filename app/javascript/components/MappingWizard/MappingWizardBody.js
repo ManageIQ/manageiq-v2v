@@ -21,8 +21,8 @@ const todo = str => (
 const MappingWizardBody = props => (
   <ModalWizard.Body
     {...props}
-    loadingTitle="planWizard.loadingTitle"
-    loadingMessage="planWizard.loadingMessage"
+    loadingTitle={__('Loading Infrastructure Mappings...')}
+    loadingMessage={__('This may take a minute.')}
     steps={[
       {
         title: __('General'),
