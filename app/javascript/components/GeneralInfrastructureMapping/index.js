@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { Form, Grid } from 'patternfly-react';
+import { required } from '../../common/formUtilities/validation';
 
 class GeneralInfrastructureMappingContainer extends React.Component {
   constructor(props) {
@@ -15,6 +16,7 @@ class GeneralInfrastructureMappingContainer extends React.Component {
           name="name"
           label={__('Name')}
           component={renderField}
+          validate={[required]}
           type="text"
         />
         <Field
@@ -38,6 +40,8 @@ const renderField = ({
 }) => {
   const formGroupProps = { key: { label }, controlId, ...props };
 
+  if (error) formGroupProps.validationState = 'error';
+
   return (
     <Form.FormGroup {...formGroupProps}>
       <Grid.Col componentClass={Form.ControlLabel} sm={2}>
@@ -49,6 +53,8 @@ const renderField = ({
           type={type}
           componentClass={type === 'text' ? undefined : type}
         />
+        {(pristine || touched) &&
+          error && <Form.HelpBlock>{error}</Form.HelpBlock>}
       </Grid.Col>
     </Form.FormGroup>
   );
