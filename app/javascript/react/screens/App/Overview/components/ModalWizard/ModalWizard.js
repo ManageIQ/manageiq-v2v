@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { noop, Modal, Wizard, Icon, Button } from 'patternfly-react';
 import { connect } from 'react-redux';
+import { find } from 'lodash';
 
 const ModalWizard = props => {
   const {
@@ -16,11 +17,21 @@ const ModalWizard = props => {
     numSteps,
     goToStep,
     children,
-    formError
+    formContainer
   } = props;
   const onFirstStep = activeStepIndex === 0;
   const onFinalStep = activeStepIndex === numSteps - 1;
-  const disableNextStep = formError ? true : false;
+
+  const formHasErrors = () => {
+    return (
+      find(formContainer, form => {
+        return form.syncErrors;
+      }) !== undefined
+    );
+  };
+
+  const disableNextStep = formHasErrors();
+
   return (
     <Modal
       show={showWizard}
@@ -82,7 +93,8 @@ ModalWizard.propTypes = {
   activeStep: PropTypes.string,
   numSteps: PropTypes.number,
   goToStep: PropTypes.func,
-  children: PropTypes.node
+  children: PropTypes.node,
+  formContainer: PropTypes.object
 };
 
 ModalWizard.defaultProps = {
@@ -100,9 +112,7 @@ ModalWizard.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  formError:
-    state.form.generalInfrastructureMapping &&
-    state.form.generalInfrastructureMapping.syncErrors
+  formContainer: state.form
 });
 
 export default connect(mapStateToProps)(ModalWizard);
