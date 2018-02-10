@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ModalWizard from '../ModalWizard';
-import DualPaneMapperContainer from '../DualPaneMapper';
+import MappingWizardClustersStep from '../MappingWizardClustersStep';
 
 // TODO remove these, they are space fillers
 const t = str => (
@@ -32,7 +32,7 @@ const MappingWizardBody = props => (
       },
       {
         title: __('Clusters'),
-        render: () => <DualPaneMapperContainer />,
+        render: () => <MappingWizardClustersStep />,
         onClick: () => console.log('on step 2 click')
       },
       {
