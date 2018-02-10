@@ -12,11 +12,11 @@ export const source = {
     },
     {
       id: 3,
-      name: 'VMWareCluster2'
+      name: 'VMWareCluster3'
     },
     {
       id: 4,
-      name: 'VMWareCluster2'
+      name: 'VMWareCluster4'
     }
   ]
 };
