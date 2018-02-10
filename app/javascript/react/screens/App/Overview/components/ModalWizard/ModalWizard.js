@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { noop, Modal, Wizard, Icon, Button } from 'patternfly-react';
+import { connect } from 'react-redux';
 
 const ModalWizard = props => {
   const {
@@ -14,10 +15,12 @@ const ModalWizard = props => {
     activeStep,
     numSteps,
     goToStep,
-    children
+    children,
+    formError
   } = props;
   const onFirstStep = activeStepIndex === 0;
   const onFinalStep = activeStepIndex === numSteps - 1;
+  const disableNextStep = formError ? true : false;
   return (
     <Modal
       show={showWizard}
@@ -54,7 +57,11 @@ const ModalWizard = props => {
             <Icon type="fa" name="angle-left" />
             {__('Back')}
           </Button>
-          <Button bsStyle="primary" onClick={onFinalStep ? onHide : onNext}>
+          <Button
+            bsStyle="primary"
+            onClick={onFinalStep ? onHide : onNext}
+            disabled={disableNextStep}
+          >
             {onFinalStep ? __('Close') : __('Next')}
             <Icon type="fa" name="angle-right" />
           </Button>
@@ -92,4 +99,10 @@ ModalWizard.defaultProps = {
   children: null
 };
 
-export default ModalWizard;
+const mapStateToProps = state => ({
+  formError:
+    state.form.generalInfrastructureMapping &&
+    state.form.generalInfrastructureMapping.syncErrors
+});
+
+export default connect(mapStateToProps)(ModalWizard);
