@@ -1,0 +1,239 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mappingWizard actions should fetch source clusters and return PENDING and FULFILLED action 1`] = `
+Array [
+  Object {
+    "type": "FETCH_V2V_SOURCE_CLUSTERS_PENDING",
+  },
+  Object {
+    "payload": Object {
+      "config": Object {
+        "adapter": null,
+        "data": undefined,
+        "headers": Object {
+          "Accept": "application/json, text/plain, */*",
+          "X-CSRF-Token": "",
+          "X-Requested-With": "XMLHttpRequest",
+        },
+        "maxContentLength": -1,
+        "method": "get",
+        "params": Object {},
+        "timeout": 0,
+        "transformRequest": Object {
+          "0": [Function],
+        },
+        "transformResponse": Object {
+          "0": [Function],
+        },
+        "url": "/api/sourceClusters",
+        "validateStatus": [Function],
+        "xsrfCookieName": "XSRF-TOKEN",
+        "xsrfHeaderName": "X-XSRF-TOKEN",
+      },
+      "data": null,
+      "headers": undefined,
+      "status": 200,
+    },
+    "type": "FETCH_V2V_SOURCE_CLUSTERS_FULFILLED",
+  },
+]
+`;
+
+exports[`mappingWizard actions should fetch source clusters and return PENDING and REJECTED action 1`] = `
+Array [
+  Object {
+    "type": "FETCH_V2V_SOURCE_CLUSTERS_PENDING",
+  },
+  Object {
+    "error": true,
+    "payload": [Error: Request failed with status code 404],
+    "type": "FETCH_V2V_SOURCE_CLUSTERS_REJECTED",
+  },
+  Object {
+    "payload": Object {
+      "data": Object {
+        "count": 49,
+        "name": "providers",
+        "pages": 1,
+        "resources": Array [
+          Object {
+            "api_version": "3.6.9.2",
+            "created_on": "2016-07-15T18:25:07Z",
+            "ems_clusters": Array [
+              Object {
+                "created_on": "2016-07-15T18:28:16Z",
+                "drs_automation_level": null,
+                "drs_enabled": null,
+                "drs_migration_threshold": null,
+                "effective_cpu": null,
+                "effective_memory": null,
+                "ems_id": "10000000000012",
+                "ems_ref": "/api/clusters/00000002-0002-0002-0002-00000000024b",
+                "ems_ref_obj": "/api/clusters/00000002-0002-0002-0002-00000000024b",
+                "ha_admit_control": null,
+                "ha_enabled": null,
+                "ha_max_failures": null,
+                "href": "http://localhost:3000/api/clusters/10000000000001",
+                "id": "10000000000001",
+                "last_perf_capture_on": null,
+                "name": "Default",
+                "type": null,
+                "uid_ems": "00000002-0002-0002-0002-00000000024b",
+                "updated_on": "2016-07-15T18:28:16Z",
+              },
+            ],
+            "emstype": "rhevm",
+            "enabled": true,
+            "guid": "74cbbbb8-4ab9-11e6-b213-005056b170bd",
+            "host_default_vnc_port_end": null,
+            "host_default_vnc_port_start": null,
+            "href": "http://localhost:3000/api/providers/10000000000012",
+            "id": "10000000000012",
+            "last_metrics_error": null,
+            "last_metrics_success_date": null,
+            "last_metrics_update_date": null,
+            "last_refresh_date": "2017-02-26T02:44:22Z",
+            "last_refresh_error": null,
+            "name": "RHV-M",
+            "options": Object {},
+            "parent_ems_id": null,
+            "project": null,
+            "provider_id": null,
+            "provider_region": null,
+            "realm": null,
+            "subscription": null,
+            "tenant_id": "10000000000001",
+            "tenant_mapping_enabled": null,
+            "type": "ManageIQ::Providers::Redhat::InfraManager",
+            "uid_ems": null,
+            "updated_on": "2017-11-21T23:03:49Z",
+            "zone_id": "10000000000008",
+          },
+        ],
+        "subcount": 8,
+        "subquery_count": 8,
+      },
+    },
+    "type": "FETCH_V2V_SOURCE_CLUSTERS_FULFILLED",
+  },
+]
+`;
+
+exports[`mappingWizard actions should fetch target clusters and return PENDING and FULFILLED action 1`] = `
+Array [
+  Object {
+    "type": "FETCH_V2V_TARGET_CLUSTERS_PENDING",
+  },
+  Object {
+    "payload": Object {
+      "config": Object {
+        "adapter": null,
+        "data": undefined,
+        "headers": Object {
+          "Accept": "application/json, text/plain, */*",
+          "X-CSRF-Token": "",
+          "X-Requested-With": "XMLHttpRequest",
+        },
+        "maxContentLength": -1,
+        "method": "get",
+        "params": Object {},
+        "timeout": 0,
+        "transformRequest": Object {
+          "0": [Function],
+        },
+        "transformResponse": Object {
+          "0": [Function],
+        },
+        "url": "/api/targetClusters",
+        "validateStatus": [Function],
+        "xsrfCookieName": "XSRF-TOKEN",
+        "xsrfHeaderName": "X-XSRF-TOKEN",
+      },
+      "data": null,
+      "headers": undefined,
+      "status": 200,
+    },
+    "type": "FETCH_V2V_TARGET_CLUSTERS_FULFILLED",
+  },
+]
+`;
+
+exports[`mappingWizard actions should fetch target clusters and return PENDING and REJECTED action 1`] = `
+Array [
+  Object {
+    "type": "FETCH_V2V_TARGET_CLUSTERS_PENDING",
+  },
+  Object {
+    "error": true,
+    "payload": [Error: Request failed with status code 404],
+    "type": "FETCH_V2V_TARGET_CLUSTERS_REJECTED",
+  },
+  Object {
+    "payload": Object {
+      "data": Object {
+        "count": 49,
+        "name": "providers",
+        "pages": 1,
+        "resources": Array [
+          Object {
+            "api_version": "6.0",
+            "created_on": "2016-07-08T10:33:40Z",
+            "ems_clusters": Array [
+              Object {
+                "created_on": "2016-08-03T02:19:35Z",
+                "drs_automation_level": "fullyAutomated",
+                "drs_enabled": false,
+                "drs_migration_threshold": 3,
+                "effective_cpu": 109356,
+                "effective_memory": 789977235456,
+                "ems_id": "10000000000001",
+                "ems_ref": "domain-c7",
+                "ems_ref_obj": "domain-c7",
+                "ha_admit_control": true,
+                "ha_enabled": false,
+                "ha_max_failures": 1,
+                "href": "http://localhost:3000/api/clusters/10000000000006",
+                "id": "10000000000006",
+                "last_perf_capture_on": null,
+                "name": "Raleigh",
+                "type": null,
+                "uid_ems": "domain-c7",
+                "updated_on": "2017-02-26T02:33:43Z",
+              },
+            ],
+            "emstype": "vmwarews",
+            "enabled": true,
+            "guid": "700f10d8-44f7-11e6-8d89-005056b170bd",
+            "host_default_vnc_port_end": null,
+            "host_default_vnc_port_start": null,
+            "href": "http://localhost:3000/api/providers/10000000000001",
+            "id": "10000000000001",
+            "last_metrics_error": null,
+            "last_metrics_success_date": null,
+            "last_metrics_update_date": null,
+            "last_refresh_date": "2017-02-26T03:18:27Z",
+            "last_refresh_error": null,
+            "name": "vCenter",
+            "options": null,
+            "parent_ems_id": null,
+            "project": null,
+            "provider_id": null,
+            "provider_region": null,
+            "realm": null,
+            "subscription": null,
+            "tenant_id": "10000000000001",
+            "tenant_mapping_enabled": null,
+            "type": "ManageIQ::Providers::Vmware::InfraManager",
+            "uid_ems": "0302ea13-8681-4b48-9609-b4aea788ca63",
+            "updated_on": "2017-02-26T03:18:27Z",
+            "zone_id": "10000000000003",
+          },
+        ],
+        "subcount": 1,
+        "subquery_count": 1,
+      },
+    },
+    "type": "FETCH_V2V_TARGET_CLUSTERS_FULFILLED",
+  },
+]
+`;

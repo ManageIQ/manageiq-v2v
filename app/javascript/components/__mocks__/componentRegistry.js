@@ -39,7 +39,7 @@ const componentRegistry = {
       );
     }
     const WrappedComponent = i18nProviderWrapperFactory(
-      new Date('2017-10-13 00:54:55 -1100')
+      new Date('2017-10-13 00:54:55 -1100') // mock time to ensure snapshots are same
     )(currentComponent.type);
 
     // todo: should component registry `markup` actually merge {data} instead?

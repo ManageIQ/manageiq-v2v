@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Mapping Wizard integration test should mount the MappingWizard with mapStateToProps reduced 1`] = `
+Object {
+  "hideMappingWizard": false,
+  "hideMappingWizardAction": [Function],
+  "mappingWizardExitedAction": [Function],
+}
+`;

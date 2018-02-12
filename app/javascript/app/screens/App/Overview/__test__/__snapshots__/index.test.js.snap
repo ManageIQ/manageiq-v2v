@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Overview integration test should mount the Overview with mapStateToProps reduced 1`] = `
+Object {
+  "hideMappingWizard": false,
+  "hidePlanWizard": false,
+  "mappingWizardVisible": false,
+  "planWizardVisible": false,
+  "showMappingWizardAction": [Function],
+  "showPlanWizardAction": [Function],
+}
+`;

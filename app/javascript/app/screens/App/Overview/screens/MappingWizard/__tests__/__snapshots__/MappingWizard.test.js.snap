@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MappingWizard component renders the mapping wizard 1`] = `
+<ModalWizardStateProvider
+  numSteps={5}
+>
+  <ModalWizard
+    activeStep="1"
+    activeStepIndex={0}
+    goToStep={[Function]}
+    numSteps={1}
+    onBack={[Function]}
+    onExited={[MockFunction]}
+    onHide={[MockFunction]}
+    onNext={[Function]}
+    showWizard={true}
+    title="Infrastructure Mapping Wizard"
+  >
+    <MappingWizardBody
+      activeStep="1"
+      activeStepIndex={0}
+      loaded={true}
+    />
+  </ModalWizard>
+</ModalWizardStateProvider>
+`;

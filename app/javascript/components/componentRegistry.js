@@ -1,8 +1,7 @@
 import React from 'react';
 import { i18nProviderWrapperFactory } from '../common/i18nProviderWrapperFactory';
 
-// eslint-disable-next-line prefer-destructuring
-const componentRegistry = window.MiqReact.componentRegistry;
+const { componentRegistry } = window.MiqReact;
 
 // extends current MIQ componentRegistry with i18nProviderWrapper
 componentRegistry.markup = (name, data, store) => {
