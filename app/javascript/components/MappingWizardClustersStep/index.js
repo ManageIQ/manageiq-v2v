@@ -172,7 +172,12 @@ class MappingWizardClustersStep extends React.Component {
           }
         >
           {sourceClusters && (
-            <DualPaneMapperList listTitle={sourceClusters.name}>
+            <DualPaneMapperList
+              listTitle={sourceClusters.name}
+              hasCounter
+              totalItems={sourceClusters.resources.length}
+              selectedItems={selectedSourceClusters.length}
+            >
               {sourceClusters.resources.map(item => (
                 <DualPaneMapperListItem
                   item={item}

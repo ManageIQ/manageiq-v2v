@@ -1,6 +1,6 @@
 export const source = {
   name: 'Source Clusters',
-  count: 4,
+  count: 10,
   resources: [
     {
       id: 1,

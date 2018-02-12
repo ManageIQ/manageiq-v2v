@@ -13,12 +13,6 @@
   justify-content: space-around;
 }
 
-// .dual-pane-mapper-list-container {
-//   display: inline-block;
-//   width: calc(50% - 32px);
-//   vertical-align: top;
-// }
-
 .dual-pane-mapper-label {
   width: 225px;
 }
@@ -41,6 +35,9 @@
   overflow-x: hidden;
   overflow-y: auto;
   width: 225px;
+  &.has-counter {
+    height: 180px;
+  }
 }
 .dual-pane-mapper-list .dual-pane-mapper-item {
   cursor: pointer;
@@ -110,9 +107,8 @@
   top: 10px;
 }
 
-.dual-pane-mapper-count-text {
-  /*border: 1px solid rgba(0, 0, 0, 0.3);
-  border-top-width: 0; */
-  padding-left: 5px;
-  min-height: 20px;
+.dual-pane-mapper-count {
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-top: none;
+  padding-left: 10px;
 }
