@@ -1,18 +1,30 @@
-import MappingWizardContainer from './MappingWizard';
-import PlanWizardContainer from './PlanWizard';
-import Dashboard from '../migration/scenes/Dashboard';
-import Overview from '../migration/scenes/Overview';
+import MappingWizardContainer from '../app/screens/App/Overview/screens/MappingWizard';
+import MappingWizardClustersStepContainer from '../app/screens/App/Overview/screens/MappingWizard/components/MappingWizardClustersStep';
+import PlanWizardContainer from '../app/screens/App/Overview/screens/PlanWizard';
+import OverviewContainer from '../app/screens/App/Overview';
+import Dashboard from '../app/screens/App/Dashboard/Dashboard';
 import IsoDate from './dates/IsoDate';
 import LongDateTime from './dates/LongDateTime';
 import RelativeDateTime from './dates/RelativeDateTime';
 import ShortDateTime from './dates/ShortDateTime';
-import MiqV2vUi from '../migration/containers/Application';
+import MiqV2vUi from '../app';
 
 export const coreComponents = [
   {
     name: 'MappingWizardContainer',
     type: MappingWizardContainer,
-    data: { url: '/api/sourceClusters' },
+    data: {},
+    store: true
+  },
+  {
+    name: 'MappingWizardClustersStepContainer',
+    type: MappingWizardClustersStepContainer,
+    data: {
+      fetchSourceClustersUrl: '/api/sourceClusters',
+      // '/api/providers?expand=resources&attributes=emstype,ems_clusters&filter[]=emstype=vmwarews',
+      fetchTargetClustersUrl: '/api/targetClusters'
+      // '/api/providers?expand=resources&attributes=emstype,ems_clusters&filter[]=emstype=rhevm'
+    },
     store: true
   },
   {
@@ -27,8 +39,8 @@ export const coreComponents = [
     data: {}
   },
   {
-    name: 'Overview',
-    type: Overview,
+    name: 'OverviewContainer',
+    type: OverviewContainer,
     data: {},
     store: true
   },
