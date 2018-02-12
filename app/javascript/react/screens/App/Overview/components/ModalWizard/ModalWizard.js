@@ -56,7 +56,8 @@ const ModalWizard = props => {
             React.cloneElement(child, {
               activeStepIndex,
               activeStep,
-              goToStep
+              goToStep,
+              disableNextStep
             })
           )}
         </Modal.Body>
