@@ -7,7 +7,7 @@ const DualPaneMapper = ({ children, handleButtonClick, validMapping }) => (
   <div className="dual-pane-mapper-container">
     <div className="dual-pane-mapper">{children}</div>
     <Button disabled={validMapping} onClick={handleButtonClick}>
-      Add Mapping
+      {__('Add Mapping')}
     </Button>
   </div>
 );

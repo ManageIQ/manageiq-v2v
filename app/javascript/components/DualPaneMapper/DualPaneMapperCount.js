@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const DualPaneMapperCount = ({ selectedItems, totalItems }) => (
   <div className="dual-pane-mapper-count">
-    {selectedItems} of {totalItems} items selected
+    {selectedItems} {__('of')} {totalItems} {__('items selected')}
   </div>
 );
 
