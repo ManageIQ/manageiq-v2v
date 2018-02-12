@@ -1,13 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { target, source } from './__mocks__/data';
 
 import DualPaneMapper from '../DualPaneMapper';
 import DualPaneMapperList from '../DualPaneMapper/DualPaneMapperList';
 import DualPaneMapperListItem from '../DualPaneMapper/DualPaneMapperListItem';
-
-import { TreeView, Button } from 'patternfly-react';
+import TreeViewContainer from './TreeViewContainer';
 
 class MappingWizardClustersStep extends React.Component {
   constructor(props) {
@@ -91,9 +89,11 @@ class MappingWizardClustersStep extends React.Component {
             },
             selectable: true,
             selected: false,
-            nodes: prevState.selectedSourceClusters.map(cluster => {
-              return { ...cluster, text: cluster.name, icon: 'fa fa-file-o' };
-            })
+            nodes: prevState.selectedSourceClusters.map(cluster => ({
+              ...cluster,
+              text: cluster.name,
+              icon: 'fa fa-file-o'
+            }))
           }
         ]
       };
@@ -101,29 +101,26 @@ class MappingWizardClustersStep extends React.Component {
   }
 
   selectMapping(selectedMapping) {
-    this.setState(prevState => {
-      return {
-        mappings: prevState.mappings.map(mapping => {
-          if (mapping.id === selectedMapping.id) {
-            return { ...mapping, selected: !mapping.selected };
-          } else if (mapping.id !== selectedMapping.id && mapping.selected) {
-            return { ...mapping, selected: false };
-          } else {
-            return mapping;
-          }
-        }),
-        selectedMapping
-      };
-    });
+    this.setState(prevState => ({
+      mappings: prevState.mappings.map(mapping => {
+        if (mapping.id === selectedMapping.id) {
+          return { ...mapping, selected: !mapping.selected };
+        } else if (mapping.id !== selectedMapping.id && mapping.selected) {
+          return { ...mapping, selected: false };
+        }
+        return mapping;
+      }),
+      selectedMapping
+    }));
   }
 
   removeMapping() {
     this.setState(prevState => {
       const { nodes, ...targetCluster } = prevState.selectedMapping;
       return {
-        mappings: prevState.mappings.filter(mapping => {
-          return !mapping.id === prevState.selectedMapping.id;
-        }),
+        mappings: prevState.mappings.filter(
+          mapping => !(mapping.id === prevState.selectedMapping.id)
+        ),
         selectedMapping: null,
         sourceClusters: {
           ...prevState.sourceClusters,
@@ -164,7 +161,7 @@ class MappingWizardClustersStep extends React.Component {
       selectedMapping
     } = this.state;
     return (
-      <div>
+      <div className="mapping-wizard-clusters-step">
         <DualPaneMapper
           handleButtonClick={this.addMapping}
           validMapping={
@@ -207,24 +204,13 @@ class MappingWizardClustersStep extends React.Component {
             </DualPaneMapperList>
           )}
         </DualPaneMapper>
-        {mappings.length > 0 ? (
-          <TreeView
-            nodes={mappings}
-            selectNode={this.selectMapping}
-            highlightOnSelect={true}
-          />
-        ) : (
-          <div>hello</div>
-        )}
-        <Button
-          disabled={mappings.length === 0 || !selectedMapping}
-          onClick={this.removeMapping}
-        >
-          Remove Mapping
-        </Button>
-        <Button disabled={mappings.length === 0} onClick={this.removeAll}>
-          Remove all
-        </Button>
+        <TreeViewContainer
+          mappings={mappings}
+          selectMapping={this.selectMapping}
+          removeMapping={this.removeMapping}
+          removeAll={this.removeAll}
+          selectedMapping={selectedMapping}
+        />
       </div>
     );
   }
