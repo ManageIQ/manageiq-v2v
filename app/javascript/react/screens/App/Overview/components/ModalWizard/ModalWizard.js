@@ -22,13 +22,8 @@ const ModalWizard = props => {
   const onFirstStep = activeStepIndex === 0;
   const onFinalStep = activeStepIndex === numSteps - 1;
 
-  const formHasErrors = () => {
-    return (
-      find(formContainer, form => {
-        return form.syncErrors;
-      }) !== undefined
-    );
-  };
+  const formHasErrors = () =>
+    find(formContainer, form => form.syncErrors) !== undefined;
 
   const disableNextStep = formHasErrors();
 
