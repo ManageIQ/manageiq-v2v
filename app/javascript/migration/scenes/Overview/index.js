@@ -82,9 +82,9 @@ class Overview extends React.Component {
       >
         <Grid.Col md={12}>
           <Grid.Row>
+            <div className="spacer" />
             <Equalizer nodes={this.getNodes}>
-              <Grid.Col xs={6}>
-                <div className="spacer" />
+              <Grid.Col xs={12} md={6}>
                 <div className="card-pf">
                   <div className="card-pf-body">
                     <div className="blank-slate-pf" ref={n => (this.node1 = n)}>
@@ -110,8 +110,7 @@ class Overview extends React.Component {
                   </div>
                 </div>
               </Grid.Col>
-              <Grid.Col xs={6}>
-                <div className="spacer" />
+              <Grid.Col xs={12} md={6}>
                 <div className="card-pf">
                   <div className="card-pf-body">
                     <div className="blank-slate-pf" ref={n => (this.node2 = n)}>
