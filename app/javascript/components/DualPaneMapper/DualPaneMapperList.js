@@ -2,17 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import DualPaneMapperCount from './DualPaneMapperCount';
+const DualPaneMapperList = ({ children, listTitle }) => {
+  const childrenArray = React.Children.toArray(children);
 
-const DualPaneMapperList = ({
-  children,
-  listTitle,
-  totalItems,
-  selectedItems,
-  hasCounter
-}) => {
+  const counter = childrenArray.find(
+    child => child.type.name === 'DualPaneMapperCount'
+  );
+
+  const listItems =
+    counter &&
+    childrenArray.filter(child => child.type.name === 'DualPaneMapperListItem');
+
   const classes = cx('dual-pane-mapper-items-container', {
-    'has-counter': hasCounter
+    'has-counter': counter
   });
 
   return (
@@ -21,30 +23,20 @@ const DualPaneMapperList = ({
         <label htmlFor="availableTitle">
           <span id="listTitle">{listTitle}</span>
         </label>
-        <div className={classes}>{children}</div>
+        {counter ? (
+          <div className={classes}>{listItems}</div>
+        ) : (
+          <div className={classes}>{children}</div>
+        )}
       </div>
-      {hasCounter && (
-        <DualPaneMapperCount
-          totalItems={totalItems}
-          selectedItems={selectedItems}
-        />
-      )}
+      {counter && counter}
     </div>
   );
 };
 
 DualPaneMapperList.propTypes = {
   children: PropTypes.node,
-  listTitle: PropTypes.string,
-  totalItems: PropTypes.number,
-  selectedItems: PropTypes.number,
-  hasCounter: PropTypes.bool
-};
-
-DualPaneMapperList.defaultProps = {
-  totalItems: null,
-  selectedItems: 0,
-  hasCounter: false
+  listTitle: PropTypes.string
 };
 
 export default DualPaneMapperList;

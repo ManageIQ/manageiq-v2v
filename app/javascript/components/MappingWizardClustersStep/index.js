@@ -4,6 +4,7 @@ import { target, source } from './__mocks__/data';
 
 import DualPaneMapper from '../DualPaneMapper';
 import DualPaneMapperList from '../DualPaneMapper/DualPaneMapperList';
+import DualPaneMapperCount from '../DualPaneMapper/DualPaneMapperCount';
 import DualPaneMapperListItem from '../DualPaneMapper/DualPaneMapperListItem';
 import TreeViewContainer from './TreeViewContainer';
 
@@ -172,12 +173,7 @@ class MappingWizardClustersStep extends React.Component {
           }
         >
           {sourceClusters && (
-            <DualPaneMapperList
-              listTitle={sourceClusters.name}
-              hasCounter
-              totalItems={sourceClusters.resources.length}
-              selectedItems={selectedSourceClusters.length}
-            >
+            <DualPaneMapperList listTitle={sourceClusters.name}>
               {sourceClusters.resources.map(item => (
                 <DualPaneMapperListItem
                   item={item}
@@ -192,6 +188,10 @@ class MappingWizardClustersStep extends React.Component {
                   handleKeyPress={this.selectSourceCluster}
                 />
               ))}
+              <DualPaneMapperCount
+                selectedItems={selectedSourceClusters.length}
+                totalItems={sourceClusters.resources.length}
+              />
             </DualPaneMapperList>
           )}
           {targetClusters && (
