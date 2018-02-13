@@ -39,7 +39,7 @@ const TreeViewContainer = ({
         {__('Remove Mapping')}
       </Button>{' '}
       <Button disabled={mappings.length === 0} onClick={removeAll}>
-        {__('Remove all')}
+        {__('Remove All')}
       </Button>
     </div>
   </div>
