@@ -189,6 +189,7 @@ class MappingWizardClustersStep extends React.Component {
                     )
                   }
                   handleClick={this.selectSourceCluster}
+                  handleKeyPress={this.selectSourceCluster}
                 />
               ))}
             </DualPaneMapperList>
@@ -204,6 +205,7 @@ class MappingWizardClustersStep extends React.Component {
                     selectedTargetCluster.id === item.id
                   }
                   handleClick={this.selectTargetCluster}
+                  handleKeyPress={this.selectTargetCluster}
                 />
               ))}
             </DualPaneMapperList>
