@@ -1,16 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
+import { required } from 'redux-form-validators';
+import { Form } from 'patternfly-react';
 import { renderField } from '../../common/formUtilities/renderField';
-import { required } from '../../common/formUtilities/validation';
 
 const GeneralInfrastructureMappingContainer = props => (
-  <form className="form-horizontal">
+  <Form className="form-horizontal">
     <Field
       name="name"
       label={__('Name')}
       component={renderField}
-      validate={[required]}
+      validate={[required({ msg: __('Required') })]}
       type="text"
     />
     <Field
@@ -19,7 +20,7 @@ const GeneralInfrastructureMappingContainer = props => (
       component={renderField}
       type="textarea"
     />
-  </form>
+  </Form>
 );
 
 // Decorate with reduxForm(). It will read the initialValues prop provided by connect()
