@@ -2,7 +2,8 @@ import Immutable from 'seamless-immutable';
 
 import {
   FETCH_V2V_SOURCE_CLUSTERS,
-  FETCH_V2V_TARGET_CLUSTERS
+  FETCH_V2V_TARGET_CLUSTERS,
+  REMOVE_TARGET_CLUSTER
 } from './MappingWizardClustersStepConstants';
 
 const initialState = Immutable({
@@ -59,6 +60,14 @@ export default (state = initialState, action) => {
         .set('errorTargetClusters', action.payload)
         .set('isRejectedTargetClusters', true)
         .set('isFetchingTargetClusters', false);
+    case REMOVE_TARGET_CLUSTER: {
+      return state.set(
+        'targetClusters',
+        state.targetClusters.filter(targetCluster => {
+          return targetCluster.id !== action.targetClusterToRemove.id;
+        })
+      );
+    }
     default:
       return state;
   }

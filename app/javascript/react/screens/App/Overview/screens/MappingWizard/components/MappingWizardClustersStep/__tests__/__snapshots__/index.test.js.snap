@@ -8,6 +8,7 @@ Object {
   "fetchTargetClustersUrl": "/api/targetClusters",
   "isFetchingSourceClusters": true,
   "isFetchingTargetClusters": true,
+  "removeTargetCluster": [Function],
   "sourceClusters": Array [],
   "targetClusters": Array [],
 }
