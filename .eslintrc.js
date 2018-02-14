@@ -4,7 +4,8 @@ module.exports = {
     'jest/globals': true
   },
   globals: {
-    __: true
+    __: true,
+    sprintf: true
   },
   extends: [
     'standard',

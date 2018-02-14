@@ -1,0 +1,114 @@
+/** Dual Pane Mapper CSS **/
+.dual-pane-mapper-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.dual-pane-mapper {
+  width: 100%;
+  padding: 20px 0;
+  display: flex;
+  justify-content: space-around;
+}
+
+.dual-pane-mapper-label {
+  width: 225px;
+}
+.dual-pane-mapper-label .dual-pane-mapper-label-left {
+  margin-right: 5px;
+}
+.dual-pane-mapper-label .dual-pane-mapper-label-right {
+  margin-left: 5px;
+}
+
+.dual-pane-mapper-list.dual-pane-mapper-list-left {
+  margin-right: 5px;
+}
+.dual-pane-mapper-list.dual-pane-mapper-list-right {
+  margin-left: 5px;
+}
+.dual-pane-mapper-list .dual-pane-mapper-items-container {
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  height: 200px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  width: 225px;
+  &.has-counter {
+    height: 180px;
+  }
+}
+.dual-pane-mapper-list .dual-pane-mapper-item {
+  cursor: pointer;
+  padding: 0 10px;
+  width: 100%;
+}
+.dual-pane-mapper-list
+  .dual-pane-mapper-item
+  .dual-pane-mapper-item-select-indicator {
+  display: inline-block;
+  font-size: 12px;
+  margin-left: 10px;
+  vertical-align: middle;
+  visibility: hidden;
+}
+.dual-pane-mapper-list .dual-pane-mapper-item.selected {
+  background-color: #3397db;
+  color: #fff;
+}
+.dual-pane-mapper-list
+  .dual-pane-mapper-item.selected
+  .dual-pane-mapper-item-select-indicator {
+  visibility: visible;
+}
+.dual-pane-mapper-list .dual-pane-mapper-item:hover {
+  background-color: #d4edfa;
+  color: #030303;
+}
+.dual-pane-mapper-list .dual-pane-mapper-item-container {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+  white-space: nowrap;
+  width: calc(100% - 26px);
+}
+
+.dual-pane-mapper-button-container {
+  display: inline-block;
+  padding: 0 10px;
+  width: 40px;
+}
+.dual-pane-mapper-button-container .btn-link {
+  font-size: 24px;
+  text-decoration: none;
+}
+.dual-pane-mapper-button-container .btn-link:hover {
+  text-decoration: none;
+}
+.dual-pane-mapper-button-container .btn-link:focus {
+  outline: none;
+}
+.dual-pane-mapper-button-container .dual-pane-mapper-select-button-container {
+  height: 125px;
+  position: relative;
+}
+.dual-pane-mapper-button-container
+  .dual-pane-mapper-select-button-container.dual-pane-mapper-select-button-container-top
+  .btn-link {
+  bottom: 10px;
+  position: absolute;
+}
+.dual-pane-mapper-button-container
+  .dual-pane-mapper-select-button-container.dual-pane-mapper-select-button-container-bottom
+  .btn-link {
+  position: absolute;
+  top: 10px;
+}
+
+.dual-pane-mapper-count {
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-top: none;
+  padding-left: 10px;
+}

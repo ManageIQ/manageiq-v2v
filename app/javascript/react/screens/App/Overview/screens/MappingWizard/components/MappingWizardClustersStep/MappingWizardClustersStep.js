@@ -2,6 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { noop } from 'patternfly-react';
 
+import DualPaneMapper from '../DualPaneMapper/DualPaneMapper';
+import DualPaneMapperList from '../DualPaneMapper/DualPaneMapperList';
+import DualPaneMapperCount from '../DualPaneMapper/DualPaneMapperCount';
+import DualPaneMapperListItem from '../DualPaneMapper/DualPaneMapperListItem';
+import ClustersStepTreeView from './components/ClustersStepTreeView';
+
 class MappingWizardClustersStep extends React.Component {
   constructor(props) {
     super(props);
@@ -12,6 +18,13 @@ class MappingWizardClustersStep extends React.Component {
       mappings: [], // eslint-disable-line react/no-unused-state
       selectedMapping: null // eslint-disable-line react/no-unused-state
     };
+
+    this.selectSourceCluster = this.selectSourceCluster.bind(this);
+    this.selectTargetCluster = this.selectTargetCluster.bind(this);
+    this.addMapping = this.addMapping.bind(this);
+    this.selectMapping = this.selectMapping.bind(this);
+    this.removeMapping = this.removeMapping.bind(this);
+    this.removeAll = this.removeAll.bind(this);
   }
 
   componentDidMount() {
@@ -26,6 +39,123 @@ class MappingWizardClustersStep extends React.Component {
     fetchTargetClustersAction(fetchTargetClustersUrl);
   }
 
+  selectSourceCluster(sourceCluster) {
+    this.setState(prevState => {
+      const isAlreadySelected = prevState.selectedSourceClusters.some(
+        cluster => cluster.id === sourceCluster.id
+      );
+      if (isAlreadySelected) {
+        return {
+          selectedSourceClusters: prevState.selectedSourceClusters.filter(
+            cluster => cluster.id !== sourceCluster.id
+          )
+        };
+      }
+      return {
+        selectedSourceClusters: [
+          ...prevState.selectedSourceClusters,
+          sourceCluster
+        ]
+      };
+    });
+  }
+
+  selectTargetCluster(targetCluster) {
+    this.setState(() => ({ selectedTargetCluster: targetCluster }));
+  }
+
+  addMapping() {
+    this.setState(prevState =>
+      // const sourceClusters = {
+      //   ...prevState.sourceClusters,
+      //   resources: prevState.sourceClusters.filter(
+      //     cluster =>
+      //       !prevState.selectedSourceClusters.some(
+      //         clusterToRemove => cluster.id === clusterToRemove.id
+      //       )
+      //   )
+      // };
+      // const targetClusters = {
+      //   ...prevState.targetClusters,
+      //   resources: prevState.targetClusters.filter(
+      //     cluster => cluster.id !== prevState.selectedTargetCluster.id
+      //   )
+      // };
+      ({
+        selectedTargetCluster: null,
+        selectedSourceClusters: [],
+        mappings: [
+          ...prevState.mappings,
+          {
+            ...prevState.selectedTargetCluster,
+            text: prevState.selectedTargetCluster.name,
+            state: {
+              expanded: true
+            },
+            selectable: true,
+            selected: false,
+            nodes: prevState.selectedSourceClusters.map(cluster => ({
+              ...cluster,
+              text: cluster.name,
+              icon: 'fa fa-file-o'
+            }))
+          }
+        ]
+      })
+    );
+  }
+
+  selectMapping(selectedMapping) {
+    this.setState(prevState => ({
+      mappings: prevState.mappings.map(mapping => {
+        if (mapping.id === selectedMapping.id) {
+          return { ...mapping, selected: !mapping.selected };
+        } else if (mapping.id !== selectedMapping.id && mapping.selected) {
+          return { ...mapping, selected: false };
+        }
+        return mapping;
+      }),
+      selectedMapping
+    }));
+  }
+
+  removeMapping() {
+    this.setState(prevState => {
+      // const { nodes, ...targetCluster } = prevState.selectedMapping;
+      return {
+        mappings: prevState.mappings.filter(
+          mapping => !(mapping.id === prevState.selectedMapping.id)
+        ),
+        selectedMapping: null
+        // sourceClusters: {
+        //   ...prevState.sourceClusters,
+        //   resources: [...prevState.sourceClusters.resources, ...nodes]
+        // },
+        // targetClusters: {
+        //   ...prevState.targetClusters,
+        //   resources: [...prevState.targetClusters.resources, targetCluster]
+        // }
+      };
+    });
+  }
+
+  removeAll() {
+    this.setState(prevState =>
+      // const sourceClusters = { ...prevState.sourceClusters };
+      // const targetClusters = { ...prevState.targetClusters };
+      // prevState.mappings.forEach(mapping => {
+      //   const { nodes, ...targetCluster } = mapping;
+      //   sourceClusters.resources = [...sourceClusters.resources, ...nodes];
+      //   targetClusters.resources = [...targetClusters.resources, targetCluster];
+      // });
+      ({
+        mappings: []
+        // sourceClusters,
+        // targetClusters
+      })
+    );
+  }
+
   render() {
     const {
       isFetchingSourceClusters,
@@ -34,32 +164,71 @@ class MappingWizardClustersStep extends React.Component {
       targetClusters
     } = this.props;
 
+    const {
+      selectedTargetCluster,
+      selectedSourceClusters,
+      mappings,
+      selectedMapping
+    } = this.state;
+
     if (!isFetchingSourceClusters && !isFetchingTargetClusters) {
       return (
-        <div>
-          <p>Source Clusters</p>
-          {sourceClusters.map(cluster => (
-            <div key={cluster.id}>
-              <span>
-                <b>Name</b>: {cluster.name} &nbsp;
-              </span>
-              <span>
-                <b>ID</b>: {cluster.id} &nbsp;
-              </span>
-            </div>
-          ))}
-          <br />
-          <p>Target Clusters</p>
-          {targetClusters.map(cluster => (
-            <div key={cluster.id}>
-              <span>
-                <b>Name</b>: {cluster.name} &nbsp;
-              </span>
-              <span>
-                <b>ID</b>: {cluster.id} &nbsp;
-              </span>
-            </div>
-          ))}
+        <div className="mapping-wizard-clusters-step">
+          <DualPaneMapper
+            handleButtonClick={this.addMapping}
+            validMapping={
+              !(
+                selectedTargetCluster &&
+                (selectedSourceClusters && selectedSourceClusters.length > 0)
+              )
+            }
+          >
+            {sourceClusters && (
+              <DualPaneMapperList listTitle="fix me">
+                {sourceClusters.map(item => (
+                  <DualPaneMapperListItem
+                    item={item}
+                    key={item.id}
+                    selected={
+                      selectedSourceClusters &&
+                      selectedSourceClusters.some(
+                        sourceCluster => sourceCluster.id === item.id
+                      )
+                    }
+                    handleClick={this.selectSourceCluster}
+                    handleKeyPress={this.selectSourceCluster}
+                  />
+                ))}
+                <DualPaneMapperCount
+                  selectedItems={selectedSourceClusters.length}
+                  totalItems={sourceClusters.length}
+                />
+              </DualPaneMapperList>
+            )}
+            {targetClusters && (
+              <DualPaneMapperList listTitle="fix me">
+                {targetClusters.map(item => (
+                  <DualPaneMapperListItem
+                    item={item}
+                    key={item.id}
+                    selected={
+                      selectedTargetCluster &&
+                      selectedTargetCluster.id === item.id
+                    }
+                    handleClick={this.selectTargetCluster}
+                    handleKeyPress={this.selectTargetCluster}
+                  />
+                ))}
+              </DualPaneMapperList>
+            )}
+          </DualPaneMapper>
+          <ClustersStepTreeView
+            mappings={mappings}
+            selectMapping={this.selectMapping}
+            removeMapping={this.removeMapping}
+            removeAll={this.removeAll}
+            selectedMapping={selectedMapping}
+          />
         </div>
       );
     }
