@@ -1,13 +1,13 @@
-import MappingWizardContainer from '../app/screens/App/Overview/screens/MappingWizard';
-import MappingWizardClustersStepContainer from '../app/screens/App/Overview/screens/MappingWizard/components/MappingWizardClustersStep';
-import PlanWizardContainer from '../app/screens/App/Overview/screens/PlanWizard';
-import OverviewContainer from '../app/screens/App/Overview';
-import Dashboard from '../app/screens/App/Dashboard/Dashboard';
+import MappingWizardContainer from '../react/screens/App/Overview/screens/MappingWizard';
+import MappingWizardClustersStepContainer from '../react/screens/App/Overview/screens/MappingWizard/components/MappingWizardClustersStep';
+import PlanWizardContainer from '../react/screens/App/Overview/screens/PlanWizard';
+import OverviewContainer from '../react/screens/App/Overview';
+import Dashboard from '../react/screens/App/Dashboard/Dashboard';
 import IsoDate from './dates/IsoDate';
 import LongDateTime from './dates/LongDateTime';
 import RelativeDateTime from './dates/RelativeDateTime';
 import ShortDateTime from './dates/ShortDateTime';
-import MiqV2vUi from '../app';
+import MiqV2vUi from '../react';
 
 export const coreComponents = [
   {
