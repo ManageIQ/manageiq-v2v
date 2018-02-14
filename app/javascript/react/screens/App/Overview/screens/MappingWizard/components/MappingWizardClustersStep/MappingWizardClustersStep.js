@@ -65,44 +65,30 @@ class MappingWizardClustersStep extends React.Component {
   }
 
   addMapping() {
-    this.setState(prevState =>
-      // const sourceClusters = {
-      //   ...prevState.sourceClusters,
-      //   resources: prevState.sourceClusters.filter(
-      //     cluster =>
-      //       !prevState.selectedSourceClusters.some(
-      //         clusterToRemove => cluster.id === clusterToRemove.id
-      //       )
-      //   )
-      // };
-      // const targetClusters = {
-      //   ...prevState.targetClusters,
-      //   resources: prevState.targetClusters.filter(
-      //     cluster => cluster.id !== prevState.selectedTargetCluster.id
-      //   )
-      // };
-      ({
-        selectedTargetCluster: null,
-        selectedSourceClusters: [],
-        mappings: [
-          ...prevState.mappings,
-          {
-            ...prevState.selectedTargetCluster,
-            text: prevState.selectedTargetCluster.name,
-            state: {
-              expanded: true
-            },
-            selectable: true,
-            selected: false,
-            nodes: prevState.selectedSourceClusters.map(cluster => ({
-              ...cluster,
-              text: cluster.name,
-              icon: 'fa fa-file-o'
-            }))
-          }
-        ]
-      })
-    );
+    const { removeTargetCluster } = this.props;
+    const { selectedTargetCluster } = this.state;
+    removeTargetCluster(selectedTargetCluster);
+    this.setState(prevState => ({
+      selectedTargetCluster: null,
+      selectedSourceClusters: [],
+      mappings: [
+        ...prevState.mappings,
+        {
+          ...prevState.selectedTargetCluster,
+          text: prevState.selectedTargetCluster.name,
+          state: {
+            expanded: true
+          },
+          selectable: true,
+          selected: false,
+          nodes: prevState.selectedSourceClusters.map(cluster => ({
+            ...cluster,
+            text: cluster.name,
+            icon: 'fa fa-file-o'
+          }))
+        }
+      ]
+    }));
   }
 
   selectMapping(selectedMapping) {
@@ -120,9 +106,9 @@ class MappingWizardClustersStep extends React.Component {
   }
 
   removeMapping() {
-    this.setState(prevState => {
+    this.setState(prevState =>
       // const { nodes, ...targetCluster } = prevState.selectedMapping;
-      return {
+      ({
         mappings: prevState.mappings.filter(
           mapping => !(mapping.id === prevState.selectedMapping.id)
         ),
@@ -135,8 +121,8 @@ class MappingWizardClustersStep extends React.Component {
         //   ...prevState.targetClusters,
         //   resources: [...prevState.targetClusters.resources, targetCluster]
         // }
-      };
-    });
+      })
+    );
   }
 
   removeAll() {
@@ -244,7 +230,8 @@ MappingWizardClustersStep.propTypes = {
   sourceClusters: PropTypes.arrayOf(PropTypes.object),
   targetClusters: PropTypes.arrayOf(PropTypes.object),
   isFetchingSourceClusters: PropTypes.bool,
-  isFetchingTargetClusters: PropTypes.bool
+  isFetchingTargetClusters: PropTypes.bool,
+  removeTargetCluster: PropTypes.func
 };
 MappingWizardClustersStep.defaultProps = {
   fetchSourceClustersUrl: '',
@@ -252,7 +239,8 @@ MappingWizardClustersStep.defaultProps = {
   fetchTargetClustersUrl: '',
   fetchTargetClustersAction: noop,
   isFetchingSourceClusters: true,
-  isFetchingTargetClusters: true
+  isFetchingTargetClusters: true,
+  removeTargetCluster: noop
 };
 
 export default MappingWizardClustersStep;

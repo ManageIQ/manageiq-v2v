@@ -2,7 +2,8 @@ import URI from 'urijs';
 import API from '../../../../../../../../common/API';
 import {
   FETCH_V2V_SOURCE_CLUSTERS,
-  FETCH_V2V_TARGET_CLUSTERS
+  FETCH_V2V_TARGET_CLUSTERS,
+  REMOVE_TARGET_CLUSTER
 } from './MappingWizardClustersStepConstants';
 
 import {
@@ -51,3 +52,9 @@ export const fetchTargetClustersAction = url => {
   const uri = new URI(url);
   return _getTargetClustersActionCreator(uri.toString());
 };
+
+export const removeTargetCluster = targetClusterToRemove => dispatch =>
+  dispatch({
+    type: REMOVE_TARGET_CLUSTER,
+    targetClusterToRemove
+  });
