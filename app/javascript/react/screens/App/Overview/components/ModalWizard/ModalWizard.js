@@ -29,7 +29,7 @@ const ModalWizard = props => {
 
   const onCancel = () => {
     // Delete/Destroy all wizard forms here
-    delete formContainer.generalInfrastructureMapping;
+    delete formContainer.mappingWizardGeneralStep;
     onHide();
   };
 

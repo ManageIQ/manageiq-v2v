@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { required } from 'redux-form-validators';
 import { Form } from 'patternfly-react';
-import { renderField } from '../../common/formUtilities/renderField';
+import { renderField } from '../../../formUtilities/renderField';
 
-const GeneralInfrastructureMappingContainer = props => (
+const MappingWizardGeneralStep = props => (
   <Form className="form-horizontal">
     <Field
       name="name"
@@ -24,10 +24,10 @@ const GeneralInfrastructureMappingContainer = props => (
 );
 
 // Decorate with reduxForm(). It will read the initialValues prop provided by connect()
-const GeneralInfrastructureMappingForm = reduxForm({
-  form: 'generalInfrastructureMapping', // a unique identifier for this form
+const MappingWizardGeneralStepForm = reduxForm({
+  form: 'mappingWizardGeneralStep', // a unique identifier for this form
   destroyOnUnmount: false // preserve form data
   // forceUnregisterOnUnmount: true, // unregister fields on unmount
-})(GeneralInfrastructureMappingContainer);
+})(MappingWizardGeneralStep);
 
-export default connect()(GeneralInfrastructureMappingForm);
+export default connect()(MappingWizardGeneralStepForm);

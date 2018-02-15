@@ -34,7 +34,7 @@ export const renderField = ({
 
 renderField.propTypes = {
   label: PropTypes.string,
-  input: PropTypes.string,
+  input: PropTypes.object,
   controlId: PropTypes.string,
   type: PropTypes.string,
   meta: PropTypes.object

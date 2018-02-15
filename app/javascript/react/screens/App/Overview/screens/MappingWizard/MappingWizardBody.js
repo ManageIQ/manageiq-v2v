@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ModalWizard from '../../components/ModalWizard';
 import componentRegistry from '../../../../../../components/componentRegistry';
+import MappingWizardGeneralStep from '../MappingWizard/components/MappingWizardGeneralStep';
 
 // TODO remove these, they are space fillers
 const t = str => (
@@ -23,6 +24,11 @@ const MappingWizardBody = props => {
   const mappingWizardClustersStepContainer = componentRegistry.markup(
     'MappingWizardClustersStepContainer'
   );
+  // This may not be required for Redux form
+  // const mappingWizardGeneralStepContainer = componentRegistry.markup(
+  //   'MappingWizardGeneralStepContainer'
+  // );
+  const renderMappingWizardGeneralStep = () => <MappingWizardGeneralStep />;
   return (
     <ModalWizard.Body
       {...props}
@@ -31,7 +37,7 @@ const MappingWizardBody = props => {
       steps={[
         {
           title: __('General'),
-          render: () => todo('Name and Description Fields'),
+          render: () => renderMappingWizardGeneralStep(), // mappingWizardGeneralStepContainer
           onClick: () => console.log('on step 1 click')
         },
         {
