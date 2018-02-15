@@ -65,8 +65,9 @@ class MappingWizardClustersStep extends React.Component {
   }
 
   addMapping() {
-    const { removeTargetCluster } = this.props;
-    const { selectedTargetCluster } = this.state;
+    const { removeTargetCluster, removeSourceClusters } = this.props;
+    const { selectedTargetCluster, selectedSourceClusters } = this.state;
+    removeSourceClusters(selectedSourceClusters);
     removeTargetCluster(selectedTargetCluster);
     this.setState(prevState => ({
       selectedTargetCluster: null,
@@ -170,7 +171,7 @@ class MappingWizardClustersStep extends React.Component {
             }
           >
             {sourceClusters && (
-              <DualPaneMapperList listTitle="fix me">
+              <DualPaneMapperList listTitle="Source Clusters">
                 {sourceClusters.map(item => (
                   <DualPaneMapperListItem
                     item={item}
@@ -192,7 +193,7 @@ class MappingWizardClustersStep extends React.Component {
               </DualPaneMapperList>
             )}
             {targetClusters && (
-              <DualPaneMapperList listTitle="fix me">
+              <DualPaneMapperList listTitle="Target Clusters">
                 {targetClusters.map(item => (
                   <DualPaneMapperListItem
                     item={item}
@@ -231,7 +232,8 @@ MappingWizardClustersStep.propTypes = {
   targetClusters: PropTypes.arrayOf(PropTypes.object),
   isFetchingSourceClusters: PropTypes.bool,
   isFetchingTargetClusters: PropTypes.bool,
-  removeTargetCluster: PropTypes.func
+  removeTargetCluster: PropTypes.func,
+  removeSourceClusters: PropTypes.func
 };
 MappingWizardClustersStep.defaultProps = {
   fetchSourceClustersUrl: '',
@@ -240,7 +242,8 @@ MappingWizardClustersStep.defaultProps = {
   fetchTargetClustersAction: noop,
   isFetchingSourceClusters: true,
   isFetchingTargetClusters: true,
-  removeTargetCluster: noop
+  removeTargetCluster: noop,
+  removeSourceClusters: noop
 };
 
 export default MappingWizardClustersStep;
