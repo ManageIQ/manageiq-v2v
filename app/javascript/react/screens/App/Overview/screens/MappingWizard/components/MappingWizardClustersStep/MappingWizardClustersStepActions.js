@@ -4,7 +4,9 @@ import {
   FETCH_V2V_SOURCE_CLUSTERS,
   FETCH_V2V_TARGET_CLUSTERS,
   REMOVE_TARGET_CLUSTER,
-  REMOVE_SOURCE_CLUSTERS
+  REMOVE_SOURCE_CLUSTERS,
+  ADD_TARGET_CLUSTER,
+  ADD_SOURCE_CLUSTERS
 } from './MappingWizardClustersStepConstants';
 
 import {
@@ -64,4 +66,16 @@ export const removeSourceClusters = sourceClustersToRemove => dispatch =>
   dispatch({
     type: REMOVE_SOURCE_CLUSTERS,
     sourceClustersToRemove
+  });
+
+export const addTargetCluster = targetClusterToAdd => dispatch =>
+  dispatch({
+    type: ADD_TARGET_CLUSTER,
+    targetClusterToAdd
+  });
+
+export const addSourceClusters = sourceClustersToAdd => dispatch =>
+  dispatch({
+    type: ADD_SOURCE_CLUSTERS,
+    sourceClustersToAdd
   });

@@ -4,7 +4,9 @@ import {
   FETCH_V2V_SOURCE_CLUSTERS,
   FETCH_V2V_TARGET_CLUSTERS,
   REMOVE_TARGET_CLUSTER,
-  REMOVE_SOURCE_CLUSTERS
+  REMOVE_SOURCE_CLUSTERS,
+  ADD_TARGET_CLUSTER,
+  ADD_SOURCE_CLUSTERS
 } from './MappingWizardClustersStepConstants';
 
 const initialState = Immutable({
@@ -79,6 +81,16 @@ export default (state = initialState, action) => {
             )
         )
       );
+    case ADD_TARGET_CLUSTER:
+      return state.set('targetClusters', [
+        ...state.targetClusters,
+        action.targetClusterToAdd
+      ]);
+    case ADD_SOURCE_CLUSTERS:
+      return state.set('sourceClusters', [
+        ...state.sourceClusters,
+        ...action.sourceClustersToAdd
+      ]);
     default:
       return state;
   }
