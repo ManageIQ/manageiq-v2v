@@ -107,40 +107,32 @@ class MappingWizardClustersStep extends React.Component {
   }
 
   removeMapping() {
-    this.setState(prevState =>
-      // const { nodes, ...targetCluster } = prevState.selectedMapping;
-      ({
+    const { addTargetCluster, addSourceClusters } = this.props;
+    this.setState(prevState => {
+      const { nodes, ...targetCluster } = prevState.selectedMapping;
+      addTargetCluster(targetCluster);
+      addSourceClusters(nodes);
+      return {
         mappings: prevState.mappings.filter(
           mapping => !(mapping.id === prevState.selectedMapping.id)
         ),
         selectedMapping: null
-        // sourceClusters: {
-        //   ...prevState.sourceClusters,
-        //   resources: [...prevState.sourceClusters.resources, ...nodes]
-        // },
-        // targetClusters: {
-        //   ...prevState.targetClusters,
-        //   resources: [...prevState.targetClusters.resources, targetCluster]
-        // }
-      })
-    );
+      };
+    });
   }
 
   removeAll() {
-    this.setState(prevState =>
-      // const sourceClusters = { ...prevState.sourceClusters };
-      // const targetClusters = { ...prevState.targetClusters };
-      // prevState.mappings.forEach(mapping => {
-      //   const { nodes, ...targetCluster } = mapping;
-      //   sourceClusters.resources = [...sourceClusters.resources, ...nodes];
-      //   targetClusters.resources = [...targetClusters.resources, targetCluster];
-      // });
-      ({
+    const { addTargetCluster, addSourceClusters } = this.props;
+    this.setState(prevState => {
+      prevState.mappings.forEach(mapping => {
+        const { nodes, ...targetCluster } = mapping;
+        addTargetCluster(targetCluster);
+        addSourceClusters(nodes);
+      });
+      return {
         mappings: []
-        // sourceClusters,
-        // targetClusters
-      })
-    );
+      };
+    });
   }
 
   render() {
@@ -233,7 +225,9 @@ MappingWizardClustersStep.propTypes = {
   isFetchingSourceClusters: PropTypes.bool,
   isFetchingTargetClusters: PropTypes.bool,
   removeTargetCluster: PropTypes.func,
-  removeSourceClusters: PropTypes.func
+  removeSourceClusters: PropTypes.func,
+  addTargetCluster: PropTypes.func,
+  addSourceClusters: PropTypes.func
 };
 MappingWizardClustersStep.defaultProps = {
   fetchSourceClustersUrl: '',
@@ -243,7 +237,9 @@ MappingWizardClustersStep.defaultProps = {
   isFetchingSourceClusters: true,
   isFetchingTargetClusters: true,
   removeTargetCluster: noop,
-  removeSourceClusters: noop
+  removeSourceClusters: noop,
+  addTargetCluster: noop,
+  addSourceClusters: noop
 };
 
 export default MappingWizardClustersStep;
