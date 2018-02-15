@@ -3,7 +3,8 @@ import Immutable from 'seamless-immutable';
 import {
   FETCH_V2V_SOURCE_CLUSTERS,
   FETCH_V2V_TARGET_CLUSTERS,
-  REMOVE_TARGET_CLUSTER
+  REMOVE_TARGET_CLUSTER,
+  REMOVE_SOURCE_CLUSTERS
 } from './MappingWizardClustersStepConstants';
 
 const initialState = Immutable({
@@ -63,11 +64,21 @@ export default (state = initialState, action) => {
     case REMOVE_TARGET_CLUSTER: {
       return state.set(
         'targetClusters',
-        state.targetClusters.filter(targetCluster => {
-          return targetCluster.id !== action.targetClusterToRemove.id;
-        })
+        state.targetClusters.filter(
+          targetCluster => targetCluster.id !== action.targetClusterToRemove.id
+        )
       );
     }
+    case REMOVE_SOURCE_CLUSTERS:
+      return state.set(
+        'sourceClusters',
+        state.sourceClusters.filter(
+          sourceCluster =>
+            !action.sourceClustersToRemove.some(
+              clusterToRemove => clusterToRemove.id === sourceCluster.id
+            )
+        )
+      );
     default:
       return state;
   }

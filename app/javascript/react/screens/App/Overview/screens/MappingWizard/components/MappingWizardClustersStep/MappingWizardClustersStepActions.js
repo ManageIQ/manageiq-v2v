@@ -3,7 +3,8 @@ import API from '../../../../../../../../common/API';
 import {
   FETCH_V2V_SOURCE_CLUSTERS,
   FETCH_V2V_TARGET_CLUSTERS,
-  REMOVE_TARGET_CLUSTER
+  REMOVE_TARGET_CLUSTER,
+  REMOVE_SOURCE_CLUSTERS
 } from './MappingWizardClustersStepConstants';
 
 import {
@@ -57,4 +58,10 @@ export const removeTargetCluster = targetClusterToRemove => dispatch =>
   dispatch({
     type: REMOVE_TARGET_CLUSTER,
     targetClusterToRemove
+  });
+
+export const removeSourceClusters = sourceClustersToRemove => dispatch =>
+  dispatch({
+    type: REMOVE_SOURCE_CLUSTERS,
+    sourceClustersToRemove
   });
