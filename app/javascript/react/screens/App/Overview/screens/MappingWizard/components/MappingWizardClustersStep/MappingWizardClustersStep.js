@@ -66,30 +66,31 @@ class MappingWizardClustersStep extends React.Component {
 
   addMapping() {
     const { removeTargetCluster, removeSourceClusters } = this.props;
-    const { selectedTargetCluster, selectedSourceClusters } = this.state;
-    removeSourceClusters(selectedSourceClusters);
-    removeTargetCluster(selectedTargetCluster);
-    this.setState(prevState => ({
-      selectedTargetCluster: null,
-      selectedSourceClusters: [],
-      mappings: [
-        ...prevState.mappings,
-        {
-          ...prevState.selectedTargetCluster,
-          text: prevState.selectedTargetCluster.name,
-          state: {
-            expanded: true
-          },
-          selectable: true,
-          selected: false,
-          nodes: prevState.selectedSourceClusters.map(cluster => ({
-            ...cluster,
-            text: cluster.name,
-            icon: 'fa fa-file-o'
-          }))
-        }
-      ]
-    }));
+    this.setState(prevState => {
+      removeSourceClusters(prevState.selectedSourceClusters);
+      removeTargetCluster(prevState.selectedTargetCluster);
+      return {
+        selectedTargetCluster: null,
+        selectedSourceClusters: [],
+        mappings: [
+          ...prevState.mappings,
+          {
+            ...prevState.selectedTargetCluster,
+            text: prevState.selectedTargetCluster.name,
+            state: {
+              expanded: true
+            },
+            selectable: true,
+            selected: false,
+            nodes: prevState.selectedSourceClusters.map(cluster => ({
+              ...cluster,
+              text: cluster.name,
+              icon: 'fa fa-file-o'
+            }))
+          }
+        ]
+      };
+    });
   }
 
   selectMapping(selectedMapping) {
