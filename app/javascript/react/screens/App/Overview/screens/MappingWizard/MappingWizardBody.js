@@ -20,45 +20,53 @@ const todo = str => (
   </div>
 );
 
-const MappingWizardBody = props => {
-  const mappingWizardClustersStepContainer = componentRegistry.markup(
-    'MappingWizardClustersStepContainer'
-  );
-  return (
-    <ModalWizard.Body
-      {...props}
-      loadingTitle={__('Loading Infrastructure Mappings...')}
-      loadingMessage={__('This may take a minute.')}
-      steps={[
-        {
-          title: __('General'),
-          render: () => <MappingWizardGeneralStep />,
-          onClick: () => console.log('on step 1 click')
-        },
-        {
-          title: __('Clusters'),
-          render: () => mappingWizardClustersStepContainer,
-          onClick: () => console.log('on step 2 click')
-        },
-        {
-          title: __('Datastores'),
-          render: () => todo('Datastore Mappings Form'),
-          onClick: () => console.log('on step 3 click')
-        },
-        {
-          title: __('Networks'),
-          render: () => todo('Network Mappings Form'),
-          onClick: () => console.log('on step 4 click')
-        },
-        {
-          title: __('Results'),
-          render: () => todo('Display Progress and Results'),
-          onClick: () => console.log('on step 5 click')
-        }
-      ]}
-    />
-  );
-};
+class MappingWizardBody extends React.Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    return (
+      JSON.stringify(this.props) !== JSON.stringify(nextProps) ||
+      JSON.stringify(this.state) !== JSON.stringify(nextState)
+    );
+  }
+  render() {
+    const mappingWizardClustersStepContainer = componentRegistry.markup(
+      'MappingWizardClustersStepContainer'
+    );
+    return (
+      <ModalWizard.Body
+        {...this.props}
+        loadingTitle={__('Loading Infrastructure Mappings...')}
+        loadingMessage={__('This may take a minute.')}
+        steps={[
+          {
+            title: __('General'),
+            render: () => <MappingWizardGeneralStep />,
+            onClick: () => console.log('on step 1 click')
+          },
+          {
+            title: __('Clusters'),
+            render: () => mappingWizardClustersStepContainer,
+            onClick: () => console.log('on step 2 click')
+          },
+          {
+            title: __('Datastores'),
+            render: () => todo('Datastore Mappings Form'),
+            onClick: () => console.log('on step 3 click')
+          },
+          {
+            title: __('Networks'),
+            render: () => todo('Network Mappings Form'),
+            onClick: () => console.log('on step 4 click')
+          },
+          {
+            title: __('Results'),
+            render: () => todo('Display Progress and Results'),
+            onClick: () => console.log('on step 5 click')
+          }
+        ]}
+      />
+    );
+  }
+}
 
 MappingWizardBody.propTypes = {
   loaded: PropTypes.bool,
