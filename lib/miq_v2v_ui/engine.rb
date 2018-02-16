@@ -12,11 +12,10 @@ module MiqV2vUI
 
     initializer 'plugin' do
       Menu::CustomLoader.register(
-        Menu::Section.new(:compute, N_("Compute"), 'pficon pficon-cpu', [
-          Menu::Section.new(:migration, N_("Migration"), 'fa fa-plus', [
-            Menu::Item.new('overview', N_('Overview'), 'miq_report', {:feature => 'miq_report', :any => true}, '/migration')
-          ])
-        ])
+        Menu::Section.new(:migration, N_("Migration"), 'fa fa-plus', [
+          Menu::Item.new('overview', N_('Overview'), 'miq_report', {:feature => 'miq_report', :any => true}, '/migration'),
+          Menu::Item.new('infrastructure_mappings', N_('Infrastructure Mappings'), 'miq_report', {:feature => 'miq_report', :any => true}, '/migration/infrastructure-mappings')
+        ], nil, nil, nil, nil, :compute),
       )
     end
   end
