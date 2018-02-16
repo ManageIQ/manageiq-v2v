@@ -29,13 +29,7 @@ The aim of this plugin is to provide UI infrastructure to ManageIQ for the V2V e
 
 You need to checkout manageiq, manageiq-ui-classic next to each other and setup the gem overrides.
 
-Uses the following branch of manageiq-ui-classic to add Migration to the navigation menu:
-
-```
-https://github.com/priley86/manageiq-ui-classic/tree/v2v
-```
-
-Make sure to add this `miq_v2v_ui` gem to your `bundler.d/Gemfile.dev.rb` in `manageiq`:
+Make sure to add this `miq_v2v_ui_plugin` gem to your Gemfile or bundler.d/ in `manageiq`:
 
 ```ruby
 gem 'miq_v2v_ui', :path => File.expand_path('../../miq_v2v_ui_plugin', __dir__)
