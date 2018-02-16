@@ -1,5 +1,4 @@
 import MappingWizardContainer from '../react/screens/App/Overview/screens/MappingWizard';
-// import MappingWizardGeneralStepContainer from '../react/screens/App/Overview/screens/MappingWizard/components/MappingWizardGeneralStep';
 import MappingWizardClustersStepContainer from '../react/screens/App/Overview/screens/MappingWizard/components/MappingWizardClustersStep';
 import PlanWizardContainer from '../react/screens/App/Overview/screens/PlanWizard';
 import OverviewContainer from '../react/screens/App/Overview';
@@ -17,13 +16,6 @@ export const coreComponents = [
     data: {},
     store: true
   },
-  // This may not be required if using Redux form
-  // {
-  //   name: 'MappingWizardGeneralStepContainer',
-  //   type: MappingWizardGeneralStepContainer,
-  //   data: {},
-  //   store: true
-  // },
   {
     name: 'MappingWizardClustersStepContainer',
     type: MappingWizardClustersStepContainer,
