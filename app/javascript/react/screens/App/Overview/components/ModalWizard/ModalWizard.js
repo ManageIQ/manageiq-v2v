@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { noop, Modal, Wizard, Icon, Button } from 'patternfly-react';
+import { connect } from 'react-redux';
+import { find } from 'lodash';
 
 const ModalWizard = props => {
   const {
@@ -14,10 +16,17 @@ const ModalWizard = props => {
     activeStep,
     numSteps,
     goToStep,
-    children
+    children,
+    formContainer
   } = props;
   const onFirstStep = activeStepIndex === 0;
   const onFinalStep = activeStepIndex === numSteps - 1;
+
+  const formHasErrors =
+    find(formContainer, form => form.syncErrors) !== undefined;
+
+  const disableNextStep = formHasErrors;
+
   return (
     <Modal
       show={showWizard}
@@ -42,7 +51,8 @@ const ModalWizard = props => {
             React.cloneElement(child, {
               activeStepIndex,
               activeStep,
-              goToStep
+              goToStep,
+              disableNextStep
             })
           )}
         </Modal.Body>
@@ -54,7 +64,11 @@ const ModalWizard = props => {
             <Icon type="fa" name="angle-left" />
             {__('Back')}
           </Button>
-          <Button bsStyle="primary" onClick={onFinalStep ? onHide : onNext}>
+          <Button
+            bsStyle="primary"
+            onClick={onFinalStep ? onHide : onNext}
+            disabled={disableNextStep}
+          >
             {onFinalStep ? __('Close') : __('Next')}
             <Icon type="fa" name="angle-right" />
           </Button>
@@ -75,7 +89,8 @@ ModalWizard.propTypes = {
   activeStep: PropTypes.string,
   numSteps: PropTypes.number,
   goToStep: PropTypes.func,
-  children: PropTypes.node
+  children: PropTypes.node,
+  formContainer: PropTypes.object
 };
 
 ModalWizard.defaultProps = {
@@ -92,4 +107,8 @@ ModalWizard.defaultProps = {
   children: null
 };
 
-export default ModalWizard;
+const mapStateToProps = state => ({
+  formContainer: state.form
+});
+
+export default connect(mapStateToProps)(ModalWizard);
