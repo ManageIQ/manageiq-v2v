@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Grid } from 'patternfly-react';
 
-export const renderField = ({
+export const FormField = ({
   input,
   label,
   controlId,
@@ -32,7 +32,7 @@ export const renderField = ({
   );
 };
 
-renderField.propTypes = {
+FormField.propTypes = {
   label: PropTypes.string,
   input: PropTypes.object,
   controlId: PropTypes.string,

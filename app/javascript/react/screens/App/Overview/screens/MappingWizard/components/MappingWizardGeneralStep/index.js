@@ -3,21 +3,21 @@ import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { required } from 'redux-form-validators';
 import { Form } from 'patternfly-react';
-import { renderField } from '../../../formUtilities/renderField';
+import { FormField } from '../../../formUtilities/FormField';
 
 const MappingWizardGeneralStep = props => (
   <Form className="form-horizontal">
     <Field
       name="name"
       label={__('Name')}
-      component={renderField}
+      component={FormField}
       validate={[required({ msg: __('Required') })]}
       type="text"
     />
     <Field
       name="description"
       label={__('Description')}
-      component={renderField}
+      component={FormField}
       type="textarea"
     />
   </Form>

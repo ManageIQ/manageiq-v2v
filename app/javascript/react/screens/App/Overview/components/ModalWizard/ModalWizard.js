@@ -22,10 +22,10 @@ const ModalWizard = props => {
   const onFirstStep = activeStepIndex === 0;
   const onFinalStep = activeStepIndex === numSteps - 1;
 
-  const formHasErrors = () =>
+  const formHasErrors =
     find(formContainer, form => form.syncErrors) !== undefined;
 
-  const disableNextStep = formHasErrors();
+  const disableNextStep = formHasErrors;
 
   const onCancel = () => {
     // Delete/Destroy all wizard forms here

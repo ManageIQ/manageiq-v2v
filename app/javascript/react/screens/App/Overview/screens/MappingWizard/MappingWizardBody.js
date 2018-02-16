@@ -24,11 +24,6 @@ const MappingWizardBody = props => {
   const mappingWizardClustersStepContainer = componentRegistry.markup(
     'MappingWizardClustersStepContainer'
   );
-  // This may not be required for Redux form
-  // const mappingWizardGeneralStepContainer = componentRegistry.markup(
-  //   'MappingWizardGeneralStepContainer'
-  // );
-  const renderMappingWizardGeneralStep = () => <MappingWizardGeneralStep />;
   return (
     <ModalWizard.Body
       {...props}
@@ -37,7 +32,7 @@ const MappingWizardBody = props => {
       steps={[
         {
           title: __('General'),
-          render: () => renderMappingWizardGeneralStep(), // mappingWizardGeneralStepContainer
+          render: () => <MappingWizardGeneralStep />,
           onClick: () => console.log('on step 1 click')
         },
         {
