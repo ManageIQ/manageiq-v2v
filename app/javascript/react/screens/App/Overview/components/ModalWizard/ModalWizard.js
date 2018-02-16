@@ -27,12 +27,6 @@ const ModalWizard = props => {
 
   const disableNextStep = formHasErrors;
 
-  const onCancel = () => {
-    // Delete/Destroy all wizard forms here
-    delete formContainer.mappingWizardGeneralStep;
-    onHide();
-  };
-
   return (
     <Modal
       show={showWizard}
@@ -44,7 +38,7 @@ const ModalWizard = props => {
         <Modal.Header>
           <button
             className="close"
-            onClick={onCancel}
+            onClick={onHide}
             aria-hidden="true"
             aria-label="Close"
           >
@@ -63,7 +57,7 @@ const ModalWizard = props => {
           )}
         </Modal.Body>
         <Modal.Footer className="wizard-pf-footer">
-          <Button bsStyle="default" className="btn-cancel" onClick={onCancel}>
+          <Button bsStyle="default" className="btn-cancel" onClick={onHide}>
             {__('Cancel')}
           </Button>
           <Button bsStyle="default" onClick={onBack} disabled={onFirstStep}>
