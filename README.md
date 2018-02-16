@@ -35,8 +35,8 @@ Uses the following branch of manageiq-ui-classic to add Migration to the navigat
 https://github.com/priley86/manageiq-ui-classic/tree/v2v
 ```
 
-Make sure to add this `miq_v2v_ui_plugin` gem to your Gemfile or bundler.d/ in `manageiq`:
+Make sure to add this `miq_v2v_ui` gem to your `bundler.d/Gemfile.dev.rb` in `manageiq`:
 
 ```ruby
-gem 'miq_v2v_ui_plugin', :path => File.expand_path('../../miq_v2v_ui_plugin/', __dir__)
+gem 'miq_v2v_ui', :path => File.expand_path('../../miq_v2v_ui_plugin', __dir__)
 ```
