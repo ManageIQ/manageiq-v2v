@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ModalWizard from '../../components/ModalWizard';
 import PlanWizardGeneralStep from '../PlanWizard/components/PlanWizardGeneralStep';
+import PlanWizardCSVStep from '../PlanWizard/components/PlanWizardCSVStep';
 
 // TODO remove these, they are space fillers
 const t = str => (
@@ -32,7 +33,7 @@ const PlanWizardBody = props => (
       },
       {
         title: __('VMs'),
-        render: () => todo('VM CSV Upload Form'),
+        render: () => <PlanWizardCSVStep />,
         onClick: () => console.log('on step 2 click')
       },
       {
