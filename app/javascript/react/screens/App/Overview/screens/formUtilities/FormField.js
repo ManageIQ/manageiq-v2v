@@ -5,19 +5,21 @@ import { Form, Grid } from 'patternfly-react';
 export const FormField = ({
   input,
   label,
+  required,
   controlId,
   type,
-  meta: { pristine, touched, error },
+  meta: { touched, error },
   ...props
 }) => {
   const formGroupProps = { key: { label }, controlId, ...props };
 
-  if (error) formGroupProps.validationState = 'error';
+  if (touched && error) formGroupProps.validationState = 'error';
 
   return (
     <Form.FormGroup {...formGroupProps}>
       <Grid.Col componentClass={Form.ControlLabel} sm={2}>
         {label}
+        {required && ' *'}
       </Grid.Col>
       <Grid.Col sm={9}>
         <Form.FormControl
@@ -25,8 +27,7 @@ export const FormField = ({
           type={type}
           componentClass={type === 'text' ? undefined : type}
         />
-        {(pristine || touched) &&
-          error && <Form.HelpBlock>{error}</Form.HelpBlock>}
+        {touched && error && <Form.HelpBlock>{error}</Form.HelpBlock>}
       </Grid.Col>
     </Form.FormGroup>
   );
@@ -35,6 +36,7 @@ export const FormField = ({
 FormField.propTypes = {
   label: PropTypes.string,
   input: PropTypes.object,
+  required: PropTypes.bool,
   controlId: PropTypes.string,
   type: PropTypes.string,
   meta: PropTypes.object

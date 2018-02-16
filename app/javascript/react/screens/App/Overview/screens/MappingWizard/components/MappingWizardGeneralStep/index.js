@@ -10,6 +10,7 @@ const MappingWizardGeneralStep = props => (
     <Field
       name="name"
       label={__('Name')}
+      required
       component={FormField}
       validate={[required({ msg: __('Required') })]}
       type="text"
