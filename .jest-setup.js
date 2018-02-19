@@ -5,4 +5,5 @@ configure({ adapter: new Adapter() });
 // Mocking translation function
 global.__ = str => str;
 global.n__ = str => str;
+global.sprintf = str => str;
 global.Jed = { sprintf: str => str };
