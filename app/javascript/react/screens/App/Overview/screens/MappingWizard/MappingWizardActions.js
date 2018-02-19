@@ -17,4 +17,5 @@ export const mappingWizardExitedAction = () => dispatch => {
 
   // Dispatch reset for all the wizard step forms here
   dispatch(reset('mappingWizardGeneralStep'));
+  dispatch(reset('mappingWizardClustersStep'));
 };
