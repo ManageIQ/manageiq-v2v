@@ -3,10 +3,10 @@ import API from '../../../../../../../../common/API';
 import {
   FETCH_V2V_SOURCE_CLUSTERS,
   FETCH_V2V_TARGET_CLUSTERS,
-  REMOVE_TARGET_CLUSTER,
-  REMOVE_SOURCE_CLUSTERS,
-  ADD_TARGET_CLUSTER,
-  ADD_SOURCE_CLUSTERS
+  REMOVE_V2V_TARGET_CLUSTER,
+  REMOVE_V2V_SOURCE_CLUSTERS,
+  ADD_V2V_TARGET_CLUSTER,
+  ADD_V2V_SOURCE_CLUSTERS
 } from './MappingWizardClustersStepConstants';
 
 import {
@@ -58,24 +58,24 @@ export const fetchTargetClustersAction = url => {
 
 export const removeTargetCluster = targetClusterToRemove => dispatch =>
   dispatch({
-    type: REMOVE_TARGET_CLUSTER,
+    type: REMOVE_V2V_TARGET_CLUSTER,
     targetClusterToRemove
   });
 
 export const removeSourceClusters = sourceClustersToRemove => dispatch =>
   dispatch({
-    type: REMOVE_SOURCE_CLUSTERS,
+    type: REMOVE_V2V_SOURCE_CLUSTERS,
     sourceClustersToRemove
   });
 
 export const addTargetCluster = targetClusterToAdd => dispatch =>
   dispatch({
-    type: ADD_TARGET_CLUSTER,
+    type: ADD_V2V_TARGET_CLUSTER,
     targetClusterToAdd
   });
 
 export const addSourceClusters = sourceClustersToAdd => dispatch =>
   dispatch({
-    type: ADD_SOURCE_CLUSTERS,
+    type: ADD_V2V_SOURCE_CLUSTERS,
     sourceClustersToAdd
   });
