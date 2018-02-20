@@ -12,7 +12,7 @@ import {
   MenuItem
 } from 'patternfly-react';
 
-const SourceClusterSelect = ({ sourceClusters }) => {
+const SourceClusterSelect = ({ sourceClusters, selectSourceCluster }) => {
   return (
     <Form horizontal>
       <FormGroup>
