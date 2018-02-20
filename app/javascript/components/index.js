@@ -22,9 +22,9 @@ export const coreComponents = [
     name: 'MappingWizardClustersStepContainer',
     type: MappingWizardClustersStepContainer,
     data: {
-      fetchSourceClustersUrl: '/api/sourceClusters',
+      fetchSourceClustersUrl: '/api/dummyProviders',
       // '/api/providers?expand=resources&attributes=emstype,ems_clusters&filter[]=emstype=vmwarews',
-      fetchTargetClustersUrl: '/api/targetClusters'
+      fetchTargetClustersUrl: '/api/dummyProviders'
       // '/api/providers?expand=resources&attributes=emstype,ems_clusters&filter[]=emstype=rhevm'
     },
     store: true
@@ -33,8 +33,8 @@ export const coreComponents = [
     name: 'MappingWizardDatastoresStepContainer',
     type: MappingWizardDatastoresStepContainer,
     data: {
-      fetchDatastoresUrl: '/api/datastores'
-      // 'api/clusters/1?attributes=storages'
+      fetchDatastoresUrl: '/api/dummyClusters'
+      // will become 'api/clusters/1?attributes=storages'
     },
     store: true
   },
@@ -42,8 +42,8 @@ export const coreComponents = [
     name: 'MappingWizardNetworksStepContainer',
     type: MappingWizardNetworksStepContainer,
     data: {
-      fetchNetworksUrl: '/api/networks'
-      // 'api/clusters/1?attributes=lans'
+      fetchNetworksUrl: '/api/dummyClusters'
+      // will become 'api/clusters/1?attributes=lans'
     },
     store: true
   },
