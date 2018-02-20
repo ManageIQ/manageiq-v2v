@@ -24,19 +24,24 @@ class MappingWizardNetworksStep extends React.Component {
 
   componentDidMount() {}
 
-  selectSourceNetwork(id) {
-    // when dropdown selection occurs for source cluster, we go retrieve the networks for that
-    // cluster
-    const { fetchNetworksUrl, fetchNetworksAction } = this.props;
-    fetchNetworksAction(fetchNetworksUrl, id);
+  selectSourceNetwork(sourceClusterId, targetClusterId) {
+    const {
+      fetchNetworksUrl,
+      fetchSourceNetworksAction,
+      fetchTargetNetworksAction
+    } = this.props;
+    fetchSourceNetworksAction(fetchNetworksUrl, sourceClusterId);
+    fetchTargetNetworksAction(fetchNetworksUrl, targetClusterId);
   }
 
   render() {
     const {
       // todo: inject the mapped clusters from MappingWizardClustersStep as props here
       clusterMappings, // eslint-disable-line no-unused-vars
-      isFetchingNetworks, // eslint-disable-line no-unused-vars
-      isRejectedNetworks, // eslint-disable-line no-unused-vars
+      isFetchingSourceNetworks, // eslint-disable-line no-unused-vars
+      isRejectedSourceNetworks, // eslint-disable-line no-unused-vars
+      isFetchingTargetNetworks, // eslint-disable-line no-unused-vars
+      isRejectedTargetNetworks, // eslint-disable-line no-unused-vars
       // source/target networks change depending on selection
       sourceNetworks, // eslint-disable-line no-unused-vars
       targetNetworks // eslint-disable-line no-unused-vars
@@ -60,34 +65,34 @@ class MappingWizardNetworksStep extends React.Component {
           Fetch Networks
         </Button>
         {sourceNetworks.length > 0 &&
-          !isFetchingNetworks && (
+          !isFetchingSourceNetworks && (
             <div>
               {' '}
               <h4>Source Networks</h4>
-              {sourceNetworks.map(store => (
+              {sourceNetworks.map(lan => (
                 <div>
-                  <span>{store.id}</span>
+                  <span>{lan.id}</span>
                   &nbsp;
-                  <span>{store.name}</span>
+                  <span>{lan.name}</span>
                   &nbsp;
-                  <span>{store.store_type}</span>
+                  <span>{lan.lan_type}</span>
                   &nbsp;
                 </div>
               ))}
             </div>
           )}
         {targetNetworks.length > 0 &&
-          !isFetchingNetworks && (
+          !isFetchingTargetNetworks && (
             <div>
               {' '}
               <h4>Target Networks</h4>
-              {targetNetworks.map(store => (
+              {targetNetworks.map(lan => (
                 <div>
-                  <span>{store.id}</span>
+                  <span>{lan.id}</span>
                   &nbsp;
-                  <span>{store.name}</span>
+                  <span>{lan.name}</span>
                   &nbsp;
-                  <span>{store.store_type}</span>
+                  <span>{lan.lan_type}</span>
                   &nbsp;
                 </div>
               ))}
@@ -101,11 +106,14 @@ class MappingWizardNetworksStep extends React.Component {
 MappingWizardNetworksStep.propTypes = {
   clusterMappings: PropTypes.array,
   fetchNetworksUrl: PropTypes.string,
-  fetchNetworksAction: PropTypes.func,
+  fetchSourceNetworksAction: PropTypes.func,
+  fetchTargetNetworksAction: PropTypes.func,
   sourceNetworks: PropTypes.arrayOf(PropTypes.object),
   targetNetworks: PropTypes.arrayOf(PropTypes.object),
-  isFetchingNetworks: PropTypes.bool,
-  isRejectedNetworks: PropTypes.bool
+  isFetchingSourceNetworks: PropTypes.bool,
+  isRejectedSourceNetworks: PropTypes.bool,
+  isFetchingTargetNetworks: PropTypes.bool,
+  isRejectedTargetNetworks: PropTypes.bool
   // removeTargetNetwork: PropTypes.func,
   // removeSourceNetwork: PropTypes.func,
   // addTargetNetwork: PropTypes.func,
@@ -114,11 +122,15 @@ MappingWizardNetworksStep.propTypes = {
 MappingWizardNetworksStep.defaultProps = {
   clusterMappings: [],
   fetchNetworksUrl: '',
-  fetchNetworksAction: noop,
+  fetchSourceNetworksAction: noop,
+  fetchTargetNetworksAction: noop,
   sourceNetworks: [],
   targetNetworks: [],
-  isFetchingNetworks: false,
-  isRejectedNetworks: false
+  isFetchingSourceNetworks: false,
+  isRejectedSourceNetworks: false,
+  isFetchingTargetNetworks: false,
+  isRejectedTargetNetworks: false
+
   // removeTargetNetwork: noop,
   // removeSourceNetwork: noop,
   // addTargetNetwork: noop,

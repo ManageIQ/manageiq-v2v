@@ -150,5 +150,5 @@ export const requestTargetDatastoresData = {
 export const initialState = Immutable({
   sourceClusterDatastores: {},
   targetClusterDatastores: {},
-  fetchDatastoresUrl: '/api/datastores'
+  fetchDatastoresUrl: '/api/dummyClusters'
 });
