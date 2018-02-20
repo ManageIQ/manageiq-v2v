@@ -4,11 +4,11 @@ import { noop, Modal, Wizard, Icon, Button } from 'patternfly-react';
 import { connect } from 'react-redux';
 
 const reduxFormMap = {
-  'Infrastructure Mapping Wizard': [
+  [__('Infrastructure Mapping Wizard')]: [
     'mappingWizardGeneralStep',
     'mappingWizardClustersStep'
   ],
-  'Migration Plan Wizard': []
+  [__('Migration Plan Wizard')]: []
 };
 
 const ModalWizard = props => {
