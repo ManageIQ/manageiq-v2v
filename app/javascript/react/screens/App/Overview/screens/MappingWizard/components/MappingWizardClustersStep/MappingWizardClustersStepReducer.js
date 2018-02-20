@@ -32,12 +32,13 @@ export default (state = initialState, action) => {
       ) {
         return state
           .set('sourceClusters', action.payload.data.resources[0].ems_clusters)
+          .set('isRejectedSourceClusters', false)
           .set('isFetchingSourceClusters', false);
       }
       return state
         .set('sourceClusters', [])
-        .set('isFetchingSourceClusters', false);
-
+        .set('isFetchingSourceClusters', false)
+        .set('isRejectedSourceClusters', false);
     case `${FETCH_V2V_SOURCE_CLUSTERS}_REJECTED`:
       return state
         .set('errorSourceClusters', action.payload)
@@ -57,6 +58,7 @@ export default (state = initialState, action) => {
       }
       return state
         .set('targetClusters', [])
+        .set('isRejectedTargetClusters', false)
         .set('isFetchingTargetClusters', false);
     case `${FETCH_V2V_TARGET_CLUSTERS}_REJECTED`:
       return state

@@ -1,5 +1,7 @@
 import MappingWizardContainer from '../react/screens/App/Overview/screens/MappingWizard';
 import MappingWizardClustersStepContainer from '../react/screens/App/Overview/screens/MappingWizard/components/MappingWizardClustersStep';
+import MappingWizardDatastoresStepContainer from '../react/screens/App/Overview/screens/MappingWizard/components/MappingWizardDatastoresStep';
+import MappingWizardNetworksStepContainer from '../react/screens/App/Overview/screens/MappingWizard/components/MappingWizardNetworksStep';
 import PlanWizardContainer from '../react/screens/App/Overview/screens/PlanWizard';
 import OverviewContainer from '../react/screens/App/Overview';
 import Dashboard from '../react/screens/App/Dashboard/Dashboard';
@@ -20,10 +22,28 @@ export const coreComponents = [
     name: 'MappingWizardClustersStepContainer',
     type: MappingWizardClustersStepContainer,
     data: {
-      fetchSourceClustersUrl: '/api/sourceClusters',
+      fetchSourceClustersUrl: '/api/dummyProviders',
       // '/api/providers?expand=resources&attributes=emstype,ems_clusters&filter[]=emstype=vmwarews',
-      fetchTargetClustersUrl: '/api/targetClusters'
+      fetchTargetClustersUrl: '/api/dummyProviders'
       // '/api/providers?expand=resources&attributes=emstype,ems_clusters&filter[]=emstype=rhevm'
+    },
+    store: true
+  },
+  {
+    name: 'MappingWizardDatastoresStepContainer',
+    type: MappingWizardDatastoresStepContainer,
+    data: {
+      fetchDatastoresUrl: '/api/dummyClusters'
+      // will become 'api/clusters/1?attributes=storages'
+    },
+    store: true
+  },
+  {
+    name: 'MappingWizardNetworksStepContainer',
+    type: MappingWizardNetworksStepContainer,
+    data: {
+      fetchNetworksUrl: '/api/dummyClusters'
+      // will become 'api/clusters/1?attributes=lans'
     },
     store: true
   },

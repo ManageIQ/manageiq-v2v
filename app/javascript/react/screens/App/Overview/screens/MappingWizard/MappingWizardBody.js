@@ -31,6 +31,12 @@ class MappingWizardBody extends React.Component {
     const mappingWizardClustersStepContainer = componentRegistry.markup(
       'MappingWizardClustersStepContainer'
     );
+    const mappingWizardDatastoresStepContainer = componentRegistry.markup(
+      'MappingWizardDatastoresStepContainer'
+    );
+    const mappingWizardNetworksStepContainer = componentRegistry.markup(
+      'MappingWizardNetworksStepContainer'
+    );
     return (
       <ModalWizard.Body
         {...this.props}
@@ -49,12 +55,12 @@ class MappingWizardBody extends React.Component {
           },
           {
             title: __('Datastores'),
-            render: () => todo('Datastore Mappings Form'),
+            render: () => mappingWizardDatastoresStepContainer,
             onClick: () => console.log('on step 3 click')
           },
           {
             title: __('Networks'),
-            render: () => todo('Network Mappings Form'),
+            render: () => mappingWizardNetworksStepContainer,
             onClick: () => console.log('on step 4 click')
           },
           {
