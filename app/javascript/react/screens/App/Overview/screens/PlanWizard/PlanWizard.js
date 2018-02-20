@@ -23,11 +23,13 @@ const PlanWizard = ({
 PlanWizard.propTypes = {
   hidePlanWizard: PropTypes.bool,
   hidePlanWizardAction: PropTypes.func,
-  planWizardExitedAction: PropTypes.func
+  planWizardExitedAction: PropTypes.func,
+  transformationMappings: PropTypes.array // eslint-disable-line react/no-unused-prop-types
 };
 PlanWizard.defaultProps = {
   hidePlanWizard: true,
   hidePlanWizardAction: noop,
-  planWizardExitedAction: noop
+  planWizardExitedAction: noop,
+  transformationMappings: []
 };
 export default PlanWizard;
