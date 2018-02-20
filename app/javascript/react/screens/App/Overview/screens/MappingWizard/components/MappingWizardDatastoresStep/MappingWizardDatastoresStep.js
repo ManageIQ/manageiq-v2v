@@ -24,19 +24,27 @@ class MappingWizardDatastoresStep extends React.Component {
 
   componentDidMount() {}
 
-  selectSourceCluster(id) {
+  selectSourceCluster(sourceClusterId, targetClusterId) {
     // when dropdown selection occurs for source cluster, we go retrieve the datastores for that
     // cluster
-    const { fetchDatastoresUrl, fetchDatastoresAction } = this.props;
-    fetchDatastoresAction(fetchDatastoresUrl, id);
+    const {
+      fetchDatastoresUrl,
+      fetchSourceDatastoresAction,
+      fetchTargetDatastoresAction
+    } = this.props;
+
+    fetchSourceDatastoresAction(fetchDatastoresUrl, sourceClusterId);
+    fetchTargetDatastoresAction(fetchDatastoresUrl, targetClusterId);
   }
 
   render() {
     const {
       // todo: inject the mapped clusters from MappingWizardClustersStep as props here
       clusterMappings, // eslint-disable-line no-unused-vars
-      isFetchingDatastores, // eslint-disable-line no-unused-vars
-      isRejectedDatastores, // eslint-disable-line no-unused-vars
+      isFetchingSourceDatastores, // eslint-disable-line no-unused-vars
+      isRejectedSourceDatastores, // eslint-disable-line no-unused-vars
+      isFetchingTargetDatastores, // eslint-disable-line no-unused-vars
+      isRejectedTargetDatastores, // eslint-disable-line no-unused-vars
       // source/target datastores change depending on selection
       sourceDatastores, // eslint-disable-line no-unused-vars
       targetDatastores // eslint-disable-line no-unused-vars
@@ -56,11 +64,15 @@ class MappingWizardDatastoresStep extends React.Component {
     // todo: change this Button to the source cluster populated Dropdown
     return (
       <div>
-        <Button onClick={() => this.selectSourceCluster('10000000000001')}>
+        <Button
+          onClick={() =>
+            this.selectSourceCluster('10000000000001', '10000000000001')
+          }
+        >
           Fetch Datastores
         </Button>
         {sourceDatastores.length > 0 &&
-          !isFetchingDatastores && (
+          !isFetchingSourceDatastores && (
             <div>
               {' '}
               <h4>Source Datastores</h4>
@@ -77,7 +89,7 @@ class MappingWizardDatastoresStep extends React.Component {
             </div>
           )}
         {targetDatastores.length > 0 &&
-          !isFetchingDatastores && (
+          !isFetchingTargetDatastores && (
             <div>
               {' '}
               <h4>Target Datastores</h4>
@@ -101,11 +113,14 @@ class MappingWizardDatastoresStep extends React.Component {
 MappingWizardDatastoresStep.propTypes = {
   clusterMappings: PropTypes.array,
   fetchDatastoresUrl: PropTypes.string,
-  fetchDatastoresAction: PropTypes.func,
+  fetchSourceDatastoresAction: PropTypes.func,
+  fetchTargetDatastoresAction: PropTypes.func,
   sourceDatastores: PropTypes.arrayOf(PropTypes.object),
   targetDatastores: PropTypes.arrayOf(PropTypes.object),
-  isFetchingDatastores: PropTypes.bool,
-  isRejectedDatastores: PropTypes.bool
+  isFetchingSourceDatastores: PropTypes.bool,
+  isRejectedSourceDatastores: PropTypes.bool,
+  isFetchingTargetDatastores: PropTypes.bool,
+  isRejectedTargetDatastores: PropTypes.bool
   // removeTargetDatastore: PropTypes.func,
   // removeSourceDatastore: PropTypes.func,
   // addTargetDatastore: PropTypes.func,
@@ -114,11 +129,14 @@ MappingWizardDatastoresStep.propTypes = {
 MappingWizardDatastoresStep.defaultProps = {
   clusterMappings: [],
   fetchDatastoresUrl: '',
-  fetchDatastoresAction: noop,
+  fetchSourceDatastoresAction: noop,
+  fetchTargetDatastoresAction: noop,
   sourceDatastores: [],
   targetDatastores: [],
-  isFetchingDatastores: false,
-  isRejectedDatastores: false
+  isFetchingSourceDatastores: false,
+  isRejectedSourceDatastores: false,
+  isFetchingTargetDatastores: false,
+  isRejectedTargetDatastores: false
   // removeTargetDatastore: noop,
   // removeSourceDatastore: noop,
   // addTargetDatastore: noop,
