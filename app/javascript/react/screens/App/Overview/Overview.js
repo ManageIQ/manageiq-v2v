@@ -1,7 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Equalizer from 'react-equalizer';
-import { bindMethods, Button, EmptyState, Grid } from 'patternfly-react';
+import { bindMethods, Grid } from 'patternfly-react';
+import InfrastructureMappingCard from './components/Cards/InfrastructureMappingCard/InfrastructureMappingCard';
+import MigrationPlansCard from './components/Cards/MigrationPlansCard/MigrationPlansCard';
+import MigrationsInProgressCard from './components/Cards/MigrationsInProgressCard/MigrationsInProgressCard';
+import MigrationsCompletedCard from './components/Cards/MigrationsCompletedCard/MigrationsCompletedCard';
 import componentRegistry from '../../../../components/componentRegistry';
 
 class Overview extends React.Component {
@@ -19,6 +23,16 @@ class Overview extends React.Component {
       props.store
     );
   }
+
+  componentDidMount() {
+    const {
+      fetchTransformationMappingsUrl,
+      fetchTransformationMappingsAction
+    } = this.props;
+
+    fetchTransformationMappingsAction(fetchTransformationMappingsUrl);
+  }
+
   getNodes(equalizerComponent, equalizerElement) {
     return [this.node1, this.node2];
   }
@@ -27,8 +41,14 @@ class Overview extends React.Component {
       showMappingWizardAction,
       showPlanWizardAction,
       mappingWizardVisible,
-      planWizardVisible
+      planWizardVisible,
+      transformationMappings,
+      isFetchingTransformationMappings, // eslint-disable-line no-unused-vars
+      isRejectedTransformationMappings // eslint-disable-line no-unused-vars
     } = this.props;
+
+    const showPlanEnabled =
+      transformationMappings && transformationMappings.length;
 
     const overviewCards = (
       <div
@@ -41,81 +61,30 @@ class Overview extends React.Component {
             <div className="spacer" />
             <Equalizer nodes={this.getNodes}>
               <Grid.Col xs={12} md={6}>
-                <div className="card-pf">
-                  <div className="card-pf-body">
-                    <div className="blank-slate-pf" ref={n => (this.node1 = n)}>
-                      <EmptyState.Icon />
-                      <EmptyState.Title>
-                        {__('Infrastructure Mappings')}
-                      </EmptyState.Title>
-                      <EmptyState.Info>
-                        {__(
-                          'Create mapping to later be used by a migration plan.'
-                        )}
-                      </EmptyState.Info>
-                      <EmptyState.Action>
-                        <Button
-                          bsStyle="primary"
-                          bsSize="large"
-                          onClick={showMappingWizardAction}
-                        >
-                          {__('Create Infrastructure Mapping')}
-                        </Button>
-                      </EmptyState.Action>
-                    </div>
-                  </div>
-                </div>
+                <InfrastructureMappingCard
+                  cardRef={n => (this.node1 = n)}
+                  showMappingWizardAction={showMappingWizardAction}
+                />
               </Grid.Col>
               <Grid.Col xs={12} md={6}>
-                <div className="card-pf">
-                  <div className="card-pf-body">
-                    <div className="blank-slate-pf" ref={n => (this.node2 = n)}>
-                      <EmptyState.Icon />
-                      <EmptyState.Title>
-                        {__('Migration Plans')}
-                      </EmptyState.Title>
-                      <EmptyState.Info>
-                        {__('Create a migration plan to start migrating.')}
-                      </EmptyState.Info>
-                      <EmptyState.Action>
-                        <Button
-                          bsStyle="primary"
-                          bsSize="large"
-                          onClick={showPlanWizardAction}
-                        >
-                          {__('Create Migration Plan')}
-                        </Button>
-                      </EmptyState.Action>
-                    </div>
-                  </div>
-                </div>
+                <MigrationPlansCard
+                  cardRef={n => (this.node2 = n)}
+                  showPlanWizardAction={showPlanWizardAction}
+                  showPlanDisabled={!showPlanEnabled}
+                />
               </Grid.Col>
             </Equalizer>
           </Grid.Row>
 
           <Grid.Row>
             <Grid.Col xs={12}>
-              <div className="card-pf">
-                <div className="card-pf-heading">
-                  <h2>0 Migrations in Progress</h2>
-                </div>
-                <div className="card-pf-body">
-                  <p>content</p>
-                </div>
-              </div>
+              <MigrationsInProgressCard />
             </Grid.Col>
           </Grid.Row>
 
           <Grid.Row>
             <Grid.Col xs={12}>
-              <div className="card-pf">
-                <div className="card-pf-heading">
-                  <h2>0 Completed Migrations</h2>
-                </div>
-                <div className="card-pf-body">
-                  <p>content</p>
-                </div>
-              </div>
+              <MigrationsCompletedCard />
               <div className="spacer" />
             </Grid.Col>
           </Grid.Row>
@@ -137,6 +106,11 @@ Overview.propTypes = {
   showMappingWizardAction: PropTypes.func,
   showPlanWizardAction: PropTypes.func,
   mappingWizardVisible: PropTypes.bool,
-  planWizardVisible: PropTypes.bool
+  planWizardVisible: PropTypes.bool,
+  fetchTransformationMappingsUrl: PropTypes.string,
+  fetchTransformationMappingsAction: PropTypes.func,
+  transformationMappings: PropTypes.array,
+  isFetchingTransformationMappings: PropTypes.bool,
+  isRejectedTransformationMappings: PropTypes.bool
 };
 export default Overview;
