@@ -27,17 +27,24 @@ class MappingWizardDatastoresStep extends React.Component {
 
   componentDidMount() {}
 
-  selectSourceCluster(sourceClusterId, targetClusterId) {
+  selectSourceCluster(sourceClusterId) {
     // when dropdown selection occurs for source cluster, we go retrieve the datastores for that
     // cluster
     const {
       fetchDatastoresUrl,
       fetchSourceDatastoresAction,
-      fetchTargetDatastoresAction
+      fetchTargetDatastoresAction,
+      clusterMappings
     } = this.props;
 
+    const targetCluster = clusterMappings.find(clusterMapping => {
+      return clusterMapping.nodes.some(sourceCluster => {
+        return sourceCluster.id === sourceClusterId;
+      });
+    });
+
     fetchSourceDatastoresAction(fetchDatastoresUrl, sourceClusterId);
-    fetchTargetDatastoresAction(fetchDatastoresUrl, targetClusterId);
+    fetchTargetDatastoresAction(fetchDatastoresUrl, targetCluster.id);
   }
 
   render() {
@@ -74,14 +81,8 @@ class MappingWizardDatastoresStep extends React.Component {
             },
             []
           )}
+          selectSourceCluster={this.selectSourceCluster}
         />
-        {/* <Button
-          onClick={() =>
-            this.selectSourceCluster('10000000000001', '10000000000001')
-          }
-        >
-          Fetch Datastores
-        </Button>
         {sourceDatastores.length > 0 &&
           !isFetchingSourceDatastores && (
             <div>
@@ -115,7 +116,7 @@ class MappingWizardDatastoresStep extends React.Component {
                 </div>
               ))}
             </div>
-          )} */}
+          )}
       </div>
     );
   }
