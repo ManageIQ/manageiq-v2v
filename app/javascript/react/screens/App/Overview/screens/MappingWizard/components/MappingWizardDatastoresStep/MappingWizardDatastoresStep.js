@@ -4,11 +4,7 @@ import { Field, reduxForm } from 'redux-form';
 import { noop, Button, bindMethods } from 'patternfly-react';
 
 import SourceClusterSelect from './components/SourceClusterSelect';
-
-// import DualPaneMapper from '../DualPaneMapper/DualPaneMapper';
-// import DualPaneMapperList from '../DualPaneMapper/DualPaneMapperList';
-// import DualPaneMapperCount from '../DualPaneMapper/DualPaneMapperCount';
-// import DualPaneMapperListItem from '../DualPaneMapper/DualPaneMapperListItem';
+import DatastoresStepForm from './components/DatastoresStepForm';
 
 class MappingWizardDatastoresStep extends React.Component {
   constructor(props) {
@@ -83,39 +79,14 @@ class MappingWizardDatastoresStep extends React.Component {
           )}
           selectSourceCluster={this.selectSourceCluster}
         />
-        {sourceDatastores.length > 0 &&
-          !isFetchingSourceDatastores && (
-            <div>
-              {' '}
-              <h4>Source Datastores</h4>
-              {sourceDatastores.map(store => (
-                <div>
-                  <span>{store.id}</span>
-                  &nbsp;
-                  <span>{store.name}</span>
-                  &nbsp;
-                  <span>{store.store_type}</span>
-                  &nbsp;
-                </div>
-              ))}
-            </div>
-          )}
-        {targetDatastores.length > 0 &&
-          !isFetchingTargetDatastores && (
-            <div>
-              {' '}
-              <h4>Target Datastores</h4>
-              {targetDatastores.map(store => (
-                <div>
-                  <span>{store.id}</span>
-                  &nbsp;
-                  <span>{store.name}</span>
-                  &nbsp;
-                  <span>{store.store_type}</span>
-                  &nbsp;
-                </div>
-              ))}
-            </div>
+        {!isFetchingSourceDatastores &&
+          !isFetchingTargetDatastores &&
+          sourceDatastores.length > 0 &&
+          targetDatastores.length > 0 && (
+            <DatastoresStepForm
+              sourceDatastores={sourceDatastores}
+              targetDatastores={targetDatastores}
+            />
           )}
       </div>
     );
