@@ -1,7 +1,7 @@
 import Immutable from 'seamless-immutable';
 
 // returns sample datastores for a single cluster
-export const clusterDatastores = {
+export const sourceClusterDatastores = {
   href: 'http://localhost:3000/api/clusters/1',
   id: '1',
   name: 'Raleigh',
@@ -22,28 +22,6 @@ export const clusterDatastores = {
   ems_ref: 'domain-c7',
   type: null,
   storages: [
-    {
-      href: 'http://localhost:3000/api/data_stores/1',
-      id: '1',
-      name: 'Shared-NFS',
-      store_type: 'NFS41',
-      total_space: 5388852264960,
-      free_space: 3389349027840,
-      created_on: '2017-10-06T16:41:09Z',
-      updated_on: '2018-01-21T01:02:38Z',
-      multiplehostaccess: 1,
-      location: 'a0f0178e-ddec1f02-0000-000000000000',
-      last_scan_on: '2018-01-21T00:05:45Z',
-      uncommitted: 3917934592000,
-      last_perf_capture_on: '2018-01-21T01:00:00Z',
-      ems_ref_obj: 'datastore-874',
-      directory_hierarchy_supported: true,
-      thin_provisioning_supported: true,
-      raw_disk_mappings_supported: false,
-      master: false,
-      ems_ref: 'datastore-874',
-      storage_domain_type: null
-    },
     {
       href: 'http://localhost:3000/api/data_stores/2',
       id: '2',
@@ -113,13 +91,64 @@ export const clusterDatastores = {
   ]
 };
 
-export const requestDatastoresData = {
+export const targetClusterDatastores = {
+  href: 'http://localhost:3000/api/clusters/1',
+  id: '1',
+  name: 'Raleigh',
+  ems_id: '1',
+  created_on: '2017-10-06T16:41:09Z',
+  updated_on: '2018-01-20T23:12:00Z',
+  uid_ems: 'domain-c7',
+  ha_enabled: false,
+  ha_admit_control: true,
+  ha_max_failures: 1,
+  drs_enabled: false,
+  drs_automation_level: 'fullyAutomated',
+  drs_migration_threshold: 3,
+  last_perf_capture_on: null,
+  ems_ref_obj: 'domain-c7',
+  effective_cpu: 109356,
+  effective_memory: 790163881984,
+  ems_ref: 'domain-c7',
+  type: null,
+  storages: [
+    {
+      href: 'http://localhost:3000/api/data_stores/1',
+      id: '1',
+      name: 'Shared-NFS',
+      store_type: 'NFS41',
+      total_space: 5388852264960,
+      free_space: 3389349027840,
+      created_on: '2017-10-06T16:41:09Z',
+      updated_on: '2018-01-21T01:02:38Z',
+      multiplehostaccess: 1,
+      location: 'a0f0178e-ddec1f02-0000-000000000000',
+      last_scan_on: '2018-01-21T00:05:45Z',
+      uncommitted: 3917934592000,
+      last_perf_capture_on: '2018-01-21T01:00:00Z',
+      ems_ref_obj: 'datastore-874',
+      directory_hierarchy_supported: true,
+      thin_provisioning_supported: true,
+      raw_disk_mappings_supported: false,
+      master: false,
+      ems_ref: 'datastore-874',
+      storage_domain_type: null
+    }
+  ]
+};
+
+export const requestSourceDatastoresData = {
   method: 'GET',
-  fetchDatastoresUrl: '/api/datastores',
-  response: { data: clusterDatastores }
+  response: { data: sourceClusterDatastores }
+};
+
+export const requestTargetDatastoresData = {
+  method: 'GET',
+  response: { data: targetClusterDatastores }
 };
 
 export const initialState = Immutable({
-  clusterDatastores: {},
-  fetchDatastoresUrl: requestDatastoresData.fetchDatastoresUrl
+  sourceClusterDatastores: {},
+  targetClusterDatastores: {},
+  fetchDatastoresUrl: '/api/datastores'
 });
