@@ -25,7 +25,7 @@ Array [
         "transformResponse": Object {
           "0": [Function],
         },
-        "url": "/api/sourceClusters",
+        "url": "/api/dummyProviders",
         "validateStatus": [Function],
         "xsrfCookieName": "XSRF-TOKEN",
         "xsrfHeaderName": "X-XSRF-TOKEN",
@@ -249,7 +249,7 @@ Array [
         "transformResponse": Object {
           "0": [Function],
         },
-        "url": "/api/targetClusters",
+        "url": "/api/dummyProviders",
         "validateStatus": [Function],
         "xsrfCookieName": "XSRF-TOKEN",
         "xsrfHeaderName": "X-XSRF-TOKEN",

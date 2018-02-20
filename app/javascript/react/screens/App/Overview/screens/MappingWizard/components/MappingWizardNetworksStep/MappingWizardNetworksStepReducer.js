@@ -1,30 +1,48 @@
 import Immutable from 'seamless-immutable';
 
-import { FETCH_V2V_NETWORKS } from './MappingWizardNetworksStepConstants';
+import {
+  FETCH_V2V_SOURCE_NETWORKS,
+  FETCH_V2V_TARGET_NETWORKS
+} from './MappingWizardNetworksStepConstants';
 
 const initialState = Immutable({
-  isFetchingNetworks: false,
-  isRejectedNetworks: false,
-  errorNetworks: null,
+  isFetchingSourceNetworks: false,
+  isRejectedSourceNetworks: false,
+  errorSourceNetworks: null,
+  isFetchingTargetNetworks: false,
+  isRejectedTargetNetworks: false,
+  errorTargetNetworks: null,
   sourceNetworks: [],
   targetNetworks: []
 });
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case `${FETCH_V2V_NETWORKS}_PENDING`:
-      return state.set('isFetchingNetworks', true);
-    case `${FETCH_V2V_NETWORKS}_FULFILLED`:
+    case `${FETCH_V2V_SOURCE_NETWORKS}_PENDING`:
+      return state.set('isFetchingSourceNetworks', true);
+    case `${FETCH_V2V_SOURCE_NETWORKS}_FULFILLED`:
       return state
         .set('sourceNetworks', action.payload.sourceNetworks)
-        .set('targetNetworks', action.payload.targetNetworks)
-        .set('isRejectedNetworks', false)
-        .set('isFetchingNetworks', false);
-    case `${FETCH_V2V_NETWORKS}_REJECTED`:
+        .set('isRejectedSourceNetworks', false)
+        .set('isFetchingSourceNetworks', false);
+    case `${FETCH_V2V_SOURCE_NETWORKS}_REJECTED`:
       return state
-        .set('errorNetworks', action.payload)
-        .set('isRejectedNetworks', true)
-        .set('isFetchingNetworks', false);
+        .set('errorSourceNetworks', action.payload)
+        .set('isRejectedSourceNetworks', true)
+        .set('isFetchingSourceNetworks', false);
+
+    case `${FETCH_V2V_TARGET_NETWORKS}_PENDING`:
+      return state.set('isFetchingTargetNetworks', true);
+    case `${FETCH_V2V_TARGET_NETWORKS}_FULFILLED`:
+      return state
+        .set('targetNetworks', action.payload.targetNetworks)
+        .set('isRejectedTargetNetworks', false)
+        .set('isFetchingTargetNetworks', false);
+    case `${FETCH_V2V_TARGET_NETWORKS}_REJECTED`:
+      return state
+        .set('errorTargetNetworks', action.payload)
+        .set('isRejectedTargetNetworks', true)
+        .set('isFetchingTargetNetworks', false);
     default:
       return state;
   }
