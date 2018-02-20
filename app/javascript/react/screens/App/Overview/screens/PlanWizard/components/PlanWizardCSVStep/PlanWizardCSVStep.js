@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Dropzone from 'react-dropzone'
 import cx from 'classnames';
+import Dropzone from 'react-dropzone';
+import csv from 'csv';
 import { bindMethods, Toolbar, Button, Icon, EmptyState, ListView } from 'patternfly-react';
 
 // Unfortunately, this is the recommended way to trigger the browse window from a button outside Dropzone:
@@ -16,7 +17,18 @@ class PlanWizardCSVStep extends React.Component {
   }
 
   onFileDrop(acceptedFiles, rejectedFiles) {
-    console.log('FILE(S) DROPPED! Accepted:', acceptedFiles, 'Rejected:', rejectedFiles);
+    if (acceptedFiles && acceptedFiles.length > 0) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        csv.parse(reader.result, (err, data) => {
+          console.log('PARSED CSV DATA: ', data);
+          // TODO dispatch action to load data into redux
+        });
+      };
+      reader.readAsBinaryString(acceptedFiles[0]);
+    } else {
+      // TODO error reporting?
+    }
   }
 
   render() {

@@ -51,6 +51,7 @@
   "dependencies": {
     "axios": "^0.17.1",
     "classnames": "^2.2.5",
+    "csv": "^2.0.0",
     "cx": "^18.1.11",
     "intl": "~1.2.5",
     "patternfly": "^3.35.1",
