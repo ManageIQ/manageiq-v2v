@@ -4,25 +4,20 @@ import {
   FETCH_V2V_SOURCE_DATASTORES,
   FETCH_V2V_TARGET_DATASTORES
 } from './MappingWizardDatastoresStepConstants';
-import { requestDatastoresData } from './mappingWizardDatastoresStep.fixtures';
+import {
+  requestSourceDatastoresData,
+  requestTargetDatastoresData
+} from './mappingWizardDatastoresStep.fixtures';
 
 const _filterSourceDatastores = response => {
   const { data } = response;
-  const sourceDatastores = [];
-  // do we still need to filter these? probably not...but just leaving for now
-  if (data) {
-    const { storages } = data;
-    if (storages && storages.length) {
-      for (const store of storages) {
-        const { store_type } = store;
-        if (store_type && store_type.includes('VMFS')) {
-          sourceDatastores.push(store);
-        }
-      }
-    }
+  if (data.storages) {
+    return {
+      sourceDatastores: data.storages
+    };
   }
   return {
-    sourceDatastores
+    sourceDatastores: []
   };
 };
 
@@ -35,7 +30,7 @@ const _getSourceDatastoresActionCreator = url => dispatch =>
     // and passing some mock data thru the FULFILLED action after the REJECTED action is finished.
     dispatch({
       type: `${FETCH_V2V_SOURCE_DATASTORES}_FULFILLED`,
-      payload: _filterSourceDatastores(requestDatastoresData.response)
+      payload: _filterSourceDatastores(requestSourceDatastoresData.response)
     });
   });
 
@@ -49,21 +44,13 @@ export const fetchSourceDatastoresAction = (url, id) => {
 
 const _filterTargetDatastores = response => {
   const { data } = response;
-  const targetDatastores = [];
-  // do we still need to filter these? probably not...but just leaving for now
-  if (data) {
-    const { storages } = data;
-    if (storages && storages.length) {
-      for (const store of storages) {
-        const { store_type } = store;
-        if (store_type && store_type.includes('NFS')) {
-          targetDatastores.push(store);
-        }
-      }
-    }
+  if (data.storages) {
+    return {
+      targetDatastores: data.storages
+    };
   }
   return {
-    targetDatastores
+    targetDatastores: []
   };
 };
 
@@ -76,7 +63,7 @@ const _getTargetDatastoresActionCreator = url => dispatch =>
     // and passing some mock data thru the FULFILLED action after the REJECTED action is finished.
     dispatch({
       type: `${FETCH_V2V_TARGET_DATASTORES}_FULFILLED`,
-      payload: _filterTargetDatastores(requestDatastoresData.response)
+      payload: _filterTargetDatastores(requestTargetDatastoresData.response)
     });
   });
 
