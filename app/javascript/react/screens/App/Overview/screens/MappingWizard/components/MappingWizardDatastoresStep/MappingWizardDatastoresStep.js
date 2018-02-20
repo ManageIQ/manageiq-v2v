@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Field, reduxForm } from 'redux-form';
 import { noop, Button, bindMethods } from 'patternfly-react';
+
+import SourceClusterSelect from './components/SourceClusterSelect';
 
 // import DualPaneMapper from '../DualPaneMapper/DualPaneMapper';
 // import DualPaneMapperList from '../DualPaneMapper/DualPaneMapperList';
@@ -64,7 +67,15 @@ class MappingWizardDatastoresStep extends React.Component {
     // todo: change this Button to the source cluster populated Dropdown
     return (
       <div>
-        <Button
+        <SourceClusterSelect
+          sourceClusters={clusterMappings.reduce(
+            (sourceClusters, clusterMapping) => {
+              return sourceClusters.concat(clusterMapping.nodes);
+            },
+            []
+          )}
+        />
+        {/* <Button
           onClick={() =>
             this.selectSourceCluster('10000000000001', '10000000000001')
           }
@@ -104,7 +115,7 @@ class MappingWizardDatastoresStep extends React.Component {
                 </div>
               ))}
             </div>
-          )}
+          )} */}
       </div>
     );
   }
@@ -143,4 +154,8 @@ MappingWizardDatastoresStep.defaultProps = {
   // addSourceDatastore: noop
 };
 
-export default MappingWizardDatastoresStep;
+export default reduxForm({
+  form: 'MappingWizardDatastoresStep',
+  initialValues: { datastoresMappings: [] },
+  destroyOnUnmount: false
+})(MappingWizardDatastoresStep);
