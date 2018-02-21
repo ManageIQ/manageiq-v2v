@@ -11,12 +11,8 @@ class MappingWizardDatastoresStep extends React.Component {
     super(props);
 
     this.state = {
-      selectedCluster: undefined, // dropdown selected cluster
-      selectedClusterMapping: null,
-      selectedTargetDatastore: null, // eslint-disable-line react/no-unused-state
-      selectedSourceDatastore: [], // eslint-disable-line react/no-unused-state
-      datastoreMappings: [], // eslint-disable-line react/no-unused-state
-      selectedDatastoreMapping: null // eslint-disable-line react/no-unused-state
+      selectedCluster: undefined,
+      selectedClusterMapping: null
     };
 
     bindMethods(this, ['selectSourceCluster']);
@@ -55,34 +51,24 @@ class MappingWizardDatastoresStep extends React.Component {
 
   render() {
     const {
-      // todo: inject the mapped clusters from MappingWizardClustersStep as props here
-      clusterMappings, // eslint-disable-line no-unused-vars
-      isFetchingSourceDatastores, // eslint-disable-line no-unused-vars
+      clusterMappings,
+      isFetchingSourceDatastores,
       isRejectedSourceDatastores, // eslint-disable-line no-unused-vars
-      isFetchingTargetDatastores, // eslint-disable-line no-unused-vars
+      isFetchingTargetDatastores,
       isRejectedTargetDatastores, // eslint-disable-line no-unused-vars
       // source/target datastores change depending on selection
-      sourceDatastores, // eslint-disable-line no-unused-vars
-      targetDatastores, // eslint-disable-line no-unused-vars
+      sourceDatastores,
+      targetDatastores,
       removeSourceDatastores,
       removeTargetDatastore,
       addSourceDatastores,
       addTargetDatastore
     } = this.props;
 
-    const {
-      selectedCluster, // eslint-disable-line no-unused-vars
-      selectedClusterMapping,
-      selectedTargetDatastore, // eslint-disable-line no-unused-vars
-      selectedSourceDatastore, // eslint-disable-line no-unused-vars
-      datastoreMappings, // eslint-disable-line no-unused-vars
-      selectedDatastoreMapping // eslint-disable-line no-unused-vars
-    } = this.state;
+    const { selectedCluster, selectedClusterMapping } = this.state;
 
     // first we render the dropdown selection for each source cluster in clusterMappings,
     // then we call `selectSourceCluster` and go get that cluster's datastores on selection
-
-    // todo: change this Button to the source cluster populated Dropdown
     return (
       <div>
         <SourceClusterSelect
