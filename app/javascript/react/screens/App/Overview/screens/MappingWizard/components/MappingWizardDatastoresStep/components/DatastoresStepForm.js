@@ -16,7 +16,11 @@ class DatastoresStepForm extends React.Component {
       selectedTargetDatastore: null
     };
 
-    bindMethods(this, ['selectSourceDatastore', 'selectTargetDatastore']);
+    bindMethods(this, [
+      'selectSourceDatastore',
+      'selectTargetDatastore',
+      'addDatastoreMapping'
+    ]);
   }
 
   selectSourceDatastore(sourceDatastore) {
@@ -44,11 +48,71 @@ class DatastoresStepForm extends React.Component {
     this.setState(() => ({ selectedTargetDatastore: targetDatastore }));
   }
 
+  addDatastoreMapping() {
+    // const { removeTargetCluster, removeSourceClusters, input } = this.props;
+    const { input, selectedCluster, selectedClusterMapping } = this.props;
+    const { selectedTargetDatastore } = this.state;
+    const { nodes, ...targetCluster } = selectedClusterMapping;
+    this.setState(prevState => {
+      // removeSourceClusters(prevState.selectedSourceClusters);
+      // removeTargetCluster(prevState.selectedTargetCluster);
+      if (input.value.length === 0) {
+        input.onChange([
+          {
+            ...targetCluster,
+            text: targetCluster.name,
+            selectable: false,
+            nodes: [
+              {
+                ...prevState.selectedTargetDatastore,
+                text: prevState.selectedTargetDatastore.name,
+                selectable: true,
+                selected: false,
+                state: {
+                  expanded: true
+                },
+                nodes: prevState.selectedSourceDatastores.map(datastore => {
+                  return {
+                    ...datastore,
+                    text: datastore.name,
+                    icon: 'fa fa-file-o'
+                  };
+                })
+              }
+            ]
+          }
+        ]);
+      } else {
+        input.onChange([
+          {
+            ...input.value[0],
+            nodes: input.value[0].nodes.concat({
+              ...prevState.selectedTargetDatastore,
+              text: prevState.selectedTargetDatastore.name,
+              selectable: true,
+              selected: false,
+              state: {
+                expanded: true
+              },
+              nodes: prevState.selectedSourceDatastores.map(datastore => {
+                return {
+                  ...datastore,
+                  text: datastore.name,
+                  icon: 'fa fa-file-o'
+                };
+              })
+            })
+          }
+        ]);
+      }
+    });
+  }
+
   render() {
     const { sourceDatastores, targetDatastores } = this.props;
     const { selectedSourceDatastores, selectedTargetDatastore } = this.state;
     return (
-      <DualPaneMapper handleButtonClick={() => {}}>
+      <DualPaneMapper handleButtonClick={this.addDatastoreMapping}>
         <DualPaneMapperList listTitle="Source Datastores">
           {sourceDatastores.map(item => (
             <DualPaneMapperListItem
@@ -61,7 +125,7 @@ class DatastoresStepForm extends React.Component {
                 )
               }
               handleClick={this.selectSourceDatastore}
-              handleKeyPress={this.selectSourceCluster}
+              handleKeyPress={this.selectSourceDatastore}
             />
           ))}
           {/* <DualPaneMapperCount

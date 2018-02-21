@@ -12,6 +12,7 @@ class MappingWizardDatastoresStep extends React.Component {
 
     this.state = {
       selectedCluster: null, // dropdown selected cluster
+      selectedClusterMapping: null,
       selectedTargetDatastore: null, // eslint-disable-line react/no-unused-state
       selectedSourceDatastore: [], // eslint-disable-line react/no-unused-state
       datastoreMappings: [], // eslint-disable-line react/no-unused-state
@@ -33,10 +34,21 @@ class MappingWizardDatastoresStep extends React.Component {
       clusterMappings
     } = this.props;
 
-    const targetCluster = clusterMappings.find(clusterMapping => {
+    const selectedClusterMapping = clusterMappings.find(clusterMapping => {
       return clusterMapping.nodes.some(sourceCluster => {
         return sourceCluster.id === sourceClusterId;
       });
+    });
+
+    const { nodes: sourceClusters, ...targetCluster } = selectedClusterMapping;
+
+    this.setState(() => {
+      return {
+        selectedCluster: sourceClusters.find(sourceCluster => {
+          return sourceCluster.id === sourceClusterId;
+        }),
+        selectedClusterMapping
+      };
     });
 
     fetchSourceDatastoresAction(fetchDatastoresUrl, sourceClusterId);
@@ -58,6 +70,7 @@ class MappingWizardDatastoresStep extends React.Component {
 
     const {
       selectedCluster, // eslint-disable-line no-unused-vars
+      selectedClusterMapping,
       selectedTargetDatastore, // eslint-disable-line no-unused-vars
       selectedSourceDatastore, // eslint-disable-line no-unused-vars
       datastoreMappings, // eslint-disable-line no-unused-vars
@@ -83,9 +96,13 @@ class MappingWizardDatastoresStep extends React.Component {
           !isFetchingTargetDatastores &&
           sourceDatastores.length > 0 &&
           targetDatastores.length > 0 && (
-            <DatastoresStepForm
+            <Field
+              name="datastoresMappings"
+              component={DatastoresStepForm}
               sourceDatastores={sourceDatastores}
               targetDatastores={targetDatastores}
+              selectedCluster={selectedCluster}
+              selectedClusterMapping={selectedClusterMapping}
             />
           )}
       </div>
@@ -127,7 +144,7 @@ MappingWizardDatastoresStep.defaultProps = {
 };
 
 export default reduxForm({
-  form: 'MappingWizardDatastoresStep',
+  form: 'mappingWizardDatastoresStep',
   initialValues: { datastoresMappings: [] },
   destroyOnUnmount: false
 })(MappingWizardDatastoresStep);
