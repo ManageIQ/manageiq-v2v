@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import { noop, Button, bindMethods } from 'patternfly-react';
 
-import SourceClusterSelect from './components/SourceClusterSelect';
+import SourceClusterSelect from './components/SourceClusterSelect/SourceClusterSelect';
 import DatastoresStepForm from './components/DatastoresStepForm';
 
 class MappingWizardDatastoresStep extends React.Component {
@@ -11,7 +11,7 @@ class MappingWizardDatastoresStep extends React.Component {
     super(props);
 
     this.state = {
-      selectedCluster: null, // dropdown selected cluster
+      selectedCluster: undefined, // dropdown selected cluster
       selectedClusterMapping: null,
       selectedTargetDatastore: null, // eslint-disable-line react/no-unused-state
       selectedSourceDatastore: [], // eslint-disable-line react/no-unused-state
@@ -95,6 +95,7 @@ class MappingWizardDatastoresStep extends React.Component {
             []
           )}
           selectSourceCluster={this.selectSourceCluster}
+          selectedCluster={selectedCluster}
         />
         {!isFetchingSourceDatastores &&
           !isFetchingTargetDatastores &&
