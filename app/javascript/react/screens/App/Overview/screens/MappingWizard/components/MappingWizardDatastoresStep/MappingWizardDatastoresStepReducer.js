@@ -4,7 +4,9 @@ import {
   FETCH_V2V_SOURCE_DATASTORES,
   FETCH_V2V_TARGET_DATASTORES,
   REMOVE_V2V_TARGET_DATASTORE,
-  REMOVE_V2V_SOURCE_DATASTORES
+  REMOVE_V2V_SOURCE_DATASTORES,
+  ADD_V2V_TARGET_DATASTORE,
+  ADD_V2V_SOURCE_DATASTORES
 } from './MappingWizardDatastoresStepConstants';
 
 const initialState = Immutable({
@@ -64,6 +66,16 @@ export default (state = initialState, action) => {
             )
         )
       );
+    case ADD_V2V_TARGET_DATASTORE:
+      return state.set('targetDatastores', [
+        ...state.targetDatastores,
+        action.targetDatastoreToAdd
+      ]);
+    case ADD_V2V_SOURCE_DATASTORES:
+      return state.set('sourceDatastores', [
+        ...state.sourceDatastores,
+        ...action.sourceDatastoresToAdd
+      ]);
     default:
       return state;
   }

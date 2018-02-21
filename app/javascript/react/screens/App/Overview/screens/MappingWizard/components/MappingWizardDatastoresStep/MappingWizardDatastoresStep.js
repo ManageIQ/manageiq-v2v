@@ -67,7 +67,9 @@ class MappingWizardDatastoresStep extends React.Component {
       sourceDatastores, // eslint-disable-line no-unused-vars
       targetDatastores, // eslint-disable-line no-unused-vars
       removeSourceDatastores,
-      removeTargetDatastore
+      removeTargetDatastore,
+      addSourceDatastores,
+      addTargetDatastore
     } = this.props;
 
     const {
@@ -106,6 +108,8 @@ class MappingWizardDatastoresStep extends React.Component {
               selectedClusterMapping={selectedClusterMapping}
               removeSourceDatastores={removeSourceDatastores}
               removeTargetDatastore={removeTargetDatastore}
+              addSourceDatastores={addSourceDatastores}
+              addTargetDatastore={addTargetDatastore}
             />
           )}
       </div>
