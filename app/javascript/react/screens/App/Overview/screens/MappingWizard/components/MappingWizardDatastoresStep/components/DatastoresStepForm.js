@@ -60,7 +60,6 @@ class DatastoresStepForm extends React.Component {
       removeSourceDatastores,
       removeTargetDatastore
     } = this.props;
-    // const { nodes, ...targetCluster } = selectedClusterMapping;
     this.setState(prevState => {
       removeSourceDatastores(prevState.selectedSourceDatastores);
       removeTargetDatastore(prevState.selectedTargetDatastore);
