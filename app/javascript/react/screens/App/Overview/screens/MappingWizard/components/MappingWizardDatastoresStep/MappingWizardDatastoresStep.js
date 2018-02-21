@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
-import { noop, Button, bindMethods } from 'patternfly-react';
+import { noop, bindMethods } from 'patternfly-react';
 
 import SourceClusterSelect from './components/SourceClusterSelect/SourceClusterSelect';
 import DatastoresStepForm from './components/DatastoresStepForm';
@@ -34,22 +34,20 @@ class MappingWizardDatastoresStep extends React.Component {
       clusterMappings
     } = this.props;
 
-    const selectedClusterMapping = clusterMappings.find(clusterMapping => {
-      return clusterMapping.nodes.some(sourceCluster => {
-        return sourceCluster.id === sourceClusterId;
-      });
-    });
+    const selectedClusterMapping = clusterMappings.find(clusterMapping =>
+      clusterMapping.nodes.some(
+        sourceCluster => sourceCluster.id === sourceClusterId
+      )
+    );
 
     const { nodes: sourceClusters, ...targetCluster } = selectedClusterMapping;
 
-    this.setState(() => {
-      return {
-        selectedCluster: sourceClusters.find(sourceCluster => {
-          return sourceCluster.id === sourceClusterId;
-        }),
-        selectedClusterMapping
-      };
-    });
+    this.setState(() => ({
+      selectedCluster: sourceClusters.find(
+        sourceCluster => sourceCluster.id === sourceClusterId
+      ),
+      selectedClusterMapping
+    }));
 
     fetchSourceDatastoresAction(fetchDatastoresUrl, sourceClusterId);
     fetchTargetDatastoresAction(fetchDatastoresUrl, targetCluster.id);
@@ -89,9 +87,8 @@ class MappingWizardDatastoresStep extends React.Component {
       <div>
         <SourceClusterSelect
           sourceClusters={clusterMappings.reduce(
-            (sourceClusters, clusterMapping) => {
-              return sourceClusters.concat(clusterMapping.nodes);
-            },
+            (sourceClusters, clusterMapping) =>
+              sourceClusters.concat(clusterMapping.nodes),
             []
           )}
           selectSourceCluster={this.selectSourceCluster}
@@ -128,11 +125,11 @@ MappingWizardDatastoresStep.propTypes = {
   isFetchingSourceDatastores: PropTypes.bool,
   isRejectedSourceDatastores: PropTypes.bool,
   isFetchingTargetDatastores: PropTypes.bool,
-  isRejectedTargetDatastores: PropTypes.bool
-  // removeTargetDatastore: PropTypes.func,
-  // removeSourceDatastore: PropTypes.func,
-  // addTargetDatastore: PropTypes.func,
-  // addSourceDatastore: PropTypes.func
+  isRejectedTargetDatastores: PropTypes.bool,
+  removeTargetDatastore: PropTypes.func,
+  removeSourceDatastores: PropTypes.func,
+  addTargetDatastore: PropTypes.func,
+  addSourceDatastores: PropTypes.func
 };
 MappingWizardDatastoresStep.defaultProps = {
   clusterMappings: [],
@@ -144,11 +141,11 @@ MappingWizardDatastoresStep.defaultProps = {
   isFetchingSourceDatastores: false,
   isRejectedSourceDatastores: false,
   isFetchingTargetDatastores: false,
-  isRejectedTargetDatastores: false
-  // removeTargetDatastore: noop,
-  // removeSourceDatastore: noop,
-  // addTargetDatastore: noop,
-  // addSourceDatastore: noop
+  isRejectedTargetDatastores: false,
+  removeTargetDatastore: noop,
+  removeSourceDatastores: noop,
+  addTargetDatastore: noop,
+  addSourceDatastores: noop
 };
 
 export default reduxForm({
