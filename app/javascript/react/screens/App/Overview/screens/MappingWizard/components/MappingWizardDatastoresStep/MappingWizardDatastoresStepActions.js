@@ -4,7 +4,9 @@ import {
   FETCH_V2V_SOURCE_DATASTORES,
   FETCH_V2V_TARGET_DATASTORES,
   REMOVE_V2V_TARGET_DATASTORE,
-  REMOVE_V2V_SOURCE_DATASTORES
+  REMOVE_V2V_SOURCE_DATASTORES,
+  ADD_V2V_TARGET_DATASTORE,
+  ADD_V2V_SOURCE_DATASTORES
 } from './MappingWizardDatastoresStepConstants';
 import {
   requestSourceDatastoresData,
@@ -87,4 +89,16 @@ export const removeSourceDatastores = sourceDatastoresToRemove => dispatch =>
   dispatch({
     type: REMOVE_V2V_SOURCE_DATASTORES,
     sourceDatastoresToRemove
+  });
+
+export const addTargetDatastore = targetDatastoreToAdd => dispatch =>
+  dispatch({
+    type: ADD_V2V_TARGET_DATASTORE,
+    targetDatastoreToAdd
+  });
+
+export const addSourceDatastores = sourceDatastoresToAdd => dispatch =>
+  dispatch({
+    type: ADD_V2V_SOURCE_DATASTORES,
+    sourceDatastoresToAdd
   });

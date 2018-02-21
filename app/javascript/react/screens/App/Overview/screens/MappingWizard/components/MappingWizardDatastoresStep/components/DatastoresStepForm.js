@@ -22,7 +22,9 @@ class DatastoresStepForm extends React.Component {
       'selectSourceDatastore',
       'selectTargetDatastore',
       'addDatastoreMapping',
-      'selectMapping'
+      'selectMapping',
+      'removeMapping',
+      'removeAll'
     ]);
   }
 
@@ -134,9 +136,47 @@ class DatastoresStepForm extends React.Component {
     this.setState(() => ({ selectedMapping }));
   }
 
+  removeMapping() {
+    const { addTargetDatastore, addSourceDatastores, input } = this.props;
+    this.setState(prevState => {
+      const { nodes, ...targetDatastore } = prevState.selectedMapping;
+      addTargetDatastore(targetDatastore);
+      addSourceDatastores(nodes);
+      if (input.value[0].nodes.length > 1) {
+        input.onChange([
+          {
+            ...input.value[0],
+            nodes: input.value[0].nodes.filter(
+              mapping => !(mapping.id === prevState.selectedMapping.id)
+            )
+          }
+        ]);
+      } else {
+        input.onChange([]);
+      }
+      return {
+        selectedMapping: null
+      };
+    });
+  }
+
+  removeAll() {
+    const { addTargetDatastore, addSourceDatastores, input } = this.props;
+    input.value[0].nodes.forEach(mapping => {
+      const { nodes, ...targetCluster } = mapping;
+      addTargetDatastore(targetCluster);
+      addSourceDatastores(nodes);
+    });
+    input.onChange([]);
+  }
+
   render() {
     const { sourceDatastores, targetDatastores, input } = this.props;
-    const { selectedSourceDatastores, selectedTargetDatastore } = this.state;
+    const {
+      selectedSourceDatastores,
+      selectedTargetDatastore,
+      selectedMapping
+    } = this.state;
     return (
       <div>
         <DualPaneMapper handleButtonClick={this.addDatastoreMapping}>
@@ -180,6 +220,9 @@ class DatastoresStepForm extends React.Component {
         <DatastoresStepTreeView
           mappings={input.value}
           selectMapping={this.selectMapping}
+          removeMapping={this.removeMapping}
+          removeAll={this.removeAll}
+          selectedMapping={selectedMapping}
         />
       </div>
     );
