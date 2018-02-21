@@ -21,7 +21,7 @@ const SourceClusterSelect = ({
     <Form horizontal>
       <FormGroup>
         <Grid.Col componentClass={ControlLabel} sm={6}>
-          Map source datastores to target datastores for cluster
+          {__('Map source datastores to target datastores for cluster')}
         </Grid.Col>
         <Grid.Col sm={3}>
           <InputGroup>
@@ -30,7 +30,7 @@ const SourceClusterSelect = ({
                 selectedCluster.name
               ) : (
                 <span className="placeholder-text">
-                  Select a source cluster
+                  {__('Select a source cluster')}
                 </span>
               )}
             </FormControl.Static>
