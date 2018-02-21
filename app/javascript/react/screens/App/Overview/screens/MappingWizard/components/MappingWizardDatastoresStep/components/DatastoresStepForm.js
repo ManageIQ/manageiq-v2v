@@ -52,13 +52,18 @@ class DatastoresStepForm extends React.Component {
   }
 
   addDatastoreMapping() {
-    // const { removeTargetCluster, removeSourceClusters, input } = this.props;
-    const { input, selectedCluster, selectedClusterMapping } = this.props;
+    const {
+      input,
+      selectedCluster,
+      selectedClusterMapping,
+      removeSourceDatastores,
+      removeTargetDatastore
+    } = this.props;
     const { selectedTargetDatastore } = this.state;
     const { nodes, ...targetCluster } = selectedClusterMapping;
     this.setState(prevState => {
-      // removeSourceClusters(prevState.selectedSourceClusters);
-      // removeTargetCluster(prevState.selectedTargetCluster);
+      removeSourceDatastores(prevState.selectedSourceDatastores);
+      removeTargetDatastore(prevState.selectedTargetDatastore);
       if (input.value.length === 0) {
         input.onChange([
           {
@@ -108,6 +113,10 @@ class DatastoresStepForm extends React.Component {
           }
         ]);
       }
+      return {
+        selectedTargetDatastore: null,
+        selectedSourceDatastores: []
+      };
     });
   }
 
@@ -132,38 +141,40 @@ class DatastoresStepForm extends React.Component {
       <div>
         <DualPaneMapper handleButtonClick={this.addDatastoreMapping}>
           <DualPaneMapperList listTitle="Source Datastores">
-            {sourceDatastores.map(item => (
-              <DualPaneMapperListItem
-                item={item}
-                key={item.id}
-                selected={
-                  selectedSourceDatastores &&
-                  selectedSourceDatastores.some(
-                    sourceDatastore => sourceDatastore.id === item.id
-                  )
-                }
-                handleClick={this.selectSourceDatastore}
-                handleKeyPress={this.selectSourceDatastore}
-              />
-            ))}
-            {/* <DualPaneMapperCount
-                      selectedItems={selectedSourceClusters.length}
-                      totalItems={sourceClusters.length}
-                    /> */}
+            {sourceDatastores &&
+              sourceDatastores.map(item => (
+                <DualPaneMapperListItem
+                  item={item}
+                  key={item.id}
+                  selected={
+                    selectedSourceDatastores &&
+                    selectedSourceDatastores.some(
+                      sourceDatastore => sourceDatastore.id === item.id
+                    )
+                  }
+                  handleClick={this.selectSourceDatastore}
+                  handleKeyPress={this.selectSourceDatastore}
+                />
+              ))}
+            <DualPaneMapperCount
+              selectedItems={selectedSourceDatastores.length}
+              totalItems={sourceDatastores.length}
+            />
           </DualPaneMapperList>
           <DualPaneMapperList listTitle="Target Datastores">
-            {targetDatastores.map(item => (
-              <DualPaneMapperListItem
-                item={item}
-                key={item.id}
-                selected={
-                  selectedTargetDatastore &&
-                  selectedTargetDatastore.id === item.id
-                }
-                handleClick={this.selectTargetDatastore}
-                handleKeyPress={this.selectTargetDatastore}
-              />
-            ))}
+            {targetDatastores &&
+              targetDatastores.map(item => (
+                <DualPaneMapperListItem
+                  item={item}
+                  key={item.id}
+                  selected={
+                    selectedTargetDatastore &&
+                    selectedTargetDatastore.id === item.id
+                  }
+                  handleClick={this.selectTargetDatastore}
+                  handleKeyPress={this.selectTargetDatastore}
+                />
+              ))}
           </DualPaneMapperList>
         </DualPaneMapper>
         <DatastoresStepTreeView
