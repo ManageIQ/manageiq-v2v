@@ -65,7 +65,9 @@ class MappingWizardDatastoresStep extends React.Component {
       isRejectedTargetDatastores, // eslint-disable-line no-unused-vars
       // source/target datastores change depending on selection
       sourceDatastores, // eslint-disable-line no-unused-vars
-      targetDatastores // eslint-disable-line no-unused-vars
+      targetDatastores, // eslint-disable-line no-unused-vars
+      removeSourceDatastores,
+      removeTargetDatastore
     } = this.props;
 
     const {
@@ -94,8 +96,7 @@ class MappingWizardDatastoresStep extends React.Component {
         />
         {!isFetchingSourceDatastores &&
           !isFetchingTargetDatastores &&
-          sourceDatastores.length > 0 &&
-          targetDatastores.length > 0 && (
+          selectedCluster && (
             <Field
               name="datastoresMappings"
               component={DatastoresStepForm}
@@ -103,6 +104,8 @@ class MappingWizardDatastoresStep extends React.Component {
               targetDatastores={targetDatastores}
               selectedCluster={selectedCluster}
               selectedClusterMapping={selectedClusterMapping}
+              removeSourceDatastores={removeSourceDatastores}
+              removeTargetDatastore={removeTargetDatastore}
             />
           )}
       </div>

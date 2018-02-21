@@ -2,7 +2,9 @@ import URI from 'urijs';
 import API from '../../../../../../../../common/API';
 import {
   FETCH_V2V_SOURCE_DATASTORES,
-  FETCH_V2V_TARGET_DATASTORES
+  FETCH_V2V_TARGET_DATASTORES,
+  REMOVE_V2V_TARGET_DATASTORE,
+  REMOVE_V2V_SOURCE_DATASTORES
 } from './MappingWizardDatastoresStepConstants';
 import {
   requestSourceDatastoresData,
@@ -74,3 +76,15 @@ export const fetchTargetDatastoresAction = (url, id) => {
 
   return _getTargetDatastoresActionCreator(uri.toString());
 };
+
+export const removeTargetDatastore = targetDatastoreToRemove => dispatch =>
+  dispatch({
+    type: REMOVE_V2V_TARGET_DATASTORE,
+    targetDatastoreToRemove
+  });
+
+export const removeSourceDatastores = sourceDatastoresToRemove => dispatch =>
+  dispatch({
+    type: REMOVE_V2V_SOURCE_DATASTORES,
+    sourceDatastoresToRemove
+  });
