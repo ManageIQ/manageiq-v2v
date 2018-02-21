@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { noop } from 'patternfly-react';
 import { Field, reduxForm } from 'redux-form';
+import { length } from 'redux-form-validators';
 
 import ClustersStepForm from './components/ClustersStepForm';
 
@@ -41,6 +42,7 @@ class MappingWizardClustersStep extends React.Component {
           removeTargetCluster={removeTargetCluster}
           addTargetCluster={addTargetCluster}
           addSourceClusters={addSourceClusters}
+          validate={[length({ min: 1 })]}
         />
       );
     }
