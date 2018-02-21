@@ -6,6 +6,7 @@ import DualPaneMapper from '../../DualPaneMapper/DualPaneMapper';
 import DualPaneMapperList from '../../DualPaneMapper/DualPaneMapperList';
 import DualPaneMapperCount from '../../DualPaneMapper/DualPaneMapperCount';
 import DualPaneMapperListItem from '../../DualPaneMapper/DualPaneMapperListItem';
+import DatastoresStepTreeView from './DatastoresStepTreeView';
 
 class DatastoresStepForm extends React.Component {
   constructor(props) {
@@ -13,13 +14,15 @@ class DatastoresStepForm extends React.Component {
 
     this.state = {
       selectedSourceDatastores: [],
-      selectedTargetDatastore: null
+      selectedTargetDatastore: null,
+      selectedMapping: null
     };
 
     bindMethods(this, [
       'selectSourceDatastore',
       'selectTargetDatastore',
-      'addDatastoreMapping'
+      'addDatastoreMapping',
+      'selectMapping'
     ]);
   }
 
@@ -108,46 +111,66 @@ class DatastoresStepForm extends React.Component {
     });
   }
 
+  selectMapping(selectedMapping) {
+    const { input } = this.props;
+    const updatedMappings = input.value[0].nodes.map(mapping => {
+      if (mapping.id === selectedMapping.id) {
+        return { ...mapping, selected: !mapping.selected };
+      } else if (mapping.id !== selectedMapping.id && mapping.selected) {
+        return { ...mapping, selected: false };
+      }
+      return mapping;
+    });
+    input.onChange([{ ...input.value[0], nodes: updatedMappings }]);
+    this.setState(() => ({ selectedMapping }));
+  }
+
   render() {
-    const { sourceDatastores, targetDatastores } = this.props;
+    const { sourceDatastores, targetDatastores, input } = this.props;
     const { selectedSourceDatastores, selectedTargetDatastore } = this.state;
     return (
-      <DualPaneMapper handleButtonClick={this.addDatastoreMapping}>
-        <DualPaneMapperList listTitle="Source Datastores">
-          {sourceDatastores.map(item => (
-            <DualPaneMapperListItem
-              item={item}
-              key={item.id}
-              selected={
-                selectedSourceDatastores &&
-                selectedSourceDatastores.some(
-                  sourceDatastore => sourceDatastore.id === item.id
-                )
-              }
-              handleClick={this.selectSourceDatastore}
-              handleKeyPress={this.selectSourceDatastore}
-            />
-          ))}
-          {/* <DualPaneMapperCount
+      <div>
+        <DualPaneMapper handleButtonClick={this.addDatastoreMapping}>
+          <DualPaneMapperList listTitle="Source Datastores">
+            {sourceDatastores.map(item => (
+              <DualPaneMapperListItem
+                item={item}
+                key={item.id}
+                selected={
+                  selectedSourceDatastores &&
+                  selectedSourceDatastores.some(
+                    sourceDatastore => sourceDatastore.id === item.id
+                  )
+                }
+                handleClick={this.selectSourceDatastore}
+                handleKeyPress={this.selectSourceDatastore}
+              />
+            ))}
+            {/* <DualPaneMapperCount
                       selectedItems={selectedSourceClusters.length}
                       totalItems={sourceClusters.length}
                     /> */}
-        </DualPaneMapperList>
-        <DualPaneMapperList listTitle="Target Datastores">
-          {targetDatastores.map(item => (
-            <DualPaneMapperListItem
-              item={item}
-              key={item.id}
-              selected={
-                selectedTargetDatastore &&
-                selectedTargetDatastore.id === item.id
-              }
-              handleClick={this.selectTargetDatastore}
-              handleKeyPress={this.selectTargetDatastore}
-            />
-          ))}
-        </DualPaneMapperList>
-      </DualPaneMapper>
+          </DualPaneMapperList>
+          <DualPaneMapperList listTitle="Target Datastores">
+            {targetDatastores.map(item => (
+              <DualPaneMapperListItem
+                item={item}
+                key={item.id}
+                selected={
+                  selectedTargetDatastore &&
+                  selectedTargetDatastore.id === item.id
+                }
+                handleClick={this.selectTargetDatastore}
+                handleKeyPress={this.selectTargetDatastore}
+              />
+            ))}
+          </DualPaneMapperList>
+        </DualPaneMapper>
+        <DatastoresStepTreeView
+          mappings={input.value}
+          selectMapping={this.selectMapping}
+        />
+      </div>
     );
   }
 }
