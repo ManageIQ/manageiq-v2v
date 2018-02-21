@@ -134,7 +134,7 @@ class ClustersStepForm extends React.Component {
     } = this.state;
 
     return (
-      <div className="mapping-wizard-clusters-step">
+      <div className="dual-pane-mapper-form">
         <DualPaneMapper
           handleButtonClick={this.addMapping}
           validMapping={

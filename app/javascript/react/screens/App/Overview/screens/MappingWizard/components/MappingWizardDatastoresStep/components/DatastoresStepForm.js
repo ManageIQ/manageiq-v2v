@@ -178,7 +178,7 @@ class DatastoresStepForm extends React.Component {
       selectedMapping
     } = this.state;
     return (
-      <div>
+      <div className="dual-pane-mapper-form">
         <DualPaneMapper handleButtonClick={this.addDatastoreMapping}>
           <DualPaneMapperList listTitle="Source Datastores">
             {sourceDatastores &&
