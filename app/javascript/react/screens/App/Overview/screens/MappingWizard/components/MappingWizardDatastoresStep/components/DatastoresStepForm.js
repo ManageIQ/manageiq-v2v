@@ -60,11 +60,17 @@ class DatastoresStepForm extends React.Component {
       removeSourceDatastores,
       removeTargetDatastore
     } = this.props;
+
+    const noMappingForTargetCluster = !input.value.some(
+      datastoreMapping => datastoreMapping.id === selectedClusterMapping.id
+    );
+
     this.setState(prevState => {
       removeSourceDatastores(prevState.selectedSourceDatastores);
       removeTargetDatastore(prevState.selectedTargetDatastore);
-      if (input.value.length === 0) {
+      if (input.value.length === 0 || noMappingForTargetCluster) {
         input.onChange([
+          ...input.value,
           {
             ...selectedClusterMapping,
             text: selectedClusterMapping.name,
@@ -88,25 +94,30 @@ class DatastoresStepForm extends React.Component {
           }
         ]);
       } else {
-        input.onChange([
-          {
-            ...input.value[0],
-            nodes: input.value[0].nodes.concat({
-              ...prevState.selectedTargetDatastore,
-              text: prevState.selectedTargetDatastore.name,
-              selectable: true,
-              selected: false,
-              state: {
-                expanded: true
-              },
-              nodes: prevState.selectedSourceDatastores.map(datastore => ({
-                ...datastore,
-                text: datastore.name,
-                icon: 'fa fa-file-o'
-              }))
-            })
-          }
-        ]);
+        input.onChange(
+          input.value.map(datastoreMapping => {
+            if (datastoreMapping.id !== selectedClusterMapping.id) {
+              return datastoreMapping;
+            }
+            return {
+              ...datastoreMapping,
+              nodes: datastoreMapping.nodes.concat({
+                ...prevState.selectedTargetDatastore,
+                text: prevState.selectedTargetDatastore.name,
+                selectable: true,
+                selected: false,
+                state: {
+                  expanded: true
+                },
+                nodes: prevState.selectedSourceDatastores.map(datastore => ({
+                  ...datastore,
+                  text: datastore.name,
+                  icon: 'fa fa-file-o'
+                }))
+              })
+            };
+          })
+        );
       }
       return {
         selectedTargetDatastore: null,
