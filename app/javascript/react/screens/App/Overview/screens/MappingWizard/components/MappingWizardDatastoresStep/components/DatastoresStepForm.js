@@ -128,15 +128,29 @@ class DatastoresStepForm extends React.Component {
 
   selectMapping(selectedMapping) {
     const { input } = this.props;
-    const updatedMappings = input.value[0].nodes.map(mapping => {
-      if (mapping.id === selectedMapping.id) {
-        return { ...mapping, selected: !mapping.selected };
-      } else if (mapping.id !== selectedMapping.id && mapping.selected) {
-        return { ...mapping, selected: false };
-      }
-      return mapping;
-    });
-    input.onChange([{ ...input.value[0], nodes: updatedMappings }]);
+
+    input.onChange(
+      input.value.map(targetClusterDatastoreMappings => {
+        const updatedMappings = targetClusterDatastoreMappings.nodes.map(
+          datastoreMapping => {
+            if (datastoreMapping.id === selectedMapping.id) {
+              console.log(datastoreMapping);
+              return {
+                ...datastoreMapping,
+                selected: !datastoreMapping.selected
+              };
+            } else if (
+              datastoreMapping.id !== selectedMapping.id &&
+              datastoreMapping.selected
+            ) {
+              return { ...datastoreMapping, selected: false };
+            }
+            return datastoreMapping;
+          }
+        );
+        return { ...targetClusterDatastoreMappings, nodes: updatedMappings };
+      })
+    );
     this.setState(() => ({ selectedMapping }));
   }
 
