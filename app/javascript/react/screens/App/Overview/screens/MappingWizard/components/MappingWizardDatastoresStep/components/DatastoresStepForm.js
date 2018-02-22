@@ -8,10 +8,7 @@ import DualPaneMapperCount from '../../DualPaneMapper/DualPaneMapperCount';
 import DualPaneMapperListItem from '../../DualPaneMapper/DualPaneMapperListItem';
 import DatastoresStepTreeView from './DatastoresStepTreeView';
 
-import {
-  sourceDatastoreFilter,
-  targetDatastoreFilter
-} from '../MappingWizardDatastoresStepSelectors';
+import { sourceDatastoreFilter } from '../MappingWizardDatastoresStepSelectors';
 
 class DatastoresStepForm extends React.Component {
   constructor(props) {
@@ -62,17 +59,24 @@ class DatastoresStepForm extends React.Component {
     const {
       input,
       selectedClusterMapping,
-      removeSourceDatastores,
-      removeTargetDatastore
+      removeSourceDatastores
     } = this.props;
+
+    const { selectedTargetDatastore } = this.state;
 
     const noMappingForTargetCluster = !input.value.some(
       datastoreMapping => datastoreMapping.id === selectedClusterMapping.id
     );
 
+    const addingToExistingMapping = input.value.some(
+      targetClusterDatastoreMappings =>
+        targetClusterDatastoreMappings.nodes.some(
+          datastoreMapping => datastoreMapping.id === selectedTargetDatastore.id
+        )
+    );
+
     this.setState(prevState => {
       removeSourceDatastores(prevState.selectedSourceDatastores);
-      removeTargetDatastore(prevState.selectedTargetDatastore);
       if (input.value.length === 0 || noMappingForTargetCluster) {
         input.onChange([
           ...input.value,
@@ -103,6 +107,25 @@ class DatastoresStepForm extends React.Component {
           input.value.map(datastoreMapping => {
             if (datastoreMapping.id !== selectedClusterMapping.id) {
               return datastoreMapping;
+            } else if (addingToExistingMapping) {
+              return {
+                ...datastoreMapping,
+                nodes: datastoreMapping.nodes.map(mapping => {
+                  if (mapping.id === prevState.selectedTargetDatastore.id) {
+                    return {
+                      ...mapping,
+                      nodes: mapping.nodes.concat(
+                        prevState.selectedSourceDatastores.map(datastore => ({
+                          ...datastore,
+                          text: datastore.name,
+                          icon: 'fa fa-file-o'
+                        }))
+                      )
+                    };
+                  }
+                  return mapping;
+                })
+              };
             }
             return {
               ...datastoreMapping,
@@ -139,7 +162,6 @@ class DatastoresStepForm extends React.Component {
         const updatedMappings = targetClusterDatastoreMappings.nodes.map(
           datastoreMapping => {
             if (datastoreMapping.id === selectedMapping.id) {
-              console.log(datastoreMapping);
               return {
                 ...datastoreMapping,
                 selected: !datastoreMapping.selected
@@ -231,7 +253,7 @@ class DatastoresStepForm extends React.Component {
           </DualPaneMapperList>
           <DualPaneMapperList listTitle="Target Datastores">
             {targetDatastores &&
-              targetDatastoreFilter(targetDatastores, input.value).map(item => (
+              targetDatastores.map(item => (
                 <DualPaneMapperListItem
                   item={item}
                   key={item.id}
@@ -263,7 +285,6 @@ DatastoresStepForm.propTypes = {
   input: PropTypes.object,
   selectedClusterMapping: PropTypes.object,
   removeSourceDatastores: PropTypes.func,
-  removeTargetDatastore: PropTypes.func,
   addTargetDatastore: PropTypes.func,
   addSourceDatastores: PropTypes.func,
   sourceDatastores: PropTypes.array,
