@@ -17,6 +17,21 @@ class MappingWizardDatastoresStep extends React.Component {
     bindMethods(this, ['selectSourceCluster', 'resetState']);
   }
 
+  componentWillMount() {
+    const { clusterMappings } = this.props;
+
+    const sourceClusters = clusterMappings.reduce(
+      (clusters, clusterMapping) => {
+        return clusters.concat(clusterMapping.nodes);
+      },
+      []
+    );
+
+    if (sourceClusters.length === 1) {
+      this.selectSourceCluster(sourceClusters[0].id);
+    }
+  }
+
   componentDidMount() {}
 
   selectSourceCluster(sourceClusterId) {
