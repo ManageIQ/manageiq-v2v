@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import { noop, bindMethods } from 'patternfly-react';
-
 import SourceClusterSelect from './components/SourceClusterSelect/SourceClusterSelect';
 import DatastoresStepForm from './components/DatastoresStepForm';
 
@@ -15,7 +14,7 @@ class MappingWizardDatastoresStep extends React.Component {
       selectedClusterMapping: null
     };
 
-    bindMethods(this, ['selectSourceCluster']);
+    bindMethods(this, ['selectSourceCluster', 'resetState']);
   }
 
   componentDidMount() {}
@@ -47,6 +46,13 @@ class MappingWizardDatastoresStep extends React.Component {
 
     fetchSourceDatastoresAction(fetchDatastoresUrl, sourceClusterId);
     fetchTargetDatastoresAction(fetchDatastoresUrl, targetCluster.id);
+  }
+
+  resetState() {
+    this.setState(() => ({
+      selectedCluster: undefined,
+      selectedClusterMapping: null
+    }));
   }
 
   render() {
@@ -94,6 +100,7 @@ class MappingWizardDatastoresStep extends React.Component {
               removeTargetDatastore={removeTargetDatastore}
               addSourceDatastores={addSourceDatastores}
               addTargetDatastore={addTargetDatastore}
+              resetState={this.resetState}
             />
           )}
       </div>
