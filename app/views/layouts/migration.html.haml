@@ -1,0 +1,17 @@
+!!!
+%html.layout-pf.layout-pf-fixed.transitions{:lang => I18n.locale.to_s.sub('-', '_')}
+  %body
+    %p
+    %title ManageIQ v2v plugin
+    = stylesheet_link_tag "application", media: "all"
+    = stylesheet_link_tag "miq_v2v_ui/application", media: "all"
+    = javascript_pack_tag 'vendor'
+    = javascript_include_tag "application"
+    = javascript_pack_tag 'manageiq-ui-classic/application-common'
+    = javascript_pack_tag 'miq_v2v_ui/migration'
+    = csrf_meta_tags
+    = render :partial => "layouts/header"
+    = render :partial => "layouts/vertical_navbar"
+    .container-pf-nav-pf-vertical.container-pf-nav-pf-vertical-with-sub-menus{:style => "overflow: hidden; height: 100%"}
+      = yield
+
