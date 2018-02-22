@@ -41,7 +41,10 @@ export const coreComponents = [
   {
     name: 'OverviewContainer',
     type: OverviewContainer,
-    data: {},
+    data: {
+      fetchTransformationMappingsUrl: '/api/dummyMappings'
+      // 'api/transformation_mappings'
+    },
     store: true
   },
   {
