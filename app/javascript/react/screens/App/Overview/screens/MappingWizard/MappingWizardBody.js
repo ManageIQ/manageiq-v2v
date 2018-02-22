@@ -21,22 +21,22 @@ const todo = str => (
 );
 
 class MappingWizardBody extends React.Component {
-  shouldComponentUpdate(nextProps, nextState) {
-    return (
-      JSON.stringify(this.props) !== JSON.stringify(nextProps) ||
-      JSON.stringify(this.state) !== JSON.stringify(nextState)
-    );
-  }
-  render() {
-    const mappingWizardClustersStepContainer = componentRegistry.markup(
+  constructor(props) {
+    super(props);
+    this.mappingWizardClustersStepContainer = componentRegistry.markup(
       'MappingWizardClustersStepContainer'
     );
-    const mappingWizardDatastoresStepContainer = componentRegistry.markup(
+    this.mappingWizardDatastoresStepContainer = componentRegistry.markup(
       'MappingWizardDatastoresStepContainer'
     );
-    const mappingWizardNetworksStepContainer = componentRegistry.markup(
+    this.mappingWizardNetworksStepContainer = componentRegistry.markup(
       'MappingWizardNetworksStepContainer'
     );
+  }
+  shouldComponentUpdate(nextProps, nextState) {
+    return JSON.stringify(this.props) !== JSON.stringify(nextProps);
+  }
+  render() {
     return (
       <ModalWizard.Body
         {...this.props}
@@ -50,17 +50,17 @@ class MappingWizardBody extends React.Component {
           },
           {
             title: __('Clusters'),
-            render: () => mappingWizardClustersStepContainer,
+            render: () => this.mappingWizardClustersStepContainer,
             onClick: () => console.log('on step 2 click')
           },
           {
             title: __('Datastores'),
-            render: () => mappingWizardDatastoresStepContainer,
+            render: () => this.mappingWizardDatastoresStepContainer,
             onClick: () => console.log('on step 3 click')
           },
           {
             title: __('Networks'),
-            render: () => mappingWizardNetworksStepContainer,
+            render: () => this.mappingWizardNetworksStepContainer,
             onClick: () => console.log('on step 4 click')
           },
           {
