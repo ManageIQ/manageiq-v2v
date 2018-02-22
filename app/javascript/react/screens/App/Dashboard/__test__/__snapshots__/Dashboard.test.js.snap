@@ -6,7 +6,9 @@ exports[`Dashboard component renders the dashboard 1`] = `
     <h1>
       Dashboard Page
     </h1>
-    <ListView>
+    <ListView
+      className=""
+    >
       <div
         className="list-group list-view-pf list-view-pf-view"
       >
@@ -21,6 +23,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
           additionalInfo={
             Array [
               <ListViewInfoItem
+                className=""
                 stacked={false}
               >
                 <span
@@ -33,6 +36,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                 hosts
               </ListViewInfoItem>,
               <ListViewInfoItem
+                className=""
                 stacked={false}
               >
                 <span
@@ -45,6 +49,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                 clusters
               </ListViewInfoItem>,
               <ListViewInfoItem
+                className=""
                 stacked={false}
               >
                 <span
@@ -57,6 +62,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                 nodes
               </ListViewInfoItem>,
               <ListViewInfoItem
+                className=""
                 stacked={false}
               >
                 <span
@@ -75,12 +81,15 @@ exports[`Dashboard component renders the dashboard 1`] = `
               type="checkbox"
             />
           }
+          compoundExpand={false}
+          compoundExpanded={false}
           description="This is Item 1 description"
           heading="Item 1"
           hideCloseIcon={false}
           key="1"
           leftContent={
             <ListViewIcon
+              className=""
               name="plane"
               size="sm"
               type="fa"
@@ -92,6 +101,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
           stacked={true}
         >
           <ListViewGroupItem
+            className=""
             expanded={false}
             stacked={true}
           >
@@ -129,6 +139,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                     additionalInfo={
                       Array [
                         <ListViewInfoItem
+                          className=""
                           stacked={false}
                         >
                           <span
@@ -141,6 +152,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                           hosts
                         </ListViewInfoItem>,
                         <ListViewInfoItem
+                          className=""
                           stacked={false}
                         >
                           <span
@@ -153,6 +165,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                           clusters
                         </ListViewInfoItem>,
                         <ListViewInfoItem
+                          className=""
                           stacked={false}
                         >
                           <span
@@ -165,6 +178,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                           nodes
                         </ListViewInfoItem>,
                         <ListViewInfoItem
+                          className=""
                           stacked={false}
                         >
                           <span
@@ -187,6 +201,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                     heading="Item 1"
                     leftContent={
                       <ListViewIcon
+                        className=""
                         name="plane"
                         size="sm"
                         type="fa"
@@ -194,6 +209,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                     }
                   >
                     <ListViewCheckbox
+                      className=""
                       key="checkbox"
                     >
                       <div
@@ -242,6 +258,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                             className="list-view-pf-left"
                           >
                             <ListViewIcon
+                              className=""
                               name="plane"
                               size="sm"
                               type="fa"
@@ -293,6 +310,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                                 className="list-view-pf-additional-info"
                               >
                                 <ListViewInfoItem
+                                  className=""
                                   key="hosts"
                                   stacked={false}
                                 >
@@ -311,6 +329,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                                   </div>
                                 </ListViewInfoItem>
                                 <ListViewInfoItem
+                                  className=""
                                   key="clusters"
                                   stacked={false}
                                 >
@@ -329,6 +348,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                                   </div>
                                 </ListViewInfoItem>
                                 <ListViewInfoItem
+                                  className=""
                                   key="nodes"
                                   stacked={false}
                                 >
@@ -347,6 +367,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                                   </div>
                                 </ListViewInfoItem>
                                 <ListViewInfoItem
+                                  className=""
                                   key="images"
                                   stacked={false}
                                 >
@@ -404,6 +425,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
           additionalInfo={
             Array [
               <ListViewInfoItem
+                className=""
                 stacked={false}
               >
                 <span
@@ -416,6 +438,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                 hosts
               </ListViewInfoItem>,
               <ListViewInfoItem
+                className=""
                 stacked={false}
               >
                 <span
@@ -428,6 +451,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                 clusters
               </ListViewInfoItem>,
               <ListViewInfoItem
+                className=""
                 stacked={false}
               >
                 <span
@@ -440,6 +464,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                 nodes
               </ListViewInfoItem>,
               <ListViewInfoItem
+                className=""
                 stacked={false}
               >
                 <span
@@ -458,12 +483,15 @@ exports[`Dashboard component renders the dashboard 1`] = `
               type="checkbox"
             />
           }
+          compoundExpand={false}
+          compoundExpanded={false}
           description="This is Item 2 description"
           heading="Item 2"
           hideCloseIcon={false}
           key="2"
           leftContent={
             <ListViewIcon
+              className=""
               name="plane"
               size="sm"
               type="fa"
@@ -475,6 +503,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
           stacked={true}
         >
           <ListViewGroupItem
+            className=""
             expanded={false}
             stacked={true}
           >
@@ -512,6 +541,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                     additionalInfo={
                       Array [
                         <ListViewInfoItem
+                          className=""
                           stacked={false}
                         >
                           <span
@@ -524,6 +554,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                           hosts
                         </ListViewInfoItem>,
                         <ListViewInfoItem
+                          className=""
                           stacked={false}
                         >
                           <span
@@ -536,6 +567,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                           clusters
                         </ListViewInfoItem>,
                         <ListViewInfoItem
+                          className=""
                           stacked={false}
                         >
                           <span
@@ -548,6 +580,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                           nodes
                         </ListViewInfoItem>,
                         <ListViewInfoItem
+                          className=""
                           stacked={false}
                         >
                           <span
@@ -570,6 +603,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                     heading="Item 2"
                     leftContent={
                       <ListViewIcon
+                        className=""
                         name="plane"
                         size="sm"
                         type="fa"
@@ -577,6 +611,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                     }
                   >
                     <ListViewCheckbox
+                      className=""
                       key="checkbox"
                     >
                       <div
@@ -625,6 +660,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                             className="list-view-pf-left"
                           >
                             <ListViewIcon
+                              className=""
                               name="plane"
                               size="sm"
                               type="fa"
@@ -676,6 +712,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                                 className="list-view-pf-additional-info"
                               >
                                 <ListViewInfoItem
+                                  className=""
                                   key="hosts"
                                   stacked={false}
                                 >
@@ -694,6 +731,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                                   </div>
                                 </ListViewInfoItem>
                                 <ListViewInfoItem
+                                  className=""
                                   key="clusters"
                                   stacked={false}
                                 >
@@ -712,6 +750,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                                   </div>
                                 </ListViewInfoItem>
                                 <ListViewInfoItem
+                                  className=""
                                   key="nodes"
                                   stacked={false}
                                 >
@@ -730,6 +769,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                                   </div>
                                 </ListViewInfoItem>
                                 <ListViewInfoItem
+                                  className=""
                                   key="images"
                                   stacked={false}
                                 >
@@ -787,6 +827,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
           additionalInfo={
             Array [
               <ListViewInfoItem
+                className=""
                 stacked={false}
               >
                 <span
@@ -799,6 +840,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                 hosts
               </ListViewInfoItem>,
               <ListViewInfoItem
+                className=""
                 stacked={false}
               >
                 <span
@@ -811,6 +853,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                 clusters
               </ListViewInfoItem>,
               <ListViewInfoItem
+                className=""
                 stacked={false}
               >
                 <span
@@ -823,6 +866,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                 nodes
               </ListViewInfoItem>,
               <ListViewInfoItem
+                className=""
                 stacked={false}
               >
                 <span
@@ -841,12 +885,15 @@ exports[`Dashboard component renders the dashboard 1`] = `
               type="checkbox"
             />
           }
+          compoundExpand={false}
+          compoundExpanded={false}
           description="This is Item 3 description"
           heading="Item 3"
           hideCloseIcon={false}
           key="3"
           leftContent={
             <ListViewIcon
+              className=""
               name="plane"
               size="sm"
               type="fa"
@@ -858,6 +905,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
           stacked={true}
         >
           <ListViewGroupItem
+            className=""
             expanded={false}
             stacked={true}
           >
@@ -895,6 +943,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                     additionalInfo={
                       Array [
                         <ListViewInfoItem
+                          className=""
                           stacked={false}
                         >
                           <span
@@ -907,6 +956,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                           hosts
                         </ListViewInfoItem>,
                         <ListViewInfoItem
+                          className=""
                           stacked={false}
                         >
                           <span
@@ -919,6 +969,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                           clusters
                         </ListViewInfoItem>,
                         <ListViewInfoItem
+                          className=""
                           stacked={false}
                         >
                           <span
@@ -931,6 +982,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                           nodes
                         </ListViewInfoItem>,
                         <ListViewInfoItem
+                          className=""
                           stacked={false}
                         >
                           <span
@@ -953,6 +1005,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                     heading="Item 3"
                     leftContent={
                       <ListViewIcon
+                        className=""
                         name="plane"
                         size="sm"
                         type="fa"
@@ -960,6 +1013,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                     }
                   >
                     <ListViewCheckbox
+                      className=""
                       key="checkbox"
                     >
                       <div
@@ -1008,6 +1062,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                             className="list-view-pf-left"
                           >
                             <ListViewIcon
+                              className=""
                               name="plane"
                               size="sm"
                               type="fa"
@@ -1059,6 +1114,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                                 className="list-view-pf-additional-info"
                               >
                                 <ListViewInfoItem
+                                  className=""
                                   key="hosts"
                                   stacked={false}
                                 >
@@ -1077,6 +1133,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                                   </div>
                                 </ListViewInfoItem>
                                 <ListViewInfoItem
+                                  className=""
                                   key="clusters"
                                   stacked={false}
                                 >
@@ -1095,6 +1152,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                                   </div>
                                 </ListViewInfoItem>
                                 <ListViewInfoItem
+                                  className=""
                                   key="nodes"
                                   stacked={false}
                                 >
@@ -1113,6 +1171,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                                   </div>
                                 </ListViewInfoItem>
                                 <ListViewInfoItem
+                                  className=""
                                   key="images"
                                   stacked={false}
                                 >
@@ -1167,16 +1226,21 @@ exports[`Dashboard component renders the dashboard 1`] = `
               </Button>
             </div>
           }
+          additionalInfo={null}
           checkboxInput={
             <input
               type="checkbox"
             />
           }
+          compoundExpand={false}
+          compoundExpanded={false}
           description="This is Item without heading"
+          heading={null}
           hideCloseIcon={false}
           key="4"
           leftContent={
             <ListViewIcon
+              className=""
               name="plane"
               size="sm"
               type="fa"
@@ -1188,6 +1252,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
           stacked={true}
         >
           <ListViewGroupItem
+            className=""
             expanded={false}
             stacked={true}
           >
@@ -1222,14 +1287,17 @@ exports[`Dashboard component renders the dashboard 1`] = `
                         </Button>
                       </div>
                     }
+                    additionalInfo={null}
                     checkboxInput={
                       <input
                         type="checkbox"
                       />
                     }
                     description="This is Item without heading"
+                    heading={null}
                     leftContent={
                       <ListViewIcon
+                        className=""
                         name="plane"
                         size="sm"
                         type="fa"
@@ -1237,6 +1305,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                     }
                   >
                     <ListViewCheckbox
+                      className=""
                       key="checkbox"
                     >
                       <div
@@ -1285,6 +1354,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                             className="list-view-pf-left"
                           >
                             <ListViewIcon
+                              className=""
                               name="plane"
                               size="sm"
                               type="fa"
@@ -1362,6 +1432,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
           additionalInfo={
             Array [
               <ListViewInfoItem
+                className=""
                 stacked={false}
               >
                 <span
@@ -1374,6 +1445,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                 hosts
               </ListViewInfoItem>,
               <ListViewInfoItem
+                className=""
                 stacked={false}
               >
                 <span
@@ -1386,6 +1458,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                 clusters
               </ListViewInfoItem>,
               <ListViewInfoItem
+                className=""
                 stacked={false}
               >
                 <span
@@ -1398,6 +1471,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                 nodes
               </ListViewInfoItem>,
               <ListViewInfoItem
+                className=""
                 stacked={false}
               >
                 <span
@@ -1416,10 +1490,15 @@ exports[`Dashboard component renders the dashboard 1`] = `
               type="checkbox"
             />
           }
+          compoundExpand={false}
+          compoundExpanded={false}
+          description={null}
+          heading={null}
           hideCloseIcon={false}
           key="5"
           leftContent={
             <ListViewIcon
+              className=""
               name="plane"
               size="sm"
               type="fa"
@@ -1431,6 +1510,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
           stacked={true}
         >
           <ListViewGroupItem
+            className=""
             expanded={false}
             stacked={true}
           >
@@ -1468,6 +1548,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                     additionalInfo={
                       Array [
                         <ListViewInfoItem
+                          className=""
                           stacked={false}
                         >
                           <span
@@ -1480,6 +1561,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                           hosts
                         </ListViewInfoItem>,
                         <ListViewInfoItem
+                          className=""
                           stacked={false}
                         >
                           <span
@@ -1492,6 +1574,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                           clusters
                         </ListViewInfoItem>,
                         <ListViewInfoItem
+                          className=""
                           stacked={false}
                         >
                           <span
@@ -1504,6 +1587,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                           nodes
                         </ListViewInfoItem>,
                         <ListViewInfoItem
+                          className=""
                           stacked={false}
                         >
                           <span
@@ -1522,8 +1606,11 @@ exports[`Dashboard component renders the dashboard 1`] = `
                         type="checkbox"
                       />
                     }
+                    description={null}
+                    heading={null}
                     leftContent={
                       <ListViewIcon
+                        className=""
                         name="plane"
                         size="sm"
                         type="fa"
@@ -1531,6 +1618,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                     }
                   >
                     <ListViewCheckbox
+                      className=""
                       key="checkbox"
                     >
                       <div
@@ -1579,6 +1667,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                             className="list-view-pf-left"
                           >
                             <ListViewIcon
+                              className=""
                               name="plane"
                               size="sm"
                               type="fa"
@@ -1610,6 +1699,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                                 className="list-view-pf-additional-info"
                               >
                                 <ListViewInfoItem
+                                  className=""
                                   key="hosts"
                                   stacked={false}
                                 >
@@ -1628,6 +1718,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                                   </div>
                                 </ListViewInfoItem>
                                 <ListViewInfoItem
+                                  className=""
                                   key="clusters"
                                   stacked={false}
                                 >
@@ -1646,6 +1737,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                                   </div>
                                 </ListViewInfoItem>
                                 <ListViewInfoItem
+                                  className=""
                                   key="nodes"
                                   stacked={false}
                                 >
@@ -1664,6 +1756,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                                   </div>
                                 </ListViewInfoItem>
                                 <ListViewInfoItem
+                                  className=""
                                   key="images"
                                   stacked={false}
                                 >
@@ -1718,16 +1811,21 @@ exports[`Dashboard component renders the dashboard 1`] = `
               </Button>
             </div>
           }
+          additionalInfo={null}
           checkboxInput={
             <input
               type="checkbox"
             />
           }
+          compoundExpand={false}
+          compoundExpanded={false}
+          description={null}
           heading="Item without description"
           hideCloseIcon={false}
           key="6"
           leftContent={
             <ListViewIcon
+              className=""
               name="plane"
               size="sm"
               type="fa"
@@ -1739,6 +1837,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
           stacked={true}
         >
           <ListViewGroupItem
+            className=""
             expanded={false}
             stacked={true}
           >
@@ -1773,14 +1872,17 @@ exports[`Dashboard component renders the dashboard 1`] = `
                         </Button>
                       </div>
                     }
+                    additionalInfo={null}
                     checkboxInput={
                       <input
                         type="checkbox"
                       />
                     }
+                    description={null}
                     heading="Item without description"
                     leftContent={
                       <ListViewIcon
+                        className=""
                         name="plane"
                         size="sm"
                         type="fa"
@@ -1788,6 +1890,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                     }
                   >
                     <ListViewCheckbox
+                      className=""
                       key="checkbox"
                     >
                       <div
@@ -1836,6 +1939,7 @@ exports[`Dashboard component renders the dashboard 1`] = `
                             className="list-view-pf-left"
                           >
                             <ListViewIcon
+                              className=""
                               name="plane"
                               size="sm"
                               type="fa"
