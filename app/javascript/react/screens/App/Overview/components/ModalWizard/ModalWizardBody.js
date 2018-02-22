@@ -80,7 +80,12 @@ class ModalWizardBody extends React.Component {
         />
         <Wizard.Row>
           <Wizard.Main>
-            <Wizard.Contents>{renderedStep}</Wizard.Contents>
+            <Wizard.Contents
+              stepIndex={activeStepIndex}
+              activeStepIndex={activeStepIndex}
+            >
+              {renderedStep}
+            </Wizard.Contents>
           </Wizard.Main>
         </Wizard.Row>
       </React.Fragment>
