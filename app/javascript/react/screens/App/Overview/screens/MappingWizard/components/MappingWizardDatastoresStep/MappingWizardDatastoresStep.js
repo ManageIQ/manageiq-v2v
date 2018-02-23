@@ -21,9 +21,7 @@ class MappingWizardDatastoresStep extends React.Component {
     const { clusterMappings } = this.props;
 
     const sourceClusters = clusterMappings.reduce(
-      (clusters, clusterMapping) => {
-        return clusters.concat(clusterMapping.nodes);
-      },
+      (clusters, clusterMapping) => clusters.concat(clusterMapping.nodes),
       []
     );
 
@@ -79,11 +77,7 @@ class MappingWizardDatastoresStep extends React.Component {
       isRejectedTargetDatastores, // eslint-disable-line no-unused-vars
       // source/target datastores change depending on selection
       sourceDatastores,
-      targetDatastores,
-      removeSourceDatastores,
-      removeTargetDatastore,
-      addSourceDatastores,
-      addTargetDatastore
+      targetDatastores
     } = this.props;
 
     const { selectedCluster, selectedClusterMapping } = this.state;
@@ -109,12 +103,7 @@ class MappingWizardDatastoresStep extends React.Component {
               component={DatastoresStepForm}
               sourceDatastores={sourceDatastores}
               targetDatastores={targetDatastores}
-              selectedCluster={selectedCluster}
               selectedClusterMapping={selectedClusterMapping}
-              removeSourceDatastores={removeSourceDatastores}
-              removeTargetDatastore={removeTargetDatastore}
-              addSourceDatastores={addSourceDatastores}
-              addTargetDatastore={addTargetDatastore}
               resetState={this.resetState}
             />
           )}
@@ -133,11 +122,7 @@ MappingWizardDatastoresStep.propTypes = {
   isFetchingSourceDatastores: PropTypes.bool,
   isRejectedSourceDatastores: PropTypes.bool,
   isFetchingTargetDatastores: PropTypes.bool,
-  isRejectedTargetDatastores: PropTypes.bool,
-  removeTargetDatastore: PropTypes.func,
-  removeSourceDatastores: PropTypes.func,
-  addTargetDatastore: PropTypes.func,
-  addSourceDatastores: PropTypes.func
+  isRejectedTargetDatastores: PropTypes.bool
 };
 MappingWizardDatastoresStep.defaultProps = {
   clusterMappings: [],
@@ -149,11 +134,7 @@ MappingWizardDatastoresStep.defaultProps = {
   isFetchingSourceDatastores: false,
   isRejectedSourceDatastores: false,
   isFetchingTargetDatastores: false,
-  isRejectedTargetDatastores: false,
-  removeTargetDatastore: noop,
-  removeSourceDatastores: noop,
-  addTargetDatastore: noop,
-  addSourceDatastores: noop
+  isRejectedTargetDatastores: false
 };
 
 export default reduxForm({
