@@ -19,7 +19,7 @@ class CSVDropzoneField extends React.Component {
 
   confirmOverwrite(andThen) {
     const { input: { value } } = this.props;
-    const confirmMessage = 'Importing a new VM list file will overwrite the contents of the existing list.\n\nAre you sure you want to import a new file?';
+    const confirmMessage = __('Importing a new VM list file will overwrite the contents of the existing list.\n\nAre you sure you want to import a new file?');
     // TODO fancier confirm dialog... or something else? see comments at https://github.com/priley86/miq_v2v_ui_plugin/issues/34
     if (!value || value.length === 0 || confirm(confirmMessage)) {
       andThen();
@@ -46,9 +46,9 @@ class CSVDropzoneField extends React.Component {
     const mainContents = (!value || value.length === 0) ? (
       <EmptyState>
         <EmptyState.Icon type="fa" name="upload" />
-        <EmptyState.Title>Import a CSV file</EmptyState.Title>
+        <EmptyState.Title>{__('Import a CSV file')}</EmptyState.Title>
         <EmptyState.Info>
-          Click Import or drag-and-drop here to import a CSV file containing a list of VMs to be migrated.
+          {__('Click Import or drag-and-drop here to import a CSV file containing a list of VMs to be migrated.')}
         </EmptyState.Info>
       </EmptyState>
     ) : (
@@ -76,14 +76,14 @@ class CSVDropzoneField extends React.Component {
         <Toolbar>
           <Toolbar.RightContent>
             <Button bsStyle="primary" onClick={() => { dropzoneRef.open(); }}>
-              <Icon type="fa" name="upload" /> Import
+              <Icon type="fa" name="upload" /> {__('Import')}
             </Button>
           </Toolbar.RightContent>
           <div className="form-group">
             {mainContents}
           </div>
           <Toolbar.Results>
-            {value && value.length || 0} Items
+            {value && value.length || 0} {__('Items')}
           </Toolbar.Results>
         </Toolbar>
       </Dropzone>
