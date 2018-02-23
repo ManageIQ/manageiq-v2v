@@ -21,7 +21,7 @@ const _filterSourceNetworks = response => {
   };
 };
 
-const _getSourceNetworksActionCreator = url => dispatch =>
+const _getSourceNetworksActionCreator = (url, id) => dispatch =>
   dispatch({
     type: FETCH_V2V_SOURCE_NETWORKS,
     payload: API.get(url)
@@ -30,7 +30,7 @@ const _getSourceNetworksActionCreator = url => dispatch =>
     // and passing some mock data thru the FULFILLED action after the REJECTED action is finished.
     dispatch({
       type: `${FETCH_V2V_SOURCE_NETWORKS}_FULFILLED`,
-      payload: _filterSourceNetworks(requestSourceNetworksData.response)
+      payload: _filterSourceNetworks(requestSourceNetworksData(id).response)
     });
   });
 
@@ -39,7 +39,7 @@ export const fetchSourceNetworksAction = (url, id) => {
   // creates url like: http://localhost:3000/api/clusters/1?attributes=lans
   uri.addSearch({ attributes: 'lans' });
 
-  return _getSourceNetworksActionCreator(uri.toString());
+  return _getSourceNetworksActionCreator(uri.toString(), id);
 };
 
 const _filterTargetNetworks = response => {
@@ -54,7 +54,7 @@ const _filterTargetNetworks = response => {
   };
 };
 
-const _getTargetNetworksActionCreator = url => dispatch =>
+const _getTargetNetworksActionCreator = (url, id) => dispatch =>
   dispatch({
     type: FETCH_V2V_TARGET_NETWORKS,
     payload: API.get(url)
@@ -63,7 +63,7 @@ const _getTargetNetworksActionCreator = url => dispatch =>
     // and passing some mock data thru the FULFILLED action after the REJECTED action is finished.
     dispatch({
       type: `${FETCH_V2V_TARGET_NETWORKS}_FULFILLED`,
-      payload: _filterTargetNetworks(requestTargetNetworksData.response)
+      payload: _filterTargetNetworks(requestTargetNetworksData(id).response)
     });
   });
 
@@ -72,5 +72,5 @@ export const fetchTargetNetworksAction = (url, id) => {
   // creates url like: http://localhost:3000/api/clusters/1?attributes=lans
   uri.addSearch({ attributes: 'lans' });
 
-  return _getTargetNetworksActionCreator(uri.toString());
+  return _getTargetNetworksActionCreator(uri.toString(), id);
 };
