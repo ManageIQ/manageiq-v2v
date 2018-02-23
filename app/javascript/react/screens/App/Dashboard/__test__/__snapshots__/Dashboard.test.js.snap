@@ -15,7 +15,13 @@ exports[`Dashboard component renders the dashboard 1`] = `
         <ListViewItem
           actions={
             <div>
-              <Button>
+              <Button
+                active={false}
+                block={false}
+                bsClass="btn"
+                bsStyle="default"
+                disabled={false}
+              >
                 Details
               </Button>
             </div>
@@ -131,7 +137,13 @@ exports[`Dashboard component renders the dashboard 1`] = `
                   <ListViewRow
                     actions={
                       <div>
-                        <Button>
+                        <Button
+                          active={false}
+                          block={false}
+                          bsClass="btn"
+                          bsStyle="default"
+                          disabled={false}
+                        >
                           Details
                         </Button>
                       </div>
@@ -227,22 +239,20 @@ exports[`Dashboard component renders the dashboard 1`] = `
                         className="list-view-pf-actions"
                       >
                         <div>
-                          <Button>
-                            <Button
-                              active={false}
-                              block={false}
-                              bsClass="btn"
-                              bsStyle="default"
+                          <Button
+                            active={false}
+                            block={false}
+                            bsClass="btn"
+                            bsStyle="default"
+                            disabled={false}
+                          >
+                            <button
+                              className="btn btn-default"
                               disabled={false}
+                              type="button"
                             >
-                              <button
-                                className="btn btn-default"
-                                disabled={false}
-                                type="button"
-                              >
-                                Details
-                              </button>
-                            </Button>
+                              Details
+                            </button>
                           </Button>
                         </div>
                       </div>
@@ -417,7 +427,13 @@ exports[`Dashboard component renders the dashboard 1`] = `
         <ListViewItem
           actions={
             <div>
-              <Button>
+              <Button
+                active={false}
+                block={false}
+                bsClass="btn"
+                bsStyle="default"
+                disabled={false}
+              >
                 Details
               </Button>
             </div>
@@ -533,7 +549,13 @@ exports[`Dashboard component renders the dashboard 1`] = `
                   <ListViewRow
                     actions={
                       <div>
-                        <Button>
+                        <Button
+                          active={false}
+                          block={false}
+                          bsClass="btn"
+                          bsStyle="default"
+                          disabled={false}
+                        >
                           Details
                         </Button>
                       </div>
@@ -629,22 +651,20 @@ exports[`Dashboard component renders the dashboard 1`] = `
                         className="list-view-pf-actions"
                       >
                         <div>
-                          <Button>
-                            <Button
-                              active={false}
-                              block={false}
-                              bsClass="btn"
-                              bsStyle="default"
+                          <Button
+                            active={false}
+                            block={false}
+                            bsClass="btn"
+                            bsStyle="default"
+                            disabled={false}
+                          >
+                            <button
+                              className="btn btn-default"
                               disabled={false}
+                              type="button"
                             >
-                              <button
-                                className="btn btn-default"
-                                disabled={false}
-                                type="button"
-                              >
-                                Details
-                              </button>
-                            </Button>
+                              Details
+                            </button>
                           </Button>
                         </div>
                       </div>
@@ -819,7 +839,13 @@ exports[`Dashboard component renders the dashboard 1`] = `
         <ListViewItem
           actions={
             <div>
-              <Button>
+              <Button
+                active={false}
+                block={false}
+                bsClass="btn"
+                bsStyle="default"
+                disabled={false}
+              >
                 Details
               </Button>
             </div>
@@ -935,7 +961,13 @@ exports[`Dashboard component renders the dashboard 1`] = `
                   <ListViewRow
                     actions={
                       <div>
-                        <Button>
+                        <Button
+                          active={false}
+                          block={false}
+                          bsClass="btn"
+                          bsStyle="default"
+                          disabled={false}
+                        >
                           Details
                         </Button>
                       </div>
@@ -1031,22 +1063,20 @@ exports[`Dashboard component renders the dashboard 1`] = `
                         className="list-view-pf-actions"
                       >
                         <div>
-                          <Button>
-                            <Button
-                              active={false}
-                              block={false}
-                              bsClass="btn"
-                              bsStyle="default"
+                          <Button
+                            active={false}
+                            block={false}
+                            bsClass="btn"
+                            bsStyle="default"
+                            disabled={false}
+                          >
+                            <button
+                              className="btn btn-default"
                               disabled={false}
+                              type="button"
                             >
-                              <button
-                                className="btn btn-default"
-                                disabled={false}
-                                type="button"
-                              >
-                                Details
-                              </button>
-                            </Button>
+                              Details
+                            </button>
                           </Button>
                         </div>
                       </div>
@@ -1221,7 +1251,13 @@ exports[`Dashboard component renders the dashboard 1`] = `
         <ListViewItem
           actions={
             <div>
-              <Button>
+              <Button
+                active={false}
+                block={false}
+                bsClass="btn"
+                bsStyle="default"
+                disabled={false}
+              >
                 Details
               </Button>
             </div>
@@ -1282,7 +1318,13 @@ exports[`Dashboard component renders the dashboard 1`] = `
                   <ListViewRow
                     actions={
                       <div>
-                        <Button>
+                        <Button
+                          active={false}
+                          block={false}
+                          bsClass="btn"
+                          bsStyle="default"
+                          disabled={false}
+                        >
                           Details
                         </Button>
                       </div>
@@ -1323,22 +1365,20 @@ exports[`Dashboard component renders the dashboard 1`] = `
                         className="list-view-pf-actions"
                       >
                         <div>
-                          <Button>
-                            <Button
-                              active={false}
-                              block={false}
-                              bsClass="btn"
-                              bsStyle="default"
+                          <Button
+                            active={false}
+                            block={false}
+                            bsClass="btn"
+                            bsStyle="default"
+                            disabled={false}
+                          >
+                            <button
+                              className="btn btn-default"
                               disabled={false}
+                              type="button"
                             >
-                              <button
-                                className="btn btn-default"
-                                disabled={false}
-                                type="button"
-                              >
-                                Details
-                              </button>
-                            </Button>
+                              Details
+                            </button>
                           </Button>
                         </div>
                       </div>
@@ -1424,7 +1464,13 @@ exports[`Dashboard component renders the dashboard 1`] = `
         <ListViewItem
           actions={
             <div>
-              <Button>
+              <Button
+                active={false}
+                block={false}
+                bsClass="btn"
+                bsStyle="default"
+                disabled={false}
+              >
                 Details
               </Button>
             </div>
@@ -1540,7 +1586,13 @@ exports[`Dashboard component renders the dashboard 1`] = `
                   <ListViewRow
                     actions={
                       <div>
-                        <Button>
+                        <Button
+                          active={false}
+                          block={false}
+                          bsClass="btn"
+                          bsStyle="default"
+                          disabled={false}
+                        >
                           Details
                         </Button>
                       </div>
@@ -1636,22 +1688,20 @@ exports[`Dashboard component renders the dashboard 1`] = `
                         className="list-view-pf-actions"
                       >
                         <div>
-                          <Button>
-                            <Button
-                              active={false}
-                              block={false}
-                              bsClass="btn"
-                              bsStyle="default"
+                          <Button
+                            active={false}
+                            block={false}
+                            bsClass="btn"
+                            bsStyle="default"
+                            disabled={false}
+                          >
+                            <button
+                              className="btn btn-default"
                               disabled={false}
+                              type="button"
                             >
-                              <button
-                                className="btn btn-default"
-                                disabled={false}
-                                type="button"
-                              >
-                                Details
-                              </button>
-                            </Button>
+                              Details
+                            </button>
                           </Button>
                         </div>
                       </div>
@@ -1806,7 +1856,13 @@ exports[`Dashboard component renders the dashboard 1`] = `
         <ListViewItem
           actions={
             <div>
-              <Button>
+              <Button
+                active={false}
+                block={false}
+                bsClass="btn"
+                bsStyle="default"
+                disabled={false}
+              >
                 Details
               </Button>
             </div>
@@ -1867,7 +1923,13 @@ exports[`Dashboard component renders the dashboard 1`] = `
                   <ListViewRow
                     actions={
                       <div>
-                        <Button>
+                        <Button
+                          active={false}
+                          block={false}
+                          bsClass="btn"
+                          bsStyle="default"
+                          disabled={false}
+                        >
                           Details
                         </Button>
                       </div>
@@ -1908,22 +1970,20 @@ exports[`Dashboard component renders the dashboard 1`] = `
                         className="list-view-pf-actions"
                       >
                         <div>
-                          <Button>
-                            <Button
-                              active={false}
-                              block={false}
-                              bsClass="btn"
-                              bsStyle="default"
+                          <Button
+                            active={false}
+                            block={false}
+                            bsClass="btn"
+                            bsStyle="default"
+                            disabled={false}
+                          >
+                            <button
+                              className="btn btn-default"
                               disabled={false}
+                              type="button"
                             >
-                              <button
-                                className="btn btn-default"
-                                disabled={false}
-                                type="button"
-                              >
-                                Details
-                              </button>
-                            </Button>
+                              Details
+                            </button>
                           </Button>
                         </div>
                       </div>

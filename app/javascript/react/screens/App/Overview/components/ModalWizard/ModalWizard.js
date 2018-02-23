@@ -2,7 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { noop, Modal, Wizard, Icon, Button } from 'patternfly-react';
 import { connect } from 'react-redux';
-import { find } from 'lodash';
+
+const reduxFormMap = {
+  [__('Infrastructure Mapping Wizard')]: [
+    'mappingWizardGeneralStep',
+    'mappingWizardClustersStep'
+  ],
+  [__('Migration Plan Wizard')]: []
+};
 
 const ModalWizard = props => {
   const {
@@ -22,10 +29,11 @@ const ModalWizard = props => {
   const onFirstStep = activeStepIndex === 0;
   const onFinalStep = activeStepIndex === numSteps - 1;
 
-  const formHasErrors =
-    find(formContainer, form => form.syncErrors) !== undefined;
-
-  const disableNextStep = formHasErrors;
+  const currentReduxForm = reduxFormMap[title][activeStepIndex];
+  const disableNextStep =
+    formContainer &&
+    Object.prototype.hasOwnProperty.call(formContainer, currentReduxForm) &&
+    !!formContainer[currentReduxForm].syncErrors;
 
   return (
     <Modal

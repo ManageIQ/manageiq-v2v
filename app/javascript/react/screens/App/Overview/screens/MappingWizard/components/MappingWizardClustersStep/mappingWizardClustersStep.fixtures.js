@@ -275,13 +275,13 @@ export const targetClusters = Immutable({
 
 export const requestSourceClustersData = {
   method: 'GET',
-  fetchSourceClustersUrl: '/api/sourceClusters',
+  fetchSourceClustersUrl: '/api/dummyProviders',
   response: { data: sourceClusters }
 };
 
 export const requestTargetClustersData = {
   method: 'GET',
-  fetchTargetClustersUrl: '/api/targetClusters',
+  fetchTargetClustersUrl: '/api/dummyProviders',
   response: { data: targetClusters }
 };
 
