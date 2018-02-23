@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import { required } from 'redux-form-validators';
 import CSVDropzoneField from './CSVDropzoneField';

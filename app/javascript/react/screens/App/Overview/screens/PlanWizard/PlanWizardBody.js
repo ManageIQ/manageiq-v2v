@@ -28,18 +28,15 @@ const PlanWizardBody = props => (
     steps={[
       {
         title: __('General'),
-        render: () => <PlanWizardGeneralStep />,
-        onClick: () => console.log('on step 1 click')
+        render: () => <PlanWizardGeneralStep />
       },
       {
         title: __('VMs'),
-        render: () => <PlanWizardCSVStep />,
-        onClick: () => console.log('on step 2 click')
+        render: () => <PlanWizardCSVStep />
       },
       {
         title: __('Results'),
-        render: () => todo('Display Progress and Results'),
-        onClick: () => console.log('on step 3 click')
+        render: () => todo('Display Progress and Results')
       }
     ]}
   />
