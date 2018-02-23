@@ -7,7 +7,7 @@ const Toolbar = ({ navigation }) => (
     <Grid.Col xs={12}>
       <Breadcrumb style={{ marginBottom: 8 }}>
         <Breadcrumb.Item href="#">Compute</Breadcrumb.Item>
-        <Breadcrumb.Item href="#">Migration</Breadcrumb.Item>
+        <Breadcrumb.Item href="/migration">Migration</Breadcrumb.Item>
         <Breadcrumb.Item active>{navigation}</Breadcrumb.Item>
       </Breadcrumb>
     </Grid.Col>
