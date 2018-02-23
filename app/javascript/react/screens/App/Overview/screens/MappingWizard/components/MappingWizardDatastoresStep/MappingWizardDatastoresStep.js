@@ -77,7 +77,8 @@ class MappingWizardDatastoresStep extends React.Component {
       isRejectedTargetDatastores, // eslint-disable-line no-unused-vars
       // source/target datastores change depending on selection
       sourceDatastores,
-      targetDatastores
+      targetDatastores,
+      form
     } = this.props;
 
     const { selectedCluster, selectedClusterMapping } = this.state;
@@ -94,6 +95,7 @@ class MappingWizardDatastoresStep extends React.Component {
           )}
           selectSourceCluster={this.selectSourceCluster}
           selectedCluster={selectedCluster}
+          form={form}
         />
         {selectedCluster && (
           <Field
@@ -122,7 +124,8 @@ MappingWizardDatastoresStep.propTypes = {
   isFetchingSourceDatastores: PropTypes.bool,
   isRejectedSourceDatastores: PropTypes.bool,
   isFetchingTargetDatastores: PropTypes.bool,
-  isRejectedTargetDatastores: PropTypes.bool
+  isRejectedTargetDatastores: PropTypes.bool,
+  form: PropTypes.string
 };
 MappingWizardDatastoresStep.defaultProps = {
   clusterMappings: [],
@@ -134,7 +137,8 @@ MappingWizardDatastoresStep.defaultProps = {
   isFetchingSourceDatastores: false,
   isRejectedSourceDatastores: false,
   isFetchingTargetDatastores: false,
-  isRejectedTargetDatastores: false
+  isRejectedTargetDatastores: false,
+  form: ''
 };
 
 export default reduxForm({
