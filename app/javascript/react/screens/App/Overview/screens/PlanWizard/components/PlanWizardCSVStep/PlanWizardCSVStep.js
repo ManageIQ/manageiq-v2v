@@ -6,7 +6,7 @@ import CSVDropzoneField from './CSVDropzoneField';
 
 const PlanWizardCSVStep = () => (
   <div>
-    <h2>VMs to be Migrated</h2>
+    <h2>{__('VMs to be Migrated')}</h2>
     <Field
       name="csvRows"
       component={CSVDropzoneField}
