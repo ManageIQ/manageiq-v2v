@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import { Spinner } from 'patternfly-react';
 
-const DualPaneMapperList = ({ children, listTitle }) => {
+const DualPaneMapperList = ({ children, listTitle, loading }) => {
   const childrenArray = React.Children.toArray(children);
 
   const counter = childrenArray.find(
@@ -14,7 +15,8 @@ const DualPaneMapperList = ({ children, listTitle }) => {
     childrenArray.filter(child => child.type.name === 'DualPaneMapperListItem');
 
   const classes = cx('dual-pane-mapper-items-container', {
-    'has-counter': counter
+    'has-counter': counter,
+    loading
   });
 
   return (
@@ -24,9 +26,13 @@ const DualPaneMapperList = ({ children, listTitle }) => {
           <span id="listTitle">{listTitle}</span>
         </label>
         {counter ? (
-          <div className={classes}>{listItems}</div>
+          <div className={classes}>
+            {loading ? <Spinner loading /> : listItems}
+          </div>
         ) : (
-          <div className={classes}>{children}</div>
+          <div className={classes}>
+            {loading ? <Spinner loading /> : children}
+          </div>
         )}
       </div>
       {counter && counter}
@@ -36,7 +42,8 @@ const DualPaneMapperList = ({ children, listTitle }) => {
 
 DualPaneMapperList.propTypes = {
   children: PropTypes.node,
-  listTitle: PropTypes.string
+  listTitle: PropTypes.string,
+  loading: PropTypes.bool
 };
 
 export default DualPaneMapperList;
