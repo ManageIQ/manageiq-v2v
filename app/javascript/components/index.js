@@ -4,7 +4,7 @@ import MappingWizardDatastoresStepContainer from '../react/screens/App/Overview/
 import MappingWizardNetworksStepContainer from '../react/screens/App/Overview/screens/MappingWizard/components/MappingWizardNetworksStep';
 import PlanWizardContainer from '../react/screens/App/Overview/screens/PlanWizard';
 import OverviewContainer from '../react/screens/App/Overview';
-import Dashboard from '../react/screens/App/Dashboard/Dashboard';
+import InfrastructureMappings from '../react/screens/App/InfrastructureMappings/InfrastructureMappings';
 import IsoDate from './dates/IsoDate';
 import LongDateTime from './dates/LongDateTime';
 import RelativeDateTime from './dates/RelativeDateTime';
@@ -54,13 +54,15 @@ export const coreComponents = [
     store: true
   },
   {
-    name: 'Dashboard',
-    type: Dashboard,
+    name: 'InfrastructureMappings',
+    type: InfrastructureMappings,
+    navigation: 'Infrastructure Mappings',
     data: {}
   },
   {
     name: 'OverviewContainer',
     type: OverviewContainer,
+    navigation: 'Overview',
     data: {
       fetchTransformationMappingsUrl: '/api/dummyMappings'
       // 'api/transformation_mappings'
