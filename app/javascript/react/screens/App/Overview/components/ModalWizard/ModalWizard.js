@@ -3,13 +3,17 @@ import PropTypes from 'prop-types';
 import { noop, Modal, Wizard, Icon, Button } from 'patternfly-react';
 import { connect } from 'react-redux';
 
+// TODO we should lift this application-specific stuff out of this generalized component file.
 const reduxFormMap = {
   [__('Infrastructure Mapping Wizard')]: [
     'mappingWizardGeneralStep',
     'mappingWizardClustersStep'
   ],
-  [__('Migration Plan Wizard')]: []
+  [__('Migration Plan Wizard')]: ['planWizardGeneralStep']
 };
+
+// NOTE: This may be a good component to move up to patternfly-react.
+// Let's try to avoid putting any application-specific code in here.
 
 const ModalWizard = props => {
   const {

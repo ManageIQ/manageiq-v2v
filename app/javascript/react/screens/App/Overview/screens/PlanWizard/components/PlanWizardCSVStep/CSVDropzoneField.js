@@ -2,7 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import csv from 'csv';
-import { bindMethods, Toolbar, Button, Icon, EmptyState, ListView } from 'patternfly-react';
+import {
+  bindMethods,
+  Toolbar,
+  Button,
+  Icon,
+  EmptyState,
+  ListView
+} from 'patternfly-react';
 import Dropzone from 'react-dropzone';
 
 // TODO __('i18n')
@@ -14,16 +21,7 @@ let dropzoneRef;
 class CSVDropzoneField extends React.Component {
   constructor() {
     super();
-    bindMethods(this, ['confirmOverwrite', 'onFileDrop']);
-  }
-
-  confirmOverwrite(andThen) {
-    const { input: { value } } = this.props;
-    const confirmMessage = __('Importing a new VM list file will overwrite the contents of the existing list.\n\nAre you sure you want to import a new file?');
-    // TODO fancier confirm dialog... or something else? see comments at https://github.com/priley86/miq_v2v_ui_plugin/issues/34
-    if (!value || value.length === 0 || confirm(confirmMessage)) {
-      andThen();
-    }
+    bindMethods(this, ['onFileDrop', 'confirmOverwrite']);
   }
 
   onFileDrop(acceptedFiles, rejectedFiles) {
@@ -41,32 +39,52 @@ class CSVDropzoneField extends React.Component {
     });
   }
 
+  // TODO fancier confirm dialog... or something else? see comments at https://github.com/priley86/miq_v2v_ui_plugin/issues/34
+  confirmOverwrite(andThen) {
+    const { input: { value } } = this.props;
+    const confirmMessage = __(
+      'Importing a new VM list file will overwrite the contents of the existing list.\n\nAre you sure you want to import a new file?'
+    );
+    // eslint-disable-next-line no-restricted-globals
+    if (!value || value.length === 0 || confirm(confirmMessage)) {
+      andThen();
+    }
+  }
+
   render() {
     const { input: { value } } = this.props;
-    const mainContents = (!value || value.length === 0) ? (
-      <EmptyState>
-        <EmptyState.Icon type="fa" name="upload" />
-        <EmptyState.Title>{__('Import a CSV file')}</EmptyState.Title>
-        <EmptyState.Info>
-          {__('Click Import or drag-and-drop here to import a CSV file containing a list of VMs to be migrated.')}
-        </EmptyState.Info>
-      </EmptyState>
-    ) : (
-      <ListView>
-        {value.map(row => (
-          <ListView.Item
-            heading={row[0] || ''}
-            description={row[1] || ''}
-            additionalInfo={row.length > 2 && row.slice(2).map(col => (
-              <ListView.InfoItem>{col}</ListView.InfoItem>
-            ))}
-          />
-        ))}
-      </ListView>
-    );
+    const mainContents =
+      !value || value.length === 0 ? (
+        <EmptyState>
+          <EmptyState.Icon type="fa" name="upload" />
+          <EmptyState.Title>{__('Import a CSV file')}</EmptyState.Title>
+          <EmptyState.Info>
+            {__(
+              'Click Import or drag-and-drop here to import a CSV file containing a list of VMs to be migrated.'
+            )}
+          </EmptyState.Info>
+        </EmptyState>
+      ) : (
+        <ListView>
+          {value.map(row => (
+            <ListView.Item
+              heading={row[0] || ''}
+              description={row[1] || ''}
+              additionalInfo={
+                row.length > 2 &&
+                row
+                  .slice(2)
+                  .map(col => <ListView.InfoItem>{col}</ListView.InfoItem>)
+              }
+            />
+          ))}
+        </ListView>
+      );
     return (
       <Dropzone
-        ref={(node) => { dropzoneRef = node; }} // See comment at top
+        ref={node => {
+          dropzoneRef = node;
+        }} // See comment at top
         className={cx('csv-upload-dropzone')}
         activeClassName={cx('active')}
         onDrop={this.onFileDrop}
@@ -75,15 +93,18 @@ class CSVDropzoneField extends React.Component {
       >
         <Toolbar>
           <Toolbar.RightContent>
-            <Button bsStyle="primary" onClick={() => { dropzoneRef.open(); }}>
+            <Button
+              bsStyle="primary"
+              onClick={() => {
+                dropzoneRef.open();
+              }}
+            >
               <Icon type="fa" name="upload" /> {__('Import')}
             </Button>
           </Toolbar.RightContent>
-          <div className="form-group">
-            {mainContents}
-          </div>
+          <div className="form-group">{mainContents}</div>
           <Toolbar.Results>
-            {value && value.length || 0} {__('Items')}
+            {(value && value.length) || 0} {__('Items')}
           </Toolbar.Results>
         </Toolbar>
       </Dropzone>
@@ -95,8 +116,7 @@ CSVDropzoneField.propTypes = {
   input: PropTypes.shape({
     value: PropTypes.arrayOf(PropTypes.array),
     onChange: PropTypes.func
-  }),
-  setDropzoneRef: PropTypes.func
+  })
 };
 
 export default CSVDropzoneField;

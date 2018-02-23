@@ -8,6 +8,9 @@ import {
   Wizard
 } from 'patternfly-react';
 
+// NOTE: This may be a good component to move up to patternfly-react.
+// Let's try to avoid putting any application-specific code in here.
+
 class ModalWizardBody extends React.Component {
   constructor() {
     super();
@@ -22,7 +25,6 @@ class ModalWizardBody extends React.Component {
     if (step && step.onClick) {
       step.onClick();
     }
-    console.log('on step index click: ', stepIndex);
   }
 
   stepProps(stepIndex, title) {
