@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ModalWizard from '../../components/ModalWizard';
+import PlanWizardGeneralStep from '../PlanWizard/components/PlanWizardGeneralStep';
 
 // TODO remove these, they are space fillers
 const t = str => (
@@ -26,7 +27,7 @@ const PlanWizardBody = props => (
     steps={[
       {
         title: __('General'),
-        render: () => todo('Name and Description Fields'),
+        render: () => <PlanWizardGeneralStep />,
         onClick: () => console.log('on step 1 click')
       },
       {
