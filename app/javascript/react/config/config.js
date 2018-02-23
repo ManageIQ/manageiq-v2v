@@ -1,5 +1,5 @@
 import OverviewContainer from '../screens/App/Overview';
-import Dashboard from '../screens/App/Dashboard/Dashboard';
+import InfrastructureMappings from '../screens/App/InfrastructureMappings/InfrastructureMappings';
 
 export const links = [
   {
@@ -8,8 +8,8 @@ export const links = [
     component: OverviewContainer
   },
   {
-    text: 'Dashboard',
-    path: 'migration/dashboard',
-    component: Dashboard
+    text: 'Infrastructure Mappings',
+    path: 'migration/infrastructure-mappings',
+    component: InfrastructureMappings
   }
 ];
