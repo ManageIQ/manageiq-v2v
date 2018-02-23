@@ -11,6 +11,7 @@ const InfrastructureMapping = () => (
         position: 'absolute',
         left: -20
       }}
+      alt="infrastructure mappings list"
     />
   </div>
 );
