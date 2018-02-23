@@ -8,7 +8,7 @@ const reduxFormMap = {
     'mappingWizardGeneralStep',
     'mappingWizardClustersStep'
   ],
-  [__('Migration Plan Wizard')]: []
+  [__('Migration Plan Wizard')]: ['planWizardGeneralStep']
 };
 
 const ModalWizard = props => {
