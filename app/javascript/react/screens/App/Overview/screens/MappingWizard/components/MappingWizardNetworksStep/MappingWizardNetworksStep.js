@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { noop, Button, bindMethods } from 'patternfly-react';
+import { Field, reduxForm } from 'redux-form';
 
 // import DualPaneMapper from '../DualPaneMapper/DualPaneMapper';
 // import DualPaneMapperList from '../DualPaneMapper/DualPaneMapperList';
@@ -137,4 +138,8 @@ MappingWizardNetworksStep.defaultProps = {
   // addSourceNetwork: noop
 };
 
-export default MappingWizardNetworksStep;
+export default reduxForm({
+  form: 'mappingWizardNetworksStep',
+  initialValues: { networksMappings: [] },
+  destroyOnUnmount: false
+})(MappingWizardNetworksStep);
