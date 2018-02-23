@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { noop, Button, bindMethods } from 'patternfly-react';
 import { Field, reduxForm } from 'redux-form';
 
+import SourceClusterSelect from '../SourceClusterSelect/SourceClusterSelect';
+
 // import DualPaneMapper from '../DualPaneMapper/DualPaneMapper';
 // import DualPaneMapperList from '../DualPaneMapper/DualPaneMapperList';
 // import DualPaneMapperCount from '../DualPaneMapper/DualPaneMapperCount';
@@ -13,26 +15,46 @@ class MappingWizardNetworksStep extends React.Component {
     super(props);
 
     this.state = {
-      selectedCluster: null, // dropdown selected cluster
+      selectedCluster: undefined, // dropdown selected cluster
+      selectedClusterMapping: null,
       selectedTargetNetwork: null, // eslint-disable-line react/no-unused-state
       selectedSourceNetwork: [], // eslint-disable-line react/no-unused-state
       networkMappings: [], // eslint-disable-line react/no-unused-state
       selectedNetworkMapping: null // eslint-disable-line react/no-unused-state
     };
 
-    bindMethods(this, ['selectSourceNetwork']);
+    bindMethods(this, ['selectSourceCluster']);
   }
 
   componentDidMount() {}
 
-  selectSourceNetwork(sourceClusterId, targetClusterId) {
+  selectSourceCluster(sourceClusterId) {
+    // when dropdown selection occurs for source cluster, we go retrieve the
+    // newworks for that cluster
     const {
       fetchNetworksUrl,
       fetchSourceNetworksAction,
-      fetchTargetNetworksAction
+      fetchTargetNetworksAction,
+      clusterMappings
     } = this.props;
+
+    const selectedClusterMapping = clusterMappings.find(clusterMapping =>
+      clusterMapping.nodes.some(
+        sourceCluster => sourceCluster.id === sourceClusterId
+      )
+    );
+
+    const { nodes: sourceClusters, ...targetCluster } = selectedClusterMapping;
+
+    this.setState(() => ({
+      selectedCluster: sourceClusters.find(
+        sourceCluster => sourceCluster.id === sourceClusterId
+      ),
+      selectedClusterMapping
+    }));
+
     fetchSourceNetworksAction(fetchNetworksUrl, sourceClusterId);
-    fetchTargetNetworksAction(fetchNetworksUrl, targetClusterId);
+    fetchTargetNetworksAction(fetchNetworksUrl, targetCluster.id);
   }
 
   render() {
@@ -45,7 +67,8 @@ class MappingWizardNetworksStep extends React.Component {
       isRejectedTargetNetworks, // eslint-disable-line no-unused-vars
       // source/target networks change depending on selection
       sourceNetworks, // eslint-disable-line no-unused-vars
-      targetNetworks // eslint-disable-line no-unused-vars
+      targetNetworks, // eslint-disable-line no-unused-vars
+      form
     } = this.props;
 
     const {
@@ -62,9 +85,16 @@ class MappingWizardNetworksStep extends React.Component {
     // todo: change this Button to the source cluster populated Dropdown
     return (
       <div>
-        <Button onClick={() => this.selectSourceNetwork('10000000000001')}>
-          Fetch Networks
-        </Button>
+        <SourceClusterSelect
+          sourceClusters={clusterMappings.reduce(
+            (sourceClusters, clusterMapping) =>
+              sourceClusters.concat(clusterMapping.nodes),
+            []
+          )}
+          selectSourceCluster={this.selectSourceCluster}
+          selectedCluster={selectedCluster}
+          form={form}
+        />
         {sourceNetworks.length > 0 &&
           !isFetchingSourceNetworks && (
             <div>
@@ -114,7 +144,8 @@ MappingWizardNetworksStep.propTypes = {
   isFetchingSourceNetworks: PropTypes.bool,
   isRejectedSourceNetworks: PropTypes.bool,
   isFetchingTargetNetworks: PropTypes.bool,
-  isRejectedTargetNetworks: PropTypes.bool
+  isRejectedTargetNetworks: PropTypes.bool,
+  form: PropTypes.string
   // removeTargetNetwork: PropTypes.func,
   // removeSourceNetwork: PropTypes.func,
   // addTargetNetwork: PropTypes.func,
@@ -130,7 +161,8 @@ MappingWizardNetworksStep.defaultProps = {
   isFetchingSourceNetworks: false,
   isRejectedSourceNetworks: false,
   isFetchingTargetNetworks: false,
-  isRejectedTargetNetworks: false
+  isRejectedTargetNetworks: false,
+  form: ''
 
   // removeTargetNetwork: noop,
   // removeSourceNetwork: noop,
