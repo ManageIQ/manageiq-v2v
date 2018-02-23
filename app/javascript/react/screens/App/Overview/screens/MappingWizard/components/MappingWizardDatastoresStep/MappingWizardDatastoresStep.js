@@ -95,18 +95,18 @@ class MappingWizardDatastoresStep extends React.Component {
           selectSourceCluster={this.selectSourceCluster}
           selectedCluster={selectedCluster}
         />
-        {!isFetchingSourceDatastores &&
-          !isFetchingTargetDatastores &&
-          selectedCluster && (
-            <Field
-              name="datastoresMappings"
-              component={DatastoresStepForm}
-              sourceDatastores={sourceDatastores}
-              targetDatastores={targetDatastores}
-              selectedClusterMapping={selectedClusterMapping}
-              resetState={this.resetState}
-            />
-          )}
+        {selectedCluster && (
+          <Field
+            name="datastoresMappings"
+            component={DatastoresStepForm}
+            sourceDatastores={sourceDatastores}
+            targetDatastores={targetDatastores}
+            selectedClusterMapping={selectedClusterMapping}
+            resetState={this.resetState}
+            isFetchingSourceDatastores={isFetchingSourceDatastores}
+            isFetchingTargetDatastores={isFetchingTargetDatastores}
+          />
+        )}
       </div>
     );
   }

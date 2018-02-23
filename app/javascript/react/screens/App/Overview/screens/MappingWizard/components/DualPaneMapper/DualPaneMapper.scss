@@ -38,6 +38,11 @@
   &.has-counter {
     height: 180px;
   }
+  &.loading {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
 }
 .dual-pane-mapper-list .dual-pane-mapper-item {
   cursor: pointer;

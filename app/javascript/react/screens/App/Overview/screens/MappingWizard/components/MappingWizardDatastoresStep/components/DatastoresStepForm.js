@@ -213,7 +213,13 @@ class DatastoresStepForm extends React.Component {
   }
 
   render() {
-    const { sourceDatastores, targetDatastores, input } = this.props;
+    const {
+      sourceDatastores,
+      targetDatastores,
+      isFetchingSourceDatastores,
+      isFetchingTargetDatastores,
+      input
+    } = this.props;
     const {
       selectedSourceDatastores,
       selectedTargetDatastore,
@@ -231,7 +237,10 @@ class DatastoresStepForm extends React.Component {
             )
           }
         >
-          <DualPaneMapperList listTitle="Source Datastores">
+          <DualPaneMapperList
+            listTitle="Source Datastores"
+            loading={isFetchingSourceDatastores}
+          >
             {sourceDatastores &&
               sourceDatastoreFilter(sourceDatastores, input.value).map(item => (
                 <DualPaneMapperListItem
@@ -249,10 +258,15 @@ class DatastoresStepForm extends React.Component {
               ))}
             <DualPaneMapperCount
               selectedItems={selectedSourceDatastores.length}
-              totalItems={sourceDatastores.length}
+              totalItems={
+                sourceDatastoreFilter(sourceDatastores, input.value).length
+              }
             />
           </DualPaneMapperList>
-          <DualPaneMapperList listTitle="Target Datastores">
+          <DualPaneMapperList
+            listTitle="Target Datastores"
+            loading={isFetchingTargetDatastores}
+          >
             {targetDatastores &&
               targetDatastores.map(item => (
                 <DualPaneMapperListItem
@@ -287,5 +301,7 @@ DatastoresStepForm.propTypes = {
   selectedClusterMapping: PropTypes.object,
   sourceDatastores: PropTypes.array,
   targetDatastores: PropTypes.array,
-  resetState: PropTypes.func
+  resetState: PropTypes.func,
+  isFetchingSourceDatastores: PropTypes.bool,
+  isFetchingTargetDatastores: PropTypes.bool
 };
