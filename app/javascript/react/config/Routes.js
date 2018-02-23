@@ -21,7 +21,7 @@ const Routes = ({ store }) =>
           key={path}
           path={`/${path}`}
           render={props => {
-            if (props.match.url === coreComponent.path) {
+            if (props.match.isExact) {
               return (
                 <React.Fragment>
                   <Toolbar navigation={coreComponent.navigation} />
