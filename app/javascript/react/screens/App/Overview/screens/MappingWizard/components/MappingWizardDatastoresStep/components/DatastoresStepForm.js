@@ -56,11 +56,7 @@ class DatastoresStepForm extends React.Component {
   }
 
   addDatastoreMapping() {
-    const {
-      input,
-      selectedClusterMapping,
-      removeSourceDatastores
-    } = this.props;
+    const { input, selectedClusterMapping } = this.props;
 
     const { selectedTargetDatastore } = this.state;
 
@@ -76,7 +72,6 @@ class DatastoresStepForm extends React.Component {
     );
 
     this.setState(prevState => {
-      removeSourceDatastores(prevState.selectedSourceDatastores);
       if (input.value.length === 0 || noMappingForTargetCluster) {
         input.onChange([
           ...input.value,
@@ -182,27 +177,33 @@ class DatastoresStepForm extends React.Component {
   }
 
   removeMapping() {
-    const { addTargetDatastore, addSourceDatastores, input } = this.props;
-    this.setState(prevState => {
-      const { nodes, ...targetDatastore } = prevState.selectedMapping;
-      addTargetDatastore(targetDatastore);
-      addSourceDatastores(nodes);
-      if (input.value[0].nodes.length > 1) {
-        input.onChange([
-          {
-            ...input.value[0],
-            nodes: input.value[0].nodes.filter(
-              mapping => !(mapping.id === prevState.selectedMapping.id)
-            )
-          }
-        ]);
-      } else {
-        input.onChange([]);
-      }
-      return {
-        selectedMapping: null
-      };
-    });
+    const { input } = this.props;
+    const { selectedMapping } = this.state;
+    const datastoresStepMappings = input.value;
+
+    const updatedDatastoresStepMappings = datastoresStepMappings
+      .map(targetClusterWithDatastoreMappings => {
+        const containsMappingToRemove = targetClusterWithDatastoreMappings.nodes.some(
+          mapping => mapping.id === selectedMapping.id
+        );
+        if (!containsMappingToRemove) {
+          return targetClusterWithDatastoreMappings;
+        }
+        const updatedDatastoreMappings = targetClusterWithDatastoreMappings.nodes.filter(
+          datastoreMapping => !(datastoreMapping.id === selectedMapping.id)
+        );
+        if (updatedDatastoreMappings.length === 0) {
+          return undefined;
+        }
+        return {
+          ...targetClusterWithDatastoreMappings,
+          nodes: updatedDatastoreMappings
+        };
+      })
+      .filter(item => item !== undefined);
+
+    input.onChange(updatedDatastoresStepMappings);
+    this.setState(() => ({ selectedMapping: null }));
   }
 
   removeAll() {
@@ -284,9 +285,6 @@ export default DatastoresStepForm;
 DatastoresStepForm.propTypes = {
   input: PropTypes.object,
   selectedClusterMapping: PropTypes.object,
-  removeSourceDatastores: PropTypes.func,
-  addTargetDatastore: PropTypes.func,
-  addSourceDatastores: PropTypes.func,
   sourceDatastores: PropTypes.array,
   targetDatastores: PropTypes.array,
   resetState: PropTypes.func
