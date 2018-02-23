@@ -57,14 +57,12 @@ export const coreComponents = [
     name: 'InfrastructureMappings',
     type: InfrastructureMappings,
     navigation: 'Infrastructure Mappings',
-    path: '/migration/infrastructure-mappings',
     data: {}
   },
   {
     name: 'OverviewContainer',
     type: OverviewContainer,
     navigation: 'Overview',
-    path: '/migration',
     data: {
       fetchTransformationMappingsUrl: '/api/dummyMappings'
       // 'api/transformation_mappings'
