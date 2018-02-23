@@ -6,7 +6,9 @@ const Toolbar = ({ navigation }) => (
   <Grid.Row className="toolbar-pf" style={{ paddingTop: 0 }}>
     <Grid.Col xs={12}>
       <Breadcrumb style={{ marginBottom: 8 }}>
-        <Breadcrumb.Item href="#">Compute</Breadcrumb.Item>
+        <Breadcrumb.Item href="/dashboard/maintab?tab=compute">
+          Compute
+        </Breadcrumb.Item>
         <Breadcrumb.Item href="/migration">Migration</Breadcrumb.Item>
         <Breadcrumb.Item active>{navigation}</Breadcrumb.Item>
       </Breadcrumb>
