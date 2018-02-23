@@ -14,24 +14,31 @@ let dropzoneRef;
 class CSVDropzoneField extends React.Component {
   constructor() {
     super();
-    bindMethods(this, ['onImportClick', 'onFileDrop']);
+    bindMethods(this, ['confirmOverwrite', 'onFileDrop']);
   }
 
-  onImportClick() {
-    dropzoneRef.open();
+  confirmOverwrite(andThen) {
+    const { input: { value } } = this.props;
+    const confirmMessage = 'Importing a new VM list file will overwrite the contents of the existing list.\n\nAre you sure you want to import a new file?';
+    // TODO fancier confirm dialog... or something else? see comments at https://github.com/priley86/miq_v2v_ui_plugin/issues/34
+    if (!value || value.length === 0 || confirm(confirmMessage)) {
+      andThen();
+    }
   }
 
   onFileDrop(acceptedFiles, rejectedFiles) {
     const { input: { onChange } } = this.props;
-    if (acceptedFiles && acceptedFiles.length > 0) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        csv.parse(reader.result, (err, csvRows) => onChange(csvRows));
-      };
-      reader.readAsBinaryString(acceptedFiles[0]);
-    } else {
-      // TODO error reporting / unhappy path? message about rejected files?
-    }
+    this.confirmOverwrite(() => {
+      if (acceptedFiles && acceptedFiles.length > 0) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          csv.parse(reader.result, (err, csvRows) => onChange(csvRows));
+        };
+        reader.readAsBinaryString(acceptedFiles[0]);
+      } else {
+        // TODO error reporting / unhappy path? message about rejected files?
+      }
+    });
   }
 
   render() {
@@ -64,10 +71,11 @@ class CSVDropzoneField extends React.Component {
         activeClassName={cx('active')}
         onDrop={this.onFileDrop}
         disableClick
+        disablePreview
       >
         <Toolbar>
           <Toolbar.RightContent>
-            <Button bsStyle="primary" onClick={this.onImportClick}>
+            <Button bsStyle="primary" onClick={() => { dropzoneRef.open(); }}>
               <Icon type="fa" name="upload" /> Import
             </Button>
           </Toolbar.RightContent>
