@@ -17,6 +17,6 @@ const PlanWizardCSVStep = () => (
 
 export default reduxForm({
   form: 'planWizardCSVStep',
-  initialValues: { csvRows: [] },
+  initialValues: { csvRows: null },
   destroyOnUnmount: false
 })(PlanWizardCSVStep);
