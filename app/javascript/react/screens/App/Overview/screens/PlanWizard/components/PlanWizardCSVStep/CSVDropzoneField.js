@@ -52,7 +52,7 @@ class CSVDropzoneField extends React.Component {
   }
 
   render() {
-    const { input: { value } } = this.props;
+    const { input: { value }, meta: { pristine, error } } = this.props;
     const mainContents =
       !value || value.length === 0 ? (
         <EmptyState>
@@ -99,12 +99,13 @@ class CSVDropzoneField extends React.Component {
                 dropzoneRef.open();
               }}
             >
-              <Icon type="fa" name="upload" /> {__('Import')}
+              {__('Browse...')}
             </Button>
           </Toolbar.RightContent>
           <div className="form-group">{mainContents}</div>
           <Toolbar.Results>
-            {(value && value.length) || 0} {__('Items')}
+            {!error && value && sprintf(__('%s Items'), value.length)}
+            {pristine && error}
           </Toolbar.Results>
         </Toolbar>
       </Dropzone>
@@ -116,6 +117,10 @@ CSVDropzoneField.propTypes = {
   input: PropTypes.shape({
     value: PropTypes.arrayOf(PropTypes.array),
     onChange: PropTypes.func
+  }),
+  meta: PropTypes.shape({
+    pristine: PropTypes.bool,
+    error: PropTypes.string
   })
 };
 

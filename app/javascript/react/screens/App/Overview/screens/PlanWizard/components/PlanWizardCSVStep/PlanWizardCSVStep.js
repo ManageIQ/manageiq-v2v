@@ -1,6 +1,6 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
-import { required } from 'redux-form-validators';
+import { length } from 'redux-form-validators';
 import CSVDropzoneField from './CSVDropzoneField';
 
 const PlanWizardCSVStep = () => (
@@ -9,14 +9,15 @@ const PlanWizardCSVStep = () => (
     <Field
       name="csvRows"
       component={CSVDropzoneField}
-      required
-      validate={[required({ msg: __('Required') })]}
+      validate={[
+        length({ min: 1, msg: __('At least one VM needs to be selected') })
+      ]}
     />
   </div>
 );
 
 export default reduxForm({
   form: 'planWizardCSVStep',
-  initialValues: { csvRows: null },
+  initialValues: { csvRows: [] },
   destroyOnUnmount: false
 })(PlanWizardCSVStep);
