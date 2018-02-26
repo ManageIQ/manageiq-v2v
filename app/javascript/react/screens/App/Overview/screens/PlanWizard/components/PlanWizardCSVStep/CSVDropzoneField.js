@@ -33,7 +33,8 @@ class CSVDropzoneField extends React.Component {
         };
         reader.readAsBinaryString(acceptedFiles[0]);
       } else {
-        // TODO error reporting / unhappy path? message about rejected files?
+        // eslint-disable-next-line no-restricted-globals
+        alert('Invalid file extension. Only .csv files are accepted.');
       }
     });
   }
@@ -59,7 +60,7 @@ class CSVDropzoneField extends React.Component {
           <EmptyState.Title>{__('Import a CSV file')}</EmptyState.Title>
           <EmptyState.Info>
             {__(
-              'Click Import or drag-and-drop here to import a CSV file containing a list of VMs to be migrated.'
+              'Click "Browse..." or drag-and-drop here to import a CSV file containing a list of VMs to be migrated.'
             )}
           </EmptyState.Info>
         </EmptyState>
@@ -81,14 +82,15 @@ class CSVDropzoneField extends React.Component {
       );
     return (
       <Dropzone
-        ref={node => {
-          dropzoneRef = node;
-        }} // See comment at top
+        accept=".csv"
         className={cx('csv-upload-dropzone')}
         activeClassName={cx('active')}
         onDrop={this.onFileDrop}
         disableClick
         disablePreview
+        ref={node => {
+          dropzoneRef = node; // See comment at top, this is so we can call dropzoneRef.open below
+        }}
       >
         <Toolbar>
           <Toolbar.RightContent>
