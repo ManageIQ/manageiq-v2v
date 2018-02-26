@@ -24,7 +24,7 @@ export const sourceClusterDatastores = [
     type: null,
     storages: [
       {
-        href: 'http://localhost:3000/api/data_stores/2',
+        href: 'http://localhost:3000/api/data_stores/1',
         id: '1-1',
         name: 'VMWareCluster1-DS1',
         store_type: 'VMFS',
@@ -46,7 +46,7 @@ export const sourceClusterDatastores = [
         storage_domain_type: null
       },
       {
-        href: 'http://localhost:3000/api/data_stores/4',
+        href: 'http://localhost:3000/api/data_stores/2',
         id: '1-2',
         name: 'VMWareCluster1-DS2',
         store_type: 'VMFS',
@@ -90,7 +90,7 @@ export const sourceClusterDatastores = [
         storage_domain_type: null
       },
       {
-        href: 'http://localhost:3000/api/data_stores/3',
+        href: 'http://localhost:3000/api/data_stores/4',
         id: '1-4',
         name: 'VMWareCluster1-DS4',
         store_type: 'VMFS',
@@ -135,7 +135,7 @@ export const sourceClusterDatastores = [
     type: null,
     storages: [
       {
-        href: 'http://localhost:3000/api/data_stores/2',
+        href: 'http://localhost:3000/api/data_stores/5',
         id: '2-1',
         name: 'VMWareCluster2-DS1',
         store_type: 'VMFS',
@@ -157,7 +157,7 @@ export const sourceClusterDatastores = [
         storage_domain_type: null
       },
       {
-        href: 'http://localhost:3000/api/data_stores/4',
+        href: 'http://localhost:3000/api/data_stores/6',
         id: '2-2',
         name: 'VMWareCluster2-DS2',
         store_type: 'VMFS',
@@ -179,7 +179,7 @@ export const sourceClusterDatastores = [
         storage_domain_type: null
       },
       {
-        href: 'http://localhost:3000/api/data_stores/3',
+        href: 'http://localhost:3000/api/data_stores/7',
         id: '2-3',
         name: 'VMWareCluster2-DS3',
         store_type: 'VMFS',
@@ -201,7 +201,7 @@ export const sourceClusterDatastores = [
         storage_domain_type: null
       },
       {
-        href: 'http://localhost:3000/api/data_stores/3',
+        href: 'http://localhost:3000/api/data_stores/8',
         id: '2-4',
         name: 'VMWareCluster2-DS4',
         store_type: 'VMFS',
@@ -246,7 +246,7 @@ export const sourceClusterDatastores = [
     type: null,
     storages: [
       {
-        href: 'http://localhost:3000/api/data_stores/2',
+        href: 'http://localhost:3000/api/data_stores/9',
         id: '3-1',
         name: 'VMWareCluster3-DS1',
         store_type: 'VMFS',
@@ -268,7 +268,7 @@ export const sourceClusterDatastores = [
         storage_domain_type: null
       },
       {
-        href: 'http://localhost:3000/api/data_stores/4',
+        href: 'http://localhost:3000/api/data_stores/10',
         id: '3-2',
         name: 'VMWareCluster3-DS2',
         store_type: 'VMFS',
@@ -290,7 +290,7 @@ export const sourceClusterDatastores = [
         storage_domain_type: null
       },
       {
-        href: 'http://localhost:3000/api/data_stores/3',
+        href: 'http://localhost:3000/api/data_stores/11',
         id: '3-3',
         name: 'VMWareCluster3-DS3',
         store_type: 'VMFS',
@@ -312,7 +312,7 @@ export const sourceClusterDatastores = [
         storage_domain_type: null
       },
       {
-        href: 'http://localhost:3000/api/data_stores/3',
+        href: 'http://localhost:3000/api/data_stores/12',
         id: '3-4',
         name: 'VMWareCluster3-DS4',
         store_type: 'VMFS',
@@ -360,7 +360,7 @@ export const targetClusterDatastores = [
     type: null,
     storages: [
       {
-        href: 'http://localhost:3000/api/data_stores/1',
+        href: 'http://localhost:3000/api/data_stores/13',
         id: '1-1',
         name: 'RHVCluster1-Shared-NFS-1',
         store_type: 'NFS41',
@@ -382,7 +382,7 @@ export const targetClusterDatastores = [
         storage_domain_type: null
       },
       {
-        href: 'http://localhost:3000/api/data_stores/1',
+        href: 'http://localhost:3000/api/data_stores/14',
         id: '1-2',
         name: 'RHVCluster1-Shared-NFS-2',
         store_type: 'NFS41',
@@ -427,7 +427,7 @@ export const targetClusterDatastores = [
     type: null,
     storages: [
       {
-        href: 'http://localhost:3000/api/data_stores/1',
+        href: 'http://localhost:3000/api/data_stores/15',
         id: '2-1',
         name: 'RHVCluster2-Shared-NFS-1',
         store_type: 'NFS41',
@@ -449,7 +449,7 @@ export const targetClusterDatastores = [
         storage_domain_type: null
       },
       {
-        href: 'http://localhost:3000/api/data_stores/1',
+        href: 'http://localhost:3000/api/data_stores/16',
         id: '2-2',
         name: 'RHVCluster2-Shared-NFS-2',
         store_type: 'NFS41',

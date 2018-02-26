@@ -59,7 +59,7 @@ export const sourceClusters = Immutable({
           type: null
         },
         {
-          href: 'http://localhost:3000/api/clusters/10000000000001',
+          href: 'http://localhost:3000/api/clusters/10000000000002',
           id: '2',
           name: 'VMWare Cluster2',
           ems_id: '10000000000012',
@@ -80,7 +80,7 @@ export const sourceClusters = Immutable({
           type: null
         },
         {
-          href: 'http://localhost:3000/api/clusters/10000000000001',
+          href: 'http://localhost:3000/api/clusters/10000000000003',
           id: '3',
           name: 'VMWare Cluster3',
           ems_id: '10000000000012',
@@ -164,7 +164,7 @@ export const targetClusters = Immutable({
           type: null
         },
         {
-          href: 'http://localhost:3000/api/clusters/10000000000006',
+          href: 'http://localhost:3000/api/clusters/10000000000007',
           id: '2',
           name: 'RHV Cluster2',
           ems_id: '10000000000008',

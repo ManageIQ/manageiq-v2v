@@ -58,7 +58,7 @@ export const sourceClusterNetworks = [
         parent_id: null
       },
       {
-        href: 'http://localhost:3000/api/lans/10000000000008',
+        href: 'http://localhost:3000/api/lans/10000000000009',
         id: '1-3',
         switch_id: '10000000000005',
         name: 'VMWareCluster1-vm_network3',
@@ -75,7 +75,7 @@ export const sourceClusterNetworks = [
         parent_id: null
       },
       {
-        href: 'http://localhost:3000/api/lans/10000000000008',
+        href: 'http://localhost:3000/api/lans/10000000000010',
         id: '1-4',
         switch_id: '10000000000005',
         name: 'VMWareCluster1-vm_network4',
@@ -115,7 +115,7 @@ export const sourceClusterNetworks = [
     type: null,
     lans: [
       {
-        href: 'http://localhost:3000/api/lans/10000000000007',
+        href: 'http://localhost:3000/api/lans/10000000000011',
         id: '2-1',
         switch_id: '10000000000004',
         name: 'VMWareCluster2-vm_network1',
@@ -132,7 +132,7 @@ export const sourceClusterNetworks = [
         parent_id: null
       },
       {
-        href: 'http://localhost:3000/api/lans/10000000000008',
+        href: 'http://localhost:3000/api/lans/10000000000012',
         id: '2-2',
         switch_id: '10000000000005',
         name: 'VMWareCluster2-vm_network2',
@@ -149,7 +149,7 @@ export const sourceClusterNetworks = [
         parent_id: null
       },
       {
-        href: 'http://localhost:3000/api/lans/10000000000008',
+        href: 'http://localhost:3000/api/lans/10000000000013',
         id: '2-3',
         switch_id: '10000000000005',
         name: 'VMWareCluster2-vm_network3',
@@ -166,7 +166,7 @@ export const sourceClusterNetworks = [
         parent_id: null
       },
       {
-        href: 'http://localhost:3000/api/lans/10000000000008',
+        href: 'http://localhost:3000/api/lans/10000000000014',
         id: '2-4',
         switch_id: '10000000000005',
         name: 'VMWareCluster2-vm_network4',
@@ -206,7 +206,7 @@ export const sourceClusterNetworks = [
     type: null,
     lans: [
       {
-        href: 'http://localhost:3000/api/lans/10000000000007',
+        href: 'http://localhost:3000/api/lans/10000000000015',
         id: '3-1',
         switch_id: '10000000000004',
         name: 'VMWareCluster3-vm_network1',
@@ -223,7 +223,7 @@ export const sourceClusterNetworks = [
         parent_id: null
       },
       {
-        href: 'http://localhost:3000/api/lans/10000000000008',
+        href: 'http://localhost:3000/api/lans/10000000000016',
         id: '3-2',
         switch_id: '10000000000005',
         name: 'VMWareCluster3-vm_network2',
@@ -240,7 +240,7 @@ export const sourceClusterNetworks = [
         parent_id: null
       },
       {
-        href: 'http://localhost:3000/api/lans/10000000000008',
+        href: 'http://localhost:3000/api/lans/10000000000017',
         id: '3-3',
         switch_id: '10000000000005',
         name: 'VMWareCluster3-vm_network3',
@@ -257,7 +257,7 @@ export const sourceClusterNetworks = [
         parent_id: null
       },
       {
-        href: 'http://localhost:3000/api/lans/10000000000008',
+        href: 'http://localhost:3000/api/lans/10000000000018',
         id: '3-4',
         switch_id: '10000000000005',
         name: 'VMWareCluster3-vm_network4',
@@ -300,7 +300,7 @@ export const targetClusterNetworks = [
     type: null,
     lans: [
       {
-        href: 'http://localhost:3000/api/lans/10000000000011',
+        href: 'http://localhost:3000/api/lans/10000000000019',
         id: '1-1',
         switch_id: '10000000000008',
         name: 'RHV Cluster 1 - ovirtmgmt1',
@@ -317,7 +317,7 @@ export const targetClusterNetworks = [
         parent_id: null
       },
       {
-        href: 'http://localhost:3000/api/lans/10000000000018',
+        href: 'http://localhost:3000/api/lans/10000000000020',
         id: '1-2',
         switch_id: '10000000000015',
         name: 'RHV Cluster 1 - ovirtmgmt2',
@@ -335,7 +335,7 @@ export const targetClusterNetworks = [
       },
 
       {
-        href: 'http://localhost:3000/api/lans/10000000000016',
+        href: 'http://localhost:3000/api/lans/10000000000021',
         id: '1-3',
         switch_id: '10000000000013',
         name: 'RHV Cluster 1 - ovirtmgmt3',
@@ -375,7 +375,7 @@ export const targetClusterNetworks = [
     type: null,
     lans: [
       {
-        href: 'http://localhost:3000/api/lans/10000000000011',
+        href: 'http://localhost:3000/api/lans/10000000000022',
         id: '2-1',
         switch_id: '10000000000008',
         name: 'RHV Cluster 2 - ovirtmgmt1',
@@ -392,7 +392,7 @@ export const targetClusterNetworks = [
         parent_id: null
       },
       {
-        href: 'http://localhost:3000/api/lans/10000000000018',
+        href: 'http://localhost:3000/api/lans/10000000000023',
         id: '2-2',
         switch_id: '10000000000015',
         name: 'RHV Cluster 2 - ovirtmgmt2',
@@ -410,7 +410,7 @@ export const targetClusterNetworks = [
       },
 
       {
-        href: 'http://localhost:3000/api/lans/10000000000016',
+        href: 'http://localhost:3000/api/lans/10000000000024',
         id: '2-3',
         switch_id: '10000000000013',
         name: 'RHV Cluster 2 - ovirtmgmt3',
