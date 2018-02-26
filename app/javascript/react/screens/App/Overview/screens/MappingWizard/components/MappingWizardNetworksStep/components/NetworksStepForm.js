@@ -11,6 +11,39 @@ import DualPaneMapperListItem from '../../DualPaneMapper/DualPaneMapperListItem'
 class NetworksStepForm extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      selectedSourceNetworks: [],
+      selectedTargetNetwork: null
+    };
+
+    bindMethods(this, ['selectSourceNetwork', 'selectTargetNetwork']);
+  }
+
+  selectSourceNetwork(sourceNetwork) {
+    this.setState(prevState => {
+      const isAlreadySelected = prevState.selectedSourceNetworks.some(
+        selectedSourceNetwork => selectedSourceNetwork.id === sourceNetwork.id
+      );
+      if (isAlreadySelected) {
+        return {
+          selectedSourceNetworks: prevState.selectedSourceNetworks.filter(
+            selectedSourceNetwork =>
+              selectedSourceNetwork.id !== sourceNetwork.id
+          )
+        };
+      }
+      return {
+        selectedSourceNetworks: [
+          ...prevState.selectedSourceNetworks,
+          sourceNetwork
+        ]
+      };
+    });
+  }
+
+  selectTargetNetwork(targetNetwork) {
+    this.setState(() => ({ selectedTargetNetwork: targetNetwork }));
   }
 
   render() {
@@ -21,11 +54,11 @@ class NetworksStepForm extends React.Component {
       isFetchingTargetNetworks,
       input
     } = this.props;
-    // const {
-    //   selectedSourceDatastores,
-    //   selectedTargetDatastore,
-    //   selectedMapping
-    // } = this.state;
+    const {
+      selectedSourceNetworks,
+      selectedTargetNetwork
+      // selectedMapping
+    } = this.state;
 
     return (
       <div className="dual-pane-mapper-form">
@@ -43,18 +76,19 @@ class NetworksStepForm extends React.Component {
             loading={isFetchingSourceNetworks}
           >
             {sourceNetworks &&
-              sourceNetworks.map(item => (
+              sourceNetworks.map(sourceNetwork => (
                 <DualPaneMapperListItem
-                  item={item}
-                  key={item.id}
-                  // selected={
-                  //   selectedSourceDatastores &&
-                  //   selectedSourceDatastores.some(
-                  //     sourceDatastore => sourceDatastore.id === item.id
-                  //   )
-                  // }
-                  // handleClick={this.selectSourceDatastore}
-                  // handleKeyPress={this.selectSourceDatastore}
+                  item={sourceNetwork}
+                  key={sourceNetwork.id}
+                  selected={
+                    selectedSourceNetworks &&
+                    selectedSourceNetworks.some(
+                      selectedSourceNetwork =>
+                        selectedSourceNetwork.id === sourceNetwork.id
+                    )
+                  }
+                  handleClick={this.selectSourceNetwork}
+                  handleKeyPress={this.selectSourceNetwork}
                 />
               ))}
             {/* <DualPaneMapperCount
@@ -67,16 +101,16 @@ class NetworksStepForm extends React.Component {
             loading={isFetchingTargetNetworks}
           >
             {targetNetworks &&
-              targetNetworks.map(item => (
+              targetNetworks.map(targetNetwork => (
                 <DualPaneMapperListItem
-                  item={item}
-                  key={item.id}
-                  // selected={
-                  //   selectedTargetDatastore &&
-                  //   selectedTargetDatastore.id === item.id
-                  // }
-                  // handleClick={this.selectTargetDatastore}
-                  // handleKeyPress={this.selectTargetDatastore}
+                  item={targetNetwork}
+                  key={targetNetwork.id}
+                  selected={
+                    selectedTargetNetwork &&
+                    selectedTargetNetwork.id === targetNetwork.id
+                  }
+                  handleClick={this.selectTargetNetwork}
+                  handleKeyPress={this.selectTargetNetwork}
                 />
               ))}
           </DualPaneMapperList>
