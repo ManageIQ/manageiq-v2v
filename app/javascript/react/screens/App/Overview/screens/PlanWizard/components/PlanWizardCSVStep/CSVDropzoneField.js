@@ -6,7 +6,6 @@ import {
   bindMethods,
   Toolbar,
   Button,
-  Icon,
   EmptyState,
   ListView
 } from 'patternfly-react';
