@@ -6,7 +6,7 @@ import DualPaneMapper from '../../DualPaneMapper/DualPaneMapper';
 import DualPaneMapperList from '../../DualPaneMapper/DualPaneMapperList';
 import DualPaneMapperCount from '../../DualPaneMapper/DualPaneMapperCount';
 import DualPaneMapperListItem from '../../DualPaneMapper/DualPaneMapperListItem';
-// import DatastoresStepTreeView from './DatastoresStepTreeView';
+import MappingWizardTreeView from '../../MappingWizardTreeView/MappingWizardTreeView';
 
 import { sourceNetworksFilter } from '../MappingWizardNetworksStepSelectors';
 
@@ -16,13 +16,17 @@ class NetworksStepForm extends React.Component {
 
     this.state = {
       selectedSourceNetworks: [],
-      selectedTargetNetwork: null
+      selectedTargetNetwork: null,
+      selectedMapping: null
     };
 
     bindMethods(this, [
       'selectSourceNetwork',
       'selectTargetNetwork',
-      'addNetworkMapping'
+      'addNetworkMapping',
+      'selectMapping',
+      'removeMapping',
+      'removeAll'
     ]);
   }
 
@@ -168,6 +172,70 @@ class NetworksStepForm extends React.Component {
     });
   }
 
+  selectMapping(selectedMapping) {
+    const { input } = this.props;
+    const networksStepMappings = input.value;
+
+    input.onChange(
+      networksStepMappings.map(targetClusterWithNetworkMappings => {
+        const updatedMappings = targetClusterWithNetworkMappings.nodes.map(
+          networkMapping => {
+            if (networkMapping.id === selectedMapping.id) {
+              return {
+                ...networkMapping,
+                selected: !networkMapping.selected
+              };
+            } else if (
+              networkMapping.id !== selectedMapping.id &&
+              networkMapping.selected
+            ) {
+              return { ...networkMapping, selected: false };
+            }
+            return networkMapping;
+          }
+        );
+        return { ...targetClusterWithNetworkMappings, nodes: updatedMappings };
+      })
+    );
+    this.setState(() => ({ selectedMapping }));
+  }
+
+  removeMapping() {
+    const { input } = this.props;
+    const { selectedMapping } = this.state;
+    const networksStepMappings = input.value;
+
+    const updatedNetworksStepMappings = networksStepMappings
+      .map(targetClusterWithNetworkMappings => {
+        const containsMappingToRemove = targetClusterWithNetworkMappings.nodes.some(
+          mapping => mapping.id === selectedMapping.id
+        );
+        if (!containsMappingToRemove) {
+          return targetClusterWithNetworkMappings;
+        }
+        const updatedNetworkMappings = targetClusterWithNetworkMappings.nodes.filter(
+          networkMapping => !(networkMapping.id === selectedMapping.id)
+        );
+        if (updatedNetworkMappings.length === 0) {
+          return undefined;
+        }
+        return {
+          ...targetClusterWithNetworkMappings,
+          nodes: updatedNetworkMappings
+        };
+      })
+      .filter(item => item !== undefined);
+
+    input.onChange(updatedNetworksStepMappings);
+    this.setState(() => ({ selectedMapping: null }));
+  }
+
+  removeAll() {
+    const { resetState, input } = this.props;
+    input.onChange([]);
+    resetState();
+  }
+
   render() {
     const {
       sourceNetworks,
@@ -178,8 +246,8 @@ class NetworksStepForm extends React.Component {
     } = this.props;
     const {
       selectedSourceNetworks,
-      selectedTargetNetwork
-      // selectedMapping
+      selectedTargetNetwork,
+      selectedMapping
     } = this.state;
 
     return (
@@ -215,10 +283,12 @@ class NetworksStepForm extends React.Component {
                   />
                 )
               )}
-            {/* <DualPaneMapperCount
-              selectedItems={selectedSourceDatastores.length}
-              totalItems={sourceDatastores.length}
-            /> */}
+            <DualPaneMapperCount
+              selectedItems={selectedSourceNetworks.length}
+              totalItems={
+                sourceNetworksFilter(sourceNetworks, input.value).length
+              }
+            />
           </DualPaneMapperList>
           <DualPaneMapperList
             listTitle="Target Networks"
@@ -239,13 +309,13 @@ class NetworksStepForm extends React.Component {
               ))}
           </DualPaneMapperList>
         </DualPaneMapper>
-        {/* <DatastoresStepTreeView
+        <MappingWizardTreeView
           mappings={input.value}
           selectMapping={this.selectMapping}
           removeMapping={this.removeMapping}
           removeAll={this.removeAll}
           selectedMapping={selectedMapping}
-        /> */}
+        />
       </div>
     );
   }
@@ -256,7 +326,9 @@ NetworksStepForm.propTypes = {
   sourceNetworks: PropTypes.array,
   targetNetworks: PropTypes.array,
   isFetchingSourceNetworks: PropTypes.bool,
-  isFetchingTargetNetworks: PropTypes.bool
+  isFetchingTargetNetworks: PropTypes.bool,
+  selectedClusterMapping: PropTypes.object,
+  resetState: PropTypes.func
 };
 
 export default NetworksStepForm;
