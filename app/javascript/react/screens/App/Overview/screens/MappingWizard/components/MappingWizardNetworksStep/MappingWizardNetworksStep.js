@@ -1,15 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { noop, Button, bindMethods } from 'patternfly-react';
+import { noop, bindMethods } from 'patternfly-react';
 import { Field, reduxForm } from 'redux-form';
 
 import SourceClusterSelect from '../SourceClusterSelect/SourceClusterSelect';
 import NetworksStepForm from './components/NetworksStepForm';
-
-// import DualPaneMapper from '../DualPaneMapper/DualPaneMapper';
-// import DualPaneMapperList from '../DualPaneMapper/DualPaneMapperList';
-// import DualPaneMapperCount from '../DualPaneMapper/DualPaneMapperCount';
-// import DualPaneMapperListItem from '../DualPaneMapper/DualPaneMapperListItem';
 
 class MappingWizardNetworksStep extends React.Component {
   constructor(props) {
@@ -17,11 +12,7 @@ class MappingWizardNetworksStep extends React.Component {
 
     this.state = {
       selectedCluster: undefined, // dropdown selected cluster
-      selectedClusterMapping: null,
-      selectedTargetNetwork: null, // eslint-disable-line react/no-unused-state
-      selectedSourceNetwork: [], // eslint-disable-line react/no-unused-state
-      networkMappings: [], // eslint-disable-line react/no-unused-state
-      selectedNetworkMapping: null // eslint-disable-line react/no-unused-state
+      selectedClusterMapping: null // cluster mapping from step-2 associated with selected source cluster
     };
 
     bindMethods(this, ['selectSourceCluster', 'resetState']);
@@ -67,31 +58,18 @@ class MappingWizardNetworksStep extends React.Component {
 
   render() {
     const {
-      // todo: inject the mapped clusters from MappingWizardClustersStep as props here
-      clusterMappings, // eslint-disable-line no-unused-vars
-      isFetchingSourceNetworks, // eslint-disable-line no-unused-vars
+      clusterMappings,
+      isFetchingSourceNetworks,
       isRejectedSourceNetworks, // eslint-disable-line no-unused-vars
-      isFetchingTargetNetworks, // eslint-disable-line no-unused-vars
+      isFetchingTargetNetworks,
       isRejectedTargetNetworks, // eslint-disable-line no-unused-vars
-      // source/target networks change depending on selection
-      sourceNetworks, // eslint-disable-line no-unused-vars
-      targetNetworks, // eslint-disable-line no-unused-vars
+      sourceNetworks,
+      targetNetworks,
       form
     } = this.props;
 
-    const {
-      selectedCluster, // eslint-disable-line no-unused-vars
-      selectedClusterMapping,
-      selectedTargetNetwork, // eslint-disable-line no-unused-vars
-      selectedSourceNetwork, // eslint-disable-line no-unused-vars
-      networkMappings, // eslint-disable-line no-unused-vars
-      selectedNetworkMapping // eslint-disable-line no-unused-vars
-    } = this.state;
+    const { selectedCluster, selectedClusterMapping } = this.state;
 
-    // first we render the dropdown selection for each source cluster in clusterMappings,
-    // then we call `selectSourceNetwork` and go get that cluster's networks on selection
-
-    // todo: change this Button to the source cluster populated Dropdown
     return (
       <div>
         <SourceClusterSelect
@@ -133,10 +111,6 @@ MappingWizardNetworksStep.propTypes = {
   isFetchingTargetNetworks: PropTypes.bool,
   isRejectedTargetNetworks: PropTypes.bool,
   form: PropTypes.string
-  // removeTargetNetwork: PropTypes.func,
-  // removeSourceNetwork: PropTypes.func,
-  // addTargetNetwork: PropTypes.func,
-  // addSourceNetwork: PropTypes.func
 };
 MappingWizardNetworksStep.defaultProps = {
   clusterMappings: [],
@@ -150,11 +124,6 @@ MappingWizardNetworksStep.defaultProps = {
   isFetchingTargetNetworks: false,
   isRejectedTargetNetworks: false,
   form: ''
-
-  // removeTargetNetwork: noop,
-  // removeSourceNetwork: noop,
-  // addTargetNetwork: noop,
-  // addSourceNetwork: noop
 };
 
 export default reduxForm({
