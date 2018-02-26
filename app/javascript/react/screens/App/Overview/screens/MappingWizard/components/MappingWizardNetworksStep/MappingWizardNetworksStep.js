@@ -4,6 +4,7 @@ import { noop, Button, bindMethods } from 'patternfly-react';
 import { Field, reduxForm } from 'redux-form';
 
 import SourceClusterSelect from '../SourceClusterSelect/SourceClusterSelect';
+import NetworksStepForm from './components/NetworksStepForm';
 
 // import DualPaneMapper from '../DualPaneMapper/DualPaneMapper';
 // import DualPaneMapperList from '../DualPaneMapper/DualPaneMapperList';
@@ -73,6 +74,7 @@ class MappingWizardNetworksStep extends React.Component {
 
     const {
       selectedCluster, // eslint-disable-line no-unused-vars
+      selectedClusterMapping,
       selectedTargetNetwork, // eslint-disable-line no-unused-vars
       selectedSourceNetwork, // eslint-disable-line no-unused-vars
       networkMappings, // eslint-disable-line no-unused-vars
@@ -95,40 +97,18 @@ class MappingWizardNetworksStep extends React.Component {
           selectedCluster={selectedCluster}
           form={form}
         />
-        {sourceNetworks.length > 0 &&
-          !isFetchingSourceNetworks && (
-            <div>
-              {' '}
-              <h4>Source Networks</h4>
-              {sourceNetworks.map(lan => (
-                <div>
-                  <span>{lan.id}</span>
-                  &nbsp;
-                  <span>{lan.name}</span>
-                  &nbsp;
-                  <span>{lan.lan_type}</span>
-                  &nbsp;
-                </div>
-              ))}
-            </div>
-          )}
-        {targetNetworks.length > 0 &&
-          !isFetchingTargetNetworks && (
-            <div>
-              {' '}
-              <h4>Target Networks</h4>
-              {targetNetworks.map(lan => (
-                <div>
-                  <span>{lan.id}</span>
-                  &nbsp;
-                  <span>{lan.name}</span>
-                  &nbsp;
-                  <span>{lan.lan_type}</span>
-                  &nbsp;
-                </div>
-              ))}
-            </div>
-          )}
+        {selectedCluster && (
+          <Field
+            name="networksMappings"
+            component={NetworksStepForm}
+            sourceNetworks={sourceNetworks}
+            targetNetworks={targetNetworks}
+            selectedClusterMapping={selectedClusterMapping}
+            isFetchingSourceNetworks={isFetchingSourceNetworks}
+            isFetchingTargetNetworks={isFetchingTargetNetworks}
+            // resetState={this.resetState}
+          />
+        )}
       </div>
     );
   }
