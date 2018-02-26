@@ -25,8 +25,8 @@ const SourceClusterSelect = ({
       <Form horizontal>
         <FormGroup>
           <Grid.Col componentClass={ControlLabel} sm={6}>
-            {__(
-              sprintf(
+            {sprintf(
+              __(
                 'Map source %s to target %s for cluster',
                 mappingObject,
                 mappingObject
