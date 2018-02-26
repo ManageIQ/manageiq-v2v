@@ -24,7 +24,7 @@ class MappingWizardNetworksStep extends React.Component {
       selectedNetworkMapping: null // eslint-disable-line react/no-unused-state
     };
 
-    bindMethods(this, ['selectSourceCluster']);
+    bindMethods(this, ['selectSourceCluster', 'resetState']);
   }
 
   componentDidMount() {}
@@ -56,6 +56,13 @@ class MappingWizardNetworksStep extends React.Component {
 
     fetchSourceNetworksAction(fetchNetworksUrl, sourceClusterId);
     fetchTargetNetworksAction(fetchNetworksUrl, targetCluster.id);
+  }
+
+  resetState() {
+    this.setState(() => ({
+      selectedCluster: undefined,
+      selectedClusterMapping: null
+    }));
   }
 
   render() {
@@ -106,7 +113,7 @@ class MappingWizardNetworksStep extends React.Component {
             selectedClusterMapping={selectedClusterMapping}
             isFetchingSourceNetworks={isFetchingSourceNetworks}
             isFetchingTargetNetworks={isFetchingTargetNetworks}
-            // resetState={this.resetState}
+            resetState={this.resetState}
           />
         )}
       </div>

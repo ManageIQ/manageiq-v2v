@@ -6,7 +6,7 @@ import DualPaneMapper from '../../DualPaneMapper/DualPaneMapper';
 import DualPaneMapperList from '../../DualPaneMapper/DualPaneMapperList';
 import DualPaneMapperCount from '../../DualPaneMapper/DualPaneMapperCount';
 import DualPaneMapperListItem from '../../DualPaneMapper/DualPaneMapperListItem';
-import DatastoresStepTreeView from './DatastoresStepTreeView';
+import MappingWizardTreeView from '../../MappingWizardTreeView/MappingWizardTreeView';
 
 import { sourceDatastoreFilter } from '../MappingWizardDatastoresStepSelectors';
 
@@ -282,7 +282,7 @@ class DatastoresStepForm extends React.Component {
               ))}
           </DualPaneMapperList>
         </DualPaneMapper>
-        <DatastoresStepTreeView
+        <MappingWizardTreeView
           mappings={input.value}
           selectMapping={this.selectMapping}
           removeMapping={this.removeMapping}
