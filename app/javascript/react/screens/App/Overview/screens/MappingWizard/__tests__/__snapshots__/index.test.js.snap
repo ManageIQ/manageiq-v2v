@@ -9,5 +9,6 @@ Object {
   "mappingWizardExitedAction": [Function],
   "mappingWizardGeneralStep": Object {},
   "mappingWizardNetworksStep": Object {},
+  "setTransformationsBodyAction": [Function],
 }
 `;
