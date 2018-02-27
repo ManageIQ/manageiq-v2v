@@ -1,20 +1,119 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MappingWizard component renders the mapping wizard 1`] = `
-<ModalWizardStateProvider
-  numSteps={5}
+<Modal
+  animation={true}
+  autoFocus={true}
+  backdrop={true}
+  bsClass="modal"
+  dialogClassName="modal-lg wizard-pf"
+  dialogComponentClass={[Function]}
+  enforceFocus={true}
+  keyboard={true}
+  manager={
+    ModalManager {
+      "add": [Function],
+      "containers": Array [],
+      "data": Array [],
+      "handleContainerOverflow": true,
+      "hideSiblingNodes": true,
+      "isTopModal": [Function],
+      "modals": Array [],
+      "remove": [Function],
+    }
+  }
+  onExited={[MockFunction]}
+  onHide={[MockFunction]}
+  renderBackdrop={[Function]}
+  restoreFocus={true}
+  show={true}
 >
-  <Connect(ModalWizard)
-    onExited={[MockFunction]}
-    onHide={[MockFunction]}
-    showWizard={true}
-    title="Infrastructure Mapping Wizard"
+  <Wizard
+    className=""
+    embedded={false}
   >
-    <MappingWizardBody
-      activeStep="1"
-      activeStepIndex={0}
-      loaded={true}
-    />
-  </Connect(ModalWizard)>
-</ModalWizardStateProvider>
+    <ModalHeader
+      bsClass="modal-header"
+      closeButton={false}
+      closeLabel="Close"
+    >
+      <button
+        aria-hidden="true"
+        aria-label="Close"
+        className="close"
+        onClick={[MockFunction]}
+      >
+        <Icon
+          name="close"
+          type="pf"
+        />
+      </button>
+      <ModalTitle
+        bsClass="modal-title"
+        componentClass="h4"
+      >
+        Infrastructure Mapping Wizard
+      </ModalTitle>
+    </ModalHeader>
+    <ModalBody
+      bsClass="modal-body"
+      className="wizard-pf-body clearfix"
+      componentClass="div"
+    >
+      <MappingWizardBody
+        activeStep="1"
+        activeStepIndex={0}
+        disableNextStep={false}
+        goToStep={[Function]}
+        loaded={true}
+        transformationsBody={Object {}}
+      />
+    </ModalBody>
+    <ModalFooter
+      bsClass="modal-footer"
+      className="wizard-pf-footer"
+      componentClass="div"
+    >
+      <Button
+        active={false}
+        block={false}
+        bsClass="btn"
+        bsStyle="default"
+        className="btn-cancel"
+        disabled={false}
+        onClick={[MockFunction]}
+      >
+        Cancel
+      </Button>
+      <Button
+        active={false}
+        block={false}
+        bsClass="btn"
+        bsStyle="default"
+        disabled={true}
+        onClick={[Function]}
+      >
+        <Icon
+          name="angle-left"
+          type="fa"
+        />
+        Back
+      </Button>
+      <Button
+        active={false}
+        block={false}
+        bsClass="btn"
+        bsStyle="primary"
+        disabled={false}
+        onClick={[Function]}
+      >
+        Next
+        <Icon
+          name="angle-right"
+          type="fa"
+        />
+      </Button>
+    </ModalFooter>
+  </Wizard>
+</Modal>
 `;

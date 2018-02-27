@@ -2,6 +2,7 @@ import MappingWizardContainer from '../react/screens/App/Overview/screens/Mappin
 import MappingWizardClustersStepContainer from '../react/screens/App/Overview/screens/MappingWizard/components/MappingWizardClustersStep';
 import MappingWizardDatastoresStepContainer from '../react/screens/App/Overview/screens/MappingWizard/components/MappingWizardDatastoresStep';
 import MappingWizardNetworksStepContainer from '../react/screens/App/Overview/screens/MappingWizard/components/MappingWizardNetworksStep';
+import MappingWizardResultsStepContainer from '../react/screens/App/Overview/screens/MappingWizard/components/MappingWizardResultsStep';
 import PlanWizardContainer from '../react/screens/App/Overview/screens/PlanWizard';
 import OverviewContainer from '../react/screens/App/Overview';
 import InfrastructureMappings from '../react/screens/App/InfrastructureMappings/InfrastructureMappings';
@@ -46,6 +47,14 @@ export const coreComponents = [
       // will become 'api/clusters/1?attributes=lans'
     },
     store: true
+  },
+  {
+    name: 'MappingWizardResultsStepContainer',
+    type: MappingWizardResultsStepContainer,
+    data: {
+      postMappingsUrl: '/api/dummyPostMappings'
+      // will become 'api/transformation_mappings'
+    }
   },
   {
     name: 'PlanWizardContainer',
