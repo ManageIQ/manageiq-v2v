@@ -9,16 +9,15 @@ const PlanWizard = ({
   hidePlanWizardAction,
   planWizardExitedAction
 }) => (
-  <ModalWizard.StateProvider numSteps={3}>
-    <ModalWizard
-      showWizard={!hidePlanWizard}
-      onHide={hidePlanWizardAction}
-      onExited={planWizardExitedAction}
-      title={__('Migration Plan Wizard')}
-    >
-      <PlanWizardBody loaded />
-    </ModalWizard>
-  </ModalWizard.StateProvider>
+  <ModalWizard
+    numSteps={3}
+    showWizard={!hidePlanWizard}
+    onHide={hidePlanWizardAction}
+    onExited={planWizardExitedAction}
+    title={__('Migration Plan Wizard')}
+  >
+    <PlanWizardBody loaded />
+  </ModalWizard>
 );
 PlanWizard.propTypes = {
   hidePlanWizard: PropTypes.bool,

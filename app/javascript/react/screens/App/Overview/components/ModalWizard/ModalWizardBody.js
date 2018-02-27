@@ -28,7 +28,7 @@ class ModalWizardBody extends React.Component {
   }
 
   stepProps(stepIndex, title) {
-    const { activeStep } = this.props;
+    const { activeStepStr } = this.props;
     const label = (stepIndex + 1).toString();
     return {
       key: `wizard-step-${title}`,
@@ -36,7 +36,7 @@ class ModalWizardBody extends React.Component {
       label,
       step: label,
       title,
-      activeStep
+      activeStepStr
     };
   }
 
@@ -107,7 +107,7 @@ ModalWizardBody.propTypes = {
     })
   ),
   activeStepIndex: PropTypes.number,
-  activeStep: PropTypes.string,
+  activeStepStr: PropTypes.string,
   onClick: PropTypes.func,
   goToStep: PropTypes.func,
   disableNextStep: PropTypes.bool
@@ -119,7 +119,7 @@ ModalWizardBody.defaultProps = {
   loaded: false,
   steps: [{ title: __('General'), render: () => <p>{__('General')}</p> }],
   activeStepIndex: 0,
-  activeStep: '1',
+  activeStepStr: '1',
   onClick: noop,
   goToStep: noop,
   disableNextStep: true
