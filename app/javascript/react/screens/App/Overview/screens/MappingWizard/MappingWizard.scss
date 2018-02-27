@@ -7,6 +7,10 @@
   align-items: center;
 }
 
+.dual-pane-mapper-form.is-hidden {
+  opacity: 0;
+}
+
 // TreeView container styles
 .treeview-container {
   margin-top: 20px;
