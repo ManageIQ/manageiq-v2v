@@ -19,4 +19,5 @@ export const mappingWizardExitedAction = () => dispatch => {
   dispatch(reset('mappingWizardGeneralStep'));
   dispatch(reset('mappingWizardClustersStep'));
   dispatch(reset('mappingWizardDatastoresStep'));
+  dispatch(reset('mappingWizardNetworksStep'));
 };
