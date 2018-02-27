@@ -46,19 +46,31 @@ exports[`Overview component renders the overview 1`] = `
                   className="blank-slate-pf"
                 >
                   <EmptyStateIcon
+                    className=""
                     name="add-circle-o"
                     type="pf"
                   />
-                  <EmptyStateTitle>
+                  <EmptyStateTitle
+                    className=""
+                  >
                     Infrastructure Mappings
                   </EmptyStateTitle>
-                  <EmptyStateInfo>
+                  <EmptyStateInfo
+                    className=""
+                  >
                     Create mapping to later be used by a migration plan.
                   </EmptyStateInfo>
-                  <EmptyStateAction>
+                  <EmptyStateAction
+                    className=""
+                    secondary={false}
+                  >
                     <Button
+                      active={false}
+                      block={false}
+                      bsClass="btn"
                       bsSize="large"
                       bsStyle="primary"
+                      disabled={false}
                       onClick={[MockFunction]}
                     >
                       Create Infrastructure Mapping
@@ -84,19 +96,31 @@ exports[`Overview component renders the overview 1`] = `
                   className="blank-slate-pf"
                 >
                   <EmptyStateIcon
+                    className=""
                     name="add-circle-o"
                     type="pf"
                   />
-                  <EmptyStateTitle>
+                  <EmptyStateTitle
+                    className=""
+                  >
                     Migration Plans
                   </EmptyStateTitle>
-                  <EmptyStateInfo>
+                  <EmptyStateInfo
+                    className=""
+                  >
                     Create a migration plan to start migrating.
                   </EmptyStateInfo>
-                  <EmptyStateAction>
+                  <EmptyStateAction
+                    className=""
+                    secondary={false}
+                  >
                     <Button
+                      active={false}
+                      block={false}
+                      bsClass="btn"
                       bsSize="large"
                       bsStyle="primary"
+                      disabled={false}
                       onClick={[MockFunction]}
                     >
                       Create Migration Plan
