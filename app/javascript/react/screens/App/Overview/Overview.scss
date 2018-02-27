@@ -9,3 +9,11 @@
     padding: 20px 20px;
   }
 }
+
+.csv-upload-dropzone {
+  border: 3px solid #fff;
+}
+
+.csv-upload-dropzone.active {
+  border: 3px dashed #9b9b9b; // Matches upload icon color
+}

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ModalWizard from '../../components/ModalWizard';
 import PlanWizardGeneralStep from '../PlanWizard/components/PlanWizardGeneralStep';
+import PlanWizardCSVStep from '../PlanWizard/components/PlanWizardCSVStep';
 
 // TODO remove these, they are space fillers
 const t = str => (
@@ -27,18 +28,15 @@ const PlanWizardBody = props => (
     steps={[
       {
         title: __('General'),
-        render: () => <PlanWizardGeneralStep />,
-        onClick: () => console.log('on step 1 click')
+        render: () => <PlanWizardGeneralStep />
       },
       {
         title: __('VMs'),
-        render: () => todo('VM CSV Upload Form'),
-        onClick: () => console.log('on step 2 click')
+        render: () => <PlanWizardCSVStep />
       },
       {
         title: __('Results'),
-        render: () => todo('Display Progress and Results'),
-        onClick: () => console.log('on step 3 click')
+        render: () => todo('Display Progress and Results')
       }
     ]}
   />
