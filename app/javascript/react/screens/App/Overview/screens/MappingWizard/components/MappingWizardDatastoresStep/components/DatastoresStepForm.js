@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { bindMethods } from 'patternfly-react';
+import cx from 'classnames';
 
 import DualPaneMapper from '../../DualPaneMapper/DualPaneMapper';
 import DualPaneMapperList from '../../DualPaneMapper/DualPaneMapperList';
@@ -218,7 +219,8 @@ class DatastoresStepForm extends React.Component {
       targetDatastores,
       isFetchingSourceDatastores,
       isFetchingTargetDatastores,
-      input
+      input,
+      selectedCluster
     } = this.props;
     const {
       selectedSourceDatastores,
@@ -226,8 +228,12 @@ class DatastoresStepForm extends React.Component {
       selectedMapping
     } = this.state;
 
+    const classes = cx('dual-pane-mapper-form', {
+      'is-hidden': !selectedCluster
+    });
+
     return (
-      <div className="dual-pane-mapper-form">
+      <div className={classes}>
         <DualPaneMapper
           handleButtonClick={this.addDatastoreMapping}
           validMapping={
@@ -298,6 +304,7 @@ export default DatastoresStepForm;
 
 DatastoresStepForm.propTypes = {
   input: PropTypes.object,
+  selectedCluster: PropTypes.object,
   selectedClusterMapping: PropTypes.object,
   sourceDatastores: PropTypes.array,
   targetDatastores: PropTypes.array,

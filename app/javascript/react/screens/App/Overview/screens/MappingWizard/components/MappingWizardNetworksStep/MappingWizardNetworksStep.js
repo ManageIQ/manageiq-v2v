@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { noop, bindMethods } from 'patternfly-react';
 import { Field, reduxForm } from 'redux-form';
-
+import { length } from 'redux-form-validators';
 import SourceClusterSelect from '../SourceClusterSelect/SourceClusterSelect';
 import NetworksStepForm from './components/NetworksStepForm';
 
@@ -82,18 +82,18 @@ class MappingWizardNetworksStep extends React.Component {
           selectedCluster={selectedCluster}
           form={form}
         />
-        {selectedCluster && (
-          <Field
-            name="networksMappings"
-            component={NetworksStepForm}
-            sourceNetworks={sourceNetworks}
-            targetNetworks={targetNetworks}
-            selectedClusterMapping={selectedClusterMapping}
-            isFetchingSourceNetworks={isFetchingSourceNetworks}
-            isFetchingTargetNetworks={isFetchingTargetNetworks}
-            resetState={this.resetState}
-          />
-        )}
+        <Field
+          name="networksMappings"
+          component={NetworksStepForm}
+          sourceNetworks={sourceNetworks}
+          targetNetworks={targetNetworks}
+          selectedCluster={selectedCluster}
+          selectedClusterMapping={selectedClusterMapping}
+          isFetchingSourceNetworks={isFetchingSourceNetworks}
+          isFetchingTargetNetworks={isFetchingTargetNetworks}
+          resetState={this.resetState}
+          validate={length({ min: 1 })}
+        />
       </div>
     );
   }
