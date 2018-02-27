@@ -1,12 +1,17 @@
 import { connect } from 'react-redux';
 import MappingWizard from './MappingWizard';
 import * as MappingWizardActions from './MappingWizardActions';
-import { mappingWizardFilter } from './MappingWizardSelectors';
+import {
+  mappingWizardOverviewFilter,
+  mappingWizardFormFilter
+} from './MappingWizardSelectors';
 
-const mapStateToProps = ({ overview }, ownProps) => {
-  const selected = mappingWizardFilter(overview);
+const mapStateToProps = ({ overview, form }, ownProps) => {
+  const selectedOverview = mappingWizardOverviewFilter(overview);
+  const selectedForms = mappingWizardFormFilter(form);
   return {
-    ...selected,
+    ...selectedOverview,
+    ...selectedForms,
     ...ownProps.data
   };
 };

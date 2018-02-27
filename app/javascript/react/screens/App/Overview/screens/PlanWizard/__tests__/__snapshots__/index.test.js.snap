@@ -5,6 +5,5 @@ Object {
   "hidePlanWizard": false,
   "hidePlanWizardAction": [Function],
   "planWizardExitedAction": [Function],
-  "transformationMappings": Array [],
 }
 `;

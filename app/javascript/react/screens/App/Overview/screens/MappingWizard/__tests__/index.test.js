@@ -21,7 +21,13 @@ describe('Mapping Wizard integration test', () => {
     createStore(
       combineReducers({ ...reducers }),
       {
-        overview: initialState
+        overview: initialState,
+        form: {
+          mappingWizardGeneralStep: {},
+          mappingWizardClustersStep: {},
+          mappingWizardDatastoresStep: {},
+          mappingWizardNetworksStep: {}
+        }
       },
       applyMiddleware(...middlewares)
     );
