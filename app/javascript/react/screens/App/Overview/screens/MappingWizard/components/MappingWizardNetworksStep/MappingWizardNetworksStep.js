@@ -18,6 +18,19 @@ class MappingWizardNetworksStep extends React.Component {
     bindMethods(this, ['selectSourceCluster', 'resetState']);
   }
 
+  componentWillMount() {
+    const { clusterMappings, pristine } = this.props;
+
+    const sourceClusters = clusterMappings.reduce(
+      (clusters, clusterMapping) => clusters.concat(clusterMapping.nodes),
+      []
+    );
+
+    if (sourceClusters.length === 1 || !pristine) {
+      this.selectSourceCluster(sourceClusters[0].id);
+    }
+  }
+
   componentDidMount() {}
 
   selectSourceCluster(sourceClusterId) {
@@ -110,7 +123,8 @@ MappingWizardNetworksStep.propTypes = {
   isRejectedSourceNetworks: PropTypes.bool,
   isFetchingTargetNetworks: PropTypes.bool,
   isRejectedTargetNetworks: PropTypes.bool,
-  form: PropTypes.string
+  form: PropTypes.string,
+  pristine: PropTypes.bool
 };
 MappingWizardNetworksStep.defaultProps = {
   clusterMappings: [],
@@ -123,7 +137,8 @@ MappingWizardNetworksStep.defaultProps = {
   isRejectedSourceNetworks: false,
   isFetchingTargetNetworks: false,
   isRejectedTargetNetworks: false,
-  form: ''
+  form: '',
+  pristine: true
 };
 
 export default reduxForm({
