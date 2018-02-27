@@ -22,7 +22,7 @@ const mappingWizardSteps = [
 class MappingWizard extends React.Component {
   constructor() {
     super();
-    this.state = { activeStepIndex: 0, transformationsBody: {} };
+    this.state = { activeStepIndex: 0 };
     bindMethods(this, ['prevStep', 'nextStep', 'goToStep']);
   }
 
@@ -37,25 +37,25 @@ class MappingWizard extends React.Component {
       mappingWizardGeneralStep,
       mappingWizardClustersStep,
       mappingWizardDatastoresStep,
-      mappingWizardNetworksStep
+      mappingWizardNetworksStep,
+      setTransformationsBodyAction
     } = this.props;
-    let transformationsBody = {};
 
     if (activeStepIndex === 3) {
-      transformationsBody = createTransformationMappings(
+      const transformationsBody = createTransformationMappings(
         mappingWizardGeneralStep,
         mappingWizardClustersStep,
         mappingWizardDatastoresStep,
         mappingWizardNetworksStep
       );
+      setTransformationsBodyAction(transformationsBody);
     }
 
     this.setState({
       activeStepIndex: Math.min(
         activeStepIndex + 1,
         mappingWizardSteps.length - 1
-      ),
-      transformationsBody
+      )
     });
   }
 
@@ -147,7 +147,8 @@ MappingWizard.propTypes = {
   mappingWizardGeneralStep: PropTypes.object,
   mappingWizardClustersStep: PropTypes.object,
   mappingWizardDatastoresStep: PropTypes.object,
-  mappingWizardNetworksStep: PropTypes.object
+  mappingWizardNetworksStep: PropTypes.object,
+  setTransformationsBodyAction: PropTypes.func
 };
 MappingWizard.defaultProps = {
   hideMappingWizard: true,
@@ -156,6 +157,7 @@ MappingWizard.defaultProps = {
   mappingWizardGeneralStep: {},
   mappingWizardClustersStep: {},
   mappingWizardDatastoresStep: {},
-  mappingWizardNetworksStep: {}
+  mappingWizardNetworksStep: {},
+  setTransformationsBodyAction: noop
 };
 export default MappingWizard;

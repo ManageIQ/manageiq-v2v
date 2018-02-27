@@ -6,8 +6,12 @@ import reducer from './MappingWizardResultsStepReducer';
 
 export const reducers = { mappingWizardResultsStep: reducer };
 
-const mapStateToProps = ({ mappingWizardResultsStep }, ownProps) => ({
+const mapStateToProps = (
+  { mappingWizardResultsStep, mappingWizard },
+  ownProps
+) => ({
   ...mappingWizardResultsStep,
+  ...mappingWizard,
   ...ownProps.data
 });
 

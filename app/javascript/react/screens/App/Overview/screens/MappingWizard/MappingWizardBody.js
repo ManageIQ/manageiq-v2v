@@ -19,10 +19,7 @@ class MappingWizardBody extends React.Component {
       'MappingWizardNetworksStepContainer'
     );
     this.mappingWizardResultsStepContainer = componentRegistry.markup(
-      'MappingWizardResultsStepContainer',
-      {
-        transformationsBody: props.transformationsBody
-      }
+      'MappingWizardResultsStepContainer'
     );
   }
   shouldComponentUpdate(nextProps, nextState) {
