@@ -3,9 +3,10 @@ import PlanWizard from './PlanWizard';
 import * as PlanWizardActions from './PlanWizardActions';
 import { planWizardFilter } from './PlanWizardSelectors';
 
-const mapStateToProps = ({ overview }, ownProps) => {
+const mapStateToProps = ({ overview, form }, ownProps) => {
   const selected = planWizardFilter(overview);
   return {
+    formContainer: form,
     ...selected,
     ...ownProps.data
   };

@@ -1,16 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { noop, controlled, bindMethods, Modal, Wizard, Icon, Button } from 'patternfly-react';
-import { connect } from 'react-redux';
-
-// TODO we should lift this application-specific stuff out of this generalized component file.
-const reduxFormMap = {
-  [__('Infrastructure Mapping Wizard')]: [
-    'mappingWizardGeneralStep',
-    'mappingWizardClustersStep'
-  ],
-  [__('Migration Plan Wizard')]: ['planWizardGeneralStep', 'planWizardCSVStep']
-};
+import {
+  noop,
+  controlled,
+  bindMethods,
+  Modal,
+  Wizard,
+  Icon,
+  Button
+} from 'patternfly-react';
 
 // NOTE: This may be a good component to move up to patternfly-react.
 // Let's try to avoid putting any application-specific code in here.
@@ -31,7 +29,13 @@ class ModalWizard extends React.Component {
   }
 
   goToStep(newStepIndex) {
-    const { setControlledState, onStepChanged, activeStepIndex, onNext, onBack } = this.props;
+    const {
+      setControlledState,
+      onStepChanged,
+      activeStepIndex,
+      onNext,
+      onBack
+    } = this.props;
     setControlledState({ activeStepIndex: newStepIndex });
     onStepChanged && onStepChanged(newStepIndex);
     onNext && newStepIndex === activeStepIndex + 1 && onNext();
@@ -48,18 +52,14 @@ class ModalWizard extends React.Component {
       onNext,
       activeStepIndex,
       numSteps,
-      children,
-      formContainer
+      shouldDisableNextStep,
+      children
     } = this.props;
     const onFirstStep = activeStepIndex === 0;
     const onFinalStep = activeStepIndex === numSteps - 1;
     const activeStepStr = (activeStepIndex + 1).toString();
 
-    const currentReduxForm = reduxFormMap[title][activeStepIndex];
-    const disableNextStep =
-      formContainer &&
-      Object.prototype.hasOwnProperty.call(formContainer, currentReduxForm) &&
-      !!formContainer[currentReduxForm].syncErrors;
+    const disableNextStep = shouldDisableNextStep(activeStepIndex);
 
     return (
       <Modal
@@ -94,7 +94,11 @@ class ModalWizard extends React.Component {
             <Button bsStyle="default" className="btn-cancel" onClick={onHide}>
               {__('Cancel')}
             </Button>
-            <Button bsStyle="default" onClick={this.onBackClick} disabled={onFirstStep}>
+            <Button
+              bsStyle="default"
+              onClick={this.onBackClick}
+              disabled={onFirstStep}
+            >
               <Icon type="fa" name="angle-left" />
               {__('Back')}
             </Button>
@@ -111,7 +115,7 @@ class ModalWizard extends React.Component {
       </Modal>
     );
   }
-};
+}
 
 ModalWizard.propTypes = {
   showWizard: PropTypes.bool,
@@ -123,8 +127,8 @@ ModalWizard.propTypes = {
   onStepChanged: PropTypes.func,
   activeStepIndex: PropTypes.number,
   numSteps: PropTypes.number,
+  shouldDisableNextStep: PropTypes.func,
   children: PropTypes.node,
-  formContainer: PropTypes.object,
   setControlledState: PropTypes.func
 };
 
@@ -138,12 +142,9 @@ ModalWizard.defaultProps = {
   onStepChanged: noop,
   activeStepIndex: 0,
   numSteps: 1,
+  shouldDisableNextStep: () => false,
   children: null
 };
-
-const mapStateToProps = state => ({
-  formContainer: state.form
-});
 
 const stateTypes = {
   activeStepIndex: PropTypes.number
@@ -153,6 +154,4 @@ const stateDefaults = {
   activeStepIndex: 0
 };
 
-export default connect(mapStateToProps)(
-  controlled(stateTypes, stateDefaults)(ModalWizard)
-);
+export default controlled(stateTypes, stateDefaults)(ModalWizard);

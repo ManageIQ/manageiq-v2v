@@ -11,10 +11,15 @@ import {
 import { createTransformationMappings } from './helpers';
 import MappingWizardBody from './MappingWizardBody';
 
+// TODO these could even be moved to properties on the wizard steps array,
+// if we move the MappingWizardBody stuff into here.
+const reduxFormKeys = ['mappingWizardGeneralStep', 'mappingWizardClustersStep'];
+
 const MappingWizard = ({
   hideMappingWizard,
   hideMappingWizardAction,
-  mappingWizardExitedAction
+  mappingWizardExitedAction,
+  formContainer
 }) => (
   <ModalWizard
     numSteps={5}
@@ -22,6 +27,9 @@ const MappingWizard = ({
     onHide={hideMappingWizardAction}
     onExited={mappingWizardExitedAction}
     title={__('Infrastructure Mapping Wizard')}
+    shouldDisableNextStep={activeStepIndex =>
+      formHasErrors(formContainer, reduxFormKeys[activeStepIndex])
+    }
   >
     <MappingWizardBody loaded />
   </ModalWizard>
@@ -34,7 +42,8 @@ MappingWizard.propTypes = {
   mappingWizardClustersStep: PropTypes.object,
   mappingWizardDatastoresStep: PropTypes.object,
   mappingWizardNetworksStep: PropTypes.object,
-  setTransformationsBodyAction: PropTypes.func
+  setTransformationsBodyAction: PropTypes.func,
+  formContainer: PropTypes.object
 };
 MappingWizard.defaultProps = {
   hideMappingWizard: true,
@@ -44,6 +53,7 @@ MappingWizard.defaultProps = {
   mappingWizardClustersStep: {},
   mappingWizardDatastoresStep: {},
   mappingWizardNetworksStep: {},
-  setTransformationsBodyAction: noop
+  setTransformationsBodyAction: noop,
+  formContainer: {}
 };
 export default MappingWizard;
