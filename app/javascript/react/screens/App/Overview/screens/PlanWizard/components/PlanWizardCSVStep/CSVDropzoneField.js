@@ -24,12 +24,20 @@ class CSVDropzoneField extends React.Component {
   }
 
   onFileDrop(acceptedFiles, rejectedFiles) {
-    const { input: { onChange } } = this.props;
+    const { input, columnNames } = this.props;
     this.confirmOverwrite(() => {
       if (acceptedFiles && acceptedFiles.length > 0) {
         const reader = new FileReader();
         reader.onload = () => {
-          csv.parse(reader.result, (err, csvRows) => onChange(csvRows));
+          csv.parse(reader.result, (err, csvRows) => {
+            const rowObjects = csvRows.map(row =>
+              columnNames.reduce((rowObject, key, index) => ({
+                ...rowObject,
+                [key]: row[index]
+              }), {})
+            );
+            input.onChange(rowObjects);
+          });
         };
         reader.readAsBinaryString(acceptedFiles[0]);
       } else {
@@ -66,16 +74,13 @@ class CSVDropzoneField extends React.Component {
         </EmptyState>
       ) : (
         <ListView>
-          {value.map(row => (
+          {value.map(vm => (
             <ListView.Item
-              heading={row[0] || ''}
-              description={row[1] || ''}
-              additionalInfo={
-                row.length > 2 &&
-                row
-                  .slice(2)
-                  .map(col => <ListView.InfoItem>{col}</ListView.InfoItem>)
-              }
+              description={vm.name || ''}
+              additionalInfo={[
+                <ListView.InfoItem>{vm.path}</ListView.InfoItem>,
+                <ListView.InfoItem>{vm.ip}</ListView.InfoItem>
+              ]}
             />
           ))}
         </ListView>
@@ -122,7 +127,8 @@ CSVDropzoneField.propTypes = {
   meta: PropTypes.shape({
     pristine: PropTypes.bool,
     error: PropTypes.string
-  })
+  }),
+  columnNames: PropTypes.arrayOf(PropTypes.string)
 };
 
 export default CSVDropzoneField;
