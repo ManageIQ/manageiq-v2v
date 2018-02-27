@@ -1,28 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { noop } from 'patternfly-react';
 import ModalWizard from '../../components/ModalWizard';
 import componentRegistry from '../../../../../../components/componentRegistry';
 import MappingWizardGeneralStep from '../MappingWizard/components/MappingWizardGeneralStep';
 
-// TODO remove these, they are space fillers
-const t = str => (
-  <div align="center">
-    <h1>TODO: {str}!</h1>
-  </div>
-);
-const todo = str => (
-  <div>
-    {t(str)}
-    {t(str)}
-    {t(str)}
-    {t(str)}
-    {t(str)}
-  </div>
-);
-
 class MappingWizardBody extends React.Component {
   constructor(props) {
     super(props);
+
     this.mappingWizardClustersStepContainer = componentRegistry.markup(
       'MappingWizardClustersStepContainer'
     );
@@ -31,6 +17,12 @@ class MappingWizardBody extends React.Component {
     );
     this.mappingWizardNetworksStepContainer = componentRegistry.markup(
       'MappingWizardNetworksStepContainer'
+    );
+    this.mappingWizardResultsStepContainer = componentRegistry.markup(
+      'MappingWizardResultsStepContainer',
+      {
+        transformationsBody: props.transformationsBody
+      }
     );
   }
   shouldComponentUpdate(nextProps, nextState) {
@@ -65,7 +57,7 @@ class MappingWizardBody extends React.Component {
           },
           {
             title: __('Results'),
-            render: () => todo('Display Progress and Results'),
+            render: () => this.mappingWizardResultsStepContainer,
             onClick: () => console.log('on step 5 click')
           }
         ]}
@@ -77,13 +69,19 @@ class MappingWizardBody extends React.Component {
 MappingWizardBody.propTypes = {
   loaded: PropTypes.bool,
   activeStepIndex: PropTypes.number,
-  activeStep: PropTypes.string
+  activeStep: PropTypes.string,
+  goToStep: PropTypes.func,
+  disableNextStep: PropTypes.bool,
+  transformationsBody: PropTypes.object
 };
 
 MappingWizardBody.defaultProps = {
   loaded: false,
   activeStepIndex: 0,
-  activeStep: '1'
+  activeStep: '1',
+  goToStep: noop,
+  disableNextStep: true,
+  transformationsBody: {}
 };
 
 export default MappingWizardBody;

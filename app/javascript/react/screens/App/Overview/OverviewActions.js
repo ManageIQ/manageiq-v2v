@@ -15,9 +15,10 @@ export const showMappingWizardAction = () => dispatch => {
   });
 };
 
-export const showPlanWizardAction = () => dispatch => {
+export const showPlanWizardAction = id => dispatch => {
   dispatch({
-    type: SHOW_PLAN_WIZARD
+    type: SHOW_PLAN_WIZARD,
+    payload: id
   });
 };
 

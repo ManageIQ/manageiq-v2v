@@ -4,7 +4,7 @@ import * as OverviewActions from './OverviewActions';
 
 import reducer from './OverviewReducer';
 
-export const reducers = { overview: reducer };
+export const reducers = { overview: reducer, form: {} };
 
 const mapStateToProps = ({ overview }, ownProps) => ({
   ...overview,

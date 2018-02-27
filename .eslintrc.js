@@ -42,6 +42,7 @@ module.exports = {
         devDependencies: true
       }
     ],
+    'no-nested-ternary': 'off',
     'react/jsx-filename-extension': 'off',
     'react/prefer-stateless-function': 'warn',
     'react/forbid-prop-types': 'off',
