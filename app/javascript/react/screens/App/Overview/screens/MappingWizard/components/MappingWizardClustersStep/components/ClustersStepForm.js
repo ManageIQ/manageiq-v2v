@@ -155,7 +155,13 @@ class ClustersStepForm extends React.Component {
   }
 
   render() {
-    const { sourceClusters, targetClusters, input } = this.props;
+    const {
+      sourceClusters,
+      targetClusters,
+      isFetchingSourceClusters,
+      isFetchingTargetClusters,
+      input
+    } = this.props;
 
     const {
       selectedTargetCluster,
@@ -175,7 +181,10 @@ class ClustersStepForm extends React.Component {
           }
         >
           {sourceClusters && (
-            <DualPaneMapperList listTitle="Source Clusters">
+            <DualPaneMapperList
+              listTitle="Source Clusters"
+              loading={isFetchingSourceClusters}
+            >
               {sourceClustersFilter(sourceClusters, input.value).map(item => (
                 <DualPaneMapperListItem
                   item={item}
@@ -197,7 +206,10 @@ class ClustersStepForm extends React.Component {
             </DualPaneMapperList>
           )}
           {targetClusters && (
-            <DualPaneMapperList listTitle="Target Clusters">
+            <DualPaneMapperList
+              listTitle="Target Clusters"
+              loading={isFetchingTargetClusters}
+            >
               {targetClusters.map(item => (
                 <DualPaneMapperListItem
                   item={item}
@@ -230,7 +242,9 @@ class ClustersStepForm extends React.Component {
 ClustersStepForm.propTypes = {
   input: PropTypes.object,
   sourceClusters: PropTypes.arrayOf(PropTypes.object),
-  targetClusters: PropTypes.arrayOf(PropTypes.object)
+  targetClusters: PropTypes.arrayOf(PropTypes.object),
+  isFetchingSourceClusters: PropTypes.bool,
+  isFetchingTargetClusters: PropTypes.bool
 };
 
 export default ClustersStepForm;

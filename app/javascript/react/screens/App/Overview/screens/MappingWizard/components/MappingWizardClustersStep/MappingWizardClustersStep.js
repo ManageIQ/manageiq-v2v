@@ -27,18 +27,17 @@ class MappingWizardClustersStep extends React.Component {
       targetClusters
     } = this.props;
 
-    if (!isFetchingSourceClusters && !isFetchingTargetClusters) {
-      return (
-        <Field
-          name="clusterMappings"
-          component={ClustersStepForm}
-          sourceClusters={sourceClusters}
-          targetClusters={targetClusters}
-          validate={[length({ min: 1 })]}
-        />
-      );
-    }
-    return null;
+    return (
+      <Field
+        name="clusterMappings"
+        component={ClustersStepForm}
+        sourceClusters={sourceClusters}
+        targetClusters={targetClusters}
+        validate={[length({ min: 1 })]}
+        isFetchingSourceClusters={isFetchingSourceClusters}
+        isFetchingTargetClusters={isFetchingTargetClusters}
+      />
+    );
   }
 }
 
