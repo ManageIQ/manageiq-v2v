@@ -31,6 +31,18 @@ class NetworksStepForm extends React.Component {
     ]);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (
+      this.props.selectedCluster &&
+      nextProps.selectedCluster.id !== this.props.selectedCluster.id
+    ) {
+      this.setState(() => ({
+        selectedSourceNetworks: [],
+        selectedTargetNetwork: null
+      }));
+    }
+  }
+
   selectSourceNetwork(sourceNetwork) {
     this.setState(prevState => {
       const isAlreadySelected = prevState.selectedSourceNetworks.some(
