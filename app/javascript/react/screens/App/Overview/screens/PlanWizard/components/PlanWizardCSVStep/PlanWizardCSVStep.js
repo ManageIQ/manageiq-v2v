@@ -9,7 +9,7 @@ const PlanWizardCSVStep = () => (
     <Field
       name="csvRows"
       component={CSVDropzoneField}
-      columnNames={['id', 'name', 'path', 'ip', 'TODO']} // TODO
+      columnNames={['name', 'provider', 'reference']}
       validate={[
         length({ min: 1, msg: __('At least one VM needs to be selected') })
       ]}
