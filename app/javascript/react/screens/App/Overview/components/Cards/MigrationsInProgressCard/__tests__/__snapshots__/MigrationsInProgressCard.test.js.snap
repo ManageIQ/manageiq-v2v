@@ -23,7 +23,7 @@ exports[`MigrationsInProgressCard component renders the ActiveMigrations 1`] = `
         bsClass="row"
         componentClass="div"
       >
-        <ActiveMigrationCard
+        <MigrationInProgressCard
           key="14"
           migration={
             Object {
@@ -210,7 +210,7 @@ exports[`MigrationsInProgressCard component renders the ActiveMigrations 1`] = `
             }
           }
         />
-        <ActiveMigrationCard
+        <MigrationInProgressCard
           key="15"
           migration={
             Object {

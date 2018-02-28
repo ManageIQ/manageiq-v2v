@@ -17,7 +17,7 @@ describe('MigrationsInProgressCard component', () => {
     migrationsInProgress: requestActiveServiceRequests.response.data.resources,
     isFetchingMigrationsInProgress: false,
     isRejectedMigrationsInProgress: false,
-    errorMigrationsInProgress: '',
+    errorMigrationsInProgress: null,
     ...MigrationsInProgressActions
   });
 
