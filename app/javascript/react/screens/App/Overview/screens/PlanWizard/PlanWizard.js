@@ -8,6 +8,7 @@ import {
   Modal,
   Wizard
 } from 'patternfly-react';
+import { createMigrationPlans } from './helpers';
 import PlanWizardBody from './PlanWizardBody';
 
 const planWizardSteps = [
@@ -31,6 +32,13 @@ class PlanWizard extends React.Component {
   nextStep() {
     const { activeStepIndex } = this.state;
     const { planWizardGeneralStep, planWizardCSVStep } = this.props;
+
+    if (activeStepIndex === 1) {
+      const plansBody = createMigrationPlans(
+        planWizardGeneralStep,
+        planWizardCSVStep
+      );
+    }
 
     this.setState({
       activeStepIndex: Math.min(activeStepIndex + 1, planWizardSteps.length - 1)
