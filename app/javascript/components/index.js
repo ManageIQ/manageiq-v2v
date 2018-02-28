@@ -3,6 +3,7 @@ import MappingWizardClustersStepContainer from '../react/screens/App/Overview/sc
 import MappingWizardDatastoresStepContainer from '../react/screens/App/Overview/screens/MappingWizard/components/MappingWizardDatastoresStep';
 import MappingWizardNetworksStepContainer from '../react/screens/App/Overview/screens/MappingWizard/components/MappingWizardNetworksStep';
 import MappingWizardResultsStepContainer from '../react/screens/App/Overview/screens/MappingWizard/components/MappingWizardResultsStep';
+import PlanWizardResultsStepContainer from '../react/screens/App/Overview/screens/PlanWizard/components/PlanWizardResultsStep';
 import PlanWizardContainer from '../react/screens/App/Overview/screens/PlanWizard';
 import OverviewContainer from '../react/screens/App/Overview';
 import InfrastructureMappings from '../react/screens/App/InfrastructureMappings/InfrastructureMappings';
@@ -54,6 +55,14 @@ export const coreComponents = [
     data: {
       postMappingsUrl: '/api/dummyPostMappings'
       // will become 'api/transformation_mappings'
+    }
+  },
+  {
+    name: 'PlanWizardResultsStepContainer',
+    type: PlanWizardResultsStepContainer,
+    data: {
+      postPlansUrl: '/api/dummyMigrationPlans'
+      // will become 'api/service_templates'
     }
   },
   {
