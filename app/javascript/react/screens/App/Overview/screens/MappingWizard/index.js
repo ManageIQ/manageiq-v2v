@@ -15,7 +15,7 @@ const mapStateToProps = ({ overview, mappingWizard, form }, ownProps) => {
   const selectedForms = mappingWizardFormFilter(form);
   return {
     ...selectedOverview,
-    ...selectedForms, // formContainer: form, // TODO necessary for shouldDisableNextStep?
+    ...selectedForms,
     ...ownProps.data
   };
 };

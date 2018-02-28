@@ -36,7 +36,7 @@ class ModalWizardBody extends React.Component {
       label,
       step: label,
       title,
-      activeStepStr
+      activeStep: activeStepStr
     };
   }
 

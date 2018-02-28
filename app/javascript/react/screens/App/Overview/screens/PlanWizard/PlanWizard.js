@@ -1,33 +1,57 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { noop } from 'patternfly-react';
-import { formHasErrors } from '../../../common/helpers';
 import ModalWizard from '../../components/ModalWizard';
-import PlanWizardBody from './PlanWizardBody';
+import PlanWizardGeneralStep from '../PlanWizard/components/PlanWizardGeneralStep';
+import PlanWizardCSVStep from '../PlanWizard/components/PlanWizardCSVStep';
+import { todo } from '../../../common/helpers';
 
-// TODO these could even be moved to properties on the wizard steps array,
-// if we move the PlanWizardBody stuff into here.
-const reduxFormKeys = ['planWizardGeneralStep', 'planWizardCSVStep'];
+const PlanWizard = props => {
+  const {
+    hidePlanWizard,
+    hidePlanWizardAction,
+    planWizardExitedAction,
+    formContainer
+  } = props;
 
-const PlanWizard = ({
-  hidePlanWizard,
-  hidePlanWizardAction,
-  planWizardExitedAction,
-  formContainer
-}) => (
-  <ModalWizard
-    numSteps={3}
-    showWizard={!hidePlanWizard}
-    onHide={hidePlanWizardAction}
-    onExited={planWizardExitedAction}
-    title={__('Migration Plan Wizard')}
-    shouldDisableNextStep={activeStepIndex =>
-      formHasErrors(formContainer, reduxFormKeys[activeStepIndex])
+  const wizardSteps = [
+    {
+      title: __('General'),
+      render: () => <PlanWizardGeneralStep />,
+      reduxFormKey: 'planWizardGeneralStep'
+    },
+    {
+      title: __('VMs'),
+      render: () => <PlanWizardCSVStep />,
+      reduxFormKey: 'planWizardCSVStep'
+    },
+    {
+      title: __('Results'),
+      render: () => todo('Display Progress and Results')
     }
-  >
-    <PlanWizardBody loaded />
-  </ModalWizard>
-);
+  ];
+
+  return (
+    <ModalWizard
+      numSteps={3}
+      showWizard={!hidePlanWizard}
+      onHide={hidePlanWizardAction}
+      onExited={planWizardExitedAction}
+      title={__('Migration Plan Wizard')}
+      shouldDisableNextStep={activeStepIndex => {
+        const form = props[wizardSteps[activeStepIndex].reduxFormKey];
+        return form && !!form.syncErrors;
+      }}
+    >
+      <ModalWizard.Body
+        loadingTitle={__('Loading Clusters...')}
+        loadingMessage={__('This may take a minute.')}
+        loaded // TODO either remove these 3 props or set loaded to actual loading state
+        steps={wizardSteps}
+      />
+    </ModalWizard>
+  );
+};
 
 PlanWizard.propTypes = {
   hidePlanWizard: PropTypes.bool,

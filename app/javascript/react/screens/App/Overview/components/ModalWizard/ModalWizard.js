@@ -125,11 +125,9 @@ ModalWizard.propTypes = {
   onBack: PropTypes.func,
   onNext: PropTypes.func,
   onStepChanged: PropTypes.func,
-  activeStepIndex: PropTypes.number,
   numSteps: PropTypes.number,
   shouldDisableNextStep: PropTypes.func,
-  children: PropTypes.node,
-  setControlledState: PropTypes.func
+  children: PropTypes.node
 };
 
 ModalWizard.defaultProps = {
@@ -140,18 +138,16 @@ ModalWizard.defaultProps = {
   onBack: noop,
   onNext: noop,
   onStepChanged: noop,
-  activeStepIndex: 0,
   numSteps: 1,
   shouldDisableNextStep: () => false,
   children: null
 };
 
-const stateTypes = {
-  activeStepIndex: PropTypes.number
-};
-
-const stateDefaults = {
-  activeStepIndex: 0
-};
-
-export default controlled(stateTypes, stateDefaults)(ModalWizard);
+export default controlled({
+  types: {
+    activeStepIndex: PropTypes.number
+  },
+  defaults: {
+    activeStepIndex: 0
+  }
+})(ModalWizard);
