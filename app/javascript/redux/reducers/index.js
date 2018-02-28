@@ -6,6 +6,7 @@ import { reducers as mappingWizardClustersStepReducers } from '../../react/scree
 import { reducers as mappingWizardDatastoresStepReducers } from '../../react/screens/App/Overview/screens/MappingWizard/components/MappingWizardDatastoresStep';
 import { reducers as mappingWizardNetworksStepReducers } from '../../react/screens/App/Overview/screens/MappingWizard/components/MappingWizardNetworksStep';
 import { reducers as mappingWizardResultsStepReducers } from '../../react/screens/App/Overview/screens/MappingWizard/components/MappingWizardResultsStep';
+import { reducers as planWizardResultsStepReducers } from '../../react/screens/App/Overview/screens/PlanWizard/components/PlanWizardResultsStep';
 
 export function combineReducersAsync(asyncReducers) {
   return combineReducers({
@@ -15,6 +16,7 @@ export function combineReducersAsync(asyncReducers) {
     ...mappingWizardDatastoresStepReducers,
     ...mappingWizardNetworksStepReducers,
     ...mappingWizardResultsStepReducers,
+    ...planWizardResultsStepReducers,
     form: formReducer,
     ...asyncReducers
   });
