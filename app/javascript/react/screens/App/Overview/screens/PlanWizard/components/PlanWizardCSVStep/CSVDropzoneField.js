@@ -11,8 +11,6 @@ import {
 } from 'patternfly-react';
 import Dropzone from 'react-dropzone';
 
-// TODO __('i18n')
-
 // Unfortunately, this is the recommended way to trigger the file dialog programmatically.
 // https://github.com/react-dropzone/react-dropzone/tree/master/examples/File%20Dialog
 let dropzoneRef;
@@ -31,10 +29,13 @@ class CSVDropzoneField extends React.Component {
         reader.onload = () => {
           csv.parse(reader.result, (err, csvRows) => {
             const rowObjects = csvRows.map(row =>
-              columnNames.reduce((rowObject, key, index) => ({
-                ...rowObject,
-                [key]: row[index]
-              }), {})
+              columnNames.reduce(
+                (rowObject, key, index) => ({
+                  ...rowObject,
+                  [key]: row[index]
+                }),
+                {}
+              )
             );
             input.onChange(rowObjects);
           });
@@ -78,8 +79,12 @@ class CSVDropzoneField extends React.Component {
             <ListView.Item
               description={vm.name || ''}
               additionalInfo={[
-                <ListView.InfoItem>{vm.path}</ListView.InfoItem>,
-                <ListView.InfoItem>{vm.ip}</ListView.InfoItem>
+                <ListView.InfoItem>
+                  {`${__('Provider:')} ${vm.provider || ''}`}
+                </ListView.InfoItem>,
+                <ListView.InfoItem>
+                  {`${__('Reference:')} ${vm.reference || ''}`}
+                </ListView.InfoItem>
               ]}
             />
           ))}
