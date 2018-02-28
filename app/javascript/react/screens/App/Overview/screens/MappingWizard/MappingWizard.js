@@ -30,11 +30,6 @@ class MappingWizard extends React.Component {
     bindMethods(this, ['onNextStep']);
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    // TODO do we really need this?? FIXME
-    return JSON.stringify(this.props) !== JSON.stringify(nextProps);
-  }
-
   onNextStep(activeStepIndex) {
     const {
       mappingWizardGeneralStep,
