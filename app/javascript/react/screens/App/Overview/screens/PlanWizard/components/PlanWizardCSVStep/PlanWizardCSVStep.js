@@ -9,6 +9,7 @@ const PlanWizardCSVStep = () => (
     <Field
       name="csvRows"
       component={CSVDropzoneField}
+      columnNames={['name', 'provider', 'reference']}
       validate={[
         length({ min: 1, msg: __('At least one VM needs to be selected') })
       ]}
