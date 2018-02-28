@@ -3,6 +3,12 @@ import PropTypes from 'prop-types';
 import { noop, Spinner } from 'patternfly-react';
 
 class PlanWizardResultsStep extends React.Component {
+  componentDidMount() {
+    const { postPlansUrl, postMigrationPlansAction, plansBody } = this.props;
+
+    postMigrationPlansAction(postPlansUrl, plansBody);
+  }
+
   render() {
     const {
       isPostingPlans,
