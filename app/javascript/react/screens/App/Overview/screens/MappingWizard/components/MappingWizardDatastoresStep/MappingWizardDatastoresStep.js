@@ -19,14 +19,14 @@ class MappingWizardDatastoresStep extends React.Component {
   }
 
   componentWillMount() {
-    const { clusterMappings } = this.props;
+    const { clusterMappings, pristine } = this.props;
 
     const sourceClusters = clusterMappings.reduce(
       (clusters, clusterMapping) => clusters.concat(clusterMapping.nodes),
       []
     );
 
-    if (sourceClusters.length === 1) {
+    if (sourceClusters.length === 1 || !pristine) {
       this.selectSourceCluster(sourceClusters[0].id);
     }
   }
@@ -126,7 +126,8 @@ MappingWizardDatastoresStep.propTypes = {
   isRejectedSourceDatastores: PropTypes.bool,
   isFetchingTargetDatastores: PropTypes.bool,
   isRejectedTargetDatastores: PropTypes.bool,
-  form: PropTypes.string
+  form: PropTypes.string,
+  pristine: PropTypes.bool
 };
 MappingWizardDatastoresStep.defaultProps = {
   clusterMappings: [],
@@ -139,7 +140,8 @@ MappingWizardDatastoresStep.defaultProps = {
   isRejectedSourceDatastores: false,
   isFetchingTargetDatastores: false,
   isRejectedTargetDatastores: false,
-  form: ''
+  form: '',
+  pristine: true
 };
 
 export default reduxForm({
