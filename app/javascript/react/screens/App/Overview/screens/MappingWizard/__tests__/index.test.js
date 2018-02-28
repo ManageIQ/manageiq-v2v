@@ -4,6 +4,7 @@ import promiseMiddleware from 'redux-promise-middleware';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
+import { reducer as formReducer } from 'redux-form';
 import { initialState } from '../../../overview.fixtures';
 import MappingWizard from '../MappingWizard';
 import MappingWizardContainer from '../index';
@@ -19,15 +20,9 @@ describe('Mapping Wizard integration test', () => {
   const middlewares = [thunk, promiseMiddleware()];
   const generateStore = () =>
     createStore(
-      combineReducers({ ...reducers }),
+      combineReducers({ ...reducers, form: formReducer }),
       {
-        overview: initialState,
-        form: {
-          mappingWizardGeneralStep: {},
-          mappingWizardClustersStep: {},
-          mappingWizardDatastoresStep: {},
-          mappingWizardNetworksStep: {}
-        }
+        overview: initialState
       },
       applyMiddleware(...middlewares)
     );
