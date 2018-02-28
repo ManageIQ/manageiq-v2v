@@ -74,7 +74,7 @@ class MappingWizard extends React.Component {
         title: __('Networks'),
         render: () => this.mappingWizardNetworksStepContainer,
         reduxFormKey: 'mappingWizardNetworksStep',
-        onNext: this.createMappings,
+        onNext: this.createMappings
       },
       {
         title: __('Results'),
