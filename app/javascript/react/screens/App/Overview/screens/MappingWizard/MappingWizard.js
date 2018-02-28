@@ -13,7 +13,6 @@ import ModalWizard from '../../components/ModalWizard';
 import MappingWizardGeneralStep from '../MappingWizard/components/MappingWizardGeneralStep';
 import componentRegistry from '../../../../../../components/componentRegistry';
 
-// TODO just make body a part of MappingWizard
 // TODO pull in Patrick's behavior that i pulled out
 // TODO test link between modals
 
@@ -81,14 +80,11 @@ class MappingWizard extends React.Component {
           const form = this.props[wizardSteps[activeStepIndex].reduxFormKey];
           return form && !!form.syncErrors;
         }}
-      >
-        <ModalWizard.Body
-          loadingTitle={__('Loading Infrastructure Mappings...')}
-          loadingMessage={__('This may take a minute.')}
-          loaded // TODO either remove these 3 props or set loaded to actual loading state
-          steps={wizardSteps}
-        />
-      </ModalWizard>
+        steps={wizardSteps}
+        loadingTitle={__('Loading Infrastructure Mappings...')}
+        loadingMessage={__('This may take a minute.')}
+        loaded // TODO either remove these 3 props or set loaded to actual loading state
+      />
     );
   }
 }

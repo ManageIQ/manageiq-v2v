@@ -42,14 +42,11 @@ const PlanWizard = props => {
         const form = props[wizardSteps[activeStepIndex].reduxFormKey];
         return form && !!form.syncErrors;
       }}
-    >
-      <ModalWizard.Body
-        loadingTitle={__('Loading Clusters...')}
-        loadingMessage={__('This may take a minute.')}
-        loaded // TODO either remove these 3 props or set loaded to actual loading state
-        steps={wizardSteps}
-      />
-    </ModalWizard>
+      steps={wizardSteps}
+      loadingTitle={__('Loading Clusters...')}
+      loadingMessage={__('This may take a minute.')}
+      loaded // TODO either remove these 3 props or set loaded to actual loading state
+    />
   );
 };
 

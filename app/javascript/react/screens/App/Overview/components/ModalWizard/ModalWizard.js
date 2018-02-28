@@ -9,6 +9,7 @@ import {
   Icon,
   Button
 } from 'patternfly-react';
+import ModalWizardBody from './ModalWizardBody';
 
 // NOTE: This may be a good component to move up to patternfly-react.
 // Let's try to avoid putting any application-specific code in here.
@@ -24,8 +25,8 @@ class ModalWizard extends React.Component {
   }
 
   onNextClick() {
-    const { numSteps, activeStepIndex } = this.props;
-    this.goToStep(Math.min(activeStepIndex + 1, numSteps - 1));
+    const { steps, activeStepIndex } = this.props;
+    this.goToStep(Math.min(activeStepIndex + 1, steps.length - 1));
   }
 
   goToStep(newStepIndex) {
@@ -51,12 +52,12 @@ class ModalWizard extends React.Component {
       onBack,
       onNext,
       activeStepIndex,
-      numSteps,
+      steps,
       shouldDisableNextStep,
       children
     } = this.props;
     const onFirstStep = activeStepIndex === 0;
-    const onFinalStep = activeStepIndex === numSteps - 1;
+    const onFinalStep = activeStepIndex === steps.length - 1;
     const activeStepStr = (activeStepIndex + 1).toString();
 
     const disableNextStep = shouldDisableNextStep(activeStepIndex);
@@ -81,14 +82,12 @@ class ModalWizard extends React.Component {
             <Modal.Title>{title}</Modal.Title>
           </Modal.Header>
           <Modal.Body className="wizard-pf-body clearfix">
-            {React.Children.map(children, child =>
-              React.cloneElement(child, {
-                activeStepIndex,
-                activeStepStr,
-                goToStep: this.goToStep,
-                disableNextStep
-              })
-            )}
+            <ModalWizardBody
+              {...this.props}
+              goToStep={this.goToStep}
+              disabelNextStep={disableNextStep}
+              activeStepStr={activeStepStr}
+            />
           </Modal.Body>
           <Modal.Footer className="wizard-pf-footer">
             <Button bsStyle="default" className="btn-cancel" onClick={onHide}>
@@ -125,7 +124,16 @@ ModalWizard.propTypes = {
   onBack: PropTypes.func,
   onNext: PropTypes.func,
   onStepChanged: PropTypes.func,
-  numSteps: PropTypes.number,
+  loadingTitle: PropTypes.string,
+  loadingMessage: PropTypes.string,
+  loaded: PropTypes.bool,
+  steps: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string,
+      render: PropTypes.func,
+      onClick: PropTypes.func
+    })
+  ),
   shouldDisableNextStep: PropTypes.func,
   children: PropTypes.node
 };
@@ -138,7 +146,10 @@ ModalWizard.defaultProps = {
   onBack: noop,
   onNext: noop,
   onStepChanged: noop,
-  numSteps: 1,
+  loadingTitle: __('Loading Wizard...'),
+  loadingMessage: __('Loading...'),
+  loaded: false,
+  steps: [{ title: __('General'), render: () => <p>{__('General')}</p> }],
   shouldDisableNextStep: () => false,
   children: null
 };
