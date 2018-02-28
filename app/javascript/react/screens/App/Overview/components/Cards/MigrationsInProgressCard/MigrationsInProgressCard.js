@@ -1,16 +1,83 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { Grid, Icon, Spinner } from 'patternfly-react';
+import MigrationInProgressCard from './MigrationInProgressCard';
 
-const MigrationsInProgressCard = () => (
-  <div className="card-pf">
-    <div className="card-pf-heading">
-      <h2>0 Migrations in Progress</h2>
-    </div>
-    <div className="card-pf-body">
-      <p>content</p>
-    </div>
-  </div>
-);
+class MigrationsInProgressCard extends React.Component {
+  componentDidMount() {
+    const { fetchMigrationsInProgressAction } = this.props;
+    fetchMigrationsInProgressAction();
+  }
 
-MigrationsInProgressCard.propTypes = {};
+  renderActiveMigrations() {
+    const { migrationsInProgress } = this.props;
+
+    return (
+      <Grid fluid>
+        <Grid.Row>
+          {migrationsInProgress.map(migration => (
+            <MigrationInProgressCard migration={migration} key={migration.id} />
+          ))}
+        </Grid.Row>
+      </Grid>
+    );
+  }
+
+  render() {
+    const {
+      isRejectedMigrationsInProgress,
+      isFetchingMigrationsInProgress,
+      errorMigrationsInProgress,
+      migrationsInProgress
+    } = this.props;
+
+    return (
+      <div className="card-pf card-pf-multi-card-container">
+        <div className="card-pf-heading">
+          <h2>
+            {sprintf(
+              __('%s Migrations in Progress'),
+              migrationsInProgress.length
+            )}
+          </h2>
+        </div>
+        <div className="card-pf-body">
+          {isFetchingMigrationsInProgress && (
+            <React.Fragment>
+              <Spinner size="xs" inline loading />
+              <span className="message-text">
+                {__('Loading migrations in progress')}
+              </span>
+            </React.Fragment>
+          )}
+          {isRejectedMigrationsInProgress && (
+            <React.Fragment>
+              <Icon type="pf" name="error-circle-o" />
+              <span className="message-text">
+                {errorMigrationsInProgress ||
+                  __('Error retrieving active migrations')}
+              </span>
+            </React.Fragment>
+          )}
+          {migrationsInProgress.length > 0 && this.renderActiveMigrations()}
+        </div>
+      </div>
+    );
+  }
+}
+
+MigrationsInProgressCard.propTypes = {
+  fetchMigrationsInProgressAction: PropTypes.func,
+  isFetchingMigrationsInProgress: PropTypes.bool,
+  migrationsInProgress: PropTypes.arrayOf(PropTypes.object),
+  isRejectedMigrationsInProgress: PropTypes.bool,
+  errorMigrationsInProgress: PropTypes.string
+};
+MigrationsInProgressCard.defaultProps = {
+  migrationsInProgress: [],
+  isFetchingMigrationsInProgress: false,
+  isRejectedMigrationsInProgress: false,
+  errorMigrationsInProgress: ''
+};
 
 export default MigrationsInProgressCard;
