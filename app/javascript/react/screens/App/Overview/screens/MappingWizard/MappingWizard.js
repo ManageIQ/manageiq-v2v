@@ -6,9 +6,6 @@ import ModalWizard from '../../components/ModalWizard';
 import MappingWizardGeneralStep from '../MappingWizard/components/MappingWizardGeneralStep';
 import componentRegistry from '../../../../../../components/componentRegistry';
 
-// TODO pull in Patrick's behavior that i pulled out
-// TODO test link between modals
-
 class MappingWizard extends React.Component {
   constructor(props) {
     super(props);

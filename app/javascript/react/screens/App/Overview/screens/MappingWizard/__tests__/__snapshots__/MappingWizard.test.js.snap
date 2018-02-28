@@ -1,17 +1,48 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MappingWizard component renders the mapping wizard 1`] = `
-<Connect(ModalWizard)
+<ControlledComponent
+  loaded={true}
+  loadingMessage="This may take a minute."
+  loadingTitle="Loading Infrastructure Mappings..."
   numSteps={5}
+  onBack={[Function]}
   onExited={[MockFunction]}
   onHide={[MockFunction]}
+  onNext={[Function]}
+  onStepChanged={[Function]}
+  shouldDisableNextStep={[Function]}
   showWizard={true}
+  steps={
+    Array [
+      Object {
+        "reduxFormKey": "mappingWizardGeneralStep",
+        "render": [Function],
+        "title": "General",
+      },
+      Object {
+        "reduxFormKey": "mappingWizardClustersStep",
+        "render": [Function],
+        "title": "Clusters",
+      },
+      Object {
+        "reduxFormKey": "mappingWizardDatastoresStep",
+        "render": [Function],
+        "title": "Datastores",
+      },
+      Object {
+        "onNext": [Function],
+        "reduxFormKey": "mappingWizardNetworksStep",
+        "render": [Function],
+        "title": "Networks",
+      },
+      Object {
+        "reduxFormKey": "mappingWizardResultsStep",
+        "render": [Function],
+        "title": "Results",
+      },
+    ]
+  }
   title="Infrastructure Mapping Wizard"
->
-  <MappingWizardBody
-    activeStep="1"
-    activeStepIndex={0}
-    loaded={true}
-  />
-</Connect(ModalWizard)>
+/>
 `;

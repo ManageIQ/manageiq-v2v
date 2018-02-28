@@ -9,6 +9,7 @@ Object {
   "mappingWizardExitedAction": [Function],
   "mappingWizardGeneralStep": Object {},
   "mappingWizardNetworksStep": Object {},
+  "mappingWizardResultsStep": undefined,
   "setTransformationsBodyAction": [Function],
 }
 `;
