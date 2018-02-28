@@ -1,13 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  bindMethods,
-  noop,
-  Button,
-  Icon,
-  Modal,
-  Wizard
-} from 'patternfly-react';
+import { bindMethods, noop } from 'patternfly-react';
 import { createTransformationMappings } from './helpers';
 import ModalWizard from '../../components/ModalWizard';
 import MappingWizardGeneralStep from '../MappingWizard/components/MappingWizardGeneralStep';

@@ -40,13 +40,13 @@ class ModalWizard extends React.Component {
     } = this.props;
     const currentStep = steps[activeStepIndex];
     setControlledState({ activeStepIndex: newStepIndex });
-    onStepChanged && onStepChanged(newStepIndex);
+    if (onStepChanged) onStepChanged(newStepIndex);
     if (newStepIndex === activeStepIndex + 1) {
       currentStep.onNext && currentStep.onNext();
-      onNext && onNext(newStepIndex);
+      if (onNext) onNext(newStepIndex);
     }
     if (newStepIndex === activeStepIndex - 1) {
-      onBack && onBack(newStepIndex);
+      if (onBack) onBack(newStepIndex);
     }
   }
 
@@ -56,12 +56,9 @@ class ModalWizard extends React.Component {
       showWizard,
       onHide,
       onExited,
-      onBack,
-      onNext,
       activeStepIndex,
       steps,
-      shouldDisableNextStep,
-      children
+      shouldDisableNextStep
     } = this.props;
     const onFirstStep = activeStepIndex === 0;
     const onFinalStep = activeStepIndex === steps.length - 1;
@@ -142,7 +139,8 @@ ModalWizard.propTypes = {
     })
   ),
   shouldDisableNextStep: PropTypes.func,
-  children: PropTypes.node
+  setControlledState: PropTypes.func,
+  activeStepIndex: PropTypes.number
 };
 
 ModalWizard.defaultProps = {
@@ -157,8 +155,7 @@ ModalWizard.defaultProps = {
   loadingMessage: __('Loading...'),
   loaded: false,
   steps: [{ title: __('General'), render: () => <p>{__('General')}</p> }],
-  shouldDisableNextStep: () => false,
-  children: null
+  shouldDisableNextStep: () => false
 };
 
 export default controlled({
