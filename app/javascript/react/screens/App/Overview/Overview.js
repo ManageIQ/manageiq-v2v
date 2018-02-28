@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Equalizer from 'react-equalizer';
 import { bindMethods, Button, EmptyState, Grid } from 'patternfly-react';
 import componentRegistry from '../../../../components/componentRegistry';
+import ActiveMigrations from './screens/ActiveMigrations';
 
 class Overview extends React.Component {
   constructor(props) {
@@ -95,14 +96,7 @@ class Overview extends React.Component {
 
           <Grid.Row>
             <Grid.Col xs={12}>
-              <div className="card-pf">
-                <div className="card-pf-heading">
-                  <h2>0 Migrations in Progress</h2>
-                </div>
-                <div className="card-pf-body">
-                  <p>content</p>
-                </div>
-              </div>
+              <ActiveMigrations />
             </Grid.Col>
           </Grid.Row>
 
