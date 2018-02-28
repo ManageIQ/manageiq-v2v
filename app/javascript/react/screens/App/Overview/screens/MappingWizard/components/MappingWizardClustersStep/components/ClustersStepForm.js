@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { noop, bindMethods } from 'patternfly-react';
+import { bindMethods } from 'patternfly-react';
 
 import DualPaneMapper from '../../DualPaneMapper/DualPaneMapper';
 import DualPaneMapperList from '../../DualPaneMapper/DualPaneMapperList';
 import DualPaneMapperCount from '../../DualPaneMapper/DualPaneMapperCount';
 import DualPaneMapperListItem from '../../DualPaneMapper/DualPaneMapperListItem';
 import ClustersStepTreeView from './ClustersStepTreeView';
+
+import { sourceClustersFilter } from '../MappingWizardClustersStepSelectors';
 
 class ClustersStepForm extends React.Component {
   constructor(props) {
@@ -54,13 +56,40 @@ class ClustersStepForm extends React.Component {
   }
 
   addMapping() {
-    const { removeTargetCluster, removeSourceClusters, input } = this.props;
+    const { input } = this.props;
     this.setState(prevState => {
-      removeSourceClusters(prevState.selectedSourceClusters);
-      removeTargetCluster(prevState.selectedTargetCluster);
-      input.onChange([
-        ...input.value,
-        {
+      const clustersStepMappings = input.value;
+
+      const mappingExistsForSelectedTargetCluster = clustersStepMappings.some(
+        targetClusterWithSourceClusters =>
+          targetClusterWithSourceClusters.id ===
+          prevState.selectedTargetCluster.id
+      );
+
+      if (mappingExistsForSelectedTargetCluster) {
+        const updatedMappings = clustersStepMappings.map(
+          targetClusterWithSourceClusters => {
+            if (
+              targetClusterWithSourceClusters.id ===
+              prevState.selectedTargetCluster.id
+            ) {
+              return {
+                ...targetClusterWithSourceClusters,
+                nodes: targetClusterWithSourceClusters.nodes.concat(
+                  prevState.selectedSourceClusters.map(sourceCluster => ({
+                    ...sourceCluster,
+                    text: sourceCluster.name,
+                    icon: 'fa fa-file-o'
+                  }))
+                )
+              };
+            }
+            return targetClusterWithSourceClusters;
+          }
+        );
+        input.onChange(updatedMappings);
+      } else {
+        const targetClusterWithSourceClusters = {
           ...prevState.selectedTargetCluster,
           text: prevState.selectedTargetCluster.name,
           state: {
@@ -68,13 +97,17 @@ class ClustersStepForm extends React.Component {
           },
           selectable: true,
           selected: false,
-          nodes: prevState.selectedSourceClusters.map(cluster => ({
-            ...cluster,
-            text: cluster.name,
+          nodes: prevState.selectedSourceClusters.map(sourceCluster => ({
+            ...sourceCluster,
+            text: sourceCluster.name,
             icon: 'fa fa-file-o'
           }))
-        }
-      ]);
+        };
+        input.onChange([
+          ...clustersStepMappings,
+          targetClusterWithSourceClusters
+        ]);
+      }
       return {
         selectedTargetCluster: null,
         selectedSourceClusters: []
@@ -98,14 +131,16 @@ class ClustersStepForm extends React.Component {
   }
 
   removeMapping() {
-    const { addTargetCluster, addSourceClusters, input } = this.props;
+    const { input } = this.props;
     this.setState(prevState => {
-      const { nodes, ...targetCluster } = prevState.selectedMapping;
-      addTargetCluster(targetCluster);
-      addSourceClusters(nodes);
+      const clustersStepMappings = input.value;
       input.onChange(
-        input.value.filter(
-          mapping => !(mapping.id === prevState.selectedMapping.id)
+        clustersStepMappings.filter(
+          targetClusterWithSourceClusters =>
+            !(
+              targetClusterWithSourceClusters.id ===
+              prevState.selectedMapping.id
+            )
         )
       );
       return {
@@ -115,17 +150,18 @@ class ClustersStepForm extends React.Component {
   }
 
   removeAll() {
-    const { addTargetCluster, addSourceClusters, input } = this.props;
-    input.value.forEach(mapping => {
-      const { nodes, ...targetCluster } = mapping;
-      addTargetCluster(targetCluster);
-      addSourceClusters(nodes);
-    });
+    const { input } = this.props;
     input.onChange([]);
   }
 
   render() {
-    const { sourceClusters, targetClusters, input } = this.props;
+    const {
+      sourceClusters,
+      targetClusters,
+      isFetchingSourceClusters,
+      isFetchingTargetClusters,
+      input
+    } = this.props;
 
     const {
       selectedTargetCluster,
@@ -145,8 +181,11 @@ class ClustersStepForm extends React.Component {
           }
         >
           {sourceClusters && (
-            <DualPaneMapperList listTitle="Source Clusters">
-              {sourceClusters.map(item => (
+            <DualPaneMapperList
+              listTitle="Source Clusters"
+              loading={isFetchingSourceClusters}
+            >
+              {sourceClustersFilter(sourceClusters, input.value).map(item => (
                 <DualPaneMapperListItem
                   item={item}
                   key={item.id}
@@ -167,7 +206,10 @@ class ClustersStepForm extends React.Component {
             </DualPaneMapperList>
           )}
           {targetClusters && (
-            <DualPaneMapperList listTitle="Target Clusters">
+            <DualPaneMapperList
+              listTitle="Target Clusters"
+              loading={isFetchingTargetClusters}
+            >
               {targetClusters.map(item => (
                 <DualPaneMapperListItem
                   item={item}
@@ -198,20 +240,11 @@ class ClustersStepForm extends React.Component {
 }
 
 ClustersStepForm.propTypes = {
-  removeTargetCluster: PropTypes.func,
-  removeSourceClusters: PropTypes.func,
   input: PropTypes.object,
-  addTargetCluster: PropTypes.func,
-  addSourceClusters: PropTypes.func,
   sourceClusters: PropTypes.arrayOf(PropTypes.object),
-  targetClusters: PropTypes.arrayOf(PropTypes.object)
-};
-
-ClustersStepForm.defaultProps = {
-  removeTargetCluster: noop,
-  removeSourceClusters: noop,
-  addTargetCluster: noop,
-  addSourceClusters: noop
+  targetClusters: PropTypes.arrayOf(PropTypes.object),
+  isFetchingSourceClusters: PropTypes.bool,
+  isFetchingTargetClusters: PropTypes.bool
 };
 
 export default ClustersStepForm;

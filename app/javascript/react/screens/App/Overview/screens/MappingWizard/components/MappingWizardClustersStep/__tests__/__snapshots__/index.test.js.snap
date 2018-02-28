@@ -2,16 +2,12 @@
 
 exports[`Mapping Wizard integration test should mount the MappingWizardClusterStep with mapStateToProps reduced 1`] = `
 Object {
-  "addSourceClusters": [Function],
-  "addTargetCluster": [Function],
   "fetchSourceClustersAction": [Function],
   "fetchSourceClustersUrl": "/api/dummyProviders",
   "fetchTargetClustersAction": [Function],
   "fetchTargetClustersUrl": "/api/dummyProviders",
   "isFetchingSourceClusters": true,
   "isFetchingTargetClusters": true,
-  "removeSourceClusters": [Function],
-  "removeTargetCluster": [Function],
   "sourceClusters": Array [],
   "targetClusters": Array [],
 }
