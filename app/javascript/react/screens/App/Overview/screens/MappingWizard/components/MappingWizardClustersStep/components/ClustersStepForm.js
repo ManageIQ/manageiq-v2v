@@ -201,7 +201,9 @@ class ClustersStepForm extends React.Component {
               ))}
               <DualPaneMapperCount
                 selectedItems={selectedSourceClusters.length}
-                totalItems={sourceClusters.length}
+                totalItems={
+                  sourceClustersFilter(sourceClusters, input.value).length
+                }
               />
             </DualPaneMapperList>
           )}
