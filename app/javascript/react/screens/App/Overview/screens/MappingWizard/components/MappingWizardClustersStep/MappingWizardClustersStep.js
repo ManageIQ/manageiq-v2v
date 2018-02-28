@@ -24,11 +24,7 @@ class MappingWizardClustersStep extends React.Component {
       isFetchingSourceClusters,
       sourceClusters,
       isFetchingTargetClusters,
-      targetClusters,
-      removeSourceClusters,
-      removeTargetCluster,
-      addTargetCluster,
-      addSourceClusters
+      targetClusters
     } = this.props;
 
     if (!isFetchingSourceClusters && !isFetchingTargetClusters) {
@@ -38,10 +34,6 @@ class MappingWizardClustersStep extends React.Component {
           component={ClustersStepForm}
           sourceClusters={sourceClusters}
           targetClusters={targetClusters}
-          removeSourceClusters={removeSourceClusters}
-          removeTargetCluster={removeTargetCluster}
-          addTargetCluster={addTargetCluster}
-          addSourceClusters={addSourceClusters}
           validate={[length({ min: 1 })]}
         />
       );
@@ -58,11 +50,7 @@ MappingWizardClustersStep.propTypes = {
   sourceClusters: PropTypes.arrayOf(PropTypes.object),
   targetClusters: PropTypes.arrayOf(PropTypes.object),
   isFetchingSourceClusters: PropTypes.bool,
-  isFetchingTargetClusters: PropTypes.bool,
-  removeTargetCluster: PropTypes.func,
-  removeSourceClusters: PropTypes.func,
-  addTargetCluster: PropTypes.func,
-  addSourceClusters: PropTypes.func
+  isFetchingTargetClusters: PropTypes.bool
 };
 MappingWizardClustersStep.defaultProps = {
   fetchSourceClustersUrl: '',
@@ -70,11 +58,7 @@ MappingWizardClustersStep.defaultProps = {
   fetchTargetClustersUrl: '',
   fetchTargetClustersAction: noop,
   isFetchingSourceClusters: true,
-  isFetchingTargetClusters: true,
-  removeTargetCluster: noop,
-  removeSourceClusters: noop,
-  addTargetCluster: noop,
-  addSourceClusters: noop
+  isFetchingTargetClusters: true
 };
 
 export default reduxForm({
