@@ -21,7 +21,11 @@ describe('Plan Wizard integration test', () => {
     createStore(
       combineReducers({ ...reducers }),
       {
-        overview: initialState
+        overview: initialState,
+        form: {
+          planWizardGeneralStep: {},
+          planWizardCSVStep: {}
+        }
       },
       applyMiddleware(...middlewares)
     );

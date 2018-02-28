@@ -18,17 +18,14 @@ class ModalWizardBody extends React.Component {
   }
 
   onStepClick(stepIndex) {
-    const { steps, goToStep, disableNextStep } = this.props;
-    if (disableNextStep) return;
-    const step = steps[stepIndex];
+    const { goToStep, disableNextStep, activeStepIndex } = this.props;
+    // Don't allow step clicks to skip into the future, but skipping into the past is ok.
+    if (disableNextStep || stepIndex > activeStepIndex + 1) return;
     goToStep(stepIndex);
-    if (step && step.onClick) {
-      step.onClick();
-    }
   }
 
   stepProps(stepIndex, title) {
-    const { activeStep } = this.props;
+    const { activeStepStr } = this.props;
     const label = (stepIndex + 1).toString();
     return {
       key: `wizard-step-${title}`,
@@ -36,7 +33,7 @@ class ModalWizardBody extends React.Component {
       label,
       step: label,
       title,
-      activeStep
+      activeStep: activeStepStr
     };
   }
 
@@ -103,12 +100,11 @@ ModalWizardBody.propTypes = {
     PropTypes.shape({
       title: PropTypes.string,
       render: PropTypes.func,
-      onClick: PropTypes.func
+      onNext: PropTypes.func
     })
   ),
   activeStepIndex: PropTypes.number,
-  activeStep: PropTypes.string,
-  onClick: PropTypes.func,
+  activeStepStr: PropTypes.string,
   goToStep: PropTypes.func,
   disableNextStep: PropTypes.bool
 };
@@ -119,10 +115,9 @@ ModalWizardBody.defaultProps = {
   loaded: false,
   steps: [{ title: __('General'), render: () => <p>{__('General')}</p> }],
   activeStepIndex: 0,
-  activeStep: '1',
-  onClick: noop,
+  activeStepStr: '1',
   goToStep: noop,
-  disableNextStep: true
+  disableNextStep: false
 };
 
 export default ModalWizardBody;

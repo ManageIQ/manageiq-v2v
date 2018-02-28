@@ -1,10 +1,13 @@
-export const mappingWizardOverviewFilter = overview => ({
-  hideMappingWizard: overview.hideMappingWizard
-});
+import { selectKeys } from 'patternfly-react';
 
-export const mappingWizardFormFilter = form => ({
-  mappingWizardGeneralStep: form.mappingWizardGeneralStep,
-  mappingWizardClustersStep: form.mappingWizardClustersStep,
-  mappingWizardDatastoresStep: form.mappingWizardDatastoresStep,
-  mappingWizardNetworksStep: form.mappingWizardNetworksStep
-});
+export const mappingWizardOverviewFilter = overview =>
+  selectKeys(overview, ['hideMappingWizard']);
+
+export const mappingWizardFormFilter = form =>
+  selectKeys(form, [
+    'mappingWizardGeneralStep',
+    'mappingWizardClustersStep',
+    'mappingWizardDatastoresStep',
+    'mappingWizardNetworksStep',
+    'mappingWizardResultsStep'
+  ]);

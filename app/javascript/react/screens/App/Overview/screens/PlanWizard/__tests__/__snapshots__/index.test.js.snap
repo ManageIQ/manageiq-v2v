@@ -4,6 +4,10 @@ exports[`Plan Wizard integration test should mount the PlanWizard with mapStateT
 Object {
   "hidePlanWizard": false,
   "hidePlanWizardAction": [Function],
+  "planWizardCSVStep": Object {},
   "planWizardExitedAction": [Function],
+  "planWizardGeneralStep": Object {},
+  "planWizardResultsStep": undefined,
+  "transformationMappings": Array [],
 }
 `;

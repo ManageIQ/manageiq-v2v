@@ -1,12 +1,17 @@
 import { connect } from 'react-redux';
 import PlanWizard from './PlanWizard';
 import * as PlanWizardActions from './PlanWizardActions';
-import { planWizardFilter } from './PlanWizardSelectors';
+import {
+  planWizardOverviewFilter,
+  planWizardFormFilter
+} from './PlanWizardSelectors';
 
-const mapStateToProps = ({ overview }, ownProps) => {
-  const selected = planWizardFilter(overview);
+const mapStateToProps = ({ overview, form }, ownProps) => {
+  const selectedOverview = planWizardOverviewFilter(overview);
+  const selectedForms = planWizardFormFilter(form);
   return {
-    ...selected,
+    ...selectedOverview,
+    ...selectedForms,
     ...ownProps.data
   };
 };
