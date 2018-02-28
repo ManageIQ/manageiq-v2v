@@ -31,6 +31,18 @@ class DatastoresStepForm extends React.Component {
     ]);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (
+      this.props.selectedCluster &&
+      nextProps.selectedCluster.id !== this.props.selectedCluster.id
+    ) {
+      this.setState(() => ({
+        selectedSourceDatastores: [],
+        selectedTargetDatastore: null
+      }));
+    }
+  }
+
   selectSourceDatastore(sourceDatastore) {
     this.setState(prevState => {
       const isAlreadySelected = prevState.selectedSourceDatastores.some(
