@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { bindMethods } from 'patternfly-react';
+import cx from 'classnames';
 
 import DualPaneMapper from '../../DualPaneMapper/DualPaneMapper';
 import DualPaneMapperList from '../../DualPaneMapper/DualPaneMapperList';
@@ -242,7 +243,8 @@ class NetworksStepForm extends React.Component {
       targetNetworks,
       isFetchingSourceNetworks,
       isFetchingTargetNetworks,
-      input
+      input,
+      selectedCluster
     } = this.props;
     const {
       selectedSourceNetworks,
@@ -250,8 +252,12 @@ class NetworksStepForm extends React.Component {
       selectedMapping
     } = this.state;
 
+    const classes = cx('dual-pane-mapper-form', {
+      'is-hidden': !selectedCluster
+    });
+
     return (
-      <div className="dual-pane-mapper-form">
+      <div className={classes}>
         <DualPaneMapper
           handleButtonClick={this.addNetworkMapping}
           validMapping={
@@ -327,6 +333,7 @@ NetworksStepForm.propTypes = {
   targetNetworks: PropTypes.array,
   isFetchingSourceNetworks: PropTypes.bool,
   isFetchingTargetNetworks: PropTypes.bool,
+  selectedCluster: PropTypes.object,
   selectedClusterMapping: PropTypes.object,
   resetState: PropTypes.func
 };

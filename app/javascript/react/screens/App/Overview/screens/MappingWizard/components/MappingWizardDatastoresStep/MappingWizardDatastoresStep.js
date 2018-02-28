@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
+import { length } from 'redux-form-validators';
 import { noop, bindMethods } from 'patternfly-react';
 import SourceClusterSelect from '../SourceClusterSelect/SourceClusterSelect';
 import DatastoresStepForm from './components/DatastoresStepForm';
@@ -97,18 +98,18 @@ class MappingWizardDatastoresStep extends React.Component {
           selectedCluster={selectedCluster}
           form={form}
         />
-        {selectedCluster && (
-          <Field
-            name="datastoresMappings"
-            component={DatastoresStepForm}
-            sourceDatastores={sourceDatastores}
-            targetDatastores={targetDatastores}
-            selectedClusterMapping={selectedClusterMapping}
-            resetState={this.resetState}
-            isFetchingSourceDatastores={isFetchingSourceDatastores}
-            isFetchingTargetDatastores={isFetchingTargetDatastores}
-          />
-        )}
+        <Field
+          name="datastoresMappings"
+          component={DatastoresStepForm}
+          sourceDatastores={sourceDatastores}
+          targetDatastores={targetDatastores}
+          selectedCluster={selectedCluster}
+          selectedClusterMapping={selectedClusterMapping}
+          resetState={this.resetState}
+          isFetchingSourceDatastores={isFetchingSourceDatastores}
+          isFetchingTargetDatastores={isFetchingTargetDatastores}
+          validate={length({ min: 1 })}
+        />
       </div>
     );
   }
