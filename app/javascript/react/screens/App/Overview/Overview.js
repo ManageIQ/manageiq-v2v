@@ -4,7 +4,7 @@ import Equalizer from 'react-equalizer';
 import { bindMethods, Grid } from 'patternfly-react';
 import InfrastructureMappingCard from './components/Cards/InfrastructureMappingCard/InfrastructureMappingCard';
 import MigrationPlansCard from './components/Cards/MigrationPlansCard/MigrationPlansCard';
-import MigrationsInProgressCard from './components/Cards/MigrationsInProgressCard/MigrationsInProgressCard';
+import MigrationsInProgressCard from './components/Cards/MigrationsInProgressCard';
 import MigrationsCompletedCard from './components/Cards/MigrationsCompletedCard/MigrationsCompletedCard';
 import componentRegistry from '../../../../components/componentRegistry';
 

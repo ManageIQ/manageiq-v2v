@@ -64,7 +64,7 @@ exports[`Overview component renders the overview 1`] = `
           componentClass="div"
           xs={12}
         >
-          <MigrationsInProgressCard />
+          <Connect(MigrationsInProgressCard) />
         </Col>
       </Row>
       <Row
