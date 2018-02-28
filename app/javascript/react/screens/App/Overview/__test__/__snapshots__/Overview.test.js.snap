@@ -141,24 +141,7 @@ exports[`Overview component renders the overview 1`] = `
           componentClass="div"
           xs={12}
         >
-          <div
-            className="card-pf"
-          >
-            <div
-              className="card-pf-heading"
-            >
-              <h2>
-                0 Migrations in Progress
-              </h2>
-            </div>
-            <div
-              className="card-pf-body"
-            >
-              <p>
-                content
-              </p>
-            </div>
-          </div>
+          <Connect(ActiveMigrations) />
         </Col>
       </Row>
       <Row
