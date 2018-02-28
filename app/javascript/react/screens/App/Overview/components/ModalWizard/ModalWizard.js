@@ -35,12 +35,19 @@ class ModalWizard extends React.Component {
       onStepChanged,
       activeStepIndex,
       onNext,
-      onBack
+      onBack,
+      steps
     } = this.props;
+    const currentStep = steps[activeStepIndex];
     setControlledState({ activeStepIndex: newStepIndex });
     onStepChanged && onStepChanged(newStepIndex);
-    onNext && newStepIndex === activeStepIndex + 1 && onNext(newStepIndex);
-    onBack && newStepIndex === activeStepIndex - 1 && onBack(newStepIndex);
+    if (newStepIndex === activeStepIndex + 1) {
+      currentStep.onNext && currentStep.onNext();
+      onNext && onNext(newStepIndex);
+    }
+    if (newStepIndex === activeStepIndex - 1) {
+      onBack && onBack(newStepIndex);
+    }
   }
 
   render() {
@@ -85,7 +92,7 @@ class ModalWizard extends React.Component {
             <ModalWizardBody
               {...this.props}
               goToStep={this.goToStep}
-              disabelNextStep={disableNextStep}
+              disableNextStep={disableNextStep}
               activeStepStr={activeStepStr}
             />
           </Modal.Body>
@@ -131,7 +138,7 @@ ModalWizard.propTypes = {
     PropTypes.shape({
       title: PropTypes.string,
       render: PropTypes.func,
-      onClick: PropTypes.func
+      onNext: PropTypes.func
     })
   ),
   shouldDisableNextStep: PropTypes.func,

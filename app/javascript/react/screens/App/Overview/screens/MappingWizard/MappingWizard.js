@@ -27,10 +27,10 @@ class MappingWizard extends React.Component {
     register(this, 'MappingWizardDatastoresStepContainer');
     register(this, 'MappingWizardNetworksStepContainer');
     register(this, 'MappingWizardResultsStepContainer');
-    bindMethods(this, ['onNextStep']);
+    bindMethods(this, ['createMappings']);
   }
 
-  onNextStep(activeStepIndex) {
+  createMappings() {
     const {
       mappingWizardGeneralStep,
       mappingWizardClustersStep,
@@ -38,15 +38,13 @@ class MappingWizard extends React.Component {
       mappingWizardNetworksStep,
       setTransformationsBodyAction
     } = this.props;
-    if (activeStepIndex === 3) {
-      const transformationsBody = createTransformationMappings(
-        mappingWizardGeneralStep,
-        mappingWizardClustersStep,
-        mappingWizardDatastoresStep,
-        mappingWizardNetworksStep
-      );
-      setTransformationsBodyAction(transformationsBody);
-    }
+    const transformationsBody = createTransformationMappings(
+      mappingWizardGeneralStep,
+      mappingWizardClustersStep,
+      mappingWizardDatastoresStep,
+      mappingWizardNetworksStep
+    );
+    setTransformationsBodyAction(transformationsBody);
   }
 
   render() {
@@ -75,7 +73,8 @@ class MappingWizard extends React.Component {
       {
         title: __('Networks'),
         render: () => this.mappingWizardNetworksStepContainer,
-        reduxFormKey: 'mappingWizardNetworksStep'
+        reduxFormKey: 'mappingWizardNetworksStep',
+        onNext: this.createMappings,
       },
       {
         title: __('Results'),
@@ -90,7 +89,6 @@ class MappingWizard extends React.Component {
         showWizard={!hideMappingWizard}
         onHide={hideMappingWizardAction}
         onExited={mappingWizardExitedAction}
-        onNext={this.onNextStep}
         title={__('Infrastructure Mapping Wizard')}
         shouldDisableNextStep={activeStepIndex => {
           const form = this.props[wizardSteps[activeStepIndex].reduxFormKey];
