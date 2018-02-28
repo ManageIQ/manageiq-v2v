@@ -6,7 +6,7 @@ const initialState = Immutable({
   migrationsInProgress: [],
   isFetchingMigrationsInProgress: false,
   isRejectedMigrationsInProgress: false,
-  errorMigrationsInProgress: ''
+  errorMigrationsInProgress: null
 });
 
 export default (state = initialState, action) => {

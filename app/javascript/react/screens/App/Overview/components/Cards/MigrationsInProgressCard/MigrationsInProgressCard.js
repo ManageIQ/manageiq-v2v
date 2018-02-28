@@ -54,8 +54,9 @@ class MigrationsInProgressCard extends React.Component {
             <React.Fragment>
               <Icon type="pf" name="error-circle-o" />
               <span className="message-text">
-                {errorMigrationsInProgress ||
-                  __('Error retrieving active migrations')}
+                {errorMigrationsInProgress
+                  ? errorMigrationsInProgress.message
+                  : __('Error retrieving active migrations')}
               </span>
             </React.Fragment>
           )}
@@ -71,13 +72,13 @@ MigrationsInProgressCard.propTypes = {
   isFetchingMigrationsInProgress: PropTypes.bool,
   migrationsInProgress: PropTypes.arrayOf(PropTypes.object),
   isRejectedMigrationsInProgress: PropTypes.bool,
-  errorMigrationsInProgress: PropTypes.string
+  errorMigrationsInProgress: PropTypes.object
 };
 MigrationsInProgressCard.defaultProps = {
   migrationsInProgress: [],
   isFetchingMigrationsInProgress: false,
   isRejectedMigrationsInProgress: false,
-  errorMigrationsInProgress: ''
+  errorMigrationsInProgress: null
 };
 
 export default MigrationsInProgressCard;
