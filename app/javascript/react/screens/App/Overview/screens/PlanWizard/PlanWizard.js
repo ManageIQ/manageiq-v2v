@@ -10,8 +10,7 @@ const PlanWizard = props => {
   const {
     hidePlanWizard,
     hidePlanWizardAction,
-    planWizardExitedAction,
-    formContainer
+    planWizardExitedAction
   } = props;
 
   const wizardSteps = [
@@ -54,14 +53,12 @@ PlanWizard.propTypes = {
   hidePlanWizard: PropTypes.bool,
   hidePlanWizardAction: PropTypes.func,
   planWizardExitedAction: PropTypes.func,
-  transformationMappings: PropTypes.array, // eslint-disable-line react/no-unused-prop-types
-  formContainer: PropTypes.object
+  transformationMappings: PropTypes.array // eslint-disable-line react/no-unused-prop-types
 };
 PlanWizard.defaultProps = {
   hidePlanWizard: true,
   hidePlanWizardAction: noop,
   planWizardExitedAction: noop,
-  transformationMappings: [],
-  formContainer: {}
+  transformationMappings: []
 };
 export default PlanWizard;

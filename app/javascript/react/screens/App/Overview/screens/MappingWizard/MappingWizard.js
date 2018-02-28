@@ -27,11 +27,31 @@ class MappingWizard extends React.Component {
     register(this, 'MappingWizardDatastoresStepContainer');
     register(this, 'MappingWizardNetworksStepContainer');
     register(this, 'MappingWizardResultsStepContainer');
+    bindMethods(this, ['onNextStep']);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    // TODO do we really need this??
+    // TODO do we really need this?? FIXME
     return JSON.stringify(this.props) !== JSON.stringify(nextProps);
+  }
+
+  onNextStep(activeStepIndex) {
+    const {
+      mappingWizardGeneralStep,
+      mappingWizardClustersStep,
+      mappingWizardDatastoresStep,
+      mappingWizardNetworksStep,
+      setTransformationsBodyAction
+    } = this.props;
+    if (activeStepIndex === 3) {
+      const transformationsBody = createTransformationMappings(
+        mappingWizardGeneralStep,
+        mappingWizardClustersStep,
+        mappingWizardDatastoresStep,
+        mappingWizardNetworksStep
+      );
+      setTransformationsBodyAction(transformationsBody);
+    }
   }
 
   render() {
@@ -75,6 +95,7 @@ class MappingWizard extends React.Component {
         showWizard={!hideMappingWizard}
         onHide={hideMappingWizardAction}
         onExited={mappingWizardExitedAction}
+        onNext={this.onNextStep}
         title={__('Infrastructure Mapping Wizard')}
         shouldDisableNextStep={activeStepIndex => {
           const form = this.props[wizardSteps[activeStepIndex].reduxFormKey];

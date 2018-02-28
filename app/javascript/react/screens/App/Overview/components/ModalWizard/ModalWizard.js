@@ -39,8 +39,8 @@ class ModalWizard extends React.Component {
     } = this.props;
     setControlledState({ activeStepIndex: newStepIndex });
     onStepChanged && onStepChanged(newStepIndex);
-    onNext && newStepIndex === activeStepIndex + 1 && onNext();
-    onBack && newStepIndex === activeStepIndex - 1 && onBack();
+    onNext && newStepIndex === activeStepIndex + 1 && onNext(newStepIndex);
+    onBack && newStepIndex === activeStepIndex - 1 && onBack(newStepIndex);
   }
 
   render() {

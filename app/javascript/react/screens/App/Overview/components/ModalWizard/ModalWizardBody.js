@@ -18,8 +18,9 @@ class ModalWizardBody extends React.Component {
   }
 
   onStepClick(stepIndex) {
-    const { steps, goToStep, disableNextStep } = this.props;
-    if (disableNextStep) return;
+    const { steps, goToStep, disableNextStep, activeStepIndex } = this.props;
+    // Don't allow step clicks to skip into the future, but skipping into the past is ok.
+    if (disableNextStep || stepIndex > (activeStepIndex + 1)) return;
     const step = steps[stepIndex];
     goToStep(stepIndex);
     if (step && step.onClick) {
@@ -122,7 +123,7 @@ ModalWizardBody.defaultProps = {
   activeStepStr: '1',
   onClick: noop,
   goToStep: noop,
-  disableNextStep: true
+  disableNextStep: false
 };
 
 export default ModalWizardBody;
