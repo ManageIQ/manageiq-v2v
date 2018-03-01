@@ -115,5 +115,10 @@ exports[`MappingWizard component renders the mapping wizard 1`] = `
       </Button>
     </ModalFooter>
   </Wizard>
+  <WarningModal
+    activeStepIndex={0}
+    nextStep={[Function]}
+    onFinalStep={false}
+  />
 </Modal>
 `;

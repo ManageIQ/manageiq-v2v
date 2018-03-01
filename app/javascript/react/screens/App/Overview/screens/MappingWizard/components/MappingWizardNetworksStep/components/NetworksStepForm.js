@@ -31,6 +31,18 @@ class NetworksStepForm extends React.Component {
     ]);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (
+      this.props.selectedCluster &&
+      nextProps.selectedCluster.id !== this.props.selectedCluster.id
+    ) {
+      this.setState(() => ({
+        selectedSourceNetworks: [],
+        selectedTargetNetwork: null
+      }));
+    }
+  }
+
   selectSourceNetwork(sourceNetwork) {
     this.setState(prevState => {
       const isAlreadySelected = prevState.selectedSourceNetworks.some(
@@ -58,7 +70,7 @@ class NetworksStepForm extends React.Component {
   }
 
   addNetworkMapping() {
-    const { input, selectedClusterMapping } = this.props;
+    const { input, selectedCluster, selectedClusterMapping } = this.props;
 
     this.setState(prevState => {
       const networksStepMappings = input.value;
@@ -100,7 +112,8 @@ class NetworksStepForm extends React.Component {
                 nodes: prevState.selectedSourceNetworks.map(network => ({
                   ...network,
                   text: network.name,
-                  icon: 'fa fa-file-o'
+                  icon: 'fa fa-file-o',
+                  sourceClusterId: selectedCluster.id
                 }))
               }
             ]
@@ -135,7 +148,8 @@ class NetworksStepForm extends React.Component {
                           prevState.selectedSourceNetworks.map(network => ({
                             ...network,
                             text: network.name,
-                            icon: 'fa fa-file-o'
+                            icon: 'fa fa-file-o',
+                            sourceClusterId: selectedCluster.id
                           }))
                         )
                       };
@@ -159,7 +173,8 @@ class NetworksStepForm extends React.Component {
                 nodes: prevState.selectedSourceNetworks.map(network => ({
                   ...network,
                   text: network.name,
-                  icon: 'fa fa-file-o'
+                  icon: 'fa fa-file-o',
+                  sourceClusterId: selectedCluster.id
                 }))
               })
             };
@@ -232,9 +247,8 @@ class NetworksStepForm extends React.Component {
   }
 
   removeAll() {
-    const { resetState, input } = this.props;
+    const { input } = this.props;
     input.onChange([]);
-    resetState();
   }
 
   render() {
@@ -334,8 +348,7 @@ NetworksStepForm.propTypes = {
   isFetchingSourceNetworks: PropTypes.bool,
   isFetchingTargetNetworks: PropTypes.bool,
   selectedCluster: PropTypes.object,
-  selectedClusterMapping: PropTypes.object,
-  resetState: PropTypes.func
+  selectedClusterMapping: PropTypes.object
 };
 
 export default NetworksStepForm;

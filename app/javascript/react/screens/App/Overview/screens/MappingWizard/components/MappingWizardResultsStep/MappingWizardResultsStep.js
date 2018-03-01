@@ -81,21 +81,21 @@ class MappingWizardResultsStep extends React.Component {
 MappingWizardResultsStep.propTypes = {
   postMappingsUrl: PropTypes.string,
   postTransformMappingsAction: PropTypes.func,
-  continueToPlanAction: PropTypes.func,
   transformationsBody: PropTypes.object,
   isPostingMappings: PropTypes.bool,
   isRejectedPostingMappings: PropTypes.bool,
   errorPostingMappings: PropTypes.object,
-  transformationMappingsResult: PropTypes.object
+  transformationMappingsResult: PropTypes.object,
+  continueToPlanAction: PropTypes.func
 };
 MappingWizardResultsStep.defaultProps = {
   postMappingsUrl: '',
   postTransformMappingsAction: noop,
-  continueToPlanAction: noop,
   transformationsBody: {},
   isPostingMappings: true,
   isRejectedPostingMappings: false,
   errorPostingMappings: null,
-  transformationMappingsResult: null
+  transformationMappingsResult: null,
+  continueToPlanAction: noop
 };
 export default MappingWizardResultsStep;

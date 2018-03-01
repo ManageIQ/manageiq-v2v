@@ -10,6 +10,8 @@ import {
   requestTargetClustersData
 } from './mappingWizardClustersStep.fixtures';
 
+const mockMode = true;
+
 const _getSourceClustersActionCreator = url => dispatch =>
   dispatch({
     type: FETCH_V2V_SOURCE_CLUSTERS,
@@ -20,10 +22,12 @@ const _getSourceClustersActionCreator = url => dispatch =>
 
     // to enable UI development without the backend ready, i'm catching the error
     // and passing some mock data thru the FULFILLED action after the REJECTED action is finished.
-    dispatch({
-      type: `${FETCH_V2V_SOURCE_CLUSTERS}_FULFILLED`,
-      payload: requestSourceClustersData.response
-    });
+    if (mockMode) {
+      dispatch({
+        type: `${FETCH_V2V_SOURCE_CLUSTERS}_FULFILLED`,
+        payload: requestSourceClustersData.response
+      });
+    }
   });
 
 export const fetchSourceClustersAction = url => {
@@ -41,10 +45,12 @@ const _getTargetClustersActionCreator = url => dispatch =>
 
     // to enable UI development without the backend ready, i'm catching the error
     // and passing some mock data thru the FULFILLED action after the REJECTED action is finished.
-    dispatch({
-      type: `${FETCH_V2V_TARGET_CLUSTERS}_FULFILLED`,
-      payload: requestTargetClustersData.response
-    });
+    if (mockMode) {
+      dispatch({
+        type: `${FETCH_V2V_TARGET_CLUSTERS}_FULFILLED`,
+        payload: requestTargetClustersData.response
+      });
+    }
   });
 
 export const fetchTargetClustersAction = url => {

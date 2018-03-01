@@ -4,7 +4,11 @@ import {
   MAPPING_WIZARD_EXITED
 } from '../../OverviewConstants';
 
-import { V2V_SET_TRANSFORMATIONS_BODY } from './MappingWizardConstants';
+import {
+  V2V_SET_TRANSFORMATIONS_BODY,
+  V2V_SHOW_WARNING_MODAL,
+  V2V_HIDE_WARNING_MODAL
+} from './MappingWizardConstants';
 
 export const hideMappingWizardAction = () => dispatch => {
   dispatch({
@@ -28,5 +32,18 @@ export const setTransformationsBodyAction = body => dispatch => {
   dispatch({
     type: V2V_SET_TRANSFORMATIONS_BODY,
     payload: body
+  });
+};
+
+export const showWarningModalAction = sourceClustersWithoutMappings => dispatch => {
+  dispatch({
+    type: V2V_SHOW_WARNING_MODAL,
+    payload: sourceClustersWithoutMappings
+  });
+};
+
+export const hideWarningModalAction = () => dispatch => {
+  dispatch({
+    type: V2V_HIDE_WARNING_MODAL
   });
 };

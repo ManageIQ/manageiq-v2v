@@ -102,3 +102,24 @@ export const createTransformationMappings = (
     ]
   };
 };
+
+export const getMappedSourceClusters = clusterMappings =>
+  clusterMappings.reduce(
+    (sourceClusters, targetClusterWithSourceClusters) =>
+      sourceClusters.concat(targetClusterWithSourceClusters.nodes),
+    []
+  );
+
+export const getSourceClustersWithMappings = mappings =>
+  mappings.reduce((idsPerTargetCluster, targetClusterWithMappings) => {
+    const idsForTargetCluster = targetClusterWithMappings.nodes.reduce(
+      (idsPerMapping, targetObjectWithSourceObjects) => {
+        const idsForSourceObjects = targetObjectWithSourceObjects.nodes.map(
+          sourceObject => sourceObject.sourceClusterId
+        );
+        return idsPerMapping.concat(Array.from(new Set(idsForSourceObjects)));
+      },
+      []
+    );
+    return idsPerTargetCluster.concat(Array.from(new Set(idsForTargetCluster)));
+  }, []);

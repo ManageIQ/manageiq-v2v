@@ -4,6 +4,7 @@ exports[`Mapping Wizard integration test should mount the MappingWizard with map
 Object {
   "hideMappingWizard": false,
   "hideMappingWizardAction": [Function],
+  "hideWarningModalAction": [Function],
   "mappingWizardClustersStep": Object {},
   "mappingWizardDatastoresStep": Object {},
   "mappingWizardExitedAction": [Function],
@@ -26,5 +27,6 @@ Object {
   },
   "mappingWizardNetworksStep": Object {},
   "setTransformationsBodyAction": [Function],
+  "showWarningModalAction": [Function],
 }
 `;

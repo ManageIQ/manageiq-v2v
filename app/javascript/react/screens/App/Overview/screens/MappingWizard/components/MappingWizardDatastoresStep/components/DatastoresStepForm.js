@@ -31,6 +31,18 @@ class DatastoresStepForm extends React.Component {
     ]);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (
+      this.props.selectedCluster &&
+      nextProps.selectedCluster.id !== this.props.selectedCluster.id
+    ) {
+      this.setState(() => ({
+        selectedSourceDatastores: [],
+        selectedTargetDatastore: null
+      }));
+    }
+  }
+
   selectSourceDatastore(sourceDatastore) {
     this.setState(prevState => {
       const isAlreadySelected = prevState.selectedSourceDatastores.some(
@@ -57,7 +69,7 @@ class DatastoresStepForm extends React.Component {
   }
 
   addDatastoreMapping() {
-    const { input, selectedClusterMapping } = this.props;
+    const { input, selectedCluster, selectedClusterMapping } = this.props;
 
     const { selectedTargetDatastore } = this.state;
 
@@ -92,7 +104,8 @@ class DatastoresStepForm extends React.Component {
                 nodes: prevState.selectedSourceDatastores.map(datastore => ({
                   ...datastore,
                   text: datastore.name,
-                  icon: 'fa fa-file-o'
+                  icon: 'fa fa-file-o',
+                  sourceClusterId: selectedCluster.id
                 }))
               }
             ]
@@ -114,7 +127,8 @@ class DatastoresStepForm extends React.Component {
                         prevState.selectedSourceDatastores.map(datastore => ({
                           ...datastore,
                           text: datastore.name,
-                          icon: 'fa fa-file-o'
+                          icon: 'fa fa-file-o',
+                          sourceClusterId: selectedCluster.id
                         }))
                       )
                     };
@@ -136,7 +150,8 @@ class DatastoresStepForm extends React.Component {
                 nodes: prevState.selectedSourceDatastores.map(datastore => ({
                   ...datastore,
                   text: datastore.name,
-                  icon: 'fa fa-file-o'
+                  icon: 'fa fa-file-o',
+                  sourceClusterId: selectedCluster.id
                 }))
               })
             };
@@ -208,9 +223,8 @@ class DatastoresStepForm extends React.Component {
   }
 
   removeAll() {
-    const { resetState, input } = this.props;
+    const { input } = this.props;
     input.onChange([]);
-    resetState();
   }
 
   render() {
@@ -308,7 +322,6 @@ DatastoresStepForm.propTypes = {
   selectedClusterMapping: PropTypes.object,
   sourceDatastores: PropTypes.array,
   targetDatastores: PropTypes.array,
-  resetState: PropTypes.func,
   isFetchingSourceDatastores: PropTypes.bool,
   isFetchingTargetDatastores: PropTypes.bool
 };
