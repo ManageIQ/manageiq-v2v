@@ -58,7 +58,7 @@ class NetworksStepForm extends React.Component {
   }
 
   addNetworkMapping() {
-    const { input, selectedClusterMapping } = this.props;
+    const { input, selectedCluster, selectedClusterMapping } = this.props;
 
     this.setState(prevState => {
       const networksStepMappings = input.value;
@@ -100,7 +100,8 @@ class NetworksStepForm extends React.Component {
                 nodes: prevState.selectedSourceNetworks.map(network => ({
                   ...network,
                   text: network.name,
-                  icon: 'fa fa-file-o'
+                  icon: 'fa fa-file-o',
+                  sourceClusterId: selectedCluster.id
                 }))
               }
             ]
@@ -135,7 +136,8 @@ class NetworksStepForm extends React.Component {
                           prevState.selectedSourceNetworks.map(network => ({
                             ...network,
                             text: network.name,
-                            icon: 'fa fa-file-o'
+                            icon: 'fa fa-file-o',
+                            sourceClusterId: selectedCluster.id
                           }))
                         )
                       };
@@ -159,7 +161,8 @@ class NetworksStepForm extends React.Component {
                 nodes: prevState.selectedSourceNetworks.map(network => ({
                   ...network,
                   text: network.name,
-                  icon: 'fa fa-file-o'
+                  icon: 'fa fa-file-o',
+                  sourceClusterId: selectedCluster.id
                 }))
               })
             };

@@ -57,7 +57,7 @@ class DatastoresStepForm extends React.Component {
   }
 
   addDatastoreMapping() {
-    const { input, selectedClusterMapping } = this.props;
+    const { input, selectedCluster, selectedClusterMapping } = this.props;
 
     const { selectedTargetDatastore } = this.state;
 
@@ -92,7 +92,8 @@ class DatastoresStepForm extends React.Component {
                 nodes: prevState.selectedSourceDatastores.map(datastore => ({
                   ...datastore,
                   text: datastore.name,
-                  icon: 'fa fa-file-o'
+                  icon: 'fa fa-file-o',
+                  sourceClusterId: selectedCluster.id
                 }))
               }
             ]
@@ -114,7 +115,8 @@ class DatastoresStepForm extends React.Component {
                         prevState.selectedSourceDatastores.map(datastore => ({
                           ...datastore,
                           text: datastore.name,
-                          icon: 'fa fa-file-o'
+                          icon: 'fa fa-file-o',
+                          sourceClusterId: selectedCluster.id
                         }))
                       )
                     };
@@ -136,7 +138,8 @@ class DatastoresStepForm extends React.Component {
                 nodes: prevState.selectedSourceDatastores.map(datastore => ({
                   ...datastore,
                   text: datastore.name,
-                  icon: 'fa fa-file-o'
+                  icon: 'fa fa-file-o',
+                  sourceClusterId: selectedCluster.id
                 }))
               })
             };
