@@ -1,5 +1,3 @@
-import { map, trim } from 'lodash';
-
 export const createMigrationPlans = (
   planWizardGeneralStep,
   planWizardCSVStep
@@ -8,7 +6,9 @@ export const createMigrationPlans = (
   const planDescription = planWizardGeneralStep.values.description;
   const infrastructureMapping =
     planWizardGeneralStep.values.infrastructure_mapping;
-  const vms = map(planWizardCSVStep.values.csvRows, 'reference').map(trim);
+  const vms = planWizardCSVStep.values.csvRows.map(value =>
+    value['reference'].trim()
+  );
 
   return {
     name: planName,
