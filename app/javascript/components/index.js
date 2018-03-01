@@ -68,8 +68,9 @@ export const coreComponents = [
     name: 'PlanWizardResultsStepContainer',
     type: PlanWizardResultsStepContainer,
     data: {
-      postPlansUrl: '/api/dummyMigrationPlans'
-      // will become 'api/service_templates'
+      postPlansUrl: mockMode
+        ? '/api/dummyMigrationPlansAndRequests'
+        : '/api/service_templates'
     }
   },
   {
