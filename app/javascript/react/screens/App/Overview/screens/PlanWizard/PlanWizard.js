@@ -31,13 +31,19 @@ class PlanWizard extends React.Component {
 
   nextStep() {
     const { activeStepIndex } = this.state;
-    const { planWizardGeneralStep, planWizardCSVStep } = this.props;
+    const {
+      planWizardGeneralStep,
+      planWizardCSVStep,
+      setPlansBodyAction
+    } = this.props;
 
     if (activeStepIndex === 1) {
       const plansBody = createMigrationPlans(
         planWizardGeneralStep,
         planWizardCSVStep
       );
+
+      setPlansBodyAction(plansBody);
     }
 
     this.setState({
@@ -131,13 +137,15 @@ PlanWizard.propTypes = {
   hidePlanWizardAction: PropTypes.func,
   planWizardExitedAction: PropTypes.func,
   planWizardGeneralStep: PropTypes.object,
-  planWizardCSVStep: PropTypes.object
+  planWizardCSVStep: PropTypes.object,
+  setPlansBodyAction: PropTypes.func
 };
 PlanWizard.defaultProps = {
   hidePlanWizard: true,
   hidePlanWizardAction: noop,
   planWizardExitedAction: noop,
   planWizardGeneralStep: {},
-  planWizardCSVStep: {}
+  planWizardCSVStep: {},
+  setPlansBodyAction: noop
 };
 export default PlanWizard;

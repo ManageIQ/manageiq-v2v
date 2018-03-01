@@ -48,13 +48,17 @@ class PlanWizardResultsStep extends React.Component {
         </div>
       );
     } else if (migrationPlansResult) {
+      const migrationPlanProgress = sprintf(
+        __(" Migration Plan: '%s' is in progress"),
+        plansBody.name
+      );
       return (
         <div className="wizard-pf-complete blank-slate-pf">
           <div className="plan-wizard-results-step-icon">
             <span className="fa fa-clock-o" />
           </div>
           <h3 className="blank-slate-pf-main-action">
-            {__(' Migration Plan is in progress')}
+            {migrationPlanProgress}
           </h3>
           <p className="blank-slate-pf-secondary-action">
             {__(

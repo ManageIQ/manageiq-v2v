@@ -1,5 +1,6 @@
 import { reset } from 'redux-form';
 import { HIDE_PLAN_WIZARD, PLAN_WIZARD_EXITED } from '../../OverviewConstants';
+import { V2V_SET_PLANS_BODY } from './PlanWizardConstants';
 
 export const hidePlanWizardAction = () => dispatch => {
   dispatch({
@@ -14,4 +15,11 @@ export const planWizardExitedAction = () => dispatch => {
   // Dispatch reset for all the wizard step forms here
   dispatch(reset('planWizardGeneralStep'));
   dispatch(reset('planWizardCSVStep'));
+};
+
+export const setPlansBodyAction = body => dispatch => {
+  dispatch({
+    type: V2V_SET_PLANS_BODY,
+    payload: body
+  });
 };
