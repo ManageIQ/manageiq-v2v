@@ -39,7 +39,7 @@ const WarningModal = ({
         <div className="warning-modal-body--list">
           <h3>
             {sprintf(
-              __('The following source clusters have unmapped %s'),
+              __('The following source clusters have no mapped %s'),
               currentStep.toLowerCase()
             )}
           </h3>
@@ -62,6 +62,7 @@ const WarningModal = ({
         <Button
           bsStyle="primary"
           onClick={onFinalStep ? hideWarningModalAction : nextStep}
+          autoFocus
         >
           {onFinalStep
             ? __('Close')
