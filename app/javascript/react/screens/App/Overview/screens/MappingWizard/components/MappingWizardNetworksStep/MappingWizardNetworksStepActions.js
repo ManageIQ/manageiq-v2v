@@ -9,6 +9,8 @@ import {
   requestTargetNetworksData
 } from './mappingWizardNetworksStep.fixtures';
 
+const mockMode = true;
+
 const _filterSourceNetworks = response => {
   const { data } = response;
   if (data.lans) {
@@ -21,18 +23,28 @@ const _filterSourceNetworks = response => {
   };
 };
 
-const _getSourceNetworksActionCreator = (url, id) => dispatch =>
+const _getSourceNetworksActionCreator = (url, id) => dispatch => {
   dispatch({
     type: FETCH_V2V_SOURCE_NETWORKS,
-    payload: API.get(url)
-  }).catch(error => {
-    // to enable UI development without the backend ready, i'm catching the error
-    // and passing some mock data thru the FULFILLED action after the REJECTED action is finished.
-    dispatch({
-      type: `${FETCH_V2V_SOURCE_NETWORKS}_FULFILLED`,
-      payload: _filterSourceNetworks(requestSourceNetworksData(id).response)
-    });
+    payload: new Promise((resolve, reject) => {
+      API.get(url)
+        .then(response => {
+          resolve(_filterSourceNetworks(response));
+        })
+        .catch(e => {
+          if (mockMode) {
+            return dispatch({
+              type: `${FETCH_V2V_SOURCE_NETWORKS}_FULFILLED`,
+              payload: _filterSourceNetworks(
+                requestSourceNetworksData(id).response
+              )
+            });
+          }
+          return reject(e);
+        });
+    })
   });
+};
 
 export const fetchSourceNetworksAction = (url, id) => {
   const uri = new URI(`${url}/${id}`);
@@ -54,18 +66,28 @@ const _filterTargetNetworks = response => {
   };
 };
 
-const _getTargetNetworksActionCreator = (url, id) => dispatch =>
+const _getTargetNetworksActionCreator = (url, id) => dispatch => {
   dispatch({
     type: FETCH_V2V_TARGET_NETWORKS,
-    payload: API.get(url)
-  }).catch(error => {
-    // to enable UI development without the backend ready, i'm catching the error
-    // and passing some mock data thru the FULFILLED action after the REJECTED action is finished.
-    dispatch({
-      type: `${FETCH_V2V_TARGET_NETWORKS}_FULFILLED`,
-      payload: _filterTargetNetworks(requestTargetNetworksData(id).response)
-    });
+    payload: new Promise((resolve, reject) => {
+      API.get(url)
+        .then(response => {
+          resolve(_filterTargetNetworks(response));
+        })
+        .catch(e => {
+          if (mockMode) {
+            return dispatch({
+              type: `${FETCH_V2V_TARGET_NETWORKS}_FULFILLED`,
+              payload: _filterTargetNetworks(
+                requestTargetNetworksData(id).response
+              )
+            });
+          }
+          return reject(e);
+        });
+    })
   });
+};
 
 export const fetchTargetNetworksAction = (url, id) => {
   const uri = new URI(`${url}/${id}`);

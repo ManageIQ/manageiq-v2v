@@ -9,6 +9,8 @@ import {
   requestTargetDatastoresData
 } from './mappingWizardDatastoresStep.fixtures';
 
+const mockMode = true;
+
 const _filterSourceDatastores = response => {
   const { data } = response;
   if (data.storages) {
@@ -21,18 +23,30 @@ const _filterSourceDatastores = response => {
   };
 };
 
-const _getSourceDatastoresActionCreator = (url, id) => dispatch =>
+const _getSourceDatastoresActionCreator = (url, id) => dispatch => {
   dispatch({
     type: FETCH_V2V_SOURCE_DATASTORES,
-    payload: API.get(url)
-  }).catch(error => {
-    // to enable UI development without the backend ready, i'm catching the error
-    // and passing some mock data thru the FULFILLED action after the REJECTED action is finished.
-    dispatch({
-      type: `${FETCH_V2V_SOURCE_DATASTORES}_FULFILLED`,
-      payload: _filterSourceDatastores(requestSourceDatastoresData(id).response)
-    });
+    payload: new Promise((resolve, reject) => {
+      API.get(url)
+        .then(response => {
+          resolve(_filterSourceDatastores(response));
+        })
+        .catch(e => {
+          if (mockMode) {
+            // to enable UI development without the backend ready, i'm catching the error
+            // and passing some mock data thru the FULFILLED action after the REJECTED action is finished.
+            return dispatch({
+              type: `${FETCH_V2V_SOURCE_DATASTORES}_FULFILLED`,
+              payload: _filterSourceDatastores(
+                requestSourceDatastoresData(id).response
+              )
+            });
+          }
+          return reject(e);
+        });
+    })
   });
+};
 
 export const fetchSourceDatastoresAction = (url, id) => {
   const uri = new URI(`${url}/${id}`);
@@ -54,18 +68,28 @@ const _filterTargetDatastores = response => {
   };
 };
 
-const _getTargetDatastoresActionCreator = (url, id) => dispatch =>
+const _getTargetDatastoresActionCreator = (url, id) => dispatch => {
   dispatch({
     type: FETCH_V2V_TARGET_DATASTORES,
-    payload: API.get(url)
-  }).catch(error => {
-    // to enable UI development without the backend ready, i'm catching the error
-    // and passing some mock data thru the FULFILLED action after the REJECTED action is finished.
-    dispatch({
-      type: `${FETCH_V2V_TARGET_DATASTORES}_FULFILLED`,
-      payload: _filterTargetDatastores(requestTargetDatastoresData(id).response)
-    });
+    payload: new Promise((resolve, reject) => {
+      API.get(url)
+        .then(response => {
+          resolve(_filterTargetDatastores(response));
+        })
+        .catch(e => {
+          if (mockMode) {
+            return dispatch({
+              type: `${FETCH_V2V_TARGET_DATASTORES}_FULFILLED`,
+              payload: _filterTargetDatastores(
+                requestTargetDatastoresData(id).response
+              )
+            });
+          }
+          return reject(e);
+        });
+    })
   });
+};
 
 export const fetchTargetDatastoresAction = (url, id) => {
   const uri = new URI(`${url}/${id}`);
