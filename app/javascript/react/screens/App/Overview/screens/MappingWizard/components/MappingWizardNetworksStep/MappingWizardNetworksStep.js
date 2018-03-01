@@ -15,7 +15,7 @@ class MappingWizardNetworksStep extends React.Component {
       selectedClusterMapping: null // cluster mapping from step-2 associated with selected source cluster
     };
 
-    bindMethods(this, ['selectSourceCluster', 'resetState']);
+    bindMethods(this, ['selectSourceCluster']);
   }
 
   componentWillMount() {
@@ -62,13 +62,6 @@ class MappingWizardNetworksStep extends React.Component {
     fetchTargetNetworksAction(fetchNetworksUrl, targetCluster.id);
   }
 
-  resetState() {
-    this.setState(() => ({
-      selectedCluster: undefined,
-      selectedClusterMapping: null
-    }));
-  }
-
   render() {
     const {
       clusterMappings,
@@ -104,7 +97,6 @@ class MappingWizardNetworksStep extends React.Component {
           selectedClusterMapping={selectedClusterMapping}
           isFetchingSourceNetworks={isFetchingSourceNetworks}
           isFetchingTargetNetworks={isFetchingTargetNetworks}
-          resetState={this.resetState}
           validate={length({ min: 1 })}
         />
       </div>

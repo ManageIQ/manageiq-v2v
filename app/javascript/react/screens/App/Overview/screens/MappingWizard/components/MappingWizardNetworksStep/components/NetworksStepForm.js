@@ -247,9 +247,8 @@ class NetworksStepForm extends React.Component {
   }
 
   removeAll() {
-    const { resetState, input } = this.props;
+    const { input } = this.props;
     input.onChange([]);
-    resetState();
   }
 
   render() {
@@ -349,8 +348,7 @@ NetworksStepForm.propTypes = {
   isFetchingSourceNetworks: PropTypes.bool,
   isFetchingTargetNetworks: PropTypes.bool,
   selectedCluster: PropTypes.object,
-  selectedClusterMapping: PropTypes.object,
-  resetState: PropTypes.func
+  selectedClusterMapping: PropTypes.object
 };
 
 export default NetworksStepForm;

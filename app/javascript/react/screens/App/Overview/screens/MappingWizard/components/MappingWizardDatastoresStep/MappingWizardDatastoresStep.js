@@ -15,7 +15,7 @@ class MappingWizardDatastoresStep extends React.Component {
       selectedClusterMapping: null
     };
 
-    bindMethods(this, ['selectSourceCluster', 'resetState']);
+    bindMethods(this, ['selectSourceCluster']);
   }
 
   componentWillMount() {
@@ -62,13 +62,6 @@ class MappingWizardDatastoresStep extends React.Component {
     fetchTargetDatastoresAction(fetchDatastoresUrl, targetCluster.id);
   }
 
-  resetState() {
-    this.setState(() => ({
-      selectedCluster: undefined,
-      selectedClusterMapping: null
-    }));
-  }
-
   render() {
     const {
       clusterMappings,
@@ -105,7 +98,6 @@ class MappingWizardDatastoresStep extends React.Component {
           targetDatastores={targetDatastores}
           selectedCluster={selectedCluster}
           selectedClusterMapping={selectedClusterMapping}
-          resetState={this.resetState}
           isFetchingSourceDatastores={isFetchingSourceDatastores}
           isFetchingTargetDatastores={isFetchingTargetDatastores}
           validate={length({ min: 1 })}

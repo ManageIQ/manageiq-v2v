@@ -223,9 +223,8 @@ class DatastoresStepForm extends React.Component {
   }
 
   removeAll() {
-    const { resetState, input } = this.props;
+    const { input } = this.props;
     input.onChange([]);
-    resetState();
   }
 
   render() {
@@ -323,7 +322,6 @@ DatastoresStepForm.propTypes = {
   selectedClusterMapping: PropTypes.object,
   sourceDatastores: PropTypes.array,
   targetDatastores: PropTypes.array,
-  resetState: PropTypes.func,
   isFetchingSourceDatastores: PropTypes.bool,
   isFetchingTargetDatastores: PropTypes.bool
 };
