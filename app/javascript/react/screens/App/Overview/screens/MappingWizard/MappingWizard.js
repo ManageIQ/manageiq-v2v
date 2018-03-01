@@ -126,8 +126,18 @@ class MappingWizard extends React.Component {
 
   goToStep(activeStepIndex) {
     const { activeStepIndex: currentStep } = this.state;
+    const targetStepProp = mappingWizardSteps[activeStepIndex];
+    const targetStepForm = this.props[targetStepProp];
 
-    if (currentStep !== 4) {
+    if (activeStepIndex === 4) {
+      this.setState(prevState => ({
+        activeStepIndex: prevState.activeStepIndex
+      }));
+    } else if (currentStep === 2 && activeStepIndex === 3) {
+      this.nextStep();
+    } else if (currentStep < activeStepIndex && targetStepForm.values) {
+      this.setState(() => ({ activeStepIndex }));
+    } else if (currentStep !== 4) {
       this.setState(() => ({ activeStepIndex }));
     }
   }
