@@ -10,7 +10,7 @@ import {
   requestTargetClustersData
 } from './mappingWizardClustersStep.fixtures';
 
-const mockMode = true;
+const mockMode = false;
 
 const _getSourceClustersActionCreator = url => dispatch =>
   dispatch({
