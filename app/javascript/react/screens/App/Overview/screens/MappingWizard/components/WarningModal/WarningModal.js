@@ -11,12 +11,15 @@ const WarningModal = ({
   nextStep,
   sourceClustersWithoutMappings
 }) => {
+  const currentStep = activeStepIndex === 2 ? 'Datastores' : 'Networks';
+
   return (
     <Modal
       show={warningModalVisible}
       onHide={hideWarningModalAction}
       onExited={hideWarningModalAction}
-      dialogClassName="modal-lg wizard-pf"
+      dialogClassName="warning-modal"
+      backdropClassName="warning-modal"
     >
       <Modal.Header>
         <button
@@ -27,15 +30,28 @@ const WarningModal = ({
         >
           <Icon type="pf" name="close" />
         </button>
-        <Modal.Title>{__('Unmapped Things')}</Modal.Title>
+        <Modal.Title>{sprintf(__('Unmapped %s'), currentStep)}</Modal.Title>
       </Modal.Header>
-      <Modal.Body className="wizard-pf-body clearfix">
-        {sourceClustersWithoutMappings &&
-          sourceClustersWithoutMappings.map(sourceCluster => {
-            return <p>{sourceCluster.name}</p>;
-          })}
+      <Modal.Body className="warning-modal-body">
+        <div className="warning-modal-body--icon">
+          <Icon type="pf" name="warning-triangle-o" />
+        </div>
+        <div className="warning-modal-body--list">
+          <h3>
+            {sprintf(
+              __('The following source clusters have unmapped %s'),
+              currentStep.toLowerCase()
+            )}
+          </h3>
+          <ul>
+            {sourceClustersWithoutMappings &&
+              sourceClustersWithoutMappings.map(sourceCluster => {
+                return <li key={sourceCluster.id}>{sourceCluster.name}</li>;
+              })}
+          </ul>
+        </div>
       </Modal.Body>
-      <Modal.Footer className="wizard-pf-footer">
+      <Modal.Footer className="warning-modal-footer">
         <Button
           bsStyle="default"
           className="btn-cancel"
@@ -49,8 +65,7 @@ const WarningModal = ({
         >
           {onFinalStep
             ? __('Close')
-            : activeStepIndex === 3 ? __('Create') : __('Next')}
-          <Icon type="fa" name="angle-right" />
+            : activeStepIndex === 3 ? __('Create') : __('Continue')}
         </Button>
       </Modal.Footer>
     </Modal>
