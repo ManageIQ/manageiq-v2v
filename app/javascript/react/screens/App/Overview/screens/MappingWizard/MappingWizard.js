@@ -125,7 +125,11 @@ class MappingWizard extends React.Component {
   }
 
   goToStep(activeStepIndex) {
-    this.setState({ activeStepIndex });
+    const { activeStepIndex: currentStep } = this.state;
+
+    if (currentStep !== 4) {
+      this.setState(() => ({ activeStepIndex }));
+    }
   }
 
   render() {
@@ -181,13 +185,15 @@ class MappingWizard extends React.Component {
               bsStyle="default"
               className="btn-cancel"
               onClick={hideMappingWizardAction}
+              disabled={onFinalStep}
             >
               {__('Cancel')}
             </Button>
+
             <Button
               bsStyle="default"
               onClick={this.prevStep}
-              disabled={onFirstStep}
+              disabled={onFirstStep || onFinalStep}
             >
               <Icon type="fa" name="angle-left" />
               {__('Back')}
