@@ -50,17 +50,17 @@ class MappingWizard extends React.Component {
     } = this.props;
 
     if (activeStepIndex === 2 && !warningModalVisible) {
-      const clusterMappings = mappingWizardClustersStep.values.clusterMappings;
-      const datastoresMappings =
-        mappingWizardDatastoresStep.values.datastoresMappings;
+      const { clusterMappings } = mappingWizardClustersStep.values;
+      const { datastoresMappings } = mappingWizardDatastoresStep.values;
 
       const sourceClustersWithoutDatastoresMappings = getMappedSourceClusters(
         clusterMappings
-      ).filter(sourceCluster => {
-        return !getSourceClustersWithMappings(datastoresMappings).includes(
-          sourceCluster.id
-        );
-      });
+      ).filter(
+        sourceCluster =>
+          !getSourceClustersWithMappings(datastoresMappings).includes(
+            sourceCluster.id
+          )
+      );
 
       if (sourceClustersWithoutDatastoresMappings.length > 0) {
         showWarningModalAction(sourceClustersWithoutDatastoresMappings);
@@ -73,17 +73,17 @@ class MappingWizard extends React.Component {
         });
       }
     } else if (activeStepIndex === 3 && !warningModalVisible) {
-      const clusterMappings = mappingWizardClustersStep.values.clusterMappings;
-      const networksMappings =
-        mappingWizardNetworksStep.values.networksMappings;
+      const { clusterMappings } = mappingWizardClustersStep.values;
+      const { networksMappings } = mappingWizardNetworksStep.values;
 
       const sourceClustersWithoutNetworksMappings = getMappedSourceClusters(
         clusterMappings
-      ).filter(sourceCluster => {
-        return !getSourceClustersWithMappings(networksMappings).includes(
-          sourceCluster.id
-        );
-      });
+      ).filter(
+        sourceCluster =>
+          !getSourceClustersWithMappings(networksMappings).includes(
+            sourceCluster.id
+          )
+      );
 
       if (sourceClustersWithoutNetworksMappings.length > 0) {
         showWarningModalAction(sourceClustersWithoutNetworksMappings);
@@ -224,7 +224,11 @@ MappingWizard.propTypes = {
   mappingWizardClustersStep: PropTypes.object,
   mappingWizardDatastoresStep: PropTypes.object,
   mappingWizardNetworksStep: PropTypes.object,
-  setTransformationsBodyAction: PropTypes.func
+  setTransformationsBodyAction: PropTypes.func,
+  showWarningModalAction: PropTypes.func,
+  hideWarningModalAction: PropTypes.func,
+  warningModalVisible: PropTypes.bool,
+  sourceClustersWithoutMappings: PropTypes.array
 };
 MappingWizard.defaultProps = {
   hideMappingWizard: true,

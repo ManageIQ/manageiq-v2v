@@ -45,9 +45,9 @@ const WarningModal = ({
           </h3>
           <ul>
             {sourceClustersWithoutMappings &&
-              sourceClustersWithoutMappings.map(sourceCluster => {
-                return <li key={sourceCluster.id}>{sourceCluster.name}</li>;
-              })}
+              sourceClustersWithoutMappings.map(sourceCluster => (
+                <li key={sourceCluster.id}>{sourceCluster.name}</li>
+              ))}
           </ul>
         </div>
       </Modal.Body>
@@ -70,6 +70,15 @@ const WarningModal = ({
       </Modal.Footer>
     </Modal>
   );
+};
+
+WarningModal.propTypes = {
+  warningModalVisible: PropTypes.bool,
+  hideWarningModalAction: PropTypes.func,
+  onFinalStep: PropTypes.bool,
+  activeStepIndex: PropTypes.number,
+  nextStep: PropTypes.func,
+  sourceClustersWithoutMappings: PropTypes.array
 };
 
 export default WarningModal;
