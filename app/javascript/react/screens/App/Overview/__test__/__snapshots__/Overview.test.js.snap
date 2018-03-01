@@ -76,7 +76,7 @@ exports[`Overview component renders the overview 1`] = `
           componentClass="div"
           xs={12}
         >
-          <MigrationsCompletedCard />
+          <Connect(MigrationsCompletedCard) />
           <div
             className="spacer"
           />
