@@ -1,0 +1,24 @@
+.completed-migrations-list {
+  max-height: 200px;
+  overflow-y: auto;
+
+  .list-group-item {
+    padding: 0;
+  }
+}
+.completed-migration-item {
+  margin: 10px -20px;
+  width: 100%;
+  .list-view-pf-additional-info-item {
+    text-align: left;
+    line-height: 26px;
+  }
+}
+.completed-migration-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  @media(min-width: 992px) {
+    margin-top: 4px;
+  }
+}

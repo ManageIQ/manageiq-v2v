@@ -1,6 +1,7 @@
 @import './screens/MappingWizard/MappingWizard.scss';
 @import './screens/PlanWizard/components/PlanWizardResultsStep/PlanWizardResultsStep.scss';
 @import 'components/Cards/MigrationsInProgressCard/MigrationsInProgress.scss';
+@import 'components/Cards/MigrationsCompletedCard/MigrationsCompleted.scss';
 
 .card-pf-body .blank-slate-pf {
   background-color: #fff;

@@ -9,11 +9,13 @@ import { reducers as mappingWizardResultsStepReducers } from '../../react/screen
 import { reducers as planWizardReducers } from '../../react/screens/App/Overview/screens/PlanWizard';
 import { reducers as planWizardResultsStepReducers } from '../../react/screens/App/Overview/screens/PlanWizard/components/PlanWizardResultsStep';
 import { reducers as migrationsInProgressReducers } from '../../react/screens/App/Overview/components/Cards/MigrationsInProgressCard';
+import { reducers as migrationsCompletedReducers } from '../../react/screens/App/Overview/components/Cards/MigrationsCompletedCard';
 
 export function combineReducersAsync(asyncReducers) {
   return combineReducers({
     ...overviewReducers,
     ...migrationsInProgressReducers,
+    ...migrationsCompletedReducers,
     ...mappingWizardReducers,
     ...mappingWizardClustersStepReducers,
     ...mappingWizardDatastoresStepReducers,
