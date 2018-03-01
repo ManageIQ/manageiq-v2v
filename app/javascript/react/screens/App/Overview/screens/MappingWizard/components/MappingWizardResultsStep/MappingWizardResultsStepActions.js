@@ -1,17 +1,13 @@
 import API from '../../../../../../../../common/API';
 import { POST_V2V_TRANSFORM_MAPPINGS } from './MappingWizardResultsStepConstants';
-import {
-  HIDE_MAPPING_WIZARD,
-  SHOW_PLAN_WIZARD
-} from '../../../../OverviewConstants';
+import { CONTINUE_TO_PLAN } from '../../../../OverviewConstants';
 import { requestTransformationMappingsData } from './mappingWizardResultsStep.fixtures';
+
+const mockMode = true;
 
 export const continueToPlanAction = id => dispatch => {
   dispatch({
-    type: HIDE_MAPPING_WIZARD
-  });
-  dispatch({
-    type: SHOW_PLAN_WIZARD,
+    type: CONTINUE_TO_PLAN,
     payload: { id }
   });
 };
@@ -19,18 +15,26 @@ export const continueToPlanAction = id => dispatch => {
 const _postTransformMappingsActionCreator = (
   url,
   transformMappings
-) => dispatch =>
+) => dispatch => {
   dispatch({
     type: POST_V2V_TRANSFORM_MAPPINGS,
-    payload: API.post(url, transformMappings)
-  }).catch(error => {
-    // to enable UI development without the backend ready, i'm catching the error
-    // and passing some mock data thru the FULFILLED action after the REJECTED action is finished.
-    dispatch({
-      type: `${POST_V2V_TRANSFORM_MAPPINGS}_FULFILLED`,
-      payload: requestTransformationMappingsData.response
-    });
+    payload: new Promise((resolve, reject) => {
+      API.post(url, transformMappings)
+        .then(response => {
+          resolve(response);
+        })
+        .catch(e => {
+          if (mockMode) {
+            return dispatch({
+              type: `${POST_V2V_TRANSFORM_MAPPINGS}_FULFILLED`,
+              payload: requestTransformationMappingsData.response
+            });
+          }
+          return reject(e);
+        });
+    })
   });
+};
 
 export const postTransformMappingsAction = (url, transformMappings) =>
   _postTransformMappingsActionCreator(url, transformMappings);

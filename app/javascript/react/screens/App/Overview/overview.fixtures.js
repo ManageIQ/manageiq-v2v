@@ -87,5 +87,5 @@ export const transformationMappings = [
 export const requestTransformationMappingsData = {
   method: 'GET',
   fetchTransformationMappingsUrl: initialState.fetchTransformationMappingsUrl,
-  response: { data: transformationMappings }
+  response: { data: { resources: transformationMappings } }
 };

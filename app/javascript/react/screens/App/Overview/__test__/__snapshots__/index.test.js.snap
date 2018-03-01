@@ -2,6 +2,7 @@
 
 exports[`Overview integration test should mount the Overview with mapStateToProps reduced 1`] = `
 Object {
+  "continueToPlanAction": [Function],
   "fetchTransformationMappingsAction": [Function],
   "fetchTransformationMappingsUrl": "/api/dummyMappings",
   "hideMappingWizard": false,

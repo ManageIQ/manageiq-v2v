@@ -12,6 +12,8 @@ import RelativeDateTime from './dates/RelativeDateTime';
 import ShortDateTime from './dates/ShortDateTime';
 import MiqV2vUi from '../react';
 
+const mockMode = true;
+
 export const coreComponents = [
   {
     name: 'MappingWizardContainer',
@@ -23,10 +25,12 @@ export const coreComponents = [
     name: 'MappingWizardClustersStepContainer',
     type: MappingWizardClustersStepContainer,
     data: {
-      fetchSourceClustersUrl: '/api/dummyProviders',
-      // '/api/providers?expand=resources&attributes=emstype,ems_clusters&filter[]=emstype=vmwarews',
-      fetchTargetClustersUrl: '/api/dummyProviders'
-      // '/api/providers?expand=resources&attributes=emstype,ems_clusters&filter[]=emstype=rhevm'
+      fetchSourceClustersUrl: mockMode
+        ? '/api/dummyProviders'
+        : '/api/providers?expand=resources&attributes=emstype,ems_clusters&filter[]=emstype=vmwarews',
+      fetchTargetClustersUrl: mockMode
+        ? '/api/dummyProviders'
+        : '/api/providers?expand=resources&attributes=emstype,ems_clusters&filter[]=emstype=rhevm'
     },
     store: true
   },
@@ -34,8 +38,9 @@ export const coreComponents = [
     name: 'MappingWizardDatastoresStepContainer',
     type: MappingWizardDatastoresStepContainer,
     data: {
-      fetchDatastoresUrl: '/api/dummyClusters'
-      // will become 'api/clusters/1?attributes=storages'
+      fetchDatastoresUrl: mockMode
+        ? '/api/dummyClusters'
+        : 'api/clusters/1?attributes=storages'
     },
     store: true
   },
@@ -43,8 +48,9 @@ export const coreComponents = [
     name: 'MappingWizardNetworksStepContainer',
     type: MappingWizardNetworksStepContainer,
     data: {
-      fetchNetworksUrl: '/api/dummyClusters'
-      // will become 'api/clusters/1?attributes=lans'
+      fetchNetworksUrl: mockMode
+        ? '/api/dummyClusters'
+        : 'api/clusters/1?attributes=lans'
     },
     store: true
   },
@@ -52,14 +58,17 @@ export const coreComponents = [
     name: 'MappingWizardResultsStepContainer',
     type: MappingWizardResultsStepContainer,
     data: {
-      postMappingsUrl: '/api/dummyPostMappings'
-      // will become 'api/transformation_mappings'
+      postMappingsUrl: mockMode
+        ? '/api/dummyPostMappings'
+        : 'api/transformation_mappings'
     }
   },
   {
     name: 'PlanWizardContainer',
     type: PlanWizardContainer,
-    data: { url: '/api/migrationPlans' },
+    data: {
+      url: mockMode ? '/api/dummyMigrationPlans' : '/api/migrationPlans'
+    },
     store: true
   },
   {
@@ -73,8 +82,9 @@ export const coreComponents = [
     type: OverviewContainer,
     navigation: 'Overview',
     data: {
-      fetchTransformationMappingsUrl: '/api/dummyMappings'
-      // 'api/transformation_mappings'
+      fetchTransformationMappingsUrl: mockMode
+        ? '/api/dummyMappings'
+        : 'api/transformation_mappings?expand=resources'
     },
     store: true
   },
