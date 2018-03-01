@@ -17,7 +17,8 @@ export default (state = initialState, action) => {
       return state.set('transformationsBody', action.payload);
     case V2V_SHOW_WARNING_MODAL:
       return Immutable.merge(state, {
-        warningModalVisible: true
+        warningModalVisible: true,
+        sourceClustersWithoutMappings: action.payload
       });
     case V2V_HIDE_WARNING_MODAL:
       return Immutable.merge(state, {

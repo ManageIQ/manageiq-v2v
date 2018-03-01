@@ -8,8 +8,13 @@ import {
   Modal,
   Wizard
 } from 'patternfly-react';
-import { createTransformationMappings } from './helpers';
+import {
+  createTransformationMappings,
+  getMappedSourceClusters,
+  getSourceClustersWithMappings
+} from './helpers';
 import MappingWizardBody from './MappingWizardBody';
+import WarningModal from './components/WarningModal/WarningModal';
 
 const mappingWizardSteps = [
   'mappingWizardGeneralStep',
@@ -38,25 +43,85 @@ class MappingWizard extends React.Component {
       mappingWizardClustersStep,
       mappingWizardDatastoresStep,
       mappingWizardNetworksStep,
-      setTransformationsBodyAction
+      setTransformationsBodyAction,
+      showWarningModalAction,
+      hideWarningModalAction,
+      warningModalVisible
     } = this.props;
 
-    if (activeStepIndex === 3) {
-      const transformationsBody = createTransformationMappings(
-        mappingWizardGeneralStep,
-        mappingWizardClustersStep,
-        mappingWizardDatastoresStep,
-        mappingWizardNetworksStep
-      );
-      setTransformationsBodyAction(transformationsBody);
-    }
+    if (activeStepIndex === 2 && !warningModalVisible) {
+      const clusterMappings = mappingWizardClustersStep.values.clusterMappings;
+      const datastoresMappings =
+        mappingWizardDatastoresStep.values.datastoresMappings;
 
-    this.setState({
-      activeStepIndex: Math.min(
-        activeStepIndex + 1,
-        mappingWizardSteps.length - 1
-      )
-    });
+      const sourceClustersWithoutDatastoresMappings = getMappedSourceClusters(
+        clusterMappings
+      ).filter(sourceCluster => {
+        return !getSourceClustersWithMappings(datastoresMappings).includes(
+          sourceCluster.id
+        );
+      });
+
+      if (sourceClustersWithoutDatastoresMappings.length > 0) {
+        showWarningModalAction(sourceClustersWithoutDatastoresMappings);
+      } else {
+        this.setState({
+          activeStepIndex: Math.min(
+            activeStepIndex + 1,
+            mappingWizardSteps.length - 1
+          )
+        });
+      }
+    } else if (activeStepIndex === 3 && !warningModalVisible) {
+      const clusterMappings = mappingWizardClustersStep.values.clusterMappings;
+      const networksMappings =
+        mappingWizardNetworksStep.values.networksMappings;
+
+      const sourceClustersWithoutNetworksMappings = getMappedSourceClusters(
+        clusterMappings
+      ).filter(sourceCluster => {
+        return !getSourceClustersWithMappings(networksMappings).includes(
+          sourceCluster.id
+        );
+      });
+
+      if (sourceClustersWithoutNetworksMappings.length > 0) {
+        showWarningModalAction(sourceClustersWithoutNetworksMappings);
+      } else {
+        const transformationsBody = createTransformationMappings(
+          mappingWizardGeneralStep,
+          mappingWizardClustersStep,
+          mappingWizardDatastoresStep,
+          mappingWizardNetworksStep
+        );
+        setTransformationsBodyAction(transformationsBody);
+        this.setState({
+          activeStepIndex: Math.min(
+            activeStepIndex + 1,
+            mappingWizardSteps.length - 1
+          )
+        });
+      }
+    } else {
+      // Either we are not on the datastores or networks step, or we are clicking
+      // the continue button in the warning modal
+      hideWarningModalAction();
+      if (activeStepIndex === 3) {
+        const transformationsBody = createTransformationMappings(
+          mappingWizardGeneralStep,
+          mappingWizardClustersStep,
+          mappingWizardDatastoresStep,
+          mappingWizardNetworksStep
+        );
+        setTransformationsBodyAction(transformationsBody);
+      }
+      this.setState({
+        activeStepIndex: Math.min(
+          activeStepIndex + 1,
+          mappingWizardSteps.length - 1
+        )
+      });
+    }
   }
 
   goToStep(activeStepIndex) {
@@ -67,7 +132,10 @@ class MappingWizard extends React.Component {
     const {
       hideMappingWizard,
       hideMappingWizardAction,
-      mappingWizardExitedAction
+      mappingWizardExitedAction,
+      hideWarningModalAction,
+      warningModalVisible,
+      sourceClustersWithoutMappings
     } = this.props;
 
     const { activeStepIndex, transformationsBody } = this.state;
@@ -136,6 +204,14 @@ class MappingWizard extends React.Component {
             </Button>
           </Modal.Footer>
         </Wizard>
+        <WarningModal
+          warningModalVisible={warningModalVisible}
+          hideWarningModalAction={hideWarningModalAction}
+          onFinalStep={onFinalStep}
+          activeStepIndex={activeStepIndex}
+          nextStep={this.nextStep}
+          sourceClustersWithoutMappings={sourceClustersWithoutMappings}
+        />
       </Modal>
     );
   }
