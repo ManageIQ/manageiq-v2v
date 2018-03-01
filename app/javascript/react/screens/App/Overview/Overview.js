@@ -33,6 +33,28 @@ class Overview extends React.Component {
     fetchTransformationMappingsAction(fetchTransformationMappingsUrl);
   }
 
+  componentWillReceiveProps(nextProps) {
+    const {
+      isContinuingToPlan,
+      fetchTransformationMappingsUrl,
+      fetchTransformationMappingsAction,
+      planWizardId,
+      continueToPlanAction
+    } = this.props;
+    if (
+      isContinuingToPlan !== nextProps.isContinuingToPlan &&
+      nextProps.isContinuingToPlan
+    ) {
+      // refetech our mappings so that plan wizard has this newly created mapping
+      fetchTransformationMappingsAction(fetchTransformationMappingsUrl);
+    } else if (
+      isContinuingToPlan !== nextProps.isContinuingToPlan &&
+      !nextProps.isContinuingToPlan
+    ) {
+      continueToPlanAction(planWizardId);
+    }
+  }
+
   getNodes(equalizerComponent, equalizerElement) {
     return [this.node1, this.node2];
   }
@@ -111,6 +133,9 @@ Overview.propTypes = {
   fetchTransformationMappingsAction: PropTypes.func,
   transformationMappings: PropTypes.array,
   isFetchingTransformationMappings: PropTypes.bool,
-  isRejectedTransformationMappings: PropTypes.bool
+  isRejectedTransformationMappings: PropTypes.bool,
+  isContinuingToPlan: PropTypes.bool,
+  planWizardId: PropTypes.string,
+  continueToPlanAction: PropTypes.func
 };
 export default Overview;
