@@ -35,27 +35,32 @@ class MappingWizardBody extends React.Component {
           {
             title: __('General'),
             render: () => <MappingWizardGeneralStep />,
-            onClick: () => console.log('on step 1 click')
+            onClick: () => console.log('on step 1 click'),
+            disabled: !this.props.mappingWizardGeneralStep.values
           },
           {
             title: __('Clusters'),
             render: () => this.mappingWizardClustersStepContainer,
-            onClick: () => console.log('on step 2 click')
+            onClick: () => console.log('on step 2 click'),
+            disabled: !this.props.mappingWizardClustersStep.values
           },
           {
             title: __('Datastores'),
             render: () => this.mappingWizardDatastoresStepContainer,
-            onClick: () => console.log('on step 3 click')
+            onClick: () => console.log('on step 3 click'),
+            disabled: !this.props.mappingWizardDatastoresStep.values
           },
           {
             title: __('Networks'),
             render: () => this.mappingWizardNetworksStepContainer,
-            onClick: () => console.log('on step 4 click')
+            onClick: () => console.log('on step 4 click'),
+            disabled: !this.props.mappingWizardNetworksStep.values
           },
           {
             title: __('Results'),
             render: () => this.mappingWizardResultsStepContainer,
-            onClick: () => console.log('on step 5 click')
+            onClick: () => console.log('on step 5 click'),
+            disabled: true
           }
         ]}
       />
@@ -69,7 +74,11 @@ MappingWizardBody.propTypes = {
   activeStep: PropTypes.string,
   goToStep: PropTypes.func,
   disableNextStep: PropTypes.bool,
-  transformationsBody: PropTypes.object
+  transformationsBody: PropTypes.object,
+  mappingWizardGeneralStep: PropTypes.object,
+  mappingWizardClustersStep: PropTypes.object,
+  mappingWizardDatastoresStep: PropTypes.object,
+  mappingWizardNetworksStep: PropTypes.object
 };
 
 MappingWizardBody.defaultProps = {
@@ -78,7 +87,11 @@ MappingWizardBody.defaultProps = {
   activeStep: '1',
   goToStep: noop,
   disableNextStep: true,
-  transformationsBody: {}
+  transformationsBody: {},
+  mappingWizardGeneralStep: {},
+  mappingWizardClustersStep: {},
+  mappingWizardDatastoresStep: {},
+  mappingWizardNetworksStep: {}
 };
 
 export default MappingWizardBody;

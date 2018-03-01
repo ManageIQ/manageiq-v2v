@@ -66,6 +66,10 @@ exports[`MappingWizard component renders the mapping wizard 1`] = `
         disableNextStep={false}
         goToStep={[Function]}
         loaded={true}
+        mappingWizardClustersStep={Object {}}
+        mappingWizardDatastoresStep={Object {}}
+        mappingWizardGeneralStep={Object {}}
+        mappingWizardNetworksStep={Object {}}
         transformationsBody={Object {}}
       />
     </ModalBody>
