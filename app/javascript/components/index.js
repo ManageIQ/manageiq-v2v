@@ -13,7 +13,7 @@ import RelativeDateTime from './dates/RelativeDateTime';
 import ShortDateTime from './dates/ShortDateTime';
 import MiqV2vUi from '../react';
 
-const mockMode = true;
+const mockMode = false;
 
 export const coreComponents = [
   {

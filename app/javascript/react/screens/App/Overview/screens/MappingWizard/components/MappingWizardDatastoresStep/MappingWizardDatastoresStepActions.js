@@ -9,7 +9,7 @@ import {
   requestTargetDatastoresData
 } from './mappingWizardDatastoresStep.fixtures';
 
-const mockMode = true;
+const mockMode = false;
 
 const _filterSourceDatastores = response => {
   const { data } = response;

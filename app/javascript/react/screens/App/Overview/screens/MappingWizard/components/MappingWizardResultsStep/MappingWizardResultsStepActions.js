@@ -3,7 +3,7 @@ import { POST_V2V_TRANSFORM_MAPPINGS } from './MappingWizardResultsStepConstants
 import { CONTINUE_TO_PLAN } from '../../../../OverviewConstants';
 import { requestTransformationMappingsData } from './mappingWizardResultsStep.fixtures';
 
-const mockMode = true;
+const mockMode = false;
 
 export const continueToPlanAction = id => dispatch => {
   dispatch({
