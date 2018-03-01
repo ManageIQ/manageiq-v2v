@@ -20,7 +20,7 @@ export const createMigrationPlans = (
     options: {
       config_info: {
         transformation_mapping_id: infrastructureMapping,
-        vms: vms
+        vms
       }
     }
   };
