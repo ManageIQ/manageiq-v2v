@@ -9,7 +9,7 @@ import {
   requestTargetNetworksData
 } from './mappingWizardNetworksStep.fixtures';
 
-const mockMode = true;
+const mockMode = false;
 
 const _filterSourceNetworks = response => {
   const { data } = response;

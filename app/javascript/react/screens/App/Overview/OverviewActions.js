@@ -10,7 +10,7 @@ import {
 
 import { requestTransformationMappingsData } from './overview.fixtures';
 
-const mockMode = true;
+const mockMode = false;
 
 export const showMappingWizardAction = () => dispatch => {
   dispatch({
