@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { bindMethods } from 'patternfly-react';
 import cx from 'classnames';
+import numeral from 'numeral';
 
 import DualPaneMapper from '../../DualPaneMapper/DualPaneMapper';
 import DualPaneMapperList from '../../DualPaneMapper/DualPaneMapperList';
@@ -10,6 +11,7 @@ import DualPaneMapperListItem from '../../DualPaneMapper/DualPaneMapperListItem'
 import MappingWizardTreeView from '../../MappingWizardTreeView/MappingWizardTreeView';
 
 import { sourceDatastoreFilter } from '../MappingWizardDatastoresStepSelectors';
+import { diskSpaceInfo } from './helpers';
 
 class DatastoresStepForm extends React.Component {
   constructor(props) {
@@ -95,7 +97,10 @@ class DatastoresStepForm extends React.Component {
             nodes: [
               {
                 ...prevState.selectedTargetDatastore,
-                text: prevState.selectedTargetDatastore.name,
+                text: diskSpaceInfo(
+                  prevState.selectedTargetDatastore,
+                  prevState.selectedSourceDatastores
+                ),
                 selectable: true,
                 selected: false,
                 state: {
@@ -123,6 +128,10 @@ class DatastoresStepForm extends React.Component {
                   if (mapping.id === prevState.selectedTargetDatastore.id) {
                     return {
                       ...mapping,
+                      text: diskSpaceInfo(
+                        mapping,
+                        mapping.nodes.concat(prevState.selectedSourceDatastores)
+                      ),
                       nodes: mapping.nodes.concat(
                         prevState.selectedSourceDatastores.map(datastore => ({
                           ...datastore,
@@ -141,7 +150,10 @@ class DatastoresStepForm extends React.Component {
               ...datastoreMapping,
               nodes: datastoreMapping.nodes.concat({
                 ...prevState.selectedTargetDatastore,
-                text: prevState.selectedTargetDatastore.name,
+                text: diskSpaceInfo(
+                  prevState.selectedTargetDatastore,
+                  prevState.selectedSourceDatastores
+                ),
                 selectable: true,
                 selected: false,
                 state: {
