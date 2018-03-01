@@ -1,9 +1,11 @@
-const calculateTotalUsedSpace = sourceDatastores => {
-  return sourceDatastores.reduce((totalSpace, sourceDatastore) => {
-    return (totalSpace +=
-      sourceDatastore.total_space - sourceDatastore.free_space);
-  }, 0);
-};
+import numeral from 'numeral';
+
+const calculateTotalUsedSpace = sourceDatastores =>
+  sourceDatastores.reduce(
+    (totalSpace, sourceDatastore) =>
+      (totalSpace += sourceDatastore.total_space - sourceDatastore.free_space),
+    0
+  );
 
 const diskSpaceInfo = (targetDatastore, sourceDatastores) => {
   const { total_space, free_space } = targetDatastore;
