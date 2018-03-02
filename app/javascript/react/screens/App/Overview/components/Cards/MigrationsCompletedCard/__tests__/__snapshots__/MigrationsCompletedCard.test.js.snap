@@ -7,7 +7,9 @@ exports[`MigrationsCompletedCard component renders the MigrationsCompletedCard 1
   <div
     className="card-pf-heading"
   >
-    <h2>
+    <h2
+      className="card-pf-title"
+    >
       %s Completed Migrations
     </h2>
   </div>

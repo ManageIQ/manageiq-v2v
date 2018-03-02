@@ -32,7 +32,7 @@ class MigrationsCompletedCard extends React.Component {
     return (
       <div className="card-pf">
         <div className="card-pf-heading">
-          <h2>
+          <h2 className="card-pf-title">
             {sprintf(__('%s Completed Migrations'), migrationsCompleted.length)}
           </h2>
         </div>

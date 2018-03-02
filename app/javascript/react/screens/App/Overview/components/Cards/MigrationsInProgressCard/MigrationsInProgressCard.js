@@ -34,7 +34,7 @@ class MigrationsInProgressCard extends React.Component {
     return (
       <div className="card-pf card-pf-multi-card-container">
         <div className="card-pf-heading">
-          <h2>
+          <h2 className="card-pf-title">
             {sprintf(
               __('%s Migrations in Progress'),
               migrationsInProgress.length
