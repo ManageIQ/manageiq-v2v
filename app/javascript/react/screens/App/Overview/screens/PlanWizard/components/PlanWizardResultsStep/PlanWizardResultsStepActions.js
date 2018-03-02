@@ -25,7 +25,7 @@ const _postMigrationPlansActionCreator = (url, migrationPlans) => dispatch => {
       dispatch({
         type: POST_V2V_MIGRATION_REQUESTS,
         payload: API.post(
-          `${url}/${requestMigrationRequestsData.response.data.results[0].id}`,
+          `${url}/${requestMigrationPlansData.response.data.results[0].id}`,
           { action: 'order' }
         ).catch(errorMigrationRequest => {
           // to enable UI development without the backend ready, i'm catching the error
@@ -47,15 +47,15 @@ const _postMigrationPlansActionCreator = (url, migrationPlans) => dispatch => {
 
             dispatch({
               type: POST_V2V_MIGRATION_REQUESTS,
-              payload: new Promise((resolve, reject) => {
+              payload: new Promise((resolveRequest, rejectRequest) => {
                 API.post(`${url}/${response.data.results[0].id}`, {
                   action: 'order'
                 })
                   .then(responseMigrationRequest => {
-                    resolve(responseMigrationRequest);
+                    resolveRequest(responseMigrationRequest);
                   })
                   .catch(e => {
-                    return reject(e);
+                    return rejectRequest(e);
                   });
               })
             });
