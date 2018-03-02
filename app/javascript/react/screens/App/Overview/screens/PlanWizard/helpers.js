@@ -7,7 +7,7 @@ export const createMigrationPlans = (
   const infrastructureMapping =
     planWizardGeneralStep.values.infrastructure_mapping;
   const vms = planWizardCSVStep.values.csvRows.map(value =>
-    value['reference'].trim()
+    value.reference.trim()
   );
 
   return {
