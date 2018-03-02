@@ -10,6 +10,21 @@ import {
 
 const mockMode = false;
 
+const postMigrationRequestsAction = (response, dispatch) => {
+  dispatch({
+    type: POST_V2V_MIGRATION_REQUESTS,
+    payload: new Promise((resolve, reject) => {
+      API.post(`${response.data.results[0].href}`, {
+        action: 'order'
+      })
+        .then(responseMigrationRequest => {
+          resolve(responseMigrationRequest);
+        })
+        .catch(e => reject(e));
+    })
+  });
+};
+
 const _postMigrationPlansActionCreator = (url, migrationPlans) => dispatch => {
   if (mockMode) {
     dispatch({
@@ -25,16 +40,16 @@ const _postMigrationPlansActionCreator = (url, migrationPlans) => dispatch => {
       dispatch({
         type: POST_V2V_MIGRATION_REQUESTS,
         payload: API.post(
-          `${url}/${requestMigrationPlansData.response.data.results[0].id}`,
+          `${requestMigrationPlansData.response.data.results[0].href}`,
           { action: 'order' }
-        ).catch(errorMigrationRequest => {
+        ).catch(errorMigrationRequest =>
           // to enable UI development without the backend ready, i'm catching the error
           // and passing some mock data thru the FULFILLED action after the REJECTED action is finished.
-          return dispatch({
+          dispatch({
             type: `${POST_V2V_MIGRATION_REQUESTS}_FULFILLED`,
             payload: requestMigrationRequestsData.response
-          });
-        })
+          })
+        )
       });
     });
   } else {
@@ -44,25 +59,9 @@ const _postMigrationPlansActionCreator = (url, migrationPlans) => dispatch => {
         API.post(url, migrationPlans)
           .then(response => {
             resolve(response);
-
-            dispatch({
-              type: POST_V2V_MIGRATION_REQUESTS,
-              payload: new Promise((resolveRequest, rejectRequest) => {
-                API.post(`${url}/${response.data.results[0].id}`, {
-                  action: 'order'
-                })
-                  .then(responseMigrationRequest => {
-                    resolveRequest(responseMigrationRequest);
-                  })
-                  .catch(e => {
-                    return rejectRequest(e);
-                  });
-              })
-            });
+            postMigrationRequestsAction(response, dispatch);
           })
-          .catch(e => {
-            return reject(e);
-          });
+          .catch(e => reject(e));
       })
     });
   }
