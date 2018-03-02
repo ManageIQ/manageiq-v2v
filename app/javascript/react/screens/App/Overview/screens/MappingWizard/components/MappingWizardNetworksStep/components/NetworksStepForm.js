@@ -290,6 +290,7 @@ class NetworksStepForm extends React.Component {
                 sourceNetwork => (
                   <DualPaneMapperListItem
                     item={sourceNetwork}
+                    text={sourceNetwork.name}
                     key={sourceNetwork.id}
                     selected={
                       selectedSourceNetworks &&
@@ -318,6 +319,7 @@ class NetworksStepForm extends React.Component {
               targetNetworks.map(targetNetwork => (
                 <DualPaneMapperListItem
                   item={targetNetwork}
+                  text={targetNetwork.name}
                   key={targetNetwork.id}
                   selected={
                     selectedTargetNetwork &&
