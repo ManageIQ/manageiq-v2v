@@ -39,32 +39,27 @@ class MappingWizardBody extends React.Component {
           {
             title: __('General'),
             render: () => <MappingWizardGeneralStep />,
-            onClick: () => console.log('on step 1 click'),
-            disabled: !this.props.mappingWizardGeneralStep.values
+            disableGoto: !this.props.mappingWizardGeneralStep.values
           },
           {
             title: __('Clusters'),
             render: () => this.mappingWizardClustersStepContainer,
-            onClick: () => console.log('on step 2 click'),
-            disabled: !this.props.mappingWizardClustersStep.values
+            disableGoto: !this.props.mappingWizardClustersStep.values
           },
           {
             title: __('Datastores'),
             render: () => this.mappingWizardDatastoresStepContainer,
-            onClick: () => console.log('on step 3 click'),
-            disabled: !this.props.mappingWizardDatastoresStep.values
+            disableGoto: !this.props.mappingWizardDatastoresStep.values
           },
           {
             title: __('Networks'),
             render: () => this.mappingWizardNetworksStepContainer,
-            onClick: () => console.log('on step 4 click'),
-            disabled: !this.props.mappingWizardNetworksStep.values
+            disableGoto: !this.props.mappingWizardNetworksStep.values
           },
           {
             title: __('Results'),
             render: () => this.mappingWizardResultsStepContainer,
-            onClick: () => console.log('on step 5 click'),
-            disabled: true
+            disableGoto: true
           }
         ]}
       />
