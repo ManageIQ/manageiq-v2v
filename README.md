@@ -22,6 +22,7 @@ The aim of this plugin is to provide UI infrastructure to ManageIQ for the V2V e
 
 ## TODO
 
+* Integrate all APIs
 * MIGRATE SOME VMs!!!
 
 ## Usage
