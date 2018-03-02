@@ -23,8 +23,8 @@ const _getMigrationsInProgressAction = url => dispatch => {
 const fetchMigrationsInProgressAction = () => {
   const url =
     '/api/service_requests?' +
-    "filter[]=state='active'" +
-    "&filter[]=type='ServiceTemplateMigrationPlanRequest'" +
+    "filter[]=state='pending'" +
+    "&filter[]=type='ServiceTemplateTransformationPlanRequest'" +
     '&expand=resources' +
     '&attributes=status,state,options,description,miq_request_tasks';
 
