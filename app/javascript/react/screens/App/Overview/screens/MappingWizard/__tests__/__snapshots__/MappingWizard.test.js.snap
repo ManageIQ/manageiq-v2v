@@ -23,7 +23,7 @@ exports[`MappingWizard component renders the mapping wizard 1`] = `
     }
   }
   onExited={[MockFunction]}
-  onHide={[MockFunction]}
+  onHide={[Function]}
   renderBackdrop={[Function]}
   restoreFocus={true}
   show={true}
@@ -41,7 +41,7 @@ exports[`MappingWizard component renders the mapping wizard 1`] = `
         aria-hidden="true"
         aria-label="Close"
         className="close"
-        onClick={[MockFunction]}
+        onClick={[Function]}
       >
         <Icon
           name="close"
@@ -85,7 +85,7 @@ exports[`MappingWizard component renders the mapping wizard 1`] = `
         bsStyle="default"
         className="btn-cancel"
         disabled={false}
-        onClick={[MockFunction]}
+        onClick={[Function]}
       >
         Cancel
       </Button>

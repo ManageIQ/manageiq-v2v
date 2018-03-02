@@ -20,7 +20,8 @@ const initialState = Immutable({
   transformationMappings: [],
   isRejectedTransformationMappings: false,
   isFetchingTransformationMappings: false,
-  isContinuingToPlan: false
+  isContinuingToPlan: false,
+  shouldReloadMappings: false
 });
 
 export default (state = initialState, action) => {
@@ -30,8 +31,15 @@ export default (state = initialState, action) => {
         mappingWizardVisible: true,
         hideMappingWizard: false
       });
-    case HIDE_MAPPING_WIZARD:
-      return state.set('hideMappingWizard', true);
+    case HIDE_MAPPING_WIZARD: {
+      const { payload } = action;
+      return state
+        .set('hideMappingWizard', true)
+        .set(
+          'shouldReloadMappings',
+          (payload && payload.shouldReloadMappings) || false
+        );
+    }
     case MAPPING_WIZARD_EXITED:
       return state.set('mappingWizardVisible', false);
     case SHOW_PLAN_WIZARD:
@@ -53,6 +61,7 @@ export default (state = initialState, action) => {
           .set('transformationMappings', action.payload.data.resources)
           .set('isRejectedTransformationMappings', false)
           .set('isFetchingTransformationMappings', false)
+          .set('shouldReloadMappings', false)
           .set('isContinuingToPlan', false);
       }
       return state
@@ -67,6 +76,7 @@ export default (state = initialState, action) => {
     case CONTINUE_TO_PLAN:
       return state
         .set('isContinuingToPlan', true)
+        .set('shouldReloadMappings', true)
         .set('planWizardId', action.payload.id);
     default:
       return state;

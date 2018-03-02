@@ -39,11 +39,12 @@ class Overview extends React.Component {
       fetchTransformationMappingsUrl,
       fetchTransformationMappingsAction,
       planWizardId,
-      continueToPlanAction
+      continueToPlanAction,
+      shouldReloadMappings
     } = this.props;
     if (
-      isContinuingToPlan !== nextProps.isContinuingToPlan &&
-      nextProps.isContinuingToPlan
+      shouldReloadMappings !== nextProps.shouldReloadMappings &&
+      nextProps.shouldReloadMappings
     ) {
       // refetech our mappings so that plan wizard has this newly created mapping
       fetchTransformationMappingsAction(fetchTransformationMappingsUrl);
@@ -136,6 +137,7 @@ Overview.propTypes = {
   isRejectedTransformationMappings: PropTypes.bool,
   isContinuingToPlan: PropTypes.bool,
   planWizardId: PropTypes.string,
-  continueToPlanAction: PropTypes.func
+  continueToPlanAction: PropTypes.func,
+  shouldReloadMappings: PropTypes.bool
 };
 export default Overview;
