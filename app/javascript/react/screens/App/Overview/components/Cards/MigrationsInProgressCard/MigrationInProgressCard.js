@@ -89,7 +89,7 @@ const MigrationInProgressCard = ({ migration }) => {
             delay={500}
             rootClose={false}
           >
-            <h3>{migration.description}</h3>
+            <h3 className="card-pf-title">{migration.description}</h3>
           </OverlayTrigger>
         </div>
         <div className="card-pf-body">
