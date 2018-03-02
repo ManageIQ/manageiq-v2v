@@ -126,7 +126,7 @@ class CSVDropzoneField extends React.Component {
 
 CSVDropzoneField.propTypes = {
   input: PropTypes.shape({
-    value: PropTypes.arrayOf(PropTypes.array),
+    value: PropTypes.arrayOf(PropTypes.object),
     onChange: PropTypes.func
   }),
   meta: PropTypes.shape({
