@@ -14,6 +14,7 @@ class PlanWizardResultsStep extends React.Component {
       isPostingPlans,
       isRejectedPostingPlans,
       migrationPlansResult,
+      migrationRequestsResult,
       errorPostingPlans, // eslint-disable-line no-unused-vars
       plansBody
     } = this.props;
@@ -47,7 +48,7 @@ class PlanWizardResultsStep extends React.Component {
           </button>
         </div>
       );
-    } else if (migrationPlansResult) {
+    } else if (migrationPlansResult && migrationRequestsResult) {
       const migrationPlanProgress = sprintf(
         __(" Migration Plan: '%s' is in progress"),
         plansBody.name
@@ -78,7 +79,8 @@ PlanWizardResultsStep.propTypes = {
   isPostingPlans: PropTypes.bool,
   isRejectedPostingPlans: PropTypes.bool,
   errorPostingPlans: PropTypes.object,
-  migrationPlansResult: PropTypes.object
+  migrationPlansResult: PropTypes.object,
+  migrationRequestsResult: PropTypes.object
 };
 PlanWizardResultsStep.defaultProps = {
   postPlansUrl: '',
@@ -87,6 +89,7 @@ PlanWizardResultsStep.defaultProps = {
   isPostingPlans: true,
   isRejectedPostingPlans: false,
   errorPostingPlans: null,
-  migrationPlansResult: null
+  migrationPlansResult: null,
+  migrationRequestsResult: null
 };
 export default PlanWizardResultsStep;
