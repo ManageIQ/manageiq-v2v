@@ -10,9 +10,10 @@ import {
   V2V_HIDE_WARNING_MODAL
 } from './MappingWizardConstants';
 
-export const hideMappingWizardAction = () => dispatch => {
+export const hideMappingWizardAction = shouldReloadMappings => dispatch => {
   dispatch({
-    type: HIDE_MAPPING_WIZARD
+    type: HIDE_MAPPING_WIZARD,
+    payload: { shouldReloadMappings }
   });
 };
 

@@ -160,7 +160,9 @@ class MappingWizard extends React.Component {
     return (
       <Modal
         show={!hideMappingWizard}
-        onHide={hideMappingWizardAction}
+        onHide={() => {
+          hideMappingWizardAction(onFinalStep);
+        }}
         onExited={mappingWizardExitedAction}
         dialogClassName="modal-lg wizard-pf"
       >
@@ -168,7 +170,9 @@ class MappingWizard extends React.Component {
           <Modal.Header>
             <button
               className="close"
-              onClick={hideMappingWizardAction}
+              onClick={() => {
+                hideMappingWizardAction(onFinalStep);
+              }}
               aria-hidden="true"
               aria-label="Close"
             >
@@ -194,7 +198,9 @@ class MappingWizard extends React.Component {
             <Button
               bsStyle="default"
               className="btn-cancel"
-              onClick={hideMappingWizardAction}
+              onClick={() => {
+                hideMappingWizardAction(onFinalStep);
+              }}
               disabled={onFinalStep}
             >
               {__('Cancel')}
@@ -210,7 +216,11 @@ class MappingWizard extends React.Component {
             </Button>
             <Button
               bsStyle="primary"
-              onClick={onFinalStep ? hideMappingWizardAction : this.nextStep}
+              onClick={
+                onFinalStep
+                  ? () => hideMappingWizardAction(onFinalStep)
+                  : this.nextStep
+              }
               disabled={disableNextStep}
             >
               {onFinalStep
