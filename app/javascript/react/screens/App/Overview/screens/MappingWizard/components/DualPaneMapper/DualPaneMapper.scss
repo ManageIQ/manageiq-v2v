@@ -31,12 +31,12 @@
 }
 .dual-pane-mapper-list .dual-pane-mapper-items-container {
   border: 1px solid rgba(0, 0, 0, 0.3);
-  height: 200px;
+  height: 130px;
   overflow-x: hidden;
   overflow-y: auto;
-  width: 225px;
+  width: 300px;
   &.has-counter {
-    height: 180px;
+    height: 110px;
   }
   &.loading {
     display: flex;

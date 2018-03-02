@@ -10,7 +10,11 @@ import DualPaneMapperListItem from '../../DualPaneMapper/DualPaneMapperListItem'
 import MappingWizardTreeView from '../../MappingWizardTreeView/MappingWizardTreeView';
 
 import { sourceDatastoreFilter } from '../MappingWizardDatastoresStepSelectors';
-import { diskSpaceInfo } from './helpers';
+import {
+  diskSpaceInfo,
+  sourceDatastoreInfo,
+  targetDatastoreInfo
+} from './helpers';
 
 class DatastoresStepForm extends React.Component {
   constructor(props) {
@@ -276,6 +280,7 @@ class DatastoresStepForm extends React.Component {
               sourceDatastoreFilter(sourceDatastores, input.value).map(item => (
                 <DualPaneMapperListItem
                   item={item}
+                  text={sourceDatastoreInfo(item)}
                   key={item.id}
                   selected={
                     selectedSourceDatastores &&
@@ -302,6 +307,7 @@ class DatastoresStepForm extends React.Component {
               targetDatastores.map(item => (
                 <DualPaneMapperListItem
                   item={item}
+                  text={targetDatastoreInfo(item, input.value)}
                   key={item.id}
                   selected={
                     selectedTargetDatastore &&
