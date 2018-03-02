@@ -7,7 +7,9 @@ exports[`MigrationsInProgressCard component renders the ActiveMigrations 1`] = `
   <div
     className="card-pf-heading"
   >
-    <h2>
+    <h2
+      className="card-pf-title"
+    >
       %s Migrations in Progress
     </h2>
   </div>
