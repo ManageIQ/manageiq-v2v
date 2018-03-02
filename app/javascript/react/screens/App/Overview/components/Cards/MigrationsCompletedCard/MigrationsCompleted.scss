@@ -6,19 +6,90 @@
     padding: 0;
   }
 }
+
 .completed-migration-item {
   margin: 10px -20px;
   width: 100%;
+
   .list-view-pf-additional-info-item {
     text-align: left;
     line-height: 26px;
+
+    .trigger-icon {
+      position: relative;
+      top: 1px;
+    }
+
+    .trigger-text {
+      position: relative;
+      top: -2px;
+    }
   }
 }
+
 .completed-migration-name {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  @media(min-width: 992px) {
+
+  @media (min-width: 992px) {
     margin-top: 4px;
+  }
+}
+
+.failed-migrations-popover {
+  max-width: 440px;
+
+  @media (min-width: 768px) {
+    width: 440px;
+  }
+
+  .popover-title {
+    padding-left: 10px;
+  }
+
+  .failure-popover-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .failure-popover-close {
+    position: absolute;
+    right: 0;
+    margin-top: -4px;
+
+    .btn-link {
+      color: black;
+      &:hover,
+      &:focus {
+        color: black;
+      }
+    }
+  }
+
+  .popover-content {
+    padding: 10px 0;
+
+    > .conainer-fluid {
+      padding: 5px 0;
+    }
+  }
+
+  [class*="col-"] {
+    padding-left: 10px;
+    padding-right: 10px;
+    line-height: 26px;
+  }
+
+  .failures-list {
+    max-height: 200px;
+    overflow-y: auto;
+  }
+
+  .failed-vm-column-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
