@@ -2,19 +2,22 @@ import moment from 'moment';
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
+  Button,
   Grid,
   Icon,
   ListView,
   OverlayTrigger,
+  Popover,
   Tooltip
 } from 'patternfly-react';
+import MigrationFailedVMsList from './MigrationFailedVMsList';
 
 const MigrationCompletedRow = ({ migration }) => {
-  const successfulMigrations = migration.miq_request_tasks.filter(
-    task => task.state === 'finished'
+  const successfulMigrationsCount = migration.miq_request_tasks.filter(
+    task => task.status === 'Ok'
   ).length;
-  const failedMigrations = migration.miq_request_tasks.filter(
-    task => task.state !== 'finished'
+  const failedMigrationsCount = migration.miq_request_tasks.filter(
+    task => task.status === 'Error'
   ).length;
 
   const startTime = new Date(migration.options.delivered_on);
@@ -32,6 +35,39 @@ const MigrationCompletedRow = ({ migration }) => {
   } else {
     elapsedTime = sprintf(__('%s:%s'), hours, minutes);
   }
+
+  const closePopover = () => {
+    document.body.click();
+  };
+
+  const removeButton = (
+    <Button
+      bsStyle="link"
+      onClick={e => {
+        e.preventDefault();
+        closePopover();
+      }}
+      className="pf-remove-button"
+    >
+      <Icon type="pf" name="close" aria-hidden="true" />
+      <span className="sr-only">{__('Close')}</span>
+    </Button>
+  );
+
+  const failuresPopover = (
+    <Popover
+      id={`failure-popover-${migration.id}`}
+      className="failed-migrations-popover"
+      title={
+        <div className="failure-popover-title">
+          {`${__('Failed Migrations')} - ${migration.description}`}
+          <span className="failure-popover-close">{removeButton}</span>
+        </div>
+      }
+    >
+      <MigrationFailedVMsList migration={migration} />
+    </Popover>
+  );
 
   return (
     <div className="list-group-item">
@@ -62,22 +98,39 @@ const MigrationCompletedRow = ({ migration }) => {
             <Icon
               type="pf"
               name="ok"
-              className={successfulMigrations === 0 ? 'invisible' : ''}
+              className={successfulMigrationsCount === 0 ? 'invisible' : ''}
             />
-            <strong>{successfulMigrations}</strong>
+            <strong>{successfulMigrationsCount}</strong>
             {__('Successful')}
           </ListView.InfoItem>
         </Grid.Col>
         <Grid.Col xs={4} md={3} mdPull={3}>
-          <ListView.InfoItem>
-            <Icon
-              type="pf"
-              name="error-circle-o"
-              className={failedMigrations === 0 ? 'invisible' : ''}
-            />
-            <strong>{failedMigrations}</strong>
-            {__('Failed')}
-          </ListView.InfoItem>
+          {failedMigrationsCount > 0 ? (
+            <ListView.InfoItem>
+              <OverlayTrigger
+                overlay={failuresPopover}
+                placement="top"
+                trigger={['click']}
+                rootClose
+              >
+                <span className="btn-link">
+                  <Icon
+                    type="pf"
+                    name="error-circle-o"
+                    className="trigger-icon"
+                  />
+                  <strong>{failedMigrationsCount}</strong>
+                  <span className="trigger-text">{__('Failed')}</span>
+                </span>
+              </OverlayTrigger>
+            </ListView.InfoItem>
+          ) : (
+            <ListView.InfoItem>
+              <Icon type="pf" name="error-circle-o" className="invisible" />
+              <strong>{failedMigrationsCount}</strong>
+              {__('Failed')}
+            </ListView.InfoItem>
+          )}
         </Grid.Col>
       </Grid.Row>
     </div>
