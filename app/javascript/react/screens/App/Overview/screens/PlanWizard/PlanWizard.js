@@ -59,7 +59,9 @@ class PlanWizard extends React.Component {
     const {
       hidePlanWizard,
       hidePlanWizardAction,
-      planWizardExitedAction
+      planWizardExitedAction,
+      planWizardGeneralStep,
+      planWizardCSVStep
     } = this.props;
 
     const { activeStepIndex, plansBody } = this.state;
@@ -98,6 +100,8 @@ class PlanWizard extends React.Component {
               goToStep={this.goToStep}
               disableNextStep={disableNextStep}
               plansBody={plansBody}
+              planWizardGeneralStep={planWizardGeneralStep}
+              planWizardCSVStep={planWizardCSVStep}
             />
           </Modal.Body>
           <Modal.Footer className="wizard-pf-footer">
