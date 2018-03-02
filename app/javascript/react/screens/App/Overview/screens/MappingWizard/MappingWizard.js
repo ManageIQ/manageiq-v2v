@@ -127,7 +127,9 @@ class MappingWizard extends React.Component {
   goToStep(activeStepIndex) {
     const { activeStepIndex: currentStep } = this.state;
 
-    if (currentStep !== 4) {
+    if (currentStep === 2 && activeStepIndex === 3) {
+      this.nextStep();
+    } else {
       this.setState(() => ({ activeStepIndex }));
     }
   }
@@ -139,7 +141,11 @@ class MappingWizard extends React.Component {
       mappingWizardExitedAction,
       hideWarningModalAction,
       warningModalVisible,
-      sourceClustersWithoutMappings
+      sourceClustersWithoutMappings,
+      mappingWizardGeneralStep,
+      mappingWizardClustersStep,
+      mappingWizardDatastoresStep,
+      mappingWizardNetworksStep
     } = this.props;
 
     const { activeStepIndex, transformationsBody } = this.state;
@@ -178,6 +184,10 @@ class MappingWizard extends React.Component {
               goToStep={this.goToStep}
               disableNextStep={disableNextStep}
               transformationsBody={transformationsBody}
+              mappingWizardGeneralStep={mappingWizardGeneralStep}
+              mappingWizardClustersStep={mappingWizardClustersStep}
+              mappingWizardDatastoresStep={mappingWizardDatastoresStep}
+              mappingWizardNetworksStep={mappingWizardNetworksStep}
             />
           </Modal.Body>
           <Modal.Footer className="wizard-pf-footer">

@@ -41,3 +41,7 @@
 .wizard-pf-main .blank-slate-pf {
   padding: 30px;
 }
+
+.wizard-pf-step.is-disabled .wizard-pf-step-number {
+  cursor: not-allowed;
+}
