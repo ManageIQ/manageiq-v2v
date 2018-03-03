@@ -12,36 +12,29 @@ const sourceDatastoreInfo = sourceDatastore =>
     sourceDatastore.total_space - sourceDatastore.free_space
   ).format('0.00b')})`;
 
-const targetDatastoreInfo = (targetDatastore, mappings) => {
-  if (mappings.length > 0) {
-    const hasMappedSourceDatastores = mappings.some(
-      targetClusterWithDatastoreMappings =>
-        targetClusterWithDatastoreMappings.nodes.some(
-          targetDatastoreWithSourceDatastores =>
-            targetDatastoreWithSourceDatastores.id === targetDatastore.id
-        )
-    );
-    if (hasMappedSourceDatastores) {
-      const sourceDatastores = mappings
-        .filter(targetClusterWithDatastoreMappings =>
-          targetClusterWithDatastoreMappings.nodes.some(
-            targetDatastoreWithSourceDatastores =>
-              targetDatastoreWithSourceDatastores.id === targetDatastore.id
-          )
-        )[0]
-        .nodes.find(
-          targetDatastoreWithSourceDatastores =>
-            targetDatastoreWithSourceDatastores.id === targetDatastore.id
-        ).nodes;
+const targetDatastoreInfo = (targetDatastore, datastoresStepMappings) => {
+  const datastoresMappings = datastoresStepMappings.reduce(
+    (mappings, targetClusterWithDatastoresMappings) =>
+      mappings.concat(targetClusterWithDatastoresMappings.nodes),
+    []
+  );
+
+  const datastoresMapping = datastoresMappings.find(
+    targetDatastoreWithSourceDatastores =>
+      targetDatastoreWithSourceDatastores.id === targetDatastore.id
+  );
+
+  if (datastoresStepMappings.length > 0) {
+    if (datastoresMapping) {
       return sprintf(
         __('%s (%s avail)'),
         targetDatastore.name,
         numeral(
-          targetDatastore.free_space - calculateTotalUsedSpace(sourceDatastores)
+          targetDatastore.free_space -
+            calculateTotalUsedSpace(datastoresMapping.nodes)
         ).format('0.00b')
       );
     }
-  } else {
     return sprintf(
       __('%s (%s avail)'),
       targetDatastore.name,
