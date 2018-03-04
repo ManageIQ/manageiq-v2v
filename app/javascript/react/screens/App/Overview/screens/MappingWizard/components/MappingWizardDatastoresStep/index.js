@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import MappingWizardDatastoresStep from './MappingWizardDatastoresStep';
 import * as MappingWizardDatastoresStepActions from './MappingWizardDatastoresStepActions';
+import { showAlertAction, hideAlertAction } from '../../MappingWizardActions';
 
 import reducer from './MappingWizardDatastoresStepReducer';
 
@@ -12,11 +13,15 @@ const mapStateToProps = ({ mappingWizardDatastoresStep, form }, ownProps) => ({
   clusterMappings: form.mappingWizardClustersStep.values.clusterMappings
 });
 
+const actions = {
+  ...MappingWizardDatastoresStepActions,
+  showAlertAction,
+  hideAlertAction
+};
+
 const mergeProps = (stateProps, dispatchProps, ownProps) =>
   Object.assign(stateProps, ownProps.data, dispatchProps);
 
-export default connect(
-  mapStateToProps,
-  MappingWizardDatastoresStepActions,
-  mergeProps
-)(MappingWizardDatastoresStep);
+export default connect(mapStateToProps, actions, mergeProps)(
+  MappingWizardDatastoresStep
+);

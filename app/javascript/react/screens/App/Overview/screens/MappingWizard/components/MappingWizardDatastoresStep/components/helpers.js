@@ -63,3 +63,7 @@ export const targetDatastoreTreeViewInfo = (
     numeral(availableSpace).format('0.00b')
   );
 };
+
+export const errorMessage = __(
+  'The size of the selected source datastores exceeds the available space in the target datastore'
+);

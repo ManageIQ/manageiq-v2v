@@ -3,12 +3,15 @@ import Immutable from 'seamless-immutable';
 import {
   V2V_SET_TRANSFORMATIONS_BODY,
   V2V_SHOW_WARNING_MODAL,
-  V2V_HIDE_WARNING_MODAL
+  V2V_HIDE_WARNING_MODAL,
+  V2V_SHOW_ALERT,
+  V2V_HIDE_ALERT
 } from './MappingWizardConstants';
 
 const initialState = Immutable({
   transformationsBody: {},
-  warningModalVisible: false
+  warningModalVisible: false,
+  alert: ''
 });
 
 export default (state = initialState, action) => {
@@ -24,6 +27,10 @@ export default (state = initialState, action) => {
       return Immutable.merge(state, {
         warningModalVisible: false
       });
+    case V2V_SHOW_ALERT:
+      return Immutable.merge(state, action.payload);
+    case V2V_HIDE_ALERT:
+      return state.set('alertText', '');
     default:
       return state;
   }

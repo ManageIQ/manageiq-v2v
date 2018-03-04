@@ -7,7 +7,9 @@ import {
 import {
   V2V_SET_TRANSFORMATIONS_BODY,
   V2V_SHOW_WARNING_MODAL,
-  V2V_HIDE_WARNING_MODAL
+  V2V_HIDE_WARNING_MODAL,
+  V2V_SHOW_ALERT,
+  V2V_HIDE_ALERT
 } from './MappingWizardConstants';
 
 export const hideMappingWizardAction = shouldReloadMappings => dispatch => {
@@ -46,5 +48,18 @@ export const showWarningModalAction = sourceClustersWithoutMappings => dispatch 
 export const hideWarningModalAction = () => dispatch => {
   dispatch({
     type: V2V_HIDE_WARNING_MODAL
+  });
+};
+
+export const showAlertAction = (alertText, alertType = 'error') => dispatch => {
+  dispatch({
+    type: V2V_SHOW_ALERT,
+    payload: { alertText, alertType }
+  });
+};
+
+export const hideAlertAction = () => dispatch => {
+  dispatch({
+    type: V2V_HIDE_ALERT
   });
 };
