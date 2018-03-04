@@ -25,6 +25,10 @@ class MappingWizardBody extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
     return JSON.stringify(this.props) !== JSON.stringify(nextProps);
   }
+  componentWillUnmount() {
+    const { hideAlertAction } = this.props;
+    hideAlertAction();
+  }
   render() {
     return (
       <ModalWizard.Body
@@ -78,7 +82,8 @@ MappingWizardBody.propTypes = {
   mappingWizardGeneralStep: PropTypes.object,
   mappingWizardClustersStep: PropTypes.object,
   mappingWizardDatastoresStep: PropTypes.object,
-  mappingWizardNetworksStep: PropTypes.object
+  mappingWizardNetworksStep: PropTypes.object,
+  hideAlertAction: PropTypes.func
 };
 
 MappingWizardBody.defaultProps = {
@@ -91,7 +96,8 @@ MappingWizardBody.defaultProps = {
   mappingWizardGeneralStep: {},
   mappingWizardClustersStep: {},
   mappingWizardDatastoresStep: {},
-  mappingWizardNetworksStep: {}
+  mappingWizardNetworksStep: {},
+  hideAlertAction: noop
 };
 
 export default MappingWizardBody;

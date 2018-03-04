@@ -72,7 +72,9 @@ class MappingWizardDatastoresStep extends React.Component {
       // source/target datastores change depending on selection
       sourceDatastores,
       targetDatastores,
-      form
+      form,
+      showAlertAction,
+      hideAlertAction
     } = this.props;
 
     const { selectedCluster, selectedClusterMapping } = this.state;
@@ -101,6 +103,8 @@ class MappingWizardDatastoresStep extends React.Component {
           isFetchingSourceDatastores={isFetchingSourceDatastores}
           isFetchingTargetDatastores={isFetchingTargetDatastores}
           validate={length({ min: 1 })}
+          showAlertAction={showAlertAction}
+          hideAlertAction={hideAlertAction}
         />
       </div>
     );
@@ -119,7 +123,9 @@ MappingWizardDatastoresStep.propTypes = {
   isFetchingTargetDatastores: PropTypes.bool,
   isRejectedTargetDatastores: PropTypes.bool,
   form: PropTypes.string,
-  pristine: PropTypes.bool
+  pristine: PropTypes.bool,
+  showAlertAction: PropTypes.func,
+  hideAlertAction: PropTypes.func
 };
 MappingWizardDatastoresStep.defaultProps = {
   clusterMappings: [],
@@ -133,7 +139,9 @@ MappingWizardDatastoresStep.defaultProps = {
   isFetchingTargetDatastores: false,
   isRejectedTargetDatastores: false,
   form: '',
-  pristine: true
+  pristine: true,
+  showAlertAction: noop,
+  hideAlertAction: noop
 };
 
 export default reduxForm({
