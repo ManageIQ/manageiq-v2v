@@ -1,56 +1,60 @@
 import numeral from 'numeral';
 
-const calculateTotalUsedSpace = sourceDatastores =>
-  sourceDatastores.reduce(
-    (totalSpace, sourceDatastore) =>
-      (totalSpace += sourceDatastore.total_space - sourceDatastore.free_space),
+export const datastoreUsedSpace = (datastore = {}) =>
+  datastore.total_space - datastore.free_space;
+
+export const totalUsedSpace = (datastores = []) =>
+  datastores.reduce(
+    (totalSpace, datastore) => (totalSpace += datastoreUsedSpace(datastore)),
     0
   );
 
-const sourceDatastoreInfo = sourceDatastore =>
-  `${sourceDatastore.name} (${numeral(
-    sourceDatastore.total_space - sourceDatastore.free_space
-  ).format('0.00b')})`;
-
-const targetDatastoreInfo = (targetDatastore, datastoresStepMappings) => {
+export const targetDatastoreAvailableSpace = (
+  targetDatastore,
+  datastoresStepMappings
+) => {
   const datastoresMappings = datastoresStepMappings.reduce(
     (mappings, targetClusterWithDatastoresMappings) =>
       mappings.concat(targetClusterWithDatastoresMappings.nodes),
     []
   );
 
-  const datastoresMapping = datastoresMappings.find(
+  const matchingDatastoresMapping = datastoresMappings.find(
     targetDatastoreWithSourceDatastores =>
       targetDatastoreWithSourceDatastores.id === targetDatastore.id
   );
 
-  if (datastoresStepMappings.length > 0) {
-    if (datastoresMapping) {
-      return sprintf(
-        __('%s (%s avail)'),
-        targetDatastore.name,
-        numeral(
-          targetDatastore.free_space -
-            calculateTotalUsedSpace(datastoresMapping.nodes)
-        ).format('0.00b')
-      );
-    }
-    return sprintf(
-      __('%s (%s avail)'),
-      targetDatastore.name,
-      numeral(targetDatastore.free_space).format('0.00b')
+  if (datastoresMappings.length > 0 && matchingDatastoresMapping) {
+    return (
+      targetDatastore.free_space -
+      totalUsedSpace(matchingDatastoresMapping.nodes)
     );
   }
-  return sprintf(
-    __('%s (%s avail)'),
-    targetDatastore.name,
-    numeral(targetDatastore.free_space).format('0.00b')
-  );
+  return targetDatastore.free_space;
 };
 
-const diskSpaceInfo = (targetDatastore, sourceDatastores) => {
+export const sourceDatastoreInfo = sourceDatastore =>
+  sprintf(
+    __('%s (%s)'),
+    sourceDatastore.name,
+    numeral(datastoreUsedSpace(sourceDatastore)).format('0.00b')
+  );
+
+export const targetDatastoreInfo = (targetDatastore, datastoresStepMappings) =>
+  sprintf(
+    __('%s (%s avail)'),
+    targetDatastore.name,
+    numeral(
+      targetDatastoreAvailableSpace(targetDatastore, datastoresStepMappings)
+    ).format('0.00b')
+  );
+
+export const targetDatastoreTreeViewInfo = (
+  targetDatastore,
+  sourceDatastores
+) => {
   const { total_space, free_space } = targetDatastore;
-  const availableSpace = free_space - calculateTotalUsedSpace(sourceDatastores);
+  const availableSpace = free_space - totalUsedSpace(sourceDatastores);
 
   return sprintf(
     __('%s (%s total, %s avail)'),
@@ -59,5 +63,3 @@ const diskSpaceInfo = (targetDatastore, sourceDatastores) => {
     numeral(availableSpace).format('0.00b')
   );
 };
-
-export { diskSpaceInfo, sourceDatastoreInfo, targetDatastoreInfo };

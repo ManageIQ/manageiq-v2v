@@ -11,7 +11,7 @@ import MappingWizardTreeView from '../../MappingWizardTreeView/MappingWizardTree
 
 import { sourceDatastoreFilter } from '../MappingWizardDatastoresStepSelectors';
 import {
-  diskSpaceInfo,
+  targetDatastoreTreeViewInfo,
   sourceDatastoreInfo,
   targetDatastoreInfo
 } from './helpers';
@@ -100,7 +100,7 @@ class DatastoresStepForm extends React.Component {
             nodes: [
               {
                 ...prevState.selectedTargetDatastore,
-                text: diskSpaceInfo(
+                text: targetDatastoreTreeViewInfo(
                   prevState.selectedTargetDatastore,
                   prevState.selectedSourceDatastores
                 ),
@@ -131,7 +131,7 @@ class DatastoresStepForm extends React.Component {
                   if (mapping.id === prevState.selectedTargetDatastore.id) {
                     return {
                       ...mapping,
-                      text: diskSpaceInfo(
+                      text: targetDatastoreTreeViewInfo(
                         mapping,
                         mapping.nodes.concat(prevState.selectedSourceDatastores)
                       ),
@@ -153,7 +153,7 @@ class DatastoresStepForm extends React.Component {
               ...datastoreMapping,
               nodes: datastoreMapping.nodes.concat({
                 ...prevState.selectedTargetDatastore,
-                text: diskSpaceInfo(
+                text: targetDatastoreTreeViewInfo(
                   prevState.selectedTargetDatastore,
                   prevState.selectedSourceDatastores
                 ),
