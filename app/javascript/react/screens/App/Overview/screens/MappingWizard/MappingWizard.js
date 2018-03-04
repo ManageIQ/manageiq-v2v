@@ -145,7 +145,10 @@ class MappingWizard extends React.Component {
       mappingWizardGeneralStep,
       mappingWizardClustersStep,
       mappingWizardDatastoresStep,
-      mappingWizardNetworksStep
+      mappingWizardNetworksStep,
+      alertText,
+      alertType,
+      hideAlertAction
     } = this.props;
 
     const { activeStepIndex, transformationsBody } = this.state;
@@ -192,6 +195,9 @@ class MappingWizard extends React.Component {
               mappingWizardClustersStep={mappingWizardClustersStep}
               mappingWizardDatastoresStep={mappingWizardDatastoresStep}
               mappingWizardNetworksStep={mappingWizardNetworksStep}
+              alertText={alertText}
+              alertType={alertType}
+              hideAlertAction={hideAlertAction}
             />
           </Modal.Body>
           <Modal.Footer className="wizard-pf-footer">
@@ -254,7 +260,10 @@ MappingWizard.propTypes = {
   showWarningModalAction: PropTypes.func,
   hideWarningModalAction: PropTypes.func,
   warningModalVisible: PropTypes.bool,
-  sourceClustersWithoutMappings: PropTypes.array
+  sourceClustersWithoutMappings: PropTypes.array,
+  alertText: PropTypes.string,
+  alertType: PropTypes.string,
+  hideAlertAction: PropTypes.func
 };
 MappingWizard.defaultProps = {
   hideMappingWizard: true,
@@ -264,6 +273,7 @@ MappingWizard.defaultProps = {
   mappingWizardClustersStep: {},
   mappingWizardDatastoresStep: {},
   mappingWizardNetworksStep: {},
-  setTransformationsBodyAction: noop
+  setTransformationsBodyAction: noop,
+  hideAlertAction: noop
 };
 export default MappingWizard;

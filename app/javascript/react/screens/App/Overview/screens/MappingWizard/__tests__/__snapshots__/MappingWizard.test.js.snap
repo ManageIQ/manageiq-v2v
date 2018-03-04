@@ -65,6 +65,7 @@ exports[`MappingWizard component renders the mapping wizard 1`] = `
         activeStepIndex={0}
         disableNextStep={false}
         goToStep={[Function]}
+        hideAlertAction={[Function]}
         loaded={true}
         mappingWizardClustersStep={Object {}}
         mappingWizardDatastoresStep={Object {}}
