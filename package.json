@@ -8,7 +8,8 @@
     "prettier": "prettier --single-quote --trailing-comma=none --write 'app/javascript/**/*.js' '*.{js,json}'",
     "build": "yarn run prettier && yarn run lint",
     "stylelint": "stylelint 'app/**/*.scss'",
-    "lint": "eslint --fix app/javascript"
+    "lint": "eslint app/javascript",
+    "lint:fix": "eslint --fix app/javascript"
   },
   "devDependencies": {
     "axios-mock-adapter": "^1.10.0",
