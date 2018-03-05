@@ -14,7 +14,7 @@ class MigrationsInProgressCard extends React.Component {
     const { fetchMigrationsInProgressAction } = this.props;
     // fetch migrations in progress initially, then poll them
     fetchMigrationsInProgressAction();
-    setInterval(fetchMigrationsInProgressAction, 10000);
+    this.pollingInterval = setInterval(fetchMigrationsInProgressAction, 10000);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -30,6 +30,10 @@ class MigrationsInProgressCard extends React.Component {
         });
       }, 3000);
     }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.pollingInterval);
   }
 
   renderActiveMigrations() {

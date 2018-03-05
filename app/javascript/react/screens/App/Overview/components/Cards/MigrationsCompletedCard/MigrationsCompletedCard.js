@@ -14,7 +14,7 @@ class MigrationsCompletedCard extends React.Component {
     const { fetchMigrationsCompletedAction } = this.props;
     // fetch migrations completed initially, then poll them
     fetchMigrationsCompletedAction();
-    setInterval(fetchMigrationsCompletedAction, 10000);
+    this.pollingInterval = setInterval(fetchMigrationsCompletedAction, 10000);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -30,6 +30,10 @@ class MigrationsCompletedCard extends React.Component {
         });
       }, 3000);
     }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.pollingInterval);
   }
 
   renderCompletedMigrations() {
