@@ -1,14 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Icon, Spinner, bindMethods } from 'patternfly-react';
+import { Icon, bindMethods } from 'patternfly-react';
 import MigrationCompletedRow from './MigrationCompletedRow';
 
 class MigrationsCompletedCard extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isFetchingMigrationsCompleted: false
-    };
     bindMethods(this, ['stopPolling', 'startPolling']);
   }
 
@@ -20,18 +17,6 @@ class MigrationsCompletedCard extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // make the loading animation smooth - delay three seconds even if the backend is immediate
-    if (nextProps.isFetchingMigrationsCompleted) {
-      this.setState({
-        isFetchingMigrationsCompleted: true
-      });
-    } else if (!nextProps.isFetchingMigrationsCompleted) {
-      setTimeout(() => {
-        this.setState({
-          isFetchingMigrationsCompleted: false
-        });
-      }, 3000);
-    }
     // kill interval if a wizard becomes visble
     if (nextProps.mappingWizardVisible || nextProps.planWizardVisible) {
       this.stopPolling();
@@ -50,7 +35,7 @@ class MigrationsCompletedCard extends React.Component {
 
   startPolling() {
     const { fetchMigrationsCompletedAction } = this.props;
-    this.pollingInterval = setInterval(fetchMigrationsCompletedAction, 10000);
+    this.pollingInterval = setInterval(fetchMigrationsCompletedAction, 3000);
   }
 
   stopPolling() {
@@ -79,8 +64,6 @@ class MigrationsCompletedCard extends React.Component {
       migrationsCompleted
     } = this.props;
 
-    const { isFetchingMigrationsCompleted } = this.state;
-
     return (
       <div className="card-pf">
         <div className="card-pf-heading">
@@ -89,14 +72,14 @@ class MigrationsCompletedCard extends React.Component {
           </h2>
         </div>
         <div className="card-pf-body">
-          {isFetchingMigrationsCompleted && (
+          {/** isFetchingMigrationsCompleted && (
             <React.Fragment>
               <Spinner size="xs" inline loading />
               <span className="message-text">
                 {__('Loading completed migrations in progress')}
               </span>
             </React.Fragment>
-          )}
+          )* */}
           {isRejectedMigrationsCompleted && (
             <React.Fragment>
               <Icon type="pf" name="error-circle-o" />
@@ -116,7 +99,7 @@ class MigrationsCompletedCard extends React.Component {
 
 MigrationsCompletedCard.propTypes = {
   fetchMigrationsCompletedAction: PropTypes.func,
-  isFetchingMigrationsCompleted: PropTypes.bool,
+  /* isFetchingMigrationsCompleted: PropTypes.bool, */
   migrationsCompleted: PropTypes.arrayOf(PropTypes.object),
   isRejectedMigrationsCompleted: PropTypes.bool,
   errorMigrationsCompleted: PropTypes.object,
@@ -125,7 +108,7 @@ MigrationsCompletedCard.propTypes = {
 };
 MigrationsCompletedCard.defaultProps = {
   migrationsCompleted: [],
-  isFetchingMigrationsCompleted: false,
+  /** isFetchingMigrationsCompleted: false, */
   isRejectedMigrationsCompleted: false,
   errorMigrationsCompleted: null,
   mappingWizardVisible: false,
