@@ -62,8 +62,9 @@ class CSVDropzoneField extends React.Component {
 
   render() {
     const { input: { value }, meta: { pristine, error } } = this.props;
+    const csvDropped = value && value.length !== 0;
     const mainContents =
-      !value || value.length === 0 ? (
+      !csvDropped ? (
         <EmptyState>
           <EmptyState.Icon type="fa" name="upload" />
           <EmptyState.Title>{__('Import a CSV file')}</EmptyState.Title>
@@ -90,6 +91,12 @@ class CSVDropzoneField extends React.Component {
           ))}
         </ListView>
       );
+    const results = csvDropped && (
+      <Toolbar.Results>
+        {!error && value && sprintf(__('%s Items'), value.length)}
+        {pristine && error}
+      </Toolbar.Results>
+    );
     return (
       <Dropzone
         accept=".csv"
@@ -114,10 +121,7 @@ class CSVDropzoneField extends React.Component {
             </Button>
           </Toolbar.RightContent>
           <div className="form-group">{mainContents}</div>
-          <Toolbar.Results>
-            {!error && value && sprintf(__('%s Items'), value.length)}
-            {pristine && error}
-          </Toolbar.Results>
+          {results}
         </Toolbar>
       </Dropzone>
     );
