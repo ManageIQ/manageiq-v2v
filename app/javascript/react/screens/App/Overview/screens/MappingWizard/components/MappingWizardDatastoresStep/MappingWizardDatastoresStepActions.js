@@ -1,5 +1,5 @@
 import URI from 'urijs';
-import API from '../../../../../../../../common/API';
+import API, { globalMockMode } from '../../../../../../../../common/API';
 import {
   FETCH_V2V_SOURCE_DATASTORES,
   FETCH_V2V_TARGET_DATASTORES
@@ -9,7 +9,7 @@ import {
   requestTargetDatastoresData
 } from './mappingWizardDatastoresStep.fixtures';
 
-const mockMode = false;
+const mockMode = globalMockMode;
 
 const _filterSourceDatastores = response => {
   const { data } = response;

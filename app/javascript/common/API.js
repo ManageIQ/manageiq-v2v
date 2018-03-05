@@ -37,3 +37,5 @@ export default {
     });
   }
 };
+
+export const globalMockMode = false;

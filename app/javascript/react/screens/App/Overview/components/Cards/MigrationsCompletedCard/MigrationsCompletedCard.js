@@ -4,9 +4,32 @@ import { Icon, Spinner } from 'patternfly-react';
 import MigrationCompletedRow from './MigrationCompletedRow';
 
 class MigrationsCompletedCard extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isFetchingMigrationsCompleted: false
+    };
+  }
   componentDidMount() {
     const { fetchMigrationsCompletedAction } = this.props;
+    // fetch migrations completed initially, then poll them
     fetchMigrationsCompletedAction();
+    setInterval(fetchMigrationsCompletedAction, 10000);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // make the loading animation smooth - delay three seconds even if the backend is immediate
+    if (nextProps.isFetchingMigrationsCompleted) {
+      this.setState({
+        isFetchingMigrationsCompleted: true
+      });
+    } else {
+      setTimeout(() => {
+        this.setState({
+          isFetchingMigrationsCompleted: false
+        });
+      }, 3000);
+    }
   }
 
   renderCompletedMigrations() {
@@ -24,10 +47,11 @@ class MigrationsCompletedCard extends React.Component {
   render() {
     const {
       isRejectedMigrationsCompleted,
-      isFetchingMigrationsCompleted,
       errorMigrationsCompleted,
       migrationsCompleted
     } = this.props;
+
+    const { isFetchingMigrationsCompleted } = this.state;
 
     return (
       <div className="card-pf">

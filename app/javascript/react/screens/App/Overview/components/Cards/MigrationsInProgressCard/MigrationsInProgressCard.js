@@ -4,9 +4,32 @@ import { Grid, Icon, Spinner } from 'patternfly-react';
 import MigrationInProgressCard from './MigrationInProgressCard';
 
 class MigrationsInProgressCard extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isFetchingMigrationsInProgress: false
+    };
+  }
   componentDidMount() {
     const { fetchMigrationsInProgressAction } = this.props;
+    // fetch migrations in progress initially, then poll them
     fetchMigrationsInProgressAction();
+    setInterval(fetchMigrationsInProgressAction, 10000);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // make the loading animation smooth - delay three seconds even if the backend is immediate
+    if (nextProps.isFetchingMigrationsInProgress) {
+      this.setState({
+        isFetchingMigrationsInProgress: true
+      });
+    } else {
+      setTimeout(() => {
+        this.setState({
+          isFetchingMigrationsInProgress: false
+        });
+      }, 3000);
+    }
   }
 
   renderActiveMigrations() {
@@ -26,10 +49,11 @@ class MigrationsInProgressCard extends React.Component {
   render() {
     const {
       isRejectedMigrationsInProgress,
-      isFetchingMigrationsInProgress,
       errorMigrationsInProgress,
       migrationsInProgress
     } = this.props;
+
+    const { isFetchingMigrationsInProgress } = this.state;
 
     return (
       <div className="card-pf card-pf-multi-card-container">

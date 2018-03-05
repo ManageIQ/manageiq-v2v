@@ -1,5 +1,5 @@
 import URI from 'urijs';
-import API from '../../../../../../../../common/API';
+import API, { globalMockMode } from '../../../../../../../../common/API';
 import {
   FETCH_V2V_SOURCE_CLUSTERS,
   FETCH_V2V_TARGET_CLUSTERS
@@ -10,7 +10,7 @@ import {
   requestTargetClustersData
 } from './mappingWizardClustersStep.fixtures';
 
-const mockMode = false;
+const mockMode = globalMockMode;
 
 const _getSourceClustersActionCreator = url => dispatch =>
   dispatch({
