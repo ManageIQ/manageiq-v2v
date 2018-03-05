@@ -63,34 +63,33 @@ class CSVDropzoneField extends React.Component {
   render() {
     const { input: { value }, meta: { pristine, error } } = this.props;
     const csvDropped = value && value.length !== 0;
-    const mainContents =
-      !csvDropped ? (
-        <EmptyState>
-          <EmptyState.Icon type="fa" name="upload" />
-          <EmptyState.Title>{__('Import a CSV file')}</EmptyState.Title>
-          <EmptyState.Info>
-            {__(
-              'Click "Browse..." or drag-and-drop here to import a CSV file containing a list of VMs to be migrated.'
-            )}
-          </EmptyState.Info>
-        </EmptyState>
-      ) : (
-        <ListView>
-          {value.map(vm => (
-            <ListView.Item
-              description={vm.name || ''}
-              additionalInfo={[
-                <ListView.InfoItem>
-                  {`${__('Provider:')} ${vm.provider || ''}`}
-                </ListView.InfoItem>,
-                <ListView.InfoItem>
-                  {`${__('Reference:')} ${vm.reference || ''}`}
-                </ListView.InfoItem>
-              ]}
-            />
-          ))}
-        </ListView>
-      );
+    const mainContents = !csvDropped ? (
+      <EmptyState>
+        <EmptyState.Icon type="fa" name="upload" />
+        <EmptyState.Title>{__('Import a CSV file')}</EmptyState.Title>
+        <EmptyState.Info>
+          {__(
+            'Click "Browse..." or drag-and-drop here to import a CSV file containing a list of VMs to be migrated.'
+          )}
+        </EmptyState.Info>
+      </EmptyState>
+    ) : (
+      <ListView>
+        {value.map(vm => (
+          <ListView.Item
+            description={vm.name || ''}
+            additionalInfo={[
+              <ListView.InfoItem>
+                {`${__('Provider:')} ${vm.provider || ''}`}
+              </ListView.InfoItem>,
+              <ListView.InfoItem>
+                {`${__('Reference:')} ${vm.reference || ''}`}
+              </ListView.InfoItem>
+            ]}
+          />
+        ))}
+      </ListView>
+    );
     const results = csvDropped && (
       <Toolbar.Results>
         {!error && value && sprintf(__('%s Items'), value.length)}
