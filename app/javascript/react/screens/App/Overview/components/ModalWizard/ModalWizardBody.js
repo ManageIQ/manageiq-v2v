@@ -22,7 +22,7 @@ class ModalWizardBody extends React.Component {
   onStepClick(stepIndex, disableGoto) {
     const { steps, goToStep, disableNextStep, activeStepIndex } = this.props;
     const nextStepClicked = stepIndex === activeStepIndex + 1;
-    if (disableNextStep || (!nextStepClicked && disableGoto)) return;
+    if (disableGoto || (nextStepClicked && disableNextStep)) return;
     const step = steps[stepIndex];
     goToStep(stepIndex);
     if (step && step.onClick) {
@@ -100,7 +100,7 @@ class ModalWizardBody extends React.Component {
             <Wizard.Step
               {...this.stepProps(index, stepObj.title)}
               onClick={() => this.onStepClick(index, stepObj.disableGoto)}
-              className={stepObj.disabled && 'is-disabled'}
+              className={stepObj.disableGoto && 'is-disabled'}
             />
           ))}
         />
