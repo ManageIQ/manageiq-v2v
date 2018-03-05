@@ -42,14 +42,14 @@ const _postMigrationPlansActionCreator = (url, migrationPlans) => dispatch => {
         payload: API.post(
           `${requestMigrationPlansData.response.data.results[0].href}`,
           { action: 'order' }
-        ).catch(errorMigrationRequest =>
+        ).catch(errorMigrationRequest => {
           // to enable UI development without the backend ready, i'm catching the error
           // and passing some mock data thru the FULFILLED action after the REJECTED action is finished.
           dispatch({
             type: `${POST_V2V_MIGRATION_REQUESTS}_FULFILLED`,
             payload: requestMigrationRequestsData.response
-          })
-        )
+          });
+        })
       });
     });
   } else {
