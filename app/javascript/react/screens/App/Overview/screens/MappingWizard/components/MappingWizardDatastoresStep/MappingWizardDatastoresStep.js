@@ -84,13 +84,10 @@ class MappingWizardDatastoresStep extends React.Component {
     return (
       <div>
         <SourceClusterSelect
-          sourceClusters={clusterMappings.reduce(
-            (sourceClusters, clusterMapping) =>
-              sourceClusters.concat(clusterMapping.nodes),
-            []
-          )}
+          clusterMappings={clusterMappings}
           selectSourceCluster={this.selectSourceCluster}
           selectedCluster={selectedCluster}
+          selectedClusterMapping={selectedClusterMapping}
           form={form}
         />
         <Field
