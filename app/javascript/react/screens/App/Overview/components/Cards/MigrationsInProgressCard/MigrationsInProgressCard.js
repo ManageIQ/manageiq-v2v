@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Icon, Spinner } from 'patternfly-react';
+import { Grid, Icon, Spinner, bindMethods } from 'patternfly-react';
 import MigrationInProgressCard from './MigrationInProgressCard';
 
 class MigrationsInProgressCard extends React.Component {
@@ -9,12 +9,13 @@ class MigrationsInProgressCard extends React.Component {
     this.state = {
       isFetchingMigrationsInProgress: false
     };
+    bindMethods(this, ['stopPolling', 'startPolling']);
   }
   componentDidMount() {
     const { fetchMigrationsInProgressAction } = this.props;
     // fetch migrations in progress initially, then poll them
     fetchMigrationsInProgressAction();
-    this.pollingInterval = setInterval(fetchMigrationsInProgressAction, 10000);
+    this.startPolling();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -23,17 +24,39 @@ class MigrationsInProgressCard extends React.Component {
       this.setState({
         isFetchingMigrationsInProgress: true
       });
-    } else {
+    } else if (!nextProps.isFetchingMigrationsInProgress) {
       setTimeout(() => {
         this.setState({
           isFetchingMigrationsInProgress: false
         });
       }, 3000);
     }
+    // kill interval if a wizard becomes visble
+    if (nextProps.mappingWizardVisible || nextProps.planWizardVisible) {
+      this.stopPolling();
+    } else if (
+      !nextProps.mappingWizardVisible &&
+      !nextProps.planWizardVisible &&
+      !this.pollingInterval
+    ) {
+      this.startPolling();
+    }
   }
 
   componentWillUnmount() {
-    clearInterval(this.pollingInterval);
+    this.stopPolling();
+  }
+
+  startPolling() {
+    const { fetchMigrationsInProgressAction } = this.props;
+    this.pollingInterval = setInterval(fetchMigrationsInProgressAction, 10000);
+  }
+
+  stopPolling() {
+    if (this.pollingInterval) {
+      clearInterval(this.pollingInterval);
+      this.pollingInterval = null;
+    }
   }
 
   renderActiveMigrations() {
@@ -100,13 +123,17 @@ MigrationsInProgressCard.propTypes = {
   isFetchingMigrationsInProgress: PropTypes.bool,
   migrationsInProgress: PropTypes.arrayOf(PropTypes.object),
   isRejectedMigrationsInProgress: PropTypes.bool,
-  errorMigrationsInProgress: PropTypes.object
+  errorMigrationsInProgress: PropTypes.object,
+  mappingWizardVisible: PropTypes.bool,
+  planWizardVisible: PropTypes.bool
 };
 MigrationsInProgressCard.defaultProps = {
   migrationsInProgress: [],
   isFetchingMigrationsInProgress: false,
   isRejectedMigrationsInProgress: false,
-  errorMigrationsInProgress: null
+  errorMigrationsInProgress: null,
+  mappingWizardVisible: false,
+  planWizardVisible: false
 };
 
 export default MigrationsInProgressCard;

@@ -5,8 +5,16 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import { initialState } from '../migrationsInProgress.fixtures';
+import { initialState as overviewInitialState } from '../../../../overview.fixtures';
+import { reducers as overviewReducer } from '../../../../index';
 import MigrationsInProgressCard from '../index';
 import reducer from '../MigrationsInProgressReducer';
+
+import { coreComponents } from '../../../../../../../../components';
+import componentRegistry from '../../../../../../../../components/componentRegistry';
+
+jest.mock('../../../../../../../../components/componentRegistry.js');
+componentRegistry.registerMultiple(coreComponents);
 
 const reducers = { migrationsInProgress: reducer };
 
@@ -14,9 +22,10 @@ describe('Active ActiveMigrations integration test', () => {
   const middlewares = [thunk, promiseMiddleware()];
   const generateStore = () =>
     createStore(
-      combineReducers({ ...reducers }),
+      combineReducers({ ...reducers, overview: overviewReducer.overview }),
       {
-        migrationsInProgress: initialState
+        migrationsInProgress: initialState,
+        overview: overviewInitialState
       },
       applyMiddleware(...middlewares)
     );
