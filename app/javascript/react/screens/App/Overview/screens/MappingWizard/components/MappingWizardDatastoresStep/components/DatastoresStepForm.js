@@ -66,9 +66,9 @@ class DatastoresStepForm extends React.Component {
         )
       );
 
-    const isNotAlreadySelected = !selectedSourceDatastores.some(datastore => {
-      return datastore.id === sourceDatastore.id;
-    });
+    const isNotAlreadySelected = !selectedSourceDatastores.some(
+      datastore => datastore.id === sourceDatastore.id
+    );
 
     if (
       selectedTargetDatastore &&
