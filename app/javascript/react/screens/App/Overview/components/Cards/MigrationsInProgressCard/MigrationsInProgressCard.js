@@ -1,14 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Icon, Spinner, bindMethods } from 'patternfly-react';
+import { Grid, Icon, bindMethods } from 'patternfly-react';
 import MigrationInProgressCard from './MigrationInProgressCard';
 
 class MigrationsInProgressCard extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isFetchingMigrationsInProgress: false
-    };
     bindMethods(this, ['stopPolling', 'startPolling']);
   }
   componentDidMount() {
@@ -19,18 +16,6 @@ class MigrationsInProgressCard extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // make the loading animation smooth - delay three seconds even if the backend is immediate
-    if (nextProps.isFetchingMigrationsInProgress) {
-      this.setState({
-        isFetchingMigrationsInProgress: true
-      });
-    } else if (!nextProps.isFetchingMigrationsInProgress) {
-      setTimeout(() => {
-        this.setState({
-          isFetchingMigrationsInProgress: false
-        });
-      }, 3000);
-    }
     // kill interval if a wizard becomes visble
     if (nextProps.mappingWizardVisible || nextProps.planWizardVisible) {
       this.stopPolling();
@@ -49,7 +34,7 @@ class MigrationsInProgressCard extends React.Component {
 
   startPolling() {
     const { fetchMigrationsInProgressAction } = this.props;
-    this.pollingInterval = setInterval(fetchMigrationsInProgressAction, 10000);
+    this.pollingInterval = setInterval(fetchMigrationsInProgressAction, 3000);
   }
 
   stopPolling() {
@@ -80,8 +65,6 @@ class MigrationsInProgressCard extends React.Component {
       migrationsInProgress
     } = this.props;
 
-    const { isFetchingMigrationsInProgress } = this.state;
-
     return (
       <div className="card-pf card-pf-multi-card-container">
         <div className="card-pf-heading">
@@ -93,14 +76,14 @@ class MigrationsInProgressCard extends React.Component {
           </h2>
         </div>
         <div className="card-pf-body">
-          {isFetchingMigrationsInProgress && (
+          {/** isFetchingMigrationsInProgress && (
             <React.Fragment>
               <Spinner size="xs" inline loading />
               <span className="message-text">
                 {__('Loading migrations in progress')}
               </span>
             </React.Fragment>
-          )}
+          )* */}
           {isRejectedMigrationsInProgress && (
             <React.Fragment>
               <Icon type="pf" name="error-circle-o" />
@@ -120,7 +103,7 @@ class MigrationsInProgressCard extends React.Component {
 
 MigrationsInProgressCard.propTypes = {
   fetchMigrationsInProgressAction: PropTypes.func,
-  isFetchingMigrationsInProgress: PropTypes.bool,
+  /** isFetchingMigrationsInProgress: PropTypes.bool, */
   migrationsInProgress: PropTypes.arrayOf(PropTypes.object),
   isRejectedMigrationsInProgress: PropTypes.bool,
   errorMigrationsInProgress: PropTypes.object,
@@ -129,7 +112,7 @@ MigrationsInProgressCard.propTypes = {
 };
 MigrationsInProgressCard.defaultProps = {
   migrationsInProgress: [],
-  isFetchingMigrationsInProgress: false,
+  /** isFetchingMigrationsInProgress: false, */
   isRejectedMigrationsInProgress: false,
   errorMigrationsInProgress: null,
   mappingWizardVisible: false,
