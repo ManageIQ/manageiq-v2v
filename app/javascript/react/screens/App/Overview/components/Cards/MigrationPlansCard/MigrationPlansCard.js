@@ -7,8 +7,8 @@ const MigrationPlansCard = ({
   showPlanWizardAction,
   showPlanDisabled
 }) => {
-  const happyText = __('Create a migration plan to start migrating.');
-  const sadText = __(
+  const createAPlan = __('Create a migration plan to start migrating.');
+  const createAMappingFirst = __(
     'Before you can create a migration plan, you need to create an infrastructure mapping.'
   );
   return (
@@ -18,7 +18,7 @@ const MigrationPlansCard = ({
           <EmptyState.Icon />
           <EmptyState.Title>{__('Migration Plans')}</EmptyState.Title>
           <EmptyState.Info>
-            {showPlanDisabled ? sadText : happyText}
+            {showPlanDisabled ? createAMappingFirst : createAPlan}
           </EmptyState.Info>
           <EmptyState.Action>
             <Button
