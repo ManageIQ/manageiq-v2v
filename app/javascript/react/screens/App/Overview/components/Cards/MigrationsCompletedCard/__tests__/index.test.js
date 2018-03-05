@@ -5,8 +5,16 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import { initialState } from '../migrationsCompleted.fixtures';
+import { initialState as overviewInitialState } from '../../../../overview.fixtures';
+import { reducers as overviewReducer } from '../../../../index';
 import MigrationsCompletedCard from '../index';
 import reducer from '../MigrationsCompletedReducer';
+
+import { coreComponents } from '../../../../../../../../components';
+import componentRegistry from '../../../../../../../../components/componentRegistry';
+
+jest.mock('../../../../../../../../components/componentRegistry.js');
+componentRegistry.registerMultiple(coreComponents);
 
 const reducers = { migrationsCompleted: reducer };
 
@@ -14,9 +22,10 @@ describe('MigrationsCompletedCard integration test', () => {
   const middlewares = [thunk, promiseMiddleware()];
   const generateStore = () =>
     createStore(
-      combineReducers({ ...reducers }),
+      combineReducers({ ...reducers, overview: overviewReducer.overview }),
       {
-        migrationsCompleted: initialState
+        migrationsCompleted: initialState,
+        overview: overviewInitialState
       },
       applyMiddleware(...middlewares)
     );

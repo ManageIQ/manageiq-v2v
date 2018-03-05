@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Icon, Spinner } from 'patternfly-react';
+import { Icon, Spinner, bindMethods } from 'patternfly-react';
 import MigrationCompletedRow from './MigrationCompletedRow';
 
 class MigrationsCompletedCard extends React.Component {
@@ -9,12 +9,14 @@ class MigrationsCompletedCard extends React.Component {
     this.state = {
       isFetchingMigrationsCompleted: false
     };
+    bindMethods(this, ['stopPolling', 'startPolling']);
   }
+
   componentDidMount() {
     const { fetchMigrationsCompletedAction } = this.props;
     // fetch migrations completed initially, then poll them
     fetchMigrationsCompletedAction();
-    this.pollingInterval = setInterval(fetchMigrationsCompletedAction, 10000);
+    this.startPolling();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -23,17 +25,39 @@ class MigrationsCompletedCard extends React.Component {
       this.setState({
         isFetchingMigrationsCompleted: true
       });
-    } else {
+    } else if (!nextProps.isFetchingMigrationsCompleted) {
       setTimeout(() => {
         this.setState({
           isFetchingMigrationsCompleted: false
         });
       }, 3000);
     }
+    // kill interval if a wizard becomes visble
+    if (nextProps.mappingWizardVisible || nextProps.planWizardVisible) {
+      this.stopPolling();
+    } else if (
+      !nextProps.mappingWizardVisible &&
+      !nextProps.planWizardVisible &&
+      !this.pollingInterval
+    ) {
+      this.startPolling();
+    }
   }
 
   componentWillUnmount() {
-    clearInterval(this.pollingInterval);
+    this.stopPolling();
+  }
+
+  startPolling() {
+    const { fetchMigrationsCompletedAction } = this.props;
+    this.pollingInterval = setInterval(fetchMigrationsCompletedAction, 10000);
+  }
+
+  stopPolling() {
+    if (this.pollingInterval) {
+      clearInterval(this.pollingInterval);
+      this.pollingInterval = null;
+    }
   }
 
   renderCompletedMigrations() {
@@ -95,13 +119,17 @@ MigrationsCompletedCard.propTypes = {
   isFetchingMigrationsCompleted: PropTypes.bool,
   migrationsCompleted: PropTypes.arrayOf(PropTypes.object),
   isRejectedMigrationsCompleted: PropTypes.bool,
-  errorMigrationsCompleted: PropTypes.object
+  errorMigrationsCompleted: PropTypes.object,
+  mappingWizardVisible: PropTypes.bool,
+  planWizardVisible: PropTypes.bool
 };
 MigrationsCompletedCard.defaultProps = {
   migrationsCompleted: [],
   isFetchingMigrationsCompleted: false,
   isRejectedMigrationsCompleted: false,
-  errorMigrationsCompleted: null
+  errorMigrationsCompleted: null,
+  mappingWizardVisible: false,
+  planWizardVisible: false
 };
 
 export default MigrationsCompletedCard;
