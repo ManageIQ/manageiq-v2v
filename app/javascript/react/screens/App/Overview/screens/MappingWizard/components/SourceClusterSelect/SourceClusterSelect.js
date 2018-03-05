@@ -14,11 +14,27 @@ import {
 
 const SourceClusterSelect = ({
   form,
-  sourceClusters,
+  clusterMappings,
   selectSourceCluster,
-  selectedCluster
+  selectedCluster,
+  selectedClusterMapping
 }) => {
   const mappingObject = form.includes('Networks') ? 'networks' : 'datastores';
+
+  const sourceClustersWithAssociatedTargetClusters = clusterMappings.reduce(
+    (mappings, targetClusterWithSourceClusters) => {
+      const {
+        nodes: sourceClusters,
+        ...targetCluster
+      } = targetClusterWithSourceClusters;
+      const sourceToTargetMappings = sourceClusters.map(sourceCluster => ({
+        sourceCluster,
+        targetCluster
+      }));
+      return mappings.concat(sourceToTargetMappings);
+    },
+    []
+  );
 
   return (
     <div className="source-cluster-select">
@@ -33,11 +49,11 @@ const SourceClusterSelect = ({
               )
             )}
           </Grid.Col>
-          <Grid.Col sm={3}>
+          <Grid.Col sm={4}>
             <InputGroup>
               <FormControl.Static>
                 {selectedCluster && selectedCluster.name ? (
-                  selectedCluster.name
+                  `${selectedCluster.name} (${selectedClusterMapping.name})`
                 ) : (
                   <span className="placeholder-text">
                     {__('Select a source cluster')}
@@ -50,15 +66,21 @@ const SourceClusterSelect = ({
                 componentClass={InputGroup.Button}
                 pullRight
               >
-                {sourceClusters &&
-                  sourceClusters.map(cluster => (
-                    <MenuItem
-                      onSelect={() => selectSourceCluster(cluster.id)}
-                      key={cluster.id}
-                    >
-                      {cluster.name}
-                    </MenuItem>
-                  ))}
+                {sourceClustersWithAssociatedTargetClusters &&
+                  sourceClustersWithAssociatedTargetClusters.map(
+                    clusterMapping => (
+                      <MenuItem
+                        onSelect={() =>
+                          selectSourceCluster(clusterMapping.sourceCluster.id)
+                        }
+                        key={clusterMapping.sourceCluster.id}
+                      >
+                        {clusterMapping.sourceCluster.name} ({
+                          clusterMapping.targetCluster.name
+                        })
+                      </MenuItem>
+                    )
+                  )}
               </DropdownButton>
             </InputGroup>
           </Grid.Col>
@@ -71,8 +93,9 @@ const SourceClusterSelect = ({
 export default SourceClusterSelect;
 
 SourceClusterSelect.propTypes = {
-  sourceClusters: PropTypes.array,
+  clusterMappings: PropTypes.array,
   selectSourceCluster: PropTypes.func,
   selectedCluster: PropTypes.object,
+  selectedClusterMapping: PropTypes.object,
   form: PropTypes.string
 };
