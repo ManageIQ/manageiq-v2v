@@ -12,8 +12,9 @@ import LongDateTime from './dates/LongDateTime';
 import RelativeDateTime from './dates/RelativeDateTime';
 import ShortDateTime from './dates/ShortDateTime';
 import MiqV2vUi from '../react';
+import { globalMockMode } from '../common/API';
 
-const mockMode = false;
+const mockMode = globalMockMode;
 
 export const coreComponents = [
   {

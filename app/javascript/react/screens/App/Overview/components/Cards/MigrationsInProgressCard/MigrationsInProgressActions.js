@@ -1,10 +1,10 @@
 import URI from 'urijs';
-import API from '../../../../../../../common/API';
+import API, { globalMockMode } from '../../../../../../../common/API';
 
 import { FETCH_V2V_MIGRATIONS_IN_PROGRESS } from './MigrationsInProgressConstants';
 import { requestActiveServiceRequests } from './migrationsInProgress.fixtures';
 
-const mockMode = false;
+const mockMode = globalMockMode;
 
 const _getMigrationsInProgressAction = url => dispatch => {
   if (mockMode) {

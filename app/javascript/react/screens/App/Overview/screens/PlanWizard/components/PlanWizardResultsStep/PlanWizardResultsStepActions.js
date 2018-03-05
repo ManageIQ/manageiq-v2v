@@ -1,4 +1,4 @@
-import API from '../../../../../../../../common/API';
+import API, { globalMockMode } from '../../../../../../../../common/API';
 import {
   POST_V2V_MIGRATION_PLANS,
   POST_V2V_MIGRATION_REQUESTS
@@ -8,7 +8,7 @@ import {
   requestMigrationRequestsData
 } from './planWizardResultsStep.fixtures';
 
-const mockMode = false;
+const mockMode = globalMockMode;
 
 const postMigrationRequestsAction = (response, dispatch) => {
   dispatch({

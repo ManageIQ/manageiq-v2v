@@ -1,5 +1,5 @@
 import URI from 'urijs';
-import API from '../../../../common/API';
+import API, { globalMockMode } from '../../../../common/API';
 
 import {
   SHOW_MAPPING_WIZARD,
@@ -10,7 +10,7 @@ import {
 
 import { requestTransformationMappingsData } from './overview.fixtures';
 
-const mockMode = false;
+const mockMode = globalMockMode;
 
 export const showMappingWizardAction = () => dispatch => {
   dispatch({

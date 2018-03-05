@@ -1,5 +1,5 @@
 import URI from 'urijs';
-import API from '../../../../../../../../common/API';
+import API, { globalMockMode } from '../../../../../../../../common/API';
 import {
   FETCH_V2V_SOURCE_NETWORKS,
   FETCH_V2V_TARGET_NETWORKS
@@ -9,7 +9,7 @@ import {
   requestTargetNetworksData
 } from './mappingWizardNetworksStep.fixtures';
 
-const mockMode = false;
+const mockMode = globalMockMode;
 
 const _filterSourceNetworks = response => {
   const { data } = response;
