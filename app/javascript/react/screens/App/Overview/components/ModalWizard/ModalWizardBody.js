@@ -97,7 +97,7 @@ class ModalWizardBody extends React.Component {
           </Alert>
         </div>
         <Wizard.Steps
-          className={stepButtonsDisabled && cx('step-buttons-disabled')}
+          className={cx(stepButtonsDisabled && 'step-buttons-disabled')}
           steps={steps.map((stepObj, index) => {
             const disabled = stepButtonsDisabled || stepObj.disabled;
             return (
