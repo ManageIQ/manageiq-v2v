@@ -50,3 +50,15 @@
 .wizard-pf-steps.step-buttons-disabled .wizard-pf-steps-indicator li.wizard-pf-step a {
   cursor: default;
 }
+
+.wizard-pf-steps.step-buttons-disabled .wizard-pf-steps-indicator li a:hover .wizard-pf-step-number {
+  background-color: #fff;
+  color: #bbb;
+  border-color: #bbb;
+}
+
+.wizard-pf-steps.step-buttons-disabled .wizard-pf-steps-indicator li.active a:hover .wizard-pf-step-number {
+  background-color: #39a5dc;
+  border-color: #39a5dc;
+  color: #fff;
+}
