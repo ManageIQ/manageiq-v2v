@@ -35,6 +35,7 @@ class MappingWizardBody extends React.Component {
         {...this.props}
         loadingTitle={__('Loading Infrastructure Mappings...')}
         loadingMessage={__('This may take a minute.')}
+        stepButtonsDisabled
         steps={[
           {
             title: __('General'),
