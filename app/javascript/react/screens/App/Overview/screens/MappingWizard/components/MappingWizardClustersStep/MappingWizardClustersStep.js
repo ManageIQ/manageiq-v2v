@@ -1,13 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { noop } from 'patternfly-react';
+import { Button, noop, bindMethods } from 'patternfly-react';
 import { Field, reduxForm } from 'redux-form';
 import { length } from 'redux-form-validators';
 
 import ClustersStepForm from './components/ClustersStepForm';
 
 class MappingWizardClustersStep extends React.Component {
+  constructor(props) {
+    super(props);
+    bindMethods(this, ['fetchClusters']);
+  }
   componentDidMount() {
+    this.fetchClusters();
+  }
+
+  fetchClusters() {
     const {
       fetchSourceClustersUrl,
       fetchSourceClustersAction,
@@ -24,9 +32,29 @@ class MappingWizardClustersStep extends React.Component {
       isFetchingSourceClusters,
       sourceClusters,
       isFetchingTargetClusters,
-      targetClusters
+      targetClusters,
+      isRejectedSourceClusters,
+      isRejectedTargetClusters
     } = this.props;
 
+    if (isRejectedSourceClusters || isRejectedTargetClusters) {
+      return (
+        <div className="wizard-pf-complete blank-slate-pf">
+          <div className="wizard-pf-success-icon">
+            <span className="pficon pficon-error-circle-o" />
+          </div>
+          <h3 className="blank-slate-pf-main-action">
+            Error Retreiving Clusters
+          </h3>
+          <p className="blank-slate-pf-secondary-action">
+            We&apos;re sorry, something went wrong. Please try again.
+          </p>
+          <Button bsStyle="primary" onClick={this.fetchClusters}>
+            Retry
+          </Button>
+        </div>
+      );
+    }
     return (
       <Field
         name="clusterMappings"
@@ -49,7 +77,9 @@ MappingWizardClustersStep.propTypes = {
   sourceClusters: PropTypes.arrayOf(PropTypes.object),
   targetClusters: PropTypes.arrayOf(PropTypes.object),
   isFetchingSourceClusters: PropTypes.bool,
-  isFetchingTargetClusters: PropTypes.bool
+  isFetchingTargetClusters: PropTypes.bool,
+  isRejectedSourceClusters: PropTypes.bool,
+  isRejectedTargetClusters: PropTypes.bool
 };
 MappingWizardClustersStep.defaultProps = {
   fetchSourceClustersUrl: '',
@@ -57,7 +87,9 @@ MappingWizardClustersStep.defaultProps = {
   fetchTargetClustersUrl: '',
   fetchTargetClustersAction: noop,
   isFetchingSourceClusters: true,
-  isFetchingTargetClusters: true
+  isFetchingTargetClusters: true,
+  isRejectedSourceClusters: false,
+  isRejectedTargetClusters: false
 };
 
 export default reduxForm({
