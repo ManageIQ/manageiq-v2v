@@ -43,7 +43,10 @@
   padding: 30px;
 }
 
-.wizard-pf-step.is-disabled .wizard-pf-step-number,
-.wizard-pf-step-title {
+.wizard-pf-steps .wizard-pf-steps-indicator li.is-disabled a {
   cursor: not-allowed;
+}
+
+.wizard-pf-steps.step-buttons-disabled .wizard-pf-steps-indicator li.wizard-pf-step a {
+  cursor: default;
 }

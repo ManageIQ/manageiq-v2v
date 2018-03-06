@@ -27,6 +27,7 @@ const ModalWizard = props => {
     activeStep,
     numSteps,
     goToStep,
+    stepButtonsDisabled,
     children,
     formContainer
   } = props;
@@ -64,6 +65,7 @@ const ModalWizard = props => {
               activeStepIndex,
               activeStep,
               goToStep,
+              stepButtonsDisabled,
               disableNextStep
             })
           )}
@@ -101,6 +103,7 @@ ModalWizard.propTypes = {
   activeStep: PropTypes.string,
   numSteps: PropTypes.number,
   goToStep: PropTypes.func,
+  stepButtonsDisabled: PropTypes.bool,
   children: PropTypes.node,
   formContainer: PropTypes.object
 };
@@ -115,7 +118,7 @@ ModalWizard.defaultProps = {
   activeStepIndex: 0,
   activeStep: '1',
   numSteps: 1,
-  goToStep: PropTypes.func,
+  stepButtonsDisabled: false,
   children: null
 };
 
