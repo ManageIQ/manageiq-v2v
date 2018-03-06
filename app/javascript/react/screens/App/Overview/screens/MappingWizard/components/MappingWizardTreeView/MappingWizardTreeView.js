@@ -3,19 +3,19 @@ import PropTypes from 'prop-types';
 
 import { Button, TreeView } from 'patternfly-react';
 
-const DatastoresStepTreeView = ({
+const MappingWizardTreeView = ({
   mappings,
-  selectMapping,
-  removeMapping,
+  selectNode,
+  removeNode,
   removeAll,
-  selectedMapping
+  selectedNode
 }) => (
   <div className="treeview-container">
     <div className="treeview-container--body">
       {mappings.length > 0 ? (
         <TreeView
           nodes={mappings}
-          selectNode={selectMapping}
+          selectNode={selectNode}
           highlightOnSelect
           highlightOnHover
         />
@@ -33,10 +33,10 @@ const DatastoresStepTreeView = ({
     </div>
     <div className="treeview-container--buttons">
       <Button
-        disabled={mappings.length === 0 || !selectedMapping}
-        onClick={removeMapping}
+        disabled={mappings.length === 0 || !selectedNode}
+        onClick={removeNode}
       >
-        {__('Remove Mapping')}
+        {__('Remove Selected')}
       </Button>{' '}
       <Button disabled={mappings.length === 0} onClick={removeAll}>
         {__('Remove All')}
@@ -45,12 +45,12 @@ const DatastoresStepTreeView = ({
   </div>
 );
 
-DatastoresStepTreeView.propTypes = {
+MappingWizardTreeView.propTypes = {
   mappings: PropTypes.array,
-  selectMapping: PropTypes.func,
-  removeMapping: PropTypes.func,
+  selectNode: PropTypes.func,
+  removeNode: PropTypes.func,
   removeAll: PropTypes.func,
-  selectedMapping: PropTypes.object
+  selectedNode: PropTypes.object
 };
 
-export default DatastoresStepTreeView;
+export default MappingWizardTreeView;

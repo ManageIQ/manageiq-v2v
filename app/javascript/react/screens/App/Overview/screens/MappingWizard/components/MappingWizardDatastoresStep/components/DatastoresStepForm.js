@@ -26,15 +26,15 @@ class DatastoresStepForm extends React.Component {
     this.state = {
       selectedSourceDatastores: [],
       selectedTargetDatastore: null,
-      selectedMapping: null
+      selectedNode: null
     };
 
     bindMethods(this, [
       'selectSourceDatastore',
       'selectTargetDatastore',
       'addDatastoreMapping',
-      'selectMapping',
-      'removeMapping',
+      'selectNode',
+      'removeNode',
       'removeAll'
     ]);
   }
@@ -181,6 +181,8 @@ class DatastoresStepForm extends React.Component {
                   ...datastore,
                   text: datastore.name,
                   icon: 'fa fa-file-o',
+                  selectable: true,
+                  selected: false,
                   sourceClusterId: selectedCluster.id
                 }))
               }
@@ -208,6 +210,8 @@ class DatastoresStepForm extends React.Component {
                           ...datastore,
                           text: datastore.name,
                           icon: 'fa fa-file-o',
+                          selectable: true,
+                          selected: false,
                           sourceClusterId: selectedCluster.id
                         }))
                       )
@@ -234,6 +238,8 @@ class DatastoresStepForm extends React.Component {
                   ...datastore,
                   text: datastore.name,
                   icon: 'fa fa-file-o',
+                  selectable: true,
+                  selected: false,
                   sourceClusterId: selectedCluster.id
                 }))
               })
@@ -248,61 +254,147 @@ class DatastoresStepForm extends React.Component {
     });
   }
 
-  selectMapping(selectedMapping) {
-    const { input } = this.props;
+  selectNode(selectedNode) {
+    const { value: datastoresStepMappings, onChange } = this.props.input;
+    const isTargetDatastore = selectedNode.nodes;
 
-    input.onChange(
-      input.value.map(targetClusterDatastoreMappings => {
-        const updatedMappings = targetClusterDatastoreMappings.nodes.map(
-          datastoreMapping => {
-            if (datastoreMapping.id === selectedMapping.id) {
+    if (isTargetDatastore) {
+      const updatedMappings = datastoresStepMappings.map(
+        targetClusterWithDatastoresMappings => {
+          const {
+            nodes: datastoresMappings,
+            ...targetCluster
+          } = targetClusterWithDatastoresMappings;
+          return {
+            ...targetCluster,
+            nodes: datastoresMappings.map(datastoresMapping => {
+              const {
+                nodes: sourceDatastores,
+                ...targetDatastore
+              } = datastoresMapping;
+              return targetDatastore.id === selectedNode.id
+                ? {
+                    ...targetDatastore,
+                    selected: !targetDatastore.selected,
+                    nodes: sourceDatastores.map(sourceDatastore => ({
+                      ...sourceDatastore,
+                      selected: false
+                    }))
+                  }
+                : {
+                    ...targetDatastore,
+                    selected: false,
+                    nodes: sourceDatastores.map(sourceDatastore => ({
+                      ...sourceDatastore,
+                      selected: false
+                    }))
+                  };
+            })
+          };
+        }
+      );
+      onChange(updatedMappings);
+    } else {
+      const updatedMappings = datastoresStepMappings.map(
+        targetClusterWithDatastoresMappings => {
+          const {
+            nodes: datastoresMappings,
+            ...targetCluster
+          } = targetClusterWithDatastoresMappings;
+          return {
+            ...targetCluster,
+            nodes: datastoresMappings.map(datastoresMapping => {
+              const {
+                nodes: sourceDatastores,
+                ...targetDatastore
+              } = datastoresMapping;
               return {
-                ...datastoreMapping,
-                selected: !datastoreMapping.selected
+                ...targetDatastore,
+                selected: false,
+                nodes: sourceDatastores.map(sourceDatastore => {
+                  if (sourceDatastore.id === selectedNode.id) {
+                    return {
+                      ...sourceDatastore,
+                      selected: !sourceDatastore.selected
+                    };
+                  } else if (sourceDatastore.selected) {
+                    return {
+                      ...sourceDatastore,
+                      selected: false
+                    };
+                  }
+                  return sourceDatastore;
+                })
               };
-            } else if (
-              datastoreMapping.id !== selectedMapping.id &&
-              datastoreMapping.selected
-            ) {
-              return { ...datastoreMapping, selected: false };
-            }
-            return datastoreMapping;
-          }
-        );
-        return { ...targetClusterDatastoreMappings, nodes: updatedMappings };
-      })
-    );
-    this.setState(() => ({ selectedMapping }));
+            })
+          };
+        }
+      );
+      onChange(updatedMappings);
+    }
+    this.setState(() => ({ selectedNode }));
   }
 
-  removeMapping() {
-    const { input } = this.props;
-    const { selectedMapping } = this.state;
-    const datastoresStepMappings = input.value;
+  removeNode() {
+    const { value: datastoresStepMappings, onChange } = this.props.input;
+    const { selectedNode } = this.state;
+    const isTargetDatastore = selectedNode.nodes;
 
-    const updatedDatastoresStepMappings = datastoresStepMappings
-      .map(targetClusterWithDatastoreMappings => {
-        const containsMappingToRemove = targetClusterWithDatastoreMappings.nodes.some(
-          mapping => mapping.id === selectedMapping.id
-        );
-        if (!containsMappingToRemove) {
-          return targetClusterWithDatastoreMappings;
-        }
-        const updatedDatastoreMappings = targetClusterWithDatastoreMappings.nodes.filter(
-          datastoreMapping => !(datastoreMapping.id === selectedMapping.id)
-        );
-        if (updatedDatastoreMappings.length === 0) {
-          return undefined;
-        }
-        return {
-          ...targetClusterWithDatastoreMappings,
-          nodes: updatedDatastoreMappings
-        };
-      })
-      .filter(item => item !== undefined);
-
-    input.onChange(updatedDatastoresStepMappings);
-    this.setState(() => ({ selectedMapping: null }));
+    if (isTargetDatastore) {
+      const updatedMappings = datastoresStepMappings
+        .map(targetClusterWithDatastoresMappings => {
+          const {
+            nodes: datastoresMappings,
+            ...targetCluster
+          } = targetClusterWithDatastoresMappings;
+          const updatedDatastoresMappings = datastoresMappings.filter(
+            targetDatastoreWithSourceDatastores =>
+              targetDatastoreWithSourceDatastores.id !== selectedNode.id
+          );
+          return updatedDatastoresMappings.length === 0
+            ? undefined
+            : {
+                ...targetCluster,
+                nodes: updatedDatastoresMappings
+              };
+        })
+        .filter(item => item !== undefined);
+      onChange(updatedMappings);
+    } else {
+      const updatedMappings = datastoresStepMappings
+        .map(targetClusterWithDatastoresMappings => {
+          const {
+            nodes: datastoresMappings,
+            ...targetCluster
+          } = targetClusterWithDatastoresMappings;
+          const updatedDatastoresMappings = datastoresMappings
+            .map(datastoresMapping => {
+              const {
+                nodes: sourceDatastores,
+                ...targetDatastore
+              } = datastoresMapping;
+              const updatedSourceDatastores = sourceDatastores.filter(
+                sourceDatastore => sourceDatastore.id !== selectedNode.id
+              );
+              return updatedSourceDatastores.length === 0
+                ? undefined
+                : {
+                    ...targetDatastore,
+                    nodes: updatedSourceDatastores
+                  };
+            })
+            .filter(item => item !== undefined);
+          return updatedDatastoresMappings.length === 0
+            ? undefined
+            : {
+                ...targetCluster,
+                nodes: updatedDatastoresMappings
+              };
+        })
+        .filter(item => item !== undefined);
+      onChange(updatedMappings);
+    }
+    this.setState(() => ({ selectedNode: null }));
   }
 
   removeAll() {
@@ -322,7 +414,7 @@ class DatastoresStepForm extends React.Component {
     const {
       selectedSourceDatastores,
       selectedTargetDatastore,
-      selectedMapping
+      selectedNode
     } = this.state;
 
     const classes = cx('dual-pane-mapper-form', {
@@ -389,10 +481,10 @@ class DatastoresStepForm extends React.Component {
         </DualPaneMapper>
         <MappingWizardTreeView
           mappings={input.value}
-          selectMapping={this.selectMapping}
-          removeMapping={this.removeMapping}
+          selectNode={this.selectNode}
+          removeNode={this.removeNode}
           removeAll={this.removeAll}
-          selectedMapping={selectedMapping}
+          selectedNode={selectedNode}
         />
       </div>
     );
