@@ -23,6 +23,7 @@ class PlanWizardBody extends React.Component {
         {...this.props}
         loadingTitle={__('Loading Migration Plans...')}
         loadingMessage={__('This may take a minute.')}
+        stepButtonsDisabled
         steps={[
           {
             title: __('General'),

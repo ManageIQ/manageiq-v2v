@@ -69,7 +69,8 @@ class ModalWizardBody extends React.Component {
       activeStepIndex,
       alertText,
       alertType,
-      hideAlertAction
+      hideAlertAction,
+      stepButtonsDisabled
     } = this.props;
     const step = steps[activeStepIndex];
 
@@ -96,13 +97,17 @@ class ModalWizardBody extends React.Component {
           </Alert>
         </div>
         <Wizard.Steps
-          steps={steps.map((stepObj, index) => (
-            <Wizard.Step
-              {...this.stepProps(index, stepObj.title)}
-              onClick={() => this.onStepClick(index, stepObj.disableGoto)}
-              className={stepObj.disableGoto && 'is-disabled'}
-            />
-          ))}
+          className={stepButtonsDisabled && cx('step-buttons-disabled')}
+          steps={steps.map((stepObj, index) => {
+            const disabled = stepButtonsDisabled || stepObj.disabled;
+            return (
+              <Wizard.Step
+                {...this.stepProps(index, stepObj.title)}
+                onClick={() => this.onStepClick(index, disabled)}
+                className={disabled && cx('is-disabled')}
+              />
+            );
+          })}
         />
         <Wizard.Row>
           <Wizard.Main>
@@ -134,6 +139,7 @@ ModalWizardBody.propTypes = {
   activeStep: PropTypes.string,
   onClick: PropTypes.func,
   goToStep: PropTypes.func,
+  stepButtonsDisabled: PropTypes.bool,
   disableNextStep: PropTypes.bool,
   alertText: PropTypes.string,
   alertType: PropTypes.string,
@@ -149,6 +155,7 @@ ModalWizardBody.defaultProps = {
   activeStep: '1',
   onClick: noop,
   goToStep: noop,
+  stepButtonsDisabled: false,
   disableNextStep: true,
   hideAlertAction: noop
 };
