@@ -19,9 +19,10 @@ class ModalWizardBody extends React.Component {
     bindMethods(this, ['onStepClick', 'stepProps', 'renderLoading']);
   }
 
-  onStepClick(stepIndex, disabled) {
-    const { steps, goToStep, disableNextStep } = this.props;
-    if (disableNextStep || disabled) return;
+  onStepClick(stepIndex, disableGoto) {
+    const { steps, goToStep, disableNextStep, activeStepIndex } = this.props;
+    const nextStepClicked = stepIndex === activeStepIndex + 1;
+    if (disableGoto || (nextStepClicked && disableNextStep)) return;
     const step = steps[stepIndex];
     goToStep(stepIndex);
     if (step && step.onClick) {
@@ -98,8 +99,8 @@ class ModalWizardBody extends React.Component {
           steps={steps.map((stepObj, index) => (
             <Wizard.Step
               {...this.stepProps(index, stepObj.title)}
-              onClick={() => this.onStepClick(index, stepObj.disabled)}
-              className={stepObj.disabled && 'is-disabled'}
+              onClick={() => this.onStepClick(index, stepObj.disableGoto)}
+              className={stepObj.disableGoto && 'is-disabled'}
             />
           ))}
         />

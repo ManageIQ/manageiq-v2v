@@ -27,17 +27,17 @@ class PlanWizardBody extends React.Component {
           {
             title: __('General'),
             render: () => <PlanWizardGeneralStep />,
-            onClick: () => console.log('on step 1 click')
+            disableGoto: !this.props.planWizardGeneralStep.values
           },
           {
             title: __('VMs'),
             render: () => <PlanWizardCSVStep />,
-            onClick: () => console.log('on step 2 click')
+            disableGoto: !this.props.planWizardCSVStep.values
           },
           {
             title: __('Results'),
             render: () => this.planWizardResultsStepContainer,
-            onClick: () => console.log('on step 3 click')
+            disableGoto: true
           }
         ]}
       />
@@ -51,7 +51,9 @@ PlanWizardBody.propTypes = {
   activeStep: PropTypes.string,
   goToStep: PropTypes.func,
   disableNextStep: PropTypes.bool,
-  plansBody: PropTypes.object
+  plansBody: PropTypes.object,
+  planWizardGeneralStep: PropTypes.object,
+  planWizardCSVStep: PropTypes.object
 };
 
 PlanWizardBody.defaultProps = {
@@ -60,7 +62,9 @@ PlanWizardBody.defaultProps = {
   activeStep: '1',
   goToStep: noop,
   disableNextStep: true,
-  plansBody: {}
+  plansBody: {},
+  planWizardGeneralStep: {},
+  planWizardCSVStep: {}
 };
 
 export default PlanWizardBody;
