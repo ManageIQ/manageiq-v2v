@@ -35,11 +35,7 @@ const ConfirmModal = props => {
         )}
       </Modal.Body>
       <Modal.Footer>
-        <Button
-          bsStyle="default"
-          className="btn-cancel"
-          onClick={onCancel}
-        >
+        <Button bsStyle="default" className="btn-cancel" onClick={onCancel}>
           {cancelButtonLabel}
         </Button>
         <Button bsStyle="primary" onClick={onConfirm}>
