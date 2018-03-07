@@ -11,7 +11,11 @@ import {
   targetDatastores
 } from './fixtures';
 
-let selectedCluster, targetCluster, selectedClusterMapping, props;
+let selectedCluster;
+let targetCluster;
+let selectedClusterMapping;
+let props;
+
 beforeEach(() => {
   [selectedCluster] = sourceClusters;
   [targetCluster] = targetClusters;
@@ -187,7 +191,10 @@ describe('#removeNode', () => {
 });
 
 describe('#selectSourceDatastore', () => {
-  let input, hideAlertAction, showAlertAction;
+  let input;
+  let hideAlertAction;
+  let showAlertAction;
+
   beforeEach(() => {
     input = { value: [], onChange: jest.fn() };
     hideAlertAction = jest.fn();
@@ -232,7 +239,7 @@ describe('#selectSourceDatastore', () => {
         free_space: datastoreUsedSpace(mappedSourceDatastore)
       };
 
-      const input = {
+      input = {
         ...input,
         value: [
           {
@@ -271,7 +278,10 @@ describe('#selectSourceDatastore', () => {
 });
 
 describe('#selectTargetDatastore', () => {
-  let input, hideAlertAction, showAlertAction;
+  let input;
+  let hideAlertAction;
+  let showAlertAction;
+
   beforeEach(() => {
     input = { value: [], onChange: jest.fn() };
     hideAlertAction = jest.fn();
