@@ -62,3 +62,11 @@
   border-color: #39a5dc;
   color: #fff;
 }
+
+.inner-modal-backdrop {
+  z-index: 1060; // .modal-dialog defaults to z-index: 1050
+}
+
+.inner-modal-dialog {
+  z-index: 1070;
+}

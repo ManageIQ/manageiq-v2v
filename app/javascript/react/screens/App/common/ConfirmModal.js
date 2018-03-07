@@ -2,34 +2,53 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Modal, Button, Grid, Icon, noop } from 'patternfly-react';
 
-const ConfirmModal = props => (
-  <Modal show={props.show} onHide={props.onCancel}>
-    <Modal.Header>
-      <Modal.CloseButton onClick={props.onCancel} />
-      <Modal.Title>{props.title}</Modal.Title>
-    </Modal.Header>
-    <Modal.Body>
-      {!props.icon ? props.body : (
-        <Grid.Row className="show-grid">
-          <Grid.Col xsHidden md={2} className="text-right">
-            <Icon size="4x" type={props.iconType} name={props.icon} />
-          </Grid.Col>
-          <Grid.Col xs={12} md={10}>
-            {props.body}
-          </Grid.Col>
-        </Grid.Row>
-      )}
-    </Modal.Body>
-    <Modal.Footer>
-      <Button bsStyle="default" className="btn-cancel" onClick={props.onCancel}>
-        {props.cancelButtonLabel}
-      </Button>
-      <Button bsStyle="primary" onClick={props.onConfirm}>
-        {props.confirmButtonLabel}
-      </Button>
-    </Modal.Footer>
-  </Modal>
-);
+const ConfirmModal = props => {
+  const {
+    icon,
+    iconType,
+    title,
+    body,
+    cancelButtonLabel,
+    confirmButtonLabel,
+    onCancel,
+    onConfirm,
+    ...otherProps
+  } = props;
+  return (
+    <Modal {...otherProps} onHide={onCancel}>
+      <Modal.Header>
+        <Modal.CloseButton onClick={onCancel} />
+        <Modal.Title>{title}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        {!icon ? (
+          body
+        ) : (
+          <Grid.Row className="show-grid">
+            <Grid.Col xsHidden md={2} className="text-right">
+              <Icon size="4x" type={iconType} name={icon} />
+            </Grid.Col>
+            <Grid.Col xs={12} md={10}>
+              {body}
+            </Grid.Col>
+          </Grid.Row>
+        )}
+      </Modal.Body>
+      <Modal.Footer>
+        <Button
+          bsStyle="default"
+          className="btn-cancel"
+          onClick={onCancel}
+        >
+          {cancelButtonLabel}
+        </Button>
+        <Button bsStyle="primary" onClick={onConfirm}>
+          {confirmButtonLabel}
+        </Button>
+      </Modal.Footer>
+    </Modal>
+  );
+};
 
 ConfirmModal.propTypes = {
   show: PropTypes.bool,

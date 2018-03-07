@@ -146,7 +146,9 @@ class CSVDropzoneField extends React.Component {
         <ConfirmModal
           show={showConfirmOverwrite}
           title={__('Overwrite Import File')}
-          icon={'exclamation-triangle'}
+          icon="exclamation-triangle"
+          backdropClassName={cx('inner-modal-backdrop')}
+          dialogClassName={cx('inner-modal-dialog')}
           body={
             <React.Fragment>
               <p>
