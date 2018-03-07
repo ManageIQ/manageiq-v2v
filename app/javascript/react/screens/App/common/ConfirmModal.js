@@ -27,18 +27,12 @@ const ConfirmModal = props => {
             <Grid.Col md={2} className="text-right">
               {icon}
             </Grid.Col>
-            <Grid.Col md={10}>
-              {body}
-            </Grid.Col>
+            <Grid.Col md={10}>{body}</Grid.Col>
           </Grid.Row>
         )}
       </Modal.Body>
       <Modal.Footer>
-        <Button
-          bsStyle="default"
-          className="btn-cancel"
-          onClick={onCancel}
-        >
+        <Button bsStyle="default" className="btn-cancel" onClick={onCancel}>
           {cancelButtonLabel}
         </Button>
         <Button bsStyle="primary" onClick={onConfirm}>
