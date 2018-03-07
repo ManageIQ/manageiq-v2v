@@ -33,6 +33,28 @@ class MappingWizardNetworksStep extends React.Component {
 
   componentDidMount() {}
 
+  componentWillReceiveProps(nextProps) {
+    const {
+      showAlertAction,
+      isRejectedSourceNetworks,
+      isRejectedTargetNetworks
+    } = this.props;
+
+    const { selectedCluster, selectedClusterMapping } = this.state;
+    if (
+      (isRejectedSourceNetworks !== nextProps.isRejectedSourceNetworks &&
+        nextProps.isRejectedSourceNetworks) ||
+      (isRejectedTargetNetworks !== nextProps.isRejectedTargetNetworks &&
+        nextProps.isRejectedTargetNetworks)
+    ) {
+      showAlertAction(
+        `Error retrieving cluster: ${selectedCluster.name} (${
+          selectedClusterMapping.name
+        })`
+      );
+    }
+  }
+
   selectSourceCluster(sourceClusterId) {
     // when dropdown selection occurs for source cluster, we go retrieve the
     // newworks for that cluster
@@ -66,9 +88,7 @@ class MappingWizardNetworksStep extends React.Component {
     const {
       clusterMappings,
       isFetchingSourceNetworks,
-      isRejectedSourceNetworks, // eslint-disable-line no-unused-vars
       isFetchingTargetNetworks,
-      isRejectedTargetNetworks, // eslint-disable-line no-unused-vars
       sourceNetworks,
       targetNetworks,
       form
@@ -113,7 +133,8 @@ MappingWizardNetworksStep.propTypes = {
   isFetchingTargetNetworks: PropTypes.bool,
   isRejectedTargetNetworks: PropTypes.bool,
   form: PropTypes.string,
-  pristine: PropTypes.bool
+  pristine: PropTypes.bool,
+  showAlertAction: PropTypes.func
 };
 MappingWizardNetworksStep.defaultProps = {
   clusterMappings: [],
@@ -127,7 +148,8 @@ MappingWizardNetworksStep.defaultProps = {
   isFetchingTargetNetworks: false,
   isRejectedTargetNetworks: false,
   form: '',
-  pristine: true
+  pristine: true,
+  showAlertAction: noop
 };
 
 export default reduxForm({
