@@ -33,6 +33,28 @@ class MappingWizardDatastoresStep extends React.Component {
 
   componentDidMount() {}
 
+  componentWillReceiveProps(nextProps) {
+    const {
+      showAlertAction,
+      isRejectedSourceDatastores,
+      isRejectedTargetDatastores
+    } = this.props;
+
+    const { selectedCluster, selectedClusterMapping } = this.state;
+    if (
+      (isRejectedSourceDatastores !== nextProps.isRejectedSourceDatastores &&
+        nextProps.isRejectedSourceDatastores) ||
+      (isRejectedTargetDatastores !== nextProps.isRejectedTargetDatastores &&
+        nextProps.isRejectedTargetDatastores)
+    ) {
+      showAlertAction(
+        `Error retrieving cluster: ${selectedCluster.name} (${
+          selectedClusterMapping.name
+        })`
+      );
+    }
+  }
+
   selectSourceCluster(sourceClusterId) {
     // when dropdown selection occurs for source cluster, we go retrieve the datastores for that
     // cluster
@@ -66,9 +88,7 @@ class MappingWizardDatastoresStep extends React.Component {
     const {
       clusterMappings,
       isFetchingSourceDatastores,
-      isRejectedSourceDatastores, // eslint-disable-line no-unused-vars
       isFetchingTargetDatastores,
-      isRejectedTargetDatastores, // eslint-disable-line no-unused-vars
       // source/target datastores change depending on selection
       sourceDatastores,
       targetDatastores,
