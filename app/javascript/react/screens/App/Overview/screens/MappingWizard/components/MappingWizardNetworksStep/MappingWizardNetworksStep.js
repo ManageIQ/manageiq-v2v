@@ -41,16 +41,28 @@ class MappingWizardNetworksStep extends React.Component {
     } = this.props;
 
     const { selectedCluster, selectedClusterMapping } = this.state;
+
     if (
-      (isRejectedSourceNetworks !== nextProps.isRejectedSourceNetworks &&
-        nextProps.isRejectedSourceNetworks) ||
-      (isRejectedTargetNetworks !== nextProps.isRejectedTargetNetworks &&
-        nextProps.isRejectedTargetNetworks)
+      isRejectedSourceNetworks !== nextProps.isRejectedSourceNetworks &&
+      nextProps.isRejectedSourceNetworks
     ) {
       showAlertAction(
-        `Error retrieving cluster: ${selectedCluster.name} (${
-          selectedClusterMapping.name
-        })`
+        __(
+          `Error retrieving cluster networks: ${selectedCluster.name}, ID: ${
+            selectedCluster.id
+          }`
+        )
+      );
+    } else if (
+      isRejectedTargetNetworks !== nextProps.isRejectedTargetNetworks &&
+      nextProps.isRejectedTargetNetworks
+    ) {
+      showAlertAction(
+        __(
+          `Error retrieving cluster networks: ${
+            selectedClusterMapping.name
+          }, ID: ${selectedClusterMapping.id}`
+        )
       );
     }
   }
