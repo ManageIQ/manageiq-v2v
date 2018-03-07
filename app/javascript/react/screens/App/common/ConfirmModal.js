@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Modal, Button, Grid, Icon, noop } from 'patternfly-react';
+import { Modal, Button, Grid, noop } from 'patternfly-react';
 
 const ConfirmModal = props => {
   const {
     icon,
-    iconType,
     title,
     body,
     cancelButtonLabel,
@@ -25,17 +24,21 @@ const ConfirmModal = props => {
           body
         ) : (
           <Grid.Row className="show-grid">
-            <Grid.Col xsHidden md={2} className="text-right">
-              <Icon size="4x" type={iconType} name={icon} />
+            <Grid.Col md={2} className="text-right">
+              {icon}
             </Grid.Col>
-            <Grid.Col xs={12} md={10}>
+            <Grid.Col md={10}>
               {body}
             </Grid.Col>
           </Grid.Row>
         )}
       </Modal.Body>
       <Modal.Footer>
-        <Button bsStyle="default" className="btn-cancel" onClick={onCancel}>
+        <Button
+          bsStyle="default"
+          className="btn-cancel"
+          onClick={onCancel}
+        >
           {cancelButtonLabel}
         </Button>
         <Button bsStyle="primary" onClick={onConfirm}>
@@ -49,8 +52,7 @@ const ConfirmModal = props => {
 ConfirmModal.propTypes = {
   show: PropTypes.bool,
   title: PropTypes.string,
-  icon: PropTypes.string,
-  iconType: PropTypes.string,
+  icon: PropTypes.node,
   body: PropTypes.node,
   cancelButtonLabel: PropTypes.string,
   confirmButtonLabel: PropTypes.string,
@@ -62,7 +64,6 @@ ConfirmModal.defaultProps = {
   show: false,
   title: __('Confirm'),
   icon: null,
-  iconType: 'fa',
   body: <p>{__('Are you sure?')}</p>,
   cancelButtonLabel: __('Cancel'),
   confirmButtonLabel: __('Yes'),

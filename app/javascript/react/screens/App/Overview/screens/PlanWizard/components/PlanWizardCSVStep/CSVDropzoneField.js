@@ -7,7 +7,8 @@ import {
   Toolbar,
   Button,
   EmptyState,
-  ListView
+  ListView,
+  Icon
 } from 'patternfly-react';
 import Dropzone from 'react-dropzone';
 import ConfirmModal from '../../../../../common/ConfirmModal';
@@ -146,9 +147,9 @@ class CSVDropzoneField extends React.Component {
         <ConfirmModal
           show={showConfirmOverwrite}
           title={__('Overwrite Import File')}
-          icon="exclamation-triangle"
+          icon={<Icon type="pf" name="warning-triangle-o" className="confirm-warning-icon" />}
+          className={cx('inner-modal-dialog')}
           backdropClassName={cx('inner-modal-backdrop')}
-          dialogClassName={cx('inner-modal-dialog')}
           body={
             <React.Fragment>
               <p>
