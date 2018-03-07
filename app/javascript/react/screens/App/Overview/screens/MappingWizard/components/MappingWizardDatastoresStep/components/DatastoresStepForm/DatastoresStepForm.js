@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import { bindMethods } from 'patternfly-react';
 import cx from 'classnames';
 
-import DualPaneMapper from '../../DualPaneMapper/DualPaneMapper';
-import DualPaneMapperList from '../../DualPaneMapper/DualPaneMapperList';
-import DualPaneMapperCount from '../../DualPaneMapper/DualPaneMapperCount';
-import DualPaneMapperListItem from '../../DualPaneMapper/DualPaneMapperListItem';
-import MappingWizardTreeView from '../../MappingWizardTreeView/MappingWizardTreeView';
+import DualPaneMapper from '../../../DualPaneMapper/DualPaneMapper';
+import DualPaneMapperList from '../../../DualPaneMapper/DualPaneMapperList';
+import DualPaneMapperCount from '../../../DualPaneMapper/DualPaneMapperCount';
+import DualPaneMapperListItem from '../../../DualPaneMapper/DualPaneMapperListItem';
+import MappingWizardTreeView from '../../../MappingWizardTreeView/MappingWizardTreeView';
 
-import { sourceDatastoreFilter } from '../MappingWizardDatastoresStepSelectors';
+import { sourceDatastoreFilter } from '../../MappingWizardDatastoresStepSelectors';
 import {
   targetDatastoreTreeViewInfo,
   sourceDatastoreInfo,

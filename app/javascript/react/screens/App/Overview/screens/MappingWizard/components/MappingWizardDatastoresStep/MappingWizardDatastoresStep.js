@@ -4,7 +4,7 @@ import { Field, reduxForm } from 'redux-form';
 import { length } from 'redux-form-validators';
 import { noop, bindMethods } from 'patternfly-react';
 import SourceClusterSelect from '../SourceClusterSelect/SourceClusterSelect';
-import DatastoresStepForm from './components/DatastoresStepForm';
+import DatastoresStepForm from './components/DatastoresStepForm/DatastoresStepForm';
 
 class MappingWizardDatastoresStep extends React.Component {
   constructor(props) {
