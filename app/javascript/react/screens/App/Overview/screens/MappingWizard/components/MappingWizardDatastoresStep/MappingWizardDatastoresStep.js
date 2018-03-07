@@ -54,7 +54,8 @@ class MappingWizardDatastoresStep extends React.Component {
       );
     } else if (
       isRejectedTargetDatastores !== nextProps.isRejectedTargetDatastores &&
-      nextProps.isRejectedTargetDatastores
+      nextProps.isRejectedTargetDatastores &&
+      !isRejectedSourceDatastores
     ) {
       showAlertAction(
         __(

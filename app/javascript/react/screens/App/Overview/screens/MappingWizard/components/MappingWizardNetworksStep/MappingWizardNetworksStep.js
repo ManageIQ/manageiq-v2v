@@ -55,7 +55,8 @@ class MappingWizardNetworksStep extends React.Component {
       );
     } else if (
       isRejectedTargetNetworks !== nextProps.isRejectedTargetNetworks &&
-      nextProps.isRejectedTargetNetworks
+      nextProps.isRejectedTargetNetworks &&
+      !isRejectedSourceNetworks
     ) {
       showAlertAction(
         __(
