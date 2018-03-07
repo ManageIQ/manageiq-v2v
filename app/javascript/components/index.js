@@ -40,9 +40,7 @@ export const coreComponents = [
     name: 'MappingWizardDatastoresStepContainer',
     type: MappingWizardDatastoresStepContainer,
     data: {
-      fetchDatastoresUrl: mockMode
-        ? '/api/dummyClusters'
-        : 'api/clusters/1?attributes=storages'
+      fetchDatastoresUrl: mockMode ? '/api/dummyClusters' : 'api/clusters'
     },
     store: true
   },
@@ -50,9 +48,7 @@ export const coreComponents = [
     name: 'MappingWizardNetworksStepContainer',
     type: MappingWizardNetworksStepContainer,
     data: {
-      fetchNetworksUrl: mockMode
-        ? '/api/dummyClusters'
-        : 'api/clusters/1?attributes=lans'
+      fetchNetworksUrl: mockMode ? '/api/dummyClusters' : 'api/clusters'
     },
     store: true
   },
