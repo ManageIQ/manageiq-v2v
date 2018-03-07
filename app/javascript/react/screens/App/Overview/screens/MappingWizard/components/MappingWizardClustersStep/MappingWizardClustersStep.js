@@ -44,13 +44,13 @@ class MappingWizardClustersStep extends React.Component {
             <span className="pficon pficon-error-circle-o" />
           </div>
           <h3 className="blank-slate-pf-main-action">
-            Error Retreiving Clusters
+            {__('Error Retrieving Clusters')}
           </h3>
           <p className="blank-slate-pf-secondary-action">
-            We&apos;re sorry, something went wrong. Please try again.
+            {__("We're sorry, something went wrong. Please try again.")}
           </p>
           <Button bsStyle="primary" onClick={this.fetchClusters}>
-            Retry
+            {__('Retry')}
           </Button>
         </div>
       );
