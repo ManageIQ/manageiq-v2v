@@ -54,6 +54,7 @@ export default (state = initialState, action) => {
       ) {
         return state
           .set('targetClusters', action.payload.data.resources[0].ems_clusters)
+          .set('isRejectedTargetClusters', false)
           .set('isFetchingTargetClusters', false);
       }
       return state
