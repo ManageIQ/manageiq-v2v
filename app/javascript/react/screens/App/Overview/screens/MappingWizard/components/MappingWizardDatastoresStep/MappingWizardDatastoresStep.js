@@ -45,25 +45,23 @@ class MappingWizardDatastoresStep extends React.Component {
       isRejectedSourceDatastores !== nextProps.isRejectedSourceDatastores &&
       nextProps.isRejectedSourceDatastores
     ) {
-      showAlertAction(
-        __(
-          `Error retrieving cluster datastores: ${selectedCluster.name}, ID: ${
-            selectedCluster.id
-          }`
-        )
+      const msg = sprintf(
+        __('Error retrieving cluster datastores: %s, ID: %s'),
+        selectedCluster.name,
+        selectedCluster.id
       );
+      showAlertAction(msg);
     } else if (
       isRejectedTargetDatastores !== nextProps.isRejectedTargetDatastores &&
       nextProps.isRejectedTargetDatastores &&
       !isRejectedSourceDatastores
     ) {
-      showAlertAction(
-        __(
-          `Error retrieving cluster datastores: ${
-            selectedClusterMapping.name
-          }, ID: ${selectedClusterMapping.id}`
-        )
+      const msg = sprintf(
+        __('Error retrieving cluster datastores: %s, ID: %s'),
+        selectedClusterMapping.name,
+        selectedClusterMapping.id
       );
+      showAlertAction(msg);
     }
   }
 
