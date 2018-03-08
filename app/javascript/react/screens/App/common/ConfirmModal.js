@@ -27,7 +27,9 @@ const ConfirmModal = props => {
             <Grid.Col xsHidden md={2} className="text-right">
               {icon}
             </Grid.Col>
-            <Grid.Col xs={12} md={10}>{body}</Grid.Col>
+            <Grid.Col xs={12} md={10}>
+              {body}
+            </Grid.Col>
           </Grid.Row>
         )}
       </Modal.Body>
