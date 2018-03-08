@@ -33,6 +33,39 @@ class MappingWizardNetworksStep extends React.Component {
 
   componentDidMount() {}
 
+  componentWillReceiveProps(nextProps) {
+    const {
+      showAlertAction,
+      isRejectedSourceNetworks,
+      isRejectedTargetNetworks
+    } = this.props;
+
+    const { selectedCluster, selectedClusterMapping } = this.state;
+
+    if (
+      isRejectedSourceNetworks !== nextProps.isRejectedSourceNetworks &&
+      nextProps.isRejectedSourceNetworks
+    ) {
+      const msg = sprintf(
+        __('Error retrieving cluster networks: %s, ID: %s'),
+        selectedCluster.name,
+        selectedCluster.id
+      );
+      showAlertAction(msg);
+    } else if (
+      isRejectedTargetNetworks !== nextProps.isRejectedTargetNetworks &&
+      nextProps.isRejectedTargetNetworks &&
+      !isRejectedSourceNetworks
+    ) {
+      const msg = sprintf(
+        __('Error retrieving cluster networks: %s, ID: %s'),
+        selectedClusterMapping.name,
+        selectedClusterMapping.id
+      );
+      showAlertAction(msg);
+    }
+  }
+
   selectSourceCluster(sourceClusterId) {
     // when dropdown selection occurs for source cluster, we go retrieve the
     // newworks for that cluster
@@ -66,9 +99,7 @@ class MappingWizardNetworksStep extends React.Component {
     const {
       clusterMappings,
       isFetchingSourceNetworks,
-      isRejectedSourceNetworks, // eslint-disable-line no-unused-vars
       isFetchingTargetNetworks,
-      isRejectedTargetNetworks, // eslint-disable-line no-unused-vars
       sourceNetworks,
       targetNetworks,
       form
@@ -113,7 +144,8 @@ MappingWizardNetworksStep.propTypes = {
   isFetchingTargetNetworks: PropTypes.bool,
   isRejectedTargetNetworks: PropTypes.bool,
   form: PropTypes.string,
-  pristine: PropTypes.bool
+  pristine: PropTypes.bool,
+  showAlertAction: PropTypes.func
 };
 MappingWizardNetworksStep.defaultProps = {
   clusterMappings: [],
@@ -127,7 +159,8 @@ MappingWizardNetworksStep.defaultProps = {
   isFetchingTargetNetworks: false,
   isRejectedTargetNetworks: false,
   form: '',
-  pristine: true
+  pristine: true,
+  showAlertAction: noop
 };
 
 export default reduxForm({

@@ -19,7 +19,9 @@ const initialState = Immutable({
 export default (state = initialState, action) => {
   switch (action.type) {
     case `${FETCH_V2V_SOURCE_CLUSTERS}_PENDING`:
-      return state.set('isFetchingSourceClusters', true);
+      return state
+        .set('isFetchingSourceClusters', true)
+        .set('isRejectedSourceClusters', false);
     case `${FETCH_V2V_SOURCE_CLUSTERS}_FULFILLED`:
       if (
         action.payload.data &&
@@ -41,7 +43,9 @@ export default (state = initialState, action) => {
         .set('isRejectedSourceClusters', true)
         .set('isFetchingSourceClusters', false);
     case `${FETCH_V2V_TARGET_CLUSTERS}_PENDING`:
-      return state.set('isFetchingTargetClusters', true);
+      return state
+        .set('isFetchingTargetClusters', true)
+        .set('isRejectedTargetClusters', false);
     case `${FETCH_V2V_TARGET_CLUSTERS}_FULFILLED`:
       if (
         action.payload.data &&
@@ -50,6 +54,7 @@ export default (state = initialState, action) => {
       ) {
         return state
           .set('targetClusters', action.payload.data.resources[0].ems_clusters)
+          .set('isRejectedTargetClusters', false)
           .set('isFetchingTargetClusters', false);
       }
       return state

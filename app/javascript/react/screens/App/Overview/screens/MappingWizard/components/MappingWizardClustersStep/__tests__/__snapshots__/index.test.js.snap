@@ -8,6 +8,8 @@ Object {
   "fetchTargetClustersUrl": "/api/dummyProviders",
   "isFetchingSourceClusters": true,
   "isFetchingTargetClusters": true,
+  "isRejectedSourceClusters": false,
+  "isRejectedTargetClusters": false,
   "sourceClusters": Array [],
   "targetClusters": Array [],
 }
