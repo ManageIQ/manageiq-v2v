@@ -3,10 +3,17 @@
 exports[`MigrationFailedVMsList component renders the MigrationsCompletedCard 1`] = `
 <React.Fragment>
   <Grid
+    bsClass="container"
+    componentClass="div"
     fluid={true}
   >
-    <Row>
+    <Row
+      bsClass="row"
+      componentClass="div"
+    >
       <Col
+        bsClass="col"
+        componentClass="div"
         md={3}
         xs={4}
       >
@@ -15,6 +22,8 @@ exports[`MigrationFailedVMsList component renders the MigrationsCompletedCard 1`
         </strong>
       </Col>
       <Col
+        bsClass="col"
+        componentClass="div"
         md={9}
         xs={8}
       >
@@ -25,10 +34,14 @@ exports[`MigrationFailedVMsList component renders the MigrationsCompletedCard 1`
     </Row>
   </Grid>
   <Grid
+    bsClass="container"
     className="failures-list"
+    componentClass="div"
     fluid={true}
   >
     <Row
+      bsClass="row"
+      componentClass="div"
       key="24"
     >
       <OverlayTrigger
@@ -52,7 +65,9 @@ exports[`MigrationFailedVMsList component renders the MigrationsCompletedCard 1`
         }
       >
         <Col
+          bsClass="col"
           className="failed-vm-column-text"
+          componentClass="div"
           md={3}
           xs={4}
         >
@@ -80,7 +95,9 @@ exports[`MigrationFailedVMsList component renders the MigrationsCompletedCard 1`
         }
       >
         <Col
+          bsClass="col"
           className="failed-vm-column-text"
+          componentClass="div"
           md={9}
           xs={8}
         >
@@ -89,6 +106,8 @@ exports[`MigrationFailedVMsList component renders the MigrationsCompletedCard 1`
       </OverlayTrigger>
     </Row>
     <Row
+      bsClass="row"
+      componentClass="div"
       key="25"
     >
       <OverlayTrigger
@@ -112,7 +131,9 @@ exports[`MigrationFailedVMsList component renders the MigrationsCompletedCard 1`
         }
       >
         <Col
+          bsClass="col"
           className="failed-vm-column-text"
+          componentClass="div"
           md={3}
           xs={4}
         >
@@ -140,7 +161,9 @@ exports[`MigrationFailedVMsList component renders the MigrationsCompletedCard 1`
         }
       >
         <Col
+          bsClass="col"
           className="failed-vm-column-text"
+          componentClass="div"
           md={9}
           xs={8}
         >
@@ -149,6 +172,8 @@ exports[`MigrationFailedVMsList component renders the MigrationsCompletedCard 1`
       </OverlayTrigger>
     </Row>
     <Row
+      bsClass="row"
+      componentClass="div"
       key="26"
     >
       <OverlayTrigger
@@ -172,7 +197,9 @@ exports[`MigrationFailedVMsList component renders the MigrationsCompletedCard 1`
         }
       >
         <Col
+          bsClass="col"
           className="failed-vm-column-text"
+          componentClass="div"
           md={3}
           xs={4}
         >
@@ -200,7 +227,9 @@ exports[`MigrationFailedVMsList component renders the MigrationsCompletedCard 1`
         }
       >
         <Col
+          bsClass="col"
           className="failed-vm-column-text"
+          componentClass="div"
           md={9}
           xs={8}
         >
