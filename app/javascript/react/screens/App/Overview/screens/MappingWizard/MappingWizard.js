@@ -282,6 +282,7 @@ MappingWizard.propTypes = {
   sourceClustersWithoutMappings: PropTypes.array,
   alertText: PropTypes.string,
   alertType: PropTypes.string,
+  showAlertAction: PropTypes.func,
   hideAlertAction: PropTypes.func
 };
 MappingWizard.defaultProps = {
