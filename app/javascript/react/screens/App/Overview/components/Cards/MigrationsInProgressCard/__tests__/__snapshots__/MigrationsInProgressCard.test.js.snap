@@ -17,9 +17,14 @@ exports[`MigrationsInProgressCard component renders the ActiveMigrations 1`] = `
     className="card-pf-body"
   >
     <Grid
+      bsClass="container"
+      componentClass="div"
       fluid={true}
     >
-      <Row>
+      <Row
+        bsClass="row"
+        componentClass="div"
+      >
         <MigrationInProgressCard
           key="14"
           migration={
