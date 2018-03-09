@@ -38,39 +38,37 @@ const DropdownButtonSelect = ({
     if (!visited) dispatch(focus(formName, controlId));
   };
 
-  const renderDropdownButtonSelect = dropdownButtonSelectClass => {
-    return (
-      <div className={dropdownButtonSelectClass}>
-        <InputGroup>
-          <FormControl.Static>
-            {input.value !== '' ? (
-              options.find(val => val[optionKey] === input.value).name
-            ) : (
-              <span className="placeholder-text">{selectText}</span>
-            )}
-          </FormControl.Static>
-          <DropdownButton
-            className="dropdownbutton"
-            id={controlId}
-            title=""
-            componentClass={InputGroup.Button}
-            pullRight
-            onClick={handleClick}
-          >
-            {options.map(val => (
-              <MenuItem
-                onSelect={onSelectItem}
-                key={val[optionKey]}
-                eventKey={val[optionKey]}
-              >
-                {val[optionValue]}
-              </MenuItem>
-            ))}
-          </DropdownButton>
-        </InputGroup>
-      </div>
-    );
-  };
+  const renderDropdownButtonSelect = dropdownButtonSelectClass => (
+    <div className={dropdownButtonSelectClass}>
+      <InputGroup>
+        <FormControl.Static>
+          {input.value !== '' ? (
+            options.find(val => val[optionKey] === input.value).name
+          ) : (
+            <span className="placeholder-text">{selectText}</span>
+          )}
+        </FormControl.Static>
+        <DropdownButton
+          className="dropdownbutton"
+          id={controlId}
+          title=""
+          componentClass={InputGroup.Button}
+          pullRight
+          onClick={handleClick}
+        >
+          {options.map(val => (
+            <MenuItem
+              onSelect={onSelectItem}
+              key={val[optionKey]}
+              eventKey={val[optionKey]}
+            >
+              {val[optionValue]}
+            </MenuItem>
+          ))}
+        </DropdownButton>
+      </InputGroup>
+    </div>
+  );
 
   const dropdownButtonSelectClass =
     visited && !active && error
