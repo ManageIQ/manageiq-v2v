@@ -16,7 +16,6 @@ const PlanWizardGeneralStep = ({ transformationMappings }) => (
       component={DropdownButtonSelect}
       validate={[required({ msg: __('Required') })]}
       options={transformationMappings}
-      // selectedValue="1"
       selectText={__('Select an Infrastructure Mapping')}
       optionKey="id"
       optionValue="name"
