@@ -16,6 +16,12 @@ export const asyncValidate = (values, dispatch, props) =>
         existingTransformationName === newTransformationName.trim()
     );
     if (duplicateName) {
+      props.showAlertAction(
+        sprintf(
+          __('Infrastructure mapping %s already exists'),
+          newTransformationName
+        )
+      );
       const err = { name: 'Please enter a unique name' };
       throw err;
     }

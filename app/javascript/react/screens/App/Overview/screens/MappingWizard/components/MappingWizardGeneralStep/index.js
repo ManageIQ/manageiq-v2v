@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 import MappingWizardGeneralStep from './MappingWizardGeneralStep';
-import { hideAlertAction } from '../../MappingWizardActions';
+import { showAlertAction, hideAlertAction } from '../../MappingWizardActions';
 
 import { asyncValidate, onChange } from './helpers';
 
@@ -19,6 +19,6 @@ const mapStateToProps = ({ overview: { transformationMappings } }) => ({
   transformationMappings
 });
 
-const actions = { hideAlertAction };
+const actions = { showAlertAction, hideAlertAction };
 
 export default connect(mapStateToProps, actions)(MappingWizardGeneralStepForm);
