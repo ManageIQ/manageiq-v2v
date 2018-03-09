@@ -1,0 +1,26 @@
+.dropdown-button-select .form-control-static {
+  border: 1px solid #bbb;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  padding-left: 4px;
+  text-align: left;
+}
+
+.dropdown-button-select .form-control-static .placeholder-text {
+  color: #8b8d8f;
+  font-style: italic;
+}
+
+.dropdown-button-select-error .form-control-static {
+  border: 1px solid #cc0000;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  padding-left: 4px;
+  text-align: left;
+}
+
+.dropdown-button-select-error .form-control-static .placeholder-text {
+  color: #8b8d8f;
+  font-style: italic;
+}
+
