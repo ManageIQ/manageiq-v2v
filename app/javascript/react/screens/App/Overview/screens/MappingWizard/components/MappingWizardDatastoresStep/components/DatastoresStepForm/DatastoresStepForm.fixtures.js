@@ -1,7 +1,7 @@
 import {
   sourceClusterDatastores,
   targetClusterDatastores
-} from '../../mappingWizardDatastoresStep.fixtures.js';
+} from '../../mappingWizardDatastoresStep.fixtures';
 
 const [
   { storages: sourceClusterOneStorages, ...sourceClusterOne },
