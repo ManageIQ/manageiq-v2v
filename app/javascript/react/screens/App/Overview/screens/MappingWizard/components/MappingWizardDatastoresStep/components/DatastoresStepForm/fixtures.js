@@ -1,205 +1,28 @@
+import {
+  sourceClusterDatastores,
+  targetClusterDatastores
+} from '../../mappingWizardDatastoresStep.fixtures.js';
+
+const [
+  { storages: sourceClusterOneStorages, ...sourceClusterOne },
+  { storages: sourceClusterTwoStorages, ...sourceClusterTwo }
+] = sourceClusterDatastores;
+
+const [
+  { storages: targetClusterOneStorages, ...targetClusterOne },
+  { storages: targetClusterTwoStorages, ...targetClusterTwo }
+] = targetClusterDatastores;
+
 export const sourceDatastores = [
-  {
-    href: 'http://localhost:3000/api/data_stores/1',
-    id: '1-1',
-    name: 'VMWareCluster1-DS1',
-    store_type: 'VMFS',
-    total_space: 1192121860096,
-    free_space: 659643432960,
-    created_on: '2017-10-06T16:41:09Z',
-    updated_on: '2018-01-21T01:02:34Z',
-    multiplehostaccess: 0,
-    location: '577d1849-e3cb89c2-3f7d-000e1eaade20',
-    last_scan_on: '2018-01-21T00:00:38Z',
-    uncommitted: 168363686283,
-    last_perf_capture_on: '2018-01-21T01:00:00Z',
-    ems_ref_obj: 'datastore-11',
-    directory_hierarchy_supported: true,
-    thin_provisioning_supported: true,
-    raw_disk_mappings_supported: true,
-    master: false,
-    ems_ref: 'datastore-11',
-    storage_domain_type: null
-  },
-  {
-    href: 'http://localhost:3000/api/data_stores/2',
-    id: '1-2',
-    name: 'VMWareCluster1-DS2',
-    store_type: 'VMFS',
-    total_space: 1192121860096,
-    free_space: 659643432960,
-    created_on: '2017-10-06T16:41:09Z',
-    updated_on: '2018-01-21T01:02:34Z',
-    multiplehostaccess: 0,
-    location: '577d1849-e3cb89c2-3f7d-000e1eaade20',
-    last_scan_on: '2018-01-21T00:00:38Z',
-    uncommitted: 168363686283,
-    last_perf_capture_on: '2018-01-21T01:00:00Z',
-    ems_ref_obj: 'datastore-11',
-    directory_hierarchy_supported: true,
-    thin_provisioning_supported: true,
-    raw_disk_mappings_supported: true,
-    master: false,
-    ems_ref: 'datastore-11',
-    storage_domain_type: null
-  },
-  {
-    href: 'http://localhost:3000/api/data_stores/3',
-    id: '2-1',
-    name: 'VMWareCluster2-DS1',
-    store_type: 'VMFS',
-    total_space: 1192121860096,
-    free_space: 659643432960,
-    created_on: '2017-10-06T16:41:09Z',
-    updated_on: '2018-01-21T01:02:34Z',
-    multiplehostaccess: 0,
-    location: '577d1849-e3cb89c2-3f7d-000e1eaade20',
-    last_scan_on: '2018-01-21T00:00:38Z',
-    uncommitted: 168363686283,
-    last_perf_capture_on: '2018-01-21T01:00:00Z',
-    ems_ref_obj: 'datastore-11',
-    directory_hierarchy_supported: true,
-    thin_provisioning_supported: true,
-    raw_disk_mappings_supported: true,
-    master: false,
-    ems_ref: 'datastore-11',
-    storage_domain_type: null
-  }
+  sourceClusterOneStorages[0],
+  sourceClusterOneStorages[1],
+  sourceClusterTwoStorages[0]
 ];
 
 export const targetDatastores = [
-  {
-    href: 'http://localhost:3000/api/data_stores/15',
-    id: '1-1',
-    name: 'RHVCluster1-Shared-NFS-1',
-    store_type: 'NFS41',
-    total_space: 5388852264960,
-    free_space: 3389349027840,
-    created_on: '2017-10-06T16:41:09Z',
-    updated_on: '2018-01-21T01:02:38Z',
-    multiplehostaccess: 1,
-    location: 'a0f0178e-ddec1f02-0000-000000000000',
-    last_scan_on: '2018-01-21T00:05:45Z',
-    uncommitted: 3917934592000,
-    last_perf_capture_on: '2018-01-21T01:00:00Z',
-    ems_ref_obj: 'datastore-874',
-    directory_hierarchy_supported: true,
-    thin_provisioning_supported: true,
-    raw_disk_mappings_supported: false,
-    master: false,
-    ems_ref: 'datastore-874',
-    storage_domain_type: null
-  },
-  {
-    href: 'http://localhost:3000/api/data_stores/16',
-    id: '2-1',
-    name: 'RHVCluster2-Shared-NFS-1',
-    store_type: 'NFS41',
-    total_space: 5388852264960,
-    free_space: 3389349027840,
-    created_on: '2017-10-06T16:41:09Z',
-    updated_on: '2018-01-21T01:02:38Z',
-    multiplehostaccess: 1,
-    location: 'a0f0178e-ddec1f02-0000-000000000000',
-    last_scan_on: '2018-01-21T00:05:45Z',
-    uncommitted: 3917934592000,
-    last_perf_capture_on: '2018-01-21T01:00:00Z',
-    ems_ref_obj: 'datastore-874',
-    directory_hierarchy_supported: true,
-    thin_provisioning_supported: true,
-    raw_disk_mappings_supported: false,
-    master: false,
-    ems_ref: 'datastore-874',
-    storage_domain_type: null
-  }
+  targetClusterOneStorages[0],
+  targetClusterTwoStorages[0]
 ];
 
-export const sourceClusters = [
-  {
-    href: 'http://localhost:3000/api/clusters/10000000000001',
-    id: '1',
-    name: 'VMWare Cluster1',
-    ems_id: '10000000000012',
-    created_on: '2016-07-15T18:28:16Z',
-    updated_on: '2016-07-15T18:28:16Z',
-    uid_ems: '00000002-0002-0002-0002-00000000024b',
-    ha_enabled: null,
-    ha_admit_control: null,
-    ha_max_failures: null,
-    drs_enabled: null,
-    drs_automation_level: null,
-    drs_migration_threshold: null,
-    last_perf_capture_on: null,
-    ems_ref_obj: '/api/clusters/00000002-0002-0002-0002-00000000024b',
-    effective_cpu: null,
-    effective_memory: null,
-    ems_ref: '/api/clusters/00000002-0002-0002-0002-00000000024b',
-    type: null
-  },
-  {
-    href: 'http://localhost:3000/api/clusters/10000000000002',
-    id: '2',
-    name: 'VMWare Cluster2',
-    ems_id: '10000000000012',
-    created_on: '2016-07-15T18:28:16Z',
-    updated_on: '2016-07-15T18:28:16Z',
-    uid_ems: '00000002-0002-0002-0002-00000000024b',
-    ha_enabled: null,
-    ha_admit_control: null,
-    ha_max_failures: null,
-    drs_enabled: null,
-    drs_automation_level: null,
-    drs_migration_threshold: null,
-    last_perf_capture_on: null,
-    ems_ref_obj: '/api/clusters/00000002-0002-0002-0002-00000000024b',
-    effective_cpu: null,
-    effective_memory: null,
-    ems_ref: '/api/clusters/00000002-0002-0002-0002-00000000024b',
-    type: null
-  }
-];
-
-export const targetClusters = [
-  {
-    href: 'http://localhost:3000/api/clusters/10000000000006',
-    id: '1',
-    name: 'RHV Cluster1',
-    ems_id: '10000000000007',
-    created_on: '2016-08-03T02:19:35Z',
-    updated_on: '2017-02-26T02:33:43Z',
-    uid_ems: 'domain-c7',
-    ha_enabled: false,
-    ha_admit_control: true,
-    ha_max_failures: 1,
-    drs_enabled: false,
-    drs_automation_level: 'fullyAutomated',
-    drs_migration_threshold: 3,
-    last_perf_capture_on: null,
-    ems_ref_obj: 'domain-c7',
-    effective_cpu: 109356,
-    effective_memory: 789977235456,
-    ems_ref: 'domain-c7',
-    type: null
-  },
-  {
-    href: 'http://localhost:3000/api/clusters/10000000000007',
-    id: '2',
-    name: 'RHV Cluster2',
-    ems_id: '10000000000007',
-    created_on: '2016-08-03T02:19:35Z',
-    updated_on: '2017-02-26T02:33:43Z',
-    uid_ems: 'domain-c7',
-    ha_enabled: false,
-    ha_admit_control: true,
-    ha_max_failures: 1,
-    drs_enabled: false,
-    drs_automation_level: 'fullyAutomated',
-    drs_migration_threshold: 3,
-    last_perf_capture_on: null,
-    ems_ref_obj: 'domain-c7',
-    effective_cpu: 109356,
-    effective_memory: 789977235456,
-    ems_ref: 'domain-c7',
-    type: null
-  }
-];
+export const sourceClusters = [sourceClusterOne, sourceClusterTwo];
+export const targetClusters = [targetClusterOne, targetClusterTwo];
