@@ -9,7 +9,7 @@ import {
   targetClusters,
   sourceDatastores,
   targetDatastores
-} from '../fixtures';
+} from '../DatastoresStepForm.fixtures';
 
 let selectedCluster;
 let targetCluster;
