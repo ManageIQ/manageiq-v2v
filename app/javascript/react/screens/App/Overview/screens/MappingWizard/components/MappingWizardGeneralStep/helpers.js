@@ -1,7 +1,5 @@
 export const asyncValidate = (values, dispatch, props) =>
-  new Promise(resolve => {
-    resolve();
-  }).then(() => {
+  new Promise((resolve, reject) => {
     const { name: newTransformationName } = values;
     const { transformationMappings } = props;
     const existingTransformationNames = transformationMappings.reduce(
@@ -22,8 +20,10 @@ export const asyncValidate = (values, dispatch, props) =>
           newTransformationName
         )
       );
-      const err = { name: 'Please enter a unique name' };
-      throw err;
+      const error = { name: 'Please enter a unique name' };
+      reject(error);
+    } else {
+      resolve();
     }
   });
 
