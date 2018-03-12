@@ -3,20 +3,21 @@ import PropTypes from 'prop-types';
 import { bindMethods } from 'patternfly-react';
 import cx from 'classnames';
 
-import DualPaneMapper from '../../DualPaneMapper/DualPaneMapper';
-import DualPaneMapperList from '../../DualPaneMapper/DualPaneMapperList';
-import DualPaneMapperCount from '../../DualPaneMapper/DualPaneMapperCount';
-import DualPaneMapperListItem from '../../DualPaneMapper/DualPaneMapperListItem';
-import MappingWizardTreeView from '../../MappingWizardTreeView/MappingWizardTreeView';
+import DualPaneMapper from '../../../DualPaneMapper/DualPaneMapper';
+import DualPaneMapperList from '../../../DualPaneMapper/DualPaneMapperList';
+import DualPaneMapperCount from '../../../DualPaneMapper/DualPaneMapperCount';
+import DualPaneMapperListItem from '../../../DualPaneMapper/DualPaneMapperListItem';
+import MappingWizardTreeView from '../../../MappingWizardTreeView/MappingWizardTreeView';
 
-import { sourceDatastoreFilter } from '../MappingWizardDatastoresStepSelectors';
+import { sourceDatastoreFilter } from '../../MappingWizardDatastoresStepSelectors';
 import {
   targetDatastoreTreeViewInfo,
   sourceDatastoreInfo,
   targetDatastoreInfo,
   targetDatastoreAvailableSpace,
   totalUsedSpace,
-  errorMessage
+  errorMessage,
+  updateMappings
 } from './helpers';
 
 class DatastoresStepForm extends React.Component {
@@ -338,62 +339,14 @@ class DatastoresStepForm extends React.Component {
   removeNode() {
     const { value: datastoresStepMappings, onChange } = this.props.input;
     const { selectedNode } = this.state;
-    const isTargetDatastore = selectedNode.nodes;
 
-    if (isTargetDatastore) {
-      const updatedMappings = datastoresStepMappings
-        .map(targetClusterWithDatastoresMappings => {
-          const {
-            nodes: datastoresMappings,
-            ...targetCluster
-          } = targetClusterWithDatastoresMappings;
-          const updatedDatastoresMappings = datastoresMappings.filter(
-            targetDatastoreWithSourceDatastores =>
-              targetDatastoreWithSourceDatastores.id !== selectedNode.id
-          );
-          return updatedDatastoresMappings.length === 0
-            ? undefined
-            : {
-                ...targetCluster,
-                nodes: updatedDatastoresMappings
-              };
-        })
-        .filter(item => item !== undefined);
-      onChange(updatedMappings);
-    } else {
-      const updatedMappings = datastoresStepMappings
-        .map(targetClusterWithDatastoresMappings => {
-          const {
-            nodes: datastoresMappings,
-            ...targetCluster
-          } = targetClusterWithDatastoresMappings;
-          const updatedDatastoresMappings = datastoresMappings
-            .map(datastoresMapping => {
-              const {
-                nodes: sourceDatastores,
-                ...targetDatastore
-              } = datastoresMapping;
-              const updatedSourceDatastores = sourceDatastores.filter(
-                sourceDatastore => sourceDatastore.id !== selectedNode.id
-              );
-              return updatedSourceDatastores.length === 0
-                ? undefined
-                : {
-                    ...targetDatastore,
-                    nodes: updatedSourceDatastores
-                  };
-            })
-            .filter(item => item !== undefined);
-          return updatedDatastoresMappings.length === 0
-            ? undefined
-            : {
-                ...targetCluster,
-                nodes: updatedDatastoresMappings
-              };
-        })
-        .filter(item => item !== undefined);
-      onChange(updatedMappings);
-    }
+    const updatedMappings = datastoresStepMappings
+      .map(targetClusterWithDatastoresMappings =>
+        updateMappings(targetClusterWithDatastoresMappings, selectedNode)
+      )
+      .filter(item => item !== undefined);
+    onChange(updatedMappings);
+
     this.setState(() => ({ selectedNode: null }));
   }
 

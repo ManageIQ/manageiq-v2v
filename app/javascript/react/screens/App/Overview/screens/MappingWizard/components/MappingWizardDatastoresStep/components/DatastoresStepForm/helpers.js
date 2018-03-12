@@ -67,3 +67,45 @@ export const targetDatastoreTreeViewInfo = (
 export const errorMessage = __(
   'The size of the selected source datastores exceeds the available space in the target datastore'
 );
+
+export const removeSourceDatastore = (datastoresMapping, nodeToRemove) => {
+  const { nodes: sourceDatastores, ...targetDatastore } = datastoresMapping;
+  const updatedSourceDatastores = sourceDatastores.filter(
+    sourceDatastore => sourceDatastore.id !== nodeToRemove.id
+  );
+  return updatedSourceDatastores.length === 0
+    ? undefined
+    : {
+        ...targetDatastore,
+        nodes: updatedSourceDatastores
+      };
+};
+
+export const updateMappings = (
+  targetClusterWithDatastoresMappings,
+  nodeToRemove
+) => {
+  const isTargetDatastore = nodeToRemove.nodes;
+  const {
+    nodes: datastoresMappings,
+    ...targetCluster
+  } = targetClusterWithDatastoresMappings;
+
+  const updatedDatastoresMappings = isTargetDatastore
+    ? datastoresMappings.filter(
+        targetDatastoreWithSourceDatastores =>
+          targetDatastoreWithSourceDatastores.id !== nodeToRemove.id
+      )
+    : datastoresMappings
+        .map(datastoresMapping =>
+          removeSourceDatastore(datastoresMapping, nodeToRemove)
+        )
+        .filter(item => item !== undefined);
+
+  return updatedDatastoresMappings.length === 0
+    ? undefined
+    : {
+        ...targetCluster,
+        nodes: updatedDatastoresMappings
+      };
+};
