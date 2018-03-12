@@ -1,0 +1,138 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`fetching source datastores is fulfilled 1`] = `
+Object {
+  "errorSourceDatastores": null,
+  "errorTargetDatastores": null,
+  "isFetchingSourceDatastores": false,
+  "isFetchingTargetDatastores": false,
+  "isRejectedSourceDatastores": false,
+  "isRejectedTargetDatastores": false,
+  "sourceDatastores": Array [
+    Object {
+      "created_on": "2017-10-06T16:41:09Z",
+      "directory_hierarchy_supported": true,
+      "ems_ref": "datastore-11",
+      "ems_ref_obj": "datastore-11",
+      "free_space": 659643432960,
+      "href": "http://localhost:3000/api/data_stores/1",
+      "id": "1-1",
+      "last_perf_capture_on": "2018-01-21T01:00:00Z",
+      "last_scan_on": "2018-01-21T00:00:38Z",
+      "location": "577d1849-e3cb89c2-3f7d-000e1eaade20",
+      "master": false,
+      "multiplehostaccess": 0,
+      "name": "VMWareCluster1-DS1",
+      "raw_disk_mappings_supported": true,
+      "storage_domain_type": null,
+      "store_type": "VMFS",
+      "thin_provisioning_supported": true,
+      "total_space": 1192121860096,
+      "uncommitted": 168363686283,
+      "updated_on": "2018-01-21T01:02:34Z",
+    },
+  ],
+  "targetDatastores": Array [],
+}
+`;
+
+exports[`fetching source datastores is pending 1`] = `
+Object {
+  "errorSourceDatastores": null,
+  "errorTargetDatastores": null,
+  "isFetchingSourceDatastores": true,
+  "isFetchingTargetDatastores": false,
+  "isRejectedSourceDatastores": false,
+  "isRejectedTargetDatastores": false,
+  "sourceDatastores": Array [],
+  "targetDatastores": Array [],
+}
+`;
+
+exports[`fetching source datastores is rejected 1`] = `
+Object {
+  "errorSourceDatastores": "error",
+  "errorTargetDatastores": null,
+  "isFetchingSourceDatastores": false,
+  "isFetchingTargetDatastores": false,
+  "isRejectedSourceDatastores": true,
+  "isRejectedTargetDatastores": false,
+  "sourceDatastores": Array [],
+  "targetDatastores": Array [],
+}
+`;
+
+exports[`fetching target datastores is fulfilled 1`] = `
+Object {
+  "errorSourceDatastores": null,
+  "errorTargetDatastores": null,
+  "isFetchingSourceDatastores": false,
+  "isFetchingTargetDatastores": false,
+  "isRejectedSourceDatastores": false,
+  "isRejectedTargetDatastores": false,
+  "sourceDatastores": Array [],
+  "targetDatastores": Array [
+    Object {
+      "created_on": "2017-10-06T16:41:09Z",
+      "directory_hierarchy_supported": true,
+      "ems_ref": "datastore-874",
+      "ems_ref_obj": "datastore-874",
+      "free_space": 3389349027840,
+      "href": "http://localhost:3000/api/data_stores/13",
+      "id": "1-1",
+      "last_perf_capture_on": "2018-01-21T01:00:00Z",
+      "last_scan_on": "2018-01-21T00:05:45Z",
+      "location": "a0f0178e-ddec1f02-0000-000000000000",
+      "master": false,
+      "multiplehostaccess": 1,
+      "name": "RHVCluster1-Shared-NFS-1",
+      "raw_disk_mappings_supported": false,
+      "storage_domain_type": null,
+      "store_type": "NFS41",
+      "thin_provisioning_supported": true,
+      "total_space": 5388852264960,
+      "uncommitted": 3917934592000,
+      "updated_on": "2018-01-21T01:02:38Z",
+    },
+  ],
+}
+`;
+
+exports[`fetching target datastores is pending 1`] = `
+Object {
+  "errorSourceDatastores": null,
+  "errorTargetDatastores": null,
+  "isFetchingSourceDatastores": false,
+  "isFetchingTargetDatastores": true,
+  "isRejectedSourceDatastores": false,
+  "isRejectedTargetDatastores": false,
+  "sourceDatastores": Array [],
+  "targetDatastores": Array [],
+}
+`;
+
+exports[`fetching target datastores is rejected 1`] = `
+Object {
+  "errorSourceDatastores": null,
+  "errorTargetDatastores": "error",
+  "isFetchingSourceDatastores": false,
+  "isFetchingTargetDatastores": false,
+  "isRejectedSourceDatastores": false,
+  "isRejectedTargetDatastores": true,
+  "sourceDatastores": Array [],
+  "targetDatastores": Array [],
+}
+`;
+
+exports[`sets default state 1`] = `
+Object {
+  "errorSourceDatastores": null,
+  "errorTargetDatastores": null,
+  "isFetchingSourceDatastores": false,
+  "isFetchingTargetDatastores": false,
+  "isRejectedSourceDatastores": false,
+  "isRejectedTargetDatastores": false,
+  "sourceDatastores": Array [],
+  "targetDatastores": Array [],
+}
+`;
