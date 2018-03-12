@@ -46,10 +46,29 @@ class MappingWizard extends React.Component {
       setTransformationsBodyAction,
       showWarningModalAction,
       hideWarningModalAction,
-      warningModalVisible
+      warningModalVisible,
+      showAlertAction,
+      hideAlertAction
     } = this.props;
 
-    if (activeStepIndex === 2 && !warningModalVisible) {
+    if (activeStepIndex === 0) {
+      if (mappingWizardGeneralStep.asyncErrors) {
+        showAlertAction(
+          sprintf(
+            __('Infrastructure mapping %s already exists'),
+            mappingWizardGeneralStep.values.name
+          )
+        );
+      } else {
+        hideAlertAction();
+        this.setState({
+          activeStepIndex: Math.min(
+            activeStepIndex + 1,
+            mappingWizardSteps.length - 1
+          )
+        });
+      }
+    } else if (activeStepIndex === 2 && !warningModalVisible) {
       const { clusterMappings } = mappingWizardClustersStep.values;
       const { datastoresMappings } = mappingWizardDatastoresStep.values;
 
@@ -263,6 +282,7 @@ MappingWizard.propTypes = {
   sourceClustersWithoutMappings: PropTypes.array,
   alertText: PropTypes.string,
   alertType: PropTypes.string,
+  showAlertAction: PropTypes.func,
   hideAlertAction: PropTypes.func
 };
 MappingWizard.defaultProps = {
