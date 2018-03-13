@@ -120,8 +120,8 @@ class CSVDropzoneField extends React.Component {
       <React.Fragment>
         <Dropzone
           accept=".csv"
-          className={cx('csv-upload-dropzone')}
-          activeClassName={cx('active')}
+          className="csv-upload-dropzone"
+          activeClassName="active"
           onDrop={this.onFileDrop}
           disableClick
           disablePreview
@@ -133,9 +133,7 @@ class CSVDropzoneField extends React.Component {
             <Toolbar.RightContent>
               <Button
                 bsStyle="primary"
-                onClick={() => {
-                  dropzoneRef.open();
-                }}
+                onClick={dropzoneRef.open}
               >
                 {__('Browse...')}
               </Button>
@@ -154,8 +152,8 @@ class CSVDropzoneField extends React.Component {
               className="confirm-warning-icon"
             />
           }
-          className={cx('inner-modal-dialog')}
-          backdropClassName={cx('inner-modal-backdrop')}
+          className="inner-modal-dialog"
+          backdropClassName="inner-modal-backdrop"
           body={
             <React.Fragment>
               <p>
