@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { bindMethods } from 'patternfly-react';
 
-import DualPaneMapper from '../../DualPaneMapper/DualPaneMapper';
-import DualPaneMapperList from '../../DualPaneMapper/DualPaneMapperList';
-import DualPaneMapperCount from '../../DualPaneMapper/DualPaneMapperCount';
-import DualPaneMapperListItem from '../../DualPaneMapper/DualPaneMapperListItem';
-import ClustersStepTreeView from './ClustersStepTreeView';
+import DualPaneMapper from '../../../DualPaneMapper/DualPaneMapper';
+import DualPaneMapperList from '../../../DualPaneMapper/DualPaneMapperList';
+import DualPaneMapperCount from '../../../DualPaneMapper/DualPaneMapperCount';
+import DualPaneMapperListItem from '../../../DualPaneMapper/DualPaneMapperListItem';
+import ClustersStepTreeView from '../ClustersStepTreeView';
 
-import { sourceClustersFilter } from '../MappingWizardClustersStepSelectors';
+import { sourceClustersFilter } from '../../MappingWizardClustersStepSelectors';
 
 class ClustersStepForm extends React.Component {
   constructor(props) {
