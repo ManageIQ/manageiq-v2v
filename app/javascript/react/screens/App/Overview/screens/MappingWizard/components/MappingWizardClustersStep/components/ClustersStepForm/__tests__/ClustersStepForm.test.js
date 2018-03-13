@@ -9,8 +9,6 @@ import {
 
 import ClustersStepForm from '../ClustersStepForm';
 
-let isFetchingSourceClusters;
-let isFetchingTargetClusters;
 let onChange;
 let props;
 beforeEach(() => {
