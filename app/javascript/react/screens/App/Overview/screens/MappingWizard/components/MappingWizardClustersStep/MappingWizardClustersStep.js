@@ -4,7 +4,7 @@ import { Button, noop, bindMethods } from 'patternfly-react';
 import { Field, reduxForm } from 'redux-form';
 import { length } from 'redux-form-validators';
 
-import ClustersStepForm from './components/ClustersStepForm';
+import ClustersStepForm from './components/ClustersStepForm/ClustersStepForm';
 
 class MappingWizardClustersStep extends React.Component {
   constructor(props) {

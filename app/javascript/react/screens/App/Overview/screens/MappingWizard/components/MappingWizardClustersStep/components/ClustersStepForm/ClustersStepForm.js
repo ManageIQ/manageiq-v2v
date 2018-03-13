@@ -2,13 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { bindMethods } from 'patternfly-react';
 
-import DualPaneMapper from '../../DualPaneMapper/DualPaneMapper';
-import DualPaneMapperList from '../../DualPaneMapper/DualPaneMapperList';
-import DualPaneMapperCount from '../../DualPaneMapper/DualPaneMapperCount';
-import DualPaneMapperListItem from '../../DualPaneMapper/DualPaneMapperListItem';
-import ClustersStepTreeView from './ClustersStepTreeView';
+import DualPaneMapper from '../../../DualPaneMapper/DualPaneMapper';
+import DualPaneMapperList from '../../../DualPaneMapper/DualPaneMapperList';
+import DualPaneMapperCount from '../../../DualPaneMapper/DualPaneMapperCount';
+import DualPaneMapperListItem from '../../../DualPaneMapper/DualPaneMapperListItem';
+import ClustersStepTreeView from '../ClustersStepTreeView';
 
-import { sourceClustersFilter } from '../MappingWizardClustersStepSelectors';
+import { updateMapping, createNewMapping } from './helpers';
+import { sourceClustersFilter } from '../../MappingWizardClustersStepSelectors';
 
 class ClustersStepForm extends React.Component {
   constructor(props) {
@@ -56,63 +57,34 @@ class ClustersStepForm extends React.Component {
   }
 
   addMapping() {
-    const { input } = this.props;
-    this.setState(prevState => {
-      const clustersStepMappings = input.value;
+    const { input: { value: clustersStepMappings, onChange } } = this.props;
+    const { selectedTargetCluster, selectedSourceClusters } = this.state;
 
-      const mappingExistsForSelectedTargetCluster = clustersStepMappings.some(
-        targetClusterWithSourceClusters =>
-          targetClusterWithSourceClusters.id ===
-          prevState.selectedTargetCluster.id
+    const mappingExistsForSelectedTargetCluster = clustersStepMappings.some(
+      clustersStepMapping => clustersStepMapping.id === selectedTargetCluster.id
+    );
+
+    if (mappingExistsForSelectedTargetCluster) {
+      const updatedMappings = clustersStepMappings.map(clustersStepMapping =>
+        updateMapping(
+          clustersStepMapping,
+          selectedTargetCluster,
+          selectedSourceClusters
+        )
       );
 
-      if (mappingExistsForSelectedTargetCluster) {
-        const updatedMappings = clustersStepMappings.map(
-          targetClusterWithSourceClusters => {
-            if (
-              targetClusterWithSourceClusters.id ===
-              prevState.selectedTargetCluster.id
-            ) {
-              return {
-                ...targetClusterWithSourceClusters,
-                nodes: targetClusterWithSourceClusters.nodes.concat(
-                  prevState.selectedSourceClusters.map(sourceCluster => ({
-                    ...sourceCluster,
-                    text: sourceCluster.name,
-                    icon: 'fa fa-file-o'
-                  }))
-                )
-              };
-            }
-            return targetClusterWithSourceClusters;
-          }
-        );
-        input.onChange(updatedMappings);
-      } else {
-        const targetClusterWithSourceClusters = {
-          ...prevState.selectedTargetCluster,
-          text: prevState.selectedTargetCluster.name,
-          state: {
-            expanded: true
-          },
-          selectable: true,
-          selected: false,
-          nodes: prevState.selectedSourceClusters.map(sourceCluster => ({
-            ...sourceCluster,
-            text: sourceCluster.name,
-            icon: 'fa fa-file-o'
-          }))
-        };
-        input.onChange([
-          ...clustersStepMappings,
-          targetClusterWithSourceClusters
-        ]);
-      }
-      return {
-        selectedTargetCluster: null,
-        selectedSourceClusters: []
-      };
-    });
+      onChange(updatedMappings);
+    } else {
+      onChange([
+        ...clustersStepMappings,
+        createNewMapping(selectedTargetCluster, selectedSourceClusters)
+      ]);
+    }
+
+    this.setState(() => ({
+      selectedTargetCluster: null,
+      selectedSourceClusters: []
+    }));
   }
 
   selectMapping(selectedMapping) {
