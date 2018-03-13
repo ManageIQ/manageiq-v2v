@@ -1,7 +1,7 @@
 import React from 'react';
 import { i18nProviderWrapperFactory } from '../common/i18nProviderWrapperFactory';
 
-const { componentRegistry } = window.MiqReact;
+const { componentRegistry } = window.ManageIQ.react;
 
 // extends current MIQ componentRegistry with i18nProviderWrapper
 componentRegistry.markup = (name, data, store) => {
