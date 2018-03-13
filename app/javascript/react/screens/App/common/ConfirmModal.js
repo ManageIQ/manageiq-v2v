@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Modal, Button, Grid, noop } from 'patternfly-react';
 
+// Note: This is in the process of being moved to `patternfly-react`.
+// TODO: Replace this implementation with an import
+
 const ConfirmModal = props => {
   const {
     icon,
