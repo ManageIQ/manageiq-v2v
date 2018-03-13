@@ -1,0 +1,128 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`fetching source networks is fulfilled 1`] = `
+Object {
+  "errorSourceNetworks": null,
+  "errorTargetNetworks": null,
+  "isFetchingSourceNetworks": false,
+  "isFetchingTargetNetworks": false,
+  "isRejectedSourceNetworks": false,
+  "isRejectedTargetNetworks": false,
+  "sourceNetworks": Array [
+    Object {
+      "allow_promiscuous": null,
+      "computed_allow_promiscuous": null,
+      "computed_forged_transmits": null,
+      "computed_mac_changes": null,
+      "created_on": "2017-06-01T04:24:18Z",
+      "forged_transmits": null,
+      "href": "http://localhost:3000/api/lans/10000000000007",
+      "id": "1-1",
+      "mac_changes": null,
+      "name": "VMWareCluster1-vm_network1",
+      "parent_id": null,
+      "switch_id": "10000000000004",
+      "tag": "23",
+      "uid_ems": "6b5aeda1-18b5-4c15-a194-40ded9004ba3",
+      "updated_on": "2017-06-01T04:24:18Z",
+    },
+  ],
+  "targetNetworks": Array [],
+}
+`;
+
+exports[`fetching source networks is pending 1`] = `
+Object {
+  "errorSourceNetworks": null,
+  "errorTargetNetworks": null,
+  "isFetchingSourceNetworks": true,
+  "isFetchingTargetNetworks": false,
+  "isRejectedSourceNetworks": false,
+  "isRejectedTargetNetworks": false,
+  "sourceNetworks": Array [],
+  "targetNetworks": Array [],
+}
+`;
+
+exports[`fetching source networks is rejected 1`] = `
+Object {
+  "errorSourceNetworks": "error",
+  "errorTargetNetworks": null,
+  "isFetchingSourceNetworks": false,
+  "isFetchingTargetNetworks": false,
+  "isRejectedSourceNetworks": true,
+  "isRejectedTargetNetworks": false,
+  "sourceNetworks": Array [],
+  "targetNetworks": Array [],
+}
+`;
+
+exports[`fetching target networks is fulfilled 1`] = `
+Object {
+  "errorSourceNetworks": null,
+  "errorTargetNetworks": null,
+  "isFetchingSourceNetworks": false,
+  "isFetchingTargetNetworks": false,
+  "isRejectedSourceNetworks": false,
+  "isRejectedTargetNetworks": false,
+  "sourceNetworks": Array [],
+  "targetNetworks": Array [
+    Object {
+      "allow_promiscuous": null,
+      "computed_allow_promiscuous": null,
+      "computed_forged_transmits": null,
+      "computed_mac_changes": null,
+      "created_on": "2017-06-01T04:24:18Z",
+      "forged_transmits": null,
+      "href": "http://localhost:3000/api/lans/10000000000019",
+      "id": "1-1",
+      "mac_changes": null,
+      "name": "RHV Cluster 1 - ovirtmgmt1",
+      "parent_id": null,
+      "switch_id": "10000000000008",
+      "tag": null,
+      "uid_ems": "00000000-0000-0000-0000-000000000009",
+      "updated_on": "2017-06-01T04:24:18Z",
+    },
+  ],
+}
+`;
+
+exports[`fetching target networks is pending 1`] = `
+Object {
+  "errorSourceNetworks": null,
+  "errorTargetNetworks": null,
+  "isFetchingSourceNetworks": false,
+  "isFetchingTargetNetworks": true,
+  "isRejectedSourceNetworks": false,
+  "isRejectedTargetNetworks": false,
+  "sourceNetworks": Array [],
+  "targetNetworks": Array [],
+}
+`;
+
+exports[`fetching target networks is rejected 1`] = `
+Object {
+  "errorSourceNetworks": null,
+  "errorTargetNetworks": "error",
+  "isFetchingSourceNetworks": false,
+  "isFetchingTargetNetworks": false,
+  "isRejectedSourceNetworks": false,
+  "isRejectedTargetNetworks": true,
+  "sourceNetworks": Array [],
+  "targetNetworks": Array [],
+}
+`;
+
+exports[`sets default state 1`] = `
+Object {
+  "errorSourceNetworks": null,
+  "errorTargetNetworks": null,
+  "isFetchingSourceNetworks": false,
+  "isFetchingTargetNetworks": false,
+  "isRejectedSourceNetworks": false,
+  "isRejectedTargetNetworks": false,
+  "sourceNetworks": Array [],
+  "targetNetworks": Array [],
+}
+`;

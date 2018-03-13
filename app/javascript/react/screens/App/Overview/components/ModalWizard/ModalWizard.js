@@ -2,7 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { noop, Modal, Wizard, Icon, Button } from 'patternfly-react';
 import { connect } from 'react-redux';
-import { find } from 'lodash';
+
+// TODO we should lift this application-specific stuff out of this generalized component file.
+const reduxFormMap = {
+  [__('Infrastructure Mapping Wizard')]: [
+    'mappingWizardGeneralStep',
+    'mappingWizardClustersStep'
+  ],
+  [__('Migration Plan Wizard')]: ['planWizardGeneralStep', 'planWizardCSVStep']
+};
+
+// NOTE: This may be a good component to move up to patternfly-react.
+// Let's try to avoid putting any application-specific code in here.
 
 const ModalWizard = props => {
   const {
@@ -16,16 +27,18 @@ const ModalWizard = props => {
     activeStep,
     numSteps,
     goToStep,
+    stepButtonsDisabled,
     children,
     formContainer
   } = props;
   const onFirstStep = activeStepIndex === 0;
   const onFinalStep = activeStepIndex === numSteps - 1;
 
-  const formHasErrors =
-    find(formContainer, form => form.syncErrors) !== undefined;
-
-  const disableNextStep = formHasErrors;
+  const currentReduxForm = reduxFormMap[title][activeStepIndex];
+  const disableNextStep =
+    formContainer &&
+    Object.prototype.hasOwnProperty.call(formContainer, currentReduxForm) &&
+    !!formContainer[currentReduxForm].syncErrors;
 
   return (
     <Modal
@@ -52,6 +65,7 @@ const ModalWizard = props => {
               activeStepIndex,
               activeStep,
               goToStep,
+              stepButtonsDisabled,
               disableNextStep
             })
           )}
@@ -89,6 +103,7 @@ ModalWizard.propTypes = {
   activeStep: PropTypes.string,
   numSteps: PropTypes.number,
   goToStep: PropTypes.func,
+  stepButtonsDisabled: PropTypes.bool,
   children: PropTypes.node,
   formContainer: PropTypes.object
 };
@@ -103,7 +118,7 @@ ModalWizard.defaultProps = {
   activeStepIndex: 0,
   activeStep: '1',
   numSteps: 1,
-  goToStep: PropTypes.func,
+  stepButtonsDisabled: false,
   children: null
 };
 

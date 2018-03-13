@@ -8,7 +8,8 @@
     "prettier": "prettier --single-quote --trailing-comma=none --write 'app/javascript/**/*.js' '*.{js,json}'",
     "build": "yarn run prettier && yarn run lint",
     "stylelint": "stylelint 'app/**/*.scss'",
-    "lint": "eslint --fix app/javascript"
+    "lint": "eslint app/javascript",
+    "lint:fix": "eslint --fix app/javascript"
   },
   "devDependencies": {
     "axios-mock-adapter": "^1.10.0",
@@ -16,11 +17,15 @@
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.1",
     "babel-jest": "^22.0.0",
+    "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-export-extensions": "^6.22.0",
     "babel-plugin-transform-object-assign": "^6.8.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.0",
+    "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-1": "^6.24.1",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "enzyme-to-json": "^3.3.0",
@@ -37,6 +42,7 @@
     "eslint-plugin-promise": "^3.6.0",
     "eslint-plugin-react": "^7.5.1",
     "eslint-plugin-standard": "~2.0.1",
+    "identity-obj-proxy": "^3.0.0",
     "jest": "^22.0.6",
     "jest-cli": "^22.0.0",
     "prettier": "^1.9.2",
@@ -50,15 +56,18 @@
   "dependencies": {
     "axios": "^0.17.1",
     "classnames": "^2.2.5",
+    "csv": "^2.0.0",
     "cx": "^18.1.11",
     "intl": "~1.2.5",
-    "lodash": "^4.17.5",
+    "moment": "^2.20.1",
+    "numeral": "^2.0.6",
     "patternfly": "^3.35.1",
-    "patternfly-react": "^1.7.0",
+    "patternfly-react": "^1.11.0",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
     "react-bootstrap": "^0.31.5",
     "react-dom": "^16.2.0",
+    "react-dropzone": "^4.2.8",
     "react-equalizer": "^1.3.0",
     "react-intl": "^2.4.0",
     "react-redux": "^5.0.6",
@@ -75,7 +84,10 @@
     "setupFiles": [
       "raf/polyfill",
       "./.jest-setup.js"
-    ]
+    ],
+    "moduleNameMapper": {
+      "^.+\\.(png|gif|css|scss)$": "identity-obj-proxy"
+    }
   },
   "license": "Apache-2.0"
 }

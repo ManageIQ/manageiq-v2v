@@ -2,8 +2,33 @@
 
 exports[`Mapping Wizard integration test should mount the MappingWizard with mapStateToProps reduced 1`] = `
 Object {
+  "hideAlertAction": [Function],
   "hideMappingWizard": false,
   "hideMappingWizardAction": [Function],
+  "hideWarningModalAction": [Function],
+  "mappingWizardClustersStep": Object {},
+  "mappingWizardDatastoresStep": Object {},
   "mappingWizardExitedAction": [Function],
+  "mappingWizardGeneralStep": Object {
+    "registeredFields": Object {
+      "description": Object {
+        "count": 1,
+        "name": "description",
+        "type": "Field",
+      },
+      "name": Object {
+        "count": 1,
+        "name": "name",
+        "type": "Field",
+      },
+    },
+    "syncErrors": Object {
+      "name": "Required",
+    },
+  },
+  "mappingWizardNetworksStep": Object {},
+  "setTransformationsBodyAction": [Function],
+  "showAlertAction": [Function],
+  "showWarningModalAction": [Function],
 }
 `;

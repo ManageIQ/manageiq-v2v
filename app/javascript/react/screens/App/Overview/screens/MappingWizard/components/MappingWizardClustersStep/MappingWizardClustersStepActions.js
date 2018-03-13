@@ -1,18 +1,16 @@
 import URI from 'urijs';
-import API from '../../../../../../../../common/API';
+import API, { globalMockMode } from '../../../../../../../../common/API';
 import {
   FETCH_V2V_SOURCE_CLUSTERS,
-  FETCH_V2V_TARGET_CLUSTERS,
-  REMOVE_V2V_TARGET_CLUSTER,
-  REMOVE_V2V_SOURCE_CLUSTERS,
-  ADD_V2V_TARGET_CLUSTER,
-  ADD_V2V_SOURCE_CLUSTERS
+  FETCH_V2V_TARGET_CLUSTERS
 } from './MappingWizardClustersStepConstants';
 
 import {
   requestSourceClustersData,
   requestTargetClustersData
 } from './mappingWizardClustersStep.fixtures';
+
+const mockMode = globalMockMode;
 
 const _getSourceClustersActionCreator = url => dispatch =>
   dispatch({
@@ -24,10 +22,12 @@ const _getSourceClustersActionCreator = url => dispatch =>
 
     // to enable UI development without the backend ready, i'm catching the error
     // and passing some mock data thru the FULFILLED action after the REJECTED action is finished.
-    dispatch({
-      type: `${FETCH_V2V_SOURCE_CLUSTERS}_FULFILLED`,
-      payload: requestSourceClustersData.response
-    });
+    if (mockMode) {
+      dispatch({
+        type: `${FETCH_V2V_SOURCE_CLUSTERS}_FULFILLED`,
+        payload: requestSourceClustersData.response
+      });
+    }
   });
 
 export const fetchSourceClustersAction = url => {
@@ -45,37 +45,15 @@ const _getTargetClustersActionCreator = url => dispatch =>
 
     // to enable UI development without the backend ready, i'm catching the error
     // and passing some mock data thru the FULFILLED action after the REJECTED action is finished.
-    dispatch({
-      type: `${FETCH_V2V_TARGET_CLUSTERS}_FULFILLED`,
-      payload: requestTargetClustersData.response
-    });
+    if (mockMode) {
+      dispatch({
+        type: `${FETCH_V2V_TARGET_CLUSTERS}_FULFILLED`,
+        payload: requestTargetClustersData.response
+      });
+    }
   });
 
 export const fetchTargetClustersAction = url => {
   const uri = new URI(url);
   return _getTargetClustersActionCreator(uri.toString());
 };
-
-export const removeTargetCluster = targetClusterToRemove => dispatch =>
-  dispatch({
-    type: REMOVE_V2V_TARGET_CLUSTER,
-    targetClusterToRemove
-  });
-
-export const removeSourceClusters = sourceClustersToRemove => dispatch =>
-  dispatch({
-    type: REMOVE_V2V_SOURCE_CLUSTERS,
-    sourceClustersToRemove
-  });
-
-export const addTargetCluster = targetClusterToAdd => dispatch =>
-  dispatch({
-    type: ADD_V2V_TARGET_CLUSTER,
-    targetClusterToAdd
-  });
-
-export const addSourceClusters = sourceClustersToAdd => dispatch =>
-  dispatch({
-    type: ADD_V2V_SOURCE_CLUSTERS,
-    sourceClustersToAdd
-  });

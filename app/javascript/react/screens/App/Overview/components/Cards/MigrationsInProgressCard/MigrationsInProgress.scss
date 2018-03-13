@@ -1,0 +1,21 @@
+.card-pf-multi-card-container {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  .card-pf-heading h3 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .card-pf-body > .message-text {
+    font-size: 16px;
+    margin-left: 5px;
+  }
+}
+
+.active-migration-elapsed-time {
+  .fa,
+  .pficon {
+    margin-right: 5px;
+  }
+}

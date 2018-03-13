@@ -1,0 +1,1 @@
+export const V2V_SET_PLANS_BODY = 'V2V_SET_PLANS_BODY';

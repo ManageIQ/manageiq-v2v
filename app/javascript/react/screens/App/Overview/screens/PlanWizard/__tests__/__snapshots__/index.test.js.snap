@@ -4,6 +4,37 @@ exports[`Plan Wizard integration test should mount the PlanWizard with mapStateT
 Object {
   "hidePlanWizard": false,
   "hidePlanWizardAction": [Function],
+  "planWizardCSVStep": Object {},
   "planWizardExitedAction": [Function],
+  "planWizardGeneralStep": Object {
+    "initial": Object {
+      "infrastructure_mapping": undefined,
+    },
+    "registeredFields": Object {
+      "description": Object {
+        "count": 1,
+        "name": "description",
+        "type": "Field",
+      },
+      "infrastructure_mapping": Object {
+        "count": 1,
+        "name": "infrastructure_mapping",
+        "type": "Field",
+      },
+      "name": Object {
+        "count": 1,
+        "name": "name",
+        "type": "Field",
+      },
+    },
+    "syncErrors": Object {
+      "infrastructure_mapping": "Required",
+      "name": "Required",
+    },
+    "values": Object {
+      "infrastructure_mapping": undefined,
+    },
+  },
+  "setPlansBodyAction": [Function],
 }
 `;

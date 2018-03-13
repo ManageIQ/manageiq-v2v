@@ -22,13 +22,11 @@ module.exports = {
       'error',
       { singleQuote: true, trailingComma: 'none' }
     ],
-    'react/jsx-filename-extension': 'off',
-    'react/prefer-stateless-function': 'warn',
-    'react/forbid-prop-types': 'off',
-    'react/require-default-props': 'off',
+    camelcase: 'off',
     'import/prefer-default-export': 'off',
     'no-underscore-dangle': 'off',
     'no-param-reassign': 'off',
+    'no-restricted-syntax': 'off',
     'no-return-assign': 'off',
     'no-unused-vars': [
       'error',
@@ -43,7 +41,12 @@ module.exports = {
         // Allow importing devDependencies like @storybook
         devDependencies: true
       }
-    ]
+    ],
+    'no-nested-ternary': 'off',
+    'react/jsx-filename-extension': 'off',
+    'react/prefer-stateless-function': 'warn',
+    'react/forbid-prop-types': 'off',
+    'react/require-default-props': 'off'
   },
   parser: 'babel-eslint'
 };

@@ -36,49 +36,10 @@ exports[`Overview component renders the overview 1`] = `
             md={6}
             xs={12}
           >
-            <div
-              className="card-pf"
-            >
-              <div
-                className="card-pf-body"
-              >
-                <div
-                  className="blank-slate-pf"
-                >
-                  <EmptyStateIcon
-                    className=""
-                    name="add-circle-o"
-                    type="pf"
-                  />
-                  <EmptyStateTitle
-                    className=""
-                  >
-                    Infrastructure Mappings
-                  </EmptyStateTitle>
-                  <EmptyStateInfo
-                    className=""
-                  >
-                    Create mapping to later be used by a migration plan.
-                  </EmptyStateInfo>
-                  <EmptyStateAction
-                    className=""
-                    secondary={false}
-                  >
-                    <Button
-                      active={false}
-                      block={false}
-                      bsClass="btn"
-                      bsSize="large"
-                      bsStyle="primary"
-                      disabled={false}
-                      onClick={[MockFunction]}
-                    >
-                      Create Infrastructure Mapping
-                    </Button>
-                  </EmptyStateAction>
-                </div>
-              </div>
-            </div>
+            <InfrastructureMappingCard
+              cardRef={[Function]}
+              showMappingWizardAction={[MockFunction]}
+            />
           </Col>
           <Col
             bsClass="col"
@@ -86,49 +47,11 @@ exports[`Overview component renders the overview 1`] = `
             md={6}
             xs={12}
           >
-            <div
-              className="card-pf"
-            >
-              <div
-                className="card-pf-body"
-              >
-                <div
-                  className="blank-slate-pf"
-                >
-                  <EmptyStateIcon
-                    className=""
-                    name="add-circle-o"
-                    type="pf"
-                  />
-                  <EmptyStateTitle
-                    className=""
-                  >
-                    Migration Plans
-                  </EmptyStateTitle>
-                  <EmptyStateInfo
-                    className=""
-                  >
-                    Create a migration plan to start migrating.
-                  </EmptyStateInfo>
-                  <EmptyStateAction
-                    className=""
-                    secondary={false}
-                  >
-                    <Button
-                      active={false}
-                      block={false}
-                      bsClass="btn"
-                      bsSize="large"
-                      bsStyle="primary"
-                      disabled={false}
-                      onClick={[MockFunction]}
-                    >
-                      Create Migration Plan
-                    </Button>
-                  </EmptyStateAction>
-                </div>
-              </div>
-            </div>
+            <MigrationPlansCard
+              cardRef={[Function]}
+              showPlanDisabled={true}
+              showPlanWizardAction={[MockFunction]}
+            />
           </Col>
         </Equalizer>
       </Row>
@@ -141,24 +64,7 @@ exports[`Overview component renders the overview 1`] = `
           componentClass="div"
           xs={12}
         >
-          <div
-            className="card-pf"
-          >
-            <div
-              className="card-pf-heading"
-            >
-              <h2>
-                0 Migrations in Progress
-              </h2>
-            </div>
-            <div
-              className="card-pf-body"
-            >
-              <p>
-                content
-              </p>
-            </div>
-          </div>
+          <Connect(MigrationsInProgressCard) />
         </Col>
       </Row>
       <Row
@@ -170,24 +76,7 @@ exports[`Overview component renders the overview 1`] = `
           componentClass="div"
           xs={12}
         >
-          <div
-            className="card-pf"
-          >
-            <div
-              className="card-pf-heading"
-            >
-              <h2>
-                0 Completed Migrations
-              </h2>
-            </div>
-            <div
-              className="card-pf-body"
-            >
-              <p>
-                content
-              </p>
-            </div>
-          </div>
+          <Connect(MigrationsCompletedCard) />
           <div
             className="spacer"
           />

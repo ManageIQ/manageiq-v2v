@@ -1,4 +1,8 @@
 @import './screens/MappingWizard/MappingWizard.scss';
+@import './screens/PlanWizard/components/PlanWizardResultsStep/PlanWizardResultsStep.scss';
+@import 'components/Cards/MigrationsInProgressCard/MigrationsInProgress.scss';
+@import 'components/Cards/MigrationsCompletedCard/MigrationsCompleted.scss';
+@import 'components/ModalWizard/ModalWizard.scss';
 
 .card-pf-body .blank-slate-pf {
   background-color: #fff;
@@ -7,5 +11,21 @@
 @media (min-width: 768px) {
   .card-pf-body .blank-slate-pf {
     padding: 20px 20px;
+  }
+}
+
+.csv-upload-dropzone {
+  border: 3px solid #fff;
+}
+
+.csv-upload-dropzone.active {
+  border: 3px dashed #9b9b9b; // Matches upload icon color
+}
+
+.cards-pf .blank-slate-pf {
+  border: none;
+
+  .blank-slate-pf-icon {
+    color: #d1d1d1;
   }
 }

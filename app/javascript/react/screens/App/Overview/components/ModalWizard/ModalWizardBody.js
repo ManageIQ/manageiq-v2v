@@ -1,12 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 import {
   bindMethods,
   noop,
   EmptyState,
   Spinner,
-  Wizard
+  Wizard,
+  Alert
 } from 'patternfly-react';
+
+// NOTE: This may be a good component to move up to patternfly-react.
+// Let's try to avoid putting any application-specific code in here.
 
 class ModalWizardBody extends React.Component {
   constructor() {
@@ -14,15 +19,15 @@ class ModalWizardBody extends React.Component {
     bindMethods(this, ['onStepClick', 'stepProps', 'renderLoading']);
   }
 
-  onStepClick(stepIndex) {
-    const { steps, goToStep, disableNextStep } = this.props;
-    if (disableNextStep) return;
+  onStepClick(stepIndex, disableGoto) {
+    const { steps, goToStep, disableNextStep, activeStepIndex } = this.props;
+    const nextStepClicked = stepIndex === activeStepIndex + 1;
+    if (disableGoto || (nextStepClicked && disableNextStep)) return;
     const step = steps[stepIndex];
     goToStep(stepIndex);
     if (step && step.onClick) {
       step.onClick();
     }
-    console.log('on step index click: ', stepIndex);
   }
 
   stepProps(stepIndex, title) {
@@ -58,7 +63,15 @@ class ModalWizardBody extends React.Component {
   }
 
   render() {
-    const { loaded, steps, activeStepIndex } = this.props;
+    const {
+      loaded,
+      steps,
+      activeStepIndex,
+      alertText,
+      alertType,
+      hideAlertAction,
+      stepButtonsDisabled
+    } = this.props;
     const step = steps[activeStepIndex];
 
     if (!loaded) {
@@ -68,19 +81,42 @@ class ModalWizardBody extends React.Component {
     const renderedStep =
       step && step.render && step.render(activeStepIndex, step.title);
 
+    const alertClasses = cx('modal-wizard-alert--alert', {
+      'is-visible': alertText
+    });
+
     return (
       <React.Fragment>
+        <div className="modal-wizard-alert">
+          <Alert
+            className={alertClasses}
+            type={alertType}
+            onDismiss={hideAlertAction}
+          >
+            {alertText}
+          </Alert>
+        </div>
         <Wizard.Steps
-          steps={steps.map((stepObj, index) => (
-            <Wizard.Step
-              {...this.stepProps(index, stepObj.title)}
-              onClick={() => this.onStepClick(index)}
-            />
-          ))}
+          className={cx({ 'step-buttons-disabled': stepButtonsDisabled })}
+          steps={steps.map((stepObj, index) => {
+            const disabled = stepButtonsDisabled || stepObj.disabled;
+            return (
+              <Wizard.Step
+                {...this.stepProps(index, stepObj.title)}
+                onClick={() => this.onStepClick(index, disabled)}
+                className={disabled && cx('is-disabled')}
+              />
+            );
+          })}
         />
         <Wizard.Row>
           <Wizard.Main>
-            <Wizard.Contents>{renderedStep}</Wizard.Contents>
+            <Wizard.Contents
+              stepIndex={activeStepIndex}
+              activeStepIndex={activeStepIndex}
+            >
+              {renderedStep}
+            </Wizard.Contents>
           </Wizard.Main>
         </Wizard.Row>
       </React.Fragment>
@@ -103,7 +139,11 @@ ModalWizardBody.propTypes = {
   activeStep: PropTypes.string,
   onClick: PropTypes.func,
   goToStep: PropTypes.func,
-  disableNextStep: PropTypes.bool
+  stepButtonsDisabled: PropTypes.bool,
+  disableNextStep: PropTypes.bool,
+  alertText: PropTypes.string,
+  alertType: PropTypes.string,
+  hideAlertAction: PropTypes.func
 };
 
 ModalWizardBody.defaultProps = {
@@ -115,7 +155,9 @@ ModalWizardBody.defaultProps = {
   activeStep: '1',
   onClick: noop,
   goToStep: noop,
-  disableNextStep: true
+  stepButtonsDisabled: false,
+  disableNextStep: true,
+  hideAlertAction: noop
 };
 
 export default ModalWizardBody;

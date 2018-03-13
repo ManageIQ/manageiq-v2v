@@ -4,6 +4,7 @@ import cx from 'classnames';
 
 const DualPaneMapperListItem = ({
   item,
+  text,
   selected,
   handleClick,
   handleKeyPress
@@ -20,7 +21,7 @@ const DualPaneMapperListItem = ({
       role="option"
     >
       <div className="dual-pane-mapper-info">
-        <span className="dual-pane-mapper-item-container">{item.name}</span>
+        <span className="dual-pane-mapper-item-container">{text}</span>
         <span className="dual-pane-mapper-item-select-indicator fa fa-check" />
       </div>
     </div>
@@ -29,6 +30,7 @@ const DualPaneMapperListItem = ({
 
 DualPaneMapperListItem.propTypes = {
   item: PropTypes.object,
+  text: PropTypes.string,
   selected: PropTypes.bool,
   handleClick: PropTypes.func,
   handleKeyPress: PropTypes.func

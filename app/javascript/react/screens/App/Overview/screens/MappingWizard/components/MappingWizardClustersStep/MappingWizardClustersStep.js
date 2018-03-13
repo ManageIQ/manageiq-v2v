@@ -1,12 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { noop } from 'patternfly-react';
+import { Button, noop, bindMethods } from 'patternfly-react';
 import { Field, reduxForm } from 'redux-form';
+import { length } from 'redux-form-validators';
 
-import ClustersStepForm from './components/ClustersStepForm';
+import ClustersStepForm from './components/ClustersStepForm/ClustersStepForm';
 
 class MappingWizardClustersStep extends React.Component {
+  constructor(props) {
+    super(props);
+    bindMethods(this, ['fetchClusters']);
+  }
   componentDidMount() {
+    this.fetchClusters();
+  }
+
+  fetchClusters() {
     const {
       fetchSourceClustersUrl,
       fetchSourceClustersAction,
@@ -24,27 +33,39 @@ class MappingWizardClustersStep extends React.Component {
       sourceClusters,
       isFetchingTargetClusters,
       targetClusters,
-      removeSourceClusters,
-      removeTargetCluster,
-      addTargetCluster,
-      addSourceClusters
+      isRejectedSourceClusters,
+      isRejectedTargetClusters
     } = this.props;
 
-    if (!isFetchingSourceClusters && !isFetchingTargetClusters) {
+    if (isRejectedSourceClusters || isRejectedTargetClusters) {
       return (
-        <Field
-          name="clusterMappings"
-          component={ClustersStepForm}
-          sourceClusters={sourceClusters}
-          targetClusters={targetClusters}
-          removeSourceClusters={removeSourceClusters}
-          removeTargetCluster={removeTargetCluster}
-          addTargetCluster={addTargetCluster}
-          addSourceClusters={addSourceClusters}
-        />
+        <div className="wizard-pf-complete blank-slate-pf">
+          <div className="wizard-pf-success-icon">
+            <span className="pficon pficon-error-circle-o" />
+          </div>
+          <h3 className="blank-slate-pf-main-action">
+            {__('Error Retrieving Clusters')}
+          </h3>
+          <p className="blank-slate-pf-secondary-action">
+            {__("We're sorry, something went wrong. Please try again.")}
+          </p>
+          <Button bsStyle="primary" onClick={this.fetchClusters}>
+            {__('Retry')}
+          </Button>
+        </div>
       );
     }
-    return null;
+    return (
+      <Field
+        name="clusterMappings"
+        component={ClustersStepForm}
+        sourceClusters={sourceClusters}
+        targetClusters={targetClusters}
+        validate={[length({ min: 1 })]}
+        isFetchingSourceClusters={isFetchingSourceClusters}
+        isFetchingTargetClusters={isFetchingTargetClusters}
+      />
+    );
   }
 }
 
@@ -57,10 +78,8 @@ MappingWizardClustersStep.propTypes = {
   targetClusters: PropTypes.arrayOf(PropTypes.object),
   isFetchingSourceClusters: PropTypes.bool,
   isFetchingTargetClusters: PropTypes.bool,
-  removeTargetCluster: PropTypes.func,
-  removeSourceClusters: PropTypes.func,
-  addTargetCluster: PropTypes.func,
-  addSourceClusters: PropTypes.func
+  isRejectedSourceClusters: PropTypes.bool,
+  isRejectedTargetClusters: PropTypes.bool
 };
 MappingWizardClustersStep.defaultProps = {
   fetchSourceClustersUrl: '',
@@ -69,10 +88,8 @@ MappingWizardClustersStep.defaultProps = {
   fetchTargetClustersAction: noop,
   isFetchingSourceClusters: true,
   isFetchingTargetClusters: true,
-  removeTargetCluster: noop,
-  removeSourceClusters: noop,
-  addTargetCluster: noop,
-  addSourceClusters: noop
+  isRejectedSourceClusters: false,
+  isRejectedTargetClusters: false
 };
 
 export default reduxForm({

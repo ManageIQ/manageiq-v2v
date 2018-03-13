@@ -1,66 +1,66 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { noop } from 'patternfly-react';
 import ModalWizard from '../../components/ModalWizard';
 import componentRegistry from '../../../../../../components/componentRegistry';
 import MappingWizardGeneralStep from '../MappingWizard/components/MappingWizardGeneralStep';
 
-// TODO remove these, they are space fillers
-const t = str => (
-  <div align="center">
-    <h1>TODO: {str}!</h1>
-  </div>
-);
-const todo = str => (
-  <div>
-    {t(str)}
-    {t(str)}
-    {t(str)}
-    {t(str)}
-    {t(str)}
-  </div>
-);
-
 class MappingWizardBody extends React.Component {
-  shouldComponentUpdate(nextProps, nextState) {
-    return (
-      JSON.stringify(this.props) !== JSON.stringify(nextProps) ||
-      JSON.stringify(this.state) !== JSON.stringify(nextState)
-    );
-  }
-  render() {
-    const mappingWizardClustersStepContainer = componentRegistry.markup(
+  constructor(props) {
+    super(props);
+
+    this.mappingWizardClustersStepContainer = componentRegistry.markup(
       'MappingWizardClustersStepContainer'
     );
+    this.mappingWizardDatastoresStepContainer = componentRegistry.markup(
+      'MappingWizardDatastoresStepContainer'
+    );
+    this.mappingWizardNetworksStepContainer = componentRegistry.markup(
+      'MappingWizardNetworksStepContainer'
+    );
+    this.mappingWizardResultsStepContainer = componentRegistry.markup(
+      'MappingWizardResultsStepContainer'
+    );
+  }
+  shouldComponentUpdate(nextProps, nextState) {
+    return JSON.stringify(this.props) !== JSON.stringify(nextProps);
+  }
+  componentWillUnmount() {
+    const { hideAlertAction } = this.props;
+    hideAlertAction();
+  }
+  render() {
     return (
       <ModalWizard.Body
         {...this.props}
         loadingTitle={__('Loading Infrastructure Mappings...')}
         loadingMessage={__('This may take a minute.')}
+        stepButtonsDisabled
         steps={[
           {
             title: __('General'),
             render: () => <MappingWizardGeneralStep />,
-            onClick: () => console.log('on step 1 click')
+            disableGoto: !this.props.mappingWizardGeneralStep.values
           },
           {
             title: __('Clusters'),
-            render: () => mappingWizardClustersStepContainer,
-            onClick: () => console.log('on step 2 click')
+            render: () => this.mappingWizardClustersStepContainer,
+            disableGoto: !this.props.mappingWizardClustersStep.values
           },
           {
             title: __('Datastores'),
-            render: () => todo('Datastore Mappings Form'),
-            onClick: () => console.log('on step 3 click')
+            render: () => this.mappingWizardDatastoresStepContainer,
+            disableGoto: !this.props.mappingWizardDatastoresStep.values
           },
           {
             title: __('Networks'),
-            render: () => todo('Network Mappings Form'),
-            onClick: () => console.log('on step 4 click')
+            render: () => this.mappingWizardNetworksStepContainer,
+            disableGoto: !this.props.mappingWizardNetworksStep.values
           },
           {
             title: __('Results'),
-            render: () => todo('Display Progress and Results'),
-            onClick: () => console.log('on step 5 click')
+            render: () => this.mappingWizardResultsStepContainer,
+            disableGoto: true
           }
         ]}
       />
@@ -71,13 +71,29 @@ class MappingWizardBody extends React.Component {
 MappingWizardBody.propTypes = {
   loaded: PropTypes.bool,
   activeStepIndex: PropTypes.number,
-  activeStep: PropTypes.string
+  activeStep: PropTypes.string,
+  goToStep: PropTypes.func,
+  disableNextStep: PropTypes.bool,
+  transformationsBody: PropTypes.object,
+  mappingWizardGeneralStep: PropTypes.object,
+  mappingWizardClustersStep: PropTypes.object,
+  mappingWizardDatastoresStep: PropTypes.object,
+  mappingWizardNetworksStep: PropTypes.object,
+  hideAlertAction: PropTypes.func
 };
 
 MappingWizardBody.defaultProps = {
   loaded: false,
   activeStepIndex: 0,
-  activeStep: '1'
+  activeStep: '1',
+  goToStep: noop,
+  disableNextStep: true,
+  transformationsBody: {},
+  mappingWizardGeneralStep: {},
+  mappingWizardClustersStep: {},
+  mappingWizardDatastoresStep: {},
+  mappingWizardNetworksStep: {},
+  hideAlertAction: noop
 };
 
 export default MappingWizardBody;

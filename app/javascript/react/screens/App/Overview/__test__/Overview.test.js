@@ -15,7 +15,10 @@ describe('Overview component', () => {
     showMappingWizardAction: jest.fn(),
     showPlanWizardAction: jest.fn(),
     mappingWizardVisible: false,
-    planWizardVisible: false
+    planWizardVisible: false,
+    fetchTransformationMappingsAction: jest.fn(),
+    isFetchingTransformationMappings: false,
+    isRejectedTransformationMappings: false
   });
 
   it('renders the overview', () => {

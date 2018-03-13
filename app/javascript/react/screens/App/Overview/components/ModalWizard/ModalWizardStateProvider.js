@@ -17,6 +17,7 @@ class ModalWizardStateProvider extends React.Component {
   nextStep() {
     const { numSteps } = this.props;
     const { activeStepIndex } = this.state;
+
     this.setState({
       activeStepIndex: Math.min(activeStepIndex + 1, numSteps - 1)
     });
