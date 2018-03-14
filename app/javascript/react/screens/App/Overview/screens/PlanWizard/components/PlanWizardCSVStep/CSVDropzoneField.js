@@ -130,7 +130,12 @@ class CSVDropzoneField extends React.Component {
         >
           <Toolbar>
             <Toolbar.RightContent>
-              <Button bsStyle="primary" onClick={dropzoneRef.open}>
+              <Button
+                bsStyle="primary"
+                onClick={() => {
+                  dropzoneRef.open();
+                }}
+              >
                 {__('Browse...')}
               </Button>
             </Toolbar.RightContent>
