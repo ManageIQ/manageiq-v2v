@@ -4,6 +4,7 @@ import { required } from 'redux-form-validators';
 import { Form } from 'patternfly-react';
 import PropTypes from 'prop-types';
 import { FormField } from '../../../../../common/forms/FormField';
+import { BootstrapSelect } from '../../../../../common/forms/BootstrapSelect';
 
 const PlanWizardGeneralStep = ({ transformationMappings }) => (
   <Form className="form-horizontal">
@@ -11,12 +12,13 @@ const PlanWizardGeneralStep = ({ transformationMappings }) => (
       name="infrastructure_mapping"
       label={__('Infrastructure Mapping')}
       required
-      component={FormField}
+      data_live_search="true"
+      component={BootstrapSelect}
       validate={[required({ msg: __('Required') })]}
       options={transformationMappings}
-      optionKey="id"
-      optionValue="name"
-      type="select"
+      option_key="id"
+      option_value="name"
+      form_name="planWizardGeneralStep"
     />
     <Field
       name="name"
