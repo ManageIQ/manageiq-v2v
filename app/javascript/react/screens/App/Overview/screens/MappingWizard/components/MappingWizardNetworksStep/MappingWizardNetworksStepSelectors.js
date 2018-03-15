@@ -1,20 +1,10 @@
-export const sourceNetworksFilter = (
-  networksToFilter,
-  networksStepMappings
-) => {
-  const mappedNetworks = networksStepMappings.reduce(
-    (mappedNetworksArray, targetClusterWithNetworkMappings) => {
-      const sourceNetworks = targetClusterWithNetworkMappings.nodes.reduce(
-        (networks, networkMapping) => networks.concat(networkMapping.nodes),
-        []
-      );
-      return mappedNetworksArray.concat(sourceNetworks);
-    },
-    []
+export const groupByUidEms = (networks = []) =>
+  networks.reduce(
+    (networksMap, network) => ({
+      ...networksMap,
+      [network.uid_ems]: networksMap[network.uid_ems]
+        ? [...networksMap[network.uid_ems], network]
+        : [network]
+    }),
+    {}
   );
-
-  return networksToFilter.filter(
-    network =>
-      !mappedNetworks.some(mappedNetwork => mappedNetwork.id === network.id)
-  );
-};
