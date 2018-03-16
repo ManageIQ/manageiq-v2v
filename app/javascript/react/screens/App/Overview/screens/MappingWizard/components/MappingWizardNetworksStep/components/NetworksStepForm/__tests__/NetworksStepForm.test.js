@@ -82,7 +82,7 @@ describe('#addNetworkMapping', () => {
             {
               ...targetNetworkWithTreeViewAttrs(mappedTargetNetwork),
               nodes: networkGroupingForRep(
-                sourceNetworks[2],
+                mappedSourceNetwork,
                 groupedNetworks,
                 props.selectedCluster
               )
@@ -143,7 +143,7 @@ describe('#addNetworkMapping', () => {
           {
             ...targetNetworkWithTreeViewAttrs(mappedTargetNetwork),
             nodes: networkGroupingForRep(
-              sourceNetworks[2],
+              mappedSourceNetwork,
               groupedNetworks,
               sourceCluster
             )

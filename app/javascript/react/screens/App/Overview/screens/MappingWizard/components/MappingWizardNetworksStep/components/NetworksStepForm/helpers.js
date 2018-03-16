@@ -1,13 +1,14 @@
 import { groupByUidEms } from '../../MappingWizardNetworksStepSelectors';
 
-export const getRepresentatives = (groupedNetworks = {}) =>
-  Object.values(groupedNetworks).reduce(
-    (networkRepresentatives, networkGroup) => [
-      ...networkRepresentatives,
-      networkGroup[0]
-    ],
-    []
-  );
+export const getRepresentatives = (groupedNetworks = {}) => {
+  const representatives = [];
+  for (const uid_ems in groupedNetworks) {
+    if ({}.hasOwnProperty.call(groupedNetworks, uid_ems)) {
+      representatives.push(groupedNetworks[uid_ems][0]);
+    }
+  }
+  return representatives;
+};
 
 export const sourceNetworksFilter = (
   groupedSourceNetworks,
