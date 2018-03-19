@@ -4,7 +4,7 @@ import { noop, bindMethods } from 'patternfly-react';
 import { Field, reduxForm } from 'redux-form';
 import { length } from 'redux-form-validators';
 import SourceClusterSelect from '../SourceClusterSelect/SourceClusterSelect';
-import NetworksStepForm from './components/NetworksStepForm';
+import NetworksStepForm from './components/NetworksStepForm/NetworksStepForm';
 
 class MappingWizardNetworksStep extends React.Component {
   constructor(props) {
@@ -100,7 +100,7 @@ class MappingWizardNetworksStep extends React.Component {
       clusterMappings,
       isFetchingSourceNetworks,
       isFetchingTargetNetworks,
-      sourceNetworks,
+      groupedSourceNetworks,
       targetNetworks,
       form
     } = this.props;
@@ -119,7 +119,7 @@ class MappingWizardNetworksStep extends React.Component {
         <Field
           name="networksMappings"
           component={NetworksStepForm}
-          sourceNetworks={sourceNetworks}
+          groupedSourceNetworks={groupedSourceNetworks}
           targetNetworks={targetNetworks}
           selectedCluster={selectedCluster}
           selectedClusterMapping={selectedClusterMapping}
@@ -137,7 +137,6 @@ MappingWizardNetworksStep.propTypes = {
   fetchNetworksUrl: PropTypes.string,
   fetchSourceNetworksAction: PropTypes.func,
   fetchTargetNetworksAction: PropTypes.func,
-  sourceNetworks: PropTypes.arrayOf(PropTypes.object),
   targetNetworks: PropTypes.arrayOf(PropTypes.object),
   isFetchingSourceNetworks: PropTypes.bool,
   isRejectedSourceNetworks: PropTypes.bool,
@@ -145,14 +144,14 @@ MappingWizardNetworksStep.propTypes = {
   isRejectedTargetNetworks: PropTypes.bool,
   form: PropTypes.string,
   pristine: PropTypes.bool,
-  showAlertAction: PropTypes.func
+  showAlertAction: PropTypes.func,
+  groupedSourceNetworks: PropTypes.object
 };
 MappingWizardNetworksStep.defaultProps = {
   clusterMappings: [],
   fetchNetworksUrl: '',
   fetchSourceNetworksAction: noop,
   fetchTargetNetworksAction: noop,
-  sourceNetworks: [],
   targetNetworks: [],
   isFetchingSourceNetworks: false,
   isRejectedSourceNetworks: false,

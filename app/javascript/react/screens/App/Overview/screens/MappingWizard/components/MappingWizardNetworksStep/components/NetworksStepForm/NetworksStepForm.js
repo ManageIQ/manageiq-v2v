@@ -3,13 +3,19 @@ import PropTypes from 'prop-types';
 import { bindMethods } from 'patternfly-react';
 import cx from 'classnames';
 
-import DualPaneMapper from '../../DualPaneMapper/DualPaneMapper';
-import DualPaneMapperList from '../../DualPaneMapper/DualPaneMapperList';
-import DualPaneMapperCount from '../../DualPaneMapper/DualPaneMapperCount';
-import DualPaneMapperListItem from '../../DualPaneMapper/DualPaneMapperListItem';
-import MappingWizardTreeView from '../../MappingWizardTreeView/MappingWizardTreeView';
+import DualPaneMapper from '../../../DualPaneMapper/DualPaneMapper';
+import DualPaneMapperList from '../../../DualPaneMapper/DualPaneMapperList';
+import DualPaneMapperCount from '../../../DualPaneMapper/DualPaneMapperCount';
+import DualPaneMapperListItem from '../../../DualPaneMapper/DualPaneMapperListItem';
+import MappingWizardTreeView from '../../../MappingWizardTreeView/MappingWizardTreeView';
 
-import { sourceNetworksFilter } from '../MappingWizardNetworksStepSelectors';
+import {
+  sourceNetworksFilter,
+  clustersMappingWithTreeViewAttrs,
+  targetNetworkWithTreeViewAttrs,
+  networkGroupingForRep,
+  mappingsForTreeView
+} from './helpers';
 
 class NetworksStepForm extends React.Component {
   constructor(props) {
@@ -46,13 +52,14 @@ class NetworksStepForm extends React.Component {
   selectSourceNetwork(sourceNetwork) {
     this.setState(prevState => {
       const isAlreadySelected = prevState.selectedSourceNetworks.some(
-        selectedSourceNetwork => selectedSourceNetwork.id === sourceNetwork.id
+        selectedSourceNetwork =>
+          selectedSourceNetwork.uid_ems === sourceNetwork.uid_ems
       );
       if (isAlreadySelected) {
         return {
           selectedSourceNetworks: prevState.selectedSourceNetworks.filter(
             selectedSourceNetwork =>
-              selectedSourceNetwork.id !== sourceNetwork.id
+              selectedSourceNetwork.uid_ems !== sourceNetwork.uid_ems
           )
         };
       }
@@ -70,128 +77,126 @@ class NetworksStepForm extends React.Component {
   }
 
   addNetworkMapping() {
-    const { input, selectedCluster, selectedClusterMapping } = this.props;
+    const {
+      input: { value: networksStepMappings, onChange },
+      selectedCluster,
+      selectedClusterMapping,
+      groupedSourceNetworks
+    } = this.props;
 
-    this.setState(prevState => {
-      const networksStepMappings = input.value;
+    const { selectedTargetNetwork, selectedSourceNetworks } = this.state;
 
-      const noMappingForTargetCluster = !networksStepMappings.some(
-        targetClusterWithNetworkMappings =>
-          // targetClusterWithNetworkMappings: { ...targetCluster, nodes: [...networkMappings] }
-          // selectedClusterMapping: { ...targetCluster, nodes: [...sourceClusters (one of which is currently selected)]}
-          targetClusterWithNetworkMappings.id === selectedClusterMapping.id
-      );
+    const noMappingForTargetCluster = !networksStepMappings.some(
+      targetClusterWithNetworkMappings =>
+        targetClusterWithNetworkMappings.id === selectedClusterMapping.id
+    );
 
-      const addingToExistingMapping = networksStepMappings.some(
-        targetClusterWithNetworkMappings =>
-          targetClusterWithNetworkMappings.nodes.some(
-            networkMapping =>
-              // networkMapping: { ...targetNetwork, nodes: [...sourceNetworks] }
-              networkMapping.id === prevState.selectedTargetNetwork.id
-          )
-      );
+    const addingToExistingMapping = networksStepMappings.some(
+      targetClusterWithNetworkMappings =>
+        targetClusterWithNetworkMappings.nodes.some(
+          networkMapping => networkMapping.id === selectedTargetNetwork.id
+        )
+    );
 
-      if (networksStepMappings.length === 0 || noMappingForTargetCluster) {
-        // There are no mappings, or there does not already exist a node for
-        // a mapped target cluster
-        input.onChange([
-          ...networksStepMappings,
+    if (networksStepMappings.length === 0 || noMappingForTargetCluster) {
+      // ADD A NETWORKS STEP MAPPING
+      //   targetCluster
+      //   -- selectedTargetNetwork
+      //   ----  [...network groupings for selected source networks]
+      const networksStepMappingToAdd = {
+        ...clustersMappingWithTreeViewAttrs(selectedClusterMapping),
+        nodes: [
           {
-            ...selectedClusterMapping,
-            text: selectedClusterMapping.name,
-            selectable: false,
-            nodes: [
-              {
-                ...prevState.selectedTargetNetwork,
-                text: prevState.selectedTargetNetwork.name,
-                selectable: true,
-                selected: false,
-                state: {
-                  expanded: true
-                },
-                nodes: prevState.selectedSourceNetworks.map(network => ({
-                  ...network,
-                  text: network.name,
-                  icon: 'fa fa-file-o',
-                  sourceClusterId: selectedCluster.id,
-                  selectable: true,
-                  selected: false
-                }))
-              }
-            ]
-          }
-        ]);
-      } else {
-        input.onChange(
-          networksStepMappings.map(targetClusterWithNetworkMappings => {
-            // We are not adding a network mapping to this target cluster
-            if (
-              targetClusterWithNetworkMappings.id !== selectedClusterMapping.id
-            ) {
-              return targetClusterWithNetworkMappings;
-              // There already exists a mapping for the currently selected target
-              // network and we need to append the currently selected source networks
-              // to its source networks array
-            } else if (addingToExistingMapping) {
-              return {
-                ...targetClusterWithNetworkMappings,
-                nodes: targetClusterWithNetworkMappings.nodes.map(
-                  networkMapping => {
-                    // networkMapping: { ...targetNetwork, nodes: [...sourceNetworks] }
-                    // If the target network for this mapping matches the currently
-                    // selected target network, add the currently selected source
-                    // networks to its source networks array
-                    if (
-                      networkMapping.id === prevState.selectedTargetNetwork.id
-                    ) {
-                      return {
-                        ...networkMapping,
-                        nodes: networkMapping.nodes.concat(
-                          prevState.selectedSourceNetworks.map(network => ({
-                            ...network,
-                            text: network.name,
-                            icon: 'fa fa-file-o',
-                            sourceClusterId: selectedCluster.id,
-                            selectable: true,
-                            selected: false
-                          }))
-                        )
-                      };
-                    }
-                    return networkMapping;
-                  }
+            ...targetNetworkWithTreeViewAttrs(selectedTargetNetwork),
+            nodes: selectedSourceNetworks.reduce(
+              (sourceNetworks, sourceNetworkGroupRep) => [
+                ...sourceNetworks,
+                ...networkGroupingForRep(
+                  sourceNetworkGroupRep,
+                  groupedSourceNetworks,
+                  selectedCluster
                 )
-              };
-            }
-            // We are creating a new mapping to add under the target cluster
+              ],
+              []
+            )
+          }
+        ]
+      };
+      onChange([...networksStepMappings, networksStepMappingToAdd]);
+    } else {
+      const updatedNetworksStepMappings = networksStepMappings.map(
+        targetClusterWithNetworkMappings => {
+          if (
+            targetClusterWithNetworkMappings.id !== selectedClusterMapping.id
+          ) {
+            return targetClusterWithNetworkMappings;
+          } else if (addingToExistingMapping) {
+            // ADD TO EXISTING NETWORKS MAPPING
+            //   matchingTargetCluster
+            //   -- selectedTargetNetwork
+            //   ---- [...alreadyMappedSourceNetworks, ...network groupings for selected source networks]
             return {
               ...targetClusterWithNetworkMappings,
-              nodes: targetClusterWithNetworkMappings.nodes.concat({
-                ...prevState.selectedTargetNetwork,
-                text: prevState.selectedTargetNetwork.name,
-                selectable: true,
-                selected: false,
-                state: {
-                  expanded: true
-                },
-                nodes: prevState.selectedSourceNetworks.map(network => ({
-                  ...network,
-                  text: network.name,
-                  icon: 'fa fa-file-o',
-                  sourceClusterId: selectedCluster.id,
-                  selectable: true,
-                  selected: false
-                }))
-              })
+              nodes: targetClusterWithNetworkMappings.nodes.map(
+                networkMapping => {
+                  if (networkMapping.id === selectedTargetNetwork.id) {
+                    return {
+                      ...networkMapping,
+                      nodes: [
+                        ...networkMapping.nodes,
+                        ...selectedSourceNetworks.reduce(
+                          (sourceNetworks, networkGroupRep) => [
+                            ...sourceNetworks,
+                            ...networkGroupingForRep(
+                              networkGroupRep,
+                              groupedSourceNetworks,
+                              selectedCluster
+                            )
+                          ],
+                          []
+                        )
+                      ]
+                    };
+                  }
+                  return networkMapping;
+                }
+              )
             };
-          })
-        );
-      }
-      return {
-        selectedTargetNetwork: null,
-        selectedSourceNetworks: []
-      };
-    });
+          }
+          // ADD TO EXISTING NETWORKS STEP MAPPING
+          //   matchingTargetCluster
+          //   -- existingNetworkMapping(s)
+          //   -- selectedTargetNetwork
+          //   ---- [...network groupings for selected source networks]
+          return {
+            ...targetClusterWithNetworkMappings,
+            nodes: [
+              ...targetClusterWithNetworkMappings.nodes,
+              {
+                ...targetNetworkWithTreeViewAttrs(selectedTargetNetwork),
+                nodes: selectedSourceNetworks.reduce(
+                  (sourceNetworks, networkGroupRep) => [
+                    ...sourceNetworks,
+                    ...networkGroupingForRep(
+                      networkGroupRep,
+                      groupedSourceNetworks,
+                      selectedCluster
+                    )
+                  ],
+                  []
+                )
+              }
+            ]
+          };
+        }
+      );
+      onChange(updatedNetworksStepMappings);
+    }
+
+    this.setState(prevState => ({
+      selectedTargetNetwork: null,
+      selectedSourceNetworks: []
+    }));
   }
 
   selectNode(selectedNode) {
@@ -252,7 +257,7 @@ class NetworksStepForm extends React.Component {
                 ...targetNetwork,
                 selected: false,
                 nodes: sourceNetworks.map(sourceNetwork => {
-                  if (sourceNetwork.id === selectedNode.id) {
+                  if (sourceNetwork.uid_ems === selectedNode.uid_ems) {
                     return {
                       ...sourceNetwork,
                       selected: !sourceNetwork.selected
@@ -314,7 +319,7 @@ class NetworksStepForm extends React.Component {
                 ...targetNetwork
               } = networksMapping;
               const updatedSourceNetworks = sourceNetworks.filter(
-                sourceNetwork => sourceNetwork.id !== selectedNode.id
+                sourceNetwork => sourceNetwork.uid_ems !== selectedNode.uid_ems
               );
               return updatedSourceNetworks.length === 0
                 ? undefined
@@ -344,7 +349,7 @@ class NetworksStepForm extends React.Component {
 
   render() {
     const {
-      sourceNetworks,
+      groupedSourceNetworks,
       targetNetworks,
       isFetchingSourceNetworks,
       isFetchingTargetNetworks,
@@ -376,8 +381,8 @@ class NetworksStepForm extends React.Component {
             listTitle="Source Networks"
             loading={isFetchingSourceNetworks}
           >
-            {sourceNetworks &&
-              sourceNetworksFilter(sourceNetworks, input.value).map(
+            {groupedSourceNetworks &&
+              sourceNetworksFilter(groupedSourceNetworks, input.value).map(
                 sourceNetwork => (
                   <DualPaneMapperListItem
                     item={sourceNetwork}
@@ -387,7 +392,8 @@ class NetworksStepForm extends React.Component {
                       selectedSourceNetworks &&
                       selectedSourceNetworks.some(
                         selectedSourceNetwork =>
-                          selectedSourceNetwork.id === sourceNetwork.id
+                          selectedSourceNetwork.uid_ems ===
+                          sourceNetwork.uid_ems
                       )
                     }
                     handleClick={this.selectSourceNetwork}
@@ -398,7 +404,7 @@ class NetworksStepForm extends React.Component {
             <DualPaneMapperCount
               selectedItems={selectedSourceNetworks.length}
               totalItems={
-                sourceNetworksFilter(sourceNetworks, input.value).length
+                sourceNetworksFilter(groupedSourceNetworks, input.value).length
               }
             />
           </DualPaneMapperList>
@@ -423,7 +429,7 @@ class NetworksStepForm extends React.Component {
           </DualPaneMapperList>
         </DualPaneMapper>
         <MappingWizardTreeView
-          mappings={input.value}
+          mappings={mappingsForTreeView(input.value)}
           selectNode={this.selectNode}
           removeNode={this.removeNode}
           removeAll={this.removeAll}
@@ -436,7 +442,7 @@ class NetworksStepForm extends React.Component {
 
 NetworksStepForm.propTypes = {
   input: PropTypes.object,
-  sourceNetworks: PropTypes.array,
+  groupedSourceNetworks: PropTypes.object,
   targetNetworks: PropTypes.array,
   isFetchingSourceNetworks: PropTypes.bool,
   isFetchingTargetNetworks: PropTypes.bool,
