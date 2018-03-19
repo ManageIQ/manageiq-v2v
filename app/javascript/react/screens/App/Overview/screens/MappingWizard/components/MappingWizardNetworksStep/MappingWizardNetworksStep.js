@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { noop, bindMethods } from 'patternfly-react';
 import { Field, reduxForm } from 'redux-form';
 import { length } from 'redux-form-validators';
-import SourceClusterSelect from '../SourceClusterSelect/SourceClusterSelect';
 import NetworksStepForm from './components/NetworksStepForm/NetworksStepForm';
 import { BootstrapSelect } from '../../../../../common/forms/BootstrapSelect';
 import { getClusterOptions } from '../helpers';
