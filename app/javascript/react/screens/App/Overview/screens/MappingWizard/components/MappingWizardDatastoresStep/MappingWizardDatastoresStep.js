@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import { length } from 'redux-form-validators';
-import { noop, bindMethods, Form } from 'patternfly-react';
+import { noop, bindMethods } from 'patternfly-react';
 import DatastoresStepForm from './components/DatastoresStepForm/DatastoresStepForm';
 import { BootstrapSelect } from '../../../../../common/forms/BootstrapSelect';
 import { getClusterOptions } from '../helpers';
