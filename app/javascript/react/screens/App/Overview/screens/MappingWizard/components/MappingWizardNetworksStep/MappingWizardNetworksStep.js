@@ -6,6 +6,7 @@ import { length } from 'redux-form-validators';
 import SourceClusterSelect from '../SourceClusterSelect/SourceClusterSelect';
 import NetworksStepForm from './components/NetworksStepForm/NetworksStepForm';
 import { BootstrapSelect } from '../../../../../common/forms/BootstrapSelect';
+import { getClusterOptions } from '../helpers';
 
 class MappingWizardNetworksStep extends React.Component {
   constructor(props) {
@@ -108,29 +109,7 @@ class MappingWizardNetworksStep extends React.Component {
 
     const { selectedCluster, selectedClusterMapping } = this.state;
 
-    const sourceClustersWithAssociatedTargetClusters = clusterMappings.reduce(
-      (mappings, targetClusterWithSourceClusters) => {
-        const {
-          nodes: sourceClusters,
-          ...targetCluster
-        } = targetClusterWithSourceClusters;
-        const sourceToTargetMappings = sourceClusters.map(sourceCluster => ({
-          sourceCluster,
-          targetCluster,
-          sourceClusterMappedToTargetCluster: {
-            name: `${sourceCluster.name} (${targetCluster.name})`,
-            id: sourceCluster.id
-          }
-        }));
-        return mappings.concat(sourceToTargetMappings);
-      },
-      []
-    );
-
-    const clusterOptions = sourceClustersWithAssociatedTargetClusters.map(
-      ({ sourceClusterMappedToTargetCluster }) =>
-        sourceClusterMappedToTargetCluster
-    );
+    const clusterOptions = getClusterOptions(clusterMappings);
 
     return (
       <div>

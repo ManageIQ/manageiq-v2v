@@ -6,6 +6,7 @@ import { noop, bindMethods, Form } from 'patternfly-react';
 import SourceClusterSelect from '../SourceClusterSelect/SourceClusterSelect';
 import DatastoresStepForm from './components/DatastoresStepForm/DatastoresStepForm';
 import { BootstrapSelect } from '../../../../../common/forms/BootstrapSelect';
+import { getClusterOptions } from '../helpers';
 
 class MappingWizardDatastoresStep extends React.Component {
   constructor(props) {
@@ -110,29 +111,7 @@ class MappingWizardDatastoresStep extends React.Component {
 
     const { selectedCluster, selectedClusterMapping } = this.state;
 
-    const sourceClustersWithAssociatedTargetClusters = clusterMappings.reduce(
-      (mappings, targetClusterWithSourceClusters) => {
-        const {
-          nodes: sourceClusters,
-          ...targetCluster
-        } = targetClusterWithSourceClusters;
-        const sourceToTargetMappings = sourceClusters.map(sourceCluster => ({
-          sourceCluster,
-          targetCluster,
-          sourceClusterMappedToTargetCluster: {
-            name: `${sourceCluster.name} (${targetCluster.name})`,
-            id: sourceCluster.id
-          }
-        }));
-        return mappings.concat(sourceToTargetMappings);
-      },
-      []
-    );
-
-    const clusterOptions = sourceClustersWithAssociatedTargetClusters.map(
-      ({ sourceClusterMappedToTargetCluster }) =>
-        sourceClusterMappedToTargetCluster
-    );
+    const clusterOptions = getClusterOptions(clusterMappings);
 
     // first we render the dropdown selection for each source cluster in clusterMappings,
     // then we call `selectSourceCluster` and go get that cluster's datastores on selection
