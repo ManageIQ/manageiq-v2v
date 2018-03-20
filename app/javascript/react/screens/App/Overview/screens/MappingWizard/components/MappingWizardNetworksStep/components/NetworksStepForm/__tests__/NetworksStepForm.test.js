@@ -15,24 +15,26 @@ import {
   targetNetworks,
   sourceCluster,
   networkGrouping,
-  clustersMapping
+  clustersMapping,
+  targetCluster
 } from '../networksStepForm.fixtures';
 
-describe('#addNetworkMapping', () => {
-  const props = {
-    isFetchingSourceNetworks: false,
-    isFetchingTargetNetworks: false,
-    selectedCluster: sourceCluster,
-    selectedClusterMapping: clustersMapping
-  };
+let props = {
+  isFetchingSourceNetworks: false,
+  isFetchingTargetNetworks: false,
+  selectedCluster: sourceCluster,
+  selectedClusterMapping: clustersMapping
+};
 
+let input;
+beforeEach(() => {
+  input = { onChange: jest.fn(), value: [] };
+});
+
+describe('#addNetworkMapping', () => {
   describe('maps a network grouping to the selected target network', () => {
     describe('when a mapping does not exist for the target network', () => {
       test('and there is no mapping for the target cluster', () => {
-        const input = {
-          value: [],
-          onChange: jest.fn()
-        };
         const [targetNetworkToMap] = targetNetworks;
         const wrapper = shallow(
           <NetworksStepForm
@@ -89,9 +91,9 @@ describe('#addNetworkMapping', () => {
             }
           ]
         };
-        const input = {
-          value: [networksStepMapping],
-          onChange: jest.fn()
+        input = {
+          ...input,
+          value: [networksStepMapping]
         };
         const wrapper = shallow(
           <NetworksStepForm
@@ -150,9 +152,9 @@ describe('#addNetworkMapping', () => {
           }
         ]
       };
-      const input = {
-        value: [networksStepMapping],
-        onChange: jest.fn()
+      input = {
+        ...input,
+        value: [networksStepMapping]
       };
 
       const wrapper = shallow(
@@ -191,6 +193,139 @@ describe('#addNetworkMapping', () => {
               ]
             }
           ]
+        }
+      ]);
+    });
+  });
+});
+
+describe('#removeNode', () => {
+  const [targetNetworkOne, targetNetworkTwo] = targetNetworks;
+  const sourceNetworkGroupOne = sourceNetworks.slice(0, 2);
+  const sourceNetworkGroupTwo = sourceNetworks.slice(2, 3);
+  const groupedSourceNetworks = groupByUidEms([
+    ...sourceNetworkGroupOne,
+    ...sourceNetworkGroupTwo
+  ]);
+  props = {
+    ...props,
+    groupedSourceNetworks,
+    targetNetworks
+  };
+  describe('when removing a target network', () => {
+    const nodeToRemove = {
+      ...targetNetworkOne,
+      nodes: sourceNetworkGroupOne
+    };
+    const nodeShouldRemain = {
+      ...targetNetworkTwo,
+      nodes: sourceNetworkGroupTwo
+    };
+    test('it also removes all of the mapped source networks', () => {
+      const networksStepMapping = {
+        ...targetCluster,
+        nodes: [nodeToRemove, nodeShouldRemain]
+      };
+      input = {
+        ...input,
+        value: [networksStepMapping]
+      };
+      const wrapper = shallow(<NetworksStepForm {...props} input={input} />);
+
+      wrapper.find('MappingWizardTreeView').prop('selectNode')(nodeToRemove);
+      wrapper.find('MappingWizardTreeView').prop('removeNode')();
+
+      expect(input.onChange).toHaveBeenLastCalledWith([
+        {
+          ...targetCluster,
+          nodes: [nodeShouldRemain]
+        }
+      ]);
+    });
+
+    test('it removes the entire networks step mapping if no target networks remain', () => {
+      const networksStepMapping = {
+        ...targetCluster,
+        nodes: [nodeToRemove]
+      };
+      input = {
+        ...input,
+        value: [networksStepMapping]
+      };
+      const wrapper = shallow(<NetworksStepForm {...props} input={input} />);
+
+      wrapper.find('MappingWizardTreeView').prop('selectNode')(nodeToRemove);
+      wrapper.find('MappingWizardTreeView').prop('removeNode')();
+
+      expect(input.onChange).toHaveBeenLastCalledWith([]);
+    });
+  });
+
+  describe('when removing a source network', () => {
+    const [groupRepresentative] = sourceNetworkGroupOne;
+
+    test('it removes the entire source network grouping', () => {
+      const networksStepMapping = {
+        ...targetCluster,
+        nodes: [
+          {
+            ...targetNetworkOne,
+            nodes: [...sourceNetworkGroupOne, ...sourceNetworkGroupTwo]
+          }
+        ]
+      };
+      input = {
+        ...input,
+        value: [networksStepMapping]
+      };
+      const wrapper = shallow(<NetworksStepForm {...props} input={input} />);
+
+      wrapper.find('MappingWizardTreeView').prop('selectNode')(
+        groupRepresentative
+      );
+      wrapper.find('MappingWizardTreeView').prop('removeNode')();
+
+      expect(input.onChange).toHaveBeenLastCalledWith([
+        {
+          ...targetCluster,
+          nodes: [
+            {
+              ...targetNetworkOne,
+              nodes: sourceNetworkGroupTwo
+            }
+          ]
+        }
+      ]);
+    });
+
+    test('it removes the entire networks mapping if no source networks remain', () => {
+      const mappingToRemove = {
+        ...targetNetworkOne,
+        nodes: sourceNetworkGroupOne
+      };
+      const mappingShouldRemain = {
+        ...targetNetworkTwo,
+        nodes: sourceNetworkGroupTwo
+      };
+      const networksStepMapping = {
+        ...targetCluster,
+        nodes: [mappingToRemove, mappingShouldRemain]
+      };
+      input = {
+        ...input,
+        value: [networksStepMapping]
+      };
+      const wrapper = shallow(<NetworksStepForm input={input} />);
+
+      wrapper.find('MappingWizardTreeView').prop('selectNode')(
+        groupRepresentative
+      );
+      wrapper.find('MappingWizardTreeView').prop('removeNode')();
+
+      expect(input.onChange).toHaveBeenLastCalledWith([
+        {
+          ...targetCluster,
+          nodes: [mappingShouldRemain]
         }
       ]);
     });
