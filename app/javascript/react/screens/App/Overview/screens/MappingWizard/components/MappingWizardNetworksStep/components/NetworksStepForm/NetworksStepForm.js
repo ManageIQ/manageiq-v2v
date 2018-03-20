@@ -14,7 +14,9 @@ import {
   clustersMappingWithTreeViewAttrs,
   targetNetworkWithTreeViewAttrs,
   networkGroupingForRep,
-  mappingsForTreeView
+  mappingsForTreeView,
+  removeTargetNetwork,
+  removeSourceNetwork
 } from './helpers';
 
 class NetworksStepForm extends React.Component {
@@ -285,60 +287,46 @@ class NetworksStepForm extends React.Component {
     const { selectedNode } = this.state;
     const isTargetNetwork = selectedNode.nodes;
 
-    if (isTargetNetwork) {
-      const updatedMappings = networksStepMappings
-        .map(targetClusterWithNetworksMappings => {
-          const {
-            nodes: networksMappings,
-            ...targetCluster
-          } = targetClusterWithNetworksMappings;
-          const updatedNetworksMappings = networksMappings.filter(
-            targetNetworkWithSourceNetworks =>
-              targetNetworkWithSourceNetworks.id !== selectedNode.id
-          );
-          return updatedNetworksMappings.length === 0
-            ? undefined
-            : {
-                ...targetCluster,
-                nodes: updatedNetworksMappings
-              };
-        })
-        .filter(item => item !== undefined);
-      onChange(updatedMappings);
-    } else {
-      const updatedMappings = networksStepMappings
-        .map(targetClusterWithNetworksMappings => {
-          const {
-            nodes: networksMappings,
-            ...targetCluster
-          } = targetClusterWithNetworksMappings;
-          const updatedNetworksMappings = networksMappings
-            .map(networksMapping => {
-              const {
-                nodes: sourceNetworks,
-                ...targetNetwork
-              } = networksMapping;
-              const updatedSourceNetworks = sourceNetworks.filter(
-                sourceNetwork => sourceNetwork.uid_ems !== selectedNode.uid_ems
-              );
-              return updatedSourceNetworks.length === 0
-                ? undefined
-                : {
-                    ...targetNetwork,
-                    nodes: updatedSourceNetworks
-                  };
-            })
-            .filter(item => item !== undefined);
-          return updatedNetworksMappings.length === 0
-            ? undefined
-            : {
-                ...targetCluster,
-                nodes: updatedNetworksMappings
-              };
-        })
-        .filter(item => item !== undefined);
-      onChange(updatedMappings);
-    }
+    // *********************
+    // NETWORKS STEP MAPPING
+    // *********************
+    // Target Cluster
+    // --> Target Network
+    // ----> Source network grouping(s)
+
+    // ****************
+    // NETWORKS MAPPING
+    // ****************
+    // Target Network
+    // --> Source network grouping(s)
+
+    const updatedMappings = isTargetNetwork
+      ? networksStepMappings
+          .map(networksStepMapping =>
+            removeTargetNetwork(networksStepMapping, selectedNode)
+          )
+          .filter(item => item !== null)
+      : networksStepMappings
+          .map(networksStepMapping => {
+            const {
+              nodes: networksMappings,
+              ...targetCluster
+            } = networksStepMapping;
+            const updatedNetworksMappings = networksMappings
+              .map(networksMapping =>
+                removeSourceNetwork(networksMapping, selectedNode)
+              )
+              .filter(item => item !== null);
+            return updatedNetworksMappings.length === 0
+              ? null
+              : {
+                  ...targetCluster,
+                  nodes: updatedNetworksMappings
+                };
+          })
+          .filter(item => item !== null);
+
+    onChange(updatedMappings);
     this.setState(() => ({ selectedNode: null }));
   }
 

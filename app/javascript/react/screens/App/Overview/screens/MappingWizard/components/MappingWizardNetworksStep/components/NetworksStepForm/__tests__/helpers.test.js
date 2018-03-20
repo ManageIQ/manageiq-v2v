@@ -6,7 +6,9 @@ import {
   sourceNetworkWithTreeViewAttrs,
   networkGroupingForRep,
   dedupeMappedSourceNetworks,
-  mappingsForTreeView
+  mappingsForTreeView,
+  removeTargetNetwork,
+  removeSourceNetwork
 } from '../helpers';
 import { groupByUidEms } from '../../../MappingWizardNetworksStepSelectors';
 import {
@@ -93,4 +95,67 @@ test('mappingsForTreeView reduces source networks to representatives for all net
   };
 
   expect(mappingsForTreeView([networksStepMapping])).toMatchSnapshot();
+});
+
+describe('removeTargetNetwork', () => {
+  const [targetNetworkToRemove, targetNetworkShouldRemain] = targetNetworks;
+  const [sourceNetworkOne, sourceNetworkTwo] = sourceNetworks;
+  const nodeToRemove = {
+    ...targetNetworkToRemove,
+    nodes: [sourceNetworkOne]
+  };
+
+  test('removes the networks mapping for the specified target network', () => {
+    const nodeShouldRemain = {
+      ...targetNetworkShouldRemain,
+      nodes: [sourceNetworkTwo]
+    };
+    const networksStepMapping = {
+      ...targetCluster,
+      nodes: [nodeToRemove, nodeShouldRemain]
+    };
+
+    expect(
+      removeTargetNetwork(networksStepMapping, targetNetworkToRemove)
+    ).toMatchSnapshot();
+  });
+
+  test('returns null if no networks mappings remain', () => {
+    const networksStepMapping = {
+      ...targetCluster,
+      nodes: [nodeToRemove]
+    };
+
+    expect(
+      removeTargetNetwork(networksStepMapping, targetNetworkToRemove)
+    ).toMatchSnapshot();
+  });
+});
+
+describe('removeSourceNetwork', () => {
+  const [, , sourceNetworkShouldRemain] = sourceNetworks;
+  const [sourceNetworkToRemove] = networkGrouping;
+  const [targetNetwork] = targetNetworks;
+
+  test('removes all networks whose uid_ems matches that of the specified source network', () => {
+    const networksMapping = {
+      ...targetNetwork,
+      nodes: [...networkGrouping, sourceNetworkShouldRemain]
+    };
+
+    expect(
+      removeSourceNetwork(networksMapping, sourceNetworkToRemove)
+    ).toMatchSnapshot();
+  });
+
+  test('returns null if no source networks remain', () => {
+    const networksMapping = {
+      ...targetNetwork,
+      nodes: [sourceNetworkToRemove]
+    };
+
+    expect(
+      removeSourceNetwork(networksMapping, sourceNetworkToRemove)
+    ).toMatchSnapshot();
+  });
 });
