@@ -1,6 +1,5 @@
 export const mappingWizardOverviewFilter = overview => ({
-  hideMappingWizard: overview.hideMappingWizard,
-  warningModalVisible: overview.warningModalVisible
+  hideMappingWizard: overview.hideMappingWizard
 });
 
 export const mappingWizardFormFilter = form => ({
