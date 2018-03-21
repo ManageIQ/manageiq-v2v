@@ -284,6 +284,7 @@ MappingWizard.defaultProps = {
   transformationsBody: {}
 };
 
+// TODO: Is shouldComponentUpdate the only way to prevent an infinite loop here?
 export default lifecycle({
   shouldComponentUpdate(nextProps) {
     return JSON.stringify(this.props) !== JSON.stringify(nextProps);
