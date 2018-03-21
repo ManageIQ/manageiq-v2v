@@ -54,6 +54,8 @@ const MappingWizard = ({
 
   const getSourceClustersWithoutMappings = mappings =>
     mappings &&
+    mappingWizardClustersStep &&
+    mappingWizardClustersStep.values &&
     getMappedSourceClusters(
       mappingWizardClustersStep.values.clusterMappings
     ).filter(
