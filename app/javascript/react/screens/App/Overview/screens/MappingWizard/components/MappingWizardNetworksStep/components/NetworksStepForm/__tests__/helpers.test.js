@@ -7,8 +7,8 @@ import {
   networkGroupingForRep,
   dedupeMappedSourceNetworks,
   mappingsForTreeView,
-  removeTargetNetwork,
-  removeSourceNetwork
+  mappingWithTargetNetworkRemoved,
+  mappingWithSourceNetworkRemoved
 } from '../helpers';
 import { groupByUidEms } from '../../../MappingWizardNetworksStepSelectors';
 import {
@@ -97,7 +97,7 @@ test('mappingsForTreeView reduces source networks to representatives for all net
   expect(mappingsForTreeView([networksStepMapping])).toMatchSnapshot();
 });
 
-describe('removeTargetNetwork', () => {
+describe('mappingWithTargetNetworkRemoved', () => {
   const [targetNetworkToRemove, targetNetworkShouldRemain] = targetNetworks;
   const [sourceNetworkOne, sourceNetworkTwo] = sourceNetworks;
   const nodeToRemove = {
@@ -116,7 +116,10 @@ describe('removeTargetNetwork', () => {
     };
 
     expect(
-      removeTargetNetwork(networksStepMapping, targetNetworkToRemove)
+      mappingWithTargetNetworkRemoved(
+        networksStepMapping,
+        targetNetworkToRemove
+      )
     ).toMatchSnapshot();
   });
 
@@ -127,12 +130,15 @@ describe('removeTargetNetwork', () => {
     };
 
     expect(
-      removeTargetNetwork(networksStepMapping, targetNetworkToRemove)
+      mappingWithTargetNetworkRemoved(
+        networksStepMapping,
+        targetNetworkToRemove
+      )
     ).toMatchSnapshot();
   });
 });
 
-describe('removeSourceNetwork', () => {
+describe('mappingWithSourceNetworkRemoved', () => {
   const [, , sourceNetworkShouldRemain] = sourceNetworks;
   const [sourceNetworkToRemove] = networkGrouping;
   const [targetNetwork] = targetNetworks;
@@ -144,7 +150,7 @@ describe('removeSourceNetwork', () => {
     };
 
     expect(
-      removeSourceNetwork(networksMapping, sourceNetworkToRemove)
+      mappingWithSourceNetworkRemoved(networksMapping, sourceNetworkToRemove)
     ).toMatchSnapshot();
   });
 
@@ -155,7 +161,7 @@ describe('removeSourceNetwork', () => {
     };
 
     expect(
-      removeSourceNetwork(networksMapping, sourceNetworkToRemove)
+      mappingWithSourceNetworkRemoved(networksMapping, sourceNetworkToRemove)
     ).toMatchSnapshot();
   });
 });

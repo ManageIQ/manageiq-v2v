@@ -15,8 +15,8 @@ import {
   targetNetworkWithTreeViewAttrs,
   networkGroupingForRep,
   mappingsForTreeView,
-  removeTargetNetwork,
-  removeSourceNetwork
+  mappingWithTargetNetworkRemoved,
+  mappingWithSourceNetworkRemoved
 } from './helpers';
 
 class NetworksStepForm extends React.Component {
@@ -301,30 +301,45 @@ class NetworksStepForm extends React.Component {
     // --> Source network grouping(s)
 
     const updatedMappings = isTargetNetwork
-      ? networksStepMappings
-          .map(networksStepMapping =>
-            removeTargetNetwork(networksStepMapping, selectedNode)
-          )
-          .filter(item => item !== null)
-      : networksStepMappings
-          .map(networksStepMapping => {
+      ? networksStepMappings.reduce(
+          (updatedNetworksStepMappings, networksStepMapping) => {
+            const updatedMapping = mappingWithTargetNetworkRemoved(
+              networksStepMapping,
+              selectedNode
+            );
+            return updatedMapping
+              ? [...updatedNetworksStepMappings, updatedMapping]
+              : [...updatedNetworksStepMappings];
+          },
+          []
+        )
+      : networksStepMappings.reduce(
+          (updatedNetworksStepMappings, networksStepMapping) => {
             const {
               nodes: networksMappings,
               ...targetCluster
             } = networksStepMapping;
-            const updatedNetworksMappings = networksMappings
-              .map(networksMapping =>
-                removeSourceNetwork(networksMapping, selectedNode)
-              )
-              .filter(item => item !== null);
-            return updatedNetworksMappings.length === 0
-              ? null
-              : {
-                  ...targetCluster,
-                  nodes: updatedNetworksMappings
-                };
-          })
-          .filter(item => item !== null);
+            const updatedNodes = networksMappings.reduce(
+              (updatedNetworksMappings, networksMapping) => {
+                const updatedMapping = mappingWithSourceNetworkRemoved(
+                  networksMapping,
+                  selectedNode
+                );
+                return updatedMapping
+                  ? [...updatedNetworksMappings, updatedMapping]
+                  : [...updatedNetworksMappings];
+              },
+              []
+            );
+            return updatedNodes
+              ? [
+                  ...updatedNetworksStepMappings,
+                  { ...targetCluster, nodes: updatedNodes }
+                ]
+              : [...updatedNetworksStepMappings];
+          },
+          []
+        );
 
     onChange(updatedMappings);
     this.setState(() => ({ selectedNode: null }));
