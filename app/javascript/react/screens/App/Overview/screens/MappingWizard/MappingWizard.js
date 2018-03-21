@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import { lifecycle } from 'recompose';
 import { noop, WizardPattern, Icon, Alert } from 'patternfly-react';
 import {
   createTransformationMappings,
@@ -283,4 +284,8 @@ MappingWizard.defaultProps = {
   transformationsBody: {}
 };
 
-export default MappingWizard;
+export default lifecycle({
+  shouldComponentUpdate(nextProps) {
+    return JSON.stringify(this.props) !== JSON.stringify(nextProps);
+  }
+})(MappingWizard);
