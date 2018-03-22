@@ -85,7 +85,7 @@
   "jest": {
     "setupFiles": [
       "raf/polyfill",
-      "./.jest-setup.js"
+      "./.jest-setup.js", "./localStorageMock.js"
     ],
     "moduleNameMapper": {
       "^.+\\.(png|gif|css|scss)$": "identity-obj-proxy"
