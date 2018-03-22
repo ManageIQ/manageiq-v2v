@@ -1,5 +1,4 @@
 @import './components/DualPaneMapper/DualPaneMapper.scss';
-@import './components/SourceClusterSelect/SourceClusterSelect.scss';
 @import './components/WarningModal/WarningModal.scss';
 
 .dual-pane-mapper-form {
@@ -37,28 +36,4 @@
 // Override bootstrap-treeview styles
 .treeview span.indent {
   margin-left: 0;
-}
-
-.wizard-pf-main .blank-slate-pf {
-  padding: 30px;
-}
-
-.wizard-pf-steps .wizard-pf-steps-indicator li.is-disabled a {
-  cursor: not-allowed;
-}
-
-.wizard-pf-steps.step-buttons-disabled .wizard-pf-steps-indicator li.wizard-pf-step a {
-  cursor: default;
-}
-
-.wizard-pf-steps.step-buttons-disabled .wizard-pf-steps-indicator li a:hover .wizard-pf-step-number {
-  background-color: #fff;
-  border-color: #bbb;
-  color: #bbb;
-}
-
-.wizard-pf-steps.step-buttons-disabled .wizard-pf-steps-indicator li.active a:hover .wizard-pf-step-number {
-  background-color: #39a5dc;
-  border-color: #39a5dc;
-  color: #fff;
 }

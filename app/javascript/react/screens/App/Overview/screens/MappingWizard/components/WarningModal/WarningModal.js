@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 
 import { Button, Icon, Modal } from 'patternfly-react';
 
+// Note: This component is now redundant with ConfirmModal, but it still has some application-specific code so it stays for now.
+// TODO: Clean this up and turn it into a usage of ConfirmModal!
+
 const WarningModal = ({
   warningModalVisible,
   hideWarningModalAction,

@@ -29,3 +29,46 @@
     color: #d1d1d1;
   }
 }
+
+// The below wizard styles can be moved to PF core eventually, maybe?
+
+.wizard-pf-main .blank-slate-pf {
+  padding: 30px;
+}
+
+.wizard-pf-steps .wizard-pf-steps-indicator li.is-disabled a {
+  cursor: not-allowed;
+}
+
+.wizard-pf-steps.step-buttons-disabled .wizard-pf-steps-indicator li.wizard-pf-step a {
+  cursor: default;
+}
+
+.wizard-pf-steps.step-buttons-disabled .wizard-pf-steps-indicator li a:hover .wizard-pf-step-number {
+  background-color: #fff;
+  border-color: #bbb;
+  color: #bbb;
+}
+
+.wizard-pf-steps.step-buttons-disabled .wizard-pf-steps-indicator li.active a:hover .wizard-pf-step-number {
+  background-color: #39a5dc;
+  border-color: #39a5dc;
+  color: #fff;
+}
+
+// The below style could be moved to core for the ConfirmModal component (or first, to the CSS in patternfly-react for that)
+
+.confirm-warning-icon {
+  font-size: 3em;
+}
+
+// The below styles are for a modal-inside-a-modal, and will be necessary wherever we have that.
+
+.inner-modal-backdrop {
+  z-index: 1060; // .modal-dialog defaults to z-index: 1050
+}
+
+.inner-modal-dialog {
+  z-index: 1070;
+  margin-top: 150px;
+}
