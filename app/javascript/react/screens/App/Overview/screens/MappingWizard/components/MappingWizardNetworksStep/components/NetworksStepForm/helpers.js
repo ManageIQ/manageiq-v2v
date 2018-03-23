@@ -97,3 +97,36 @@ export const mappingsForTreeView = mappings =>
     };
     return [...updatedMappings, updatedMapping];
   }, []);
+
+export const mappingWithTargetNetworkRemoved = (
+  networksStepMapping,
+  targetNetworkToRemove
+) => {
+  const { nodes: networksMappings, ...targetCluster } = networksStepMapping;
+  const updatedNetworksMappings = networksMappings.filter(
+    targetNetworkWithSourceNetworks =>
+      targetNetworkWithSourceNetworks.id !== targetNetworkToRemove.id
+  );
+  return updatedNetworksMappings.length === 0
+    ? null
+    : {
+        ...targetCluster,
+        nodes: updatedNetworksMappings
+      };
+};
+
+export const mappingWithSourceNetworkRemoved = (
+  networksMapping,
+  sourceNetworkToRemove
+) => {
+  const { nodes: sourceNetworks, ...targetNetwork } = networksMapping;
+  const updatedSourceNetworks = sourceNetworks.filter(
+    sourceNetwork => sourceNetwork.uid_ems !== sourceNetworkToRemove.uid_ems
+  );
+  return updatedSourceNetworks.length === 0
+    ? null
+    : {
+        ...targetNetwork,
+        nodes: updatedSourceNetworks
+      };
+};

@@ -38,7 +38,7 @@ describe('#removeNode', () => {
   });
 
   test('removes selected target datastore along with its mapped source datastores', () => {
-    const [datastore1, datastore2] = sourceDatastores;
+    const [datastore1, datastore2, datastore3] = sourceDatastores;
     const [
       targetDatastoreToRemove,
       targetDatastoreShouldRemain
@@ -51,11 +51,11 @@ describe('#removeNode', () => {
           nodes: [
             {
               ...targetDatastoreToRemove,
-              nodes: [datastore1]
+              nodes: [datastore1, datastore2]
             },
             {
               ...targetDatastoreShouldRemain,
-              nodes: [datastore2]
+              nodes: [datastore3]
             }
           ]
         }
@@ -64,9 +64,10 @@ describe('#removeNode', () => {
 
     const wrapper = shallow(<DatastoresStepForm {...props} input={input} />);
 
-    wrapper.find('MappingWizardTreeView').prop('selectNode')(
-      targetDatastoreToRemove
-    );
+    wrapper.find('MappingWizardTreeView').prop('selectNode')({
+      ...targetDatastoreToRemove,
+      nodes: [datastore1, datastore2]
+    });
     wrapper.find('MappingWizardTreeView').prop('removeNode')();
 
     expect(input.onChange).toHaveBeenLastCalledWith([
@@ -75,7 +76,7 @@ describe('#removeNode', () => {
         nodes: [
           {
             ...targetDatastoreShouldRemain,
-            nodes: [datastore2]
+            nodes: [datastore3]
           }
         ]
       }
@@ -83,7 +84,7 @@ describe('#removeNode', () => {
   });
 
   test('removes entire datastores mapping if all target datastores are removed', () => {
-    const [datastore] = sourceDatastores;
+    const [datastore1, datastore2] = sourceDatastores;
     const [targetDatastoreToRemove] = targetDatastores;
     input = {
       ...input,
@@ -93,7 +94,7 @@ describe('#removeNode', () => {
           nodes: [
             {
               ...targetDatastoreToRemove,
-              nodes: [datastore]
+              nodes: [datastore1, datastore2]
             }
           ]
         }
@@ -102,9 +103,10 @@ describe('#removeNode', () => {
 
     const wrapper = shallow(<DatastoresStepForm {...props} input={input} />);
 
-    wrapper.find('MappingWizardTreeView').prop('selectNode')(
-      targetDatastoreToRemove
-    );
+    wrapper.find('MappingWizardTreeView').prop('selectNode')({
+      ...targetDatastoreToRemove,
+      nodes: [datastore1, datastore2]
+    });
     wrapper.find('MappingWizardTreeView').prop('removeNode')();
 
     expect(input.onChange).toHaveBeenLastCalledWith([]);

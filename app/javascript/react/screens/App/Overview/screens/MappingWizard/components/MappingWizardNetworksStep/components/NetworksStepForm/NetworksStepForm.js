@@ -14,7 +14,9 @@ import {
   clustersMappingWithTreeViewAttrs,
   targetNetworkWithTreeViewAttrs,
   networkGroupingForRep,
-  mappingsForTreeView
+  mappingsForTreeView,
+  mappingWithTargetNetworkRemoved,
+  mappingWithSourceNetworkRemoved
 } from './helpers';
 
 class NetworksStepForm extends React.Component {
@@ -285,60 +287,61 @@ class NetworksStepForm extends React.Component {
     const { selectedNode } = this.state;
     const isTargetNetwork = selectedNode.nodes;
 
-    if (isTargetNetwork) {
-      const updatedMappings = networksStepMappings
-        .map(targetClusterWithNetworksMappings => {
-          const {
-            nodes: networksMappings,
-            ...targetCluster
-          } = targetClusterWithNetworksMappings;
-          const updatedNetworksMappings = networksMappings.filter(
-            targetNetworkWithSourceNetworks =>
-              targetNetworkWithSourceNetworks.id !== selectedNode.id
-          );
-          return updatedNetworksMappings.length === 0
-            ? undefined
-            : {
-                ...targetCluster,
-                nodes: updatedNetworksMappings
-              };
-        })
-        .filter(item => item !== undefined);
-      onChange(updatedMappings);
-    } else {
-      const updatedMappings = networksStepMappings
-        .map(targetClusterWithNetworksMappings => {
-          const {
-            nodes: networksMappings,
-            ...targetCluster
-          } = targetClusterWithNetworksMappings;
-          const updatedNetworksMappings = networksMappings
-            .map(networksMapping => {
-              const {
-                nodes: sourceNetworks,
-                ...targetNetwork
-              } = networksMapping;
-              const updatedSourceNetworks = sourceNetworks.filter(
-                sourceNetwork => sourceNetwork.uid_ems !== selectedNode.uid_ems
-              );
-              return updatedSourceNetworks.length === 0
-                ? undefined
-                : {
-                    ...targetNetwork,
-                    nodes: updatedSourceNetworks
-                  };
-            })
-            .filter(item => item !== undefined);
-          return updatedNetworksMappings.length === 0
-            ? undefined
-            : {
-                ...targetCluster,
-                nodes: updatedNetworksMappings
-              };
-        })
-        .filter(item => item !== undefined);
-      onChange(updatedMappings);
-    }
+    // *********************
+    // NETWORKS STEP MAPPING
+    // *********************
+    // Target Cluster
+    // --> Target Network
+    // ----> Source network grouping(s)
+
+    // ****************
+    // NETWORKS MAPPING
+    // ****************
+    // Target Network
+    // --> Source network grouping(s)
+
+    const updatedMappings = isTargetNetwork
+      ? networksStepMappings.reduce(
+          (updatedNetworksStepMappings, networksStepMapping) => {
+            const updatedMapping = mappingWithTargetNetworkRemoved(
+              networksStepMapping,
+              selectedNode
+            );
+            return updatedMapping
+              ? [...updatedNetworksStepMappings, updatedMapping]
+              : [...updatedNetworksStepMappings];
+          },
+          []
+        )
+      : networksStepMappings.reduce(
+          (updatedNetworksStepMappings, networksStepMapping) => {
+            const {
+              nodes: networksMappings,
+              ...targetCluster
+            } = networksStepMapping;
+            const updatedNodes = networksMappings.reduce(
+              (updatedNetworksMappings, networksMapping) => {
+                const updatedMapping = mappingWithSourceNetworkRemoved(
+                  networksMapping,
+                  selectedNode
+                );
+                return updatedMapping
+                  ? [...updatedNetworksMappings, updatedMapping]
+                  : [...updatedNetworksMappings];
+              },
+              []
+            );
+            return updatedNodes
+              ? [
+                  ...updatedNetworksStepMappings,
+                  { ...targetCluster, nodes: updatedNodes }
+                ]
+              : [...updatedNetworksStepMappings];
+          },
+          []
+        );
+
+    onChange(updatedMappings);
     this.setState(() => ({ selectedNode: null }));
   }
 
