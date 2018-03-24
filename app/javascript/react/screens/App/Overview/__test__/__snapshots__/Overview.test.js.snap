@@ -21,64 +21,70 @@ exports[`Overview component renders the overview 1`] = `
         bsClass="row"
         componentClass="div"
       >
-        <div
-          className="spacer"
-        />
-        <Equalizer
-          byRow={true}
-          enabled={[Function]}
-          nodes={[Function]}
-          property="height"
-        >
-          <Col
-            bsClass="col"
-            componentClass="div"
-            md={6}
-            xs={12}
-          >
-            <InfrastructureMappingCard
-              cardRef={[Function]}
-              showMappingWizardAction={[MockFunction]}
-            />
-          </Col>
-          <Col
-            bsClass="col"
-            componentClass="div"
-            md={6}
-            xs={12}
-          >
-            <MigrationPlansCard
-              cardRef={[Function]}
-              showPlanDisabled={true}
-              showPlanWizardAction={[MockFunction]}
-            />
-          </Col>
-        </Equalizer>
-      </Row>
-      <Row
-        bsClass="row"
-        componentClass="div"
-      >
         <Col
           bsClass="col"
           componentClass="div"
           xs={12}
         >
-          <Connect(MigrationsInProgressCard) />
+          <CardGrid
+            className=""
+            matchHeight={true}
+          >
+            <Row
+              bsClass="row"
+              componentClass="div"
+            >
+              <Col
+                bsClass="col"
+                componentClass="div"
+                sm={3}
+                xs={6}
+              >
+                <MigrationsNotStarted />
+              </Col>
+              <Col
+                bsClass="col"
+                componentClass="div"
+                sm={3}
+                xs={6}
+              >
+                <MigrationsInProgress />
+              </Col>
+              <Col
+                bsClass="col"
+                componentClass="div"
+                sm={3}
+                xs={6}
+              >
+                <MigrationsComplete />
+              </Col>
+              <Col
+                bsClass="col"
+                componentClass="div"
+                sm={3}
+                xs={6}
+              >
+                <InfrastructureMappings />
+              </Col>
+            </Row>
+          </CardGrid>
         </Col>
       </Row>
       <Row
         bsClass="row"
         componentClass="div"
       >
+        <div
+          className="spacer"
+        />
         <Col
           bsClass="col"
           componentClass="div"
           xs={12}
         >
-          <Connect(MigrationsCompletedCard) />
-          <div
-            className="spacer"
+          <InfrastructureMappingCard
+            cardRef={[Function]}
+            showMappingWizardAction={[MockFunction]}
           />
         </Col>
       </Row>
