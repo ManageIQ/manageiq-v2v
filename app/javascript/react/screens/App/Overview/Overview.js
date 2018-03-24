@@ -1,11 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Equalizer from 'react-equalizer';
-import { bindMethods, Grid } from 'patternfly-react';
+import { bindMethods, Grid, CardGrid } from 'patternfly-react';
+import * as AggregateCards from './components/AggregateCards';
 import InfrastructureMappingCard from './components/Cards/InfrastructureMappingCard/InfrastructureMappingCard';
-import MigrationPlansCard from './components/Cards/MigrationPlansCard/MigrationPlansCard';
-import MigrationsInProgressCard from './components/Cards/MigrationsInProgressCard';
-import MigrationsCompletedCard from './components/Cards/MigrationsCompletedCard';
 import componentRegistry from '../../../../components/componentRegistry';
 
 class Overview extends React.Component {
@@ -73,51 +70,46 @@ class Overview extends React.Component {
     const showPlanEnabled =
       transformationMappings && transformationMappings.length;
 
-    const overviewCards = (
-      <div
-        className="row cards-pf"
-        ref={n => (this.mainContent = n)}
-        style={{ overflow: 'auto', paddingBottom: 100, height: '100%' }}
-      >
-        <Grid.Col md={12}>
-          <Grid.Row>
-            <div className="spacer" />
-            <Equalizer nodes={this.getNodes}>
-              <Grid.Col xs={12} md={6}>
+    const aggregateDataCards = (
+      <CardGrid matchHeight>
+        <CardGrid.Row>
+          <CardGrid.Col xs={6} sm={3}>
+            <AggregateCards.MigrationsNotStarted />
+          </CardGrid.Col>
+          <CardGrid.Col xs={6} sm={3}>
+            <AggregateCards.MigrationsInProgress />
+          </CardGrid.Col>
+          <CardGrid.Col xs={6} sm={3}>
+            <AggregateCards.MigrationsComplete />
+          </CardGrid.Col>
+          <CardGrid.Col xs={6} sm={3}>
+            <AggregateCards.InfrastructureMappings />
+          </CardGrid.Col>
+        </CardGrid.Row>
+      </CardGrid>
+    );
+
+    return (
+      <React.Fragment>
+        <div
+          className="row cards-pf"
+          style={{ overflow: 'auto', paddingBottom: 100, height: '100%' }}
+        >
+          <Grid.Col md={12}>
+            <Grid.Row>
+              <Grid.Col xs={12}>{aggregateDataCards}</Grid.Col>
+            </Grid.Row>
+            <Grid.Row>
+              <div className="spacer" />
+              <Grid.Col xs={12}>
                 <InfrastructureMappingCard
                   cardRef={n => (this.node1 = n)}
                   showMappingWizardAction={showMappingWizardAction}
                 />
               </Grid.Col>
-              <Grid.Col xs={12} md={6}>
-                <MigrationPlansCard
-                  cardRef={n => (this.node2 = n)}
-                  showPlanWizardAction={showPlanWizardAction}
-                  showPlanDisabled={!showPlanEnabled}
-                />
-              </Grid.Col>
-            </Equalizer>
-          </Grid.Row>
-
-          <Grid.Row>
-            <Grid.Col xs={12}>
-              <MigrationsInProgressCard />
-            </Grid.Col>
-          </Grid.Row>
-
-          <Grid.Row>
-            <Grid.Col xs={12}>
-              <MigrationsCompletedCard />
-              <div className="spacer" />
-            </Grid.Col>
-          </Grid.Row>
-        </Grid.Col>
-      </div>
-    );
-
-    return (
-      <React.Fragment>
-        {overviewCards}
+            </Grid.Row>
+          </Grid.Col>
+        </div>
         {mappingWizardVisible && this.mappingWizard}
         {planWizardVisible && this.planWizard}
       </React.Fragment>
