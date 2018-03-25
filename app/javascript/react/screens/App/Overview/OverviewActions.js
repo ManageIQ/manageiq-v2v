@@ -79,16 +79,8 @@ const _getMigrationsInProgressAction = url => dispatch =>
     }
   });
 
-export const fetchMigrationsInProgressAction = () => {
-  const url =
-    '/api/service_requests?' +
-    "filter[]=state='active'" +
-    "&filter[]=type='ServiceTemplateTransformationPlanRequest'" +
-    '&expand=resources' +
-    '&attributes=status,state,options,description,miq_request_tasks';
-
+export const fetchMigrationsInProgressAction = url => {
   const uri = new URI(url);
-
   return _getMigrationsInProgressAction(uri.toString());
 };
 
@@ -111,15 +103,7 @@ const _getMigrationsCompletedAction = url => dispatch =>
     }
   });
 
-export const fetchMigrationsCompletedAction = () => {
-  const url =
-    '/api/service_requests?' +
-    "filter[]=state='finished'" +
-    "&filter[]=type='ServiceTemplateTransformationPlanRequest'" +
-    '&expand=resources' +
-    '&attributes=status,state,options,description,miq_request_tasks';
-
+export const fetchMigrationsCompletedAction = url => {
   const uri = new URI(url);
-
   return _getMigrationsCompletedAction(uri.toString());
 };

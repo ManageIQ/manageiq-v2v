@@ -28,7 +28,7 @@ describe('fetchMigrationsInProgressAction', () => {
     });
 
     return store
-      .dispatch(actions.fetchMigrationsInProgressAction())
+      .dispatch(actions.fetchMigrationsInProgressAction(url))
       .then(() => {
         expect(store.getActions()).toMatchSnapshot();
       });
@@ -41,7 +41,7 @@ describe('fetchMigrationsInProgressAction', () => {
     });
 
     return store
-      .dispatch(actions.fetchMigrationsInProgressAction())
+      .dispatch(actions.fetchMigrationsInProgressAction(url))
       .then(() => {
         expect(store.getActions()).toMatchSnapshot();
       });
@@ -62,9 +62,11 @@ describe('fetchMigrationsCompletedAction', () => {
       status: 200
     });
 
-    return store.dispatch(actions.fetchMigrationsCompletedAction()).then(() => {
-      expect(store.getActions()).toMatchSnapshot();
-    });
+    return store
+      .dispatch(actions.fetchMigrationsCompletedAction(url))
+      .then(() => {
+        expect(store.getActions()).toMatchSnapshot();
+      });
   });
 
   test('fetches completed migrations and returns PENDING and REJECTED actions', () => {
@@ -73,8 +75,10 @@ describe('fetchMigrationsCompletedAction', () => {
       status: 404
     });
 
-    return store.dispatch(actions.fetchMigrationsCompletedAction()).then(() => {
-      expect(store.getActions()).toMatchSnapshot();
-    });
+    return store
+      .dispatch(actions.fetchMigrationsCompletedAction(url))
+      .then(() => {
+        expect(store.getActions()).toMatchSnapshot();
+      });
   });
 });

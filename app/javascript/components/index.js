@@ -91,7 +91,21 @@ export const coreComponents = [
     data: {
       fetchTransformationMappingsUrl: mockMode
         ? '/api/dummyMappings'
-        : 'api/transformation_mappings?expand=resources'
+        : 'api/transformation_mappings?expand=resources',
+      fetchCompletedMigrationsUrl: mockMode
+        ? '/api/dummyCompletedMigrations'
+        : '/api/service_requests?' +
+          "filter[]=state='finished'" +
+          "&filter[]=type='ServiceTemplateMigrationPlanRequest'" +
+          '&expand=resources' +
+          '&attributes=status,state,options,description,miq_request_tasks',
+      fetchActiveMigrationsUrl: mockMode
+        ? '/api/dummyActiveMigrations'
+        : '/api/service_requests?' +
+          "filter[]=state='active'" +
+          "&filter[]=type='ServiceTemplateMigrationPlanRequest'" +
+          '&expand=resources' +
+          '&attributes=status,state,options,description,miq_request_tasks'
     },
     store: true
   },
