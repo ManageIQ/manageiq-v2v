@@ -25,11 +25,13 @@ class Overview extends React.Component {
     const {
       fetchTransformationMappingsUrl,
       fetchTransformationMappingsAction,
-      fetchMigrationsInProgressAction
+      fetchMigrationsInProgressAction,
+      fetchMigrationsCompletedAction
     } = this.props;
 
     fetchTransformationMappingsAction(fetchTransformationMappingsUrl);
     fetchMigrationsInProgressAction();
+    fetchMigrationsCompletedAction();
   }
 
   componentWillReceiveProps(nextProps) {

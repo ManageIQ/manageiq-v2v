@@ -1,5 +1,57 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`fetchMigrationsCompletedAction fetches completed migrations and returns PENDING and FULFILLED actions 1`] = `
+Array [
+  Object {
+    "type": "FETCH_V2V_MIGRATIONS_COMPLETED_PENDING",
+  },
+  Object {
+    "payload": Object {
+      "config": Object {
+        "adapter": null,
+        "data": undefined,
+        "headers": Object {
+          "Accept": "application/json, text/plain, */*",
+          "X-CSRF-Token": "",
+          "X-Requested-With": "XMLHttpRequest",
+        },
+        "maxContentLength": -1,
+        "method": "get",
+        "params": Object {},
+        "timeout": 0,
+        "transformRequest": Object {
+          "0": [Function],
+        },
+        "transformResponse": Object {
+          "0": [Function],
+        },
+        "url": "/api/service_requests?filter[]=state='finished'&filter[]=type='ServiceTemplateTransformationPlanRequest'&expand=resources&attributes=status,state,options,description,miq_request_tasks",
+        "validateStatus": [Function],
+        "xsrfCookieName": "XSRF-TOKEN",
+        "xsrfHeaderName": "X-XSRF-TOKEN",
+      },
+      "data": null,
+      "headers": undefined,
+      "status": 200,
+    },
+    "type": "FETCH_V2V_MIGRATIONS_COMPLETED_FULFILLED",
+  },
+]
+`;
+
+exports[`fetchMigrationsCompletedAction fetches completed migrations and returns PENDING and REJECTED actions 1`] = `
+Array [
+  Object {
+    "type": "FETCH_V2V_MIGRATIONS_COMPLETED_PENDING",
+  },
+  Object {
+    "error": true,
+    "payload": [Error: Request failed with status code 404],
+    "type": "FETCH_V2V_MIGRATIONS_COMPLETED_REJECTED",
+  },
+]
+`;
+
 exports[`fetchMigrationsInProgressAction fetches migrations in progress and returns PENDING and FULFILLED actions 1`] = `
 Array [
   Object {

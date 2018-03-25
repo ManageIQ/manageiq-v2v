@@ -9,6 +9,7 @@ import {
   PLAN_WIZARD_EXITED,
   FETCH_V2V_TRANSFORMATION_MAPPINGS,
   FETCH_V2V_MIGRATIONS_IN_PROGRESS,
+  FETCH_V2V_MIGRATIONS_COMPLETED,
   CONTINUE_TO_PLAN
 } from './OverviewConstants';
 
@@ -26,7 +27,11 @@ const initialState = Immutable({
   migrationsInProgress: [],
   isFetchingMigrationsInProgress: false,
   isRejectedMigrationsInProgress: false,
-  errorMigrationsInProgress: null
+  errorMigrationsInProgress: null,
+  migrationsCompleted: [],
+  isFetchingMigrationsCompleted: false,
+  isRejectedMigrationsCompleted: false,
+  errorMigrationsCompleted: null
 });
 
 export default (state = initialState, action) => {
@@ -92,6 +97,20 @@ export default (state = initialState, action) => {
         .set('errorMigrationsInProgress', action.payload)
         .set('isRejectedMigrationsInProgress', true)
         .set('isFetchingMigrationsInProgress', false);
+
+    case `${FETCH_V2V_MIGRATIONS_COMPLETED}_PENDING`:
+      return state.set('isFetchingMigrationsCompleted', true);
+    case `${FETCH_V2V_MIGRATIONS_COMPLETED}_FULFILLED`:
+      return state
+        .set('migrationsCompleted', action.payload.data.resources)
+        .set('isFetchingMigrationsCompleted', false)
+        .set('isRejectedMigrationsCompleted', false)
+        .set('errorMigrationsCompleted', null);
+    case `${FETCH_V2V_MIGRATIONS_COMPLETED}_REJECTED`:
+      return state
+        .set('errorMigrationsCompleted', action.payload)
+        .set('isRejectedMigrationsCompleted', true)
+        .set('isFetchingMigrationsCompleted', false);
 
     case CONTINUE_TO_PLAN:
       return state

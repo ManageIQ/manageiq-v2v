@@ -47,3 +47,34 @@ describe('fetchMigrationsInProgressAction', () => {
       });
   });
 });
+
+describe('fetchMigrationsCompletedAction', () => {
+  const url =
+    '/api/service_requests?' +
+    "filter[]=state='finished'" +
+    "&filter[]=type='ServiceTemplateTransformationPlanRequest'" +
+    '&expand=resources' +
+    '&attributes=status,state,options,description,miq_request_tasks';
+
+  test('fetches completed migrations and returns PENDING and FULFILLED actions', () => {
+    mockRequest({
+      url,
+      status: 200
+    });
+
+    return store.dispatch(actions.fetchMigrationsCompletedAction()).then(() => {
+      expect(store.getActions()).toMatchSnapshot();
+    });
+  });
+
+  test('fetches completed migrations and returns PENDING and REJECTED actions', () => {
+    mockRequest({
+      url,
+      status: 404
+    });
+
+    return store.dispatch(actions.fetchMigrationsCompletedAction()).then(() => {
+      expect(store.getActions()).toMatchSnapshot();
+    });
+  });
+});
