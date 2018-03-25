@@ -2,7 +2,6 @@
 @import './screens/PlanWizard/components/PlanWizardResultsStep/PlanWizardResultsStep.scss';
 @import 'components/Cards/MigrationsInProgressCard/MigrationsInProgress.scss';
 @import 'components/Cards/MigrationsCompletedCard/MigrationsCompleted.scss';
-@import 'components/ModalWizard/ModalWizard.scss';
 
 .card-pf-body .blank-slate-pf {
   background-color: #fff;
@@ -71,4 +70,26 @@
 .inner-modal-dialog {
   z-index: 1070;
   margin-top: 150px;
+}
+
+.modal-wizard-alert {
+  position: absolute;
+  height: 120px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.modal-wizard-alert .modal-wizard-alert--alert {
+  position: absolute;
+  bottom: 0px;
+  width: calc(100% - 40px);
+  left: -1000px;
+  transition: left 0.2s ease-in;
+  z-index: 1;
+  margin-bottom: 0;
+  margin-left: 20px;
+}
+
+.modal-wizard-alert .modal-wizard-alert--alert.is-visible {
+  left: 1px;
 }

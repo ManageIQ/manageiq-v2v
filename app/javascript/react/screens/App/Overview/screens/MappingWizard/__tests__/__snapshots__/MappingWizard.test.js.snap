@@ -1,129 +1,85 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MappingWizard component renders the mapping wizard 1`] = `
-<Modal
-  animation={true}
-  autoFocus={true}
-  backdrop={true}
-  bsClass="modal"
-  dialogClassName="modal-lg wizard-pf"
-  dialogComponentClass={[Function]}
-  enforceFocus={true}
-  keyboard={true}
-  manager={
-    ModalManager {
-      "add": [Function],
-      "containers": Array [],
-      "data": Array [],
-      "handleContainerOverflow": true,
-      "hideSiblingNodes": true,
-      "isTopModal": [Function],
-      "modals": Array [],
-      "remove": [Function],
-    }
-  }
+<StatefulWizardPattern
+  backText="Back"
+  bodyHeader={null}
+  cancelText="Cancel"
+  closeText="Close"
+  loading={false}
+  loadingMessage="Loading..."
+  loadingTitle="Loading Wizard..."
+  nextButtonRef={[Function]}
+  nextStepDisabled={false}
+  nextText="Next"
+  onBack={[Function]}
   onExited={[MockFunction]}
   onHide={[Function]}
-  renderBackdrop={[Function]}
-  restoreFocus={true}
+  onNext={[Function]}
+  onStepChanged={[Function]}
+  shouldDisableNextStep={[Function]}
+  shouldPreventStepChange={[Function]}
   show={true}
+  stepButtonsDisabled={true}
+  steps={
+    Array [
+      Object {
+        "isInvalid": false,
+        "onNext": [Function],
+        "render": [Function],
+        "title": "General",
+      },
+      Object {
+        "isInvalid": false,
+        "render": [Function],
+        "title": "Clusters",
+      },
+      Object {
+        "isInvalid": false,
+        "onNext": [Function],
+        "render": [Function],
+        "title": "Datastores",
+      },
+      Object {
+        "isInvalid": false,
+        "onNext": [Function],
+        "render": [Function],
+        "title": "Networks",
+      },
+      Object {
+        "isInvalid": undefined,
+        "preventExit": true,
+        "render": [Function],
+        "title": "Results",
+      },
+    ]
+  }
+  title="Infrastructure Mapping Wizard"
 >
-  <Wizard
-    className=""
-    embedded={false}
-  >
-    <ModalHeader
-      bsClass="modal-header"
-      closeButton={false}
-      closeLabel="Close"
-    >
-      <button
-        aria-hidden="true"
-        aria-label="Close"
-        className="close"
-        onClick={[Function]}
-      >
-        <Icon
-          name="close"
-          type="pf"
-        />
-      </button>
-      <ModalTitle
-        bsClass="modal-title"
-        componentClass="h4"
-      >
-        Infrastructure Mapping Wizard
-      </ModalTitle>
-    </ModalHeader>
-    <ModalBody
-      bsClass="modal-body"
-      className="wizard-pf-body clearfix"
-      componentClass="div"
-    >
-      <MappingWizardBody
-        activeStep="1"
-        activeStepIndex={0}
-        disableNextStep={false}
-        goToStep={[Function]}
-        hideAlertAction={[Function]}
-        loaded={true}
-        mappingWizardClustersStep={Object {}}
-        mappingWizardDatastoresStep={Object {}}
-        mappingWizardGeneralStep={Object {}}
-        mappingWizardNetworksStep={Object {}}
-        transformationsBody={Object {}}
+  <ConfirmModal
+    backdropClassName="inner-modal-backdrop"
+    body={
+      <UNDEFINED>
+        <h3>
+          The following source clusters have no mapped networks:
+        </h3>
+        <ul />
+      </UNDEFINED>
+    }
+    cancelButtonLabel="Cancel"
+    className="inner-modal-dialog"
+    confirmButtonLabel="Close"
+    icon={
+      <Icon
+        className="confirm-warning-icon"
+        name="warning-triangle-o"
+        type="pf"
       />
-    </ModalBody>
-    <ModalFooter
-      bsClass="modal-footer"
-      className="wizard-pf-footer"
-      componentClass="div"
-    >
-      <Button
-        active={false}
-        block={false}
-        bsClass="btn"
-        bsStyle="default"
-        className="btn-cancel"
-        disabled={false}
-        onClick={[Function]}
-      >
-        Cancel
-      </Button>
-      <Button
-        active={false}
-        block={false}
-        bsClass="btn"
-        bsStyle="default"
-        disabled={true}
-        onClick={[Function]}
-      >
-        <Icon
-          name="angle-left"
-          type="fa"
-        />
-        Back
-      </Button>
-      <Button
-        active={false}
-        block={false}
-        bsClass="btn"
-        bsStyle="primary"
-        disabled={false}
-        onClick={[Function]}
-      >
-        Next
-        <Icon
-          name="angle-right"
-          type="fa"
-        />
-      </Button>
-    </ModalFooter>
-  </Wizard>
-  <WarningModal
-    activeStepIndex={0}
-    nextStep={[Function]}
-    onFinalStep={false}
+    }
+    onCancel={[Function]}
+    onConfirm={[Function]}
+    show={false}
+    title="Unmappped Networks"
   />
-</Modal>
+</StatefulWizardPattern>
 `;

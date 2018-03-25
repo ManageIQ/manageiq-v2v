@@ -3,8 +3,10 @@ export const mappingWizardOverviewFilter = overview => ({
 });
 
 export const mappingWizardFormFilter = form => ({
-  mappingWizardGeneralStep: form.mappingWizardGeneralStep,
-  mappingWizardClustersStep: form.mappingWizardClustersStep,
-  mappingWizardDatastoresStep: form.mappingWizardDatastoresStep,
-  mappingWizardNetworksStep: form.mappingWizardNetworksStep
+  forms: {
+    mappingWizardGeneralStep: form.mappingWizardGeneralStep,
+    mappingWizardClustersStep: form.mappingWizardClustersStep,
+    mappingWizardDatastoresStep: form.mappingWizardDatastoresStep,
+    mappingWizardNetworksStep: form.mappingWizardNetworksStep
+  }
 });

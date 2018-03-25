@@ -11,7 +11,7 @@ import {
 const initialState = Immutable({
   transformationsBody: {},
   warningModalVisible: false,
-  alert: ''
+  alertText: ''
 });
 
 export default (state = initialState, action) => {
