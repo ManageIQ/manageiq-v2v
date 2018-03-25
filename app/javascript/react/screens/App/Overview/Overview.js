@@ -24,10 +24,12 @@ class Overview extends React.Component {
   componentDidMount() {
     const {
       fetchTransformationMappingsUrl,
-      fetchTransformationMappingsAction
+      fetchTransformationMappingsAction,
+      fetchMigrationsInProgressAction
     } = this.props;
 
     fetchTransformationMappingsAction(fetchTransformationMappingsUrl);
+    fetchMigrationsInProgressAction();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -56,19 +58,17 @@ class Overview extends React.Component {
   getNodes(equalizerComponent, equalizerElement) {
     return [this.node1, this.node2];
   }
+
   render() {
     const {
       showMappingWizardAction,
-      showPlanWizardAction,
+      showPlanWizardAction, // eslint-disable-line no-unused-vars
       mappingWizardVisible,
       planWizardVisible,
-      transformationMappings,
+      transformationMappings, // eslint-disable-line no-unused-vars
       isFetchingTransformationMappings, // eslint-disable-line no-unused-vars
       isRejectedTransformationMappings // eslint-disable-line no-unused-vars
     } = this.props;
-
-    const showPlanEnabled =
-      transformationMappings && transformationMappings.length;
 
     const aggregateDataCards = (
       <CardGrid matchHeight>
@@ -124,6 +124,7 @@ Overview.propTypes = {
   planWizardVisible: PropTypes.bool,
   fetchTransformationMappingsUrl: PropTypes.string,
   fetchTransformationMappingsAction: PropTypes.func,
+  fetchMigrationsInProgressAction: PropTypes.func,
   transformationMappings: PropTypes.array,
   isFetchingTransformationMappings: PropTypes.bool,
   isRejectedTransformationMappings: PropTypes.bool,

@@ -17,6 +17,7 @@ describe('Overview component', () => {
     mappingWizardVisible: false,
     planWizardVisible: false,
     fetchTransformationMappingsAction: jest.fn(),
+    fetchMigrationsInProgressAction: jest.fn(),
     isFetchingTransformationMappings: false,
     isRejectedTransformationMappings: false
   });
