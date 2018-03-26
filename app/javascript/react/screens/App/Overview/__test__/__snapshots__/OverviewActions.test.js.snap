@@ -12,7 +12,7 @@ Array [
         "data": undefined,
         "headers": Object {
           "Accept": "application/json, text/plain, */*",
-          "X-CSRF-Token": "",
+          "X-Auth-Token": "",
           "X-Requested-With": "XMLHttpRequest",
         },
         "maxContentLength": -1,
@@ -64,7 +64,7 @@ Array [
         "data": undefined,
         "headers": Object {
           "Accept": "application/json, text/plain, */*",
-          "X-CSRF-Token": "",
+          "X-Auth-Token": "",
           "X-Requested-With": "XMLHttpRequest",
         },
         "maxContentLength": -1,
