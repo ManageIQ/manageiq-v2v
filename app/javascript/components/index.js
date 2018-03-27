@@ -6,7 +6,6 @@ import MappingWizardResultsStepContainer from '../react/screens/App/Overview/scr
 import PlanWizardResultsStepContainer from '../react/screens/App/Overview/screens/PlanWizard/components/PlanWizardResultsStep';
 import PlanWizardContainer from '../react/screens/App/Overview/screens/PlanWizard';
 import OverviewContainer from '../react/screens/App/Overview';
-import InfrastructureMappings from '../react/screens/App/InfrastructureMappings/InfrastructureMappings';
 import IsoDate from './dates/IsoDate';
 import LongDateTime from './dates/LongDateTime';
 import RelativeDateTime from './dates/RelativeDateTime';
@@ -77,12 +76,6 @@ export const coreComponents = [
       url: mockMode ? '/api/dummyMigrationPlans' : '/api/migrationPlans'
     },
     store: true
-  },
-  {
-    name: 'InfrastructureMappings',
-    type: InfrastructureMappings,
-    navigation: 'Infrastructure Mappings',
-    data: {}
   },
   {
     name: 'OverviewContainer',
