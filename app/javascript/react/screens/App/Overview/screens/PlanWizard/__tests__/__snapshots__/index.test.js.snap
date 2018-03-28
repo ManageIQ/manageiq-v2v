@@ -9,6 +9,7 @@ Object {
   "planWizardGeneralStep": Object {
     "initial": Object {
       "infrastructure_mapping": undefined,
+      "vm_choice_radio": "vms_via_discovery",
     },
     "registeredFields": Object {
       "description": Object {
@@ -26,6 +27,11 @@ Object {
         "name": "name",
         "type": "Field",
       },
+      "vm_choice_radio": Object {
+        "count": 3,
+        "name": "vm_choice_radio",
+        "type": "Field",
+      },
     },
     "syncErrors": Object {
       "infrastructure_mapping": "Required",
@@ -33,6 +39,7 @@ Object {
     },
     "values": Object {
       "infrastructure_mapping": undefined,
+      "vm_choice_radio": "vms_via_discovery",
     },
   },
   "setPlansBodyAction": [Function],
