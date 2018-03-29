@@ -36,6 +36,11 @@ class PlanWizardBody extends React.Component {
             disableGoto: !this.props.planWizardCSVStep.values
           },
           {
+            title: __('Options'),
+            render: () => <h3>Migration options</h3>,
+            disableGoto: true
+          },
+          {
             title: __('Results'),
             render: () => this.planWizardResultsStepContainer,
             disableGoto: true
