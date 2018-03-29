@@ -14,7 +14,7 @@ import PlanWizardBody from './PlanWizardBody';
 const planWizardSteps = [
   'planWizardGeneralStep',
   'planWizardCSVStep',
-  'planWizardCSVStep', // replace with actual form name later
+  'planWizardOptionsStep',
   'planWizardResultsStep'
 ];
 
@@ -62,7 +62,8 @@ class PlanWizard extends React.Component {
       hidePlanWizardAction,
       planWizardExitedAction,
       planWizardGeneralStep,
-      planWizardCSVStep
+      planWizardCSVStep,
+      planWizardOptionsStep
     } = this.props;
 
     const { activeStepIndex, plansBody } = this.state;
@@ -103,6 +104,7 @@ class PlanWizard extends React.Component {
               plansBody={plansBody}
               planWizardGeneralStep={planWizardGeneralStep}
               planWizardCSVStep={planWizardCSVStep}
+              planWizardOptionsStep={planWizardOptionsStep}
             />
           </Modal.Body>
           <Modal.Footer className="wizard-pf-footer">
@@ -143,6 +145,7 @@ PlanWizard.propTypes = {
   planWizardExitedAction: PropTypes.func,
   planWizardGeneralStep: PropTypes.object,
   planWizardCSVStep: PropTypes.object,
+  planWizardOptionsStep: PropTypes.object,
   setPlansBodyAction: PropTypes.func
 };
 PlanWizard.defaultProps = {
@@ -151,6 +154,7 @@ PlanWizard.defaultProps = {
   planWizardExitedAction: noop,
   planWizardGeneralStep: {},
   planWizardCSVStep: {},
+  planWizardOptionsStep: {},
   setPlansBodyAction: noop
 };
 export default PlanWizard;

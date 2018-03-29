@@ -5,6 +5,7 @@ import ModalWizard from '../../components/ModalWizard';
 import componentRegistry from '../../../../../../components/componentRegistry';
 import PlanWizardGeneralStep from '../PlanWizard/components/PlanWizardGeneralStep';
 import PlanWizardCSVStep from '../PlanWizard/components/PlanWizardCSVStep';
+import PlanWizardOptionsStep from '../PlanWizard/components/PlanWizardOptionsStep';
 
 class PlanWizardBody extends React.Component {
   constructor(props) {
@@ -37,7 +38,7 @@ class PlanWizardBody extends React.Component {
           },
           {
             title: __('Options'),
-            render: () => <h3>Migration options</h3>,
+            render: () => <PlanWizardOptionsStep />,
             disableGoto: true
           },
           {
