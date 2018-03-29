@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Grid } from 'patternfly-react';
+import { Field } from 'redux-form';
 
 export const FormField = ({
   input,
@@ -15,6 +16,8 @@ export const FormField = ({
   ...props
 }) => {
   const formGroupProps = { key: { label }, controlId, ...props };
+
+  const addBreak = <br />;
 
   if (touched && error) formGroupProps.validationState = 'error';
 
@@ -41,6 +44,22 @@ export const FormField = ({
           </select>
         );
         break;
+      case 'radio':
+        field = options.map(val => (
+          <div key={val.id}>
+            <label htmlFor={input.name}>
+              <Field
+                name={input.name}
+                component="input"
+                type="radio"
+                value={val.id}
+              />
+              {` ${val.name}`}
+            </label>
+            <br />
+          </div>
+        ));
+        break;
       default:
     }
     return field;
@@ -53,6 +72,7 @@ export const FormField = ({
         {required && ' *'}
       </Grid.Col>
       <Grid.Col sm={9}>
+        {type === 'radio' && addBreak}
         {renderField()}
         {touched && error && <Form.HelpBlock>{error}</Form.HelpBlock>}
       </Grid.Col>
