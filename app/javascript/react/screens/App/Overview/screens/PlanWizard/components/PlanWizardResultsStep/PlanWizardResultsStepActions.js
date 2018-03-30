@@ -25,7 +25,11 @@ const postMigrationRequestsAction = (response, dispatch) => {
   });
 };
 
-const _postMigrationPlansActionCreator = (url, migrationPlans) => dispatch => {
+const _postMigrationPlansActionCreator = (
+  url,
+  migrationPlans,
+  planSchedule
+) => dispatch => {
   if (mockMode) {
     dispatch({
       type: POST_V2V_MIGRATION_PLANS,
@@ -37,20 +41,22 @@ const _postMigrationPlansActionCreator = (url, migrationPlans) => dispatch => {
         type: `${POST_V2V_MIGRATION_PLANS}_FULFILLED`,
         payload: requestMigrationPlansData.response
       });
-      dispatch({
-        type: POST_V2V_MIGRATION_REQUESTS,
-        payload: API.post(
-          `${requestMigrationPlansData.response.data.results[0].href}`,
-          { action: 'order' }
-        ).catch(errorMigrationRequest => {
-          // to enable UI development without the backend ready, i'm catching the error
-          // and passing some mock data thru the FULFILLED action after the REJECTED action is finished.
-          dispatch({
-            type: `${POST_V2V_MIGRATION_REQUESTS}_FULFILLED`,
-            payload: requestMigrationRequestsData.response
-          });
-        })
-      });
+      if (planSchedule === 'migration_plan_now') {
+        dispatch({
+          type: POST_V2V_MIGRATION_REQUESTS,
+          payload: API.post(
+            `${requestMigrationPlansData.response.data.results[0].href}`,
+            { action: 'order' }
+          ).catch(errorMigrationRequest => {
+            // to enable UI development without the backend ready, i'm catching the error
+            // and passing some mock data thru the FULFILLED action after the REJECTED action is finished.
+            dispatch({
+              type: `${POST_V2V_MIGRATION_REQUESTS}_FULFILLED`,
+              payload: requestMigrationRequestsData.response
+            });
+          })
+        });
+      }
     });
   } else {
     dispatch({
@@ -59,7 +65,9 @@ const _postMigrationPlansActionCreator = (url, migrationPlans) => dispatch => {
         API.post(url, migrationPlans)
           .then(response => {
             resolve(response);
-            postMigrationRequestsAction(response, dispatch);
+            if (planSchedule === 'migration_plan_now') {
+              postMigrationRequestsAction(response, dispatch);
+            }
           })
           .catch(e => reject(e));
       })
@@ -67,5 +75,5 @@ const _postMigrationPlansActionCreator = (url, migrationPlans) => dispatch => {
   }
 };
 
-export const postMigrationPlansAction = (url, migrationPlans) =>
-  _postMigrationPlansActionCreator(url, migrationPlans);
+export const postMigrationPlansAction = (url, migrationPlans, planSchedule) =>
+  _postMigrationPlansActionCreator(url, migrationPlans, planSchedule);

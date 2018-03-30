@@ -11,7 +11,7 @@ class PlanWizardResultsStep extends React.Component {
       planSchedule
     } = this.props;
 
-    postMigrationPlansAction(postPlansUrl, plansBody);
+    postMigrationPlansAction(postPlansUrl, plansBody, planSchedule);
   }
 
   render() {
