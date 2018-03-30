@@ -35,13 +35,18 @@ class PlanWizard extends React.Component {
     const {
       planWizardGeneralStep,
       planWizardCSVStep,
-      setPlansBodyAction
+      planWizardOptionsStep,
+      setPlansBodyAction,
+      setPlanScheduleAction
     } = this.props;
 
-    if (activeStepIndex === 1) {
+    if (activeStepIndex === 2) {
       const plansBody = createMigrationPlans(
         planWizardGeneralStep,
         planWizardCSVStep
+      );
+      setPlanScheduleAction(
+        planWizardOptionsStep.values.migration_plan_choice_radio
       );
 
       setPlansBodyAction(plansBody);
@@ -146,7 +151,8 @@ PlanWizard.propTypes = {
   planWizardGeneralStep: PropTypes.object,
   planWizardCSVStep: PropTypes.object,
   planWizardOptionsStep: PropTypes.object,
-  setPlansBodyAction: PropTypes.func
+  setPlansBodyAction: PropTypes.func,
+  setPlanScheduleAction: PropTypes.func
 };
 PlanWizard.defaultProps = {
   hidePlanWizard: true,
@@ -155,6 +161,7 @@ PlanWizard.defaultProps = {
   planWizardGeneralStep: {},
   planWizardCSVStep: {},
   planWizardOptionsStep: {},
-  setPlansBodyAction: noop
+  setPlansBodyAction: noop,
+  setPlanScheduleAction: noop
 };
 export default PlanWizard;

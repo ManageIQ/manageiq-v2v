@@ -4,7 +4,12 @@ import { noop, Spinner } from 'patternfly-react';
 
 class PlanWizardResultsStep extends React.Component {
   componentDidMount() {
-    const { postPlansUrl, postMigrationPlansAction, plansBody } = this.props;
+    const {
+      postPlansUrl,
+      postMigrationPlansAction,
+      plansBody,
+      planSchedule
+    } = this.props;
 
     postMigrationPlansAction(postPlansUrl, plansBody);
   }
@@ -76,6 +81,7 @@ PlanWizardResultsStep.propTypes = {
   postPlansUrl: PropTypes.string,
   postMigrationPlansAction: PropTypes.func,
   plansBody: PropTypes.object,
+  planSchedule: PropTypes.string,
   isPostingPlans: PropTypes.bool,
   isRejectedPostingPlans: PropTypes.bool,
   errorPostingPlans: PropTypes.object,
@@ -86,6 +92,7 @@ PlanWizardResultsStep.defaultProps = {
   postPlansUrl: '',
   postMigrationPlansAction: noop,
   plansBody: {},
+  planSchedule: '',
   isPostingPlans: true,
   isRejectedPostingPlans: false,
   errorPostingPlans: null,
