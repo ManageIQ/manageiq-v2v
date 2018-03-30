@@ -1,8 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { noop, Spinner } from 'patternfly-react';
+import { noop, Spinner, bindMethods } from 'patternfly-react';
 
 class PlanWizardResultsStep extends React.Component {
+  constructor(props) {
+    super(props);
+    bindMethods(this, ['renderResult']);
+  }
   componentDidMount() {
     const {
       postPlansUrl,
@@ -13,6 +17,19 @@ class PlanWizardResultsStep extends React.Component {
 
     postMigrationPlansAction(postPlansUrl, plansBody, planSchedule);
   }
+  renderResult(migrationPlanMessage, migrationPlanFollowupMessage) {
+    return (
+      <div className="wizard-pf-complete blank-slate-pf">
+        <div className="plan-wizard-results-step-icon">
+          <span className="fa fa-clock-o" />
+        </div>
+        <h3 className="blank-slate-pf-main-action">{migrationPlanMessage}</h3>
+        <p className="blank-slate-pf-secondary-action">
+          {migrationPlanFollowupMessage}
+        </p>
+      </div>
+    );
+  }
 
   render() {
     const {
@@ -21,7 +38,8 @@ class PlanWizardResultsStep extends React.Component {
       migrationPlansResult,
       migrationRequestsResult,
       errorPostingPlans, // eslint-disable-line no-unused-vars
-      plansBody
+      plansBody,
+      planSchedule
     } = this.props;
 
     if (isPostingPlans) {
@@ -53,25 +71,36 @@ class PlanWizardResultsStep extends React.Component {
           </button>
         </div>
       );
-    } else if (migrationPlansResult && migrationRequestsResult) {
+    } else if (
+      planSchedule === 'migration_plan_later' &&
+      migrationPlansResult
+    ) {
+      const migrationPlanSaved = sprintf(
+        __(" Migration Plan: '%s' has been saved"),
+        plansBody.name
+      );
+      const migrationPlanFollowupMessage = __(
+        'Select Migrate on the Overview page to begin migration'
+      );
+      return this.renderResult(
+        migrationPlanSaved,
+        migrationPlanFollowupMessage
+      );
+    } else if (
+      planSchedule === 'migration_plan_now' &&
+      migrationPlansResult &&
+      migrationRequestsResult
+    ) {
       const migrationPlanProgress = sprintf(
         __(" Migration Plan: '%s' is in progress"),
         plansBody.name
       );
-      return (
-        <div className="wizard-pf-complete blank-slate-pf">
-          <div className="plan-wizard-results-step-icon">
-            <span className="fa fa-clock-o" />
-          </div>
-          <h3 className="blank-slate-pf-main-action">
-            {migrationPlanProgress}
-          </h3>
-          <p className="blank-slate-pf-secondary-action">
-            {__(
-              'This may take a long time. Progress of the plan will be shown in the Migration area'
-            )}
-          </p>
-        </div>
+      const migrationPlanFollowupMessage = __(
+        'This may take a long time. Progress of the plan will be shown in the Migration area'
+      );
+      return this.renderResult(
+        migrationPlanProgress,
+        migrationPlanFollowupMessage
       );
     }
     return null;
