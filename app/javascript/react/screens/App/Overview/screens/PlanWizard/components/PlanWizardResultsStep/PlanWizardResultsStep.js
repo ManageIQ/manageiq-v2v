@@ -17,19 +17,17 @@ class PlanWizardResultsStep extends React.Component {
 
     postMigrationPlansAction(postPlansUrl, plansBody, planSchedule);
   }
-  renderResult(migrationPlanMessage, migrationPlanFollowupMessage) {
-    return (
-      <div className="wizard-pf-complete blank-slate-pf">
-        <div className="plan-wizard-results-step-icon">
-          <span className="fa fa-clock-o" />
-        </div>
-        <h3 className="blank-slate-pf-main-action">{migrationPlanMessage}</h3>
-        <p className="blank-slate-pf-secondary-action">
-          {migrationPlanFollowupMessage}
-        </p>
+  renderResult = (migrationPlanMessage, migrationPlanFollowupMessage) => (
+    <div className="wizard-pf-complete blank-slate-pf">
+      <div className="plan-wizard-results-step-icon">
+        <span className="fa fa-clock-o" />
       </div>
-    );
-  }
+      <h3 className="blank-slate-pf-main-action">{migrationPlanMessage}</h3>
+      <p className="blank-slate-pf-secondary-action">
+        {migrationPlanFollowupMessage}
+      </p>
+    </div>
+  );
 
   render() {
     const {

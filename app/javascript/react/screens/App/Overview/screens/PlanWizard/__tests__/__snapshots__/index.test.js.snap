@@ -42,6 +42,8 @@ Object {
       "vm_choice_radio": "vms_via_discovery",
     },
   },
+  "planWizardOptionsStep": Object {},
+  "setPlanScheduleAction": [Function],
   "setPlansBodyAction": [Function],
 }
 `;

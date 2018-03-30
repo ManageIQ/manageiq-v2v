@@ -68,7 +68,10 @@ export const FormField = ({
 
   return (
     <Form.FormGroup {...formGroupProps}>
-      <Grid.Col componentClass={Form.ControlLabel} sm={Number.parseInt(labelWidth, 10) || 2}>
+      <Grid.Col
+        componentClass={Form.ControlLabel}
+        sm={Number.parseInt(labelWidth, 10) || 2}
+      >
         {label}
         {required && ' *'}
       </Grid.Col>
