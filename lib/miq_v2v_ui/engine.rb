@@ -12,10 +12,7 @@ module MiqV2vUI
 
     initializer 'plugin' do
       Menu::CustomLoader.register(
-        Menu::Section.new(:migration, N_("Migration"), 'fa fa-plus', [
-          Menu::Item.new('overview', N_('Overview'), 'miq_report', {:feature => 'miq_report', :any => true}, '/migration'),
-          Menu::Item.new('infrastructure_mappings', N_('Infrastructure Mappings'), 'miq_report', {:feature => 'miq_report', :any => true}, '/migration/infrastructure-mappings')
-        ], nil, nil, nil, nil, :compute),
+          Menu::Item.new('overview', N_('Migration'), 'miq_report', {:feature => 'miq_report', :any => true}, '/migration', :default, :compute)
       )
     end
   end
