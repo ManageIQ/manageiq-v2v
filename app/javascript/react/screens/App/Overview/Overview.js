@@ -24,10 +24,13 @@ class Overview extends React.Component {
   componentDidMount() {
     const {
       fetchTransformationMappingsUrl,
-      fetchTransformationMappingsAction
+      fetchTransformationMappingsAction,
+      fetchTransformationPlanRequestsUrl,
+      fetchTransformationPlanRequestsAction
     } = this.props;
 
     fetchTransformationMappingsAction(fetchTransformationMappingsUrl);
+    fetchTransformationPlanRequestsAction(fetchTransformationPlanRequestsUrl);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -121,6 +124,8 @@ Overview.propTypes = {
   planWizardVisible: PropTypes.bool,
   fetchTransformationMappingsUrl: PropTypes.string,
   fetchTransformationMappingsAction: PropTypes.func,
+  fetchTransformationPlanRequestsUrl: PropTypes.string,
+  fetchTransformationPlanRequestsAction: PropTypes.func,
   transformationMappings: PropTypes.array,
   isFetchingTransformationMappings: PropTypes.bool,
   isRejectedTransformationMappings: PropTypes.bool,
