@@ -5,10 +5,14 @@ import {
   SHOW_MAPPING_WIZARD,
   SHOW_PLAN_WIZARD,
   HIDE_MAPPING_WIZARD,
-  FETCH_V2V_TRANSFORMATION_MAPPINGS
+  FETCH_V2V_TRANSFORMATION_MAPPINGS,
+  FETCH_V2V_MIGRATIONS_IN_PROGRESS,
+  FETCH_V2V_MIGRATIONS_COMPLETED
 } from './OverviewConstants';
 
 import { requestTransformationMappingsData } from './overview.fixtures';
+import { requestActiveServiceRequests } from './overview.migrationsInProgress.fixtures';
+import { requestCompletedServiceRequests } from './overview.migrationsCompleted.fixtures';
 
 const mockMode = globalMockMode;
 
@@ -54,4 +58,52 @@ export const continueToPlanAction = id => dispatch => {
     type: SHOW_PLAN_WIZARD,
     payload: { id }
   });
+};
+
+const _getMigrationsInProgressAction = url => dispatch =>
+  dispatch({
+    type: FETCH_V2V_MIGRATIONS_IN_PROGRESS,
+    payload: API.get(url)
+  }).catch(error => {
+    // redux-promise-middleware will automatically send:
+    // FETCH_V2V_MIGRATIONS_IN_PROGRESS_PENDING, FETCH_V2V_MIGRATIONS_IN_PROGRESS_FULFILLED,
+    // FETCH_V2V_MIGRATIONS_IN_PROGRESS_REJECTED
+
+    // to enable UI development without the backend ready, i'm catching the error
+    // and passing some mock data thru the FULFILLED action after the REJECTED action is finished.
+    if (mockMode) {
+      dispatch({
+        type: `${FETCH_V2V_MIGRATIONS_IN_PROGRESS}_FULFILLED`,
+        payload: requestActiveServiceRequests.response
+      });
+    }
+  });
+
+export const fetchMigrationsInProgressAction = url => {
+  const uri = new URI(url);
+  return _getMigrationsInProgressAction(uri.toString());
+};
+
+const _getMigrationsCompletedAction = url => dispatch =>
+  dispatch({
+    type: FETCH_V2V_MIGRATIONS_COMPLETED,
+    payload: API.get(url)
+  }).catch(error => {
+    // redux-promise-middleware will automatically send:
+    // FETCH_V2V_MIGRATIONS_COMPLETED_PENDING, FETCH_V2V_MIGRATIONS_COMPLETED_FULFILLED,
+    // FETCH_V2V_MIGRATIONS_COMPLETED_REJECTED
+
+    // to enable UI development without the backend ready, i'm catching the error
+    // and passing some mock data thru the FULFILLED action after the REJECTED action is finished.
+    if (mockMode) {
+      dispatch({
+        type: `${FETCH_V2V_MIGRATIONS_COMPLETED}_FULFILLED`,
+        payload: requestCompletedServiceRequests.response
+      });
+    }
+  });
+
+export const fetchMigrationsCompletedAction = url => {
+  const uri = new URI(url);
+  return _getMigrationsCompletedAction(uri.toString());
 };
