@@ -8,10 +8,11 @@ import {
   HIDE_PLAN_WIZARD,
   PLAN_WIZARD_EXITED,
   FETCH_V2V_TRANSFORMATION_MAPPINGS,
+  FETCH_V2V_TRANSFORMATION_PLAN_REQUESTS,
   CONTINUE_TO_PLAN
 } from './OverviewConstants';
 
-const initialState = Immutable({
+export const initialState = Immutable({
   mappingWizardVisible: false,
   hideMappingWizard: true,
   planWizardVisible: false,
@@ -20,6 +21,10 @@ const initialState = Immutable({
   transformationMappings: [],
   isRejectedTransformationMappings: false,
   isFetchingTransformationMappings: false,
+  transformationPlanRequests: [],
+  isRejectedTransformationPlanRequests: false,
+  isFetchingTransformationPlanRequests: false,
+  errorTransformationPlanRequests: null,
   isContinuingToPlan: false,
   shouldReloadMappings: false
 });
@@ -73,6 +78,21 @@ export default (state = initialState, action) => {
         .set('errorSourceClusters', action.payload)
         .set('isRejectedTransformationMappings', true)
         .set('isFetchingTransformationMappings', false);
+
+    case `${FETCH_V2V_TRANSFORMATION_PLAN_REQUESTS}_PENDING`:
+      return state.set('isFetchingTransformationPlanRequests', true);
+    case `${FETCH_V2V_TRANSFORMATION_PLAN_REQUESTS}_FULFILLED`:
+      return state
+        .set('transformationPlanRequests', action.payload.data.resources)
+        .set('isFetchingTransformationPlanRequests', false)
+        .set('isRejectedTransformationPlanRequests', false)
+        .set('errorTransformationPlanRequests', null);
+    case `${FETCH_V2V_TRANSFORMATION_PLAN_REQUESTS}_REJECTED`:
+      return state
+        .set('errorTransformationPlanRequests', action.payload)
+        .set('isRejectedTransformationPlanRequests', true)
+        .set('isFetchingTransformationPlanRequests', false);
+
     case CONTINUE_TO_PLAN:
       return state
         .set('isContinuingToPlan', true)

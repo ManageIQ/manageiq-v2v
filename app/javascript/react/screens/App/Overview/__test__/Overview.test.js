@@ -18,7 +18,11 @@ describe('Overview component', () => {
     planWizardVisible: false,
     fetchTransformationMappingsAction: jest.fn(),
     isFetchingTransformationMappings: false,
-    isRejectedTransformationMappings: false
+    isRejectedTransformationMappings: false,
+    fetchTransformationPlanRequestsAction: jest.fn(),
+    isFetchingTransformationPlanRequests: false,
+    isRejectedTransformationPlanRequests: false,
+    errorTransformationPlanRequests: null
   });
 
   it('renders the overview', () => {
