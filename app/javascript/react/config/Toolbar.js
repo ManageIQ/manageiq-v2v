@@ -9,8 +9,7 @@ const Toolbar = ({ navigation }) => (
         <Breadcrumb.Item href="/dashboard/maintab?tab=compute">
           Compute
         </Breadcrumb.Item>
-        <Breadcrumb.Item href="/migration">Migration</Breadcrumb.Item>
-        <Breadcrumb.Item active>{navigation}</Breadcrumb.Item>
+        <Breadcrumb.Item active>Migration</Breadcrumb.Item>
       </Breadcrumb>
     </Grid.Col>
   </Grid.Row>
