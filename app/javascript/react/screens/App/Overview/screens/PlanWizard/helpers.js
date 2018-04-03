@@ -1,12 +1,12 @@
 export const createMigrationPlans = (
   planWizardGeneralStep,
-  planWizardCSVStep
+  planWizardVMStep
 ) => {
   const planName = planWizardGeneralStep.values.name;
   const planDescription = planWizardGeneralStep.values.description;
   const infrastructureMapping =
     planWizardGeneralStep.values.infrastructure_mapping;
-  const vms = planWizardCSVStep.values.csvRows.map(value =>
+  const vms = planWizardVMStep.values.csvRows.map(value =>
     value.reference.trim()
   );
 
