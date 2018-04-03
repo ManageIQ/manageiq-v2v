@@ -9,7 +9,7 @@ class Overview extends React.Component {
   constructor(props) {
     super(props);
 
-    bindMethods(this, ['getNodes']);
+    bindMethods(this, ['getNodes', 'stopPolling', 'startPolling']);
 
     this.mappingWizard = componentRegistry.markup(
       'MappingWizardContainer',
@@ -31,6 +31,8 @@ class Overview extends React.Component {
 
     fetchTransformationMappingsAction(fetchTransformationMappingsUrl);
     fetchTransformationPlanRequestsAction(fetchTransformationPlanRequestsUrl);
+
+    this.startPolling();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -42,6 +44,7 @@ class Overview extends React.Component {
       continueToPlanAction,
       shouldReloadMappings
     } = this.props;
+
     if (
       shouldReloadMappings !== nextProps.shouldReloadMappings &&
       nextProps.shouldReloadMappings
@@ -54,11 +57,44 @@ class Overview extends React.Component {
     ) {
       continueToPlanAction(planWizardId);
     }
+
+    // kill interval if a wizard becomes visble
+    if (nextProps.mappingWizardVisible || nextProps.planWizardVisible) {
+      this.stopPolling();
+    } else if (
+      !nextProps.mappingWizardVisible &&
+      !nextProps.planWizardVisible &&
+      !this.pollingInterval
+    ) {
+      this.startPolling();
+    }
+  }
+
+  componentWillUnmount() {
+    this.stopPolling();
   }
 
   getNodes(equalizerComponent, equalizerElement) {
     return [this.node1, this.node2];
   }
+
+  startPolling() {
+    const {
+      fetchTransformationPlanRequestsAction,
+      fetchTransformationPlanRequestsUrl
+    } = this.props;
+    this.pollingInterval = setInterval(() => {
+      fetchTransformationPlanRequestsAction(fetchTransformationPlanRequestsUrl);
+    }, 15000);
+  }
+
+  stopPolling() {
+    if (this.pollingInterval) {
+      clearInterval(this.pollingInterval);
+      this.pollingInterval = null;
+    }
+  }
+
   render() {
     const {
       showMappingWizardAction,
