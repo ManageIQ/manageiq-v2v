@@ -40,6 +40,8 @@ class Overview extends React.Component {
       isContinuingToPlan,
       fetchTransformationMappingsUrl,
       fetchTransformationMappingsAction,
+      fetchTransformationPlanRequestsUrl,
+      fetchTransformationPlanRequestsAction,
       planWizardId,
       continueToPlanAction,
       shouldReloadMappings
@@ -66,6 +68,7 @@ class Overview extends React.Component {
       !nextProps.planWizardVisible &&
       !this.pollingInterval
     ) {
+      fetchTransformationPlanRequestsAction(fetchTransformationPlanRequestsUrl);
       this.startPolling();
     }
   }
