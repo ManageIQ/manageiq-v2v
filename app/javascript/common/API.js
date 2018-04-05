@@ -35,4 +35,4 @@ export default {
   }
 };
 
-export const globalMockMode = false;
+export const globalMockMode = true;

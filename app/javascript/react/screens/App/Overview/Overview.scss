@@ -41,17 +41,28 @@
   cursor: not-allowed;
 }
 
-.wizard-pf-steps.step-buttons-disabled .wizard-pf-steps-indicator li.wizard-pf-step a {
+.wizard-pf-steps.step-buttons-disabled
+  .wizard-pf-steps-indicator
+  li.wizard-pf-step
+  a {
   cursor: default;
 }
 
-.wizard-pf-steps.step-buttons-disabled .wizard-pf-steps-indicator li a:hover .wizard-pf-step-number {
+.wizard-pf-steps.step-buttons-disabled
+  .wizard-pf-steps-indicator
+  li
+  a:hover
+  .wizard-pf-step-number {
   background-color: #fff;
   border-color: #bbb;
   color: #bbb;
 }
 
-.wizard-pf-steps.step-buttons-disabled .wizard-pf-steps-indicator li.active a:hover .wizard-pf-step-number {
+.wizard-pf-steps.step-buttons-disabled
+  .wizard-pf-steps-indicator
+  li.active
+  a:hover
+  .wizard-pf-step-number {
   background-color: #39a5dc;
   border-color: #39a5dc;
   color: #fff;
@@ -72,4 +83,19 @@
 .inner-modal-dialog {
   z-index: 1070;
   margin-top: 150px;
+}
+
+.heading-with-link-container {
+  overflow: auto;
+  margin-top: 20px;
+  .pull-left {
+    width: 80%;
+  }
+  .pull-right {
+    width: 20%;
+    text-align: right;
+  }
+  h3 {
+    margin-top: 0px;
+  }
 }

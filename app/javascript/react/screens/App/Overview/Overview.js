@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { bindMethods, Grid, CardGrid } from 'patternfly-react';
+import { bindMethods, CardGrid } from 'patternfly-react';
 import * as AggregateCards from './components/AggregateCards';
-import InfrastructureMappingCard from './components/Cards/InfrastructureMappingCard/InfrastructureMappingCard';
+import InfrastructureMappingsList from './components/InfrastructureMappingsList/InfrastructureMappingsList';
+import Migrations from './components/Migrations/Migrations';
 import componentRegistry from '../../../../components/componentRegistry';
 
 class Overview extends React.Component {
@@ -113,7 +114,13 @@ class Overview extends React.Component {
     } = this.props;
 
     const aggregateDataCards = (
-      <CardGrid matchHeight>
+      <CardGrid
+        matchHeight
+        style={{
+          marginLeft: 10,
+          marginRight: 10
+        }}
+      >
         <CardGrid.Row>
           <CardGrid.Col xs={6} sm={3}>
             <AggregateCards.MigrationsNotStarted />
@@ -131,27 +138,25 @@ class Overview extends React.Component {
       </CardGrid>
     );
 
+    const overviewContent = (
+      <div
+        className="row cards-pf"
+        style={{ overflow: 'auto', paddingBottom: 1, height: '100%' }}
+      >
+        {aggregateDataCards}
+
+        <Migrations createMigrationPlanClick={showPlanWizardAction} />
+
+        <InfrastructureMappingsList
+          transformationMappings={transformationMappings}
+          createInfraMappingClick={showMappingWizardAction}
+        />
+      </div>
+    );
+
     return (
       <React.Fragment>
-        <div
-          className="row cards-pf"
-          style={{ overflow: 'auto', paddingBottom: 100, height: '100%' }}
-        >
-          <Grid.Col md={12}>
-            <Grid.Row>
-              <Grid.Col xs={12}>{aggregateDataCards}</Grid.Col>
-            </Grid.Row>
-            <Grid.Row>
-              <div className="spacer" />
-              <Grid.Col xs={12}>
-                <InfrastructureMappingCard
-                  cardRef={n => (this.node1 = n)}
-                  showMappingWizardAction={showMappingWizardAction}
-                />
-              </Grid.Col>
-            </Grid.Row>
-          </Grid.Col>
-        </div>
+        {overviewContent}
         {mappingWizardVisible && this.mappingWizard}
         {planWizardVisible && this.planWizard}
       </React.Fragment>

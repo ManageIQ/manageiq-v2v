@@ -13,7 +13,7 @@ const MigrationsNotStarted = ({ migrationsNotStarted }) => (
   <Card className="overview-aggregate-card" accented aggregated matchHeight>
     <Card.Title>
       <Icon type="pf" name="pending" />
-      <AggregateStatusCount>0</AggregateStatusCount> Migrations Not Started
+      <AggregateStatusCount>0</AggregateStatusCount> Migration Plans Not Started
     </Card.Title>
     {migrationsNotStarted && (
       <Card.Body className="overview-aggregate-card--body">
