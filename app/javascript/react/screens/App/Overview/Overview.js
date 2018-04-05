@@ -26,11 +26,14 @@ class Overview extends React.Component {
       fetchTransformationMappingsUrl,
       fetchTransformationMappingsAction,
       fetchTransformationPlanRequestsUrl,
-      fetchTransformationPlanRequestsAction
+      fetchTransformationPlanRequestsAction,
+      fetchTransformationPlansUrl,
+      fetchTransformationPlansAction
     } = this.props;
 
     fetchTransformationMappingsAction(fetchTransformationMappingsUrl);
     fetchTransformationPlanRequestsAction(fetchTransformationPlanRequestsUrl);
+    fetchTransformationPlansAction(fetchTransformationPlansUrl);
 
     this.startPolling();
   }
@@ -165,6 +168,8 @@ Overview.propTypes = {
   fetchTransformationMappingsAction: PropTypes.func,
   fetchTransformationPlanRequestsUrl: PropTypes.string,
   fetchTransformationPlanRequestsAction: PropTypes.func,
+  fetchTransformationPlansUrl: PropTypes.string,
+  fetchTransformationPlansAction: PropTypes.func,
   transformationMappings: PropTypes.array,
   isFetchingTransformationMappings: PropTypes.bool,
   isRejectedTransformationMappings: PropTypes.bool,

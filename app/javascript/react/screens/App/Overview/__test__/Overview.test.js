@@ -24,11 +24,13 @@ describe('Overview component', () => {
   let showPlanWizardAction;
   let fetchTransformationMappingsAction;
   let fetchTransformationPlanRequestsAction;
+  let fetchTransformationPlansAction;
   beforeEach(() => {
     showMappingWizardAction = jest.fn();
     showPlanWizardAction = jest.fn();
     fetchTransformationMappingsAction = jest.fn();
     fetchTransformationPlanRequestsAction = jest.fn();
+    fetchTransformationPlansAction = jest.fn();
   });
 
   describe('polling', () => {
@@ -43,6 +45,7 @@ describe('Overview component', () => {
           fetchTransformationPlanRequestsAction={
             fetchTransformationPlanRequestsAction
           }
+          fetchTransformationPlansAction={fetchTransformationPlansAction}
         />
       );
     });

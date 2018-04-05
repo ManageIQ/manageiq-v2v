@@ -90,7 +90,13 @@ export const coreComponents = [
         : '/api/service_requests?' +
           "&filter[]=type='ServiceTemplateTransformationPlanRequest'" +
           '&expand=resources' +
-          '&attributes=status,state,approval_state,options,description,miq_request_tasks'
+          '&attributes=status,state,approval_state,options,description,miq_request_tasks',
+      fetchTransformationPlansUrl: mockMode
+        ? '/api/dummyTransformationPlans'
+        : '/api/service_templates/?' +
+          "filter[]=type='ServiceTemplateTransformationPlan'" +
+          '&expand=resources' +
+          '&attributes=miq_requests'
     },
     store: true
   },
