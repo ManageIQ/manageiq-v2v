@@ -147,10 +147,12 @@ class Overview extends React.Component {
 
         <Migrations createMigrationPlanClick={showPlanWizardAction} />
 
-        <InfrastructureMappingsList
-          transformationMappings={transformationMappings}
-          createInfraMappingClick={showMappingWizardAction}
-        />
+        {!isFetchingTransformationMappings && (
+          <InfrastructureMappingsList
+            transformationMappings={transformationMappings}
+            createInfraMappingClick={showMappingWizardAction}
+          />
+        )}
       </div>
     );
 
