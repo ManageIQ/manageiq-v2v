@@ -1,28 +1,66 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import toJson from 'enzyme-to-json';
 import Overview from '../Overview';
 import { coreComponents } from '../../../../../components';
 import componentRegistry from '../../../../../components/componentRegistry';
 
 jest.mock('../../../../../components/componentRegistry');
+jest.useFakeTimers();
 
 componentRegistry.registerMultiple(coreComponents);
 
 describe('Overview component', () => {
-  const getBaseProps = () => ({
+  const baseProps = {
     store: {},
-    showMappingWizardAction: jest.fn(),
-    showPlanWizardAction: jest.fn(),
     mappingWizardVisible: false,
     planWizardVisible: false,
-    fetchTransformationMappingsAction: jest.fn(),
     isFetchingTransformationMappings: false,
-    isRejectedTransformationMappings: false
+    isRejectedTransformationMappings: false,
+    isFetchingTransformationPlanRequests: false,
+    isRejectedTransformationPlanRequests: false,
+    errorTransformationPlanRequests: null
+  };
+  let showMappingWizardAction;
+  let showPlanWizardAction;
+  let fetchTransformationMappingsAction;
+  let fetchTransformationPlanRequestsAction;
+  let fetchTransformationPlansAction;
+  beforeEach(() => {
+    showMappingWizardAction = jest.fn();
+    showPlanWizardAction = jest.fn();
+    fetchTransformationMappingsAction = jest.fn();
+    fetchTransformationPlanRequestsAction = jest.fn();
+    fetchTransformationPlansAction = jest.fn();
   });
 
-  it('renders the overview', () => {
-    const component = shallow(<Overview {...getBaseProps()} />);
-    expect(toJson(component)).toMatchSnapshot();
+  describe('polling', () => {
+    let wrapper; // eslint-disable-line no-unused-vars
+    beforeEach(() => {
+      wrapper = shallow(
+        <Overview
+          {...baseProps}
+          showMappingWizardAction={showMappingWizardAction}
+          showPlanWizardAction={showPlanWizardAction}
+          fetchTransformationMappingsAction={fetchTransformationMappingsAction}
+          fetchTransformationPlanRequestsAction={
+            fetchTransformationPlanRequestsAction
+          }
+          fetchTransformationPlansAction={fetchTransformationPlansAction}
+        />
+      );
+    });
+    test('starts when the component is mounted', () => {
+      expect(fetchTransformationPlanRequestsAction).toHaveBeenCalledTimes(1);
+    });
+
+    test('fetches transformation plan requests every 15 seconds', () => {
+      jest.advanceTimersByTime(15000);
+      expect(fetchTransformationPlanRequestsAction).toHaveBeenCalledTimes(2);
+    });
+
+    // TODO: Come back to these once the UI is closer to final form
+    test.skip('stops if the mapping wizard is visible', () => {});
+
+    test.skip('stops if the plan wizard is visible', () => {});
   });
 });

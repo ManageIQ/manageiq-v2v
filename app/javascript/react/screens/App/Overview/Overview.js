@@ -1,18 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Equalizer from 'react-equalizer';
-import { bindMethods, Grid } from 'patternfly-react';
+import { bindMethods, Grid, CardGrid } from 'patternfly-react';
+import * as AggregateCards from './components/AggregateCards';
 import InfrastructureMappingCard from './components/Cards/InfrastructureMappingCard/InfrastructureMappingCard';
-import MigrationPlansCard from './components/Cards/MigrationPlansCard/MigrationPlansCard';
-import MigrationsInProgressCard from './components/Cards/MigrationsInProgressCard';
-import MigrationsCompletedCard from './components/Cards/MigrationsCompletedCard';
 import componentRegistry from '../../../../components/componentRegistry';
 
 class Overview extends React.Component {
   constructor(props) {
     super(props);
 
-    bindMethods(this, ['getNodes']);
+    bindMethods(this, ['getNodes', 'stopPolling', 'startPolling']);
 
     this.mappingWizard = componentRegistry.markup(
       'MappingWizardContainer',
@@ -27,10 +24,18 @@ class Overview extends React.Component {
   componentDidMount() {
     const {
       fetchTransformationMappingsUrl,
-      fetchTransformationMappingsAction
+      fetchTransformationMappingsAction,
+      fetchTransformationPlanRequestsUrl,
+      fetchTransformationPlanRequestsAction,
+      fetchTransformationPlansUrl,
+      fetchTransformationPlansAction
     } = this.props;
 
     fetchTransformationMappingsAction(fetchTransformationMappingsUrl);
+    fetchTransformationPlanRequestsAction(fetchTransformationPlanRequestsUrl);
+    fetchTransformationPlansAction(fetchTransformationPlansUrl);
+
+    this.startPolling();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -38,10 +43,13 @@ class Overview extends React.Component {
       isContinuingToPlan,
       fetchTransformationMappingsUrl,
       fetchTransformationMappingsAction,
+      fetchTransformationPlanRequestsUrl,
+      fetchTransformationPlanRequestsAction,
       planWizardId,
       continueToPlanAction,
       shouldReloadMappings
     } = this.props;
+
     if (
       shouldReloadMappings !== nextProps.shouldReloadMappings &&
       nextProps.shouldReloadMappings
@@ -54,70 +62,96 @@ class Overview extends React.Component {
     ) {
       continueToPlanAction(planWizardId);
     }
+
+    // kill interval if a wizard becomes visble
+    if (nextProps.mappingWizardVisible || nextProps.planWizardVisible) {
+      this.stopPolling();
+    } else if (
+      !nextProps.mappingWizardVisible &&
+      !nextProps.planWizardVisible &&
+      !this.pollingInterval
+    ) {
+      fetchTransformationPlanRequestsAction(fetchTransformationPlanRequestsUrl);
+      this.startPolling();
+    }
+  }
+
+  componentWillUnmount() {
+    this.stopPolling();
   }
 
   getNodes(equalizerComponent, equalizerElement) {
     return [this.node1, this.node2];
   }
+
+  startPolling() {
+    const {
+      fetchTransformationPlanRequestsAction,
+      fetchTransformationPlanRequestsUrl
+    } = this.props;
+    this.pollingInterval = setInterval(() => {
+      fetchTransformationPlanRequestsAction(fetchTransformationPlanRequestsUrl);
+    }, 15000);
+  }
+
+  stopPolling() {
+    if (this.pollingInterval) {
+      clearInterval(this.pollingInterval);
+      this.pollingInterval = null;
+    }
+  }
+
   render() {
     const {
       showMappingWizardAction,
-      showPlanWizardAction,
+      showPlanWizardAction, // eslint-disable-line no-unused-vars
       mappingWizardVisible,
       planWizardVisible,
-      transformationMappings,
+      transformationMappings, // eslint-disable-line no-unused-vars
       isFetchingTransformationMappings, // eslint-disable-line no-unused-vars
       isRejectedTransformationMappings // eslint-disable-line no-unused-vars
     } = this.props;
 
-    const showPlanEnabled =
-      transformationMappings && transformationMappings.length;
+    const aggregateDataCards = (
+      <CardGrid matchHeight>
+        <CardGrid.Row>
+          <CardGrid.Col xs={6} sm={3}>
+            <AggregateCards.MigrationsNotStarted />
+          </CardGrid.Col>
+          <CardGrid.Col xs={6} sm={3}>
+            <AggregateCards.MigrationsInProgress />
+          </CardGrid.Col>
+          <CardGrid.Col xs={6} sm={3}>
+            <AggregateCards.MigrationsComplete />
+          </CardGrid.Col>
+          <CardGrid.Col xs={6} sm={3}>
+            <AggregateCards.InfrastructureMappings />
+          </CardGrid.Col>
+        </CardGrid.Row>
+      </CardGrid>
+    );
 
-    const overviewCards = (
-      <div
-        className="row cards-pf"
-        ref={n => (this.mainContent = n)}
-        style={{ overflow: 'auto', paddingBottom: 100, height: '100%' }}
-      >
-        <Grid.Col md={12}>
-          <Grid.Row>
-            <div className="spacer" />
-            <Equalizer nodes={this.getNodes}>
-              <Grid.Col xs={12} md={6}>
+    return (
+      <React.Fragment>
+        <div
+          className="row cards-pf"
+          style={{ overflow: 'auto', paddingBottom: 100, height: '100%' }}
+        >
+          <Grid.Col md={12}>
+            <Grid.Row>
+              <Grid.Col xs={12}>{aggregateDataCards}</Grid.Col>
+            </Grid.Row>
+            <Grid.Row>
+              <div className="spacer" />
+              <Grid.Col xs={12}>
                 <InfrastructureMappingCard
                   cardRef={n => (this.node1 = n)}
                   showMappingWizardAction={showMappingWizardAction}
                 />
               </Grid.Col>
-              <Grid.Col xs={12} md={6}>
-                <MigrationPlansCard
-                  cardRef={n => (this.node2 = n)}
-                  showPlanWizardAction={showPlanWizardAction}
-                  showPlanDisabled={!showPlanEnabled}
-                />
-              </Grid.Col>
-            </Equalizer>
-          </Grid.Row>
-
-          <Grid.Row>
-            <Grid.Col xs={12}>
-              <MigrationsInProgressCard />
-            </Grid.Col>
-          </Grid.Row>
-
-          <Grid.Row>
-            <Grid.Col xs={12}>
-              <MigrationsCompletedCard />
-              <div className="spacer" />
-            </Grid.Col>
-          </Grid.Row>
-        </Grid.Col>
-      </div>
-    );
-
-    return (
-      <React.Fragment>
-        {overviewCards}
+            </Grid.Row>
+          </Grid.Col>
+        </div>
         {mappingWizardVisible && this.mappingWizard}
         {planWizardVisible && this.planWizard}
       </React.Fragment>
@@ -132,6 +166,10 @@ Overview.propTypes = {
   planWizardVisible: PropTypes.bool,
   fetchTransformationMappingsUrl: PropTypes.string,
   fetchTransformationMappingsAction: PropTypes.func,
+  fetchTransformationPlanRequestsUrl: PropTypes.string,
+  fetchTransformationPlanRequestsAction: PropTypes.func,
+  fetchTransformationPlansUrl: PropTypes.string,
+  fetchTransformationPlansAction: PropTypes.func,
   transformationMappings: PropTypes.array,
   isFetchingTransformationMappings: PropTypes.bool,
   isRejectedTransformationMappings: PropTypes.bool,
