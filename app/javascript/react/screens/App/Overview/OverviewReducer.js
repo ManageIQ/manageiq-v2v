@@ -52,12 +52,14 @@ export default (state = initialState, action) => {
     }
     case MAPPING_WIZARD_EXITED:
       return state.set('mappingWizardVisible', false);
-    case SHOW_PLAN_WIZARD:
+    case SHOW_PLAN_WIZARD: {
+      const { payload } = action;
       return Immutable.merge(state, {
         planWizardVisible: true,
         hidePlanWizard: false,
-        planWizardId: action.payload.id || null
+        planWizardId: (payload && payload.id) || null
       });
+    }
     case HIDE_PLAN_WIZARD:
       return state.set('hidePlanWizard', true).set('planWizardId', null);
     case PLAN_WIZARD_EXITED:

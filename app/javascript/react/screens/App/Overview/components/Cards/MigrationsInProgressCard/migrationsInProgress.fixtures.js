@@ -25,7 +25,7 @@ export const activeServiceRequests = Immutable({
         delivered_on: '2018-01-19T21:16:00.967Z',
         user_message: '[EVM] Service [vmmigrate] Provisioned Successfully'
       },
-      description: 'Provisioning Service [debug1] from [debug1]',
+      description: 'Migration Plan Number 1',
       id: '14',
       state: 'active',
       miq_request_tasks: [

@@ -13,7 +13,7 @@ const MigrationsInProgress = ({ migrationsInProgress }) => (
   <Card className="overview-aggregate-card" accented aggregated matchHeight>
     <Card.Title>
       <Icon type="pf" name="migration" />
-      <AggregateStatusCount>0</AggregateStatusCount> Migrations In Progress
+      <AggregateStatusCount>0</AggregateStatusCount> Migration Plans In Progress
     </Card.Title>
     {migrationsInProgress && (
       <Card.Body className="overview-aggregate-card--body">
