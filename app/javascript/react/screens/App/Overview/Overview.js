@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { bindMethods, CardGrid } from 'patternfly-react';
+import { bindMethods, CardGrid, Spinner } from 'patternfly-react';
 import * as AggregateCards from './components/AggregateCards';
 import InfrastructureMappingsList from './components/InfrastructureMappingsList/InfrastructureMappingsList';
 import Migrations from './components/Migrations/Migrations';
@@ -146,22 +146,19 @@ class Overview extends React.Component {
         style={{ overflow: 'auto', paddingBottom: 1, height: '100%' }}
       >
         {aggregateDataCards}
-
-        {!isFetchingTransformationPlans &&
-          !isFetchingTransformationMappings &&
-          transformationMappings.length > 0 && (
-            <Migrations
-              transformationPlans={transformationPlans}
-              createMigrationPlanClick={showPlanWizardAction}
-            />
-          )}
-
-        {!isFetchingTransformationMappings && (
+        <Spinner loading={isFetchingTransformationMappings}>
+          {!isFetchingTransformationPlans &&
+            transformationMappings.length > 0 && (
+              <Migrations
+                transformationPlans={transformationPlans}
+                createMigrationPlanClick={showPlanWizardAction}
+              />
+            )}
           <InfrastructureMappingsList
             transformationMappings={transformationMappings}
             createInfraMappingClick={showMappingWizardAction}
           />
-        )}
+        </Spinner>
       </div>
     );
 
