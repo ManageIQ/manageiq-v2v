@@ -4,6 +4,7 @@ import { noop, DropdownButton, Grid, Icon, MenuItem } from 'patternfly-react';
 import MigrationsInProgressCard from '../Cards/MigrationsInProgressCard';
 import MigrationsNotStartedList from './MigrationsNotStartedList';
 import MigrationsCompletedList from './MigrationsCompletedList';
+import OverviewEmptyState from '../OverviewEmptyState/OverviewEmptyState';
 
 class Migrations extends React.Component {
   constructor(props) {
@@ -16,7 +17,7 @@ class Migrations extends React.Component {
     this.setState({ activeFilter: eventKey });
   };
   render() {
-    const { createMigrationPlanClick } = this.props;
+    const { transformationPlans, createMigrationPlanClick } = this.props;
     const { activeFilter } = this.state;
     const filterOptions = [
       'Migration Plans Not Started',
@@ -46,39 +47,52 @@ class Migrations extends React.Component {
             </div>
           </div>
           <hr style={{ borderTopColor: '#d1d1d1' }} />
-          <div style={{ marginBottom: 15 }}>
-            <DropdownButton
-              bsStyle="default"
-              title={sprintf('%s', activeFilter)}
-              id="dropdown-filter"
-              onSelect={this.onSelect}
-            >
-              {filterOptions.map((filter, i) => (
-                <MenuItem
-                  eventKey={filter}
-                  active={filter === activeFilter}
-                  key={i}
-                >
-                  {sprintf('%s', filter)}
-                </MenuItem>
-              ))}
-            </DropdownButton>
-          </div>
+          {transformationPlans.length > 0 ? (
+            <div style={{ marginBottom: 15 }}>
+              <DropdownButton
+                bsStyle="default"
+                title={sprintf('%s', activeFilter)}
+                id="dropdown-filter"
+                onSelect={this.onSelect}
+              >
+                {filterOptions.map((filter, i) => (
+                  <MenuItem
+                    eventKey={filter}
+                    active={filter === activeFilter}
+                    key={i}
+                  >
+                    {sprintf('%s', filter)}
+                  </MenuItem>
+                ))}
+              </DropdownButton>
+            </div>
+          ) : (
+            <OverviewEmptyState
+              showWizardAction={createMigrationPlanClick}
+              description="Create a migration plan to select VMs for migration."
+              buttonText="Create Migration Plan"
+            />
+          )}
         </Grid.Col>
-        {activeFilter === 'Migration Plans Not Started' && (
-          <MigrationsNotStartedList />
-        )}
-        {activeFilter === 'Migration Plans in Progress' && (
-          <MigrationsInProgressCard />
-        )}
-        {activeFilter === 'Migration Plans Completed' && (
-          <MigrationsCompletedList />
+        {transformationPlans.length > 0 && (
+          <React.Fragment>
+            {activeFilter === 'Migration Plans Not Started' && (
+              <MigrationsNotStartedList />
+            )}
+            {activeFilter === 'Migration Plans in Progress' && (
+              <MigrationsInProgressCard />
+            )}
+            {activeFilter === 'Migration Plans Completed' && (
+              <MigrationsCompletedList />
+            )}
+          </React.Fragment>
         )}
       </React.Fragment>
     );
   }
 }
 Migrations.propTypes = {
+  transformationPlans: PropTypes.array,
   createMigrationPlanClick: PropTypes.func
 };
 Migrations.defaultProps = {
