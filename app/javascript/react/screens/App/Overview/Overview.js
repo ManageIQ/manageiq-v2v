@@ -105,12 +105,14 @@ class Overview extends React.Component {
   render() {
     const {
       showMappingWizardAction,
-      showPlanWizardAction, // eslint-disable-line no-unused-vars
+      showPlanWizardAction,
       mappingWizardVisible,
       planWizardVisible,
-      transformationMappings, // eslint-disable-line no-unused-vars
-      isFetchingTransformationMappings, // eslint-disable-line no-unused-vars
-      isRejectedTransformationMappings // eslint-disable-line no-unused-vars
+      transformationMappings,
+      isFetchingTransformationMappings,
+      isRejectedTransformationMappings, // eslint-disable-line no-unused-vars
+      transformationPlans,
+      isFetchingTransformationPlans
     } = this.props;
 
     const aggregateDataCards = (
@@ -145,7 +147,14 @@ class Overview extends React.Component {
       >
         {aggregateDataCards}
 
-        <Migrations createMigrationPlanClick={showPlanWizardAction} />
+        {!isFetchingTransformationPlans &&
+          !isFetchingTransformationMappings &&
+          transformationMappings.length > 0 && (
+            <Migrations
+              transformationPlans={transformationPlans}
+              createMigrationPlanClick={showPlanWizardAction}
+            />
+          )}
 
         {!isFetchingTransformationMappings && (
           <InfrastructureMappingsList
@@ -180,6 +189,8 @@ Overview.propTypes = {
   transformationMappings: PropTypes.array,
   isFetchingTransformationMappings: PropTypes.bool,
   isRejectedTransformationMappings: PropTypes.bool,
+  transformationPlans: PropTypes.array,
+  isFetchingTransformationPlans: PropTypes.bool,
   isContinuingToPlan: PropTypes.bool,
   planWizardId: PropTypes.string,
   continueToPlanAction: PropTypes.func,
