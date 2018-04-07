@@ -4,7 +4,7 @@ import {
   V2V_VM_STEP_RESET,
   V2V_VALIDATE_VMS
 } from './PlanWizardVMStepConstants';
-import { initialState, validateVMsData } from './PlanWizardVMStep.fixtures';
+import { validateVMsData } from './PlanWizardVMStep.fixtures';
 
 const mockMode = globalMockMode;
 

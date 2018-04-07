@@ -1,14 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import csv from 'csv';
-import {
-  bindMethods,
-  Toolbar,
-  Button,
-  EmptyState,
-  ListView,
-  Icon
-} from 'patternfly-react';
+import { bindMethods, Toolbar, Button, EmptyState } from 'patternfly-react';
 import Dropzone from 'react-dropzone';
 
 // Unfortunately, this is the recommended way to trigger the file dialog programmatically.
@@ -18,7 +11,6 @@ let dropzoneRef;
 class CSVDropzoneField extends React.Component {
   constructor() {
     super();
-    this.state = { unparsedFile: null, showConfirmOverwrite: false };
     bindMethods(this, ['onFileDrop', 'handleUnparsedFile']);
   }
 

@@ -4,7 +4,6 @@ import { noop } from 'patternfly-react';
 import ModalWizard from '../../components/ModalWizard';
 import componentRegistry from '../../../../../../components/componentRegistry';
 import PlanWizardGeneralStep from '../PlanWizard/components/PlanWizardGeneralStep';
-import PlanWizardVMStep from '../PlanWizard/components/PlanWizardVMStep';
 
 class PlanWizardBody extends React.Component {
   constructor(props) {

@@ -1,4 +1,5 @@
 import Immutable from 'seamless-immutable';
+import numeral from 'numeral';
 
 import {
   V2V_VALIDATE_VMS,

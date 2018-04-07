@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { reset } from 'redux-form';
 import {
   bindMethods,
   noop,
@@ -150,7 +149,7 @@ PlanWizard.propTypes = {
   planWizardGeneralStep: PropTypes.object,
   planWizardVMStep: PropTypes.object,
   setPlansBodyAction: PropTypes.func,
-  resetVmStep: PropTypes.func
+  resetVmStepAction: PropTypes.func
 };
 PlanWizard.defaultProps = {
   hidePlanWizard: true,
