@@ -6,9 +6,7 @@ export const createMigrationPlans = (
   const planDescription = planWizardGeneralStep.values.description;
   const infrastructureMapping =
     planWizardGeneralStep.values.infrastructure_mapping;
-  const vms = planWizardVMStep.values.csvRows.map(value =>
-    value.reference.trim()
-  );
+  const vms = planWizardVMStep.values.selectedVms;
 
   return {
     name: planName,

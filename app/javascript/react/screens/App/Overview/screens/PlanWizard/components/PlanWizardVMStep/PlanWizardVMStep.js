@@ -103,10 +103,20 @@ class PlanWizardVMStep extends React.Component {
 
       if (combined.length) {
         return (
-          <PlanWizardVMStepTable
+          <Field
+            name="selectedVms"
+            component={PlanWizardVMStepTable}
             rows={combined}
             onCsvImportAction={csvImportAction}
             discoveryMode={discoveryMode}
+            validate={[
+              length({
+                min: 1,
+                msg: __(
+                  'At least one VM needs to be selected to create the Migration Plan.'
+                )
+              })
+            ]}
           />
         );
       }
@@ -156,6 +166,6 @@ PlanWizardVMStep.defaultProps = {
 
 export default reduxForm({
   form: 'planWizardVMStep',
-  initialValues: { csvRows: [] },
+  initialValues: { selectedVms: [] },
   destroyOnUnmount: false
 })(PlanWizardVMStep);
