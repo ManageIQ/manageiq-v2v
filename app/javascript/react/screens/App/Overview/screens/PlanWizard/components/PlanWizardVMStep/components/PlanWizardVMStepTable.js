@@ -315,6 +315,7 @@ class PlanWizardVMStepTable extends React.Component {
     };
   }
   onSelectAllRows(event) {
+    const { input } = this.props;
     const { rows, selectedRows } = this.state;
     const { checked } = event.target;
 
@@ -332,6 +333,9 @@ class PlanWizardVMStepTable extends React.Component {
             ? PlanWizardVMStepTable.selectRow(r)
             : r
       );
+
+      input.onChange(updatedSelections);
+
       this.setState({
         // important: you must update rows to force a re-render and trigger onRow hook
         rows: updatedRows,
@@ -348,6 +352,9 @@ class PlanWizardVMStepTable extends React.Component {
             ? r
             : PlanWizardVMStepTable.deselectRow(r)
       );
+
+      input.onChange(updatedSelections);
+
       this.setState({
         rows: updatedRows,
         selectedRows: updatedSelections
@@ -355,6 +362,7 @@ class PlanWizardVMStepTable extends React.Component {
     }
   }
   onSelectRow(event, row) {
+    const { input } = this.props;
     const { rows, selectedRows } = this.state;
     const selectedRowIndex = rows.findIndex(r => r.id === row.id);
     if (selectedRowIndex > -1) {
@@ -369,6 +377,9 @@ class PlanWizardVMStepTable extends React.Component {
         updatedRow = PlanWizardVMStepTable.selectRow(row);
       }
       rows[selectedRowIndex] = updatedRow;
+
+      input.onChange(updatedSelectedRows);
+
       this.setState({
         rows,
         selectedRows: updatedSelectedRows
@@ -489,7 +500,13 @@ class PlanWizardVMStepTable extends React.Component {
       currentFilterType,
       currentValue
     } = this.state;
-    const { discoveryMode, onCsvImportAction } = this.props;
+
+    const {
+      discoveryMode,
+      onCsvImportAction,
+      input: { value },
+      meta: { pristine, error }
+    } = this.props;
 
     const filteredRows = this.filteredSearchedRows();
     const sortedPaginatedRows = this.currentRows(filteredRows);
@@ -601,6 +618,9 @@ class PlanWizardVMStepTable extends React.Component {
           onLastPage={this.onLastPage}
           onSubmit={this.onSubmit}
         />
+        <br />
+        {!error && value && sprintf(__('%s VMs selected.'), value.length)}
+        {pristine && error}
       </Grid>
     );
   }
@@ -608,7 +628,15 @@ class PlanWizardVMStepTable extends React.Component {
 PlanWizardVMStepTable.propTypes = {
   rows: PropTypes.array.isRequired,
   onCsvImportAction: PropTypes.func,
-  discoveryMode: PropTypes.bool
+  discoveryMode: PropTypes.bool,
+  input: PropTypes.shape({
+    value: PropTypes.arrayOf(PropTypes.string),
+    onChange: PropTypes.func
+  }),
+  meta: PropTypes.shape({
+    pristine: PropTypes.bool,
+    error: PropTypes.string
+  })
 };
 PlanWizardVMStepTable.defaultProps = {
   rows: [],
