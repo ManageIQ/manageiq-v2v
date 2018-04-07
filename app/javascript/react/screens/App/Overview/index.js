@@ -1,14 +1,31 @@
 import { connect } from 'react-redux';
 import Overview from './Overview';
 import * as OverviewActions from './OverviewActions';
+import {
+  activeTransformationPlanRequestsFilter,
+  completeTransformationPlanRequestsFilter,
+  pendingTransformationPlansFilter
+} from './OverviewSelectors';
 
 import reducer from './OverviewReducer';
 
 export const reducers = { overview: reducer, form: {} };
 
-const mapStateToProps = ({ overview }, ownProps) => ({
+const mapStateToProps = (
+  { overview, overview: { transformationPlanRequests, transformationPlans } },
+  ownProps
+) => ({
   ...overview,
-  ...ownProps.data
+  ...ownProps.data,
+  activeTransformationPlanRequests: activeTransformationPlanRequestsFilter(
+    transformationPlanRequests
+  ),
+  completeTransformationPlanRequests: completeTransformationPlanRequestsFilter(
+    transformationPlanRequests
+  ),
+  pendingTransformationPlans: pendingTransformationPlansFilter(
+    transformationPlans
+  )
 });
 
 const mergeProps = (stateProps, dispatchProps, ownProps) =>

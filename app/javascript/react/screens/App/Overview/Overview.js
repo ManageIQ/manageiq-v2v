@@ -6,11 +6,13 @@ import InfrastructureMappingsList from './components/InfrastructureMappingsList/
 import Migrations from './components/Migrations/Migrations';
 import componentRegistry from '../../../../components/componentRegistry';
 
+import { planRequestsWithPlanIds } from './helpers';
+
 class Overview extends React.Component {
   constructor(props) {
     super(props);
 
-    bindMethods(this, ['getNodes', 'stopPolling', 'startPolling']);
+    bindMethods(this, ['stopPolling', 'startPolling']);
 
     this.mappingWizard = componentRegistry.markup(
       'MappingWizardContainer',
@@ -81,10 +83,6 @@ class Overview extends React.Component {
     this.stopPolling();
   }
 
-  getNodes(equalizerComponent, equalizerElement) {
-    return [this.node1, this.node2];
-  }
-
   startPolling() {
     const {
       fetchTransformationPlanRequestsAction,
@@ -112,7 +110,10 @@ class Overview extends React.Component {
       isFetchingTransformationMappings,
       isRejectedTransformationMappings, // eslint-disable-line no-unused-vars
       transformationPlans,
-      isFetchingTransformationPlans
+      isFetchingTransformationPlans,
+      activeTransformationPlanRequests,
+      completeTransformationPlanRequests,
+      pendingTransformationPlans
     } = this.props;
 
     const aggregateDataCards = (
@@ -150,6 +151,14 @@ class Overview extends React.Component {
           {!isFetchingTransformationPlans &&
             transformationMappings.length > 0 && (
               <Migrations
+                activeTransformationPlanRequests={planRequestsWithPlanIds(
+                  activeTransformationPlanRequests,
+                  transformationPlans
+                )}
+                completeTransformationPlanRequests={
+                  completeTransformationPlanRequests
+                }
+                pendingTransformationPlans={pendingTransformationPlans}
                 transformationPlans={transformationPlans}
                 createMigrationPlanClick={showPlanWizardAction}
               />
@@ -172,6 +181,9 @@ class Overview extends React.Component {
   }
 }
 Overview.propTypes = {
+  activeTransformationPlanRequests: PropTypes.array,
+  completeTransformationPlanRequests: PropTypes.array,
+  pendingTransformationPlans: PropTypes.array,
   store: PropTypes.object,
   showMappingWizardAction: PropTypes.func,
   showPlanWizardAction: PropTypes.func,

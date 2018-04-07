@@ -9,7 +9,9 @@ export const initialState = Immutable({
   isRejectedTransformationMappings: false,
   isFetchingTransformationMappings: false,
   fetchTransformationMappingsUrl: '/api/dummyMappings',
+  transformationPlanRequests: [],
   fetchTransformationPlanRequestsUrl: '/api/dummyPlanRequests',
+  transformationPlans: [],
   fetchTransformationPlansUrl: '/api/dummyTransformationPlans'
 });
 
