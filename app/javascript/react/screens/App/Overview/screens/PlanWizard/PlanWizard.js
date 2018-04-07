@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { reset } from 'redux-form';
 import {
   bindMethods,
   noop,

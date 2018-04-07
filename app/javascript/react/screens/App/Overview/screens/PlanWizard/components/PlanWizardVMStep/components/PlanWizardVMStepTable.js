@@ -12,7 +12,6 @@ import {
   Button,
   Icon,
   Grid,
-  MenuItem,
   PaginationRow,
   Table,
   Toolbar,
@@ -116,7 +115,6 @@ class PlanWizardVMStepTable extends React.Component {
       currentValue: '',
       activeFilters: [],
       searchFilterValue: '',
-      filterResultCount: 0,
 
       // Sort the first column in an ascending way by default.
       sortingColumns: {
@@ -389,6 +387,23 @@ class PlanWizardVMStepTable extends React.Component {
   onSubmit() {
     this.setPage(this.state.pageChangeValue);
   }
+  onValueKeyPress(keyEvent) {
+    const { currentValue, currentFilterType } = this.state;
+
+    if (keyEvent.key === 'Enter' && currentValue && currentValue.length > 0) {
+      this.setState({ currentValue: '' });
+      this.filterAdded(currentFilterType, currentValue);
+      keyEvent.stopPropagation();
+      keyEvent.preventDefault();
+    }
+  }
+  onFindAction(value) {
+    // clear filters and set search text (search and filter are independent for now)
+    this.setState({ activeFilters: [], searchFilterValue: value });
+  }
+  onFindExit() {
+    this.setState({ searchFilterValue: '' });
+  }
   setPage(value) {
     const page = Number(value);
     if (
@@ -430,7 +445,6 @@ class PlanWizardVMStepTable extends React.Component {
   }
 
   filterAdded = (field, value) => {
-    const { rows } = this.state;
     let filterText = field.title;
     filterText += ': ';
     filterText += value;
@@ -443,16 +457,6 @@ class PlanWizardVMStepTable extends React.Component {
     this.setState({ activeFilters });
   };
 
-  onValueKeyPress(keyEvent) {
-    const { currentValue, currentFilterType } = this.state;
-
-    if (keyEvent.key === 'Enter' && currentValue && currentValue.length > 0) {
-      this.setState({ currentValue: '' });
-      this.filterAdded(currentFilterType, currentValue);
-      keyEvent.stopPropagation();
-      keyEvent.preventDefault();
-    }
-  }
   updateCurrentValue(event) {
     this.setState({ currentValue: event.target.value });
   }
@@ -480,13 +484,6 @@ class PlanWizardVMStepTable extends React.Component {
       return searchFilter(searchFilterValue, rows);
     }
     return rows;
-  }
-  onFindAction(value) {
-    // clear filters and set search text (search and filter are independent for now)
-    this.setState({ activeFilters: [], searchFilterValue: value });
-  }
-  onFindExit() {
-    this.setState({ searchFilterValue: '' });
   }
 
   render() {
@@ -626,7 +623,7 @@ class PlanWizardVMStepTable extends React.Component {
   }
 }
 PlanWizardVMStepTable.propTypes = {
-  rows: PropTypes.array.isRequired,
+  rows: PropTypes.array,
   onCsvImportAction: PropTypes.func,
   discoveryMode: PropTypes.bool,
   input: PropTypes.shape({

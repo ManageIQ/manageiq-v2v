@@ -22,15 +22,6 @@ class PlanWizardVMStep extends React.Component {
       this.validateVms();
     }
   }
-  validateVms = () => {
-    const {
-      infrastructure_mapping_id,
-      validateVmsUrl,
-      validateVmsAction
-    } = this.props;
-    validateVmsAction(validateVmsUrl, infrastructure_mapping_id, []);
-  };
-
   onCSVParseSuccess = parsedRows => {
     const {
       infrastructure_mapping_id,
@@ -39,10 +30,19 @@ class PlanWizardVMStep extends React.Component {
     } = this.props;
     validateVmsAction(validateVmsUrl, infrastructure_mapping_id, parsedRows);
   };
+  validateVms = () => {
+    const {
+      infrastructure_mapping_id,
+      validateVmsUrl,
+      validateVmsAction
+    } = this.props;
+    validateVmsAction(validateVmsUrl, infrastructure_mapping_id, []);
+  };
   render() {
     const {
       vm_choice_radio,
       isValidatingVms,
+      isRejectedValidatingVms,
       valid_vms,
       invalid_vms,
       conflict_vms,
@@ -51,7 +51,21 @@ class PlanWizardVMStep extends React.Component {
     } = this.props;
     const discoveryMode = vm_choice_radio === 'vms_via_discovery';
 
-    if ((isValidatingVms || !validationServiceCalled) && discoveryMode) {
+    if (isRejectedValidatingVms) {
+      return (
+        <div className="wizard-pf-complete blank-slate-pf">
+          <div className="wizard-pf-success-icon">
+            <span className="pficon pficon-error-circle-o" />
+          </div>
+          <h3 className="blank-slate-pf-main-action">
+            {__('Error Validating VMs')}
+          </h3>
+          <p className="blank-slate-pf-secondary-action">
+            {__('Sorry, there was an error validating VMs. Please try again.')}
+          </p>
+        </div>
+      );
+    } else if ((isValidatingVms || !validationServiceCalled) && discoveryMode) {
       return (
         <div className="blank-slate-pf">
           <div className="spinner spinner-lg blank-slate-pf-icon" />
@@ -126,10 +140,13 @@ class PlanWizardVMStep extends React.Component {
           <div className="wizard-pf-success-icon">
             <span className="pficon pficon-warning-triangle-o" />
           </div>
-          <h3 className="blank-slate-pf-main-action">No VMs were found.</h3>
+          <h3 className="blank-slate-pf-main-action">
+            {__('No VMs were found.')}
+          </h3>
           <p className="blank-slate-pf-secondary-action">
-            We&apos;re sorry, no VMs were associated with this Infrastructure
-            Mapping. Please try again.
+            {__(
+              'Sorry, no VMs were associated with this Infrastructure Mapping. Please try again.'
+            )}
           </p>
         </div>
       );
@@ -147,7 +164,7 @@ PlanWizardVMStep.propTypes = {
   isValidatingVms: PropTypes.bool,
   isRejectedValidatingVms: PropTypes.bool,
   validationServiceCalled: PropTypes.bool,
-  errorValidatingVms: PropTypes.string,
+  errorValidatingVms: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
   valid_vms: PropTypes.array,
   invalid_vms: PropTypes.array,
   conflict_vms: PropTypes.array
