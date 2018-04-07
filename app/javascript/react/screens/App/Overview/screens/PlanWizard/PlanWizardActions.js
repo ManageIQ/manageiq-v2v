@@ -14,7 +14,7 @@ export const planWizardExitedAction = () => dispatch => {
   });
   // Dispatch reset for all the wizard step forms here
   dispatch(reset('planWizardGeneralStep'));
-  dispatch(reset('planWizardCSVStep'));
+  dispatch(reset('planWizardVMStep'));
 };
 
 export const setPlansBodyAction = body => dispatch => {

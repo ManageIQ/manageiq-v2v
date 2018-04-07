@@ -13,7 +13,7 @@ import PlanWizardBody from './PlanWizardBody';
 
 const planWizardSteps = [
   'planWizardGeneralStep',
-  'planWizardCSVStep',
+  'planWizardVMStep',
   'planWizardResultsStep'
 ];
 
@@ -33,14 +33,33 @@ class PlanWizard extends React.Component {
     const { activeStepIndex } = this.state;
     const {
       planWizardGeneralStep,
-      planWizardCSVStep,
+      planWizardVMStep,
       setPlansBodyAction
     } = this.props;
 
+    const { vm_choice_radio } = planWizardGeneralStep.values || {};
+    const discoveryMode = vm_choice_radio === 'vms_via_discovery';
+
+    // NOTE/TODO: This is special logic that is not present in the refactored wizard abstraction!
+    // MTURLEY: Make sure to incorporate this in that rebase!
+    if (activeStepIndex === 0) {
+      if (discoveryMode) {
+        // TODO this boolean?
+        // TODO: request discovery of VMs
+        console.log('TODO: API REQUEST FOR VM DISCOVERY HERE');
+      }
+    }
+
     if (activeStepIndex === 1) {
+      if (!discoveryMode) {
+        // TODO this boolean?
+        // TODO: request validation of CSV VM list
+        console.log('TODO: API REQUEST FOR VM CSV VALIDATION HERE');
+      }
+
       const plansBody = createMigrationPlans(
         planWizardGeneralStep,
-        planWizardCSVStep
+        planWizardVMStep
       );
 
       setPlansBodyAction(plansBody);
@@ -61,7 +80,7 @@ class PlanWizard extends React.Component {
       hidePlanWizardAction,
       planWizardExitedAction,
       planWizardGeneralStep,
-      planWizardCSVStep
+      planWizardVMStep
     } = this.props;
 
     const { activeStepIndex, plansBody } = this.state;
@@ -101,7 +120,7 @@ class PlanWizard extends React.Component {
               disableNextStep={disableNextStep}
               plansBody={plansBody}
               planWizardGeneralStep={planWizardGeneralStep}
-              planWizardCSVStep={planWizardCSVStep}
+              planWizardVMStep={planWizardVMStep}
             />
           </Modal.Body>
           <Modal.Footer className="wizard-pf-footer">
@@ -141,7 +160,7 @@ PlanWizard.propTypes = {
   hidePlanWizardAction: PropTypes.func,
   planWizardExitedAction: PropTypes.func,
   planWizardGeneralStep: PropTypes.object,
-  planWizardCSVStep: PropTypes.object,
+  planWizardVMStep: PropTypes.object,
   setPlansBodyAction: PropTypes.func
 };
 PlanWizard.defaultProps = {
@@ -149,7 +168,7 @@ PlanWizard.defaultProps = {
   hidePlanWizardAction: noop,
   planWizardExitedAction: noop,
   planWizardGeneralStep: {},
-  planWizardCSVStep: {},
+  planWizardVMStep: {},
   setPlansBodyAction: noop
 };
 export default PlanWizard;

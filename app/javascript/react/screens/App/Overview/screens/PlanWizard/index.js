@@ -13,6 +13,7 @@ export const reducers = { planWizard: reducer };
 const mapStateToProps = ({ overview, planWizard, form }, ownProps) => {
   const selectedOverview = planWizardOverviewFilter(overview);
   const selectedForms = planWizardFormFilter(form);
+  console.log('selected forms for plan wizard? ', selectedForms);
   return {
     ...selectedOverview,
     ...selectedForms,
