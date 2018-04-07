@@ -47,13 +47,7 @@ class PlanWizardVMStep extends React.Component {
       const combined = [...inValidsVms, ...conflictVms, ...validVms];
 
       if (combined.length) {
-        return (
-          <div>
-            <h3>VMs Available for Migration</h3>
-            <br />
-            <PlanWizardVMStepTable rows={combined} />
-          </div>
-        );
+        return <PlanWizardVMStepTable rows={combined} />;
       }
       // todo: sorry you have no VMs message...
     }

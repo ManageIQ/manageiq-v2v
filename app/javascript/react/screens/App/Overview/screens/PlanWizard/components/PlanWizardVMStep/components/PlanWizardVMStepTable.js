@@ -18,6 +18,9 @@ import {
   PAGINATION_VIEW
 } from 'patternfly-react';
 
+import rowFilter from './rowFilter';
+import searchFilter from './searchFilter';
+import CustomToolbarFind from './CustomToolbarFind';
 import vmSelectionHeaderCellFormatter from './vmSelectionHeaderCellFormatter';
 import vmSelectionCellFormatter from './vmSelectionCellFormatter';
 
@@ -60,6 +63,9 @@ class PlanWizardVMStepTable extends React.Component {
     this.customHeaderFormatters = Table.customHeaderFormattersDefinition;
 
     bindMethods(this, [
+      'onFindAction',
+      'onFindExit',
+      'filteredSearchedRows',
       'removeFilter',
       'clearFilters',
       'selectFilterType',
@@ -82,8 +88,20 @@ class PlanWizardVMStepTable extends React.Component {
     const filterTypes = [
       {
         id: 'name',
-        title: 'Name',
-        placeholder: 'Filter by Name',
+        title: 'VM Name',
+        placeholder: 'Filter by VM Name',
+        filterType: 'text'
+      },
+      {
+        id: 'cluster',
+        title: 'Source Cluster',
+        placeholder: 'Filter by Source Cluster',
+        filterType: 'text'
+      },
+      {
+        id: 'path',
+        title: 'Path',
+        placeholder: 'Filter by Path',
         filterType: 'text'
       }
     ];
@@ -94,6 +112,8 @@ class PlanWizardVMStepTable extends React.Component {
       currentFilterType: filterTypes[0],
       currentValue: '',
       activeFilters: [],
+      searchFilterValue: '',
+      filterResultCount: 0,
 
       // Sort the first column in an ascending way by default.
       sortingColumns: {
@@ -294,7 +314,9 @@ class PlanWizardVMStepTable extends React.Component {
   onSelectAllRows(event) {
     const { rows, selectedRows } = this.state;
     const { checked } = event.target;
-    const currentRows = this.currentRows().rows;
+
+    const filteredRows = this.filteredSearchedRows();
+    const currentRows = this.currentRows(filteredRows).rows;
 
     if (checked) {
       const selectableRows = currentRows.filter(r => !r.invalid && !r.conflict);
@@ -366,8 +388,9 @@ class PlanWizardVMStepTable extends React.Component {
       this.setState({ pagination: newPaginationState, pageChangeValue: page });
     }
   }
-  currentRows() {
-    const { rows, sortingColumns, columns, pagination } = this.state;
+  currentRows(filteredRows) {
+    const { sortingColumns, columns, pagination } = this.state;
+
     return compose(
       paginate(pagination),
       sort.sorter({
@@ -376,8 +399,9 @@ class PlanWizardVMStepTable extends React.Component {
         sort: orderBy,
         strategy: sort.strategies.byProperty
       })
-    )(rows);
+    )(filteredRows);
   }
+
   totalPages() {
     const { rows } = this.state;
     const { perPage } = this.state.pagination;
@@ -392,24 +416,16 @@ class PlanWizardVMStepTable extends React.Component {
   }
 
   filterAdded = (field, value) => {
-    let filterText = '';
-    if (field.title) {
-      filterText = field.title;
-    } else {
-      filterText = field;
-    }
+    const { rows } = this.state;
+    let filterText = field.title;
     filterText += ': ';
+    filterText += value;
 
-    if (value.filterCategory) {
-      filterText += `${value.filterCategory.title ||
-        value.filterCategory}-${value.filterValue.title || value.filterValue}`;
-    } else if (value.title) {
-      filterText += value.title;
-    } else {
-      filterText += value;
-    }
+    const activeFilters = [
+      ...this.state.activeFilters,
+      { label: filterText, field, value }
+    ];
 
-    const activeFilters = [...this.state.activeFilters, { label: filterText }];
     this.setState({ activeFilters });
   };
 
@@ -442,6 +458,22 @@ class PlanWizardVMStepTable extends React.Component {
   clearFilters() {
     this.setState({ activeFilters: [] });
   }
+  filteredSearchedRows() {
+    const { activeFilters, searchFilterValue, rows } = this.state;
+    if (activeFilters && activeFilters.length) {
+      return rowFilter(activeFilters, rows);
+    } else if (searchFilterValue) {
+      return searchFilter(searchFilterValue, rows);
+    }
+    return rows;
+  }
+  onFindAction(value) {
+    // clear filters and set search text (search and filter are independent for now)
+    this.setState({ activeFilters: [], searchFilterValue: value });
+  }
+  onFindExit() {
+    this.setState({ searchFilterValue: '' });
+  }
 
   render() {
     const {
@@ -449,11 +481,14 @@ class PlanWizardVMStepTable extends React.Component {
       pagination,
       sortingColumns,
       pageChangeValue,
+      activeFilters,
       filterTypes,
       currentFilterType,
       currentValue
     } = this.state;
-    const sortedPaginatedRows = this.currentRows();
+
+    const filteredRows = this.filteredSearchedRows();
+    const sortedPaginatedRows = this.currentRows(filteredRows);
 
     return (
       <Grid fluid>
@@ -473,16 +508,44 @@ class PlanWizardVMStepTable extends React.Component {
             />
           </Filter>
           <Toolbar.RightContent>
-            <Toolbar.Find
-              placeholder="Find By Keyword..."
-              currentIndex={1}
-              totalCount={3}
+            <CustomToolbarFind
+              placeholder={__('Find By Keyword...')}
               onChange={this.onFindAction}
               onEnter={this.onFindAction}
-              onFindNext={this.onFindAction}
-              onFindPrevious={this.onFindAction}
+              onExit={this.onFindExit}
             />
           </Toolbar.RightContent>
+          {activeFilters &&
+            activeFilters.length > 0 && (
+              <Toolbar.Results>
+                <h5>
+                  {filteredRows.length}{' '}
+                  {filteredRows.length === 1 ? __('Result') : __('Results')}
+                </h5>
+                <Filter.ActiveLabel>{__('Active Filters')}:</Filter.ActiveLabel>
+                <Filter.List>
+                  {activeFilters.map((item, index) => (
+                    <Filter.Item
+                      key={index}
+                      onRemove={this.removeFilter}
+                      filterData={item}
+                    >
+                      {__('label=')}
+                      {item.label}
+                    </Filter.Item>
+                  ))}
+                </Filter.List>
+                <a
+                  href="#"
+                  onClick={e => {
+                    e.preventDefault();
+                    this.clearFilters();
+                  }}
+                >
+                  {__('Clear All Filters')}
+                </a>
+              </Toolbar.Results>
+            )}
         </Toolbar>
         <br />
         <Table.PfProvider
