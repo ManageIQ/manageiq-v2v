@@ -20,7 +20,10 @@ describe('Overview component', () => {
     isFetchingTransformationPlanRequests: false,
     isRejectedTransformationPlanRequests: false,
     errorTransformationPlanRequests: null,
-    transformationMappings: []
+    transformationMappings: [],
+    transformationPlans: [],
+    transformationPlanRequests: [],
+    activeTransformationPlanRequests: []
   };
   let showMappingWizardAction;
   let showPlanWizardAction;
