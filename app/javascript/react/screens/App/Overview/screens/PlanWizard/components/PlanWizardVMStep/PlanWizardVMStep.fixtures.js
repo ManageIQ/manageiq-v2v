@@ -1,8 +1,9 @@
 import Immutable from 'seamless-immutable';
 
 export const initialState = Immutable({
-  isValidatingVms: true,
+  isValidatingVms: false,
   isRejectedValidatingVms: false,
+  validationServiceCalled: false,
   errorValidatingVms: null,
   valid_vms: [],
   invalid_vms: [],
