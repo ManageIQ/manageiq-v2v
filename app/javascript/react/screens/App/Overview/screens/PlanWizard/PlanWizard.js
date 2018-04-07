@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { reset } from 'redux-form';
 import {
   bindMethods,
   noop,
@@ -26,7 +27,13 @@ class PlanWizard extends React.Component {
   }
 
   prevStep() {
+    const { resetVmStepAction } = this.props;
     const { activeStepIndex } = this.state;
+
+    if (activeStepIndex === 1) {
+      // reset all vm step values if going back from that step
+      resetVmStepAction();
+    }
     this.setState({ activeStepIndex: Math.max(activeStepIndex - 1, 0) });
   }
 
@@ -151,7 +158,8 @@ PlanWizard.propTypes = {
   planWizardVMStep: PropTypes.object,
   planWizardOptionsStep: PropTypes.object,
   setPlansBodyAction: PropTypes.func,
-  setPlanScheduleAction: PropTypes.func
+  setPlanScheduleAction: PropTypes.func,
+  resetVmStepAction: PropTypes.func
 };
 PlanWizard.defaultProps = {
   hidePlanWizard: true,
@@ -161,6 +169,7 @@ PlanWizard.defaultProps = {
   planWizardVMStep: {},
   planWizardOptionsStep: {},
   setPlansBodyAction: noop,
-  setPlanScheduleAction: noop
+  setPlanScheduleAction: noop,
+  resetVmStepAction: noop
 };
 export default PlanWizard;

@@ -5,6 +5,8 @@ import {
   V2V_SET_PLAN_SCHEDULE
 } from './PlanWizardConstants';
 
+import { V2V_VM_STEP_RESET } from './components/PlanWizardVMStep/PlanWizardVMStepConstants';
+
 export const hidePlanWizardAction = () => dispatch => {
   dispatch({
     type: HIDE_PLAN_WIZARD
@@ -33,4 +35,11 @@ export const setPlanScheduleAction = body => dispatch => {
     type: V2V_SET_PLAN_SCHEDULE,
     payload: body
   });
+};
+
+export const resetVmStepAction = () => dispatch => {
+  dispatch({
+    type: V2V_VM_STEP_RESET
+  });
+  dispatch(reset('planWizardVMStep'));
 };

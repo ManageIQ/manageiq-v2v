@@ -8,6 +8,9 @@ import { compose } from 'recompose';
 import {
   bindMethods,
   paginate,
+  noop,
+  Button,
+  Icon,
   Grid,
   MenuItem,
   PaginationRow,
@@ -486,6 +489,7 @@ class PlanWizardVMStepTable extends React.Component {
       currentFilterType,
       currentValue
     } = this.state;
+    const { discoveryMode, onCsvImportAction } = this.props;
 
     const filteredRows = this.filteredSearchedRows();
     const sortedPaginatedRows = this.currentRows(filteredRows);
@@ -507,6 +511,13 @@ class PlanWizardVMStepTable extends React.Component {
               onKeyPress={e => this.onValueKeyPress(e)}
             />
           </Filter>
+          {!discoveryMode && (
+            <div className="form-group">
+              <Button onClick={onCsvImportAction}>
+                <Icon type="pf" name="import" /> Import CSV
+              </Button>
+            </div>
+          )}
           <Toolbar.RightContent>
             <CustomToolbarFind
               placeholder={__('Find By Keyword...')}
@@ -569,7 +580,7 @@ class PlanWizardVMStepTable extends React.Component {
         >
           <Table.Header headerRows={resolve.headerRows({ columns })} />
           <Table.Body
-            rows={sortedPaginatedRows.rows}
+            rows={sortedPaginatedRows.rows || []}
             rowKey="id"
             onRow={this.onRow}
           />
@@ -595,6 +606,13 @@ class PlanWizardVMStepTable extends React.Component {
   }
 }
 PlanWizardVMStepTable.propTypes = {
-  rows: PropTypes.array.isRequired
+  rows: PropTypes.array.isRequired,
+  onCsvImportAction: PropTypes.func,
+  discoveryMode: PropTypes.bool
+};
+PlanWizardVMStepTable.defaultProps = {
+  rows: [],
+  onCsvImportAction: noop,
+  discoveryMode: false
 };
 export default PlanWizardVMStepTable;

@@ -1,10 +1,14 @@
 import Immutable from 'seamless-immutable';
 
-import { V2V_VALIDATE_VMS } from './PlanWizardVMStepConstants';
+import {
+  V2V_VALIDATE_VMS,
+  V2V_VM_STEP_RESET
+} from './PlanWizardVMStepConstants';
 
 const initialState = Immutable({
-  isValidatingVms: true,
+  isValidatingVms: false,
   isRejectedValidatingVms: false,
+  validationServiceCalled: false,
   errorValidatingVms: null,
   valid_vms: [],
   invalid_vms: [],
@@ -43,6 +47,7 @@ export default (state = initialState, action) => {
           .set('valid_vms', _formatValidVms(payload.data.valid_vms))
           .set('invalid_vms', _formatInvalidVms(payload.data.invalid_vms))
           .set('conflict_vms', _formatConflictVms(payload.data.conflict_vms))
+          .set('validationServiceCalled', true)
           .set('isRejectedValidatingVms', false)
           .set('isValidatingVms', false);
       }
@@ -57,6 +62,14 @@ export default (state = initialState, action) => {
       return state
         .set('errorValidatingVms', action.payload)
         .set('isRejectedValidatingVms', true)
+        .set('isValidatingVms', false);
+    case V2V_VM_STEP_RESET:
+      return state
+        .set('validationServiceCalled', false)
+        .set('valid_vms', [])
+        .set('invalid_vms', [])
+        .set('conflict_vms', [])
+        .set('isRejectedValidatingVms', false)
         .set('isValidatingVms', false);
 
     default:
