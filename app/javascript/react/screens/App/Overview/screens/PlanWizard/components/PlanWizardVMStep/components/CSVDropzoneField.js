@@ -10,7 +10,7 @@ import {
   Icon
 } from 'patternfly-react';
 import Dropzone from 'react-dropzone';
-import ConfirmModal from '../../../../../common/ConfirmModal';
+import ConfirmModal from '../../../../../../common/ConfirmModal';
 
 // Unfortunately, this is the recommended way to trigger the file dialog programmatically.
 // https://github.com/react-dropzone/react-dropzone/tree/master/examples/File%20Dialog

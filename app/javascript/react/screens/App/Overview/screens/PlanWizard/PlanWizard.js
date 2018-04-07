@@ -39,26 +39,7 @@ class PlanWizard extends React.Component {
       setPlansBodyAction,
       setPlanScheduleAction
     } = this.props;
-
-    const { vm_choice_radio } = planWizardGeneralStep.values || {};
-    const discoveryMode = vm_choice_radio === 'vms_via_discovery';
-
-    // NOTE/TODO: This is special logic that is not present in the refactored wizard abstraction!
-    // MTURLEY: Make sure to incorporate this in that rebase!
-    if (activeStepIndex === 0) {
-      if (discoveryMode) {
-        // TODO this boolean?
-        // TODO: request discovery of VMs
-        console.log('TODO: API REQUEST FOR VM DISCOVERY HERE');
-      }
-    }
     if (activeStepIndex === 2) {
-      if (!discoveryMode) {
-        // TODO this boolean?
-        // TODO: request validation of CSV VM list
-        console.log('TODO: API REQUEST FOR VM CSV VALIDATION HERE');
-      }
-
       const plansBody = createMigrationPlans(
         planWizardGeneralStep,
         planWizardVMStep
