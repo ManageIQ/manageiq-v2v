@@ -83,7 +83,13 @@ class PlanWizard extends React.Component {
 
     const currentStepProp = !onFinalStep && planWizardSteps[activeStepIndex];
     const currentStepForm = !onFinalStep && this.props[currentStepProp];
-    const disableNextStep = !onFinalStep && !!currentStepForm.syncErrors;
+
+    const disableNextStep =
+      (!onFinalStep && !!currentStepForm.syncErrors) ||
+      (activeStepIndex === 1 &&
+        (!this.props.planWizardVMStep.values ||
+          !this.props.planWizardVMStep.values.selectedVms ||
+          this.props.planWizardVMStep.values.selectedVms.length === 0));
 
     return (
       <Modal
