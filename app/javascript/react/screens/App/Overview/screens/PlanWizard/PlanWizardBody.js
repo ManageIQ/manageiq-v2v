@@ -10,6 +10,9 @@ class PlanWizardBody extends React.Component {
   constructor(props) {
     super(props);
 
+    this.planWizardVMStepContainer = componentRegistry.markup(
+      'PlanWizardVMStepContainer'
+    );
     this.planWizardResultsStepContainer = componentRegistry.markup(
       'PlanWizardResultsStepContainer'
     );
@@ -18,8 +21,6 @@ class PlanWizardBody extends React.Component {
     return JSON.stringify(this.props) !== JSON.stringify(nextProps);
   }
   render() {
-    const { planWizardGeneralStep: { values } } = this.props;
-    const { vm_choice_radio } = values || {};
     return (
       <ModalWizard.Body
         {...this.props}
@@ -34,9 +35,7 @@ class PlanWizardBody extends React.Component {
           },
           {
             title: __('VMs'),
-            render: () => (
-              <PlanWizardVMStep vm_choice_radio={vm_choice_radio} />
-            ),
+            render: () => this.planWizardVMStepContainer,
             disableGoto: !this.props.planWizardVMStep.values
           },
           {

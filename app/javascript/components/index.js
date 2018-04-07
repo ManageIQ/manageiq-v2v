@@ -3,8 +3,11 @@ import MappingWizardClustersStepContainer from '../react/screens/App/Overview/sc
 import MappingWizardDatastoresStepContainer from '../react/screens/App/Overview/screens/MappingWizard/components/MappingWizardDatastoresStep';
 import MappingWizardNetworksStepContainer from '../react/screens/App/Overview/screens/MappingWizard/components/MappingWizardNetworksStep';
 import MappingWizardResultsStepContainer from '../react/screens/App/Overview/screens/MappingWizard/components/MappingWizardResultsStep';
+
+import PlanWizardVMStepContainer from '../react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep';
 import PlanWizardResultsStepContainer from '../react/screens/App/Overview/screens/PlanWizard/components/PlanWizardResultsStep';
 import PlanWizardContainer from '../react/screens/App/Overview/screens/PlanWizard';
+
 import OverviewContainer from '../react/screens/App/Overview';
 import IsoDate from './dates/IsoDate';
 import LongDateTime from './dates/LongDateTime';
@@ -58,6 +61,15 @@ export const coreComponents = [
       postMappingsUrl: mockMode
         ? '/api/dummyPostMappings'
         : 'api/transformation_mappings'
+    }
+  },
+  {
+    name: 'PlanWizardVMStepContainer',
+    type: PlanWizardVMStepContainer,
+    data: {
+      validateVmsUrl: mockMode
+        ? '/api/dummyValidateVMUrl'
+        : '/api/transformation_mappings'
     }
   },
   {
