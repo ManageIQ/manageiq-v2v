@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { bindMethods, CardGrid } from 'patternfly-react';
+import { bindMethods, CardGrid, Spinner } from 'patternfly-react';
 import * as AggregateCards from './components/AggregateCards';
 import InfrastructureMappingsList from './components/InfrastructureMappingsList/InfrastructureMappingsList';
 import Migrations from './components/Migrations/Migrations';
@@ -105,12 +105,14 @@ class Overview extends React.Component {
   render() {
     const {
       showMappingWizardAction,
-      showPlanWizardAction, // eslint-disable-line no-unused-vars
+      showPlanWizardAction,
       mappingWizardVisible,
       planWizardVisible,
-      transformationMappings, // eslint-disable-line no-unused-vars
-      isFetchingTransformationMappings, // eslint-disable-line no-unused-vars
-      isRejectedTransformationMappings // eslint-disable-line no-unused-vars
+      transformationMappings,
+      isFetchingTransformationMappings,
+      isRejectedTransformationMappings, // eslint-disable-line no-unused-vars
+      transformationPlans,
+      isFetchingTransformationPlans
     } = this.props;
 
     const aggregateDataCards = (
@@ -144,13 +146,19 @@ class Overview extends React.Component {
         style={{ overflow: 'auto', paddingBottom: 1, height: '100%' }}
       >
         {aggregateDataCards}
-
-        <Migrations createMigrationPlanClick={showPlanWizardAction} />
-
-        <InfrastructureMappingsList
-          transformationMappings={transformationMappings}
-          createInfraMappingClick={showMappingWizardAction}
-        />
+        <Spinner loading={isFetchingTransformationMappings}>
+          {!isFetchingTransformationPlans &&
+            transformationMappings.length > 0 && (
+              <Migrations
+                transformationPlans={transformationPlans}
+                createMigrationPlanClick={showPlanWizardAction}
+              />
+            )}
+          <InfrastructureMappingsList
+            transformationMappings={transformationMappings}
+            createInfraMappingClick={showMappingWizardAction}
+          />
+        </Spinner>
       </div>
     );
 
@@ -178,6 +186,8 @@ Overview.propTypes = {
   transformationMappings: PropTypes.array,
   isFetchingTransformationMappings: PropTypes.bool,
   isRejectedTransformationMappings: PropTypes.bool,
+  transformationPlans: PropTypes.array,
+  isFetchingTransformationPlans: PropTypes.bool,
   isContinuingToPlan: PropTypes.bool,
   planWizardId: PropTypes.string,
   continueToPlanAction: PropTypes.func,

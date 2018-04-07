@@ -3,6 +3,7 @@ import { shallow } from 'enzyme';
 import Overview from '../Overview';
 import { coreComponents } from '../../../../../components';
 import componentRegistry from '../../../../../components/componentRegistry';
+import { transformationMappings } from '../overview.fixtures';
 
 jest.mock('../../../../../components/componentRegistry');
 jest.useFakeTimers();
@@ -18,7 +19,8 @@ describe('Overview component', () => {
     isRejectedTransformationMappings: false,
     isFetchingTransformationPlanRequests: false,
     isRejectedTransformationPlanRequests: false,
-    errorTransformationPlanRequests: null
+    errorTransformationPlanRequests: null,
+    transformationMappings: []
   };
   let showMappingWizardAction;
   let showPlanWizardAction;
@@ -31,6 +33,43 @@ describe('Overview component', () => {
     fetchTransformationMappingsAction = jest.fn();
     fetchTransformationPlanRequestsAction = jest.fn();
     fetchTransformationPlansAction = jest.fn();
+  });
+
+  describe('overview sections', () => {
+    test('does not render Migrations if there are no transformation mappings', () => {
+      const wrapper = shallow(
+        <Overview
+          {...baseProps}
+          showMappingWizardAction={showMappingWizardAction}
+          showPlanWizardAction={showPlanWizardAction}
+          fetchTransformationMappingsAction={fetchTransformationMappingsAction}
+          fetchTransformationPlanRequestsAction={
+            fetchTransformationPlanRequestsAction
+          }
+          fetchTransformationPlansAction={fetchTransformationPlansAction}
+        />
+      );
+
+      expect(wrapper.find('Migrations').exists()).toBe(false);
+    });
+
+    test('renders Migrations if there are transformation mappings', () => {
+      const wrapper = shallow(
+        <Overview
+          {...baseProps}
+          transformationMappings={transformationMappings}
+          showMappingWizardAction={showMappingWizardAction}
+          showPlanWizardAction={showPlanWizardAction}
+          fetchTransformationMappingsAction={fetchTransformationMappingsAction}
+          fetchTransformationPlanRequestsAction={
+            fetchTransformationPlanRequestsAction
+          }
+          fetchTransformationPlansAction={fetchTransformationPlansAction}
+        />
+      );
+
+      expect(wrapper.find('Migrations').exists()).toBe(true);
+    });
   });
 
   describe('polling', () => {
