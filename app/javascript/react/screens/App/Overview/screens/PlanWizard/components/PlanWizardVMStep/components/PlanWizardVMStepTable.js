@@ -370,8 +370,7 @@ class PlanWizardVMStepTable extends React.Component {
         updatedSelectedRows = selectedRows.filter(r => !(r === row.id));
         updatedRow = PlanWizardVMStepTable.deselectRow(row);
       } else {
-        selectedRows.push(row.id);
-        updatedSelectedRows = selectedRows;
+        updatedSelectedRows = [...selectedRows, row.id];
         updatedRow = PlanWizardVMStepTable.selectRow(row);
       }
       rows[selectedRowIndex] = updatedRow;
