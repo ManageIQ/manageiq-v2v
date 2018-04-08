@@ -11,7 +11,8 @@ const InfrastructureMappingsList = ({
     xs={12}
     style={{
       paddingBottom: 100,
-      height: '100%'
+      height: '100%',
+      backgroundColor: '#fff'
     }}
   >
     {transformationMappings.length > 0 ? (
@@ -34,7 +35,7 @@ const InfrastructureMappingsList = ({
             </a>
           </div>
         </div>
-        <hr style={{ borderTopColor: '#d1d1d1' }} />
+
         <ListView>
           {transformationMappings.map(mapping => (
             <ListView.Item
