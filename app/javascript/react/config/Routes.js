@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Route } from 'react-router-dom';
 import { links } from './config';
 import { componentSettings } from '../../components';
-import Toolbar from './Toolbar';
 import componentRegistry from '../../components/componentRegistry';
 
 const Routes = ({ store }) =>
@@ -22,12 +21,7 @@ const Routes = ({ store }) =>
           path={`/${path}`}
           render={props => {
             if (props.match.isExact) {
-              return (
-                <React.Fragment>
-                  <Toolbar navigation={coreComponent.navigation} />
-                  {markup}
-                </React.Fragment>
-              );
+              return <React.Fragment>{markup}</React.Fragment>;
             }
             return markup;
           }}

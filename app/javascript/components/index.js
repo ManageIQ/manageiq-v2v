@@ -9,6 +9,7 @@ import PlanWizardResultsStepContainer from '../react/screens/App/Overview/screen
 import PlanWizardContainer from '../react/screens/App/Overview/screens/PlanWizard';
 
 import OverviewContainer from '../react/screens/App/Overview';
+import PlanContainer from '../react/screens/App/Plan';
 import IsoDate from './dates/IsoDate';
 import LongDateTime from './dates/LongDateTime';
 import RelativeDateTime from './dates/RelativeDateTime';
@@ -92,7 +93,6 @@ export const coreComponents = [
   {
     name: 'OverviewContainer',
     type: OverviewContainer,
-    navigation: 'Overview',
     data: {
       fetchTransformationMappingsUrl: mockMode
         ? '/api/dummyMappings'
@@ -109,6 +109,16 @@ export const coreComponents = [
           "filter[]=type='ServiceTemplateTransformationPlan'" +
           '&expand=resources' +
           '&attributes=miq_requests'
+    },
+    store: true
+  },
+  {
+    name: 'PlanContainer',
+    type: PlanContainer,
+    data: {
+      fetchPlanRequestsUrl: mockMode
+        ? '/api/dummyPlanRequests'
+        : '/api/service_requests/{id}?attributes=miq_request_tasks'
     },
     store: true
   },
