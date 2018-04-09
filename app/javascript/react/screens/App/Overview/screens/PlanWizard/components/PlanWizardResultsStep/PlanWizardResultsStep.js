@@ -17,10 +17,14 @@ class PlanWizardResultsStep extends React.Component {
 
     postMigrationPlansAction(postPlansUrl, plansBody, planSchedule);
   }
-  renderResult = (migrationPlanMessage, migrationPlanFollowupMessage) => (
+  renderResult = (
+    migrationPlanMessage,
+    migrationPlanFollowupMessage,
+    migrationPlanIcon
+  ) => (
     <div className="wizard-pf-complete blank-slate-pf">
       <div className="plan-wizard-results-step-icon">
-        <span className="fa fa-clock-o" />
+        <span className={migrationPlanIcon} />
       </div>
       <h3 className="blank-slate-pf-main-action">{migrationPlanMessage}</h3>
       <p className="blank-slate-pf-secondary-action">
@@ -82,7 +86,8 @@ class PlanWizardResultsStep extends React.Component {
       );
       return this.renderResult(
         migrationPlanSaved,
-        migrationPlanFollowupMessage
+        migrationPlanFollowupMessage,
+        'pficon pficon-ok'
       );
     } else if (
       planSchedule === 'migration_plan_now' &&
@@ -98,7 +103,8 @@ class PlanWizardResultsStep extends React.Component {
       );
       return this.renderResult(
         migrationPlanProgress,
-        migrationPlanFollowupMessage
+        migrationPlanFollowupMessage,
+        'fa fa-clock-o'
       );
     }
     return null;
