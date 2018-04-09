@@ -13,7 +13,7 @@ import PlanWizardBody from './PlanWizardBody';
 
 const planWizardSteps = [
   'planWizardGeneralStep',
-  'planWizardCSVStep',
+  'planWizardVMStep',
   'planWizardResultsStep'
 ];
 
@@ -25,7 +25,13 @@ class PlanWizard extends React.Component {
   }
 
   prevStep() {
+    const { resetVmStepAction } = this.props;
     const { activeStepIndex } = this.state;
+
+    if (activeStepIndex === 1) {
+      // reset all vm step values if going back from that step
+      resetVmStepAction();
+    }
     this.setState({ activeStepIndex: Math.max(activeStepIndex - 1, 0) });
   }
 
@@ -33,14 +39,14 @@ class PlanWizard extends React.Component {
     const { activeStepIndex } = this.state;
     const {
       planWizardGeneralStep,
-      planWizardCSVStep,
+      planWizardVMStep,
       setPlansBodyAction
     } = this.props;
 
     if (activeStepIndex === 1) {
       const plansBody = createMigrationPlans(
         planWizardGeneralStep,
-        planWizardCSVStep
+        planWizardVMStep
       );
 
       setPlansBodyAction(plansBody);
@@ -61,7 +67,7 @@ class PlanWizard extends React.Component {
       hidePlanWizardAction,
       planWizardExitedAction,
       planWizardGeneralStep,
-      planWizardCSVStep
+      planWizardVMStep
     } = this.props;
 
     const { activeStepIndex, plansBody } = this.state;
@@ -71,7 +77,13 @@ class PlanWizard extends React.Component {
 
     const currentStepProp = !onFinalStep && planWizardSteps[activeStepIndex];
     const currentStepForm = !onFinalStep && this.props[currentStepProp];
-    const disableNextStep = !onFinalStep && !!currentStepForm.syncErrors;
+
+    const disableNextStep =
+      (!onFinalStep && !!currentStepForm.syncErrors) ||
+      (activeStepIndex === 1 &&
+        (!this.props.planWizardVMStep.values ||
+          !this.props.planWizardVMStep.values.selectedVms ||
+          this.props.planWizardVMStep.values.selectedVms.length === 0));
 
     return (
       <Modal
@@ -101,7 +113,7 @@ class PlanWizard extends React.Component {
               disableNextStep={disableNextStep}
               plansBody={plansBody}
               planWizardGeneralStep={planWizardGeneralStep}
-              planWizardCSVStep={planWizardCSVStep}
+              planWizardVMStep={planWizardVMStep}
             />
           </Modal.Body>
           <Modal.Footer className="wizard-pf-footer">
@@ -141,15 +153,17 @@ PlanWizard.propTypes = {
   hidePlanWizardAction: PropTypes.func,
   planWizardExitedAction: PropTypes.func,
   planWizardGeneralStep: PropTypes.object,
-  planWizardCSVStep: PropTypes.object,
-  setPlansBodyAction: PropTypes.func
+  planWizardVMStep: PropTypes.object,
+  setPlansBodyAction: PropTypes.func,
+  resetVmStepAction: PropTypes.func
 };
 PlanWizard.defaultProps = {
   hidePlanWizard: true,
   hidePlanWizardAction: noop,
   planWizardExitedAction: noop,
   planWizardGeneralStep: {},
-  planWizardCSVStep: {},
-  setPlansBodyAction: noop
+  planWizardVMStep: {},
+  setPlansBodyAction: noop,
+  resetVmStepAction: noop
 };
 export default PlanWizard;

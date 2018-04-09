@@ -1,0 +1,2 @@
+export const V2V_VALIDATE_VMS = 'V2V_VALIDATE_VMS';
+export const V2V_VM_STEP_RESET = 'V2V_VM_STEP_RESET';
