@@ -1,4 +1,3 @@
-import moment from 'moment';
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -8,6 +7,7 @@ import {
   Tooltip,
   UtilizationBar
 } from 'patternfly-react';
+import { IsoElpasedTime } from '../../../../../../../components/dates/IsoElapsedTime';
 
 const MigrationInProgressCard = ({ migration }) => {
   const availableTooltip = (max, now) => {
@@ -42,34 +42,18 @@ const MigrationInProgressCard = ({ migration }) => {
 
   const startTime = new Date(migration.options.delivered_on);
   const endTime = Date.now();
-  const elapsedHours = moment(endTime).diff(startTime, 'hours');
-  const elapsedMinutes = moment(endTime).diff(startTime, 'minutes') % 60;
 
-  let elapsedTime;
-  if (elapsedHours >= 48) {
-    elapsedTime = sprintf(
-      __('%s days %s:%s elapsed'),
-      Math.floor(elapsedHours / 24),
-      elapsedHours % 24,
-      elapsedMinutes
-    );
-  } else if (elapsedHours >= 24) {
-    elapsedTime = sprintf(
-      __('1 day %s:%s elapsed'),
-      elapsedHours % 24,
-      elapsedMinutes
-    );
-  } else {
-    elapsedTime = sprintf(__('%s:%s elapsed'), elapsedHours, elapsedMinutes);
-  }
+  const elapsedTime = IsoElpasedTime(startTime, endTime);
 
   const vmBarLabel = (
-    <span>
-      <strong className="label-strong">
-        {sprintf(__('%s of %s VMs'), completedVMs, totalVMs)}
-      </strong>{' '}
-      {__('Migrated')}
-    </span>
+    <a href={`/migration/plan/${migration.id}`}>
+      <span>
+        <strong className="label-strong">
+          {sprintf(__('%s of %s VMs'), completedVMs, totalVMs)}
+        </strong>{' '}
+        {__('Migrated')}
+      </span>
+    </a>
   );
   const usedVmTooltip = () => usedTooltip(totalVMs, completedVMs);
   const availableVmTooltip = () => availableTooltip(totalVMs, completedVMs);

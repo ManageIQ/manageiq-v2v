@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { bindMethods, CardGrid, Spinner } from 'patternfly-react';
+import { bindMethods, Breadcrumb, CardGrid, Spinner } from 'patternfly-react';
+import Toolbar from '../../../config/Toolbar';
 import * as AggregateCards from './components/AggregateCards';
 import InfrastructureMappingsList from './components/InfrastructureMappingsList/InfrastructureMappingsList';
 import Migrations from './components/Migrations/Migrations';
@@ -171,8 +172,18 @@ class Overview extends React.Component {
       </div>
     );
 
+    const toolbarContent = (
+      <Toolbar>
+        <Breadcrumb.Item href="/dashboard/maintab?tab=compute">
+          Compute
+        </Breadcrumb.Item>
+        <Breadcrumb.Item active>Migration</Breadcrumb.Item>
+      </Toolbar>
+    );
+
     return (
       <React.Fragment>
+        {toolbarContent}
         {overviewContent}
         {mappingWizardVisible && this.mappingWizard}
         {planWizardVisible && this.planWizard}
