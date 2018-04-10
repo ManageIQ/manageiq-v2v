@@ -68,11 +68,13 @@ export default (state = initialState, action) => {
         return state
           .set('planRequestDetails', _formatPlanRequestDetails(payload.data))
           .set('isRejectedPlanRequests', false)
+          .set('errorPlanRequests', null)
           .set('isFetchingPlanRequests', false);
       }
       return state
         .set('planRequestDetails', {})
         .set('isRejectedPlanRequests', false)
+        .set('errorPlanRequests', null)
         .set('isFetchingPlanRequests', false);
     }
     case `${FETCH_V2V_PLAN_REQUESTS}_REJECTED`:
