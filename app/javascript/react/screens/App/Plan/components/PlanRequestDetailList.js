@@ -4,9 +4,9 @@ import moment from 'moment';
 import { ListView, Spinner, Tooltip, UtilizationBar } from 'patternfly-react';
 import { IsoElpasedTime } from '../../../../../components/dates/IsoElapsedTime';
 
-const PlanRequestDetailList = ({ planRequestDetails }) => (
+const PlanRequestDetailList = ({ planRequestTasks }) => (
   <ListView className="plan-request-details-list">
-    {planRequestDetails.tasks.map(task => {
+    {planRequestTasks.map(task => {
       let leftContent;
       if (task.message === 'Pending') {
         leftContent = <ListView.Icon name="pending" />;
@@ -75,7 +75,7 @@ const PlanRequestDetailList = ({ planRequestDetails }) => (
 );
 
 PlanRequestDetailList.propTypes = {
-  planRequestDetails: PropTypes.object
+  planRequestTasks: PropTypes.array
 };
 
 export default PlanRequestDetailList;

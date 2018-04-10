@@ -12,10 +12,7 @@ const initialState = Immutable({
 });
 
 const _formatPlanRequestDetails = data => {
-  const planRequestDetails = {
-    name: data.description,
-    tasks: []
-  };
+  const tasks = [];
   if (data.miq_request_tasks && data.miq_request_tasks.length) {
     data.miq_request_tasks.forEach(task => {
       const taskDetails = {
@@ -51,10 +48,10 @@ const _formatPlanRequestDetails = data => {
         ).format('0.00b');
         taskDetails.percentComplete = percentComplete * 100;
       }
-      planRequestDetails.tasks.push(taskDetails);
+      tasks.push(taskDetails);
     });
   }
-  return planRequestDetails;
+  return tasks;
 };
 
 export default (state = initialState, action) => {
@@ -65,17 +62,16 @@ export default (state = initialState, action) => {
         .set('isRejectedPlanRequests', false);
     case `${FETCH_V2V_PLAN_REQUESTS}_FULFILLED`: {
       const { payload } = action;
-      if (payload && payload.data) {
-        return state
-          .set('planRequestsPreviouslyFetched', true)
-          .set('planRequestDetails', _formatPlanRequestDetails(payload.data))
-          .set('isRejectedPlanRequests', false)
-          .set('errorPlanRequests', null)
-          .set('isFetchingPlanRequests', false);
-      }
       return state
         .set('planRequestsPreviouslyFetched', true)
-        .set('planRequestDetails', {})
+        .set('planName', payload.data && payload.data.description)
+        .set(
+          'planRequestTasks',
+          (payload &&
+            payload.data &&
+            _formatPlanRequestDetails(payload.data)) ||
+            []
+        )
         .set('isRejectedPlanRequests', false)
         .set('errorPlanRequests', null)
         .set('isFetchingPlanRequests', false);
