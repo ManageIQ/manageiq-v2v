@@ -6,7 +6,8 @@ import {
   SHOW_PLAN_WIZARD,
   HIDE_MAPPING_WIZARD,
   FETCH_V2V_TRANSFORMATION_MAPPINGS,
-  FETCH_V2V_TRANSFORMATION_PLANS
+  FETCH_V2V_TRANSFORMATION_PLANS,
+  V2V_FETCH_CLUSTERS
 } from './OverviewConstants';
 
 import { requestTransformationMappingsData } from './overview.fixtures';
@@ -80,4 +81,22 @@ export const continueToPlanAction = id => dispatch => {
     type: SHOW_PLAN_WIZARD,
     payload: { id }
   });
+};
+
+const _getClustersActionCreator = url => dispatch =>
+  dispatch({
+    type: `${V2V_FETCH_CLUSTERS}`,
+    payload: API.get(url)
+  }).catch(error => {
+    if (mockMode) {
+      dispatch({
+        type: `${V2V_FETCH_CLUSTERS}_FULFILLED`,
+        payload: {}
+      });
+    }
+  });
+
+export const fetchClustersAction = url => {
+  const uri = new URI(url);
+  return _getClustersActionCreator(uri.toString());
 };

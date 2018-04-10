@@ -9,6 +9,7 @@ import {
   PLAN_WIZARD_EXITED,
   FETCH_V2V_TRANSFORMATION_MAPPINGS,
   FETCH_V2V_TRANSFORMATION_PLANS,
+  V2V_FETCH_CLUSTERS,
   CONTINUE_TO_PLAN
 } from './OverviewConstants';
 
@@ -27,7 +28,8 @@ export const initialState = Immutable({
   errorTransformationPlans: null,
   plansPreviouslyFetched: false,
   isContinuingToPlan: false,
-  shouldReloadMappings: false
+  shouldReloadMappings: false,
+  clusters: []
 });
 
 export default (state = initialState, action) => {
@@ -97,6 +99,8 @@ export default (state = initialState, action) => {
         .set('isRejectedTransformationPlans', true)
         .set('isFetchingTransformationPlans', false)
         .set('plansPreviouslyFetched', false);
+    case `${V2V_FETCH_CLUSTERS}_FULFILLED`:
+      return state.set('clusters', action.payload.data.resources);
 
     case CONTINUE_TO_PLAN:
       return state

@@ -2,8 +2,33 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Icon, ListView, Grid } from 'patternfly-react';
 import OverviewEmptyState from '../OverviewEmptyState/OverviewEmptyState';
+import { i18nProviderWrapperFactory } from '../../../../../../common/i18nProviderWrapperFactory';
+import LongDateTime from '../../../../../../components/dates/LongDateTime';
+
+const IntlDate = i18nProviderWrapperFactory()(LongDateTime);
+
+function clusterCount(mapping, clusterType) {
+  return [
+    ...new Set(
+      mapping
+        .filter(item => item.destination_type.toLowerCase() === 'emscluster')
+        .map(item => item[`${clusterType}`])
+    )
+  ].length;
+}
+
+function clusterName(clusters, clusterId) {
+  return clusters.map(cluster => (
+    <React.Fragment>
+      {clusterId === cluster.id
+        ? `${cluster.v_parent_datacenter} \\ ${cluster.name}`
+        : null}
+    </React.Fragment>
+  ));
+}
 
 const InfrastructureMappingsList = ({
+  clusters,
   transformationMappings,
   createInfraMappingClick
 }) => (
@@ -11,8 +36,7 @@ const InfrastructureMappingsList = ({
     xs={12}
     style={{
       paddingBottom: 100,
-      height: '100%',
-      backgroundColor: '#fff'
+      height: '100%'
     }}
   >
     {transformationMappings.length > 0 ? (
@@ -35,7 +59,6 @@ const InfrastructureMappingsList = ({
             </a>
           </div>
         </div>
-
         <ListView>
           {transformationMappings.map(mapping => (
             <ListView.Item
@@ -45,20 +68,64 @@ const InfrastructureMappingsList = ({
               additionalInfo={[
                 <ListView.InfoItem key={0}>
                   <Icon type="pf" name="cluster" />
-                  <strong>2</strong>&nbsp;{__('Source Clusters')}
+                  <strong>
+                    {clusterCount(
+                      mapping.transformation_mapping_items,
+                      'source_id'
+                    )}
+                  </strong>&nbsp;{__('Source Clusters')}
                 </ListView.InfoItem>,
                 <ListView.InfoItem key={1}>
                   <Icon type="pf" name="cluster" />
-                  <strong>2</strong>&nbsp;{__('Target Clusters')}
+                  <strong>
+                    {clusterCount(
+                      mapping.transformation_mapping_items,
+                      'destination_id'
+                    )}
+                  </strong>&nbsp;{__('Target Clusters')}
                 </ListView.InfoItem>
               ]}
             >
-              <Grid.Row>
-                <Grid.Col sm={11}>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry
+              <Grid.Row
+                style={{
+                  paddingBottom: 14
+                }}
+              >
+                <Grid.Col sm={12}>
+                  {__('Completed: ')}
+                  <IntlDate
+                    data={{
+                      date: mapping.created_at,
+                      defaultValue: 'Default value'
+                    }}
+                  />
                 </Grid.Col>
               </Grid.Row>
+              <Grid.Row>
+                <Grid.Col sm={4}>
+                  <b>{__('Source Clusters')}</b>
+                </Grid.Col>
+                <Grid.Col sm={4}>
+                  <b>{__('Target Clusters')}</b>
+                </Grid.Col>
+                <Grid.Col smOffset={4} />
+              </Grid.Row>
+              <Grid.Row />
+              {mapping.transformation_mapping_items
+                .filter(item => item.source_type.toLowerCase() === 'emscluster')
+                .map(item => (
+                  <React.Fragment>
+                    <Grid.Row>
+                      <Grid.Col sm={4}>
+                        {clusterName(clusters, item.source_id)}
+                      </Grid.Col>
+                      <Grid.Col sm={4}>
+                        {clusterName(clusters, item.destination_id)}
+                      </Grid.Col>
+                      <Grid.Col smOffset={4} />
+                    </Grid.Row>
+                  </React.Fragment>
+                ))}
             </ListView.Item>
           ))}
         </ListView>
@@ -74,6 +141,7 @@ const InfrastructureMappingsList = ({
 );
 
 InfrastructureMappingsList.propTypes = {
+  clusters: PropTypes.array,
   transformationMappings: PropTypes.array,
   createInfraMappingClick: PropTypes.func
 };
