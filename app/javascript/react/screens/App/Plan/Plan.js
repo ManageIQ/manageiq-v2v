@@ -43,7 +43,8 @@ class Plan extends React.Component {
 
   render() {
     const {
-      planRequestDetails,
+      planName,
+      planRequestTasks,
       isRejectedPlanRequests,
       isFetchingPlanRequests,
       planRequestsPreviouslyFetched
@@ -60,11 +61,7 @@ class Plan extends React.Component {
           </Breadcrumb.Item>
           {planRequestsPreviouslyFetched &&
             !isRejectedPlanRequests &&
-            planRequestDetails.name && (
-              <Breadcrumb.Item active>
-                {planRequestDetails.name}
-              </Breadcrumb.Item>
-            )}
+            planName && <Breadcrumb.Item active>{planName}</Breadcrumb.Item>}
         </Toolbar>
         <div style={{ overflow: 'auto', paddingBottom: 1, height: '100%' }}>
           <Spinner
@@ -72,11 +69,8 @@ class Plan extends React.Component {
           >
             {planRequestsPreviouslyFetched &&
               !isRejectedPlanRequests &&
-              planRequestDetails.tasks &&
-              planRequestDetails.tasks.length > 0 && (
-                <PlanRequestDetailList
-                  planRequestDetails={planRequestDetails}
-                />
+              planRequestTasks.length > 0 && (
+                <PlanRequestDetailList planRequestTasks={planRequestTasks} />
               )}
           </Spinner>
         </div>
@@ -87,14 +81,16 @@ class Plan extends React.Component {
 Plan.propTypes = {
   fetchPlanRequestsUrl: PropTypes.string.isRequired,
   fetchPlanRequestsAction: PropTypes.func.isRequired,
-  planRequestDetails: PropTypes.object,
+  planName: PropTypes.string,
+  planRequestTasks: PropTypes.array,
   isRejectedPlanRequests: PropTypes.bool,
   isFetchingPlanRequests: PropTypes.bool,
   planRequestsPreviouslyFetched: PropTypes.bool,
   errorPlanRequests: PropTypes.object // eslint-disable-line react/no-unused-prop-types
 };
 Plan.defaultProps = {
-  planRequestDetails: {},
+  planName: '',
+  planRequestTasks: [],
   isRejectedPlanRequests: false,
   isFetchingPlanRequests: false,
   planRequestsPreviouslyFetched: false,
