@@ -29,12 +29,15 @@ class Overview extends React.Component {
 
   componentDidMount() {
     const {
+      fetchClustersUrl,
+      fetchClustersAction,
       fetchTransformationMappingsUrl,
       fetchTransformationMappingsAction,
       fetchTransformationPlansUrl,
       fetchTransformationPlansAction
     } = this.props;
 
+    fetchClustersAction(fetchClustersUrl);
     fetchTransformationMappingsAction(fetchTransformationMappingsUrl);
     fetchTransformationPlansAction(fetchTransformationPlansUrl);
 
@@ -130,7 +133,8 @@ class Overview extends React.Component {
       notStartedTransformationPlans,
       activeTransformationPlans,
       finishedTransformationPlans,
-      isCreatingTransformationPlanRequest
+      isCreatingTransformationPlanRequest,
+      clusters
     } = this.props;
 
     const aggregateDataCards = (
@@ -199,6 +203,7 @@ class Overview extends React.Component {
             />
           )}
           <InfrastructureMappingsList
+            clusters={clusters}
             transformationMappings={transformationMappings}
             createInfraMappingClick={showMappingWizardAction}
           />
@@ -249,6 +254,9 @@ Overview.propTypes = {
   isContinuingToPlan: PropTypes.bool,
   planWizardId: PropTypes.string,
   continueToPlanAction: PropTypes.func,
-  shouldReloadMappings: PropTypes.bool
+  shouldReloadMappings: PropTypes.bool,
+  fetchClustersAction: PropTypes.func,
+  fetchClustersUrl: PropTypes.string,
+  clusters: PropTypes.array
 };
 export default Overview;

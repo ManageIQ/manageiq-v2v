@@ -96,7 +96,8 @@ export const coreComponents = [
     data: {
       fetchTransformationMappingsUrl: mockMode
         ? '/api/dummyMappings'
-        : 'api/transformation_mappings?expand=resources',
+        : 'api/transformation_mappings?expand=resources' +
+          '&attributes=transformation_mapping_items',
       fetchTransformationPlansUrl: mockMode
         ? '/api/dummyTransformationPlans'
         : '/api/service_templates/?' +
@@ -104,7 +105,12 @@ export const coreComponents = [
           '&expand=resources' +
           '&attributes=miq_requests,created_on' +
           '&sort_by=updated_on' +
-          '&sort_order=desc'
+          '&sort_order=desc',
+      fetchClustersUrl: mockMode
+        ? '/api/dummyClusters'
+        : 'api/clusters/' +
+          '?attributes=v_parent_datacenter' +
+          '&expand=resources'
     },
     store: true
   },

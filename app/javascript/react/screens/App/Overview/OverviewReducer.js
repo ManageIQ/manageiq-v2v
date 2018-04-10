@@ -10,6 +10,7 @@ import {
   FETCH_V2V_TRANSFORMATION_MAPPINGS,
   FETCH_V2V_TRANSFORMATION_PLANS,
   CREATE_V2V_TRANSFORMATION_PLAN_REQUEST,
+  V2V_FETCH_CLUSTERS,
   CONTINUE_TO_PLAN
 } from './OverviewConstants';
 
@@ -32,7 +33,8 @@ export const initialState = Immutable({
   isCreatingTransformationPlanRequest: null,
   errorCreateTransformationPlanRequest: null,
   isContinuingToPlan: false,
-  shouldReloadMappings: false
+  shouldReloadMappings: false,
+  clusters: []
 });
 
 export default (state = initialState, action) => {
@@ -102,6 +104,8 @@ export default (state = initialState, action) => {
         .set('isRejectedTransformationPlans', true)
         .set('isFetchingTransformationPlans', false)
         .set('plansPreviouslyFetched', false);
+    case `${V2V_FETCH_CLUSTERS}_FULFILLED`:
+      return state.set('clusters', action.payload.data.resources);
 
     case `${CREATE_V2V_TRANSFORMATION_PLAN_REQUEST}_PENDING`:
       return state.set('isCreatingTransformationPlanRequest', action.payload);
