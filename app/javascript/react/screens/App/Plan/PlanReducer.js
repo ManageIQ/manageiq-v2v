@@ -6,6 +6,7 @@ import { FETCH_V2V_PLAN_REQUESTS } from './PlanConstants';
 const initialState = Immutable({
   isFetchingPlanRequests: false,
   isRejectedPlanRequests: false,
+  planRequestsPreviouslyFetched: false,
   errorPlanRequests: null,
   planRequestDetails: {}
 });
@@ -66,12 +67,14 @@ export default (state = initialState, action) => {
       const { payload } = action;
       if (payload && payload.data) {
         return state
+          .set('planRequestsPreviouslyFetched', true)
           .set('planRequestDetails', _formatPlanRequestDetails(payload.data))
           .set('isRejectedPlanRequests', false)
           .set('errorPlanRequests', null)
           .set('isFetchingPlanRequests', false);
       }
       return state
+        .set('planRequestsPreviouslyFetched', true)
         .set('planRequestDetails', {})
         .set('isRejectedPlanRequests', false)
         .set('errorPlanRequests', null)
