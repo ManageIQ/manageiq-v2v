@@ -45,7 +45,8 @@ class Plan extends React.Component {
     const {
       planRequestDetails,
       isRejectedPlanRequests,
-      isFetchingPlanRequests
+      isFetchingPlanRequests,
+      planRequestsPreviouslyFetched
     } = this.props;
 
     return (
@@ -57,7 +58,7 @@ class Plan extends React.Component {
           <Breadcrumb.Item>
             <Link to="/migration">Migration</Link>
           </Breadcrumb.Item>
-          {!isFetchingPlanRequests &&
+          {planRequestsPreviouslyFetched &&
             !isRejectedPlanRequests &&
             planRequestDetails.name && (
               <Breadcrumb.Item active>
@@ -66,8 +67,10 @@ class Plan extends React.Component {
             )}
         </Toolbar>
         <div style={{ overflow: 'auto', paddingBottom: 1, height: '100%' }}>
-          <Spinner loading={isFetchingPlanRequests}>
-            {!isFetchingPlanRequests &&
+          <Spinner
+            loading={isFetchingPlanRequests && !planRequestsPreviouslyFetched}
+          >
+            {planRequestsPreviouslyFetched &&
               !isRejectedPlanRequests &&
               planRequestDetails.tasks &&
               planRequestDetails.tasks.length > 0 && (
@@ -87,12 +90,14 @@ Plan.propTypes = {
   planRequestDetails: PropTypes.object,
   isRejectedPlanRequests: PropTypes.bool,
   isFetchingPlanRequests: PropTypes.bool,
+  planRequestsPreviouslyFetched: PropTypes.bool,
   errorPlanRequests: PropTypes.object // eslint-disable-line react/no-unused-prop-types
 };
 Plan.defaultProps = {
   planRequestDetails: {},
   isRejectedPlanRequests: false,
   isFetchingPlanRequests: false,
+  planRequestsPreviouslyFetched: false,
   errorPlanRequests: null
 };
 export default Plan;
