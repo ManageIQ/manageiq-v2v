@@ -54,10 +54,10 @@ class Plan extends React.Component {
       <React.Fragment>
         <Toolbar>
           <Breadcrumb.Item href="/dashboard/maintab?tab=compute">
-            Compute
+            {__('Compute')}
           </Breadcrumb.Item>
           <Breadcrumb.Item>
-            <Link to="/migration">Migration</Link>
+            <Link to="/migration">{__('Migration')}</Link>
           </Breadcrumb.Item>
           {planRequestsPreviouslyFetched &&
             !isRejectedPlanRequests &&

@@ -36,12 +36,12 @@ const PlanRequestDetailList = ({ planRequestTasks }) => (
           additionalInfo={[
             <div style={{ paddingRight: 60 }}>
               <span>
-                <strong>Started: </strong>
+                <strong>{__('Started')}: </strong>
                 {moment(startDateTime).format('YYYY-MM-DD HH:mm:ss A')}
               </span>
               <br />
               <span>
-                <strong>Elapsed: </strong>
+                <strong>{__('Elapsed')}: </strong>
                 {elapsedTime}
               </span>
             </div>,
