@@ -34,7 +34,7 @@ const PlanRequestDetailList = ({ planRequestTasks }) => (
           leftContent={leftContent}
           heading={task.transformation_host_name}
           additionalInfo={[
-            <div style={{ paddingRight: 60 }}>
+            <div style={{ paddingRight: 60 }} key={`${task.id}-times`}>
               <span>
                 <strong>{__('Started')}: </strong>
                 {moment(startDateTime).format('YYYY-MM-DD HH:mm:ss A')}
@@ -45,7 +45,7 @@ const PlanRequestDetailList = ({ planRequestTasks }) => (
                 {elapsedTime}
               </span>
             </div>,
-            task.message
+            <div key={`${task.id}-message`}>{task.message}</div>
           ]}
           actions={
             <UtilizationBar
