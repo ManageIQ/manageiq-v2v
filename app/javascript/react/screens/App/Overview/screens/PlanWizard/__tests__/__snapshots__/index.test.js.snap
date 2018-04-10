@@ -42,9 +42,9 @@ Object {
     },
   },
   "planWizardOptionsStep": Object {},
-  "setPlanScheduleAction": [Function],
   "planWizardVMStep": Object {},
   "resetVmStepAction": [Function],
+  "setPlanScheduleAction": [Function],
   "setPlansBodyAction": [Function],
 }
 `;
