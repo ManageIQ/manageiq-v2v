@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { Breadcrumb, Spinner } from 'patternfly-react';
 import Toolbar from '../../../config/Toolbar';
 import PlanRequestDetailList from './components/PlanRequestDetailList';
@@ -53,7 +54,9 @@ class Plan extends React.Component {
           <Breadcrumb.Item href="/dashboard/maintab?tab=compute">
             Compute
           </Breadcrumb.Item>
-          <Breadcrumb.Item href="/migration">Migration</Breadcrumb.Item>
+          <Breadcrumb.Item>
+            <Link to="/migration">Migration</Link>
+          </Breadcrumb.Item>
           {!isFetchingPlanRequests &&
             !isRejectedPlanRequests &&
             planRequestDetails.name && (

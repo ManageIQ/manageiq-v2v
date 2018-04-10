@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import {
   Grid,
   Icon,
@@ -46,14 +47,14 @@ const MigrationInProgressCard = ({ migration }) => {
   const elapsedTime = IsoElpasedTime(startTime, endTime);
 
   const vmBarLabel = (
-    <a href={`/migration/plan/${migration.id}`}>
+    <Link to={`/migration/plan/${migration.id}`}>
       <span>
         <strong className="label-strong">
           {sprintf(__('%s of %s VMs'), completedVMs, totalVMs)}
         </strong>{' '}
         {__('Migrated')}
       </span>
-    </a>
+    </Link>
   );
   const usedVmTooltip = () => usedTooltip(totalVMs, completedVMs);
   const availableVmTooltip = () => availableTooltip(totalVMs, completedVMs);
