@@ -20,10 +20,22 @@ const _formatPlanRequestDetails = data => {
         message: task.message,
         transformation_host_name:
           task.options && task.options.transformation_host_name,
-        delivered_on: task.options.delivered_on,
-        updated_on: task.updated_on,
-        completed: task.message === 'VM Transformations completed'
+        delivered_on: new Date(task.options.delivered_on),
+        updated_on: new Date(task.updated_on),
+        completed: task.message === 'VM Transformations completed',
+        state: task.state,
+        status: task.status,
+        options: {}
       };
+
+      taskDetails.options.progress = task.options.progress;
+      taskDetails.options.virtv2v_wrapper = task.options.virtv2v_wrapper;
+
+      if (taskDetails.completed) {
+        taskDetails.completedSuccessfully =
+          task.options.progress.current_description ===
+          'Virtual machine migrated';
+      }
       if (
         task.options &&
         task.options.virtv2v_disks &&
@@ -46,7 +58,7 @@ const _formatPlanRequestDetails = data => {
         taskDetails.diskSpaceCompletedGb = numeral(
           taskDetails.diskSpaceCompleted
         ).format('0.00b');
-        taskDetails.percentComplete = percentComplete * 100;
+        taskDetails.percentComplete = Math.round(percentComplete * 1000) / 10;
       }
       tasks.push(taskDetails);
     });

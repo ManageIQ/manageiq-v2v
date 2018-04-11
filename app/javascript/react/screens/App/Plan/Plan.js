@@ -1,13 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Immutable from 'seamless-immutable';
 import { Link } from 'react-router-dom';
 import { bindMethods, Breadcrumb, Spinner } from 'patternfly-react';
 import Toolbar from '../../../config/Toolbar';
 import PlanRequestDetailList from './components/PlanRequestDetailList';
 
 class Plan extends React.Component {
+  // need to update ui-classic to React 16.3 to support this
+  // static getDerivedStateFromProps(nextProps, prevState) {
+  //   if (nextProps.planRequestTasks === prevState.planRequestTasks) {
+  //     return null;
+  //   }
+  //   return {
+  //     planRequestTasks,
+  //     planRequestTasksMutable: Immutable.asMutable(planRequestTasks)
+  //   };
+  // }
+
   constructor(props) {
     super(props);
+
+    this.state = { planRequestTasksMutable: [] };
 
     bindMethods(this, ['stopPolling', 'startPolling']);
   }
@@ -16,6 +30,17 @@ class Plan extends React.Component {
     const { fetchPlanRequestsUrl, fetchPlanRequestsAction } = this.props;
     fetchPlanRequestsAction(fetchPlanRequestsUrl);
     this.startPolling();
+  }
+
+  // Remove this after updating to 16.3
+  componentDidUpdate(prevProps) {
+    const { planRequestTasks } = this.props;
+    if (prevProps.planRequestTasks !== planRequestTasks) {
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({
+        planRequestTasksMutable: Immutable.asMutable(planRequestTasks)
+      });
+    }
   }
 
   componentWillUnmount() {
@@ -39,11 +64,12 @@ class Plan extends React.Component {
   render() {
     const {
       planName,
-      planRequestTasks,
       isRejectedPlanRequests,
       isFetchingPlanRequests,
       planRequestsPreviouslyFetched
     } = this.props;
+
+    const { planRequestTasksMutable } = this.state;
 
     return (
       <React.Fragment>
@@ -59,17 +85,17 @@ class Plan extends React.Component {
             planName && <Breadcrumb.Item active>{planName}</Breadcrumb.Item>}
         </Toolbar>
 
-        <div style={{ overflow: 'auto', paddingBottom: 1, height: '100%' }}>
-          <Spinner
-            loading={isFetchingPlanRequests && !planRequestsPreviouslyFetched}
-          >
-            {planRequestsPreviouslyFetched &&
-              !isRejectedPlanRequests &&
-              planRequestTasks.length > 0 && (
-                <PlanRequestDetailList planRequestTasks={planRequestTasks} />
-              )}
-          </Spinner>
-        </div>
+        <Spinner
+          loading={isFetchingPlanRequests && !planRequestsPreviouslyFetched}
+        >
+          {planRequestsPreviouslyFetched &&
+            !isRejectedPlanRequests &&
+            planRequestTasksMutable.length > 0 && (
+              <PlanRequestDetailList
+                planRequestTasks={planRequestTasksMutable}
+              />
+            )}
+        </Spinner>
       </React.Fragment>
     );
   }

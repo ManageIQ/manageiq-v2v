@@ -7,19 +7,19 @@ export const IsoElpasedTime = (startTime, endTime) => {
   let elapsedTime;
   if (elapsedHours >= 48) {
     elapsedTime = sprintf(
-      __('%s days %s:%s elapsed'),
+      __('%s days %sh %sm elapsed'),
       Math.floor(elapsedHours / 24),
       elapsedHours % 24,
       elapsedMinutes
     );
   } else if (elapsedHours >= 24) {
     elapsedTime = sprintf(
-      __('1 day %s:%s elapsed'),
+      __('1 day %sh %sm elapsed'),
       elapsedHours % 24,
       elapsedMinutes
     );
   } else {
-    elapsedTime = sprintf(__('%s:%s elapsed'), elapsedHours, elapsedMinutes);
+    elapsedTime = sprintf(__('%sh %sm elapsed'), elapsedHours, elapsedMinutes);
   }
   return elapsedTime;
 };
