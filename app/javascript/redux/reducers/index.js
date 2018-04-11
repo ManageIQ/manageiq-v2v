@@ -7,6 +7,7 @@ import { reducers as mappingWizardDatastoresStepReducers } from '../../react/scr
 import { reducers as mappingWizardNetworksStepReducers } from '../../react/screens/App/Overview/screens/MappingWizard/components/MappingWizardNetworksStep';
 import { reducers as mappingWizardResultsStepReducers } from '../../react/screens/App/Overview/screens/MappingWizard/components/MappingWizardResultsStep';
 import { reducers as planWizardReducers } from '../../react/screens/App/Overview/screens/PlanWizard';
+import { reducers as planWizardVMStepReducers } from '../../react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep';
 import { reducers as planWizardResultsStepReducers } from '../../react/screens/App/Overview/screens/PlanWizard/components/PlanWizardResultsStep';
 import { reducers as migrationsInProgressReducers } from '../../react/screens/App/Overview/components/Cards/MigrationsInProgressCard';
 import { reducers as migrationsCompletedReducers } from '../../react/screens/App/Overview/components/Cards/MigrationsCompletedCard';
@@ -22,6 +23,7 @@ export function combineReducersAsync(asyncReducers) {
     ...mappingWizardNetworksStepReducers,
     ...mappingWizardResultsStepReducers,
     ...planWizardReducers,
+    ...planWizardVMStepReducers,
     ...planWizardResultsStepReducers,
     form: formReducer,
     ...asyncReducers

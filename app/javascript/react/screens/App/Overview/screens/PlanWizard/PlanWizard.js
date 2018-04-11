@@ -13,7 +13,8 @@ import PlanWizardBody from './PlanWizardBody';
 
 const planWizardSteps = [
   'planWizardGeneralStep',
-  'planWizardCSVStep',
+  'planWizardVMStep',
+  'planWizardOptionsStep',
   'planWizardResultsStep'
 ];
 
@@ -25,7 +26,13 @@ class PlanWizard extends React.Component {
   }
 
   prevStep() {
+    const { resetVmStepAction } = this.props;
     const { activeStepIndex } = this.state;
+
+    if (activeStepIndex === 1) {
+      // reset all vm step values if going back from that step
+      resetVmStepAction();
+    }
     this.setState({ activeStepIndex: Math.max(activeStepIndex - 1, 0) });
   }
 
@@ -33,14 +40,18 @@ class PlanWizard extends React.Component {
     const { activeStepIndex } = this.state;
     const {
       planWizardGeneralStep,
-      planWizardCSVStep,
-      setPlansBodyAction
+      planWizardVMStep,
+      planWizardOptionsStep,
+      setPlansBodyAction,
+      setPlanScheduleAction
     } = this.props;
-
-    if (activeStepIndex === 1) {
+    if (activeStepIndex === 2) {
       const plansBody = createMigrationPlans(
         planWizardGeneralStep,
-        planWizardCSVStep
+        planWizardVMStep
+      );
+      setPlanScheduleAction(
+        planWizardOptionsStep.values.migration_plan_choice_radio
       );
 
       setPlansBodyAction(plansBody);
@@ -61,7 +72,8 @@ class PlanWizard extends React.Component {
       hidePlanWizardAction,
       planWizardExitedAction,
       planWizardGeneralStep,
-      planWizardCSVStep
+      planWizardVMStep,
+      planWizardOptionsStep
     } = this.props;
 
     const { activeStepIndex, plansBody } = this.state;
@@ -71,7 +83,13 @@ class PlanWizard extends React.Component {
 
     const currentStepProp = !onFinalStep && planWizardSteps[activeStepIndex];
     const currentStepForm = !onFinalStep && this.props[currentStepProp];
-    const disableNextStep = !onFinalStep && !!currentStepForm.syncErrors;
+
+    const disableNextStep =
+      (!onFinalStep && !!currentStepForm.syncErrors) ||
+      (activeStepIndex === 1 &&
+        (!this.props.planWizardVMStep.values ||
+          !this.props.planWizardVMStep.values.selectedVms ||
+          this.props.planWizardVMStep.values.selectedVms.length === 0));
 
     return (
       <Modal
@@ -101,7 +119,8 @@ class PlanWizard extends React.Component {
               disableNextStep={disableNextStep}
               plansBody={plansBody}
               planWizardGeneralStep={planWizardGeneralStep}
-              planWizardCSVStep={planWizardCSVStep}
+              planWizardVMStep={planWizardVMStep}
+              planWizardOptionsStep={planWizardOptionsStep}
             />
           </Modal.Body>
           <Modal.Footer className="wizard-pf-footer">
@@ -127,7 +146,7 @@ class PlanWizard extends React.Component {
             >
               {onFinalStep
                 ? __('Close')
-                : activeStepIndex === 1 ? __('Create') : __('Next')}
+                : activeStepIndex === 2 ? __('Create') : __('Next')}
               <Icon type="fa" name="angle-right" />
             </Button>
           </Modal.Footer>
@@ -141,15 +160,21 @@ PlanWizard.propTypes = {
   hidePlanWizardAction: PropTypes.func,
   planWizardExitedAction: PropTypes.func,
   planWizardGeneralStep: PropTypes.object,
-  planWizardCSVStep: PropTypes.object,
-  setPlansBodyAction: PropTypes.func
+  planWizardVMStep: PropTypes.object,
+  planWizardOptionsStep: PropTypes.object,
+  setPlansBodyAction: PropTypes.func,
+  setPlanScheduleAction: PropTypes.func,
+  resetVmStepAction: PropTypes.func
 };
 PlanWizard.defaultProps = {
   hidePlanWizard: true,
   hidePlanWizardAction: noop,
   planWizardExitedAction: noop,
   planWizardGeneralStep: {},
-  planWizardCSVStep: {},
-  setPlansBodyAction: noop
+  planWizardVMStep: {},
+  planWizardOptionsStep: {},
+  setPlansBodyAction: noop,
+  setPlanScheduleAction: noop,
+  resetVmStepAction: noop
 };
 export default PlanWizard;

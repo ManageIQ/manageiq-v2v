@@ -9,7 +9,7 @@ const reduxFormMap = {
     'mappingWizardGeneralStep',
     'mappingWizardClustersStep'
   ],
-  [__('Migration Plan Wizard')]: ['planWizardGeneralStep', 'planWizardCSVStep']
+  [__('Migration Plan Wizard')]: ['planWizardGeneralStep', 'planWizardVMStep']
 };
 
 // NOTE: This may be a good component to move up to patternfly-react.

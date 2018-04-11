@@ -12,6 +12,7 @@ export const FormField = ({
   options,
   optionKey,
   optionValue,
+  labelWidth,
   meta: { touched, error },
   ...props
 }) => {
@@ -67,7 +68,10 @@ export const FormField = ({
 
   return (
     <Form.FormGroup {...formGroupProps}>
-      <Grid.Col componentClass={Form.ControlLabel} sm={2}>
+      <Grid.Col
+        componentClass={Form.ControlLabel}
+        sm={Number.parseInt(labelWidth, 10) || 2}
+      >
         {label}
         {required && ' *'}
       </Grid.Col>
@@ -89,5 +93,6 @@ FormField.propTypes = {
   options: PropTypes.array,
   optionKey: PropTypes.string,
   optionValue: PropTypes.string,
+  labelWidth: PropTypes.string,
   meta: PropTypes.object
 };

@@ -4,12 +4,15 @@ import { noop } from 'patternfly-react';
 import ModalWizard from '../../components/ModalWizard';
 import componentRegistry from '../../../../../../components/componentRegistry';
 import PlanWizardGeneralStep from '../PlanWizard/components/PlanWizardGeneralStep';
-import PlanWizardCSVStep from '../PlanWizard/components/PlanWizardCSVStep';
+import PlanWizardOptionsStep from '../PlanWizard/components/PlanWizardOptionsStep';
 
 class PlanWizardBody extends React.Component {
   constructor(props) {
     super(props);
 
+    this.planWizardVMStepContainer = componentRegistry.markup(
+      'PlanWizardVMStepContainer'
+    );
     this.planWizardResultsStepContainer = componentRegistry.markup(
       'PlanWizardResultsStepContainer'
     );
@@ -32,8 +35,13 @@ class PlanWizardBody extends React.Component {
           },
           {
             title: __('VMs'),
-            render: () => <PlanWizardCSVStep />,
-            disableGoto: !this.props.planWizardCSVStep.values
+            render: () => this.planWizardVMStepContainer,
+            disableGoto: !this.props.planWizardVMStep.values
+          },
+          {
+            title: __('Options'),
+            render: () => <PlanWizardOptionsStep />,
+            disableGoto: true
           },
           {
             title: __('Results'),
@@ -54,7 +62,7 @@ PlanWizardBody.propTypes = {
   disableNextStep: PropTypes.bool,
   plansBody: PropTypes.object,
   planWizardGeneralStep: PropTypes.object,
-  planWizardCSVStep: PropTypes.object
+  planWizardVMStep: PropTypes.object
 };
 
 PlanWizardBody.defaultProps = {
@@ -65,7 +73,7 @@ PlanWizardBody.defaultProps = {
   disableNextStep: true,
   plansBody: {},
   planWizardGeneralStep: {},
-  planWizardCSVStep: {}
+  planWizardVMStep: {}
 };
 
 export default PlanWizardBody;

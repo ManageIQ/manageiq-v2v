@@ -4,7 +4,6 @@ exports[`Plan Wizard integration test should mount the PlanWizard with mapStateT
 Object {
   "hidePlanWizard": false,
   "hidePlanWizardAction": [Function],
-  "planWizardCSVStep": Object {},
   "planWizardExitedAction": [Function],
   "planWizardGeneralStep": Object {
     "initial": Object {
@@ -42,6 +41,10 @@ Object {
       "vm_choice_radio": "vms_via_discovery",
     },
   },
+  "planWizardOptionsStep": Object {},
+  "planWizardVMStep": Object {},
+  "resetVmStepAction": [Function],
+  "setPlanScheduleAction": [Function],
   "setPlansBodyAction": [Function],
 }
 `;
