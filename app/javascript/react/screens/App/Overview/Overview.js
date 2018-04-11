@@ -7,8 +7,6 @@ import InfrastructureMappingsList from './components/InfrastructureMappingsList/
 import Migrations from './components/Migrations/Migrations';
 import componentRegistry from '../../../../components/componentRegistry';
 
-import { planRequestsWithPlanIds } from './helpers';
-
 class Overview extends React.Component {
   constructor(props) {
     super(props);
@@ -29,14 +27,11 @@ class Overview extends React.Component {
     const {
       fetchTransformationMappingsUrl,
       fetchTransformationMappingsAction,
-      fetchTransformationPlanRequestsUrl,
-      fetchTransformationPlanRequestsAction,
       fetchTransformationPlansUrl,
       fetchTransformationPlansAction
     } = this.props;
 
     fetchTransformationMappingsAction(fetchTransformationMappingsUrl);
-    fetchTransformationPlanRequestsAction(fetchTransformationPlanRequestsUrl);
     fetchTransformationPlansAction(fetchTransformationPlansUrl);
 
     this.startPolling();
@@ -47,8 +42,8 @@ class Overview extends React.Component {
       isContinuingToPlan,
       fetchTransformationMappingsUrl,
       fetchTransformationMappingsAction,
-      fetchTransformationPlanRequestsUrl,
-      fetchTransformationPlanRequestsAction,
+      fetchTransformationPlansUrl,
+      fetchTransformationPlansAction,
       planWizardId,
       continueToPlanAction,
       shouldReloadMappings
@@ -75,7 +70,7 @@ class Overview extends React.Component {
       !nextProps.planWizardVisible &&
       !this.pollingInterval
     ) {
-      fetchTransformationPlanRequestsAction(fetchTransformationPlanRequestsUrl);
+      fetchTransformationPlansAction(fetchTransformationPlansUrl);
       this.startPolling();
     }
   }
@@ -86,11 +81,11 @@ class Overview extends React.Component {
 
   startPolling() {
     const {
-      fetchTransformationPlanRequestsAction,
-      fetchTransformationPlanRequestsUrl
+      fetchTransformationPlansAction,
+      fetchTransformationPlansUrl
     } = this.props;
     this.pollingInterval = setInterval(() => {
-      fetchTransformationPlanRequestsAction(fetchTransformationPlanRequestsUrl);
+      fetchTransformationPlansAction(fetchTransformationPlansUrl);
     }, 15000);
   }
 
@@ -111,10 +106,7 @@ class Overview extends React.Component {
       isFetchingTransformationMappings,
       isRejectedTransformationMappings, // eslint-disable-line no-unused-vars
       transformationPlans,
-      isFetchingTransformationPlans,
-      activeTransformationPlanRequests,
-      completeTransformationPlanRequests,
-      pendingTransformationPlans
+      isFetchingTransformationPlans
     } = this.props;
 
     const aggregateDataCards = (
@@ -152,14 +144,6 @@ class Overview extends React.Component {
           {!isFetchingTransformationPlans &&
             transformationMappings.length > 0 && (
               <Migrations
-                activeTransformationPlanRequests={planRequestsWithPlanIds(
-                  activeTransformationPlanRequests,
-                  transformationPlans
-                )}
-                completeTransformationPlanRequests={
-                  completeTransformationPlanRequests
-                }
-                pendingTransformationPlans={pendingTransformationPlans}
                 transformationPlans={transformationPlans}
                 createMigrationPlanClick={showPlanWizardAction}
               />
@@ -192,9 +176,6 @@ class Overview extends React.Component {
   }
 }
 Overview.propTypes = {
-  activeTransformationPlanRequests: PropTypes.array,
-  completeTransformationPlanRequests: PropTypes.array,
-  pendingTransformationPlans: PropTypes.array,
   store: PropTypes.object,
   showMappingWizardAction: PropTypes.func,
   showPlanWizardAction: PropTypes.func,
@@ -202,8 +183,6 @@ Overview.propTypes = {
   planWizardVisible: PropTypes.bool,
   fetchTransformationMappingsUrl: PropTypes.string,
   fetchTransformationMappingsAction: PropTypes.func,
-  fetchTransformationPlanRequestsUrl: PropTypes.string,
-  fetchTransformationPlanRequestsAction: PropTypes.func,
   fetchTransformationPlansUrl: PropTypes.string,
   fetchTransformationPlansAction: PropTypes.func,
   transformationMappings: PropTypes.array,

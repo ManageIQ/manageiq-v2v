@@ -17,24 +17,17 @@ describe('Overview component', () => {
     planWizardVisible: false,
     isFetchingTransformationMappings: false,
     isRejectedTransformationMappings: false,
-    isFetchingTransformationPlanRequests: false,
-    isRejectedTransformationPlanRequests: false,
-    errorTransformationPlanRequests: null,
     transformationMappings: [],
-    transformationPlans: [],
-    transformationPlanRequests: [],
-    activeTransformationPlanRequests: []
+    transformationPlans: []
   };
   let showMappingWizardAction;
   let showPlanWizardAction;
   let fetchTransformationMappingsAction;
-  let fetchTransformationPlanRequestsAction;
   let fetchTransformationPlansAction;
   beforeEach(() => {
     showMappingWizardAction = jest.fn();
     showPlanWizardAction = jest.fn();
     fetchTransformationMappingsAction = jest.fn();
-    fetchTransformationPlanRequestsAction = jest.fn();
     fetchTransformationPlansAction = jest.fn();
   });
 
@@ -46,9 +39,6 @@ describe('Overview component', () => {
           showMappingWizardAction={showMappingWizardAction}
           showPlanWizardAction={showPlanWizardAction}
           fetchTransformationMappingsAction={fetchTransformationMappingsAction}
-          fetchTransformationPlanRequestsAction={
-            fetchTransformationPlanRequestsAction
-          }
           fetchTransformationPlansAction={fetchTransformationPlansAction}
         />
       );
@@ -64,9 +54,6 @@ describe('Overview component', () => {
           showMappingWizardAction={showMappingWizardAction}
           showPlanWizardAction={showPlanWizardAction}
           fetchTransformationMappingsAction={fetchTransformationMappingsAction}
-          fetchTransformationPlanRequestsAction={
-            fetchTransformationPlanRequestsAction
-          }
           fetchTransformationPlansAction={fetchTransformationPlansAction}
         />
       );
@@ -84,20 +71,17 @@ describe('Overview component', () => {
           showMappingWizardAction={showMappingWizardAction}
           showPlanWizardAction={showPlanWizardAction}
           fetchTransformationMappingsAction={fetchTransformationMappingsAction}
-          fetchTransformationPlanRequestsAction={
-            fetchTransformationPlanRequestsAction
-          }
           fetchTransformationPlansAction={fetchTransformationPlansAction}
         />
       );
     });
     test('starts when the component is mounted', () => {
-      expect(fetchTransformationPlanRequestsAction).toHaveBeenCalledTimes(1);
+      expect(fetchTransformationPlansAction).toHaveBeenCalledTimes(1);
     });
 
     test('fetches transformation plan requests every 15 seconds', () => {
       jest.advanceTimersByTime(15000);
-      expect(fetchTransformationPlanRequestsAction).toHaveBeenCalledTimes(2);
+      expect(fetchTransformationPlansAction).toHaveBeenCalledTimes(2);
     });
 
     // TODO: Come back to these once the UI is closer to final form
