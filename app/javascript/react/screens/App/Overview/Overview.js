@@ -106,7 +106,8 @@ class Overview extends React.Component {
       isFetchingTransformationMappings,
       isRejectedTransformationMappings, // eslint-disable-line no-unused-vars
       transformationPlans,
-      isFetchingTransformationPlans
+      isFetchingTransformationPlans, // eslint-disable-line no-unused-vars
+      pendingTransformationPlans
     } = this.props;
 
     const aggregateDataCards = (
@@ -119,7 +120,9 @@ class Overview extends React.Component {
       >
         <CardGrid.Row>
           <CardGrid.Col xs={6} sm={3}>
-            <AggregateCards.MigrationsNotStarted />
+            <AggregateCards.PendingTransformationPlans
+              pendingPlans={pendingTransformationPlans}
+            />
           </CardGrid.Col>
           <CardGrid.Col xs={6} sm={3}>
             <AggregateCards.MigrationsInProgress />
@@ -141,13 +144,12 @@ class Overview extends React.Component {
       >
         {aggregateDataCards}
         <Spinner loading={isFetchingTransformationMappings}>
-          {!isFetchingTransformationPlans &&
-            transformationMappings.length > 0 && (
-              <Migrations
-                transformationPlans={transformationPlans}
-                createMigrationPlanClick={showPlanWizardAction}
-              />
-            )}
+          {transformationMappings.length > 0 && (
+            <Migrations
+              transformationPlans={transformationPlans}
+              createMigrationPlanClick={showPlanWizardAction}
+            />
+          )}
           <InfrastructureMappingsList
             transformationMappings={transformationMappings}
             createInfraMappingClick={showMappingWizardAction}
@@ -181,15 +183,16 @@ Overview.propTypes = {
   showPlanWizardAction: PropTypes.func,
   mappingWizardVisible: PropTypes.bool,
   planWizardVisible: PropTypes.bool,
-  fetchTransformationMappingsUrl: PropTypes.string,
-  fetchTransformationMappingsAction: PropTypes.func,
+  transformationPlans: PropTypes.array,
   fetchTransformationPlansUrl: PropTypes.string,
   fetchTransformationPlansAction: PropTypes.func,
+  isFetchingTransformationPlans: PropTypes.bool,
+  pendingTransformationPlans: PropTypes.array,
   transformationMappings: PropTypes.array,
+  fetchTransformationMappingsUrl: PropTypes.string,
+  fetchTransformationMappingsAction: PropTypes.func,
   isFetchingTransformationMappings: PropTypes.bool,
   isRejectedTransformationMappings: PropTypes.bool,
-  transformationPlans: PropTypes.array,
-  isFetchingTransformationPlans: PropTypes.bool,
   isContinuingToPlan: PropTypes.bool,
   planWizardId: PropTypes.string,
   continueToPlanAction: PropTypes.func,

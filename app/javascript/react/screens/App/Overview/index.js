@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import Overview from './Overview';
 import * as OverviewActions from './OverviewActions';
 import reducer from './OverviewReducer';
+import { pendingTransformationPlansFilter } from './OverviewSelectors';
 
 export const reducers = { overview: reducer, form: {} };
 
@@ -10,7 +11,10 @@ const mapStateToProps = (
   ownProps
 ) => ({
   ...overview,
-  ...ownProps.data
+  ...ownProps.data,
+  pendingTransformationPlans: pendingTransformationPlansFilter(
+    transformationPlans
+  )
 });
 
 const mergeProps = (stateProps, dispatchProps, ownProps) =>

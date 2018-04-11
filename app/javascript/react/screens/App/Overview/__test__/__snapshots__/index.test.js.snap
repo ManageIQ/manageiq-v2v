@@ -13,6 +13,7 @@ Object {
   "isFetchingTransformationPlans": true,
   "isRejectedTransformationMappings": false,
   "mappingWizardVisible": false,
+  "pendingTransformationPlans": Array [],
   "planWizardVisible": false,
   "showMappingWizardAction": [Function],
   "showPlanWizardAction": [Function],

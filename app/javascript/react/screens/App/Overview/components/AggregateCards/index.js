@@ -1,10 +1,10 @@
-import MigrationsNotStarted from './MigrationsNotStarted/MigrationsNotStarted';
+import PendingTransformationPlans from './PendingTransformationPlans/PendingTransformationPlans';
 import MigrationsInProgress from './MigrationsInProgress/MigrationsInProgress';
 import MigrationsComplete from './MigrationsComplete/MigrationsComplete';
 import InfrastructureMappings from './InfrastructureMappings/InfrastructureMappings';
 
 export {
-  MigrationsNotStarted,
+  PendingTransformationPlans,
   MigrationsInProgress,
   MigrationsComplete,
   InfrastructureMappings
