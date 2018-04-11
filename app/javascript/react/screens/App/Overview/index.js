@@ -2,7 +2,10 @@ import { connect } from 'react-redux';
 import Overview from './Overview';
 import * as OverviewActions from './OverviewActions';
 import reducer from './OverviewReducer';
-import { pendingTransformationPlansFilter } from './OverviewSelectors';
+import {
+  pendingTransformationPlansFilter,
+  activeTransformationPlansFilter
+} from './OverviewSelectors';
 
 export const reducers = { overview: reducer, form: {} };
 
@@ -13,6 +16,9 @@ const mapStateToProps = (
   ...overview,
   ...ownProps.data,
   pendingTransformationPlans: pendingTransformationPlansFilter(
+    transformationPlans
+  ),
+  activeTransformationPlans: activeTransformationPlansFilter(
     transformationPlans
   )
 });

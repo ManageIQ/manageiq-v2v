@@ -1,4 +1,7 @@
-import { pendingTransformationPlansFilter } from '../OverviewSelectors';
+import {
+  pendingTransformationPlansFilter,
+  activeTransformationPlansFilter
+} from '../OverviewSelectors';
 
 import { transformationPlans } from '../overview.transformationPlans.fixtures';
 
@@ -10,5 +13,14 @@ describe('pendingTransformationPlansFilter', () => {
     const result = pendingTransformationPlansFilter(plans);
 
     expect(result).toEqual([pendingPlan]);
+  });
+});
+
+describe('activeTransformationPlansFilter', () => {
+  test('returns all active transformation plans', () => {
+    const [, activePlanOne, activePlanTwo, , , activePlanThree] = plans;
+    const result = activeTransformationPlansFilter(plans);
+
+    expect(result).toEqual([activePlanOne, activePlanTwo, activePlanThree]);
   });
 });
