@@ -20,9 +20,7 @@ const ActiveTransformationPlans = ({ activePlans, loading }) => {
   const erroredPlans = activePlans.filter(plan => {
     const [mostRecentRequest] = plan.miq_requests.slice(-1);
     return mostRecentRequest.miq_request_tasks.some(
-      task =>
-        task.options.progress.current_description ===
-        '<PLAN_REQUEST_TASK_FAILED>'
+      task => task.request_state === 'Finished' && task.status !== 'Ok'
     );
   });
 
