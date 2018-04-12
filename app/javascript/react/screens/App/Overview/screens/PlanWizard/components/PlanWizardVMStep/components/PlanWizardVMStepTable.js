@@ -262,8 +262,8 @@ class PlanWizardVMStepTable extends React.Component {
       // pagination default states
       pagination: {
         page: 1,
-        perPage: 6,
-        perPageOptions: [6, 10, 15]
+        perPage: 5,
+        perPageOptions: [5, 10, 15]
       },
 
       // page input value

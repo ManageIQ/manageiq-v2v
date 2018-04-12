@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { bindMethods, Breadcrumb, Spinner } from 'patternfly-react';
 import Toolbar from '../../../config/Toolbar';
 import PlanRequestDetailList from './components/PlanRequestDetailList';
+import PlanEmptyState from './components/PlanEmptyState';
 
 class Plan extends React.Component {
   // need to update ui-classic to React 16.3 to support this
@@ -86,7 +87,11 @@ class Plan extends React.Component {
         </Toolbar>
 
         <Spinner
-          loading={isFetchingPlanRequests && !planRequestsPreviouslyFetched}
+          loading={
+            isFetchingPlanRequests &&
+            !planRequestsPreviouslyFetched &&
+            !isRejectedPlanRequests
+          }
         >
           {planRequestsPreviouslyFetched &&
             !isRejectedPlanRequests &&
@@ -95,7 +100,24 @@ class Plan extends React.Component {
                 planRequestTasks={planRequestTasksMutable}
               />
             )}
+          {planRequestsPreviouslyFetched &&
+            planRequestTasksMutable.length === 0 && (
+              <PlanEmptyState
+                title="No Migration Tasks."
+                iconType="pf"
+                iconName="warning-triangle-o"
+                description="No VM migration tasks have been started for this plan. Please refresh and try again."
+              />
+            )}
         </Spinner>
+        {isRejectedPlanRequests && (
+          <PlanEmptyState
+            title="Unable to retrieve migration details."
+            iconType="pf"
+            iconName="error-circle-o"
+            description="Sorry, we were unable to retrieve migration details at this time. Please refresh and try again."
+          />
+        )}
       </React.Fragment>
     );
   }

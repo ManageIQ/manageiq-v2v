@@ -2,9 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import {
+  Button,
+  Icon,
   Grid,
   FormControl,
   ListView,
+  PaginationRow,
   Popover,
   OverlayTrigger,
   Spinner,
@@ -12,11 +15,13 @@ import {
   Filter,
   Sort,
   Tooltip,
-  UtilizationBar
+  UtilizationBar,
+  PAGINATION_VIEW
 } from 'patternfly-react';
 import { IsoElpasedTime } from '../../../../../components/dates/IsoElapsedTime';
 import listFilter from './listFilter';
 import sortFilter from './sortFilter';
+import paginate from './paginate';
 
 class PlanRequestDetailList extends React.Component {
   constructor(props) {
@@ -51,20 +56,30 @@ class PlanRequestDetailList extends React.Component {
       { id: 'message', title: 'Status', isNumeric: false }
     ];
     this.state = {
+      // filter states
       filterTypes,
       currentFilterType: filterTypes[0],
       currentValue: '',
       activeFilters: [],
+
+      // sort states
       sortFields,
       currentSortType: sortFields[0],
       isSortNumeric: sortFields[0].isNumeric,
-      isSortAscending: true
+      isSortAscending: true,
+
+      // pagination default states
+      pagination: {
+        page: 1,
+        perPage: 5,
+        perPageOptions: [5, 10, 15]
+      },
+
+      // page input value
+      pageChangeValue: 1
     };
   }
 
-  /**
-   * filter methods
-   */
   onValueKeyPress = keyEvent => {
     const { currentValue, currentFilterType } = this.state;
 
@@ -76,17 +91,58 @@ class PlanRequestDetailList extends React.Component {
     }
   };
 
-  filterAdded = (field, value) => {
-    let filterText = field.title || field;
+  onFirstPage = () => {
+    this.setPage(1);
+  };
 
-    filterText += ': ';
-    filterText += value.title || value;
+  onLastPage = () => {
+    const { page } = this.state.pagination;
+    const totalPages = this.totalPages();
+    if (page < totalPages) {
+      this.setPage(totalPages);
+    }
+  };
 
-    const activeFilters = [
-      ...this.state.activeFilters,
-      { label: filterText, field, value: value.title || value }
-    ];
-    this.setState({ activeFilters });
+  onNextPage = () => {
+    const { page } = this.state.pagination;
+    if (page < this.totalPages()) {
+      this.setPage(this.state.pagination.page + 1);
+    }
+  };
+
+  onPageInput = e => {
+    this.setState({ pageChangeValue: e.target.value });
+  };
+
+  onPerPageSelect = (eventKey, e) => {
+    const newPaginationState = Object.assign({}, this.state.pagination);
+    newPaginationState.perPage = eventKey;
+    newPaginationState.page = 1;
+    this.setState({ pagination: newPaginationState });
+  };
+
+  onPreviousPage = () => {
+    if (this.state.pagination.page > 1) {
+      this.setPage(this.state.pagination.page - 1);
+    }
+  };
+
+  onSubmit = () => {
+    this.setPage(this.state.pageChangeValue);
+  };
+
+  setPage = value => {
+    const page = Number(value);
+    if (
+      !Number.isNaN(value) &&
+      value !== '' &&
+      page > 0 &&
+      page <= this.totalPages()
+    ) {
+      const newPaginationState = Object.assign({}, this.state.pagination);
+      newPaginationState.page = page;
+      this.setState({ pagination: newPaginationState, pageChangeValue: page });
+    }
   };
 
   filterValueSelected = filterValue => {
@@ -124,25 +180,28 @@ class PlanRequestDetailList extends React.Component {
     this.setState({ currentValue: event.target.value });
   };
 
-  filterSortPlanRequestTasks = tasks => {
+  filterSortPaginatePlanRequestTasks = tasks => {
     const {
       activeFilters,
       currentSortType,
       isSortNumeric,
-      isSortAscending
+      isSortAscending,
+      pagination
     } = this.state;
     const { planRequestTasks } = this.props;
 
-    return sortFilter(
-      currentSortType,
-      isSortNumeric,
-      isSortAscending,
-      listFilter(activeFilters, planRequestTasks)
+    return paginate(
+      sortFilter(
+        currentSortType,
+        isSortNumeric,
+        isSortAscending,
+        listFilter(activeFilters, planRequestTasks)
+      ),
+      pagination.page,
+      pagination.perPage
     );
   };
-  /**
-   * sort methods
-   */
+
   toggleCurrentSortDirection = () => {
     this.setState(prevState => ({
       isSortAscending: !prevState.isSortAscending
@@ -158,6 +217,26 @@ class PlanRequestDetailList extends React.Component {
         isSortAscending: true
       });
     }
+  };
+
+  filterAdded = (field, value) => {
+    let filterText = field.title || field;
+
+    filterText += ': ';
+    filterText += value.title || value;
+
+    const activeFilters = [
+      ...this.state.activeFilters,
+      { label: filterText, field, value: value.title || value }
+    ];
+    this.setState({ activeFilters });
+  };
+  totalPages = () => {
+    const { activeFilters, pagination } = this.state;
+    const { planRequestTasks } = this.props;
+    const allFilteredTasks = listFilter(activeFilters, planRequestTasks);
+
+    return Math.ceil(allFilteredTasks.length / pagination.perPage);
   };
 
   renderInput = () => {
@@ -194,10 +273,12 @@ class PlanRequestDetailList extends React.Component {
       sortFields,
       currentSortType,
       isSortNumeric,
-      isSortAscending
+      isSortAscending,
+      pagination,
+      pageChangeValue
     } = this.state;
 
-    const planRequestTasks = this.filterSortPlanRequestTasks();
+    const paginatedSortedFiltersTasks = this.filterSortPaginatePlanRequestTasks();
 
     return (
       <React.Fragment>
@@ -227,8 +308,8 @@ class PlanRequestDetailList extends React.Component {
               activeFilters.length > 0 && (
                 <Toolbar.Results>
                   <h5>
-                    {planRequestTasks.length}{' '}
-                    {planRequestTasks.length === 1
+                    {paginatedSortedFiltersTasks.itemCount}{' '}
+                    {paginatedSortedFiltersTasks.itemCount === 1
                       ? __('Result')
                       : __('Results')}
                   </h5>
@@ -260,9 +341,9 @@ class PlanRequestDetailList extends React.Component {
               )}
           </Toolbar>
         </Grid.Row>
-        <div style={{ overflow: 'auto', paddingBottom: 100, height: '100%' }}>
+        <div style={{ overflow: 'auto', paddingBottom: 300, height: '100%' }}>
           <ListView className="plan-request-details-list">
-            {planRequestTasks.map((task, n) => {
+            {paginatedSortedFiltersTasks.tasks.map((task, n) => {
               let leftContent;
               if (task.message === 'Pending') {
                 leftContent = (
@@ -307,40 +388,35 @@ class PlanRequestDetailList extends React.Component {
                 task.totalDiskSpaceGb
               );
 
-              const states = [];
-              if (task.options.progress.states) {
-                Object.entries(task.options.progress.states).forEach(
-                  ([key, value]) => {
-                    states.push(
-                      <div key={`key${task.id}`}>
-                        <small>
-                          <i>{key}:</i>&nbsp;
-                          {value.description}
-                        </small>
-                      </div>
-                    );
-                  }
-                );
-              }
+              // const states = [];
+              // if (task.options.progress.states) {
+              //   Object.entries(task.options.progress.states).forEach(
+              //     ([key, value]) => {
+              //       states.push(
+              //         <div key={`key${task.id}`}>
+              //           <small>
+              //             <i>{key}:</i>&nbsp;
+              //             {value.description}
+              //           </small>
+              //         </div>
+              //       );
+              //     }
+              //   );
+              // }
 
               const popoverContent = (
                 <Popover id={`popover${task.id}${n}`} title={task.message}>
                   <div>
-                    <div>
-                      <strong>Status:</strong> {task.status}
-                    </div>
-                    <div>
-                      <strong>State:</strong> {task.state}
-                    </div>
-                    <div>
-                      <strong>Log:</strong>{' '}
-                      {task.options.virtv2v_wrapper &&
-                        task.options.virtv2v_wrapper.v2v_log}
-                    </div>
-                    <div>
-                      <strong>Progress:</strong>
-                    </div>
-                    {states}
+                    <div>{task.options.progress.current_description}</div>
+                    {task.completed && (
+                      <div>
+                        <br />
+                        <strong>Log:</strong>
+                        <br />
+                        {task.options.virtv2v_wrapper &&
+                          task.options.virtv2v_wrapper.v2v_log}
+                      </div>
+                    )}
                   </div>
                 </Popover>
               );
@@ -362,20 +438,18 @@ class PlanRequestDetailList extends React.Component {
                       </span>
                     </div>,
                     <div key={`${task.id}-message`}>
+                      {task.message}
+                      &nbsp;
+                      {/* Todo: revisit FieldLevelHelp props in patternfly-react to support this */}
                       <OverlayTrigger
                         rootClose
                         trigger="click"
                         placement="left"
                         overlay={popoverContent}
                       >
-                        <a
-                          href="#"
-                          onClick={e => {
-                            e.preventDefault();
-                          }}
-                        >
-                          {task.message}
-                        </a>
+                        <Button bsStyle="link">
+                          <Icon type="pf" name="info" />
+                        </Button>
                       </OverlayTrigger>
                     </div>
                   ]}
@@ -404,6 +478,22 @@ class PlanRequestDetailList extends React.Component {
               );
             })}
           </ListView>
+          <PaginationRow
+            viewType={PAGINATION_VIEW.LIST}
+            pagination={pagination}
+            pageInputValue={pageChangeValue}
+            amountOfPages={paginatedSortedFiltersTasks.amountOfPages}
+            itemCount={paginatedSortedFiltersTasks.itemCount}
+            itemsStart={paginatedSortedFiltersTasks.itemsStart}
+            itemsEnd={paginatedSortedFiltersTasks.itemsEnd}
+            onPerPageSelect={this.onPerPageSelect}
+            onFirstPage={this.onFirstPage}
+            onPreviousPage={this.onPreviousPage}
+            onPageInput={this.onPageInput}
+            onNextPage={this.onNextPage}
+            onLastPage={this.onLastPage}
+            onSubmit={this.onSubmit}
+          />
         </div>
       </React.Fragment>
     );

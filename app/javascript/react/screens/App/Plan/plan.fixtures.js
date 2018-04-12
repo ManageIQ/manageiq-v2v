@@ -218,17 +218,23 @@ for (let i = 0; i < 30; i += 1) {
 
   if (i % 5 === 0) {
     copy.message = 'Pending';
+    copy.options.progress.current_description = 'Pending Migration';
   } else if (i % 5 === 1) {
     copy.message = 'Validating';
+    copy.options.progress.current_description = 'Assess Migration';
   } else if (i % 5 === 2) {
     copy.message = 'Pre-migration';
+    copy.options.progress.current_description = 'Acquire Transformation Host';
   } else if (i % 5 === 3) {
     copy.message = 'Migrating';
+    copy.options.progress.current_description = 'Transform VM';
   } else if (i % 5 === 4) {
     copy.message = 'VM Transformations completed';
     if (i % 2 === 0) {
       copy.options.progress.current_description =
         'Virtual machine migration failed.';
+    } else {
+      copy.options.progress.current_description = 'Virtual machine migrated';
     }
   }
 
