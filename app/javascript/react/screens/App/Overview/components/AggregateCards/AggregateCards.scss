@@ -1,3 +1,7 @@
 .overview-aggregate-card {
   min-height: 90px;
+  &.is-loading {
+    display: flex;
+    align-items: center;
+  }
 }

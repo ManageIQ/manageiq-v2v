@@ -25,6 +25,7 @@ export const initialState = Immutable({
   isRejectedTransformationPlans: false,
   isFetchingTransformationPlans: false,
   errorTransformationPlans: null,
+  plansPreviouslyFetched: false,
   isContinuingToPlan: false,
   shouldReloadMappings: false
 });
@@ -88,12 +89,14 @@ export default (state = initialState, action) => {
         .set('transformationPlans', action.payload.data.resources)
         .set('isFetchingTransformationPlans', false)
         .set('isRejectedTransformationPlans', false)
-        .set('errorTransformationPlans', null);
+        .set('errorTransformationPlans', null)
+        .set('plansPreviouslyFetched', true);
     case `${FETCH_V2V_TRANSFORMATION_PLANS}_REJECTED`:
       return state
         .set('errorTransformationPlans', action.payload)
         .set('isRejectedTransformationPlans', true)
-        .set('isFetchingTransformationPlans', false);
+        .set('isFetchingTransformationPlans', false)
+        .set('plansPreviouslyFetched', false);
 
     case CONTINUE_TO_PLAN:
       return state

@@ -1,15 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 import {
   Icon,
   Card,
   AggregateStatusCount,
   AggregateStatusNotifications,
-  AggregateStatusNotification
+  AggregateStatusNotification,
+  Spinner
 } from 'patternfly-react';
 
-const ActiveTransformationPlans = ({ activePlans }) => {
+const ActiveTransformationPlans = ({ activePlans, loading }) => {
   const countDescription =
     activePlans.length === 1
       ? 'Migration Plan In Progress'
@@ -24,31 +26,36 @@ const ActiveTransformationPlans = ({ activePlans }) => {
     );
   });
 
+  const classes = cx('overview-aggregate-card', { 'is-loading': loading });
+
   return (
-    <Card className="overview-aggregate-card" accented aggregated matchHeight>
-      <Card.Title>
-        <AggregateStatusCount>{activePlans.length}</AggregateStatusCount>{' '}
-        {countDescription}
-      </Card.Title>
-      {activePlans.length > 0 && (
-        <Card.Body className="overview-aggregate-card--body">
-          <AggregateStatusNotifications>
-            <AggregateStatusNotification>
-              <Icon
-                type="pf"
-                name={erroredPlans.length > 0 ? 'error-circle-o' : 'ok'}
-              />{' '}
-              {erroredPlans.length > 0 && erroredPlans.length}
-            </AggregateStatusNotification>
-          </AggregateStatusNotifications>
-        </Card.Body>
-      )}
+    <Card className={classes} accented aggregated matchHeight>
+      <Spinner loading={loading}>
+        <Card.Title>
+          <AggregateStatusCount>{activePlans.length}</AggregateStatusCount>{' '}
+          {countDescription}
+        </Card.Title>
+        {activePlans.length > 0 && (
+          <Card.Body className="overview-aggregate-card--body">
+            <AggregateStatusNotifications>
+              <AggregateStatusNotification>
+                <Icon
+                  type="pf"
+                  name={erroredPlans.length > 0 ? 'error-circle-o' : 'ok'}
+                />{' '}
+                {erroredPlans.length > 0 && erroredPlans.length}
+              </AggregateStatusNotification>
+            </AggregateStatusNotifications>
+          </Card.Body>
+        )}
+      </Spinner>
     </Card>
   );
 };
 
 ActiveTransformationPlans.propTypes = {
-  activePlans: PropTypes.array
+  activePlans: PropTypes.array,
+  loading: PropTypes.bool
 };
 
 export default ActiveTransformationPlans;

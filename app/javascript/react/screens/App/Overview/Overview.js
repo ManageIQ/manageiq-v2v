@@ -106,7 +106,8 @@ class Overview extends React.Component {
       isFetchingTransformationMappings,
       isRejectedTransformationMappings, // eslint-disable-line no-unused-vars
       transformationPlans,
-      isFetchingTransformationPlans, // eslint-disable-line no-unused-vars
+      isFetchingTransformationPlans,
+      plansPreviouslyFetched,
       pendingTransformationPlans,
       activeTransformationPlans,
       finishedTransformationPlans
@@ -124,21 +125,25 @@ class Overview extends React.Component {
           <CardGrid.Col xs={6} sm={3}>
             <AggregateCards.PendingTransformationPlans
               pendingPlans={pendingTransformationPlans}
+              loading={isFetchingTransformationPlans && !plansPreviouslyFetched}
             />
           </CardGrid.Col>
           <CardGrid.Col xs={6} sm={3}>
             <AggregateCards.ActiveTransformationPlans
               activePlans={activeTransformationPlans}
+              loading={isFetchingTransformationPlans && !plansPreviouslyFetched}
             />
           </CardGrid.Col>
           <CardGrid.Col xs={6} sm={3}>
             <AggregateCards.FinishedTransformationPlans
               finishedPlans={finishedTransformationPlans}
+              loading={isFetchingTransformationPlans && !plansPreviouslyFetched}
             />
           </CardGrid.Col>
           <CardGrid.Col xs={6} sm={3}>
             <AggregateCards.InfrastructureMappings
               mappings={transformationMappings}
+              loading={isFetchingTransformationMappings}
             />
           </CardGrid.Col>
         </CardGrid.Row>
@@ -195,6 +200,7 @@ Overview.propTypes = {
   fetchTransformationPlansUrl: PropTypes.string,
   fetchTransformationPlansAction: PropTypes.func,
   isFetchingTransformationPlans: PropTypes.bool,
+  plansPreviouslyFetched: PropTypes.bool,
   pendingTransformationPlans: PropTypes.array,
   activeTransformationPlans: PropTypes.array,
   finishedTransformationPlans: PropTypes.array,
