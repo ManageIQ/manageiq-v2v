@@ -146,7 +146,9 @@ class PlanWizard extends React.Component {
             >
               {onFinalStep
                 ? __('Close')
-                : activeStepIndex === 2 ? __('Create') : __('Next')}
+                : activeStepIndex === 2
+                  ? __('Create')
+                  : __('Next')}
               <Icon type="fa" name="angle-right" />
             </Button>
           </Modal.Footer>
