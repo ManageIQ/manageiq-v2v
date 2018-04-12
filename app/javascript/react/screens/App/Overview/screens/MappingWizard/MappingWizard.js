@@ -250,7 +250,9 @@ class MappingWizard extends React.Component {
             >
               {onFinalStep
                 ? __('Close')
-                : activeStepIndex === 3 ? __('Create') : __('Next')}
+                : activeStepIndex === 3
+                  ? __('Create')
+                  : __('Next')}
               <Icon type="fa" name="angle-right" />
             </Button>
           </Modal.Footer>

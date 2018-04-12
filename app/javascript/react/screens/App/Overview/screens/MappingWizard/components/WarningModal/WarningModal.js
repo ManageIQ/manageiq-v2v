@@ -69,7 +69,9 @@ const WarningModal = ({
         >
           {onFinalStep
             ? __('Close')
-            : activeStepIndex === 3 ? __('Create') : __('Continue')}
+            : activeStepIndex === 3
+              ? __('Create')
+              : __('Continue')}
         </Button>
       </Modal.Footer>
     </Modal>
