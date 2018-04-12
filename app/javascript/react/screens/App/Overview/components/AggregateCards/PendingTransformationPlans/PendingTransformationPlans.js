@@ -11,11 +11,11 @@ import {
   Spinner
 } from 'patternfly-react';
 
-const InfrastructureMappings = ({ mappings, loading }) => {
+const PendingTransformationPlans = ({ pendingPlans, loading }) => {
   const countDescription =
-    mappings.length === 1
-      ? 'Infrastructure Mapping'
-      : 'Infrastructure Mappings';
+    pendingPlans.length === 1
+      ? 'Migration Plan Not Started'
+      : 'Migration Plans Not Started';
 
   const classes = cx('overview-aggregate-card', { 'is-loading': loading });
 
@@ -23,10 +23,10 @@ const InfrastructureMappings = ({ mappings, loading }) => {
     <Card className={classes} accented aggregated matchHeight>
       <Spinner loading={loading}>
         <Card.Title>
-          <AggregateStatusCount>{mappings.length}</AggregateStatusCount>{' '}
+          <AggregateStatusCount>{pendingPlans.length}</AggregateStatusCount>{' '}
           {countDescription}
         </Card.Title>
-        {mappings.length > 0 && (
+        {pendingPlans.length > 0 && (
           <Card.Body className="overview-aggregate-card--body">
             <AggregateStatusNotifications>
               <AggregateStatusNotification>
@@ -40,9 +40,9 @@ const InfrastructureMappings = ({ mappings, loading }) => {
   );
 };
 
-InfrastructureMappings.propTypes = {
-  mappings: PropTypes.array,
+PendingTransformationPlans.propTypes = {
+  pendingPlans: PropTypes.array,
   loading: PropTypes.bool
 };
 
-export default InfrastructureMappings;
+export default PendingTransformationPlans;

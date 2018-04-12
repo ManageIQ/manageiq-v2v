@@ -11,11 +11,18 @@ import {
   Spinner
 } from 'patternfly-react';
 
-const InfrastructureMappings = ({ mappings, loading }) => {
+const ActiveTransformationPlans = ({ activePlans, loading }) => {
   const countDescription =
-    mappings.length === 1
-      ? 'Infrastructure Mapping'
-      : 'Infrastructure Mappings';
+    activePlans.length === 1
+      ? 'Migration Plan In Progress'
+      : 'Migration Plans In Progress';
+
+  const erroredPlans = activePlans.filter(plan => {
+    const [mostRecentRequest] = plan.miq_requests.slice(-1);
+    return mostRecentRequest.miq_request_tasks.some(
+      task => task.request_state === 'Finished' && task.status !== 'Ok'
+    );
+  });
 
   const classes = cx('overview-aggregate-card', { 'is-loading': loading });
 
@@ -23,14 +30,18 @@ const InfrastructureMappings = ({ mappings, loading }) => {
     <Card className={classes} accented aggregated matchHeight>
       <Spinner loading={loading}>
         <Card.Title>
-          <AggregateStatusCount>{mappings.length}</AggregateStatusCount>{' '}
+          <AggregateStatusCount>{activePlans.length}</AggregateStatusCount>{' '}
           {countDescription}
         </Card.Title>
-        {mappings.length > 0 && (
+        {activePlans.length > 0 && (
           <Card.Body className="overview-aggregate-card--body">
             <AggregateStatusNotifications>
               <AggregateStatusNotification>
-                <Icon type="pf" name="ok" />
+                <Icon
+                  type="pf"
+                  name={erroredPlans.length > 0 ? 'error-circle-o' : 'ok'}
+                />{' '}
+                {erroredPlans.length > 0 && erroredPlans.length}
               </AggregateStatusNotification>
             </AggregateStatusNotifications>
           </Card.Body>
@@ -40,9 +51,9 @@ const InfrastructureMappings = ({ mappings, loading }) => {
   );
 };
 
-InfrastructureMappings.propTypes = {
-  mappings: PropTypes.array,
+ActiveTransformationPlans.propTypes = {
+  activePlans: PropTypes.array,
   loading: PropTypes.bool
 };
 
-export default InfrastructureMappings;
+export default ActiveTransformationPlans;

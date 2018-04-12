@@ -1,29 +1,28 @@
 import { connect } from 'react-redux';
 import Overview from './Overview';
 import * as OverviewActions from './OverviewActions';
-import {
-  activeTransformationPlanRequestsFilter,
-  completeTransformationPlanRequestsFilter,
-  pendingTransformationPlansFilter
-} from './OverviewSelectors';
-
 import reducer from './OverviewReducer';
+import {
+  pendingTransformationPlansFilter,
+  activeTransformationPlansFilter,
+  finishedTransformationPlansFilter
+} from './OverviewSelectors';
 
 export const reducers = { overview: reducer, form: {} };
 
 const mapStateToProps = (
-  { overview, overview: { transformationPlanRequests, transformationPlans } },
+  { overview, overview: { transformationPlans } },
   ownProps
 ) => ({
   ...overview,
   ...ownProps.data,
-  activeTransformationPlanRequests: activeTransformationPlanRequestsFilter(
-    transformationPlanRequests
-  ),
-  completeTransformationPlanRequests: completeTransformationPlanRequestsFilter(
-    transformationPlanRequests
-  ),
   pendingTransformationPlans: pendingTransformationPlansFilter(
+    transformationPlans
+  ),
+  activeTransformationPlans: activeTransformationPlansFilter(
+    transformationPlans
+  ),
+  finishedTransformationPlans: finishedTransformationPlansFilter(
     transformationPlans
   )
 });

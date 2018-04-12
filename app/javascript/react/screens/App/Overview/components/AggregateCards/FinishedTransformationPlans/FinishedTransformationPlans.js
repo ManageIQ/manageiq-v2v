@@ -11,11 +11,16 @@ import {
   Spinner
 } from 'patternfly-react';
 
-const InfrastructureMappings = ({ mappings, loading }) => {
+const FinishedTransformationPlans = ({ finishedPlans, loading }) => {
   const countDescription =
-    mappings.length === 1
-      ? 'Infrastructure Mapping'
-      : 'Infrastructure Mappings';
+    finishedPlans.length === 1
+      ? 'Migration Plan Complete'
+      : 'Migration Plans Complete';
+
+  const failedPlans = finishedPlans.filter(plan => {
+    const [mostRecentRequest] = plan.miq_requests.slice(-1);
+    return mostRecentRequest.status === 'failed';
+  });
 
   const classes = cx('overview-aggregate-card', { 'is-loading': loading });
 
@@ -23,14 +28,18 @@ const InfrastructureMappings = ({ mappings, loading }) => {
     <Card className={classes} accented aggregated matchHeight>
       <Spinner loading={loading}>
         <Card.Title>
-          <AggregateStatusCount>{mappings.length}</AggregateStatusCount>{' '}
+          <AggregateStatusCount>{finishedPlans.length}</AggregateStatusCount>{' '}
           {countDescription}
         </Card.Title>
-        {mappings.length > 0 && (
+        {finishedPlans.length > 0 && (
           <Card.Body className="overview-aggregate-card--body">
             <AggregateStatusNotifications>
               <AggregateStatusNotification>
-                <Icon type="pf" name="ok" />
+                <Icon
+                  type="pf"
+                  name={failedPlans.length > 0 ? 'error-circle-o' : 'ok'}
+                />{' '}
+                {failedPlans.length > 0 && failedPlans.length}
               </AggregateStatusNotification>
             </AggregateStatusNotifications>
           </Card.Body>
@@ -40,9 +49,9 @@ const InfrastructureMappings = ({ mappings, loading }) => {
   );
 };
 
-InfrastructureMappings.propTypes = {
-  mappings: PropTypes.array,
+FinishedTransformationPlans.propTypes = {
+  finishedPlans: PropTypes.array,
   loading: PropTypes.bool
 };
 
-export default InfrastructureMappings;
+export default FinishedTransformationPlans;

@@ -8,7 +8,6 @@ import {
   HIDE_PLAN_WIZARD,
   PLAN_WIZARD_EXITED,
   FETCH_V2V_TRANSFORMATION_MAPPINGS,
-  FETCH_V2V_TRANSFORMATION_PLAN_REQUESTS,
   FETCH_V2V_TRANSFORMATION_PLANS,
   CONTINUE_TO_PLAN
 } from './OverviewConstants';
@@ -22,14 +21,11 @@ export const initialState = Immutable({
   transformationMappings: [],
   isRejectedTransformationMappings: false,
   isFetchingTransformationMappings: false,
-  transformationPlanRequests: [],
-  isRejectedTransformationPlanRequests: false,
-  isFetchingTransformationPlanRequests: false,
-  errorTransformationPlanRequests: null,
   transformationPlans: [],
   isRejectedTransformationPlans: false,
   isFetchingTransformationPlans: false,
   errorTransformationPlans: null,
+  plansPreviouslyFetched: false,
   isContinuingToPlan: false,
   shouldReloadMappings: false
 });
@@ -86,20 +82,6 @@ export default (state = initialState, action) => {
         .set('isRejectedTransformationMappings', true)
         .set('isFetchingTransformationMappings', false);
 
-    case `${FETCH_V2V_TRANSFORMATION_PLAN_REQUESTS}_PENDING`:
-      return state.set('isFetchingTransformationPlanRequests', true);
-    case `${FETCH_V2V_TRANSFORMATION_PLAN_REQUESTS}_FULFILLED`:
-      return state
-        .set('transformationPlanRequests', action.payload.data.resources)
-        .set('isFetchingTransformationPlanRequests', false)
-        .set('isRejectedTransformationPlanRequests', false)
-        .set('errorTransformationPlanRequests', null);
-    case `${FETCH_V2V_TRANSFORMATION_PLAN_REQUESTS}_REJECTED`:
-      return state
-        .set('errorTransformationPlanRequests', action.payload)
-        .set('isRejectedTransformationPlanRequests', true)
-        .set('isFetchingTransformationPlanRequests', false);
-
     case `${FETCH_V2V_TRANSFORMATION_PLANS}_PENDING`:
       return state.set('isFetchingTransformationPlans', true);
     case `${FETCH_V2V_TRANSFORMATION_PLANS}_FULFILLED`:
@@ -107,12 +89,14 @@ export default (state = initialState, action) => {
         .set('transformationPlans', action.payload.data.resources)
         .set('isFetchingTransformationPlans', false)
         .set('isRejectedTransformationPlans', false)
-        .set('errorTransformationPlans', null);
+        .set('errorTransformationPlans', null)
+        .set('plansPreviouslyFetched', true);
     case `${FETCH_V2V_TRANSFORMATION_PLANS}_REJECTED`:
       return state
         .set('errorTransformationPlans', action.payload)
         .set('isRejectedTransformationPlans', true)
-        .set('isFetchingTransformationPlans', false);
+        .set('isFetchingTransformationPlans', false)
+        .set('plansPreviouslyFetched', false);
 
     case CONTINUE_TO_PLAN:
       return state

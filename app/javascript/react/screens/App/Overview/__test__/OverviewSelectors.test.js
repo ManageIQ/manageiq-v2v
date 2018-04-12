@@ -1,38 +1,36 @@
 import {
-  activeTransformationPlanRequestsFilter,
-  completeTransformationPlanRequestsFilter,
-  pendingTransformationPlansFilter
+  pendingTransformationPlansFilter,
+  activeTransformationPlansFilter,
+  finishedTransformationPlansFilter
 } from '../OverviewSelectors';
 
-import { transformationPlanRequests } from '../overview.transformationPlanRequests.fixtures';
 import { transformationPlans } from '../overview.transformationPlans.fixtures';
 
-const { resources: planRequests } = transformationPlanRequests;
 const { resources: plans } = transformationPlans;
 
-describe('activeTransformationPlanRequestsFilter', () => {
-  test('returns all active transformation plan requests', () => {
-    const [activePlanRequestOne, , activePlanRequestTwo] = planRequests;
-    const result = activeTransformationPlanRequestsFilter(planRequests);
-
-    expect(result).toEqual([activePlanRequestOne, activePlanRequestTwo]);
-  });
-});
-
-describe('completeTransformationPlanRequestsFilter', () => {
-  test('returns all complete transformation plan requests', () => {
-    const [, , , , completePlanRequest] = planRequests;
-    const result = completeTransformationPlanRequestsFilter(planRequests);
-
-    expect(result).toEqual([completePlanRequest]);
-  });
-});
-
 describe('pendingTransformationPlansFilter', () => {
-  test('returns all not started transformation plans', () => {
+  test('returns all pending transformation plans', () => {
     const [pendingPlan] = plans;
     const result = pendingTransformationPlansFilter(plans);
 
     expect(result).toEqual([pendingPlan]);
+  });
+});
+
+describe('activeTransformationPlansFilter', () => {
+  test('returns all active transformation plans', () => {
+    const [, activePlanOne, activePlanTwo, , , activePlanThree] = plans;
+    const result = activeTransformationPlansFilter(plans);
+
+    expect(result).toEqual([activePlanOne, activePlanTwo, activePlanThree]);
+  });
+});
+
+describe('finishedTransformationPlansFilter', () => {
+  test('returns all finished (complete or failed) transformation plans', () => {
+    const [, , , finishedPlanOne, finishedPlanTwo] = plans;
+    const result = finishedTransformationPlansFilter(plans);
+
+    expect(result).toEqual([finishedPlanOne, finishedPlanTwo]);
   });
 });
