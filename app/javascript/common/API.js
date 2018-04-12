@@ -1,13 +1,10 @@
 import axios from 'axios';
 
-const getcsrfToken = () => {
-  const token = document.querySelector('meta[name="csrf-token"]');
-
-  return token ? token.content : '';
-};
+const getAuthToken = () =>
+  localStorage.miq_token ? localStorage.miq_token : '';
 
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-axios.defaults.headers.common['X-CSRF-Token'] = getcsrfToken();
+axios.defaults.headers.common['X-Auth-Token'] = getAuthToken();
 
 export default {
   get(url, headers = {}, params = {}) {
