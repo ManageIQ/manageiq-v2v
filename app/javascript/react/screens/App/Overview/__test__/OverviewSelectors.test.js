@@ -1,6 +1,7 @@
 import {
   pendingTransformationPlansFilter,
-  activeTransformationPlansFilter
+  activeTransformationPlansFilter,
+  finishedTransformationPlansFilter
 } from '../OverviewSelectors';
 
 import { transformationPlans } from '../overview.transformationPlans.fixtures';
@@ -22,5 +23,14 @@ describe('activeTransformationPlansFilter', () => {
     const result = activeTransformationPlansFilter(plans);
 
     expect(result).toEqual([activePlanOne, activePlanTwo, activePlanThree]);
+  });
+});
+
+describe('finishedTransformationPlansFilter', () => {
+  test('returns all finished (complete or failed) transformation plans', () => {
+    const [, , , finishedPlanOne, finishedPlanTwo] = plans;
+    const result = finishedTransformationPlansFilter(plans);
+
+    expect(result).toEqual([finishedPlanOne, finishedPlanTwo]);
   });
 });

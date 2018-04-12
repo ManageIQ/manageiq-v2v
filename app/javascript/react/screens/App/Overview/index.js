@@ -4,7 +4,8 @@ import * as OverviewActions from './OverviewActions';
 import reducer from './OverviewReducer';
 import {
   pendingTransformationPlansFilter,
-  activeTransformationPlansFilter
+  activeTransformationPlansFilter,
+  finishedTransformationPlansFilter
 } from './OverviewSelectors';
 
 export const reducers = { overview: reducer, form: {} };
@@ -19,6 +20,9 @@ const mapStateToProps = (
     transformationPlans
   ),
   activeTransformationPlans: activeTransformationPlansFilter(
+    transformationPlans
+  ),
+  finishedTransformationPlans: finishedTransformationPlansFilter(
     transformationPlans
   )
 });

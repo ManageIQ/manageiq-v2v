@@ -108,7 +108,8 @@ class Overview extends React.Component {
       transformationPlans,
       isFetchingTransformationPlans, // eslint-disable-line no-unused-vars
       pendingTransformationPlans,
-      activeTransformationPlans
+      activeTransformationPlans,
+      finishedTransformationPlans
     } = this.props;
 
     const aggregateDataCards = (
@@ -131,7 +132,9 @@ class Overview extends React.Component {
             />
           </CardGrid.Col>
           <CardGrid.Col xs={6} sm={3}>
-            <AggregateCards.MigrationsComplete />
+            <AggregateCards.FinishedTransformationPlans
+              finishedPlans={finishedTransformationPlans}
+            />
           </CardGrid.Col>
           <CardGrid.Col xs={6} sm={3}>
             <AggregateCards.InfrastructureMappings />
@@ -192,6 +195,7 @@ Overview.propTypes = {
   isFetchingTransformationPlans: PropTypes.bool,
   pendingTransformationPlans: PropTypes.array,
   activeTransformationPlans: PropTypes.array,
+  finishedTransformationPlans: PropTypes.array,
   transformationMappings: PropTypes.array,
   fetchTransformationMappingsUrl: PropTypes.string,
   fetchTransformationMappingsAction: PropTypes.func,
