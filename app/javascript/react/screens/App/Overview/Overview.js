@@ -137,7 +137,9 @@ class Overview extends React.Component {
             />
           </CardGrid.Col>
           <CardGrid.Col xs={6} sm={3}>
-            <AggregateCards.InfrastructureMappings />
+            <AggregateCards.InfrastructureMappings
+              mappings={transformationMappings}
+            />
           </CardGrid.Col>
         </CardGrid.Row>
       </CardGrid>

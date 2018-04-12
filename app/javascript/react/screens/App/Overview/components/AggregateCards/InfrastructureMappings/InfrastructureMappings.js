@@ -9,24 +9,33 @@ import {
   AggregateStatusNotification
 } from 'patternfly-react';
 
-const InfrastructureMappings = ({ infrastructureMappings }) => (
-  <Card className="overview-aggregate-card" accented aggregated matchHeight>
-    <Card.Title>
-      <Icon type="pf" name="infrastructure" />
-      <AggregateStatusCount>0</AggregateStatusCount> Infrastructure Mappings
-    </Card.Title>
-    {infrastructureMappings && (
-      <Card.Body className="overview-aggregate-card--body">
-        <AggregateStatusNotifications>
-          <AggregateStatusNotification />
-        </AggregateStatusNotifications>
-      </Card.Body>
-    )}
-  </Card>
-);
+const InfrastructureMappings = ({ mappings }) => {
+  const countDescription =
+    mappings.length === 1
+      ? 'Infrastructure Mapping'
+      : 'Infrastructure Mappings';
+
+  return (
+    <Card className="overview-aggregate-card" accented aggregated matchHeight>
+      <Card.Title>
+        <AggregateStatusCount>{mappings.length}</AggregateStatusCount>{' '}
+        {countDescription}
+      </Card.Title>
+      {mappings.length > 0 && (
+        <Card.Body className="overview-aggregate-card--body">
+          <AggregateStatusNotifications>
+            <AggregateStatusNotification>
+              <Icon type="pf" name="ok" />
+            </AggregateStatusNotification>
+          </AggregateStatusNotifications>
+        </Card.Body>
+      )}
+    </Card>
+  );
+};
 
 InfrastructureMappings.propTypes = {
-  infrastructureMappings: PropTypes.array
+  mappings: PropTypes.array
 };
 
 export default InfrastructureMappings;
