@@ -8,7 +8,7 @@ const initialState = Immutable({
   isRejectedPlanRequests: false,
   planRequestsPreviouslyFetched: false,
   errorPlanRequests: null,
-  planRequestDetails: {}
+  planRequestTasks: []
 });
 
 const _formatPlanRequestDetails = data => {
@@ -66,6 +66,9 @@ const _formatPlanRequestDetails = data => {
   return tasks;
 };
 
+const _deepCompare = (prevTasks, newTasks) =>
+  JSON.stringify(prevTasks) === JSON.stringify(newTasks);
+
 export default (state = initialState, action) => {
   switch (action.type) {
     case `${FETCH_V2V_PLAN_REQUESTS}_PENDING`:
@@ -74,16 +77,21 @@ export default (state = initialState, action) => {
         .set('isRejectedPlanRequests', false);
     case `${FETCH_V2V_PLAN_REQUESTS}_FULFILLED`: {
       const { payload } = action;
+      if (payload.data) {
+        const newTasks = _formatPlanRequestDetails(payload.data);
+        if (!_deepCompare(state.planRequestTasks, newTasks)) {
+          return state
+            .set('planRequestsPreviouslyFetched', true)
+            .set('planName', payload.data && payload.data.description)
+            .set('planRequestTasks', newTasks)
+            .set('isRejectedPlanRequests', false)
+            .set('errorPlanRequests', null)
+            .set('isFetchingPlanRequests', false);
+        }
+      }
       return state
         .set('planRequestsPreviouslyFetched', true)
         .set('planName', payload.data && payload.data.description)
-        .set(
-          'planRequestTasks',
-          (payload &&
-            payload.data &&
-            _formatPlanRequestDetails(payload.data)) ||
-            []
-        )
         .set('isRejectedPlanRequests', false)
         .set('errorPlanRequests', null)
         .set('isFetchingPlanRequests', false);
