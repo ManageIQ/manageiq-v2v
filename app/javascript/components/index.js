@@ -102,7 +102,7 @@ export const coreComponents = [
         : '/api/service_templates/?' +
           "filter[]=type='ServiceTemplateTransformationPlan'" +
           '&expand=resources' +
-          '&attributes=miq_requests'
+          '&attributes=miq_requests,created_on,updated_on'
     },
     store: true
   },

@@ -156,11 +156,17 @@ class Overview extends React.Component {
         style={{ overflow: 'auto', paddingBottom: 1, height: '100%' }}
       >
         {aggregateDataCards}
-        <Spinner loading={isFetchingTransformationMappings}>
+        <Spinner
+          loading={
+            isFetchingTransformationMappings ||
+            (isFetchingTransformationPlans && !plansPreviouslyFetched)
+          }
+        >
           {transformationMappings.length > 0 && (
             <Migrations
               transformationPlans={transformationPlans}
               createMigrationPlanClick={showPlanWizardAction}
+              finishedTransformationPlans={finishedTransformationPlans}
             />
           )}
           <InfrastructureMappingsList
