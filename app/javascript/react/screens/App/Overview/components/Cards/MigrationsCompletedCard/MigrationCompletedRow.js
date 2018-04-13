@@ -30,11 +30,11 @@ const MigrationCompletedRow = ({ migration }) => {
 
   let elapsedTime;
   if (days >= 2) {
-    elapsedTime = sprintf(__('%s days %s:%s'), days, hours, minutes);
+    elapsedTime = sprintf(__('%s days %02s:%02s:%02s'), days, hours, minutes, seconds);
   } else if (days === 1) {
-    elapsedTime = sprintf(__('1 day %s:%s'), hours, minutes);
+    elapsedTime = sprintf(__('1 day %02s:%02s:%02s'), hours, minutes, seconds);
   } else {
-    elapsedTime = sprintf(__('%s:%s:%s'), hours, minutes, seconds);
+    elapsedTime = sprintf(__('%02s:%02s:%02s'), hours, minutes, seconds);
   }
 
   const closePopover = () => {
