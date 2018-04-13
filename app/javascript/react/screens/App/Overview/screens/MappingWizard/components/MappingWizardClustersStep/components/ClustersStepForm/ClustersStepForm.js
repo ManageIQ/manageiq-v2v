@@ -57,7 +57,9 @@ class ClustersStepForm extends React.Component {
   }
 
   addMapping() {
-    const { input: { value: clustersStepMappings, onChange } } = this.props;
+    const {
+      input: { value: clustersStepMappings, onChange }
+    } = this.props;
     const { selectedTargetCluster, selectedSourceClusters } = this.state;
 
     const mappingExistsForSelectedTargetCluster = clustersStepMappings.some(

@@ -29,7 +29,9 @@ class CSVDropzoneField extends React.Component {
   }
 
   onFileDrop(acceptedFiles, rejectedFiles) {
-    const { input: { value } } = this.props;
+    const {
+      input: { value }
+    } = this.props;
     if (acceptedFiles && acceptedFiles.length > 0) {
       // Don't bother with the confirm dialog if there is no existing value to overwrite.
       if (!value || value.length === 0) {
@@ -78,7 +80,10 @@ class CSVDropzoneField extends React.Component {
   }
 
   render() {
-    const { input: { value }, meta: { pristine, error } } = this.props;
+    const {
+      input: { value },
+      meta: { pristine, error }
+    } = this.props;
     const { showConfirmOverwrite } = this.state;
     const csvImported = value && value.length !== 0;
     const mainContents = !csvImported ? (
