@@ -109,7 +109,9 @@ class Overview extends React.Component {
 
     createTransformationPlanRequestAction(url).then(() => {
       this.activeFilter = 'Migration Plans in Progress';
-      fetchTransformationPlansAction(fetchTransformationPlansUrl);
+      fetchTransformationPlansAction(fetchTransformationPlansUrl).then(() => {
+        this.activeFilter = undefined;
+      });
     });
   }
 
