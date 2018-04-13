@@ -16,8 +16,13 @@ class Migrations extends React.Component {
   onSelect = eventKey => {
     this.setState({ activeFilter: eventKey });
   };
+  retryClick = id => {};
   render() {
-    const { transformationPlans, createMigrationPlanClick } = this.props;
+    const {
+      transformationPlans,
+      createMigrationPlanClick,
+      finishedTransformationPlans
+    } = this.props;
     const { activeFilter } = this.state;
     const filterOptions = [
       'Migration Plans Not Started',
@@ -83,7 +88,10 @@ class Migrations extends React.Component {
               <MigrationsInProgressCard />
             )}
             {activeFilter === 'Migration Plans Completed' && (
-              <MigrationsCompletedList />
+              <MigrationsCompletedList
+                finishedTransformationPlans={finishedTransformationPlans}
+                retryClick={this.retryClick}
+              />
             )}
           </React.Fragment>
         )}
@@ -93,9 +101,12 @@ class Migrations extends React.Component {
 }
 Migrations.propTypes = {
   transformationPlans: PropTypes.array,
-  createMigrationPlanClick: PropTypes.func
+  createMigrationPlanClick: PropTypes.func,
+  finishedTransformationPlans: PropTypes.array
 };
 Migrations.defaultProps = {
-  createMigrationPlanClick: noop
+  transformationPlans: [],
+  createMigrationPlanClick: noop,
+  finishedTransformationPlans: []
 };
 export default Migrations;
