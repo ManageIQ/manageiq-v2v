@@ -4,6 +4,7 @@ exports[`Overview integration test should mount the Overview with mapStateToProp
 Object {
   "activeTransformationPlans": Array [],
   "continueToPlanAction": [Function],
+  "createTransformationPlanRequestAction": [Function],
   "fetchTransformationMappingsAction": [Function],
   "fetchTransformationMappingsUrl": "/api/dummyMappings",
   "fetchTransformationPlansAction": [Function],

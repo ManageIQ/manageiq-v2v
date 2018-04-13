@@ -86,8 +86,48 @@ export const transformationMappings = [
   }
 ];
 
+export const createTransformationPlanRequestResponse = {
+  href: 'http://localhost:3000/api/service_requests/30',
+  id: '30',
+  description: 'Provisioning Service [plan_test6] from [plan_test6]',
+  approval_state: 'pending_approval',
+  type: 'ServiceTemplateTransformationPlanRequest',
+  created_on: '2018-02-22T22:50:41Z',
+  updated_on: '2018-02-22T22:50:41Z',
+  fulfilled_on: null,
+  requester_id: '1',
+  requester_name: 'Administrator',
+  request_type: 'transformation_plan',
+  request_state: 'pending',
+  message: 'VM Transformations - Request Created',
+  status: 'Ok',
+  options: {
+    dialog: null,
+    workflow_settings: {
+      resource_action_id: '312'
+    },
+    initiator: null,
+    src_id: '32',
+    cart_state: 'ordered',
+    requester_group: 'EvmGroup-super_administrator'
+  },
+  userid: 'admin',
+  source_id: '32',
+  source_type: 'ServiceTemplate',
+  destination_id: null,
+  destination_type: null,
+  tenant_id: '1',
+  service_order_id: '41',
+  process: true
+};
+
 export const requestTransformationMappingsData = {
   method: 'GET',
   fetchTransformationMappingsUrl: initialState.fetchTransformationMappingsUrl,
   response: { data: { resources: transformationMappings } }
+};
+
+export const createTransformationPlanRequestData = {
+  method: 'POST',
+  response: { data: createTransformationPlanRequestResponse }
 };

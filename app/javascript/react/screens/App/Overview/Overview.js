@@ -11,7 +11,11 @@ class Overview extends React.Component {
   constructor(props) {
     super(props);
 
-    bindMethods(this, ['stopPolling', 'startPolling']);
+    bindMethods(this, [
+      'stopPolling',
+      'startPolling',
+      'createTransformationPlanRequest'
+    ]);
 
     this.mappingWizard = componentRegistry.markup(
       'MappingWizardContainer',
@@ -96,6 +100,18 @@ class Overview extends React.Component {
     }
   }
 
+  createTransformationPlanRequest(url) {
+    const {
+      createTransformationPlanRequestAction,
+      fetchTransformationPlansAction,
+      fetchTransformationPlansUrl
+    } = this.props;
+
+    createTransformationPlanRequestAction(url).then(() => {
+      fetchTransformationPlansAction(fetchTransformationPlansUrl);
+    });
+  }
+
   render() {
     const {
       showMappingWizardAction,
@@ -110,7 +126,8 @@ class Overview extends React.Component {
       plansPreviouslyFetched,
       pendingTransformationPlans,
       activeTransformationPlans,
-      finishedTransformationPlans
+      finishedTransformationPlans,
+      isCreatingTransformationPlanRequest
     } = this.props;
 
     const aggregateDataCards = (
@@ -162,6 +179,12 @@ class Overview extends React.Component {
               transformationPlans={transformationPlans}
               notStartedPlans={pendingTransformationPlans}
               createMigrationPlanClick={showPlanWizardAction}
+              createTransformationPlanRequestClick={
+                this.createTransformationPlanRequest
+              }
+              isCreatingTransformationPlanRequest={
+                isCreatingTransformationPlanRequest
+              }
             />
           )}
           <InfrastructureMappingsList
@@ -210,6 +233,8 @@ Overview.propTypes = {
   fetchTransformationMappingsAction: PropTypes.func,
   isFetchingTransformationMappings: PropTypes.bool,
   isRejectedTransformationMappings: PropTypes.bool,
+  createTransformationPlanRequestAction: PropTypes.func,
+  isCreatingTransformationPlanRequest: PropTypes.bool,
   isContinuingToPlan: PropTypes.bool,
   planWizardId: PropTypes.string,
   continueToPlanAction: PropTypes.func,

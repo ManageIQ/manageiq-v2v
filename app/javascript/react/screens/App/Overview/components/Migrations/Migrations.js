@@ -20,7 +20,9 @@ class Migrations extends React.Component {
     const {
       transformationPlans,
       notStartedPlans,
-      createMigrationPlanClick
+      createMigrationPlanClick,
+      createTransformationPlanRequestClick,
+      isCreatingTransformationPlanRequest
     } = this.props;
     const { activeFilter } = this.state;
     const filterOptions = [
@@ -81,7 +83,11 @@ class Migrations extends React.Component {
         {transformationPlans.length > 0 && (
           <React.Fragment>
             {activeFilter === 'Migration Plans Not Started' && (
-              <MigrationsNotStartedList notStartedPlans={notStartedPlans} />
+              <MigrationsNotStartedList
+                notStartedPlans={notStartedPlans}
+                migrateClick={createTransformationPlanRequestClick}
+                loading={isCreatingTransformationPlanRequest}
+              />
             )}
             {activeFilter === 'Migration Plans in Progress' && (
               <MigrationsInProgressCard />
@@ -98,9 +104,12 @@ class Migrations extends React.Component {
 Migrations.propTypes = {
   transformationPlans: PropTypes.array,
   notStartedPlans: PropTypes.array,
-  createMigrationPlanClick: PropTypes.func
+  createMigrationPlanClick: PropTypes.func,
+  createTransformationPlanRequestClick: PropTypes.func,
+  isCreatingTransformationPlanRequest: PropTypes.bool
 };
 Migrations.defaultProps = {
-  createMigrationPlanClick: noop
+  createMigrationPlanClick: noop,
+  createTransformationPlanRequestClick: noop
 };
 export default Migrations;

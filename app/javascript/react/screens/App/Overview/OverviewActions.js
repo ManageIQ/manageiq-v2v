@@ -6,10 +6,14 @@ import {
   SHOW_PLAN_WIZARD,
   HIDE_MAPPING_WIZARD,
   FETCH_V2V_TRANSFORMATION_MAPPINGS,
-  FETCH_V2V_TRANSFORMATION_PLANS
+  FETCH_V2V_TRANSFORMATION_PLANS,
+  CREATE_V2V_TRANSFORMATION_PLAN_REQUEST
 } from './OverviewConstants';
 
-import { requestTransformationMappingsData } from './overview.fixtures';
+import {
+  requestTransformationMappingsData,
+  createTransformationPlanRequestData
+} from './overview.fixtures';
 import { requestTransformationPlansData } from './overview.transformationPlans.fixtures';
 
 const mockMode = globalMockMode;
@@ -25,6 +29,24 @@ export const showPlanWizardAction = id => dispatch => {
     type: SHOW_PLAN_WIZARD,
     payload: id
   });
+};
+
+const _createTransformationPlanRequestActionCreator = url => dispatch =>
+  dispatch({
+    type: CREATE_V2V_TRANSFORMATION_PLAN_REQUEST,
+    payload: API.post(url, { action: 'order' })
+  }).catch(error => {
+    if (mockMode) {
+      dispatch({
+        type: `${CREATE_V2V_TRANSFORMATION_PLAN_REQUEST}_FULFILLED`,
+        payload: createTransformationPlanRequestData.response
+      });
+    }
+  });
+
+export const createTransformationPlanRequestAction = url => {
+  const uri = new URI(url);
+  return _createTransformationPlanRequestActionCreator(uri.toString());
 };
 
 const _getTransformationMappingsActionCreator = url => dispatch => {

@@ -1,15 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { noop, Button, ListView, Grid, Spinner, Icon } from 'patternfly-react';
+import { noop, Button, ListView, Grid, Icon } from 'patternfly-react';
 
-const MigrationsNotStartedList = ({ migrateClick, notStartedPlans }) => (
+const MigrationsNotStartedList = ({
+  migrateClick,
+  notStartedPlans,
+  loading
+}) => (
   <Grid.Col xs={12}>
     <ListView style={{ marginTop: 0 }}>
       {notStartedPlans.map(plan => (
         <ListView.Item
           actions={
             <div>
-              <Button onClick={migrateClick}>Migrate</Button>
+              <Button
+                onClick={() => {
+                  migrateClick(plan.href);
+                }}
+                disabled={loading}
+              >
+                Migrate
+              </Button>
             </div>
           }
           leftContent={<div />}
@@ -31,7 +42,8 @@ const MigrationsNotStartedList = ({ migrateClick, notStartedPlans }) => (
 
 MigrationsNotStartedList.propTypes = {
   migrateClick: PropTypes.func,
-  notStartedPlans: PropTypes.array
+  notStartedPlans: PropTypes.array,
+  loading: PropTypes.bool
 };
 MigrationsNotStartedList.defaultProps = {
   migrateClick: noop
