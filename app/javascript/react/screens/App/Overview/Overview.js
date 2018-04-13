@@ -160,6 +160,7 @@ class Overview extends React.Component {
           {transformationMappings.length > 0 && (
             <Migrations
               transformationPlans={transformationPlans}
+              notStartedPlans={pendingTransformationPlans}
               createMigrationPlanClick={showPlanWizardAction}
             />
           )}

@@ -12,7 +12,7 @@ export const transformationPlans = Immutable({
       href: 'http://localhost:3000/api/service_templates/10',
       id: '10',
       name: 'Migration Plan A-0',
-      description: '',
+      description: 'Migration Plan description here',
       guid: '7de52447-2946-409d-8e76-b64d0f17803d',
       type: 'ServiceTemplateTransformationPlan',
       service_template_id: null,
