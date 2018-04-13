@@ -7,6 +7,16 @@ import MigrationsCompletedList from './MigrationsCompletedList';
 import OverviewEmptyState from '../OverviewEmptyState/OverviewEmptyState';
 
 class Migrations extends React.Component {
+  static getDerivedStateFromProps(nextProps) {
+    const { activeFilter } = nextProps;
+
+    if (nextProps.activeFilter === 'Migration Plans in Progress') {
+      return {
+        activeFilter
+      };
+    }
+    return null;
+  }
   constructor(props) {
     super(props);
     this.state = {
@@ -16,6 +26,7 @@ class Migrations extends React.Component {
   onSelect = eventKey => {
     this.setState({ activeFilter: eventKey });
   };
+
   render() {
     const {
       transformationPlans,
@@ -106,7 +117,7 @@ Migrations.propTypes = {
   notStartedPlans: PropTypes.array,
   createMigrationPlanClick: PropTypes.func,
   createTransformationPlanRequestClick: PropTypes.func,
-  isCreatingTransformationPlanRequest: PropTypes.bool
+  isCreatingTransformationPlanRequest: PropTypes.string
 };
 Migrations.defaultProps = {
   createMigrationPlanClick: noop,

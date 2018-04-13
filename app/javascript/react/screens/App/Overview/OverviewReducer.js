@@ -29,7 +29,7 @@ export const initialState = Immutable({
   plansPreviouslyFetched: false,
   createTransformationPlanRequestResponse: {},
   isRejectedCreateTranformationPlanRequest: false,
-  isCreatingTransformationPlanRequest: false,
+  isCreatingTransformationPlanRequest: null,
   errorCreateTransformationPlanRequest: null,
   isContinuingToPlan: false,
   shouldReloadMappings: false
@@ -104,18 +104,18 @@ export default (state = initialState, action) => {
         .set('plansPreviouslyFetched', false);
 
     case `${CREATE_V2V_TRANSFORMATION_PLAN_REQUEST}_PENDING`:
-      return state.set('isCreatingTransformationPlanRequest', true);
+      return state.set('isCreatingTransformationPlanRequest', action.payload);
     case `${CREATE_V2V_TRANSFORMATION_PLAN_REQUEST}_FULFILLED`:
       return state
         .set('createTransformationPlanRequestResponse', action.payload.data)
-        .set('isCreatingTransformationPlanRequest', false)
+        .set('isCreatingTransformationPlanRequest', null)
         .set('isRejectedCreateTranformationPlanRequest', false)
         .set('errorCreateTransformationPlanRequest', null);
     case `${CREATE_V2V_TRANSFORMATION_PLAN_REQUEST}_REJECTED`:
       return state
         .set('errorCreateTransformationPlanRequest', action.payload)
         .set('isRejectedCreateTranformationPlanRequest', true)
-        .set('isCreatingTransformationPlanRequest', false);
+        .set('isCreatingTransformationPlanRequest', null);
 
     case CONTINUE_TO_PLAN:
       return state

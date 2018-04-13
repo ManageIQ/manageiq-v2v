@@ -34,7 +34,10 @@ export const showPlanWizardAction = id => dispatch => {
 const _createTransformationPlanRequestActionCreator = url => dispatch =>
   dispatch({
     type: CREATE_V2V_TRANSFORMATION_PLAN_REQUEST,
-    payload: API.post(url, { action: 'order' })
+    payload: {
+      promise: API.post(url, { action: 'order' }),
+      data: url
+    }
   }).catch(error => {
     if (mockMode) {
       dispatch({

@@ -108,6 +108,7 @@ class Overview extends React.Component {
     } = this.props;
 
     createTransformationPlanRequestAction(url).then(() => {
+      this.activeFilter = 'Migration Plans in Progress';
       fetchTransformationPlansAction(fetchTransformationPlansUrl);
     });
   }
@@ -176,6 +177,7 @@ class Overview extends React.Component {
         <Spinner loading={isFetchingTransformationMappings}>
           {transformationMappings.length > 0 && (
             <Migrations
+              activeFilter={this.activeFilter}
               transformationPlans={transformationPlans}
               notStartedPlans={pendingTransformationPlans}
               createMigrationPlanClick={showPlanWizardAction}
@@ -234,7 +236,7 @@ Overview.propTypes = {
   isFetchingTransformationMappings: PropTypes.bool,
   isRejectedTransformationMappings: PropTypes.bool,
   createTransformationPlanRequestAction: PropTypes.func,
-  isCreatingTransformationPlanRequest: PropTypes.bool,
+  isCreatingTransformationPlanRequest: PropTypes.string,
   isContinuingToPlan: PropTypes.bool,
   planWizardId: PropTypes.string,
   continueToPlanAction: PropTypes.func,

@@ -17,7 +17,7 @@ const MigrationsNotStartedList = ({
                 onClick={() => {
                   migrateClick(plan.href);
                 }}
-                disabled={loading}
+                disabled={loading === plan.href}
               >
                 Migrate
               </Button>
@@ -43,7 +43,7 @@ const MigrationsNotStartedList = ({
 MigrationsNotStartedList.propTypes = {
   migrateClick: PropTypes.func,
   notStartedPlans: PropTypes.array,
-  loading: PropTypes.bool
+  loading: PropTypes.string
 };
 MigrationsNotStartedList.defaultProps = {
   migrateClick: noop
