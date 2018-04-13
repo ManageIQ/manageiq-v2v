@@ -30,7 +30,13 @@ const MigrationCompletedRow = ({ migration }) => {
 
   let elapsedTime;
   if (days >= 2) {
-    elapsedTime = sprintf(__('%s days %02s:%02s:%02s'), days, hours, minutes, seconds);
+    elapsedTime = sprintf(
+      __('%s days %02s:%02s:%02s'),
+      days,
+      hours,
+      minutes,
+      seconds
+    );
   } else if (days === 1) {
     elapsedTime = sprintf(__('1 day %02s:%02s:%02s'), hours, minutes, seconds);
   } else {
