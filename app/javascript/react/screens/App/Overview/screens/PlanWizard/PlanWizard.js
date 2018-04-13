@@ -134,7 +134,7 @@ class PlanWizard extends React.Component {
             <Button
               bsStyle="default"
               onClick={this.prevStep}
-              disabled={onFirstStep}
+              disabled={onFirstStep || onFinalStep}
             >
               <Icon type="fa" name="angle-left" />
               {__('Back')}
