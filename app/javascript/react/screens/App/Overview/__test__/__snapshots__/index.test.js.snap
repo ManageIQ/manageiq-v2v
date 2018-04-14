@@ -16,7 +16,7 @@ Object {
   "isFetchingTransformationPlans": true,
   "isRejectedTransformationMappings": false,
   "mappingWizardVisible": false,
-  "pendingTransformationPlans": Array [],
+  "notStartedTransformationPlans": Array [],
   "planWizardVisible": false,
   "showMappingWizardAction": [Function],
   "showPlanWizardAction": [Function],
