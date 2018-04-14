@@ -407,7 +407,14 @@ class PlanRequestDetailList extends React.Component {
               const popoverContent = (
                 <Popover id={`popover${task.id}${n}`} title={task.message}>
                   <div>
-                    <div>{task.options.progress.current_description}</div>
+                    <div>
+                      <b>{__('Started')}: </b>
+                      {moment(startDateTime).format('YYYY-MM-DD HH:mm:ss A')}
+                    </div>
+                    <div>
+                      <b>{__('Description')}: </b>
+                      {task.options.progress.current_description}
+                    </div>
                     {task.completed && (
                       <div>
                         <br />
@@ -426,18 +433,14 @@ class PlanRequestDetailList extends React.Component {
                   leftContent={leftContent}
                   heading={task.transformation_host_name}
                   additionalInfo={[
-                    <div style={{ paddingRight: 60 }} key={`${task.id}-times`}>
-                      <span>
-                        <strong>{__('Started')}: </strong>
-                        {moment(startDateTime).format('YYYY-MM-DD HH:mm:ss A')}
-                      </span>
-                      <br />
-                      <span>
-                        <strong>{__('Elapsed')}: </strong>
-                        {elapsedTime}
-                      </span>
-                    </div>,
-                    <div key={`${task.id}-message`}>
+                    <ListView.InfoItem
+                      key={`${task.id}-times`}
+                      style={{ minWidth: 150, paddingRight: 20 }}
+                    >
+                      <ListView.Icon type="fa" size="lg" name="clock-o" />
+                      {elapsedTime}
+                    </ListView.InfoItem>,
+                    <ListView.InfoItem key={`${task.id}-message`}>
                       {task.message}
                       &nbsp;
                       {/* Todo: revisit FieldLevelHelp props in patternfly-react to support this */}
@@ -451,7 +454,7 @@ class PlanRequestDetailList extends React.Component {
                           <Icon type="pf" name="info" />
                         </Button>
                       </OverlayTrigger>
-                    </div>
+                    </ListView.InfoItem>
                   ]}
                   actions={
                     <UtilizationBar
