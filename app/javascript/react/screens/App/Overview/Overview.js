@@ -127,7 +127,7 @@ class Overview extends React.Component {
       transformationPlans,
       isFetchingTransformationPlans,
       plansPreviouslyFetched,
-      pendingTransformationPlans,
+      notStartedTransformationPlans,
       activeTransformationPlans,
       finishedTransformationPlans,
       isCreatingTransformationPlanRequest
@@ -143,8 +143,8 @@ class Overview extends React.Component {
       >
         <CardGrid.Row>
           <CardGrid.Col xs={6} sm={3}>
-            <AggregateCards.PendingTransformationPlans
-              pendingPlans={pendingTransformationPlans}
+            <AggregateCards.NotStartedTransformationPlans
+              notStartedPlans={notStartedTransformationPlans}
               loading={isFetchingTransformationPlans && !plansPreviouslyFetched}
             />
           </CardGrid.Col>
@@ -176,12 +176,19 @@ class Overview extends React.Component {
         style={{ overflow: 'auto', paddingBottom: 1, height: '100%' }}
       >
         {aggregateDataCards}
-        <Spinner loading={isFetchingTransformationMappings}>
+        <Spinner
+          loading={
+            isFetchingTransformationMappings ||
+            (isFetchingTransformationPlans && !plansPreviouslyFetched)
+          }
+        >
           {transformationMappings.length > 0 && (
             <Migrations
               activeFilter={this.activeFilter}
               transformationPlans={transformationPlans}
-              notStartedPlans={pendingTransformationPlans}
+              notStartedPlans={notStartedTransformationPlans}
+              activeTransformationPlans={activeTransformationPlans}
+              finishedTransformationPlans={finishedTransformationPlans}
               createMigrationPlanClick={showPlanWizardAction}
               createTransformationPlanRequestClick={
                 this.createTransformationPlanRequest
@@ -229,7 +236,7 @@ Overview.propTypes = {
   fetchTransformationPlansAction: PropTypes.func,
   isFetchingTransformationPlans: PropTypes.bool,
   plansPreviouslyFetched: PropTypes.bool,
-  pendingTransformationPlans: PropTypes.array,
+  notStartedTransformationPlans: PropTypes.array,
   activeTransformationPlans: PropTypes.array,
   finishedTransformationPlans: PropTypes.array,
   transformationMappings: PropTypes.array,

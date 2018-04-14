@@ -46,7 +46,9 @@ MigrationsNotStartedList.propTypes = {
   loading: PropTypes.string
 };
 MigrationsNotStartedList.defaultProps = {
-  migrateClick: noop
+  migrateClick: noop,
+  notStartedPlans: [],
+  loading: ''
 };
 
 export default MigrationsNotStartedList;

@@ -50,10 +50,11 @@ export const transformationPlans = Immutable({
           state: '',
           approval_state: 'approved',
           status: 'active',
+          created_on: '2018-04-06T12:31:30Z',
           options: {
             src_id: '6',
             cart_state: 'ordered',
-            delivered_on: '2018-01-30T21:12:34.808Z', // can use this timestamp as the starting time for this request
+            delivered_on: '2018-04-06T12:49:30Z', // can use this timestamp as the starting time for this request
             user_message: '[EVM] VM Migrated Successfully'
           },
           miq_request_tasks: [
@@ -480,10 +481,11 @@ export const transformationPlans = Immutable({
           state: '',
           approval_state: 'approved',
           status: 'failed',
+          created_on: '2018-04-06T12:31:30Z',
           options: {
             src_id: '6',
             cart_state: 'ordered',
-            delivered_on: '2018-01-30T21:12:34.808Z', // can use this timestamp as the starting time for this request
+            delivered_on: '2018-04-06T12:49:30Z', // can use this timestamp as the starting time for this request
             user_message: '[EVM] VM Migrated Successfully'
           },
           miq_request_tasks: [
@@ -692,10 +694,11 @@ export const transformationPlans = Immutable({
           state: '',
           approval_state: 'approved',
           status: 'active',
+          created_on: '2018-04-06T12:31:30Z',
           options: {
             src_id: '6',
             cart_state: 'ordered',
-            delivered_on: '2018-01-30T21:12:34.808Z', // can use this timestamp as the starting time for this request
+            delivered_on: '2018-04-06T12:49:30Z', // can use this timestamp as the starting time for this request
             user_message: '[EVM] VM Migrated Successfully'
           },
           miq_request_tasks: [
@@ -925,10 +928,11 @@ export const transformationPlans = Immutable({
           state: '',
           approval_state: 'approved',
           status: 'failed',
+          created_on: '2018-04-06T12:31:30Z',
           options: {
             src_id: '6',
             cart_state: 'ordered',
-            delivered_on: '2018-01-30T21:12:34.808Z', // can use this timestamp as the starting time for this request
+            delivered_on: '2018-04-06T12:49:30Z', // can use this timestamp as the starting time for this request
             user_message: '[EVM] VM Migrated Successfully'
           },
           miq_request_tasks: [
@@ -1354,10 +1358,11 @@ export const transformationPlans = Immutable({
           state: '',
           approval_state: 'approved',
           status: 'complete',
+          created_on: '2018-04-06T12:31:30Z',
           options: {
             src_id: '6',
             cart_state: 'ordered',
-            delivered_on: '2018-01-30T21:12:34.808Z', // can use this timestamp as the starting time for this request
+            delivered_on: '2018-04-06T12:49:30Z', // can use this timestamp as the starting time for this request
             user_message: '[EVM] VM Migrated Successfully'
           },
           miq_request_tasks: [
@@ -1783,10 +1788,11 @@ export const transformationPlans = Immutable({
           state: '',
           approval_state: 'approved',
           status: 'active',
+          created_on: '2018-04-06T12:31:30Z',
           options: {
             src_id: '6',
             cart_state: 'ordered',
-            delivered_on: '2018-01-30T21:12:34.808Z', // can use this timestamp as the starting time for this request
+            delivered_on: '2018-04-06T12:49:30Z', // can use this timestamp as the starting time for this request
             user_message: '[EVM] VM Migrated Successfully'
           },
           miq_request_tasks: [
