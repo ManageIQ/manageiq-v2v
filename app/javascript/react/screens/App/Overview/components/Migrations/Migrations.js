@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { noop, DropdownButton, Grid, Icon, MenuItem } from 'patternfly-react';
-import MigrationsInProgressCard from '../Cards/MigrationsInProgressCard';
+import MigrationsInProgressCards from './MigrationsInProgressCards';
 import MigrationsNotStartedList from './MigrationsNotStartedList';
 import MigrationsCompletedList from './MigrationsCompletedList';
 import OverviewEmptyState from '../OverviewEmptyState/OverviewEmptyState';
@@ -31,6 +31,7 @@ class Migrations extends React.Component {
     const {
       transformationPlans,
       notStartedPlans,
+      activeTransformationPlans,
       createMigrationPlanClick,
       createTransformationPlanRequestClick,
       isCreatingTransformationPlanRequest,
@@ -102,7 +103,10 @@ class Migrations extends React.Component {
               />
             )}
             {activeFilter === 'Migration Plans in Progress' && (
-              <MigrationsInProgressCard />
+              <MigrationsInProgressCards
+                activeTransformationPlans={activeTransformationPlans}
+                loading={isCreatingTransformationPlanRequest !== null}
+              />
             )}
             {activeFilter === 'Migration Plans Completed' && (
               <MigrationsCompletedList
@@ -120,6 +124,7 @@ class Migrations extends React.Component {
 Migrations.propTypes = {
   transformationPlans: PropTypes.array,
   notStartedPlans: PropTypes.array,
+  activeTransformationPlans: PropTypes.array,
   createMigrationPlanClick: PropTypes.func,
   createTransformationPlanRequestClick: PropTypes.func,
   isCreatingTransformationPlanRequest: PropTypes.string,
@@ -128,6 +133,7 @@ Migrations.propTypes = {
 Migrations.defaultProps = {
   transformationPlans: [],
   notStartedPlans: [],
+  activeTransformationPlans: [],
   createMigrationPlanClick: noop,
   createTransformationPlanRequestClick: noop,
   isCreatingTransformationPlanRequest: '',

@@ -17,7 +17,7 @@ const MigrationsCompletedList = ({
         const tasks = {};
         plan.miq_requests.forEach(request => {
           request.miq_request_tasks.forEach(task => {
-            tasks[task.options.src_id] = task.status === 'Ok';
+            tasks[task.source_id] = task.status === 'Ok';
           });
         });
 
