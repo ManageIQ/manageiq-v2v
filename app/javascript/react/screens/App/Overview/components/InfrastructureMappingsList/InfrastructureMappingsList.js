@@ -19,7 +19,7 @@ function clusterCount(mapping, clusterType) {
 
 function clusterName(clusters, clusterId) {
   return clusters.map(cluster => (
-    <React.Fragment>
+    <React.Fragment key={cluster.id}>
       {clusterId === cluster.id
         ? `${cluster.v_parent_datacenter} \\ ${cluster.name}`
         : null}
@@ -114,8 +114,8 @@ const InfrastructureMappingsList = ({
               <Grid.Row />
               {mapping.transformation_mapping_items
                 .filter(item => item.source_type.toLowerCase() === 'emscluster')
-                .map(item => (
-                  <React.Fragment>
+                .map((item, i) => (
+                  <React.Fragment key={`${i}-${item.id}`}>
                     <Grid.Row>
                       <Grid.Col sm={4}>
                         {clusterName(clusters, item.source_id)}

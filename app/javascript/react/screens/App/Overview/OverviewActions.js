@@ -16,6 +16,7 @@ import {
   createTransformationPlanRequestData
 } from './overview.fixtures';
 import { requestTransformationPlansData } from './overview.transformationPlans.fixtures';
+import { requestClustersData } from './overview.clusters.fixtures';
 
 const mockMode = globalMockMode;
 
@@ -116,7 +117,7 @@ const _getClustersActionCreator = url => dispatch =>
     if (mockMode) {
       dispatch({
         type: `${V2V_FETCH_CLUSTERS}_FULFILLED`,
-        payload: {}
+        payload: requestClustersData.response
       });
     }
   });

@@ -18,7 +18,7 @@ export const initialState = Immutable({
 export const transformationMappings = [
   {
     id: '10000000000001',
-    name: 'Infrastructre Mapping 1',
+    name: 'Mapping 1',
     description: 'infrastructre mapping 1 description',
     comments: null,
     state: 'draft',
@@ -53,7 +53,7 @@ export const transformationMappings = [
   },
   {
     id: '10000000000002',
-    name: 'Infrastructure Mapping 2',
+    name: 'Mapping 2',
     description: 'infrastructre mapping 2 description',
     comments: null,
     state: 'draft',
@@ -63,7 +63,7 @@ export const transformationMappings = [
     updated_at: '2018-02-07T16:02:39Z',
     transformation_mapping_items: [
       {
-        id: '10000000000003',
+        id: '10000000000001',
         source_id: '10000000000003',
         source_type: 'EmsCluster',
         destination_id: '10000000000005',
