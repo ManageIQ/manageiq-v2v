@@ -26,8 +26,9 @@ const fetchMigrationsCompletedAction = () => {
     "filter[]=state='finished'" +
     "&filter[]=type='ServiceTemplateTransformationPlanRequest'" +
     '&expand=resources' +
-    '&attributes=status,state,options,description,miq_request_tasks' +
-    '&sort_by=updated_on';
+    '&attributes=status,state,options,description,miq_request_tasks,created_on' +
+    '&sort_by=updated_on' +
+    '&sort_order=desc';
 
   const uri = new URI(url);
 
