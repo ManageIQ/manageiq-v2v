@@ -4,6 +4,10 @@
 @import 'components/ModalWizard/ModalWizard.scss';
 @import 'components/AggregateCards/AggregateCards.scss';
 
+hr {
+  margin-top: 10px;
+}
+
 .card-pf-body .blank-slate-pf {
   background-color: #fff;
 }

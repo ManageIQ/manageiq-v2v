@@ -36,7 +36,7 @@ const InfrastructureMappingsList = ({
           </div>
         </div>
 
-        <ListView>
+        <ListView style={{ marginTop: 10 }}>
           {transformationMappings.map(mapping => (
             <ListView.Item
               key={mapping.id}
