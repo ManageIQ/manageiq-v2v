@@ -103,8 +103,8 @@ export const coreComponents = [
         : '/api/service_templates/?' +
           "filter[]=type='ServiceTemplateTransformationPlan'" +
           '&expand=resources' +
-          '&attributes=miq_requests,created_on' +
-          '&sort_by=updated_on' +
+          '&attributes=miq_requests,options,created_at' +
+          '&sort_by=updated_at' +
           '&sort_order=desc',
       fetchClustersUrl: mockMode
         ? '/api/dummyClusters'
