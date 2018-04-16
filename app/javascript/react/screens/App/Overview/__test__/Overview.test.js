@@ -18,17 +18,20 @@ describe('Overview component', () => {
     isFetchingTransformationMappings: false,
     isRejectedTransformationMappings: false,
     transformationMappings: [],
-    transformationPlans: []
+    transformationPlans: [],
+    clusters: []
   };
   let showMappingWizardAction;
   let showPlanWizardAction;
   let fetchTransformationMappingsAction;
   let fetchTransformationPlansAction;
+  let fetchClustersAction;
   beforeEach(() => {
     showMappingWizardAction = jest.fn();
     showPlanWizardAction = jest.fn();
     fetchTransformationMappingsAction = jest.fn();
     fetchTransformationPlansAction = jest.fn();
+    fetchClustersAction = jest.fn();
   });
 
   describe('overview sections', () => {
@@ -40,6 +43,7 @@ describe('Overview component', () => {
           showPlanWizardAction={showPlanWizardAction}
           fetchTransformationMappingsAction={fetchTransformationMappingsAction}
           fetchTransformationPlansAction={fetchTransformationPlansAction}
+          fetchClustersAction={fetchClustersAction}
         />
       );
 
@@ -55,6 +59,7 @@ describe('Overview component', () => {
           showPlanWizardAction={showPlanWizardAction}
           fetchTransformationMappingsAction={fetchTransformationMappingsAction}
           fetchTransformationPlansAction={fetchTransformationPlansAction}
+          fetchClustersAction={fetchClustersAction}
         />
       );
 
@@ -72,6 +77,7 @@ describe('Overview component', () => {
           showPlanWizardAction={showPlanWizardAction}
           fetchTransformationMappingsAction={fetchTransformationMappingsAction}
           fetchTransformationPlansAction={fetchTransformationPlansAction}
+          fetchClustersAction={fetchClustersAction}
         />
       );
     });

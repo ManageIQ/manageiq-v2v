@@ -11,9 +11,9 @@ import {
   Spinner
 } from 'patternfly-react';
 
-const PendingTransformationPlans = ({ pendingPlans, loading }) => {
+const NotStartedTransformationPlans = ({ notStartedPlans, loading }) => {
   const countDescription =
-    pendingPlans.length === 1
+    notStartedPlans.length === 1
       ? 'Migration Plan Not Started'
       : 'Migration Plans Not Started';
 
@@ -23,10 +23,10 @@ const PendingTransformationPlans = ({ pendingPlans, loading }) => {
     <Card className={classes} accented aggregated matchHeight>
       <Spinner loading={loading}>
         <Card.Title>
-          <AggregateStatusCount>{pendingPlans.length}</AggregateStatusCount>{' '}
+          <AggregateStatusCount>{notStartedPlans.length}</AggregateStatusCount>{' '}
           {countDescription}
         </Card.Title>
-        {pendingPlans.length > 0 && (
+        {notStartedPlans.length > 0 && (
           <Card.Body className="overview-aggregate-card--body">
             <AggregateStatusNotifications>
               <AggregateStatusNotification>
@@ -40,9 +40,9 @@ const PendingTransformationPlans = ({ pendingPlans, loading }) => {
   );
 };
 
-PendingTransformationPlans.propTypes = {
-  pendingPlans: PropTypes.array,
+NotStartedTransformationPlans.propTypes = {
+  notStartedPlans: PropTypes.array,
   loading: PropTypes.bool
 };
 
-export default PendingTransformationPlans;
+export default NotStartedTransformationPlans;

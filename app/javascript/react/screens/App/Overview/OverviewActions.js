@@ -6,11 +6,17 @@ import {
   SHOW_PLAN_WIZARD,
   HIDE_MAPPING_WIZARD,
   FETCH_V2V_TRANSFORMATION_MAPPINGS,
-  FETCH_V2V_TRANSFORMATION_PLANS
+  FETCH_V2V_TRANSFORMATION_PLANS,
+  CREATE_V2V_TRANSFORMATION_PLAN_REQUEST,
+  V2V_FETCH_CLUSTERS
 } from './OverviewConstants';
 
-import { requestTransformationMappingsData } from './overview.fixtures';
+import {
+  requestTransformationMappingsData,
+  createTransformationPlanRequestData
+} from './overview.fixtures';
 import { requestTransformationPlansData } from './overview.transformationPlans.fixtures';
+import { requestClustersData } from './overview.clusters.fixtures';
 
 const mockMode = globalMockMode;
 
@@ -25,6 +31,27 @@ export const showPlanWizardAction = id => dispatch => {
     type: SHOW_PLAN_WIZARD,
     payload: id
   });
+};
+
+const _createTransformationPlanRequestActionCreator = url => dispatch =>
+  dispatch({
+    type: CREATE_V2V_TRANSFORMATION_PLAN_REQUEST,
+    payload: {
+      promise: API.post(url, { action: 'order' }),
+      data: url
+    }
+  }).catch(error => {
+    if (mockMode) {
+      dispatch({
+        type: `${CREATE_V2V_TRANSFORMATION_PLAN_REQUEST}_FULFILLED`,
+        payload: createTransformationPlanRequestData.response
+      });
+    }
+  });
+
+export const createTransformationPlanRequestAction = url => {
+  const uri = new URI(url);
+  return _createTransformationPlanRequestActionCreator(uri.toString());
 };
 
 const _getTransformationMappingsActionCreator = url => dispatch => {
@@ -80,4 +107,22 @@ export const continueToPlanAction = id => dispatch => {
     type: SHOW_PLAN_WIZARD,
     payload: { id }
   });
+};
+
+const _getClustersActionCreator = url => dispatch =>
+  dispatch({
+    type: `${V2V_FETCH_CLUSTERS}`,
+    payload: API.get(url)
+  }).catch(error => {
+    if (mockMode) {
+      dispatch({
+        type: `${V2V_FETCH_CLUSTERS}_FULFILLED`,
+        payload: requestClustersData.response
+      });
+    }
+  });
+
+export const fetchClustersAction = url => {
+  const uri = new URI(url);
+  return _getClustersActionCreator(uri.toString());
 };

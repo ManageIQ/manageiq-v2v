@@ -1,5 +1,5 @@
 import {
-  pendingTransformationPlansFilter,
+  notStartedTransformationPlansFilter,
   activeTransformationPlansFilter,
   finishedTransformationPlansFilter
 } from '../OverviewSelectors';
@@ -8,10 +8,10 @@ import { transformationPlans } from '../overview.transformationPlans.fixtures';
 
 const { resources: plans } = transformationPlans;
 
-describe('pendingTransformationPlansFilter', () => {
+describe('notStartedTransformationPlansFilter', () => {
   test('returns all pending transformation plans', () => {
     const [pendingPlan] = plans;
-    const result = pendingTransformationPlansFilter(plans);
+    const result = notStartedTransformationPlansFilter(plans);
 
     expect(result).toEqual([pendingPlan]);
   });

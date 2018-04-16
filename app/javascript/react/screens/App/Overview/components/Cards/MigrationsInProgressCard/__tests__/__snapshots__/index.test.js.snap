@@ -1,3 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`Active ActiveMigrations integration test should mount the ActiveMigrations with mapStateToProps reduced 1`] = `Object {}`;

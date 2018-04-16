@@ -3,7 +3,7 @@ import Overview from './Overview';
 import * as OverviewActions from './OverviewActions';
 import reducer from './OverviewReducer';
 import {
-  pendingTransformationPlansFilter,
+  notStartedTransformationPlansFilter,
   activeTransformationPlansFilter,
   finishedTransformationPlansFilter
 } from './OverviewSelectors';
@@ -16,7 +16,7 @@ const mapStateToProps = (
 ) => ({
   ...overview,
   ...ownProps.data,
-  pendingTransformationPlans: pendingTransformationPlansFilter(
+  notStartedTransformationPlans: notStartedTransformationPlansFilter(
     transformationPlans
   ),
   activeTransformationPlans: activeTransformationPlansFilter(

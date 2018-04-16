@@ -11,7 +11,11 @@ class Overview extends React.Component {
   constructor(props) {
     super(props);
 
-    bindMethods(this, ['stopPolling', 'startPolling']);
+    bindMethods(this, [
+      'stopPolling',
+      'startPolling',
+      'createTransformationPlanRequest'
+    ]);
 
     this.mappingWizard = componentRegistry.markup(
       'MappingWizardContainer',
@@ -25,12 +29,15 @@ class Overview extends React.Component {
 
   componentDidMount() {
     const {
+      fetchClustersUrl,
+      fetchClustersAction,
       fetchTransformationMappingsUrl,
       fetchTransformationMappingsAction,
       fetchTransformationPlansUrl,
       fetchTransformationPlansAction
     } = this.props;
 
+    fetchClustersAction(fetchClustersUrl);
     fetchTransformationMappingsAction(fetchTransformationMappingsUrl);
     fetchTransformationPlansAction(fetchTransformationPlansUrl);
 
@@ -96,6 +103,21 @@ class Overview extends React.Component {
     }
   }
 
+  createTransformationPlanRequest(url) {
+    const {
+      createTransformationPlanRequestAction,
+      fetchTransformationPlansAction,
+      fetchTransformationPlansUrl
+    } = this.props;
+
+    createTransformationPlanRequestAction(url).then(() => {
+      this.activeFilter = 'Migration Plans in Progress';
+      fetchTransformationPlansAction(fetchTransformationPlansUrl).then(() => {
+        this.activeFilter = undefined;
+      });
+    });
+  }
+
   render() {
     const {
       showMappingWizardAction,
@@ -108,9 +130,11 @@ class Overview extends React.Component {
       transformationPlans,
       isFetchingTransformationPlans,
       plansPreviouslyFetched,
-      pendingTransformationPlans,
+      notStartedTransformationPlans,
       activeTransformationPlans,
-      finishedTransformationPlans
+      finishedTransformationPlans,
+      isCreatingTransformationPlanRequest,
+      clusters
     } = this.props;
 
     const aggregateDataCards = (
@@ -123,8 +147,8 @@ class Overview extends React.Component {
       >
         <CardGrid.Row>
           <CardGrid.Col xs={6} sm={3}>
-            <AggregateCards.PendingTransformationPlans
-              pendingPlans={pendingTransformationPlans}
+            <AggregateCards.NotStartedTransformationPlans
+              notStartedPlans={notStartedTransformationPlans}
               loading={isFetchingTransformationPlans && !plansPreviouslyFetched}
             />
           </CardGrid.Col>
@@ -156,14 +180,30 @@ class Overview extends React.Component {
         style={{ overflow: 'auto', paddingBottom: 1, height: '100%' }}
       >
         {aggregateDataCards}
-        <Spinner loading={isFetchingTransformationMappings}>
+        <Spinner
+          loading={
+            isFetchingTransformationMappings ||
+            (isFetchingTransformationPlans && !plansPreviouslyFetched)
+          }
+        >
           {transformationMappings.length > 0 && (
             <Migrations
+              activeFilter={this.activeFilter}
               transformationPlans={transformationPlans}
+              notStartedPlans={notStartedTransformationPlans}
+              activeTransformationPlans={activeTransformationPlans}
+              finishedTransformationPlans={finishedTransformationPlans}
               createMigrationPlanClick={showPlanWizardAction}
+              createTransformationPlanRequestClick={
+                this.createTransformationPlanRequest
+              }
+              isCreatingTransformationPlanRequest={
+                isCreatingTransformationPlanRequest
+              }
             />
           )}
           <InfrastructureMappingsList
+            clusters={clusters}
             transformationMappings={transformationMappings}
             createInfraMappingClick={showMappingWizardAction}
           />
@@ -201,7 +241,7 @@ Overview.propTypes = {
   fetchTransformationPlansAction: PropTypes.func,
   isFetchingTransformationPlans: PropTypes.bool,
   plansPreviouslyFetched: PropTypes.bool,
-  pendingTransformationPlans: PropTypes.array,
+  notStartedTransformationPlans: PropTypes.array,
   activeTransformationPlans: PropTypes.array,
   finishedTransformationPlans: PropTypes.array,
   transformationMappings: PropTypes.array,
@@ -209,9 +249,14 @@ Overview.propTypes = {
   fetchTransformationMappingsAction: PropTypes.func,
   isFetchingTransformationMappings: PropTypes.bool,
   isRejectedTransformationMappings: PropTypes.bool,
+  createTransformationPlanRequestAction: PropTypes.func,
+  isCreatingTransformationPlanRequest: PropTypes.string,
   isContinuingToPlan: PropTypes.bool,
   planWizardId: PropTypes.string,
   continueToPlanAction: PropTypes.func,
-  shouldReloadMappings: PropTypes.bool
+  shouldReloadMappings: PropTypes.bool,
+  fetchClustersAction: PropTypes.func,
+  fetchClustersUrl: PropTypes.string,
+  clusters: PropTypes.array
 };
 export default Overview;

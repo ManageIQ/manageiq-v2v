@@ -1,12 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { noop, DropdownButton, Grid, Icon, MenuItem } from 'patternfly-react';
-import MigrationsInProgressCard from '../Cards/MigrationsInProgressCard';
+import MigrationsInProgressCards from './MigrationsInProgressCards';
 import MigrationsNotStartedList from './MigrationsNotStartedList';
 import MigrationsCompletedList from './MigrationsCompletedList';
 import OverviewEmptyState from '../OverviewEmptyState/OverviewEmptyState';
 
 class Migrations extends React.Component {
+  static getDerivedStateFromProps(nextProps) {
+    const { activeFilter } = nextProps;
+
+    if (nextProps.activeFilter === 'Migration Plans in Progress') {
+      return {
+        activeFilter
+      };
+    }
+    return null;
+  }
   constructor(props) {
     super(props);
     this.state = {
@@ -16,8 +26,17 @@ class Migrations extends React.Component {
   onSelect = eventKey => {
     this.setState({ activeFilter: eventKey });
   };
+
   render() {
-    const { transformationPlans, createMigrationPlanClick } = this.props;
+    const {
+      transformationPlans,
+      notStartedPlans,
+      activeTransformationPlans,
+      createMigrationPlanClick,
+      createTransformationPlanRequestClick,
+      isCreatingTransformationPlanRequest,
+      finishedTransformationPlans
+    } = this.props;
     const { activeFilter } = this.state;
     const filterOptions = [
       'Migration Plans Not Started',
@@ -77,13 +96,24 @@ class Migrations extends React.Component {
         {transformationPlans.length > 0 && (
           <React.Fragment>
             {activeFilter === 'Migration Plans Not Started' && (
-              <MigrationsNotStartedList />
+              <MigrationsNotStartedList
+                notStartedPlans={notStartedPlans}
+                migrateClick={createTransformationPlanRequestClick}
+                loading={isCreatingTransformationPlanRequest}
+              />
             )}
             {activeFilter === 'Migration Plans in Progress' && (
-              <MigrationsInProgressCard />
+              <MigrationsInProgressCards
+                activeTransformationPlans={activeTransformationPlans}
+                loading={isCreatingTransformationPlanRequest !== null}
+              />
             )}
             {activeFilter === 'Migration Plans Completed' && (
-              <MigrationsCompletedList />
+              <MigrationsCompletedList
+                finishedTransformationPlans={finishedTransformationPlans}
+                retryClick={createTransformationPlanRequestClick}
+                loading={isCreatingTransformationPlanRequest}
+              />
             )}
           </React.Fragment>
         )}
@@ -93,9 +123,20 @@ class Migrations extends React.Component {
 }
 Migrations.propTypes = {
   transformationPlans: PropTypes.array,
-  createMigrationPlanClick: PropTypes.func
+  notStartedPlans: PropTypes.array,
+  activeTransformationPlans: PropTypes.array,
+  createMigrationPlanClick: PropTypes.func,
+  createTransformationPlanRequestClick: PropTypes.func,
+  isCreatingTransformationPlanRequest: PropTypes.string,
+  finishedTransformationPlans: PropTypes.array
 };
 Migrations.defaultProps = {
-  createMigrationPlanClick: noop
+  transformationPlans: [],
+  notStartedPlans: [],
+  activeTransformationPlans: [],
+  createMigrationPlanClick: noop,
+  createTransformationPlanRequestClick: noop,
+  isCreatingTransformationPlanRequest: '',
+  finishedTransformationPlans: []
 };
 export default Migrations;

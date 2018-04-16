@@ -22,7 +22,9 @@ class Plan extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { planRequestTasksMutable: [] };
+    this.state = {
+      planRequestTasksMutable: Immutable.asMutable(props.planRequestTasks)
+    };
 
     bindMethods(this, ['stopPolling', 'startPolling']);
   }

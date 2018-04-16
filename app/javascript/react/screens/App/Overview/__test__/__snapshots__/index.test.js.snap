@@ -3,7 +3,11 @@
 exports[`Overview integration test should mount the Overview with mapStateToProps reduced 1`] = `
 Object {
   "activeTransformationPlans": Array [],
+  "clusters": Array [],
   "continueToPlanAction": [Function],
+  "createTransformationPlanRequestAction": [Function],
+  "fetchClustersAction": [Function],
+  "fetchClustersUrl": "/api/dummyClusters",
   "fetchTransformationMappingsAction": [Function],
   "fetchTransformationMappingsUrl": "/api/dummyMappings",
   "fetchTransformationPlansAction": [Function],
@@ -15,7 +19,7 @@ Object {
   "isFetchingTransformationPlans": true,
   "isRejectedTransformationMappings": false,
   "mappingWizardVisible": false,
-  "pendingTransformationPlans": Array [],
+  "notStartedTransformationPlans": Array [],
   "planWizardVisible": false,
   "showMappingWizardAction": [Function],
   "showPlanWizardAction": [Function],
