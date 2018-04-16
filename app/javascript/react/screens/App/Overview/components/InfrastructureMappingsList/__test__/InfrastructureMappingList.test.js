@@ -11,6 +11,7 @@ beforeEach(() => {
 test('it shows the empty state when there are no transformation mappings', () => {
   const wrapper = shallow(
     <InfrastructureMappingsList
+      clusters={[]}
       transformationMappings={[]}
       createInfraMappingClick={createInfraMappingClick}
     />
