@@ -57,8 +57,7 @@ class ClustersStepForm extends React.Component {
   }
 
   addMapping() {
-    const {
-      input: { value: clustersStepMappings, onChange }
+    const { input: { value: clustersStepMappings, onChange }
     } = this.props;
     const { selectedTargetCluster, selectedSourceClusters } = this.state;
 
@@ -162,7 +161,8 @@ class ClustersStepForm extends React.Component {
               {sourceClustersFilter(sourceClusters, input.value).map(item => (
                 <DualPaneMapperListItem
                   item={item}
-                  text={item.name}
+                  text={`${item.v_parent_datacenter || __('No Parent')} \\
+                  ${item.name}`}
                   key={item.id}
                   selected={
                     selectedSourceClusters &&
@@ -190,7 +190,8 @@ class ClustersStepForm extends React.Component {
               {targetClusters.map(item => (
                 <DualPaneMapperListItem
                   item={item}
-                  text={item.name}
+                  text={`${item.v_parent_datacenter || __('No Parent')} \\
+                  ${item.name}`}
                   key={item.id}
                   selected={
                     selectedTargetCluster &&
