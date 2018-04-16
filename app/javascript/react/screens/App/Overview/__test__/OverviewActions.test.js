@@ -3,8 +3,12 @@ import thunk from 'redux-thunk';
 import promiseMiddleware from 'redux-promise-middleware';
 import { mockRequest, mockReset } from '../../../../../common/mockRequests';
 
-import { fetchTransformationPlansAction } from '../OverviewActions';
+import {
+  fetchTransformationPlansAction,
+  setMigrationsFilterAction
+} from '../OverviewActions';
 import { requestTransformationPlansData } from '../overview.transformationPlans.fixtures';
+import { V2V_SET_MIGRATIONS_FILTER } from '../OverviewConstants';
 
 const middlewares = [thunk, promiseMiddleware()];
 const mockStore = configureMockStore(middlewares);
@@ -43,5 +47,17 @@ describe('fetchTransformationPlansAction', () => {
       .then(() => {
         expect(store.getActions()).toMatchSnapshot();
       });
+  });
+});
+
+describe('setMigrationsFilterAction', () => {
+  test('sets up the migrations filter action object', () => {
+    const activeFilter = 'Migrations Plans Not Started';
+    const result = setMigrationsFilterAction(activeFilter);
+
+    expect(result).toEqual({
+      type: V2V_SET_MIGRATIONS_FILTER,
+      payload: activeFilter
+    });
   });
 });
