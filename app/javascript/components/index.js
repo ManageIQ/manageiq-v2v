@@ -32,14 +32,10 @@ export const coreComponents = [
     data: {
       fetchSourceClustersUrl: mockMode
         ? '/api/dummyProviders'
-        : '/api/clusters?expand=resources' +
-          '&attributes=ext_management_system.emstype,v_parent_datacenter' +
-          '&filter[]=ext_management_system.emstype=vmwarews',
+        : '/api/providers?expand=resources&attributes=emstype,ems_clusters&filter[]=emstype=vmwarews',
       fetchTargetClustersUrl: mockMode
         ? '/api/dummyProviders'
-        : '/api/clusters?expand=resources' +
-          '&attributes=ext_management_system.emstype,v_parent_datacenter' +
-          '&filter[]=ext_management_system.emstype=rhevm'
+        : '/api/providers?expand=resources&attributes=emstype,ems_clusters&filter[]=emstype=rhevm'
     },
     store: true
   },

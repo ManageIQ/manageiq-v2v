@@ -17,15 +17,12 @@ class MappingWizardClustersStep extends React.Component {
 
   fetchClusters() {
     const {
-      fetchClustersUrl,
-      fetchClustersAction,
       fetchSourceClustersUrl,
       fetchSourceClustersAction,
       fetchTargetClustersUrl,
       fetchTargetClustersAction
     } = this.props;
 
-    fetchClustersAction(fetchClustersUrl);
     fetchSourceClustersAction(fetchSourceClustersUrl);
     fetchTargetClustersAction(fetchTargetClustersUrl);
   }
@@ -82,9 +79,7 @@ MappingWizardClustersStep.propTypes = {
   isFetchingSourceClusters: PropTypes.bool,
   isFetchingTargetClusters: PropTypes.bool,
   isRejectedSourceClusters: PropTypes.bool,
-  isRejectedTargetClusters: PropTypes.bool,
-  fetchClustersAction: PropTypes.func,
-  fetchClustersUrl: PropTypes.string,
+  isRejectedTargetClusters: PropTypes.bool
 };
 MappingWizardClustersStep.defaultProps = {
   fetchSourceClustersUrl: '',
@@ -94,9 +89,7 @@ MappingWizardClustersStep.defaultProps = {
   isFetchingSourceClusters: true,
   isFetchingTargetClusters: true,
   isRejectedSourceClusters: false,
-  isRejectedTargetClusters: false,
-  fetchClustersUrl: '',
-  fetchClustersAction: noop,
+  isRejectedTargetClusters: false
 };
 
 export default reduxForm({
