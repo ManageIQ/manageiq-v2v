@@ -15,7 +15,8 @@ const Migrations = ({
   createMigrationPlanClick,
   createTransformationPlanRequestClick,
   isCreatingTransformationPlanRequest,
-  finishedTransformationPlans
+  finishedTransformationPlans,
+  redirectTo
 }) => {
   const filterOptions = [
     'Migration Plans Not Started',
@@ -87,6 +88,7 @@ const Migrations = ({
             <MigrationsInProgressCards
               activeTransformationPlans={activeTransformationPlans}
               loading={isCreatingTransformationPlanRequest !== null}
+              redirectTo={redirectTo}
             />
           )}
           {activeFilter === 'Migration Plans Completed' && (
@@ -111,7 +113,8 @@ Migrations.propTypes = {
   createMigrationPlanClick: PropTypes.func,
   createTransformationPlanRequestClick: PropTypes.func,
   isCreatingTransformationPlanRequest: PropTypes.string,
-  finishedTransformationPlans: PropTypes.array
+  finishedTransformationPlans: PropTypes.array,
+  redirectTo: PropTypes.func
 };
 Migrations.defaultProps = {
   transformationPlans: [],

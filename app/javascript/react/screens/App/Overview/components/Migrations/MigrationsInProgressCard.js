@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import numeral from 'numeral';
-import { Link } from 'react-router-dom';
 import {
   Card,
   EmptyState,
@@ -13,7 +12,7 @@ import {
 } from 'patternfly-react';
 import { IsoElpasedTime } from '../../../../../../components/dates/IsoElapsedTime';
 
-const MigrationsInProgressCard = ({ plan }) => {
+const MigrationsInProgressCard = ({ plan, handleClick }) => {
   const [mostRecentRequest] = plan.miq_requests.slice(-1);
 
   // if most recent request is still pending, show loading card
@@ -92,14 +91,12 @@ const MigrationsInProgressCard = ({ plan }) => {
 
   // Tooltips
   const vmBarLabel = (
-    <Link to={`/migration/plan/${plan.id}`}>
-      <span>
-        <strong className="label-strong">
-          {sprintf(__('%s of %s VMs'), completedVMs, totalVMs)}
-        </strong>{' '}
-        {__('migrated')}
-      </span>
-    </Link>
+    <span>
+      <strong className="label-strong">
+        {sprintf(__('%s of %s VMs'), completedVMs, totalVMs)}
+      </strong>{' '}
+      {__('migrated')}
+    </span>
   );
 
   const diskSpaceBarLabel = (
@@ -152,7 +149,13 @@ const MigrationsInProgressCard = ({ plan }) => {
 
   return (
     <Grid.Col sm={12} md={6} lg={4}>
-      <Card matchHeight>
+      <Card
+        onClick={() => {
+          handleClick(`/migration/plan/${plan.id}`);
+        }}
+        matchHeight
+        className="in-progress"
+      >
         <Card.Heading>
           <OverlayTrigger
             overlay={
@@ -210,7 +213,8 @@ const MigrationsInProgressCard = ({ plan }) => {
 };
 
 MigrationsInProgressCard.propTypes = {
-  plan: PropTypes.object.isRequired
+  plan: PropTypes.object.isRequired,
+  handleClick: PropTypes.func
 };
 
 export default MigrationsInProgressCard;

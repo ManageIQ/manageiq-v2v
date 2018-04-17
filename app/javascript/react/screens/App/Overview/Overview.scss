@@ -8,6 +8,12 @@ hr {
   margin-top: 10px;
 }
 
+.card-pf {
+  &.in-progress {
+    cursor: pointer;
+  }
+}
+
 .card-pf-body .blank-slate-pf {
   background-color: #fff;
 }

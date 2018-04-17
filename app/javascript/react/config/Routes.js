@@ -21,7 +21,15 @@ const Routes = ({ store }) =>
           path={`/${path}`}
           render={props => {
             if (props.match.isExact) {
-              return <React.Fragment>{markup}</React.Fragment>;
+              return (
+                <React.Fragment>
+                  {componentRegistry.markup(
+                    coreComponent.name,
+                    { ...coreComponent.data, ...props },
+                    store
+                  )}
+                </React.Fragment>
+              );
             }
             return markup;
           }}

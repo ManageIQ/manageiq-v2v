@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 import { CardGrid, EmptyState, Spinner } from 'patternfly-react';
 import MigrationInProgressCard from './MigrationsInProgressCard';
 
-const MigrationsInProgressCards = ({ activeTransformationPlans, loading }) => (
+const MigrationsInProgressCards = ({
+  activeTransformationPlans,
+  loading,
+  redirectTo
+}) => (
   <CardGrid
     matchHeight
     style={{
@@ -16,7 +20,11 @@ const MigrationsInProgressCards = ({ activeTransformationPlans, loading }) => (
       <Spinner loading={loading}>
         {activeTransformationPlans.length > 0 &&
           activeTransformationPlans.map(plan => (
-            <MigrationInProgressCard plan={plan} key={plan.id} />
+            <MigrationInProgressCard
+              plan={plan}
+              key={plan.id}
+              handleClick={redirectTo}
+            />
           ))}
         {activeTransformationPlans.length === 0 && (
           <EmptyState>
@@ -34,7 +42,8 @@ const MigrationsInProgressCards = ({ activeTransformationPlans, loading }) => (
 
 MigrationsInProgressCards.propTypes = {
   activeTransformationPlans: PropTypes.array,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
+  redirectTo: PropTypes.func
 };
 
 MigrationsInProgressCards.defaultProps = {
