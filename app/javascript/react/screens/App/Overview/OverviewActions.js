@@ -8,7 +8,8 @@ import {
   FETCH_V2V_TRANSFORMATION_MAPPINGS,
   FETCH_V2V_TRANSFORMATION_PLANS,
   CREATE_V2V_TRANSFORMATION_PLAN_REQUEST,
-  V2V_FETCH_CLUSTERS
+  V2V_FETCH_CLUSTERS,
+  V2V_SET_MIGRATIONS_FILTER
 } from './OverviewConstants';
 
 import {
@@ -126,3 +127,8 @@ export const fetchClustersAction = url => {
   const uri = new URI(url);
   return _getClustersActionCreator(uri.toString());
 };
+
+export const setMigrationsFilterAction = filter => ({
+  type: V2V_SET_MIGRATIONS_FILTER,
+  payload: filter
+});

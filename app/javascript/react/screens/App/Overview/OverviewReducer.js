@@ -11,7 +11,8 @@ import {
   FETCH_V2V_TRANSFORMATION_PLANS,
   CREATE_V2V_TRANSFORMATION_PLAN_REQUEST,
   V2V_FETCH_CLUSTERS,
-  CONTINUE_TO_PLAN
+  CONTINUE_TO_PLAN,
+  V2V_SET_MIGRATIONS_FILTER
 } from './OverviewConstants';
 
 export const initialState = Immutable({
@@ -34,7 +35,8 @@ export const initialState = Immutable({
   errorCreateTransformationPlanRequest: null,
   isContinuingToPlan: false,
   shouldReloadMappings: false,
-  clusters: []
+  clusters: [],
+  migrationsFilter: 'Migration Plans Not Started'
 });
 
 export default (state = initialState, action) => {
@@ -126,6 +128,8 @@ export default (state = initialState, action) => {
         .set('isContinuingToPlan', true)
         .set('shouldReloadMappings', true)
         .set('planWizardId', action.payload.id);
+    case V2V_SET_MIGRATIONS_FILTER:
+      return state.set('migrationsFilter', action.payload);
     default:
       return state;
   }

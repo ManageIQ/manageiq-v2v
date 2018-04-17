@@ -107,14 +107,13 @@ class Overview extends React.Component {
     const {
       createTransformationPlanRequestAction,
       fetchTransformationPlansAction,
-      fetchTransformationPlansUrl
+      fetchTransformationPlansUrl,
+      setMigrationsFilterAction
     } = this.props;
 
     createTransformationPlanRequestAction(url).then(() => {
-      this.activeFilter = 'Migration Plans in Progress';
-      fetchTransformationPlansAction(fetchTransformationPlansUrl).then(() => {
-        this.activeFilter = undefined;
-      });
+      setMigrationsFilterAction('Migration Plans in Progress');
+      fetchTransformationPlansAction(fetchTransformationPlansUrl);
     });
   }
 
@@ -134,7 +133,9 @@ class Overview extends React.Component {
       activeTransformationPlans,
       finishedTransformationPlans,
       isCreatingTransformationPlanRequest,
-      clusters
+      clusters,
+      migrationsFilter,
+      setMigrationsFilterAction
     } = this.props;
 
     const aggregateDataCards = (
@@ -188,7 +189,8 @@ class Overview extends React.Component {
         >
           {transformationMappings.length > 0 && (
             <Migrations
-              activeFilter={this.activeFilter}
+              activeFilter={migrationsFilter}
+              setActiveFilter={setMigrationsFilterAction}
               transformationPlans={transformationPlans}
               notStartedPlans={notStartedTransformationPlans}
               activeTransformationPlans={activeTransformationPlans}
@@ -257,6 +259,8 @@ Overview.propTypes = {
   shouldReloadMappings: PropTypes.bool,
   fetchClustersAction: PropTypes.func,
   fetchClustersUrl: PropTypes.string,
-  clusters: PropTypes.array
+  clusters: PropTypes.array,
+  migrationsFilter: PropTypes.string,
+  setMigrationsFilterAction: PropTypes.func
 };
 export default Overview;

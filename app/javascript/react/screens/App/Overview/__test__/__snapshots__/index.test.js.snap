@@ -21,6 +21,7 @@ Object {
   "mappingWizardVisible": false,
   "notStartedTransformationPlans": Array [],
   "planWizardVisible": false,
+  "setMigrationsFilterAction": [Function],
   "showMappingWizardAction": [Function],
   "showPlanWizardAction": [Function],
   "transformationMappings": Array [],
