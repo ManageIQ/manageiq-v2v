@@ -31,6 +31,8 @@ const MigrationsCompletedList = ({
           new Date(mostRecentRequest.options.delivered_on)
         );
 
+        const url = `/api/service_templates/${plan.id}`;
+
         return (
           <ListView.Item
             key={plan.id}
@@ -64,9 +66,9 @@ const MigrationsCompletedList = ({
               (failed && (
                 <Button
                   onClick={() => {
-                    retryClick(plan.href);
+                    retryClick(url);
                   }}
-                  disabled={loading === plan.href}
+                  disabled={loading === url}
                 >
                   Retry
                 </Button>
