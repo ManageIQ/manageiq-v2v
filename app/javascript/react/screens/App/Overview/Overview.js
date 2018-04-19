@@ -1,6 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { bindMethods, Breadcrumb, CardGrid, Spinner } from 'patternfly-react';
+import {
+  bindMethods,
+  Card,
+  Breadcrumb,
+  CardGrid,
+  Spinner
+} from 'patternfly-react';
 import Toolbar from '../../../config/Toolbar';
 import * as AggregateCards from './components/AggregateCards';
 import InfrastructureMappingsList from './components/InfrastructureMappingsList/InfrastructureMappingsList';
@@ -138,14 +144,8 @@ class Overview extends React.Component {
     } = this.props;
 
     const aggregateDataCards = (
-      <CardGrid
-        matchHeight
-        style={{
-          marginLeft: 10,
-          marginRight: 10
-        }}
-      >
-        <CardGrid.Row>
+      <div className="row-cards-pf">
+        <Card.HeightMatching selector={['.card-pf-match-height']}>
           <CardGrid.Col xs={6} sm={3}>
             <AggregateCards.NotStartedTransformationPlans
               notStartedPlans={notStartedTransformationPlans}
@@ -170,8 +170,8 @@ class Overview extends React.Component {
               loading={isFetchingTransformationMappings}
             />
           </CardGrid.Col>
-        </CardGrid.Row>
-      </CardGrid>
+        </Card.HeightMatching>
+      </div>
     );
 
     const overviewContent = (
