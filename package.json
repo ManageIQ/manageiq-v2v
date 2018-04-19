@@ -55,7 +55,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "bootstrap-select": "^1.12.4",
+    "bootstrap-select": "~1.12.4",
     "classnames": "^2.2.5",
     "csv": "^2.0.0",
     "cx": "^18.4.1",
@@ -65,7 +65,7 @@
     "moment": "^2.22.0",
     "numeral": "^2.0.6",
     "patternfly": "^3.43.0",
-    "patternfly-react": "1.16.4",
+    "patternfly-react": "2.0.0",
     "prop-types": "^15.6.0",
     "react": "^16.3.1",
     "react-bootstrap": "^0.32.1",

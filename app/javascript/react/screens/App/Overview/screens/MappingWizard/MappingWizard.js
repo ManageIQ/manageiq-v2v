@@ -1,13 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  bindMethods,
-  noop,
-  Button,
-  Icon,
-  Modal,
-  Wizard
-} from 'patternfly-react';
+import { bindMethods, noop, Button, Icon, Wizard } from 'patternfly-react';
 import {
   createTransformationMappings,
   getMappedSourceClusters,
@@ -180,83 +173,74 @@ class MappingWizard extends React.Component {
     const disableNextStep = !onFinalStep && !!currentStepForm.syncErrors;
 
     return (
-      <Modal
+      <Wizard
         show={!hideMappingWizard}
-        onHide={() => {
+        onClose={() => {
           hideMappingWizardAction(onFinalStep);
         }}
         onExited={mappingWizardExitedAction}
-        dialogClassName="modal-lg wizard-pf"
       >
-        <Wizard>
-          <Modal.Header>
-            <button
-              className="close"
-              onClick={() => {
-                hideMappingWizardAction(onFinalStep);
-              }}
-              aria-hidden="true"
-              aria-label="Close"
-            >
-              <Icon type="pf" name="close" />
-            </button>
-            <Modal.Title>{__('Infrastructure Mapping Wizard')}</Modal.Title>
-          </Modal.Header>
-          <Modal.Body className="wizard-pf-body clearfix">
-            <MappingWizardBody
-              loaded
-              activeStepIndex={activeStepIndex}
-              activeStep={activeStep}
-              goToStep={this.goToStep}
-              disableNextStep={disableNextStep}
-              transformationsBody={transformationsBody}
-              mappingWizardGeneralStep={mappingWizardGeneralStep}
-              mappingWizardClustersStep={mappingWizardClustersStep}
-              mappingWizardDatastoresStep={mappingWizardDatastoresStep}
-              mappingWizardNetworksStep={mappingWizardNetworksStep}
-              alertText={alertText}
-              alertType={alertType}
-              hideAlertAction={hideAlertAction}
-            />
-          </Modal.Body>
-          <Modal.Footer className="wizard-pf-footer">
-            <Button
-              bsStyle="default"
-              className="btn-cancel"
-              onClick={() => {
-                hideMappingWizardAction(onFinalStep);
-              }}
-              disabled={onFinalStep}
-            >
-              {__('Cancel')}
-            </Button>
+        <Wizard.Header
+          onClose={() => {
+            hideMappingWizardAction(onFinalStep);
+          }}
+          title={__('Infrastructure Mapping Wizard')}
+        />
 
-            <Button
-              bsStyle="default"
-              onClick={this.prevStep}
-              disabled={onFirstStep || onFinalStep}
-            >
-              <Icon type="fa" name="angle-left" />
-              {__('Back')}
-            </Button>
-            <Button
-              bsStyle="primary"
-              onClick={
-                onFinalStep
-                  ? () => hideMappingWizardAction(onFinalStep)
-                  : this.nextStep
-              }
-              disabled={disableNextStep}
-            >
-              {onFinalStep
-                ? __('Close')
-                : activeStepIndex === 3
-                  ? __('Create')
-                  : __('Next')}
-              <Icon type="fa" name="angle-right" />
-            </Button>
-          </Modal.Footer>
-        </Wizard>
+        <Wizard.Body>
+          <MappingWizardBody
+            loaded
+            activeStepIndex={activeStepIndex}
+            activeStep={activeStep}
+            goToStep={this.goToStep}
+            disableNextStep={disableNextStep}
+            transformationsBody={transformationsBody}
+            mappingWizardGeneralStep={mappingWizardGeneralStep}
+            mappingWizardClustersStep={mappingWizardClustersStep}
+            mappingWizardDatastoresStep={mappingWizardDatastoresStep}
+            mappingWizardNetworksStep={mappingWizardNetworksStep}
+            alertText={alertText}
+            alertType={alertType}
+            hideAlertAction={hideAlertAction}
+          />
+        </Wizard.Body>
+        <Wizard.Footer>
+          <Button
+            bsStyle="default"
+            className="btn-cancel"
+            onClick={() => {
+              hideMappingWizardAction(onFinalStep);
+            }}
+            disabled={onFinalStep}
+          >
+            {__('Cancel')}
+          </Button>
+
+          <Button
+            bsStyle="default"
+            onClick={this.prevStep}
+            disabled={onFirstStep || onFinalStep}
+          >
+            <Icon type="fa" name="angle-left" />
+            {__('Back')}
+          </Button>
+          <Button
+            bsStyle="primary"
+            onClick={
+              onFinalStep
+                ? () => hideMappingWizardAction(onFinalStep)
+                : this.nextStep
+            }
+            disabled={disableNextStep}
+          >
+            {onFinalStep
+              ? __('Close')
+              : activeStepIndex === 3
+                ? __('Create')
+                : __('Next')}
+            <Icon type="fa" name="angle-right" />
+          </Button>
+        </Wizard.Footer>
         <WarningModal
           warningModalVisible={warningModalVisible}
           hideWarningModalAction={hideWarningModalAction}
@@ -265,7 +249,7 @@ class MappingWizard extends React.Component {
           nextStep={this.nextStep}
           sourceClustersWithoutMappings={sourceClustersWithoutMappings}
         />
-      </Modal>
+      </Wizard>
     );
   }
 }
