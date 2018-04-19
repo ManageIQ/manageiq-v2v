@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { noop, Modal, Wizard, Icon, Button } from 'patternfly-react';
+import { noop, Wizard, Icon, Button } from 'patternfly-react';
 import { connect } from 'react-redux';
 
 // TODO we should lift this application-specific stuff out of this generalized component file.
@@ -41,54 +41,42 @@ const ModalWizard = props => {
     !!formContainer[currentReduxForm].syncErrors;
 
   return (
-    <Modal
+    <Wizard
       show={showWizard}
       onHide={onHide}
       onExited={onExited}
       dialogClassName="modal-lg wizard-pf"
     >
-      <Wizard>
-        <Modal.Header>
-          <button
-            className="close"
-            onClick={onHide}
-            aria-hidden="true"
-            aria-label="Close"
-          >
-            <Icon type="pf" name="close" />
-          </button>
-          <Modal.Title>{title}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body className="wizard-pf-body clearfix">
-          {React.Children.map(children, child =>
-            React.cloneElement(child, {
-              activeStepIndex,
-              activeStep,
-              goToStep,
-              stepButtonsDisabled,
-              disableNextStep
-            })
-          )}
-        </Modal.Body>
-        <Modal.Footer className="wizard-pf-footer">
-          <Button bsStyle="default" className="btn-cancel" onClick={onHide}>
-            {__('Cancel')}
-          </Button>
-          <Button bsStyle="default" onClick={onBack} disabled={onFirstStep}>
-            <Icon type="fa" name="angle-left" />
-            {__('Back')}
-          </Button>
-          <Button
-            bsStyle="primary"
-            onClick={onFinalStep ? onHide : onNext}
-            disabled={disableNextStep}
-          >
-            {onFinalStep ? __('Close') : __('Next')}
-            <Icon type="fa" name="angle-right" />
-          </Button>
-        </Modal.Footer>
-      </Wizard>
-    </Modal>
+      <Wizard.Header onClose={onHide} title={title} />
+      <Wizard.Body>
+        {React.Children.map(children, child =>
+          React.cloneElement(child, {
+            activeStepIndex,
+            activeStep,
+            goToStep,
+            stepButtonsDisabled,
+            disableNextStep
+          })
+        )}
+      </Wizard.Body>
+      <Wizard.Footer>
+        <Button bsStyle="default" className="btn-cancel" onClick={onHide}>
+          {__('Cancel')}
+        </Button>
+        <Button bsStyle="default" onClick={onBack} disabled={onFirstStep}>
+          <Icon type="fa" name="angle-left" />
+          {__('Back')}
+        </Button>
+        <Button
+          bsStyle="primary"
+          onClick={onFinalStep ? onHide : onNext}
+          disabled={disableNextStep}
+        >
+          {onFinalStep ? __('Close') : __('Next')}
+          <Icon type="fa" name="angle-right" />
+        </Button>
+      </Wizard.Footer>
+    </Wizard>
   );
 };
 

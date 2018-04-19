@@ -1,13 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  bindMethods,
-  noop,
-  Button,
-  Icon,
-  Modal,
-  Wizard
-} from 'patternfly-react';
+import { bindMethods, noop, Button, Icon, Wizard } from 'patternfly-react';
 import { createMigrationPlans } from './helpers';
 import PlanWizardBody from './PlanWizardBody';
 
@@ -92,68 +85,60 @@ class PlanWizard extends React.Component {
           this.props.planWizardVMStep.values.selectedVms.length === 0));
 
     return (
-      <Modal
+      <Wizard
         show={!hidePlanWizard}
-        onHide={hidePlanWizardAction}
+        onClose={hidePlanWizardAction}
         onExited={planWizardExitedAction}
-        dialogClassName="modal-lg wizard-pf"
       >
-        <Wizard>
-          <Modal.Header>
-            <button
-              className="close"
-              onClick={hidePlanWizardAction}
-              aria-hidden="true"
-              aria-label="Close"
-            >
-              <Icon type="pf" name="close" />
-            </button>
-            <Modal.Title>{__('Migration Plan Wizard')}</Modal.Title>
-          </Modal.Header>
-          <Modal.Body className="wizard-pf-body clearfix">
-            <PlanWizardBody
-              loaded
-              activeStepIndex={activeStepIndex}
-              activeStep={activeStep}
-              goToStep={this.goToStep}
-              disableNextStep={disableNextStep}
-              plansBody={plansBody}
-              planWizardGeneralStep={planWizardGeneralStep}
-              planWizardVMStep={planWizardVMStep}
-              planWizardOptionsStep={planWizardOptionsStep}
-            />
-          </Modal.Body>
-          <Modal.Footer className="wizard-pf-footer">
-            <Button
-              bsStyle="default"
-              className="btn-cancel"
-              onClick={hidePlanWizardAction}
-            >
-              {__('Cancel')}
-            </Button>
-            <Button
-              bsStyle="default"
-              onClick={this.prevStep}
-              disabled={onFirstStep || onFinalStep}
-            >
-              <Icon type="fa" name="angle-left" />
-              {__('Back')}
-            </Button>
-            <Button
-              bsStyle="primary"
-              onClick={onFinalStep ? hidePlanWizardAction : this.nextStep}
-              disabled={disableNextStep}
-            >
-              {onFinalStep
-                ? __('Close')
-                : activeStepIndex === 2
-                  ? __('Create')
-                  : __('Next')}
-              <Icon type="fa" name="angle-right" />
-            </Button>
-          </Modal.Footer>
-        </Wizard>
-      </Modal>
+        <Wizard.Header
+          onClose={hidePlanWizardAction}
+          title={__('Migration Plan Wizard')}
+        />
+
+        <Wizard.Body>
+          <PlanWizardBody
+            loaded
+            activeStepIndex={activeStepIndex}
+            activeStep={activeStep}
+            goToStep={this.goToStep}
+            disableNextStep={disableNextStep}
+            plansBody={plansBody}
+            planWizardGeneralStep={planWizardGeneralStep}
+            planWizardVMStep={planWizardVMStep}
+            planWizardOptionsStep={planWizardOptionsStep}
+          />
+        </Wizard.Body>
+
+        <Wizard.Footer className="wizard-pf-footer">
+          <Button
+            bsStyle="default"
+            className="btn-cancel"
+            onClick={hidePlanWizardAction}
+          >
+            {__('Cancel')}
+          </Button>
+          <Button
+            bsStyle="default"
+            onClick={this.prevStep}
+            disabled={onFirstStep || onFinalStep}
+          >
+            <Icon type="fa" name="angle-left" />
+            {__('Back')}
+          </Button>
+          <Button
+            bsStyle="primary"
+            onClick={onFinalStep ? hidePlanWizardAction : this.nextStep}
+            disabled={disableNextStep}
+          >
+            {onFinalStep
+              ? __('Close')
+              : activeStepIndex === 2
+                ? __('Create')
+                : __('Next')}
+            <Icon type="fa" name="angle-right" />
+          </Button>
+        </Wizard.Footer>
+      </Wizard>
     );
   }
 }
