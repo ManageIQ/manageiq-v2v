@@ -29,7 +29,7 @@ export default (state = initialState, action) => {
         action.payload.data.resources[0]
       ) {
         return state
-          .set('sourceClusters', action.payload.data.resources[0].ems_clusters)
+          .set('sourceClusters', action.payload.data.resources)
           .set('isRejectedSourceClusters', false)
           .set('isFetchingSourceClusters', false);
       }
@@ -53,7 +53,7 @@ export default (state = initialState, action) => {
         action.payload.data.resources[0]
       ) {
         return state
-          .set('targetClusters', action.payload.data.resources[0].ems_clusters)
+          .set('targetClusters', action.payload.data.resources)
           .set('isRejectedTargetClusters', false)
           .set('isFetchingTargetClusters', false);
       }

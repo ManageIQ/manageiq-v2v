@@ -61,14 +61,12 @@ describe('fetching source clusters', () => {
 
     test('and there is data', () => {
       const { resources } = sourceClusters;
-      const { ems_clusters, ...provider } = resources[0];
       const payload = {
         data: {
           ...sourceClusters,
           resources: [
             {
-              ...provider,
-              ems_clusters: [ems_clusters[0]]
+              ...resources
             }
           ]
         }
@@ -131,14 +129,12 @@ describe('fetching target clusters', () => {
     });
     test('and there is data', () => {
       const { resources } = targetClusters;
-      const { ems_clusters, ...provider } = resources[0];
       const payload = {
         data: {
           ...targetClusters,
           resources: [
             {
-              ...provider,
-              ems_clusters: [ems_clusters[0]]
+              ...resources
             }
           ]
         }
