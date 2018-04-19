@@ -225,11 +225,17 @@ class PlanRequestDetailList extends React.Component {
     filterText += ': ';
     filterText += value.title || value;
 
-    const activeFilters = [
-      ...this.state.activeFilters,
-      { label: filterText, field, value: value.title || value }
-    ];
-    this.setState({ activeFilters });
+    this.setState(prevState => ({
+      activeFilters: [
+        ...prevState.activeFilters,
+        { label: filterText, field, value: value.title || value }
+      ],
+      pagination: {
+        ...prevState.pagination,
+        page: 1
+      },
+      pageChangeValue: 1
+    }));
   };
   totalPages = () => {
     const { activeFilters, pagination } = this.state;
