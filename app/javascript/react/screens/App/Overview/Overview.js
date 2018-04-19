@@ -14,7 +14,8 @@ class Overview extends React.Component {
     bindMethods(this, [
       'stopPolling',
       'startPolling',
-      'createTransformationPlanRequest'
+      'createTransformationPlanRequest',
+      'redirectTo'
     ]);
 
     this.mappingWizard = componentRegistry.markup(
@@ -117,6 +118,11 @@ class Overview extends React.Component {
     });
   }
 
+  redirectTo(path) {
+    const { history } = this.props;
+    history.push(path);
+  }
+
   render() {
     const {
       showMappingWizardAction,
@@ -202,6 +208,7 @@ class Overview extends React.Component {
               isCreatingTransformationPlanRequest={
                 isCreatingTransformationPlanRequest
               }
+              redirectTo={this.redirectTo}
             />
           )}
           <InfrastructureMappingsList
@@ -261,6 +268,7 @@ Overview.propTypes = {
   fetchClustersUrl: PropTypes.string,
   clusters: PropTypes.array,
   migrationsFilter: PropTypes.string,
-  setMigrationsFilterAction: PropTypes.func
+  setMigrationsFilterAction: PropTypes.func,
+  history: PropTypes.object
 };
 export default Overview;
