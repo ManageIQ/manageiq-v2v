@@ -17,18 +17,21 @@ const initialState = Immutable({
 });
 
 const _formatValidVms = vms =>
+  vms &&
   vms.map(v => {
     v.valid = true;
     v.allocated_size = numeral(v.allocated_size).format('0.00b');
     return v;
   });
 const _formatInvalidVms = vms =>
+  vms &&
   vms.map(v => {
     v.invalid = true;
     v.allocated_size = numeral(v.allocated_size).format('0.00b');
     return v;
   });
 const _formatConflictVms = vms =>
+  vms &&
   vms.map(v => {
     v.conflict = true;
     v.allocated_size = numeral(v.allocated_size).format('0.00b');
