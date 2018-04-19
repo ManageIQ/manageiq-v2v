@@ -1,8 +1,9 @@
 !!!
 %html.layout-pf.layout-pf-fixed.transitions{:lang => I18n.locale.to_s.sub('-', '_')}
-  %body
-    %p
-    %title ManageIQ v2v plugin
+  %head
+    %title
+      = "%{product}: %{title}" % {:product => Vmdb::Appliance.PRODUCT_NAME, :title => _("Migration")}
+    = favicon_link_tag
     = stylesheet_link_tag "application", media: "all"
     = stylesheet_link_tag "miq_v2v_ui/application", media: "all"
     = javascript_pack_tag 'vendor'
@@ -14,4 +15,3 @@
     = render :partial => "layouts/vertical_navbar"
     .container-pf-nav-pf-vertical.container-pf-nav-pf-vertical-with-sub-menus{:style => "overflow: hidden; height: 100%"}
       = yield
-
