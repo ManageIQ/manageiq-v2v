@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { OverlayTrigger, Tooltip } from 'patternfly-react';
+import EllipsisWithTooltip from 'react-ellipsis-with-tooltip';
 
 const DualPaneMapperListItem = ({
   item,
@@ -21,16 +21,12 @@ const DualPaneMapperListItem = ({
       aria-selected={selected}
       role="option"
     >
-      <OverlayTrigger
-        overlay={<Tooltip id={text}>{text}</Tooltip>}
-        trigger={['hover', 'focus']}
-        placement="top"
-      >
+      <EllipsisWithTooltip id={text}>
         <div className="dual-pane-mapper-info">
           <span className="dual-pane-mapper-item-container">{text}</span>
           <span className="dual-pane-mapper-item-select-indicator fa fa-check" />
         </div>
-      </OverlayTrigger>
+      </EllipsisWithTooltip>
     </div>
   );
 };
