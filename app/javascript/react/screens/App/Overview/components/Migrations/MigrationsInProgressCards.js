@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, CardGrid, Grid, EmptyState, Spinner } from 'patternfly-react';
+import { Card, Grid, EmptyState, Spinner } from 'patternfly-react';
 import MigrationInProgressCard from './MigrationsInProgressCard';
 
 const MigrationsInProgressCards = ({
