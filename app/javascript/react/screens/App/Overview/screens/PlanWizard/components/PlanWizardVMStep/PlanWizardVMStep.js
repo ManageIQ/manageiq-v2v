@@ -100,13 +100,10 @@ class PlanWizardVMStep extends React.Component {
         conflict_vms.length === 0)
     ) {
       return (
-        <div>
-          <h2>{__('VMs to be Migrated')}</h2>
-          <CSVDropzoneField
-            columnNames={['name', 'host', 'provider']}
-            onCSVParseSuccess={this.onCSVParseSuccess}
-          />
-        </div>
+        <CSVDropzoneField
+          columnNames={['name', 'host', 'provider']}
+          onCSVParseSuccess={this.onCSVParseSuccess}
+        />
       );
     } else if (!isValidatingVms && validationServiceCalled) {
       // set make rows editable so they can be selected
@@ -117,21 +114,24 @@ class PlanWizardVMStep extends React.Component {
 
       if (combined.length) {
         return (
-          <Field
-            name="selectedVms"
-            component={PlanWizardVMStepTable}
-            rows={combined}
-            onCsvImportAction={csvImportAction}
-            discoveryMode={discoveryMode}
-            validate={[
-              length({
-                min: 1,
-                msg: __(
-                  'At least one VM needs to be selected to create the Migration Plan.'
-                )
-              })
-            ]}
-          />
+          <React.Fragment>
+            <h2>{__('VMs to be Migrated')}</h2>
+            <Field
+              name="selectedVms"
+              component={PlanWizardVMStepTable}
+              rows={combined}
+              onCsvImportAction={csvImportAction}
+              discoveryMode={discoveryMode}
+              validate={[
+                length({
+                  min: 1,
+                  msg: __(
+                    'At least one VM needs to be selected to create the Migration Plan.'
+                  )
+                })
+              ]}
+            />
+          </React.Fragment>
         );
       }
       // no vms found - show a warning
