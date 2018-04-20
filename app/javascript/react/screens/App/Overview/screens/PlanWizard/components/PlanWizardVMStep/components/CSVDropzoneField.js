@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import csv from 'csv';
-import { bindMethods, Toolbar, Button, EmptyState } from 'patternfly-react';
+import { bindMethods, Button, EmptyState } from 'patternfly-react';
 import Dropzone from 'react-dropzone';
 
 // Unfortunately, this is the recommended way to trigger the file dialog programmatically.
@@ -71,29 +71,23 @@ class CSVDropzoneField extends React.Component {
             dropzoneRef = node; // See comment at top, this is so we can call dropzoneRef.open below
           }}
         >
-          <Toolbar>
-            <Toolbar.RightContent>
+          <EmptyState>
+            <EmptyState.Icon type="pf" name="import" />
+            <EmptyState.Title />
+            <EmptyState.Info>
+              {__('Import a file including a list of VMs to be migrated.')}
+            </EmptyState.Info>
+            <EmptyState.Action>
               <Button
                 bsStyle="primary"
                 onClick={() => {
                   dropzoneRef.open();
                 }}
               >
-                {__('Browse...')}
+                {__('Import')}
               </Button>
-            </Toolbar.RightContent>
-            <div className="form-group">
-              <EmptyState>
-                <EmptyState.Icon type="fa" name="upload" />
-                <EmptyState.Title>{__('Import a CSV file')}</EmptyState.Title>
-                <EmptyState.Info>
-                  {__(
-                    'Click "Browse..." or drag-and-drop here to import a CSV file containing a list of VMs to be migrated.'
-                  )}
-                </EmptyState.Info>
-              </EmptyState>
-            </div>
-          </Toolbar>
+            </EmptyState.Action>
+          </EmptyState>
         </Dropzone>
       </React.Fragment>
     );
