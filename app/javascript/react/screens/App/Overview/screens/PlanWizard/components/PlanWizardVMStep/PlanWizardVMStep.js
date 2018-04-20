@@ -90,8 +90,8 @@ class PlanWizardVMStep extends React.Component {
             )}
           </p>
           <div className="form-group">
-            <Button onClick={csvImportAction}>
-              <Icon type="pf" name="import" /> {__("Import CSV")}
+            <Button bsStyle="primary" onClick={csvImportAction}>
+              {__('Import')}
             </Button>
           </div>
         </div>
