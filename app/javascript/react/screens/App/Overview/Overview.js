@@ -151,32 +151,34 @@ class Overview extends React.Component {
     } = this.props;
 
     const aggregateDataCards = (
-      <Card.HeightMatching selector={['.card-pf-match-height']}>
-        <CardGrid.Col xs={6} sm={3}>
-          <AggregateCards.NotStartedTransformationPlans
-            notStartedPlans={notStartedTransformationPlans}
-            loading={isFetchingTransformationPlans && !plansPreviouslyFetched}
-          />
-        </CardGrid.Col>
-        <CardGrid.Col xs={6} sm={3}>
-          <AggregateCards.ActiveTransformationPlans
-            activePlans={activeTransformationPlans}
-            loading={isFetchingTransformationPlans && !plansPreviouslyFetched}
-          />
-        </CardGrid.Col>
-        <CardGrid.Col xs={6} sm={3}>
-          <AggregateCards.FinishedTransformationPlans
-            finishedPlans={finishedTransformationPlans}
-            loading={isFetchingTransformationPlans && !plansPreviouslyFetched}
-          />
-        </CardGrid.Col>
-        <CardGrid.Col xs={6} sm={3}>
-          <AggregateCards.InfrastructureMappings
-            mappings={transformationMappings}
-            loading={isFetchingTransformationMappings}
-          />
-        </CardGrid.Col>
-      </Card.HeightMatching>
+      <div className="row-cards-pf">
+        <Card.HeightMatching selector={['.card-pf-match-height']}>
+          <CardGrid.Col xs={6} sm={3}>
+            <AggregateCards.NotStartedTransformationPlans
+              notStartedPlans={notStartedTransformationPlans}
+              loading={isFetchingTransformationPlans && !plansPreviouslyFetched}
+            />
+          </CardGrid.Col>
+          <CardGrid.Col xs={6} sm={3}>
+            <AggregateCards.ActiveTransformationPlans
+              activePlans={activeTransformationPlans}
+              loading={isFetchingTransformationPlans && !plansPreviouslyFetched}
+            />
+          </CardGrid.Col>
+          <CardGrid.Col xs={6} sm={3}>
+            <AggregateCards.FinishedTransformationPlans
+              finishedPlans={finishedTransformationPlans}
+              loading={isFetchingTransformationPlans && !plansPreviouslyFetched}
+            />
+          </CardGrid.Col>
+          <CardGrid.Col xs={6} sm={3}>
+            <AggregateCards.InfrastructureMappings
+              mappings={transformationMappings}
+              loading={isFetchingTransformationMappings}
+            />
+          </CardGrid.Col>
+        </Card.HeightMatching>
+      </div>
     );
 
     const overviewContent = (
