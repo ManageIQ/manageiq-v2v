@@ -32,6 +32,10 @@ class PlanWizardVMStep extends React.Component {
     parsedRows.shift();
     validateVmsAction(validateVmsUrl, infrastructure_mapping_id, parsedRows);
   };
+  onCSVParseFailure = errMsg => {
+    const { csvParseErrorAction } = this.props;
+    csvParseErrorAction(errMsg);
+  };
   validateVms = () => {
     const {
       infrastructure_mapping_id,
@@ -103,8 +107,8 @@ class PlanWizardVMStep extends React.Component {
     ) {
       return (
         <CSVDropzoneField
-          columnNames={['name', 'host', 'provider']}
           onCSVParseSuccess={this.onCSVParseSuccess}
+          onCSVParseFailure={this.onCSVParseFailure}
         />
       );
     } else if (!isValidatingVms && validationServiceCalled) {
@@ -163,6 +167,7 @@ PlanWizardVMStep.propTypes = {
   validateVmsUrl: PropTypes.string.isRequired,
   validateVmsAction: PropTypes.func.isRequired,
   csvImportAction: PropTypes.func.isRequired,
+  csvParseErrorAction: PropTypes.func.isRequired,
   isValidatingVms: PropTypes.bool,
   isRejectedValidatingVms: PropTypes.bool,
   validationServiceCalled: PropTypes.bool,
