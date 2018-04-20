@@ -15,8 +15,10 @@ import {
   PaginationRow,
   Table,
   Toolbar,
+  Popover,
   FormControl,
   Filter,
+  OverlayTrigger,
   PAGINATION_VIEW
 } from 'patternfly-react';
 
@@ -154,11 +156,49 @@ class PlanWizardVMStepTable extends React.Component {
           }
         },
         {
+          property: 'reason',
+          header: {
+            label: '',
+            props: {
+              index: 1,
+              rowSpan: 1,
+              colSpan: 1
+            },
+            transforms: [sortableTransform],
+            customFormatters: [Table.sortableHeaderCellFormatter]
+          },
+          cell: {
+            props: {
+              index: 1
+            },
+            formatters: [
+              (value, { rowData }) => (
+                <span>
+                  <OverlayTrigger
+                    overlay={<Popover id="Popover">{value}</Popover>}
+                    placement="right"
+                    trigger={['click']}
+                    rootClose
+                  >
+                    <Button bsStyle="link">
+                      <Icon
+                        type="pf"
+                        name={rowData.valid ? 'ok' : 'error-circle-o'}
+                      />
+                    </Button>
+                  </OverlayTrigger>
+                </span>
+              ),
+              Table.tableCellFormatter
+            ]
+          }
+        },
+        {
           property: 'name',
           header: {
             label: __('VM Name'),
             props: {
-              index: 1,
+              index: 2,
               rowSpan: 1,
               colSpan: 1
             },
@@ -178,7 +218,7 @@ class PlanWizardVMStepTable extends React.Component {
           header: {
             label: __('Source Cluster'),
             props: {
-              index: 2,
+              index: 3,
               rowSpan: 1,
               colSpan: 1
             },
@@ -198,7 +238,7 @@ class PlanWizardVMStepTable extends React.Component {
           header: {
             label: __('Path'),
             props: {
-              index: 3,
+              index: 4,
               rowSpan: 1,
               colSpan: 1
             },
@@ -218,26 +258,6 @@ class PlanWizardVMStepTable extends React.Component {
           header: {
             label: __('Allocated Size'),
             props: {
-              index: 4,
-              rowSpan: 1,
-              colSpan: 1
-            },
-            transforms: [sortableTransform],
-            formatters: [sortingFormatter],
-            customFormatters: [Table.sortableHeaderCellFormatter]
-          },
-          cell: {
-            props: {
-              index: 4
-            },
-            formatters: [Table.tableCellFormatter]
-          }
-        },
-        {
-          property: 'reason',
-          header: {
-            label: __('Status'),
-            props: {
               index: 5,
               rowSpan: 1,
               colSpan: 1
@@ -248,7 +268,7 @@ class PlanWizardVMStepTable extends React.Component {
           },
           cell: {
             props: {
-              index: 5
+              index: 4
             },
             formatters: [Table.tableCellFormatter]
           }
