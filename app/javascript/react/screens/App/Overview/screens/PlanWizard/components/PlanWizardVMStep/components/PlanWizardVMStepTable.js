@@ -156,7 +156,7 @@ class PlanWizardVMStepTable extends React.Component {
         {
           property: 'name',
           header: {
-            label: 'VM Name',
+            label: __('VM Name'),
             props: {
               index: 1,
               rowSpan: 1,
@@ -176,7 +176,7 @@ class PlanWizardVMStepTable extends React.Component {
         {
           property: 'cluster',
           header: {
-            label: 'Source Cluster',
+            label: __('Source Cluster'),
             props: {
               index: 2,
               rowSpan: 1,
@@ -196,7 +196,7 @@ class PlanWizardVMStepTable extends React.Component {
         {
           property: 'path',
           header: {
-            label: 'Path',
+            label: __('Path'),
             props: {
               index: 3,
               rowSpan: 1,
@@ -216,7 +216,7 @@ class PlanWizardVMStepTable extends React.Component {
         {
           property: 'allocated_size',
           header: {
-            label: 'Allocated Size',
+            label: __('Allocated Size'),
             props: {
               index: 4,
               rowSpan: 1,
@@ -236,7 +236,7 @@ class PlanWizardVMStepTable extends React.Component {
         {
           property: 'reason',
           header: {
-            label: 'Status',
+            label: __('Status'),
             props: {
               index: 5,
               rowSpan: 1,
