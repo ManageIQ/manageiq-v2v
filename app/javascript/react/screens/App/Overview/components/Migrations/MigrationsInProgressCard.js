@@ -21,7 +21,7 @@ const MigrationsInProgressCard = ({ plan, handleClick }) => {
       <Grid.Col sm={12} md={6} lg={4}>
         <Card matchHeight>
           <Card.Heading>
-            <Card.Title>{plan.name}</Card.Title>
+            <h3 className="card-pf-title">{plan.name}</h3>
           </Card.Heading>
           <Card.Body>
             <EmptyState>
