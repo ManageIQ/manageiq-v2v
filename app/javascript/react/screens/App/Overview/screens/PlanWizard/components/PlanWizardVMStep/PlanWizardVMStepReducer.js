@@ -21,6 +21,7 @@ const _formatValidVms = vms =>
   vms.map(v => {
     v.valid = true;
     v.allocated_size = numeral(v.allocated_size).format('0.00b');
+    v.reason = __(v.reason);
     return v;
   });
 const _formatInvalidVms = vms =>
@@ -28,6 +29,7 @@ const _formatInvalidVms = vms =>
   vms.map(v => {
     v.invalid = true;
     v.allocated_size = numeral(v.allocated_size).format('0.00b');
+    v.reason = __(v.reason);
     return v;
   });
 const _formatConflictVms = vms =>
@@ -35,6 +37,7 @@ const _formatConflictVms = vms =>
   vms.map(v => {
     v.conflict = true;
     v.allocated_size = numeral(v.allocated_size).format('0.00b');
+    v.reason = __(v.reason);
     return v;
   });
 
