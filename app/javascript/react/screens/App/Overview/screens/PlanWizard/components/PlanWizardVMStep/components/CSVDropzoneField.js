@@ -37,11 +37,7 @@ class CSVDropzoneField extends React.Component {
           if (csvRows && csvRows.length > 0) {
             csvRows = this.trimWhiteSpaces(csvRows);
             const headerRow = this.mapCSVColumnNameToKey(csvRows[0]);
-            if (
-              !headerRow.find(function(element) {
-                return element === 'name';
-              })
-            ) {
+            if (!headerRow.find(element => element === 'name')) {
               onCSVParseFailure(
                 __(
                   "Error: Required column 'Name' does not exist in the .CSV file"
@@ -70,9 +66,8 @@ class CSVDropzoneField extends React.Component {
     }
   }
 
-  trimWhiteSpaces = csvRows => {
-    return csvRows.map(row => row.map(value => value.trim()));
-  };
+  trimWhiteSpaces = csvRows =>
+    csvRows.map(row => row.map(value => value.trim()));
 
   mapCSVColumnNameToKey = headerRow => {
     headerRow[headerRow.findIndex(k => k === __('Name'))] = 'name';
@@ -120,8 +115,8 @@ class CSVDropzoneField extends React.Component {
 }
 
 CSVDropzoneField.propTypes = {
-  columnNames: PropTypes.arrayOf(PropTypes.string),
-  onCSVParseSuccess: PropTypes.func
+  onCSVParseSuccess: PropTypes.func,
+  onCSVParseFailure: PropTypes.func
 };
 
 export default CSVDropzoneField;
