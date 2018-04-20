@@ -69,6 +69,13 @@ export default (state = initialState, action) => {
       return state
         .set('errorValidatingVms', action.payload)
         .set('isRejectedValidatingVms', true)
+        .set('isValidatingVms', false)
+        .set('isCSVParseError', false);
+    case `${V2V_VALIDATE_VMS}_CSV_PARSE_ERROR`:
+      return state
+        .set('errorParsingCSV', action.payload)
+        .set('isRejectedValidatingVms', true)
+        .set('isCSVParseError', true)
         .set('isValidatingVms', false);
     case V2V_VM_STEP_RESET:
       return state
