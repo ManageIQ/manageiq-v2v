@@ -192,6 +192,7 @@ class Overview extends React.Component {
             isFetchingTransformationMappings ||
             (isFetchingTransformationPlans && !plansPreviouslyFetched)
           }
+          style={{ marginTop: 200 }}
         >
           {transformationMappings.length > 0 && (
             <Migrations
