@@ -11,7 +11,12 @@ let dropzoneRef;
 class CSVDropzoneField extends React.Component {
   constructor() {
     super();
-    bindMethods(this, ['onFileDrop', 'handleUnparsedFile']);
+    bindMethods(this, [
+      'onFileDrop',
+      'handleUnparsedFile',
+      'trimWhiteSpaces',
+      'mapCSVColumnNameToKey'
+    ]);
   }
 
   onFileDrop(acceptedFiles, rejectedFiles) {
@@ -24,38 +29,58 @@ class CSVDropzoneField extends React.Component {
   }
 
   handleUnparsedFile(fileHandle) {
-    const { columnNames, onCSVParseSuccess } = this.props;
+    const { onCSVParseSuccess, onCSVParseFailure } = this.props;
     if (fileHandle) {
       const reader = new FileReader();
       reader.onload = () => {
         csv.parse(reader.result, (err, csvRows) => {
-          const rowObjects = csvRows.map(row =>
-            columnNames.reduce(
-              (rowObject, key, index) => ({
-                ...rowObject,
-                [key]: row[index]
-              }),
-              {}
-            )
-          );
-
-          // TODO: client side validation logic should occur here and should prevent calling
-          // onCSVParseSuccess until all validation is done...
-          // i.e. setState with errors and show them here instead.
-
-          /**
-           * Need to check the following is done:
-           * 1. csv is empty
-           * 2. csv contains malformed rows (maybe print them out?)
-           * 3. Ask user to import the csv again
-           */
-
-          onCSVParseSuccess(rowObjects);
+          if (csvRows && csvRows.length > 0) {
+            csvRows = this.trimWhiteSpaces(csvRows);
+            const headerRow = this.mapCSVColumnNameToKey(csvRows[0]);
+            if (
+              !headerRow.find(function(element) {
+                return element === 'name';
+              })
+            ) {
+              onCSVParseFailure(
+                __(
+                  "Error: Required column 'Name' does not exist in the .CSV file"
+                )
+              );
+              return;
+            }
+            const rowObjects = csvRows.map(row =>
+              headerRow.reduce(
+                (rowObject, key, index) => ({
+                  ...rowObject,
+                  [key]: row[index]
+                }),
+                {}
+              )
+            );
+            onCSVParseSuccess(rowObjects);
+          } else {
+            onCSVParseFailure(
+              err ? `${err}` : __('Error: Possibly a blank .CSV file')
+            );
+          }
         });
       };
       reader.readAsBinaryString(fileHandle);
     }
   }
+
+  trimWhiteSpaces = csvRows => {
+    return csvRows.map(row => row.map(value => value.trim()));
+  };
+
+  mapCSVColumnNameToKey = headerRow => {
+    headerRow[headerRow.findIndex(k => k === __('Name'))] = 'name';
+    headerRow[headerRow.findIndex(k => k === __('Host'))] = 'host';
+    headerRow[headerRow.findIndex(k => k === __('Provider'))] = 'provider';
+    headerRow[headerRow.findIndex(k => k === __('UID'))] = 'uid_ems';
+    return headerRow;
+  };
 
   render() {
     return (
