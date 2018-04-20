@@ -28,6 +28,8 @@ class PlanWizardVMStep extends React.Component {
       validateVmsUrl,
       validateVmsAction
     } = this.props;
+    // skip the header row
+    parsedRows.shift();
     validateVmsAction(validateVmsUrl, infrastructure_mapping_id, parsedRows);
   };
   validateVms = () => {
