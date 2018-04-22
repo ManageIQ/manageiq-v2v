@@ -30,8 +30,8 @@ class Plan extends React.Component {
   }
 
   componentDidMount() {
-    const { fetchPlanRequestsUrl, fetchPlanRequestsAction } = this.props;
-    fetchPlanRequestsAction(fetchPlanRequestsUrl);
+    const { fetchPlanRequestUrl, fetchPlanRequestAction } = this.props;
+    fetchPlanRequestAction(fetchPlanRequestUrl);
     this.startPolling();
   }
 
@@ -51,9 +51,9 @@ class Plan extends React.Component {
   }
 
   startPolling() {
-    const { fetchPlanRequestsAction, fetchPlanRequestsUrl } = this.props;
+    const { fetchPlanRequestAction, fetchPlanRequestUrl } = this.props;
     this.pollingInterval = setInterval(() => {
-      fetchPlanRequestsAction(fetchPlanRequestsUrl);
+      fetchPlanRequestAction(fetchPlanRequestUrl);
     }, 15000);
   }
 
@@ -67,9 +67,9 @@ class Plan extends React.Component {
   render() {
     const {
       planName,
-      isRejectedPlanRequests,
-      isFetchingPlanRequests,
-      planRequestsPreviouslyFetched
+      isRejectedPlanRequest,
+      isFetchingPlanRequest,
+      planRequestPreviouslyFetched
     } = this.props;
 
     const { planRequestTasksMutable } = this.state;
@@ -83,26 +83,26 @@ class Plan extends React.Component {
           <li>
             <Link to="/migration">{__('Migration')}</Link>
           </li>
-          {planRequestsPreviouslyFetched &&
-            !isRejectedPlanRequests &&
+          {planRequestPreviouslyFetched &&
+            !isRejectedPlanRequest &&
             planName && <Breadcrumb.Item active>{planName}</Breadcrumb.Item>}
         </Toolbar>
 
         <Spinner
           loading={
-            isFetchingPlanRequests &&
-            !planRequestsPreviouslyFetched &&
-            !isRejectedPlanRequests
+            isFetchingPlanRequest &&
+            !planRequestPreviouslyFetched &&
+            !isRejectedPlanRequest
           }
         >
-          {planRequestsPreviouslyFetched &&
-            !isRejectedPlanRequests &&
+          {planRequestPreviouslyFetched &&
+            !isRejectedPlanRequest &&
             planRequestTasksMutable.length > 0 && (
               <PlanRequestDetailList
                 planRequestTasks={planRequestTasksMutable}
               />
             )}
-          {planRequestsPreviouslyFetched &&
+          {planRequestPreviouslyFetched &&
             planRequestTasksMutable.length === 0 && (
               <PlanEmptyState
                 title="No Migration Tasks."
@@ -112,7 +112,7 @@ class Plan extends React.Component {
               />
             )}
         </Spinner>
-        {isRejectedPlanRequests && (
+        {isRejectedPlanRequest && (
           <PlanEmptyState
             title="Unable to retrieve migration details."
             iconType="pf"
@@ -125,21 +125,21 @@ class Plan extends React.Component {
   }
 }
 Plan.propTypes = {
-  fetchPlanRequestsUrl: PropTypes.string.isRequired,
-  fetchPlanRequestsAction: PropTypes.func.isRequired,
+  fetchPlanRequestUrl: PropTypes.string.isRequired,
+  fetchPlanRequestAction: PropTypes.func.isRequired,
   planName: PropTypes.string,
   planRequestTasks: PropTypes.array,
-  isRejectedPlanRequests: PropTypes.bool,
-  isFetchingPlanRequests: PropTypes.bool,
-  planRequestsPreviouslyFetched: PropTypes.bool,
-  errorPlanRequests: PropTypes.object // eslint-disable-line react/no-unused-prop-types
+  isRejectedPlanRequest: PropTypes.bool,
+  isFetchingPlanRequest: PropTypes.bool,
+  planRequestPreviouslyFetched: PropTypes.bool,
+  errorPlanRequest: PropTypes.object // eslint-disable-line react/no-unused-prop-types
 };
 Plan.defaultProps = {
   planName: '',
   planRequestTasks: [],
-  isRejectedPlanRequests: false,
-  isFetchingPlanRequests: false,
-  planRequestsPreviouslyFetched: false,
-  errorPlanRequests: null
+  isRejectedPlanRequest: false,
+  isFetchingPlanRequest: false,
+  planRequestPreviouslyFetched: false,
+  errorPlanRequest: null
 };
 export default Plan;

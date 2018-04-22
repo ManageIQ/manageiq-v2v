@@ -1,28 +1,28 @@
 import URI from 'urijs';
 import API, { globalMockMode } from '../../../../common/API';
 
-import { FETCH_V2V_PLAN_REQUESTS } from './PlanConstants';
+import { FETCH_V2V_PLAN_REQUEST } from './PlanConstants';
 
-import { requestPlanRequestsData } from './plan.fixtures';
+import { requestPlanRequestData } from './plan.fixtures';
 
 const mockMode = globalMockMode;
 
-const _getPlanRequestsActionCreator = url => dispatch => {
+const _getPlanRequestActionCreator = url => dispatch => {
   if (mockMode) {
     // we don't want to send REJECTED in mock mode here b/c it will reset the state incorrectly
     dispatch({
-      type: `${FETCH_V2V_PLAN_REQUESTS}_FULFILLED`,
-      payload: requestPlanRequestsData.response
+      type: `${FETCH_V2V_PLAN_REQUEST}_FULFILLED`,
+      payload: requestPlanRequestData.response
     });
   } else {
     dispatch({
-      type: FETCH_V2V_PLAN_REQUESTS,
+      type: FETCH_V2V_PLAN_REQUEST,
       payload: API.get(url)
     });
   }
 };
 
-export const fetchPlanRequestsAction = url => {
+export const fetchPlanRequestAction = url => {
   const uri = new URI(url);
-  return _getPlanRequestsActionCreator(uri.toString());
+  return _getPlanRequestActionCreator(uri.toString());
 };

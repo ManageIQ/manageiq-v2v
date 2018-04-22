@@ -1,13 +1,13 @@
 import Immutable from 'seamless-immutable';
 import numeral from 'numeral';
 
-import { FETCH_V2V_PLAN_REQUESTS } from './PlanConstants';
+import { FETCH_V2V_PLAN_REQUEST } from './PlanConstants';
 
 const initialState = Immutable({
-  isFetchingPlanRequests: false,
-  isRejectedPlanRequests: false,
-  planRequestsPreviouslyFetched: false,
-  errorPlanRequests: null,
+  isFetchingPlanRequest: false,
+  isRejectedPlanRequest: false,
+  planRequestPreviouslyFetched: false,
+  errorPlanRequest: null,
   planRequestTasks: []
 });
 
@@ -71,36 +71,36 @@ const _deepCompare = (prevTasks, newTasks) =>
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case `${FETCH_V2V_PLAN_REQUESTS}_PENDING`:
+    case `${FETCH_V2V_PLAN_REQUEST}_PENDING`:
       return state
-        .set('isFetchingPlanRequests', true)
-        .set('isRejectedPlanRequests', false);
-    case `${FETCH_V2V_PLAN_REQUESTS}_FULFILLED`: {
+        .set('isFetchingPlanRequest', true)
+        .set('isRejectedPlanRequest', false);
+    case `${FETCH_V2V_PLAN_REQUEST}_FULFILLED`: {
       const { payload } = action;
       if (payload.data) {
         const newTasks = _formatPlanRequestDetails(payload.data);
         if (!_deepCompare(state.planRequestTasks, newTasks)) {
           return state
-            .set('planRequestsPreviouslyFetched', true)
+            .set('planRequestPreviouslyFetched', true)
             .set('planName', payload.data && payload.data.description)
             .set('planRequestTasks', newTasks)
-            .set('isRejectedPlanRequests', false)
-            .set('errorPlanRequests', null)
-            .set('isFetchingPlanRequests', false);
+            .set('isRejectedPlanRequest', false)
+            .set('errorPlanRequest', null)
+            .set('isFetchingPlanRequest', false);
         }
       }
       return state
-        .set('planRequestsPreviouslyFetched', true)
+        .set('planRequestPreviouslyFetched', true)
         .set('planName', payload.data && payload.data.description)
-        .set('isRejectedPlanRequests', false)
-        .set('errorPlanRequests', null)
-        .set('isFetchingPlanRequests', false);
+        .set('isRejectedPlanRequest', false)
+        .set('errorPlanRequest', null)
+        .set('isFetchingPlanRequest', false);
     }
-    case `${FETCH_V2V_PLAN_REQUESTS}_REJECTED`:
+    case `${FETCH_V2V_PLAN_REQUEST}_REJECTED`:
       return state
-        .set('errorPlanRequests', action.payload)
-        .set('isRejectedPlanRequests', true)
-        .set('isFetchingPlanRequests', false);
+        .set('errorPlanRequest', action.payload)
+        .set('isRejectedPlanRequest', true)
+        .set('isFetchingPlanRequest', false);
     default:
       return state;
   }

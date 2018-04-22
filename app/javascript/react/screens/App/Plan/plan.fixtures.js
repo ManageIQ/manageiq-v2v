@@ -248,7 +248,7 @@ for (let i = 0; i < 30; i += 1) {
   sampleTasks.push(copy);
 }
 
-export const planRequestsResult = Immutable({
+export const planRequestResult = Immutable({
   href: 'http://localhost:3000/api/service_requests/19',
   id: '19',
   description: 'Migration Plan 1',
@@ -317,8 +317,8 @@ export const planRequestsResult = Immutable({
   ]
 });
 
-export const requestPlanRequestsData = {
+export const requestPlanRequestData = {
   method: 'GET',
-  fetchPlanRequestsUrl: '/api/dummyPlanRequests',
-  response: { data: planRequestsResult }
+  fetchPlanRequestUrl: '/api/dummyPlanRequest',
+  response: { data: planRequestResult }
 };

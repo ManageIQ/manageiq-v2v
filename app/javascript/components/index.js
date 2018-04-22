@@ -122,8 +122,8 @@ export const coreComponents = [
     name: 'PlanContainer',
     type: PlanContainer,
     data: {
-      fetchPlanRequestsUrl: mockMode
-        ? '/api/dummyPlanRequests'
+      fetchPlanRequestUrl: mockMode
+        ? '/api/dummyPlanRequest'
         : '/api/service_requests/{id}?attributes=miq_request_tasks'
     },
     store: true
