@@ -1,14 +1,18 @@
 import Immutable from 'seamless-immutable';
 import numeral from 'numeral';
 
-import { FETCH_V2V_PLAN_REQUEST } from './PlanConstants';
+import { FETCH_V2V_PLAN_REQUEST, FETCH_V2V_PLAN } from './PlanConstants';
 
 const initialState = Immutable({
   isFetchingPlanRequest: false,
   isRejectedPlanRequest: false,
   planRequestPreviouslyFetched: false,
   errorPlanRequest: null,
-  planRequestTasks: []
+  planRequestTasks: [],
+  isFetchingPlan: false,
+  isRejectedPlan: false,
+  errorPlan: null,
+  plan: {}
 });
 
 const _formatPlanRequestDetails = data => {
@@ -82,7 +86,6 @@ export default (state = initialState, action) => {
         if (!_deepCompare(state.planRequestTasks, newTasks)) {
           return state
             .set('planRequestPreviouslyFetched', true)
-            .set('planName', payload.data && payload.data.description)
             .set('planRequestTasks', newTasks)
             .set('isRejectedPlanRequest', false)
             .set('errorPlanRequest', null)
@@ -91,7 +94,6 @@ export default (state = initialState, action) => {
       }
       return state
         .set('planRequestPreviouslyFetched', true)
-        .set('planName', payload.data && payload.data.description)
         .set('isRejectedPlanRequest', false)
         .set('errorPlanRequest', null)
         .set('isFetchingPlanRequest', false);
@@ -101,6 +103,21 @@ export default (state = initialState, action) => {
         .set('errorPlanRequest', action.payload)
         .set('isRejectedPlanRequest', true)
         .set('isFetchingPlanRequest', false);
+
+    case `${FETCH_V2V_PLAN}_PENDING`:
+      return state.set('isFetchingPlan', true).set('isRejectedPlan', false);
+    case `${FETCH_V2V_PLAN}_FULFILLED`:
+      return state
+        .set('plan', action.payload.data)
+        .set('planName', action.payload.data.name)
+        .set('isFetchingPlan', false)
+        .set('isRejectedPlan', false)
+        .set('errorPlan', null);
+    case `${FETCH_V2V_PLAN}_REJECTED`:
+      return state
+        .set('isFetchingPlan', false)
+        .set('isRejectedPlan', true)
+        .set('errorPlan', action.payload);
     default:
       return state;
   }

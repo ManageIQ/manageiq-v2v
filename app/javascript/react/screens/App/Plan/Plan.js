@@ -30,7 +30,14 @@ class Plan extends React.Component {
   }
 
   componentDidMount() {
-    const { fetchPlanRequestUrl, fetchPlanRequestAction } = this.props;
+    const {
+      fetchPlanRequestUrl,
+      fetchPlanRequestAction,
+      fetchPlanUrlBuilder,
+      fetchPlanAction,
+      planId
+    } = this.props;
+    fetchPlanAction(fetchPlanUrlBuilder, planId);
     fetchPlanRequestAction(fetchPlanRequestUrl);
     this.startPolling();
   }
@@ -69,7 +76,8 @@ class Plan extends React.Component {
       planName,
       isRejectedPlanRequest,
       isFetchingPlanRequest,
-      planRequestPreviouslyFetched
+      planRequestPreviouslyFetched,
+      isRejectedPlan
     } = this.props;
 
     const { planRequestTasksMutable } = this.state;
@@ -83,8 +91,7 @@ class Plan extends React.Component {
           <li>
             <Link to="/migration">{__('Migration')}</Link>
           </li>
-          {planRequestPreviouslyFetched &&
-            !isRejectedPlanRequest &&
+          {!isRejectedPlan &&
             planName && <Breadcrumb.Item active>{planName}</Breadcrumb.Item>}
         </Toolbar>
 
@@ -132,7 +139,11 @@ Plan.propTypes = {
   isRejectedPlanRequest: PropTypes.bool,
   isFetchingPlanRequest: PropTypes.bool,
   planRequestPreviouslyFetched: PropTypes.bool,
-  errorPlanRequest: PropTypes.object // eslint-disable-line react/no-unused-prop-types
+  errorPlanRequest: PropTypes.object, // eslint-disable-line react/no-unused-prop-types
+  fetchPlanUrlBuilder: PropTypes.func,
+  fetchPlanAction: PropTypes.func,
+  isRejectedPlan: PropTypes.bool,
+  planId: PropTypes.string
 };
 Plan.defaultProps = {
   planName: '',
