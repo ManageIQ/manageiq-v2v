@@ -1,7 +1,11 @@
 import Immutable from 'seamless-immutable';
 import numeral from 'numeral';
 
-import { FETCH_V2V_PLAN_REQUEST, FETCH_V2V_PLAN } from './PlanConstants';
+import {
+  FETCH_V2V_PLAN_REQUEST,
+  FETCH_V2V_PLAN,
+  QUERY_V2V_PLAN_VMS
+} from './PlanConstants';
 
 const initialState = Immutable({
   isFetchingPlanRequest: false,
@@ -12,7 +16,11 @@ const initialState = Immutable({
   isFetchingPlan: false,
   isRejectedPlan: false,
   errorPlan: null,
-  plan: {}
+  plan: {},
+  isQueryingVms: false,
+  isRejectedVms: false,
+  errorVms: null,
+  vms: []
 });
 
 const _formatPlanRequestDetails = data => {
@@ -118,6 +126,20 @@ export default (state = initialState, action) => {
         .set('isFetchingPlan', false)
         .set('isRejectedPlan', true)
         .set('errorPlan', action.payload);
+
+    case `${QUERY_V2V_PLAN_VMS}_PENDING`:
+      return state.set('isQueryingVms', true).set('isRejectedVms', false);
+    case `${QUERY_V2V_PLAN_VMS}_FULFILLED`:
+      return state
+        .set('vms', action.payload.data.results)
+        .set('isQueryingVms', false)
+        .set('isRejectedVms', false)
+        .set('errorVms', null);
+    case `${QUERY_V2V_PLAN_VMS}_REJECTED`:
+      return state
+        .set('isQueryingVms', false)
+        .set('isRejectedVms', true)
+        .set('errorVms', action.payload);
     default:
       return state;
   }

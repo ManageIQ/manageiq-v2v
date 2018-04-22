@@ -1,9 +1,14 @@
 import URI from 'urijs';
 import API, { globalMockMode } from '../../../../common/API';
 
-import { FETCH_V2V_PLAN_REQUEST, FETCH_V2V_PLAN } from './PlanConstants';
+import {
+  FETCH_V2V_PLAN_REQUEST,
+  FETCH_V2V_PLAN,
+  QUERY_V2V_PLAN_VMS
+} from './PlanConstants';
 
 import { requestPlanData } from './plan.fixtures';
+import { queryVmsData } from './plan.vms.fixtures';
 import { requestPlanRequestData } from './plan.planRequests.fixtures';
 
 const mockMode = globalMockMode;
@@ -26,6 +31,34 @@ const _getPlanRequestActionCreator = url => dispatch => {
 export const fetchPlanRequestAction = url => {
   const uri = new URI(url);
   return _getPlanRequestActionCreator(uri.toString());
+};
+
+// *****************************************************************************
+// * QUERY_V2V_PLAN_VMS
+// *****************************************************************************
+const _queryPlanVmsActionCreator = ids => dispatch => {
+  if (mockMode) {
+    return dispatch({
+      type: `${QUERY_V2V_PLAN_VMS}_FULFILLED`,
+      payload: queryVmsData.response
+    });
+  }
+  const resources = ids.map(id => {
+    return {
+      id
+    };
+  });
+  return dispatch({
+    type: QUERY_V2V_PLAN_VMS,
+    payload: API.post('/api/vms', {
+      action: 'query',
+      resources
+    })
+  });
+};
+
+export const queryPlanVmsAction = ids => {
+  return _queryPlanVmsActionCreator(ids);
 };
 
 // *****************************************************************************
