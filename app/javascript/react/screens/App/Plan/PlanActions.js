@@ -13,12 +13,15 @@ import { requestPlanRequestData } from './plan.planRequests.fixtures';
 
 const mockMode = globalMockMode;
 
-const _getPlanRequestActionCreator = url => dispatch => {
+// *****************************************************************************
+// * FETCH_V2V_PLAN_REQUEST
+// *****************************************************************************
+const _getPlanRequestActionCreator = (url, id) => dispatch => {
   if (mockMode) {
     // we don't want to send REJECTED in mock mode here b/c it will reset the state incorrectly
     dispatch({
       type: `${FETCH_V2V_PLAN_REQUEST}_FULFILLED`,
-      payload: requestPlanRequestData.response
+      payload: requestPlanRequestData(id).response
     });
   } else {
     dispatch({
@@ -28,9 +31,9 @@ const _getPlanRequestActionCreator = url => dispatch => {
   }
 };
 
-export const fetchPlanRequestAction = url => {
-  const uri = new URI(url);
-  return _getPlanRequestActionCreator(uri.toString());
+export const fetchPlanRequestAction = (urlBuilder, id) => {
+  const uri = new URI(urlBuilder(id));
+  return _getPlanRequestActionCreator(uri.toString(), id);
 };
 
 // *****************************************************************************
@@ -43,11 +46,11 @@ const _queryPlanVmsActionCreator = ids => dispatch => {
       payload: queryVmsData.response
     });
   }
-  const resources = ids.map(id => {
-    return {
-      id
-    };
-  });
+
+  const resources = ids.map(id => ({
+    id
+  }));
+
   return dispatch({
     type: QUERY_V2V_PLAN_VMS,
     payload: API.post('/api/vms', {
@@ -57,9 +60,7 @@ const _queryPlanVmsActionCreator = ids => dispatch => {
   });
 };
 
-export const queryPlanVmsAction = ids => {
-  return _queryPlanVmsActionCreator(ids);
-};
+export const queryPlanVmsAction = ids => _queryPlanVmsActionCreator(ids);
 
 // *****************************************************************************
 // * FETCH_V2V_PLAN
@@ -67,13 +68,24 @@ export const queryPlanVmsAction = ids => {
 export const _getPlanActionCreator = (url, id) => dispatch => {
   if (mockMode) {
     return dispatch({
-      type: `${FETCH_V2V_PLAN}_FULFILLED`,
-      payload: requestPlanData(id).response
+      type: FETCH_V2V_PLAN,
+      payload: new Promise(resolve => {
+        resolve(requestPlanData(id).response);
+      })
     });
   }
+
   return dispatch({
     type: FETCH_V2V_PLAN,
-    payload: API.get(url)
+    payload: new Promise((resolve, reject) => {
+      API.get(url)
+        .then(response => {
+          resolve(response);
+        })
+        .catch(e => {
+          reject(e);
+        });
+    })
   });
 };
 

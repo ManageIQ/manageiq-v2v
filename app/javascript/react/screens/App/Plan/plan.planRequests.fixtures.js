@@ -317,8 +317,23 @@ export const planRequestResult = Immutable({
   ]
 });
 
-export const requestPlanRequestData = {
+export const planRequestStore = {
+  '3001': {
+    ...planRequestResult,
+    href: 'http://localhost:3000/api/service_requests/3001',
+    id: '3001',
+    description: 'Migration Plan C-0'
+  },
+  '6000': {
+    ...planRequestResult,
+    href: 'http://localhost:3000/api/service_requests/6000',
+    id: '6000',
+    description: 'Migration Plan F-0'
+  }
+};
+
+export const requestPlanRequestData = id => ({
   method: 'GET',
   fetchPlanRequestUrl: '/api/dummyPlanRequest',
-  response: { data: planRequestResult }
-};
+  response: { data: planRequestStore[id] }
+});

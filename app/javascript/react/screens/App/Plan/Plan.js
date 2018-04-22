@@ -31,15 +31,33 @@ class Plan extends React.Component {
 
   componentDidMount() {
     const {
-      fetchPlanRequestUrl,
-      fetchPlanRequestAction,
       fetchPlanUrlBuilder,
       fetchPlanAction,
-      planId
+      planId,
+      fetchPlanRequestUrlBuilder,
+      fetchPlanRequestAction,
+      queryPlanVmsAction
     } = this.props;
-    fetchPlanAction(fetchPlanUrlBuilder, planId);
-    fetchPlanRequestAction(fetchPlanRequestUrl);
-    this.startPolling();
+
+    fetchPlanAction(fetchPlanUrlBuilder, planId).then(
+      ({ value: { data: plan } }) => {
+        const {
+          miq_requests,
+          options: {
+            config_info: { vm_ids }
+          }
+        } = plan;
+
+        if (miq_requests.length > 0) {
+          const [mostRecentRequest] = miq_requests.slice(-1);
+          const planRequestId = mostRecentRequest.id;
+          fetchPlanRequestAction(fetchPlanRequestUrlBuilder, planRequestId);
+          this.startPolling(planRequestId);
+        } else {
+          queryPlanVmsAction(vm_ids);
+        }
+      }
+    );
   }
 
   // Remove this after updating to 16.3
@@ -57,10 +75,10 @@ class Plan extends React.Component {
     this.stopPolling();
   }
 
-  startPolling() {
-    const { fetchPlanRequestAction, fetchPlanRequestUrl } = this.props;
+  startPolling(id) {
+    const { fetchPlanRequestAction, fetchPlanRequestUrlBuilder } = this.props;
     this.pollingInterval = setInterval(() => {
-      fetchPlanRequestAction(fetchPlanRequestUrl);
+      fetchPlanRequestAction(fetchPlanRequestUrlBuilder, id);
     }, 15000);
   }
 
@@ -132,7 +150,7 @@ class Plan extends React.Component {
   }
 }
 Plan.propTypes = {
-  fetchPlanRequestUrl: PropTypes.string.isRequired,
+  fetchPlanRequestUrlBuilder: PropTypes.func.isRequired,
   fetchPlanRequestAction: PropTypes.func.isRequired,
   planName: PropTypes.string,
   planRequestTasks: PropTypes.array,
@@ -143,7 +161,8 @@ Plan.propTypes = {
   fetchPlanUrlBuilder: PropTypes.func,
   fetchPlanAction: PropTypes.func,
   isRejectedPlan: PropTypes.bool,
-  planId: PropTypes.string
+  planId: PropTypes.string,
+  queryPlanVmsAction: PropTypes.func
 };
 Plan.defaultProps = {
   planName: '',

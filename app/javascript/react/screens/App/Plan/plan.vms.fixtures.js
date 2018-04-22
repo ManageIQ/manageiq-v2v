@@ -207,8 +207,9 @@ const sampleVmResult = {
 };
 
 const queryVmsResults = [];
-for (let i = 1; i <= 30; i++) {
+for (let i = 1; i <= 30; i += 1) {
   queryVmsResults.push({
+    ...sampleVmResult,
     href: `http://localhost:3000/api/vms/${i}`,
     id: i,
     name: `boston_VM${i}`

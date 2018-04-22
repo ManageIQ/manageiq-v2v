@@ -126,9 +126,10 @@ export const coreComponents = [
         mockMode
           ? '/api/dummyPlan'
           : `/api/service_templates/${id}/?attributes=miq_requests`,
-      fetchPlanRequestUrl: mockMode
-        ? '/api/dummyPlanRequest'
-        : '/api/service_requests/{id}?attributes=miq_request_tasks'
+      fetchPlanRequestUrlBuilder: id =>
+        mockMode
+          ? '/api/dummyPlanRequest'
+          : `/api/service_requests/${id}?attributes=miq_request_tasks`
     },
     store: true
   },
