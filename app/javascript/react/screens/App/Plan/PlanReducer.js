@@ -4,7 +4,8 @@ import numeral from 'numeral';
 import {
   FETCH_V2V_PLAN_REQUEST,
   FETCH_V2V_PLAN,
-  QUERY_V2V_PLAN_VMS
+  QUERY_V2V_PLAN_VMS,
+  RESET_PLAN_STATE
 } from './PlanConstants';
 
 const initialState = Immutable({
@@ -140,6 +141,9 @@ export default (state = initialState, action) => {
         .set('isQueryingVms', false)
         .set('isRejectedVms', true)
         .set('errorVms', action.payload);
+
+    case RESET_PLAN_STATE:
+      return state.set('planRequestTasks', []).set('vms', []);
     default:
       return state;
   }

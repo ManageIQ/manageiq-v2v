@@ -4,7 +4,8 @@ import API, { globalMockMode } from '../../../../common/API';
 import {
   FETCH_V2V_PLAN_REQUEST,
   FETCH_V2V_PLAN,
-  QUERY_V2V_PLAN_VMS
+  QUERY_V2V_PLAN_VMS,
+  RESET_PLAN_STATE
 } from './PlanConstants';
 
 import { requestPlanData } from './plan.fixtures';
@@ -93,3 +94,10 @@ export const fetchPlanAction = (urlBuilder, id) => {
   const uri = new URI(urlBuilder(id));
   return _getPlanActionCreator(uri.toString(), id);
 };
+
+// *****************************************************************************
+// * RESET_PLAN_STATE
+// *****************************************************************************
+export const resetPlanStateAction = () => ({
+  type: RESET_PLAN_STATE
+});

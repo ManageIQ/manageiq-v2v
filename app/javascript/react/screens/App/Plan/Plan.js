@@ -5,25 +5,32 @@ import { Link } from 'react-router-dom';
 import { bindMethods, Breadcrumb, Spinner } from 'patternfly-react';
 import Toolbar from '../../../config/Toolbar';
 import PlanRequestDetailList from './components/PlanRequestDetailList';
+import PlanVmsList from './components/PlanVmsList';
 import PlanEmptyState from './components/PlanEmptyState';
 
 class Plan extends React.Component {
-  // need to update ui-classic to React 16.3 to support this
-  // static getDerivedStateFromProps(nextProps, prevState) {
-  //   if (nextProps.planRequestTasks === prevState.planRequestTasks) {
-  //     return null;
-  //   }
-  //   return {
-  //     planRequestTasks,
-  //     planRequestTasksMutable: Immutable.asMutable(planRequestTasks)
-  //   };
-  // }
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const { planRequestTasks, vms } = nextProps;
+    const { planInProgress } = prevState;
+    if (planInProgress && planRequestTasks === prevState.planRequestTasks) {
+      return null;
+    }
+    return {
+      planRequestTasks,
+      planRequestTasksMutable: Immutable.asMutable(planRequestTasks),
+      vms,
+      vmsMutable: Immutable.asMutable(vms),
+      planInProgress: planRequestTasks.length > 0
+    };
+  }
 
   constructor(props) {
     super(props);
 
     this.state = {
-      planRequestTasksMutable: Immutable.asMutable(props.planRequestTasks)
+      planRequestTasksMutable: Immutable.asMutable(props.planRequestTasks),
+      vmsMutable: [],
+      planInProgress: false
     };
 
     bindMethods(this, ['stopPolling', 'startPolling']);
@@ -60,19 +67,10 @@ class Plan extends React.Component {
     );
   }
 
-  // Remove this after updating to 16.3
-  componentDidUpdate(prevProps) {
-    const { planRequestTasks } = this.props;
-    if (prevProps.planRequestTasks !== planRequestTasks) {
-      // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({
-        planRequestTasksMutable: Immutable.asMutable(planRequestTasks)
-      });
-    }
-  }
-
   componentWillUnmount() {
+    const { resetPlanStateAction } = this.props;
     this.stopPolling();
+    resetPlanStateAction();
   }
 
   startPolling(id) {
@@ -95,10 +93,13 @@ class Plan extends React.Component {
       isRejectedPlanRequest,
       isFetchingPlanRequest,
       planRequestPreviouslyFetched,
-      isRejectedPlan
+      isRejectedPlan,
+      isFetchingPlan,
+      isQueryingVms,
+      isRejectedVms
     } = this.props;
 
-    const { planRequestTasksMutable } = this.state;
+    const { planRequestTasksMutable, vmsMutable, planInProgress } = this.state;
 
     return (
       <React.Fragment>
@@ -115,19 +116,20 @@ class Plan extends React.Component {
 
         <Spinner
           loading={
-            isFetchingPlanRequest &&
-            !planRequestPreviouslyFetched &&
-            !isRejectedPlanRequest
+            (isFetchingPlan || isFetchingPlanRequest || isQueryingVms) &&
+            !planRequestPreviouslyFetched
           }
         >
-          {planRequestPreviouslyFetched &&
+          {planInProgress &&
+            planRequestPreviouslyFetched &&
             !isRejectedPlanRequest &&
             planRequestTasksMutable.length > 0 && (
               <PlanRequestDetailList
                 planRequestTasks={planRequestTasksMutable}
               />
             )}
-          {planRequestPreviouslyFetched &&
+          {planInProgress &&
+            planRequestPreviouslyFetched &&
             planRequestTasksMutable.length === 0 && (
               <PlanEmptyState
                 title="No Migration Tasks."
@@ -136,8 +138,20 @@ class Plan extends React.Component {
                 description="No VM migration tasks have been started for this plan. Please refresh and try again."
               />
             )}
+          {!planInProgress &&
+            !isRejectedVms &&
+            vmsMutable.length > 0 && <PlanVmsList planVms={vmsMutable} />}
+          {!planInProgress &&
+            vmsMutable.length === 0 && (
+              <PlanEmptyState
+                title="No VMs"
+                iconType="pf"
+                iconName="warning-triangle-o"
+                description="No VMs were returned for this migration plan. Please refresh and try again."
+              />
+            )}
         </Spinner>
-        {isRejectedPlanRequest && (
+        {(isRejectedPlanRequest || isRejectedPlan || isRejectedVms) && (
           <PlanEmptyState
             title="Unable to retrieve migration details."
             iconType="pf"
@@ -160,9 +174,13 @@ Plan.propTypes = {
   errorPlanRequest: PropTypes.object, // eslint-disable-line react/no-unused-prop-types
   fetchPlanUrlBuilder: PropTypes.func,
   fetchPlanAction: PropTypes.func,
+  isFetchingPlan: PropTypes.bool,
   isRejectedPlan: PropTypes.bool,
   planId: PropTypes.string,
-  queryPlanVmsAction: PropTypes.func
+  queryPlanVmsAction: PropTypes.func,
+  isQueryingVms: PropTypes.bool,
+  isRejectedVms: PropTypes.bool,
+  resetPlanStateAction: PropTypes.func
 };
 Plan.defaultProps = {
   planName: '',
