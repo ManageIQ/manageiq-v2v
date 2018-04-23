@@ -1,5 +1,14 @@
 import URI from 'urijs';
-import API, { globalMockMode } from '../../../../common/API';
+
+import API, {
+  globalMockMode,
+  globalLocalStorageMode
+} from '../../../../common/API';
+
+import {
+  getLocalStorageState,
+  LOCAL_STORAGE_KEYS
+} from '../../../../common/LocalStorage';
 
 import {
   SHOW_MAPPING_WIZARD,
@@ -20,6 +29,7 @@ import { requestTransformationPlansData } from './overview.transformationPlans.f
 import { requestClustersData } from './overview.clusters.fixtures';
 
 const mockMode = globalMockMode;
+const localStorageMode = globalLocalStorageMode;
 
 export const showMappingWizardAction = () => dispatch => {
   dispatch({
@@ -56,19 +66,27 @@ export const createTransformationPlanRequestAction = url => {
 };
 
 const _getTransformationMappingsActionCreator = url => dispatch => {
-  dispatch({
-    type: FETCH_V2V_TRANSFORMATION_MAPPINGS,
-    payload: API.get(url)
-  }).catch(error => {
-    // to enable UI development without the backend ready, i'm catching the error
-    // and passing some mock data thru the FULFILLED action after the REJECTED action is finished.
-    if (mockMode) {
-      dispatch({
-        type: `${FETCH_V2V_TRANSFORMATION_MAPPINGS}_FULFILLED`,
-        payload: requestTransformationMappingsData.response
-      });
-    }
-  });
+  if (localStorageMode) {
+    const mappings = getLocalStorageState(
+      LOCAL_STORAGE_KEYS.V2V_TRANSFORMATION_MAPPINGS
+    );
+    dispatch({
+      type: `${FETCH_V2V_TRANSFORMATION_MAPPINGS}_FULFILLED`,
+      payload: { data: { resources: mappings || [] } }
+    });
+  } else {
+    dispatch({
+      type: FETCH_V2V_TRANSFORMATION_MAPPINGS,
+      payload: API.get(url)
+    }).catch(error => {
+      if (mockMode) {
+        dispatch({
+          type: `${FETCH_V2V_TRANSFORMATION_MAPPINGS}_FULFILLED`,
+          payload: requestTransformationMappingsData.response
+        });
+      }
+    });
+  }
 };
 
 export const fetchTransformationMappingsAction = url => {
@@ -76,24 +94,26 @@ export const fetchTransformationMappingsAction = url => {
   return _getTransformationMappingsActionCreator(uri.toString());
 };
 
-const _getTransformationPlansActionCreator = url => dispatch =>
-  dispatch({
-    type: 'FETCH_V2V_TRANSFORMATION_PLANS',
-    payload: API.get(url)
-  }).catch(error => {
-    // redux-promise-middleware will automatically send:
-    // FETCH_V2V_TRANSFORMATION_PLANS_PENDING, FETCH_V2V_TRANSFORMATION_PLANS_FULFILLED,
-    // FETCH_V2V_TRANSFORMATION_PLANS_REJECTED
-
-    // to enable UI development without the database, i'm catching the error
-    // and passing some mock data thru the FULFILLED action after the REJECTED action is finished.
-    if (mockMode) {
-      dispatch({
-        type: `${FETCH_V2V_TRANSFORMATION_PLANS}_FULFILLED`,
-        payload: requestTransformationPlansData.response
-      });
-    }
-  });
+const _getTransformationPlansActionCreator = url => dispatch => {
+  if (localStorageMode) {
+    dispatch({
+      type: `${FETCH_V2V_TRANSFORMATION_PLANS}_FULFILLED`,
+      payload: { data: { resources: [] } }
+    });
+  } else {
+    dispatch({
+      type: 'FETCH_V2V_TRANSFORMATION_PLANS',
+      payload: API.get(url)
+    }).catch(error => {
+      if (mockMode) {
+        dispatch({
+          type: `${FETCH_V2V_TRANSFORMATION_PLANS}_FULFILLED`,
+          payload: requestTransformationPlansData.response
+        });
+      }
+    });
+  }
+};
 
 export const fetchTransformationPlansAction = url => {
   const uri = new URI(url);

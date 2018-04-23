@@ -35,4 +35,6 @@ export default {
   }
 };
 
-export const globalMockMode = false;
+export const globalMockMode = true;
+
+export const globalLocalStorageMode = true;
