@@ -82,6 +82,7 @@ const Migrations = ({
               notStartedPlans={notStartedPlans}
               migrateClick={createTransformationPlanRequestClick}
               loading={isCreatingTransformationPlanRequest}
+              redirectTo={redirectTo}
             />
           )}
           {activeFilter === 'Migration Plans in Progress' && (

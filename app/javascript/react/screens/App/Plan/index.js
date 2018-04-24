@@ -6,10 +6,18 @@ import reducer from './PlanReducer';
 
 export const reducers = { plan: reducer, form: {} };
 
-const mapStateToProps = ({ plan }, ownProps) => ({
-  ...plan,
-  ...ownProps.data
-});
+const mapStateToProps = ({ plan }, { data }) => {
+  const {
+    match: {
+      params: { id: planId }
+    }
+  } = data;
+  return {
+    ...plan,
+    ...data,
+    planId
+  };
+};
 
 const mergeProps = (stateProps, dispatchProps, ownProps) =>
   Object.assign(stateProps, ownProps.data, dispatchProps);

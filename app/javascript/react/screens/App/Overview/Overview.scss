@@ -8,6 +8,10 @@ hr {
   margin-top: 10px;
 }
 
+.plans-not-started-list .plans-not-started-list__list-item {
+  cursor: pointer;
+}
+
 .card-pf {
   &.in-progress {
     cursor: pointer;
