@@ -8,7 +8,7 @@ import {
   RESET_PLAN_STATE
 } from './PlanConstants';
 
-const initialState = Immutable({
+export const initialState = Immutable({
   isFetchingPlanRequest: false,
   isRejectedPlanRequest: false,
   planRequestPreviouslyFetched: false,
