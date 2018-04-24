@@ -10,6 +10,7 @@ import PlanWizardContainer from '../react/screens/App/Overview/screens/PlanWizar
 
 import OverviewContainer from '../react/screens/App/Overview';
 import PlanContainer from '../react/screens/App/Plan';
+import NotificationList from '../react/screens/App/common/NotificationList';
 import IsoDate from './dates/IsoDate';
 import LongDateTime from './dates/LongDateTime';
 import RelativeDateTime from './dates/RelativeDateTime';
@@ -131,6 +132,12 @@ export const coreComponents = [
           ? '/api/dummyPlanRequest'
           : `/api/service_requests/${id}?attributes=miq_request_tasks`
     },
+    store: true
+  },
+  {
+    name: 'NotificationList',
+    type: NotificationList,
+    data: true,
     store: true
   },
   {

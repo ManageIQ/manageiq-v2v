@@ -14,7 +14,6 @@ const MigrationsCompletedList = ({
       {finishedTransformationPlans.map(plan => {
         const [mostRecentRequest] = plan.miq_requests.slice(-1);
         const failed = mostRecentRequest.status === 'failed';
-
         const tasks = {};
         plan.miq_requests.forEach(request => {
           request.miq_request_tasks.forEach(task => {
