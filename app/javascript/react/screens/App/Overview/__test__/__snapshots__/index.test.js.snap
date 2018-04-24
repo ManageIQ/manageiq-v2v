@@ -3,6 +3,7 @@
 exports[`Overview integration test should mount the Overview with mapStateToProps reduced 1`] = `
 Object {
   "activeTransformationPlans": Array [],
+  "addNotificationAction": [Function],
   "clusters": Array [],
   "continueToPlanAction": [Function],
   "createTransformationPlanRequestAction": [Function],
@@ -21,6 +22,7 @@ Object {
   "mappingWizardVisible": false,
   "notStartedTransformationPlans": Array [],
   "planWizardVisible": false,
+  "removeNotificationAction": [Function],
   "setMigrationsFilterAction": [Function],
   "showMappingWizardAction": [Function],
   "showPlanWizardAction": [Function],
