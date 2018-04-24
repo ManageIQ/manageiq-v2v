@@ -97,6 +97,7 @@ const Migrations = ({
               finishedTransformationPlans={finishedTransformationPlans}
               retryClick={createTransformationPlanRequestClick}
               loading={isCreatingTransformationPlanRequest}
+              redirectTo={redirectTo}
             />
           )}
         </React.Fragment>

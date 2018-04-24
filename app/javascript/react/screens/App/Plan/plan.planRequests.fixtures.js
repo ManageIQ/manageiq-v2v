@@ -324,6 +324,18 @@ export const planRequestStore = {
     id: '3001',
     description: 'Migration Plan C-0'
   },
+  '4000': {
+    ...planRequestResult,
+    href: 'http://localhost:3000/api/service_requests/4000',
+    id: '4000',
+    description: 'Migration Plan D-0'
+  },
+  '5000': {
+    ...planRequestResult,
+    href: 'http://localhost:3000/api/service_requests/5000',
+    id: '5000',
+    description: 'Migration Plan E-0'
+  },
   '6000': {
     ...planRequestResult,
     href: 'http://localhost:3000/api/service_requests/6000',
