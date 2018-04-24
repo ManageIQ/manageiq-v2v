@@ -60,7 +60,9 @@ class Plan extends React.Component {
           const [mostRecentRequest] = miq_requests.slice(-1);
           const planRequestId = mostRecentRequest.id;
           fetchPlanRequestAction(fetchPlanRequestUrlBuilder, planRequestId);
-          this.startPolling(planRequestId);
+          if (mostRecentRequest.status === 'active') {
+            this.startPolling(planRequestId);
+          }
         } else {
           queryPlanVmsAction(vm_ids);
         }

@@ -325,7 +325,7 @@ export const planRequestResult = Immutable({
   request_type: 'migration_plan',
   request_state: 'finished',
   message: '[EVM] VM Migrated Successfully',
-  status: 'Ok',
+  status: 'active',
   options: {
     src_id: '6',
     cart_state: 'ordered',
