@@ -11,7 +11,7 @@ import PlanEmptyState from './components/PlanEmptyState';
 class Plan extends React.Component {
   static getDerivedStateFromProps(nextProps, prevState) {
     if (
-      prevState.planInProgress &&
+      !prevState.planNotStarted &&
       nextProps.planRequestTasks === prevState.planRequestTasks
     ) {
       return null;
@@ -21,7 +21,7 @@ class Plan extends React.Component {
       planRequestTasksMutable: Immutable.asMutable(nextProps.planRequestTasks),
       vms: nextProps.vms,
       vmsMutable: Immutable.asMutable(nextProps.vms),
-      planInProgress: nextProps.planRequestTasks.length > 0
+      planNotStarted: nextProps.planRequestTasks.length === 0
     };
   }
 
@@ -31,7 +31,7 @@ class Plan extends React.Component {
     this.state = {
       planRequestTasksMutable: Immutable.asMutable(props.planRequestTasks),
       vmsMutable: [],
-      planInProgress: false
+      planNotStarted: false
     };
 
     bindMethods(this, ['stopPolling', 'startPolling']);
@@ -102,7 +102,7 @@ class Plan extends React.Component {
       isRejectedVms
     } = this.props;
 
-    const { planRequestTasksMutable, vmsMutable, planInProgress } = this.state;
+    const { planRequestTasksMutable, vmsMutable, planNotStarted } = this.state;
 
     return (
       <React.Fragment>
@@ -123,7 +123,7 @@ class Plan extends React.Component {
             !planRequestPreviouslyFetched
           }
         >
-          {planInProgress &&
+          {!planNotStarted &&
             planRequestPreviouslyFetched &&
             !isRejectedPlanRequest &&
             planRequestTasksMutable.length > 0 && (
@@ -131,7 +131,7 @@ class Plan extends React.Component {
                 planRequestTasks={planRequestTasksMutable}
               />
             )}
-          {planInProgress &&
+          {!planNotStarted &&
             planRequestPreviouslyFetched &&
             planRequestTasksMutable.length === 0 && (
               <PlanEmptyState
@@ -141,10 +141,10 @@ class Plan extends React.Component {
                 description="No VM migration tasks have been started for this plan. Please refresh and try again."
               />
             )}
-          {!planInProgress &&
+          {planNotStarted &&
             !isRejectedVms &&
             vmsMutable.length > 0 && <PlanVmsList planVms={vmsMutable} />}
-          {!planInProgress &&
+          {planNotStarted &&
             vmsMutable.length === 0 && (
               <PlanEmptyState
                 title="No VMs"
