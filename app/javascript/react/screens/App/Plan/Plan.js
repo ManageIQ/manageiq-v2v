@@ -10,17 +10,18 @@ import PlanEmptyState from './components/PlanEmptyState';
 
 class Plan extends React.Component {
   static getDerivedStateFromProps(nextProps, prevState) {
-    const { planRequestTasks, vms } = nextProps;
-    const { planInProgress } = prevState;
-    if (planInProgress && planRequestTasks === prevState.planRequestTasks) {
+    if (
+      prevState.planInProgress &&
+      nextProps.planRequestTasks === prevState.planRequestTasks
+    ) {
       return null;
     }
     return {
-      planRequestTasks,
-      planRequestTasksMutable: Immutable.asMutable(planRequestTasks),
-      vms,
-      vmsMutable: Immutable.asMutable(vms),
-      planInProgress: planRequestTasks.length > 0
+      planRequestTasks: nextProps.planRequestTasks,
+      planRequestTasksMutable: Immutable.asMutable(nextProps.planRequestTasks),
+      vms: nextProps.vms,
+      vmsMutable: Immutable.asMutable(nextProps.vms),
+      planInProgress: nextProps.planRequestTasks.length > 0
     };
   }
 
