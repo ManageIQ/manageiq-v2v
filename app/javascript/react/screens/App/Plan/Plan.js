@@ -31,7 +31,8 @@ class Plan extends React.Component {
     this.state = {
       planRequestTasksMutable: Immutable.asMutable(props.planRequestTasks),
       vmsMutable: [],
-      planNotStarted: false
+      planNotStarted: false,
+      planFinished: false
     };
 
     bindMethods(this, ['stopPolling', 'startPolling']);
@@ -62,6 +63,13 @@ class Plan extends React.Component {
           fetchPlanRequestAction(fetchPlanRequestUrlBuilder, planRequestId);
           if (mostRecentRequest.status === 'active') {
             this.startPolling(planRequestId);
+          } else if (
+            mostRecentRequest.status === 'complete' ||
+            mostRecentRequest.status === 'failed'
+          ) {
+            this.setState(() => ({
+              planFinished: true
+            }));
           }
         } else {
           queryPlanVmsAction(vm_ids);
@@ -102,7 +110,12 @@ class Plan extends React.Component {
       isRejectedVms
     } = this.props;
 
-    const { planRequestTasksMutable, vmsMutable, planNotStarted } = this.state;
+    const {
+      planRequestTasksMutable,
+      vmsMutable,
+      planNotStarted,
+      planFinished
+    } = this.state;
 
     return (
       <React.Fragment>
@@ -128,6 +141,7 @@ class Plan extends React.Component {
             !isRejectedPlanRequest &&
             planRequestTasksMutable.length > 0 && (
               <PlanRequestDetailList
+                planFinished={planFinished}
                 planRequestTasks={planRequestTasksMutable}
               />
             )}

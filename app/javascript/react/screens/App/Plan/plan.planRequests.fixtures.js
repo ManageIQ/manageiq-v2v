@@ -265,6 +265,7 @@ for (let i = 0; i < 30; i += 1) {
   if (i % 5 === 4) {
     copy.options.progress.current_description =
       'Virtual machine migration failed.';
+    copy.status = 'Error';
     for (let j = 0; j < copy.options.virtv2v_disks.length; j += 1) {
       copy.options.virtv2v_disks[j].percent = Math.floor(Math.random() * 100);
       copy.options.virtv2v_disks[j].size = Math.floor(
