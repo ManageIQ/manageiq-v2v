@@ -18,75 +18,25 @@ import {
   UtilizationBar,
   PAGINATION_VIEW
 } from 'patternfly-react';
-import { IsoElpasedTime } from '../../../../../components/dates/IsoElapsedTime';
-import listFilter from './listFilter';
-import sortFilter from './sortFilter';
-import paginate from './paginate';
+import { IsoElpasedTime } from '../../../../../../components/dates/IsoElapsedTime';
+import listFilter from '../listFilter';
+import sortFilter from '../sortFilter';
+import paginate from '../paginate';
+import {
+  ACTIVE_PLAN_FILTER_TYPES,
+  FINISHED_PLAN_FILTER_TYPES,
+  ACTIVE_PLAN_SORT_FIELDS,
+  FINISHED_PLAN_SORT_FIELDS
+} from './PlanRequestDetailListConstants';
 
 class PlanRequestDetailList extends React.Component {
   static getDerivedStateFromProps(nextProps) {
     const filterTypes = nextProps.planFinished
-      ? [
-          {
-            id: 'transformation_host_name',
-            title: 'Host Name',
-            placeholder: 'Filter by Host Name',
-            filterType: 'text'
-          },
-          {
-            id: 'status',
-            title: 'Status',
-            placeholder: 'Filter by Status',
-            filterType: 'select',
-            filterValues: [
-              { title: 'Ok', id: 'Ok' },
-              { title: 'Error', id: 'Error' }
-            ]
-          }
-        ]
-      : [
-          {
-            id: 'transformation_host_name',
-            title: 'Host Name',
-            placeholder: 'Filter by Host Name',
-            filterType: 'text'
-          },
-          {
-            id: 'message',
-            title: 'Status',
-            placeholder: 'Filter by Status',
-            filterType: 'select',
-            filterValues: [
-              { title: 'Pending', id: 'Pending' },
-              { title: 'Validating', id: 'Validating' },
-              { title: 'Pre-migration', id: 'Pre-migration' },
-              { title: 'Migrating', id: 'Migrating' },
-              {
-                title: 'VM Transformations completed',
-                id: 'VM Transformations completed'
-              }
-            ]
-          }
-        ];
+      ? FINISHED_PLAN_FILTER_TYPES
+      : ACTIVE_PLAN_FILTER_TYPES;
     const sortFields = nextProps.planFinished
-      ? [
-          { id: 'delivered_on', title: 'Started', isNumeric: true },
-          {
-            id: 'transformation_host_name',
-            title: 'Host Name',
-            isNumeric: false
-          },
-          { id: 'status', title: 'Status', isNumeric: false }
-        ]
-      : [
-          { id: 'delivered_on', title: 'Started', isNumeric: true },
-          {
-            id: 'transformation_host_name',
-            title: 'Host Name',
-            isNumeric: false
-          },
-          { id: 'message', title: 'Status', isNumeric: false }
-        ];
+      ? FINISHED_PLAN_SORT_FIELDS
+      : ACTIVE_PLAN_SORT_FIELDS;
     return {
       filterTypes,
       sortFields
@@ -95,30 +45,17 @@ class PlanRequestDetailList extends React.Component {
 
   constructor(props) {
     super(props);
-    const filterTypes = [
-      {
-        id: 'transformation_host_name',
-        title: 'Host Name',
-        placeholder: 'Filter by Host Name',
-        filterType: 'text'
-      }
-    ];
-    const sortFields = [
-      { id: 'delivered_on', title: 'Started', isNumeric: true },
-      { id: 'transformation_host_name', title: 'Host Name', isNumeric: false },
-      { id: 'message', title: 'Status', isNumeric: false }
-    ];
     this.state = {
       // filter states
-      filterTypes,
-      currentFilterType: filterTypes[0],
+      filterTypes: ACTIVE_PLAN_FILTER_TYPES,
+      currentFilterType: ACTIVE_PLAN_FILTER_TYPES[0],
       currentValue: '',
       activeFilters: [],
 
       // sort states
-      sortFields,
-      currentSortType: sortFields[0],
-      isSortNumeric: sortFields[0].isNumeric,
+      sortFields: ACTIVE_PLAN_SORT_FIELDS,
+      currentSortType: ACTIVE_PLAN_SORT_FIELDS[0],
+      isSortNumeric: ACTIVE_PLAN_SORT_FIELDS[0].isNumeric,
       isSortAscending: true,
 
       // pagination default states

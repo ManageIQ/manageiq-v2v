@@ -4,7 +4,7 @@ import Immutable from 'seamless-immutable';
 import { Link } from 'react-router-dom';
 import { bindMethods, Breadcrumb, Spinner } from 'patternfly-react';
 import Toolbar from '../../../config/Toolbar';
-import PlanRequestDetailList from './components/PlanRequestDetailList';
+import PlanRequestDetailList from './components/PlanRequestDetailList/PlanRequestDetailList';
 import PlanVmsList from './components/PlanVmsList';
 import PlanEmptyState from './components/PlanEmptyState';
 
