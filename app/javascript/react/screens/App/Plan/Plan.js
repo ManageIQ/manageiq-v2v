@@ -4,14 +4,14 @@ import Immutable from 'seamless-immutable';
 import { Link } from 'react-router-dom';
 import { bindMethods, Breadcrumb, Spinner } from 'patternfly-react';
 import Toolbar from '../../../config/Toolbar';
-import PlanRequestDetailList from './components/PlanRequestDetailList';
+import PlanRequestDetailList from './components/PlanRequestDetailList/PlanRequestDetailList';
 import PlanVmsList from './components/PlanVmsList';
 import PlanEmptyState from './components/PlanEmptyState';
 
 class Plan extends React.Component {
   static getDerivedStateFromProps(nextProps, prevState) {
     if (
-      prevState.planInProgress &&
+      !prevState.planNotStarted &&
       nextProps.planRequestTasks === prevState.planRequestTasks
     ) {
       return null;
@@ -21,7 +21,7 @@ class Plan extends React.Component {
       planRequestTasksMutable: Immutable.asMutable(nextProps.planRequestTasks),
       vms: nextProps.vms,
       vmsMutable: Immutable.asMutable(nextProps.vms),
-      planInProgress: nextProps.planRequestTasks.length > 0
+      planNotStarted: nextProps.planRequestTasks.length === 0
     };
   }
 
@@ -31,7 +31,8 @@ class Plan extends React.Component {
     this.state = {
       planRequestTasksMutable: Immutable.asMutable(props.planRequestTasks),
       vmsMutable: [],
-      planInProgress: false
+      planNotStarted: false,
+      planFinished: false
     };
 
     bindMethods(this, ['stopPolling', 'startPolling']);
@@ -60,7 +61,16 @@ class Plan extends React.Component {
           const [mostRecentRequest] = miq_requests.slice(-1);
           const planRequestId = mostRecentRequest.id;
           fetchPlanRequestAction(fetchPlanRequestUrlBuilder, planRequestId);
-          this.startPolling(planRequestId);
+          if (mostRecentRequest.status === 'active') {
+            this.startPolling(planRequestId);
+          } else if (
+            mostRecentRequest.status === 'complete' ||
+            mostRecentRequest.status === 'failed'
+          ) {
+            this.setState(() => ({
+              planFinished: true
+            }));
+          }
         } else {
           queryPlanVmsAction(vm_ids);
         }
@@ -100,7 +110,12 @@ class Plan extends React.Component {
       isRejectedVms
     } = this.props;
 
-    const { planRequestTasksMutable, vmsMutable, planInProgress } = this.state;
+    const {
+      planRequestTasksMutable,
+      vmsMutable,
+      planNotStarted,
+      planFinished
+    } = this.state;
 
     return (
       <React.Fragment>
@@ -121,15 +136,16 @@ class Plan extends React.Component {
             !planRequestPreviouslyFetched
           }
         >
-          {planInProgress &&
+          {!planNotStarted &&
             planRequestPreviouslyFetched &&
             !isRejectedPlanRequest &&
             planRequestTasksMutable.length > 0 && (
               <PlanRequestDetailList
+                planFinished={planFinished}
                 planRequestTasks={planRequestTasksMutable}
               />
             )}
-          {planInProgress &&
+          {!planNotStarted &&
             planRequestPreviouslyFetched &&
             planRequestTasksMutable.length === 0 && (
               <PlanEmptyState
@@ -139,10 +155,10 @@ class Plan extends React.Component {
                 description="No VM migration tasks have been started for this plan. Please refresh and try again."
               />
             )}
-          {!planInProgress &&
+          {planNotStarted &&
             !isRejectedVms &&
             vmsMutable.length > 0 && <PlanVmsList planVms={vmsMutable} />}
-          {!planInProgress &&
+          {planNotStarted &&
             vmsMutable.length === 0 && (
               <PlanEmptyState
                 title="No VMs"

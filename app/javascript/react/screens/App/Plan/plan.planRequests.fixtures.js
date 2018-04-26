@@ -248,6 +248,70 @@ for (let i = 0; i < 30; i += 1) {
   sampleTasks.push(copy);
 }
 
+const completeSampleTasksWithFailures = [];
+
+for (let i = 0; i < 30; i += 1) {
+  const copy = JSON.parse(JSON.stringify(sampleTask));
+  copy.id = i;
+  copy.miq_request_id = i;
+  copy.options.delivered_on = moment(copy.options.delivered_on)
+    .subtract(Math.floor(Math.random() * 48), 'hours')
+    .format();
+  copy.options.updated_on = moment(copy.options.delivered_on)
+    .add(Math.floor(Math.random() * 100), 'm')
+    .format();
+  copy.message = 'VM Transformations completed';
+
+  if (i % 5 === 4) {
+    copy.options.progress.current_description =
+      'Virtual machine migration failed.';
+    copy.status = 'Error';
+    for (let j = 0; j < copy.options.virtv2v_disks.length; j += 1) {
+      copy.options.virtv2v_disks[j].percent = Math.floor(Math.random() * 100);
+      copy.options.virtv2v_disks[j].size = Math.floor(
+        Math.random() * 17179869184
+      );
+    }
+  } else {
+    copy.options.progress.current_description = 'Virtual machine migrated';
+    for (let j = 0; j < copy.options.virtv2v_disks.length; j += 1) {
+      copy.options.virtv2v_disks[j].percent = 100;
+      copy.options.virtv2v_disks[j].size = Math.floor(
+        Math.random() * 17179869184
+      );
+    }
+  }
+
+  copy.options.transformation_host_name = `rhvh${i}.example.com`;
+  completeSampleTasksWithFailures.push(copy);
+}
+
+const completeSampleTasks = [];
+
+for (let i = 0; i < 30; i += 1) {
+  const copy = JSON.parse(JSON.stringify(sampleTask));
+  copy.id = i;
+  copy.miq_request_id = i;
+  copy.options.delivered_on = moment(copy.options.delivered_on)
+    .subtract(Math.floor(Math.random() * 48), 'hours')
+    .format();
+  copy.options.updated_on = moment(copy.options.delivered_on)
+    .add(Math.floor(Math.random() * 100), 'm')
+    .format();
+  copy.message = 'VM Transformations completed';
+
+  copy.options.progress.current_description = 'Virtual machine migrated';
+  for (let j = 0; j < copy.options.virtv2v_disks.length; j += 1) {
+    copy.options.virtv2v_disks[j].percent = 100;
+    copy.options.virtv2v_disks[j].size = Math.floor(
+      Math.random() * 17179869184
+    );
+  }
+
+  copy.options.transformation_host_name = `rhvh${i}.example.com`;
+  completeSampleTasks.push(copy);
+}
+
 export const planRequestResult = Immutable({
   href: 'http://localhost:3000/api/service_requests/19',
   id: '19',
@@ -262,7 +326,7 @@ export const planRequestResult = Immutable({
   request_type: 'migration_plan',
   request_state: 'finished',
   message: '[EVM] VM Migrated Successfully',
-  status: 'Ok',
+  status: 'active',
   options: {
     src_id: '6',
     cart_state: 'ordered',
@@ -317,12 +381,162 @@ export const planRequestResult = Immutable({
   ]
 });
 
+export const failedPlanRequestResult = Immutable({
+  href: 'http://localhost:3000/api/service_requests/19',
+  id: '19',
+  description: 'Migration Plan 1',
+  approval_state: 'approved',
+  type: 'ServiceTemplateTransformationPlanRequest',
+  created_on: '2018-01-24T22:36:59Z',
+  updated_on: '2018-01-30T21:13:06Z',
+  fulfilled_on: '2018-01-30T21:13:06Z',
+  requester_id: '1',
+  requester_name: 'Administrator',
+  request_type: 'migration_plan',
+  request_state: 'finished',
+  message: '[EVM] VM Migrated Successfully',
+  status: 'failed',
+  options: {
+    src_id: '6',
+    cart_state: 'ordered',
+    delivered_on: '2018-01-30T21:12:34.808Z', // can use this timestamp as the starting time for this request
+    user_message: '[EVM] VM Migrated Successfully'
+  },
+  userid: 'admin',
+  source_id: '6',
+  source_type: 'ServiceTemplate',
+  destination_id: null,
+  destination_type: null,
+  tenant_id: '1',
+  service_order_id: '30',
+  process: true,
+  miq_request_tasks: [...completeSampleTasksWithFailures],
+  actions: [
+    {
+      name: 'approve',
+      method: 'post',
+      href: 'http://localhost:3000/api/service_requests/19'
+    },
+    {
+      name: 'deny',
+      method: 'post',
+      href: 'http://localhost:3000/api/service_requests/19'
+    },
+    {
+      name: 'delete',
+      method: 'post',
+      href: 'http://localhost:3000/api/service_requests/19'
+    },
+    {
+      name: 'add_approver',
+      method: 'post',
+      href: 'http://localhost:3000/api/service_requests/19'
+    },
+    {
+      name: 'remove_approver',
+      method: 'post',
+      href: 'http://localhost:3000/api/service_requests/19'
+    },
+    {
+      name: 'edit',
+      method: 'post',
+      href: 'http://localhost:3000/api/service_requests/19'
+    },
+    {
+      name: 'delete',
+      method: 'delete',
+      href: 'http://localhost:3000/api/service_requests/19'
+    }
+  ]
+});
+
+export const completePlanRequestResult = Immutable({
+  href: 'http://localhost:3000/api/service_requests/19',
+  id: '19',
+  description: 'Migration Plan 1',
+  approval_state: 'approved',
+  type: 'ServiceTemplateTransformationPlanRequest',
+  created_on: '2018-01-24T22:36:59Z',
+  updated_on: '2018-01-30T21:13:06Z',
+  fulfilled_on: '2018-01-30T21:13:06Z',
+  requester_id: '1',
+  requester_name: 'Administrator',
+  request_type: 'migration_plan',
+  request_state: 'finished',
+  message: '[EVM] VM Migrated Successfully',
+  status: 'complete',
+  options: {
+    src_id: '6',
+    cart_state: 'ordered',
+    delivered_on: '2018-01-30T21:12:34.808Z', // can use this timestamp as the starting time for this request
+    user_message: '[EVM] VM Migrated Successfully'
+  },
+  userid: 'admin',
+  source_id: '6',
+  source_type: 'ServiceTemplate',
+  destination_id: null,
+  destination_type: null,
+  tenant_id: '1',
+  service_order_id: '30',
+  process: true,
+  miq_request_tasks: [...completeSampleTasks],
+  actions: [
+    {
+      name: 'approve',
+      method: 'post',
+      href: 'http://localhost:3000/api/service_requests/19'
+    },
+    {
+      name: 'deny',
+      method: 'post',
+      href: 'http://localhost:3000/api/service_requests/19'
+    },
+    {
+      name: 'delete',
+      method: 'post',
+      href: 'http://localhost:3000/api/service_requests/19'
+    },
+    {
+      name: 'add_approver',
+      method: 'post',
+      href: 'http://localhost:3000/api/service_requests/19'
+    },
+    {
+      name: 'remove_approver',
+      method: 'post',
+      href: 'http://localhost:3000/api/service_requests/19'
+    },
+    {
+      name: 'edit',
+      method: 'post',
+      href: 'http://localhost:3000/api/service_requests/19'
+    },
+    {
+      name: 'delete',
+      method: 'delete',
+      href: 'http://localhost:3000/api/service_requests/19'
+    }
+  ]
+});
+
 export const planRequestStore = {
   '3001': {
     ...planRequestResult,
     href: 'http://localhost:3000/api/service_requests/3001',
     id: '3001',
     description: 'Migration Plan C-0'
+  },
+  '4000': {
+    ...failedPlanRequestResult,
+    href: 'http://localhost:3000/api/service_requests/4000',
+    id: '4000',
+    description: 'Migration Plan D-0'
+  },
+  '5000': {
+    ...completePlanRequestResult,
+    href: 'http://localhost:3000/api/service_requests/5000',
+    id: '5000',
+    description: 'Migration Plan E-0'
   },
   '6000': {
     ...planRequestResult,

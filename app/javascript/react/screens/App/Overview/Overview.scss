@@ -8,6 +8,10 @@ hr {
   margin-top: 10px;
 }
 
+.plans-complete-list .plans-complete-list__list-item {
+  cursor: pointer;
+}
+
 .plans-not-started-list .plans-not-started-list__list-item {
   cursor: pointer;
 }
