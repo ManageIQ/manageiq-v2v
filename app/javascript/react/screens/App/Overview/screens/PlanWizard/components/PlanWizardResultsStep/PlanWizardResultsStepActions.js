@@ -1,4 +1,7 @@
-import API, { globalMockMode } from '../../../../../../../../common/API';
+import API, {
+  globalMockMode,
+  globalLocalStorageMode
+} from '../../../../../../../../common/API';
 import {
   POST_V2V_MIGRATION_PLANS,
   POST_V2V_MIGRATION_REQUESTS
@@ -8,7 +11,10 @@ import {
   requestMigrationRequestsData
 } from './planWizardResultsStep.fixtures';
 
+import { saveMigrationPlanToLocalStorage } from './savePlans.localStorageService';
+
 const mockMode = globalMockMode;
+const localStorageMode = globalLocalStorageMode;
 
 const postMigrationRequestsAction = (response, dispatch) => {
   dispatch({
@@ -28,36 +34,23 @@ const postMigrationRequestsAction = (response, dispatch) => {
 const _postMigrationPlansActionCreator = (
   url,
   migrationPlans,
-  planSchedule
+  planSchedule,
+  valid_vms
 ) => dispatch => {
   if (mockMode) {
+    if (localStorageMode) {
+      saveMigrationPlanToLocalStorage(migrationPlans, planSchedule, valid_vms);
+    }
     dispatch({
-      type: POST_V2V_MIGRATION_PLANS,
-      payload: API.post(url, migrationPlans)
-    }).catch(error => {
-      // to enable UI development without the backend ready, i'm catching the error
-      // and passing some mock data thru the FULFILLED action after the REJECTED action is finished.
-      dispatch({
-        type: `${POST_V2V_MIGRATION_PLANS}_FULFILLED`,
-        payload: requestMigrationPlansData.response
-      });
-      if (planSchedule === 'migration_plan_now') {
-        dispatch({
-          type: POST_V2V_MIGRATION_REQUESTS,
-          payload: API.post(
-            `${requestMigrationPlansData.response.data.results[0].href}`,
-            { action: 'order' }
-          ).catch(errorMigrationRequest => {
-            // to enable UI development without the backend ready, i'm catching the error
-            // and passing some mock data thru the FULFILLED action after the REJECTED action is finished.
-            dispatch({
-              type: `${POST_V2V_MIGRATION_REQUESTS}_FULFILLED`,
-              payload: requestMigrationRequestsData.response
-            });
-          })
-        });
-      }
+      type: `${POST_V2V_MIGRATION_PLANS}_FULFILLED`,
+      payload: requestMigrationPlansData.response
     });
+    if (planSchedule === 'migration_plan_now') {
+      dispatch({
+        type: `${POST_V2V_MIGRATION_REQUESTS}_FULFILLED`,
+        payload: requestMigrationRequestsData.response
+      });
+    }
   } else {
     dispatch({
       type: POST_V2V_MIGRATION_PLANS,
@@ -75,5 +68,15 @@ const _postMigrationPlansActionCreator = (
   }
 };
 
-export const postMigrationPlansAction = (url, migrationPlans, planSchedule) =>
-  _postMigrationPlansActionCreator(url, migrationPlans, planSchedule);
+export const postMigrationPlansAction = (
+  url,
+  migrationPlans,
+  planSchedule,
+  valid_vms
+) =>
+  _postMigrationPlansActionCreator(
+    url,
+    migrationPlans,
+    planSchedule,
+    valid_vms
+  );

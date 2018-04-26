@@ -6,9 +6,13 @@ import reducer from './PlanWizardResultsStepReducer';
 
 export const reducers = { planWizardResultsStep: reducer };
 
-const mapStateToProps = ({ planWizardResultsStep, planWizard }, ownProps) => ({
+const mapStateToProps = (
+  { planWizardResultsStep, planWizard, planWizardVMStep },
+  ownProps
+) => ({
   ...planWizardResultsStep,
   ...planWizard,
+  ...planWizardVMStep,
   ...ownProps.data
 });
 

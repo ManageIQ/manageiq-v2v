@@ -12,10 +12,11 @@ class PlanWizardResultsStep extends React.Component {
       postPlansUrl,
       postMigrationPlansAction,
       plansBody,
-      planSchedule
+      planSchedule,
+      valid_vms
     } = this.props;
 
-    postMigrationPlansAction(postPlansUrl, plansBody, planSchedule);
+    postMigrationPlansAction(postPlansUrl, plansBody, planSchedule, valid_vms);
   }
   renderResult = (
     migrationPlanMessage,
@@ -119,7 +120,8 @@ PlanWizardResultsStep.propTypes = {
   isRejectedPostingPlans: PropTypes.bool,
   errorPostingPlans: PropTypes.object,
   migrationPlansResult: PropTypes.object,
-  migrationRequestsResult: PropTypes.object
+  migrationRequestsResult: PropTypes.object,
+  valid_vms: PropTypes.array
 };
 PlanWizardResultsStep.defaultProps = {
   postPlansUrl: '',
@@ -130,6 +132,7 @@ PlanWizardResultsStep.defaultProps = {
   isRejectedPostingPlans: false,
   errorPostingPlans: null,
   migrationPlansResult: null,
-  migrationRequestsResult: null
+  migrationRequestsResult: null,
+  valid_vms: []
 };
 export default PlanWizardResultsStep;
