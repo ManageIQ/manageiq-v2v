@@ -1,10 +1,19 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
-import { required } from 'redux-form-validators';
+import { required, length } from 'redux-form-validators';
 import { Form } from 'patternfly-react';
 import PropTypes from 'prop-types';
 import { FormField } from '../../../../../common/forms/FormField';
 import { BootstrapSelect } from '../../../../../common/forms/BootstrapSelect';
+import {
+  MAX_LENGTH_NAMES,
+  MAX_LENGTH_DESCRIPTIONS,
+  nameHelp,
+  descriptionHelp,
+  nameRequired,
+  nameTooLong,
+  descriptionTooLong
+} from '../../../../../../../../common/constants'; // Oh my
 
 const PlanWizardGeneralStep = ({ transformationMappings }) => (
   <Form className="form-horizontal">
@@ -25,14 +34,30 @@ const PlanWizardGeneralStep = ({ transformationMappings }) => (
       label={__('Name')}
       required
       component={FormField}
-      validate={[required({ msg: __('Required') })]}
       type="text"
+      help={__(nameHelp)}
+      validate={[
+        required({
+          msg: __(nameRequired)
+        }),
+        length({
+          max: MAX_LENGTH_NAMES,
+          msg: { tooLong: __(nameTooLong) }
+        })
+      ]}
     />
     <Field
       name="description"
       label={__('Description')}
       component={FormField}
       type="textarea"
+      help={__(descriptionHelp)}
+      validate={[
+        length({
+          max: MAX_LENGTH_DESCRIPTIONS,
+          msg: { tooLong: __(descriptionTooLong) }
+        })
+      ]}
     />
     <Field
       name="vm_choice_radio"

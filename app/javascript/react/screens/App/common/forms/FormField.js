@@ -14,11 +14,10 @@ export const FormField = ({
   optionValue,
   labelWidth,
   meta: { touched, error },
+  help,
   ...props
 }) => {
   const formGroupProps = { key: { label }, controlId, ...props };
-
-  const addBreak = <br />;
 
   if (touched && error) formGroupProps.validationState = 'error';
 
@@ -76,9 +75,10 @@ export const FormField = ({
         {required && ' *'}
       </Grid.Col>
       <Grid.Col sm={9}>
-        {type === 'radio' && addBreak}
         {renderField()}
-        {touched && error && <Form.HelpBlock>{error}</Form.HelpBlock>}
+        {(help || error) && (
+          <Form.HelpBlock>{(touched && error) || help}</Form.HelpBlock>
+        )}
       </Grid.Col>
     </Form.FormGroup>
   );
@@ -94,5 +94,6 @@ FormField.propTypes = {
   optionKey: PropTypes.string,
   optionValue: PropTypes.string,
   labelWidth: PropTypes.string,
-  meta: PropTypes.object
+  meta: PropTypes.object,
+  help: PropTypes.string
 };
