@@ -401,7 +401,11 @@ class PlanRequestDetailList extends React.Component {
               // }
 
               const popoverContent = (
-                <Popover id={`popover${task.id}${n}`} title={task.message}>
+                <Popover
+                  id={`popover${task.id}${n}`}
+                  title={task.message}
+                  className="task-info-popover"
+                >
                   <div>
                     <div>
                       <b>{__('Started')}: </b>
@@ -437,7 +441,9 @@ class PlanRequestDetailList extends React.Component {
                       {elapsedTime}
                     </ListView.InfoItem>,
                     <ListView.InfoItem key={`${task.id}-message`}>
-                      {task.message}
+                      <span style={{ textTransform: 'capitalize' }}>
+                        {task.message}
+                      </span>
                       &nbsp;
                       {/* Todo: revisit FieldLevelHelp props in patternfly-react to support this */}
                       <OverlayTrigger
