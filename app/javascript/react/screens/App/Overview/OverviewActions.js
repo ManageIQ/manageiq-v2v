@@ -96,9 +96,10 @@ export const fetchTransformationMappingsAction = url => {
 
 const _getTransformationPlansActionCreator = url => dispatch => {
   if (localStorageMode) {
+    const plans = getLocalStorageState(LOCAL_STORAGE_KEYS.V2V_PLANS);
     dispatch({
       type: `${FETCH_V2V_TRANSFORMATION_PLANS}_FULFILLED`,
-      payload: { data: { resources: [] } }
+      payload: { data: { resources: plans || [] } }
     });
   } else {
     dispatch({

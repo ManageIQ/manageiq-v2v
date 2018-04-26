@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, Grid, EmptyState, Spinner } from 'patternfly-react';
+import OverviewEmptyState from '../OverviewEmptyState/OverviewEmptyState';
 import MigrationInProgressCard from './MigrationsInProgressCard';
 
 const MigrationsInProgressCards = ({
@@ -13,24 +14,31 @@ const MigrationsInProgressCards = ({
       <Grid.Col xs={12}>
         <Card.HeightMatching selector={['.card-pf-match-height']}>
           <Spinner loading={loading}>
-            {activeTransformationPlans.length > 0 &&
+            {activeTransformationPlans.length > 0 ? (
               activeTransformationPlans.map(plan => (
                 <MigrationInProgressCard
                   plan={plan}
                   key={plan.id}
                   handleClick={redirectTo}
                 />
-              ))}
-            {activeTransformationPlans.length === 0 && (
-              <EmptyState>
-                <EmptyState.Icon />
-                <EmptyState.Title>
-                  {__('No Active Migrations')}
-                </EmptyState.Title>
-                <EmptyState.Info>
-                  {__('There are currently no active migrations.')}
-                </EmptyState.Info>
-              </EmptyState>
+              ))
+            ) : (
+              <OverviewEmptyState
+                title={__('No Migration Plans In Progress')}
+                iconType="pf"
+                iconName="info"
+                description={
+                  <div>
+                    {__(
+                      'There are no existing migration plans in an In Progress state.'
+                    )}
+                    <br />{' '}
+                    {__(
+                      'Make a selection in the dropdown to view plans in other states.'
+                    )}
+                  </div>
+                }
+              />
             )}
           </Spinner>
         </Card.HeightMatching>

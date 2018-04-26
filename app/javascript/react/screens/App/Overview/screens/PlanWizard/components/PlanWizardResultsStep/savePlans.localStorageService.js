@@ -5,10 +5,14 @@ import {
 } from '../../../../../../../../common/LocalStorage';
 
 const _formatLocalStoragePlan = (migrationPlans, planSchedule, valid_vms) => {
-  const plan = migrationPlans.asMutable({ deep: true });
+  const plan = {};
+  plan.name = migrationPlans.name;
+  plan.description = migrationPlans.description;
   plan.id = Math.floor(Math.random() * 1000);
   plan.href = `http://localhost:3000/api/service_templates/${plan.id}`;
   plan.miq_requests = [];
+  plan.options = {};
+  plan.options.config_info = migrationPlans.config_info;
 
   // construct tasks (for use later if not started immediately)
   const tasks = [];
