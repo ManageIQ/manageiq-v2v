@@ -60,9 +60,14 @@ class Plan extends React.Component {
         if (miq_requests.length > 0) {
           const [mostRecentRequest] = miq_requests.slice(-1);
           const planRequestId = mostRecentRequest.id;
-          fetchPlanRequestAction(fetchPlanRequestUrlBuilder, planRequestId);
+
+          fetchPlanRequestAction(
+            fetchPlanRequestUrlBuilder,
+            planRequestId,
+            planId // plan id used for local storage mode instead
+          );
           if (mostRecentRequest.status === 'active') {
-            this.startPolling(planRequestId);
+            this.startPolling(planRequestId, planId);
           } else if (
             mostRecentRequest.status === 'complete' ||
             mostRecentRequest.status === 'failed'
@@ -84,11 +89,11 @@ class Plan extends React.Component {
     resetPlanStateAction();
   }
 
-  startPolling(id) {
+  startPolling(id, planId) {
     const { fetchPlanRequestAction, fetchPlanRequestUrlBuilder } = this.props;
     this.pollingInterval = setInterval(() => {
-      fetchPlanRequestAction(fetchPlanRequestUrlBuilder, id);
-    }, 15000);
+      fetchPlanRequestAction(fetchPlanRequestUrlBuilder, id, planId);
+    }, 3000);
   }
 
   stopPolling() {

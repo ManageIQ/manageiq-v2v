@@ -100,7 +100,7 @@ class Overview extends React.Component {
     } = this.props;
     this.pollingInterval = setInterval(() => {
       fetchTransformationPlansAction(fetchTransformationPlansUrl);
-    }, 15000);
+    }, 3000);
   }
 
   stopPolling() {
