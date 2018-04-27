@@ -17,6 +17,10 @@ class Overview extends React.Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      hasMadeInitialPlansFetch: false
+    };
+
     bindMethods(this, [
       'stopPolling',
       'startPolling',
@@ -46,9 +50,14 @@ class Overview extends React.Component {
 
     fetchClustersAction(fetchClustersUrl);
     fetchTransformationMappingsAction(fetchTransformationMappingsUrl);
-    fetchTransformationPlansAction(fetchTransformationPlansUrl);
-
-    this.startPolling();
+    fetchTransformationPlansAction(fetchTransformationPlansUrl).then(() => {
+      this.setState(() => ({
+        hasMadeInitialPlansFetch: true
+      }));
+      if (!this.pollingInterval) {
+        this.startPolling();
+      }
+    });
   }
   componentWillReceiveProps(nextProps) {
     const {
@@ -61,6 +70,7 @@ class Overview extends React.Component {
       continueToPlanAction,
       shouldReloadMappings
     } = this.props;
+    const { hasMadeInitialPlansFetch } = this.state;
 
     if (
       shouldReloadMappings !== nextProps.shouldReloadMappings &&
@@ -81,6 +91,7 @@ class Overview extends React.Component {
     } else if (
       !nextProps.mappingWizardVisible &&
       !nextProps.planWizardVisible &&
+      hasMadeInitialPlansFetch &&
       !this.pollingInterval
     ) {
       fetchTransformationPlansAction(fetchTransformationPlansUrl);
@@ -89,10 +100,19 @@ class Overview extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.pollingInterval) {
-      const { finishedTransformationPlans, addNotificationAction } = this.props;
+    const { finishedTransformationPlans, addNotificationAction } = this.props;
+    const { hasMadeInitialPlansFetch } = this.state;
+
+    if (
+      hasMadeInitialPlansFetch &&
+      finishedTransformationPlans.length >
+        prevProps.finishedTransformationPlans.length
+    ) {
+      const oldMigrationIds = prevProps.finishedTransformationPlans.map(
+        plan => plan.id
+      );
       const freshMigrations = finishedTransformationPlans.filter(
-        migration => !prevProps.finishedTransformationPlans.includes(migration)
+        migration => !oldMigrationIds.includes(migration.id)
       );
 
       freshMigrations.forEach(plan => {

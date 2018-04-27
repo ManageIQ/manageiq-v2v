@@ -19,7 +19,8 @@ describe('Overview component', () => {
     isRejectedTransformationMappings: false,
     transformationMappings: [],
     transformationPlans: [],
-    clusters: []
+    clusters: [],
+    fetchTransformationPlansUrl: ''
   };
   let showMappingWizardAction;
   let showPlanWizardAction;
@@ -32,6 +33,7 @@ describe('Overview component', () => {
     fetchTransformationMappingsAction = jest.fn();
     fetchTransformationPlansAction = jest.fn();
     fetchClustersAction = jest.fn();
+    fetchTransformationPlansAction.mockReturnValue(Promise.resolve());
   });
 
   describe('overview sections', () => {
