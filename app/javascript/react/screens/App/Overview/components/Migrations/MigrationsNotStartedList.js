@@ -24,7 +24,7 @@ const MigrationsNotStartedList = ({
                   <Button
                     onClick={e => {
                       e.stopPropagation();
-                      migrateClick(plan.href);
+                      migrateClick(plan.href, plan.id);
                     }}
                     disabled={loading === plan.href}
                   >

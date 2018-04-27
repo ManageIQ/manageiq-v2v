@@ -110,7 +110,7 @@ class Overview extends React.Component {
     }
   }
 
-  createTransformationPlanRequest(url) {
+  createTransformationPlanRequest(url, planId) {
     const {
       createTransformationPlanRequestAction,
       fetchTransformationPlansAction,
@@ -118,7 +118,7 @@ class Overview extends React.Component {
       setMigrationsFilterAction
     } = this.props;
 
-    createTransformationPlanRequestAction(url).then(() => {
+    createTransformationPlanRequestAction(url, planId).then(() => {
       setMigrationsFilterAction('Migration Plans in Progress');
       fetchTransformationPlansAction(fetchTransformationPlansUrl);
     });

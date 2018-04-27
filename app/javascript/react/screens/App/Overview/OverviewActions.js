@@ -7,6 +7,7 @@ import API, {
 
 import {
   getLocalStorageState,
+  saveLocalStorageState,
   LOCAL_STORAGE_KEYS
 } from '../../../../common/LocalStorage';
 
@@ -44,8 +45,43 @@ export const showPlanWizardAction = id => dispatch => {
   });
 };
 
-const _createTransformationPlanRequestActionCreator = url => dispatch =>
-  dispatch({
+const _getPlanFromLocalStorage = id => {
+  const plans = getLocalStorageState(LOCAL_STORAGE_KEYS.V2V_PLANS);
+  return plans.find(p => p.id === id);
+};
+
+const _createTransformationPlanRequestActionCreator = (
+  url,
+  planId
+) => dispatch => {
+  if (localStorageMode) {
+    // in localStorageMode, we just want to modify the plan's pending tasks and
+    // set them pending
+    const plans = getLocalStorageState(LOCAL_STORAGE_KEYS.V2V_PLANS);
+    const planLocalStorageIndex = plans.findIndex(p => p.id === planId);
+    const plan = plans[planLocalStorageIndex];
+
+    // todo: handle retry as well as not started
+    if (plan.pending_tasks) {
+      // create a request with the previously created pending_tasks
+      const request = {};
+      request.description = plan.name;
+      request.approval_state = 'approved';
+      request.status = 'pending';
+      request.created_on = new Date().toString();
+      request.miq_request_tasks = plan.pending_tasks;
+      plan.miq_requests.push(request);
+      plan.pending_tasks = [];
+      plans[planLocalStorageIndex] = plan;
+    }
+    saveLocalStorageState(LOCAL_STORAGE_KEYS.V2V_PLANS, plans);
+
+    dispatch({
+      type: `${CREATE_V2V_TRANSFORMATION_PLAN_REQUEST}_FULFILLED`,
+      payload: { data: plan }
+    });
+  }
+  return dispatch({
     type: CREATE_V2V_TRANSFORMATION_PLAN_REQUEST,
     payload: {
       promise: API.post(url, { action: 'order' }),
@@ -59,10 +95,11 @@ const _createTransformationPlanRequestActionCreator = url => dispatch =>
       });
     }
   });
+};
 
-export const createTransformationPlanRequestAction = url => {
+export const createTransformationPlanRequestAction = (url, planId) => {
   const uri = new URI(url);
-  return _createTransformationPlanRequestActionCreator(uri.toString());
+  return _createTransformationPlanRequestActionCreator(uri.toString(), planId);
 };
 
 const _getTransformationMappingsActionCreator = url => dispatch => {
