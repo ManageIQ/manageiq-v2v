@@ -89,29 +89,31 @@ class Overview extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { finishedTransformationPlans, addNotificationAction } = this.props;
-    const freshMigrations = finishedTransformationPlans.filter(
-      migration => !prevProps.finishedTransformationPlans.includes(migration)
-    );
+    if (this.pollingInterval) {
+      const { finishedTransformationPlans, addNotificationAction } = this.props;
+      const freshMigrations = finishedTransformationPlans.filter(
+        migration => !prevProps.finishedTransformationPlans.includes(migration)
+      );
 
-    freshMigrations.forEach(plan => {
-      const planStatus =
-        plan.miq_requests[0].status.toLowerCase() === 'complete';
-      const planStatusMessage = planStatus
-        ? `${plan.miq_requests[0].status}.`
-        : __('completed with errors.');
+      freshMigrations.forEach(plan => {
+        const planStatus =
+          plan.miq_requests[0].status.toLowerCase() === 'complete';
+        const planStatusMessage = planStatus
+          ? `${plan.miq_requests[0].status}.`
+          : __('completed with errors.');
 
-      addNotificationAction({
-        message: `${plan.name} ${planStatusMessage}`,
-        notificationType: planStatus ? 'success' : 'error',
-        data: {
-          id: plan.id
-        },
-        persistent: !planStatus,
-        timerdelay: planStatus ? 8000 : null,
-        actionEnabled: true
+        addNotificationAction({
+          message: `${plan.name} ${planStatusMessage}`,
+          notificationType: planStatus ? 'success' : 'error',
+          data: {
+            id: plan.id
+          },
+          persistent: !planStatus,
+          timerdelay: planStatus ? 8000 : null,
+          actionEnabled: true
+        });
       });
-    });
+    }
   }
 
   componentWillUnmount() {
