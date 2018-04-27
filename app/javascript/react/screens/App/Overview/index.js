@@ -13,7 +13,7 @@ import {
 export const reducers = { overview: reducer, form: {} };
 
 const mapStateToProps = (
-  { overview, overview: { transformationPlans } },
+  { overview, overview: { transformationPlans, allRequestsWithTasks } },
   ownProps
 ) => ({
   ...overview,
