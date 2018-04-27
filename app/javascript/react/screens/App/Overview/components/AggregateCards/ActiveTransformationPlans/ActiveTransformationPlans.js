@@ -28,8 +28,11 @@ const ActiveTransformationPlans = ({
       );
 
       const [mostRecentRequest] = requestsOfAssociatedPlan.slice(-1);
-      return mostRecentRequest.miq_request_tasks.some(
-        task => task.request_state === 'finished' && task.status !== 'Ok'
+      return (
+        mostRecentRequest &&
+        mostRecentRequest.miq_request_tasks.some(
+          task => task.request_state === 'finished' && task.status !== 'Ok'
+        )
       );
     }
     return [];

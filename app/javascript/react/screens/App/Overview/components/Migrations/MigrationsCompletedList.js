@@ -19,7 +19,9 @@ const MigrationsCompletedList = ({
 
         const [mostRecentRequest] = requestsOfAssociatedPlan.slice(-1);
 
-        const failed = mostRecentRequest.status === 'failed';
+        const failed =
+          mostRecentRequest && mostRecentRequest.status === 'failed';
+
         const tasks = {};
         requestsOfAssociatedPlan.forEach(request => {
           request.miq_request_tasks.forEach(task => {
@@ -33,8 +35,8 @@ const MigrationsCompletedList = ({
         });
 
         const elapsedTime = IsoElpasedTime(
-          new Date(mostRecentRequest.created_on),
-          new Date(mostRecentRequest.options.delivered_on)
+          new Date(mostRecentRequest && mostRecentRequest.created_on),
+          new Date(mostRecentRequest && mostRecentRequest.options.delivered_on)
         );
 
         return (

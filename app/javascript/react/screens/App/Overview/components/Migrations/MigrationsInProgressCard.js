@@ -25,7 +25,7 @@ const MigrationsInProgressCard = ({
   const [mostRecentRequest] = requestsOfAssociatedPlan.slice(-1);
 
   // if most recent request is still pending, show loading card
-  if (mostRecentRequest.status === 'pending') {
+  if (!mostRecentRequest || mostRecentRequest.status === 'pending') {
     return (
       <Grid.Col sm={12} md={6} lg={4}>
         <Card matchHeight>
