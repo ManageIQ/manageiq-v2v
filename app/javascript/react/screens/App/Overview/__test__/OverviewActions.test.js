@@ -44,7 +44,7 @@ describe('fetchTransformationPlansAction', () => {
 
     return store
       .dispatch(fetchTransformationPlansAction(fetchTransformationPlansUrl))
-      .then(() => {
+      .catch(() => {
         expect(store.getActions()).toMatchSnapshot();
       });
   });
