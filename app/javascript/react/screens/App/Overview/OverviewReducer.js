@@ -9,6 +9,7 @@ import {
   PLAN_WIZARD_EXITED,
   FETCH_V2V_TRANSFORMATION_MAPPINGS,
   FETCH_V2V_TRANSFORMATION_PLANS,
+  FETCH_V2V_ALL_REQUESTS_WITH_TASKS,
   CREATE_V2V_TRANSFORMATION_PLAN_REQUEST,
   V2V_FETCH_CLUSTERS,
   CONTINUE_TO_PLAN,
@@ -29,6 +30,11 @@ export const initialState = Immutable({
   isFetchingTransformationPlans: false,
   errorTransformationPlans: null,
   plansPreviouslyFetched: false,
+  allRequestsWithTasks: [],
+  isRejectedAllRequestsWithTasks: false,
+  isFetchingAllRequestsWithTasks: false,
+  errorAllRequestsWithTasks: null,
+  requestsWithTasksPreviouslyFetched: false,
   createTransformationPlanRequestResponse: {},
   isRejectedCreateTranformationPlanRequest: false,
   isCreatingTransformationPlanRequest: null,
@@ -106,6 +112,23 @@ export default (state = initialState, action) => {
         .set('isRejectedTransformationPlans', true)
         .set('isFetchingTransformationPlans', false)
         .set('plansPreviouslyFetched', false);
+
+    case `${FETCH_V2V_ALL_REQUESTS_WITH_TASKS}_PENDING`:
+      return state.set('isFetchingAllRequestsWithTasks', true);
+    case `${FETCH_V2V_ALL_REQUESTS_WITH_TASKS}_FULFILLED`:
+      return state
+        .set('allRequestsWithTasks', action.payload.data.results)
+        .set('isFetchingAllRequestsWithTasks', false)
+        .set('isRejectedAllRequestsWithTasks', false)
+        .set('errorAllRequestsWithTasks', null)
+        .set('requestsWithTasksPreviouslyFetched', true);
+    case `${FETCH_V2V_ALL_REQUESTS_WITH_TASKS}_REJECTED`:
+      return state
+        .set('errorAllRequestsWithTasks', action.payload)
+        .set('isRejectedAllRequestsWithTasks', true)
+        .set('isFetchingAllRequestsWithTasks', false)
+        .set('requestsWithTasksPreviouslyFetched', false);
+
     case `${V2V_FETCH_CLUSTERS}_FULFILLED`:
       return state.set('clusters', action.payload.data.resources);
 
