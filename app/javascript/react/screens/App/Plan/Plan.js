@@ -72,7 +72,7 @@ class Plan extends React.Component {
             }));
           }
         } else {
-          queryPlanVmsAction(vm_ids);
+          queryPlanVmsAction(vm_ids, planId);
         }
       }
     );

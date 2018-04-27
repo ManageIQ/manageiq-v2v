@@ -8,7 +8,7 @@ const _formatLocalStoragePlan = (migrationPlans, planSchedule, valid_vms) => {
   const plan = {};
   plan.name = migrationPlans.name;
   plan.description = migrationPlans.description;
-  plan.id = Math.floor(Math.random() * 1000);
+  plan.id = Math.floor(Math.random() * 1000).toString();
   plan.href = `http://localhost:3000/api/service_templates/${plan.id}`;
   plan.miq_requests = [];
   plan.options = {};
@@ -17,24 +17,26 @@ const _formatLocalStoragePlan = (migrationPlans, planSchedule, valid_vms) => {
   // construct tasks (for use later if not started immediately)
   const tasks = [];
   valid_vms.forEach(vm => {
-    const task = {};
-    task.created_on = new Date().toISOString();
-    task.message = 'Pending';
-    task.options = {};
-    task.options.progress = {};
-    task.options.progress.states = {};
-    task.options.progress.percent = 0;
-    task.options.progress.current_description = 'Pending';
-    task.options.transformation_host_name = vm.name;
-    task.options.virtv2v_disks = [];
-    task.options.virtv2v_wrapper = {
-      v2v_log: `/var/log/vdsm/import/v2v-import-${task.created_on
-        .replace(/:/g, '-')
-        .substring(0, 19)}.log`
-    };
-    task.state = 'pending';
-    task.status = 'Ok';
-    tasks.push(task);
+    if (migrationPlans.config_info.vm_ids.includes(vm.id)) {
+      const task = {};
+      task.created_on = new Date().toISOString();
+      task.message = 'Pending';
+      task.options = {};
+      task.options.progress = {};
+      task.options.progress.states = {};
+      task.options.progress.percent = 0;
+      task.options.progress.current_description = 'Pending';
+      task.options.transformation_host_name = vm.name;
+      task.options.virtv2v_disks = [];
+      task.options.virtv2v_wrapper = {
+        v2v_log: `/var/log/vdsm/import/v2v-import-${task.created_on
+          .replace(/:/g, '-')
+          .substring(0, 19)}.log`
+      };
+      task.state = 'pending';
+      task.status = 'Ok';
+      tasks.push(task);
+    }
   });
 
   if (planSchedule === 'migration_plan_now') {

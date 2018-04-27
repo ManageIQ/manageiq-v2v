@@ -1,5 +1,13 @@
 import URI from 'urijs';
-import API, { globalMockMode } from '../../../../common/API';
+import API, {
+  globalMockMode,
+  globalLocalStorageMode
+} from '../../../../common/API';
+
+import {
+  getLocalStorageState,
+  LOCAL_STORAGE_KEYS
+} from '../../../../common/LocalStorage';
 
 import {
   FETCH_V2V_PLAN_REQUEST,
@@ -9,10 +17,11 @@ import {
 } from './PlanConstants';
 
 import { requestPlanData } from './plan.fixtures';
-import { queryVmsData } from './plan.vms.fixtures';
+import { queryVmsData, sampleVmResult } from './plan.vms.fixtures';
 import { requestPlanRequestData } from './plan.planRequests.fixtures';
 
 const mockMode = globalMockMode;
+const localStorageMode = globalLocalStorageMode;
 
 // *****************************************************************************
 // * FETCH_V2V_PLAN_REQUEST
@@ -40,7 +49,26 @@ export const fetchPlanRequestAction = (urlBuilder, id) => {
 // *****************************************************************************
 // * QUERY_V2V_PLAN_VMS
 // *****************************************************************************
-const _queryPlanVmsActionCreator = ids => dispatch => {
+const _queryPlanVmsActionCreator = (ids, planId) => dispatch => {
+  if (localStorageMode) {
+    // this is a shortcut for localstorage mode only (using planid)
+    const plans = getLocalStorageState(LOCAL_STORAGE_KEYS.V2V_PLANS);
+    const plan = plans.find(p => p.id === planId);
+    const vmResults = [];
+    plan.pending_tasks.forEach((task, i) => {
+      vmResults.push({
+        ...sampleVmResult,
+        href: `http://localhost:3000/api/vms/${i}`,
+        id: i,
+        name: task.options.transformation_host_name
+      });
+    });
+    return dispatch({
+      type: `${QUERY_V2V_PLAN_VMS}_FULFILLED`,
+      payload: { data: { results: vmResults } }
+    });
+  }
+
   if (mockMode) {
     return dispatch({
       type: `${QUERY_V2V_PLAN_VMS}_FULFILLED`,
@@ -61,13 +89,23 @@ const _queryPlanVmsActionCreator = ids => dispatch => {
   });
 };
 
-export const queryPlanVmsAction = ids => _queryPlanVmsActionCreator(ids);
+export const queryPlanVmsAction = (ids, planId) =>
+  _queryPlanVmsActionCreator(ids, planId);
 
 // *****************************************************************************
 // * FETCH_V2V_PLAN
 // *****************************************************************************
 export const _getPlanActionCreator = (url, id) => dispatch => {
-  if (mockMode) {
+  if (localStorageMode) {
+    const plans = getLocalStorageState(LOCAL_STORAGE_KEYS.V2V_PLANS);
+    const plan = plans.find(p => p.id === id);
+    return dispatch({
+      type: FETCH_V2V_PLAN,
+      payload: new Promise(resolve => {
+        resolve({ data: plan });
+      })
+    });
+  } else if (mockMode) {
     return dispatch({
       type: FETCH_V2V_PLAN,
       payload: new Promise(resolve => {

@@ -1,4 +1,4 @@
-const sampleVmResult = {
+export const sampleVmResult = {
   href: 'http://localhost:3000/api/vms/1',
   id: '1',
   vendor: 'vmware',
