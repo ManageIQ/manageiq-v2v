@@ -13,8 +13,16 @@ import {
 } from 'patternfly-react';
 import { IsoElpasedTime } from '../../../../../../components/dates/IsoElapsedTime';
 
-const MigrationsInProgressCard = ({ plan, handleClick }) => {
-  const [mostRecentRequest] = plan.miq_requests.slice(-1);
+const MigrationsInProgressCard = ({
+  plan,
+  allRequestsWithTasks,
+  handleClick
+}) => {
+  const requestsOfAssociatedPlan = allRequestsWithTasks.filter(
+    request => request.source_id === plan.id
+  );
+
+  const [mostRecentRequest] = requestsOfAssociatedPlan.slice(-1);
 
   // if most recent request is still pending, show loading card
   if (mostRecentRequest.status === 'pending') {
@@ -49,7 +57,7 @@ const MigrationsInProgressCard = ({ plan, handleClick }) => {
   // UX business rule 2: aggregrate the tasks across requests reflecting current status of all tasks,
   // (gather the last status for the vm, gather the last storage for use in UX bussiness rule 3)
   const tasks = {};
-  plan.miq_requests.forEach(request => {
+  requestsOfAssociatedPlan.forEach(request => {
     request.miq_request_tasks.forEach(task => {
       tasks[task.source_id] = tasks[task.source_id] || {};
       tasks[task.source_id].completed =
@@ -216,6 +224,7 @@ const MigrationsInProgressCard = ({ plan, handleClick }) => {
 
 MigrationsInProgressCard.propTypes = {
   plan: PropTypes.object.isRequired,
+  allRequestsWithTasks: PropTypes.array,
   handleClick: PropTypes.func
 };
 

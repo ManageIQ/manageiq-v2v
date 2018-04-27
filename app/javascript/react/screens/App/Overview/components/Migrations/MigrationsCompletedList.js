@@ -5,6 +5,7 @@ import { IsoElpasedTime } from '../../../../../../components/dates/IsoElapsedTim
 
 const MigrationsCompletedList = ({
   finishedTransformationPlans,
+  allRequestsWithTasks,
   retryClick,
   loading,
   redirectTo
@@ -12,10 +13,15 @@ const MigrationsCompletedList = ({
   <Grid.Col xs={12}>
     <ListView className="plans-complete-list" style={{ marginTop: 0 }}>
       {finishedTransformationPlans.map(plan => {
-        const [mostRecentRequest] = plan.miq_requests.slice(-1);
+        const requestsOfAssociatedPlan = allRequestsWithTasks.filter(
+          request => request.source_id === plan.id
+        );
+
+        const [mostRecentRequest] = requestsOfAssociatedPlan.slice(-1);
+
         const failed = mostRecentRequest.status === 'failed';
         const tasks = {};
-        plan.miq_requests.forEach(request => {
+        requestsOfAssociatedPlan.forEach(request => {
           request.miq_request_tasks.forEach(task => {
             tasks[task.source_id] = task.status === 'Ok';
           });
@@ -87,6 +93,7 @@ const MigrationsCompletedList = ({
 
 MigrationsCompletedList.propTypes = {
   finishedTransformationPlans: PropTypes.array,
+  allRequestsWithTasks: PropTypes.array,
   retryClick: PropTypes.func,
   loading: PropTypes.string,
   redirectTo: PropTypes.func

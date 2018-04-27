@@ -5,6 +5,7 @@ import MigrationInProgressCard from './MigrationsInProgressCard';
 
 const MigrationsInProgressCards = ({
   activeTransformationPlans,
+  allRequestsWithTasks,
   loading,
   redirectTo
 }) => (
@@ -14,9 +15,11 @@ const MigrationsInProgressCards = ({
         <Card.HeightMatching selector={['.card-pf-match-height']}>
           <Spinner loading={loading}>
             {activeTransformationPlans.length > 0 &&
+              allRequestsWithTasks.length > 0 &&
               activeTransformationPlans.map(plan => (
                 <MigrationInProgressCard
                   plan={plan}
+                  allRequestsWithTasks={allRequestsWithTasks}
                   key={plan.id}
                   handleClick={redirectTo}
                 />
@@ -41,6 +44,7 @@ const MigrationsInProgressCards = ({
 
 MigrationsInProgressCards.propTypes = {
   activeTransformationPlans: PropTypes.array,
+  allRequestsWithTasks: PropTypes.array,
   loading: PropTypes.bool,
   redirectTo: PropTypes.func
 };

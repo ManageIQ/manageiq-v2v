@@ -10,6 +10,7 @@ const Migrations = ({
   activeFilter,
   setActiveFilter,
   transformationPlans,
+  allRequestsWithTasks,
   notStartedPlans,
   activeTransformationPlans,
   createMigrationPlanClick,
@@ -88,6 +89,7 @@ const Migrations = ({
           {activeFilter === 'Migration Plans in Progress' && (
             <MigrationsInProgressCards
               activeTransformationPlans={activeTransformationPlans}
+              allRequestsWithTasks={allRequestsWithTasks}
               loading={isCreatingTransformationPlanRequest !== null}
               redirectTo={redirectTo}
             />
@@ -95,6 +97,7 @@ const Migrations = ({
           {activeFilter === 'Migration Plans Completed' && (
             <MigrationsCompletedList
               finishedTransformationPlans={finishedTransformationPlans}
+              allRequestsWithTasks={allRequestsWithTasks}
               retryClick={createTransformationPlanRequestClick}
               loading={isCreatingTransformationPlanRequest}
               redirectTo={redirectTo}
@@ -110,6 +113,7 @@ Migrations.propTypes = {
   activeFilter: PropTypes.string,
   setActiveFilter: PropTypes.func,
   transformationPlans: PropTypes.array,
+  allRequestsWithTasks: PropTypes.array,
   notStartedPlans: PropTypes.array,
   activeTransformationPlans: PropTypes.array,
   createMigrationPlanClick: PropTypes.func,
