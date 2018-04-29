@@ -47,7 +47,8 @@ export const transformationPlans = Immutable({
           description: 'Migration Plan B-0',
           state: '',
           approval_state: 'approved',
-          status: 'pending',
+          request_state: 'pending',
+          status: 'Ok',
           created_on: '2018-04-06T12:31:30Z',
           options: {
             src_id: '6',
@@ -87,7 +88,8 @@ export const transformationPlans = Immutable({
           description: 'Migration Plan C-0',
           state: '',
           approval_state: 'approved',
-          status: 'failed',
+          request_state: 'failed',
+          status: 'Error',
           created_on: '2018-04-06T12:31:30Z',
           options: {
             src_id: '6',
@@ -425,7 +427,8 @@ export const transformationPlans = Immutable({
           description: 'Migration Plan C-0',
           state: '',
           approval_state: 'approved',
-          status: 'active',
+          request_state: 'active',
+          status: 'Ok',
           created_on: '2018-04-06T12:31:30Z',
           options: {
             src_id: '6',
@@ -855,7 +858,8 @@ export const transformationPlans = Immutable({
           description: 'Migration Plan D-0',
           state: '',
           approval_state: 'approved',
-          status: 'failed',
+          request_state: 'failed',
+          status: 'Error',
           created_on: '2018-04-06T12:31:30Z',
           options: {
             src_id: '6',
@@ -1285,7 +1289,8 @@ export const transformationPlans = Immutable({
           description: 'Migration Plan E-0',
           state: '',
           approval_state: 'approved',
-          status: 'complete',
+          status: 'Ok',
+          request_state: 'finished',
           created_on: '2018-04-06T12:31:30Z',
           options: {
             src_id: '6',
@@ -1715,7 +1720,8 @@ export const transformationPlans = Immutable({
           description: 'Migration Plan F-0',
           state: '',
           approval_state: 'approved',
-          status: 'active',
+          request_state: 'active',
+          status: 'Ok',
           created_on: '2018-04-06T12:31:30Z',
           options: {
             src_id: '6',

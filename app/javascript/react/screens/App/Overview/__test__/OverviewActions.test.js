@@ -20,13 +20,18 @@ afterEach(() => {
 });
 
 describe('fetchTransformationPlansAction', () => {
-  const { fetchTransformationPlansUrl } = requestTransformationPlansData;
-  const request = { fetchTransformationPlansUrl };
+  const {
+    fetchTransformationPlansUrl,
+    response
+  } = requestTransformationPlansData;
 
   test('dispatches PENDING and FULFILLED actions', () => {
     mockRequest({
-      ...request,
-      status: 200
+      method: 'GET',
+      url: fetchTransformationPlansUrl,
+      params: null,
+      status: 200,
+      ...response
     });
 
     return store
@@ -38,8 +43,11 @@ describe('fetchTransformationPlansAction', () => {
 
   test('dispatches PENDING and REJECTED actions', () => {
     mockRequest({
-      ...request,
-      status: 404
+      method: 'GET',
+      url: fetchTransformationPlansUrl,
+      params: null,
+      status: 404,
+      ...response
     });
 
     return store
