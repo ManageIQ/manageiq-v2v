@@ -50,11 +50,11 @@ const _formatPlanRequestDetails = data => {
       }
 
       if (!task.diskSpaceCompletedGb) {
-        taskDetails.diskSpaceCompletedGb = 0;
+        taskDetails.diskSpaceCompletedGb = '0';
       }
 
       if (!task.percentComplete) {
-        taskDetails.percentComplete = '0';
+        taskDetails.percentComplete = 0;
       }
 
       if (!task.totalDiskSpaceGb) {
