@@ -108,18 +108,19 @@ class Overview extends React.Component {
       finishedTransformationPlans.length >
         prevProps.finishedTransformationPlans.length
     ) {
-      const oldMigrationIds = prevProps.finishedTransformationPlans.map(
+      const oldTransformationPlanIds = prevProps.finishedTransformationPlans.map(
         plan => plan.id
       );
-      const freshMigrations = finishedTransformationPlans.filter(
-        migration => !oldMigrationIds.includes(migration.id)
+      const freshTransformationPlans = finishedTransformationPlans.filter(
+        plan => !oldTransformationPlanIds.includes(plan.id)
       );
 
-      freshMigrations.forEach(plan => {
+      freshTransformationPlans.forEach(plan => {
+        const [mostRecentRequest] = plan.miq_requests.slice(-1);
         const planStatus =
-          plan.miq_requests[0].status.toLowerCase() === 'complete';
+          mostRecentRequest.status.toLowerCase() === 'complete';
         const planStatusMessage = planStatus
-          ? `${plan.miq_requests[0].status}.`
+          ? `${mostRecentRequest.status}.`
           : __('completed with errors.');
 
         addNotificationAction({
