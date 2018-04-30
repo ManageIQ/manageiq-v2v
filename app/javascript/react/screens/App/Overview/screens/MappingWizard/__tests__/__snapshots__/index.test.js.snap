@@ -23,7 +23,7 @@ Object {
       },
     },
     "syncErrors": Object {
-      "name": "Required. Maximum is 24 characters.",
+      "name": "Required. Maximum length is %s characters.",
     },
   },
   "mappingWizardNetworksStep": Object {},
