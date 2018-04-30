@@ -350,7 +350,7 @@ class PlanRequestDetailList extends React.Component {
                     style={{ width: 'inherit', backgroundColor: 'transparent' }}
                   />
                 );
-              } else if (task.completed && !task.completedSuccessfully) {
+              } else if (task.taskCompleted && !task.completedSuccessfully) {
                 leftContent = (
                   <ListView.Icon
                     type="pf"
@@ -359,7 +359,7 @@ class PlanRequestDetailList extends React.Component {
                     style={{ width: 'inherit', backgroundColor: 'transparent' }}
                   />
                 );
-              } else if (task.completed) {
+              } else if (task.taskCompleted) {
                 leftContent = (
                   <ListView.Icon
                     type="pf"
@@ -376,12 +376,12 @@ class PlanRequestDetailList extends React.Component {
               const lastUpdateDateTime = task.updated_on;
               const elapsedTime = IsoElpasedTime(
                 startDateTime,
-                task.completed ? lastUpdateDateTime : currentTime
+                task.taskCompleted ? lastUpdateDateTime : currentTime
               );
               const label = sprintf(
                 __('%s of %s Migrated'),
-                task.diskSpaceCompletedGb,
-                task.totalDiskSpaceGb
+                task.diskSpaceCompletedGb ? task.diskSpaceCompletedGb : '0',
+                task.totalDiskSpaceGb ? task.totalDiskSpaceGb : '100%'
               );
 
               // const states = [];
@@ -415,7 +415,7 @@ class PlanRequestDetailList extends React.Component {
                       <b>{__('Description')}: </b>
                       {task.options.progress.current_description}
                     </div>
-                    {task.completed && (
+                    {task.taskCompleted && (
                       <div>
                         <br />
                         <strong>Log:</strong>

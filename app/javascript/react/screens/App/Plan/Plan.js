@@ -64,8 +64,8 @@ class Plan extends React.Component {
           if (mostRecentRequest.status === 'active') {
             this.startPolling(planRequestId);
           } else if (
-            mostRecentRequest.status === 'complete' ||
-            mostRecentRequest.status === 'failed'
+            mostRecentRequest.request_state === 'finished' ||
+            mostRecentRequest.status === 'Error'
           ) {
             this.setState(() => ({
               planFinished: true

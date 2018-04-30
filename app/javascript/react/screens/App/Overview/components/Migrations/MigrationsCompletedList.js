@@ -20,7 +20,7 @@ const MigrationsCompletedList = ({
         const [mostRecentRequest] = requestsOfAssociatedPlan.slice(-1);
 
         const failed =
-          mostRecentRequest && mostRecentRequest.status === 'failed';
+          mostRecentRequest && mostRecentRequest.status === 'Error';
 
         const tasks = {};
         requestsOfAssociatedPlan.forEach(request => {
