@@ -187,8 +187,9 @@ class Overview extends React.Component {
       isFetchingTransformationMappings,
       isRejectedTransformationMappings, // eslint-disable-line no-unused-vars
       transformationPlans,
-      isFetchingTransformationPlans,
-      plansPreviouslyFetched,
+      allRequestsWithTasks,
+      isFetchingAllRequestsWithTasks,
+      requestsWithTasksPreviouslyFetched,
       notStartedTransformationPlans,
       activeTransformationPlans,
       finishedTransformationPlans,
@@ -204,19 +205,29 @@ class Overview extends React.Component {
           <CardGrid.Col xs={6} sm={3}>
             <AggregateCards.NotStartedTransformationPlans
               notStartedPlans={notStartedTransformationPlans}
-              loading={isFetchingTransformationPlans && !plansPreviouslyFetched}
+              loading={
+                isFetchingAllRequestsWithTasks &&
+                !requestsWithTasksPreviouslyFetched
+              }
             />
           </CardGrid.Col>
           <CardGrid.Col xs={6} sm={3}>
             <AggregateCards.ActiveTransformationPlans
               activePlans={activeTransformationPlans}
-              loading={isFetchingTransformationPlans && !plansPreviouslyFetched}
+              allRequestsWithTasks={allRequestsWithTasks}
+              loading={
+                isFetchingAllRequestsWithTasks &&
+                !requestsWithTasksPreviouslyFetched
+              }
             />
           </CardGrid.Col>
           <CardGrid.Col xs={6} sm={3}>
             <AggregateCards.FinishedTransformationPlans
               finishedPlans={finishedTransformationPlans}
-              loading={isFetchingTransformationPlans && !plansPreviouslyFetched}
+              loading={
+                isFetchingAllRequestsWithTasks &&
+                !requestsWithTasksPreviouslyFetched
+              }
             />
           </CardGrid.Col>
           <CardGrid.Col xs={6} sm={3}>
@@ -238,7 +249,8 @@ class Overview extends React.Component {
         <Spinner
           loading={
             isFetchingTransformationMappings ||
-            (isFetchingTransformationPlans && !plansPreviouslyFetched)
+            (isFetchingAllRequestsWithTasks &&
+              !requestsWithTasksPreviouslyFetched)
           }
           style={{ marginTop: 200 }}
         >
@@ -247,6 +259,7 @@ class Overview extends React.Component {
               activeFilter={migrationsFilter}
               setActiveFilter={setMigrationsFilterAction}
               transformationPlans={transformationPlans}
+              allRequestsWithTasks={allRequestsWithTasks}
               notStartedPlans={notStartedTransformationPlans}
               activeTransformationPlans={activeTransformationPlans}
               finishedTransformationPlans={finishedTransformationPlans}
@@ -296,10 +309,11 @@ Overview.propTypes = {
   mappingWizardVisible: PropTypes.bool,
   planWizardVisible: PropTypes.bool,
   transformationPlans: PropTypes.array,
+  allRequestsWithTasks: PropTypes.array,
   fetchTransformationPlansUrl: PropTypes.string,
   fetchTransformationPlansAction: PropTypes.func,
-  isFetchingTransformationPlans: PropTypes.bool,
-  plansPreviouslyFetched: PropTypes.bool,
+  isFetchingAllRequestsWithTasks: PropTypes.bool,
+  requestsWithTasksPreviouslyFetched: PropTypes.bool,
   notStartedTransformationPlans: PropTypes.array,
   activeTransformationPlans: PropTypes.array,
   finishedTransformationPlans: PropTypes.array,

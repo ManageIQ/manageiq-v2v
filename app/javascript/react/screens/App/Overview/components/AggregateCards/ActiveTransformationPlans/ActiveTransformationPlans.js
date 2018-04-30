@@ -11,17 +11,31 @@ import {
   Spinner
 } from 'patternfly-react';
 
-const ActiveTransformationPlans = ({ activePlans, loading }) => {
+const ActiveTransformationPlans = ({
+  activePlans,
+  allRequestsWithTasks,
+  loading
+}) => {
   const countDescription =
     activePlans.length === 1
       ? 'Migration Plan In Progress'
       : 'Migration Plans In Progress';
 
   const erroredPlans = activePlans.filter(plan => {
-    const [mostRecentRequest] = plan.miq_requests.slice(-1);
-    return mostRecentRequest.miq_request_tasks.some(
-      task => task.request_state === 'Finished' && task.status !== 'Ok'
-    );
+    if (allRequestsWithTasks && allRequestsWithTasks.length > 0) {
+      const requestsOfAssociatedPlan = allRequestsWithTasks.filter(
+        request => request.source_id === plan.id
+      );
+
+      const [mostRecentRequest] = requestsOfAssociatedPlan.slice(-1);
+      return (
+        mostRecentRequest &&
+        mostRecentRequest.miq_request_tasks.some(
+          task => task.state === 'finished' && task.status === 'Error'
+        )
+      );
+    }
+    return [];
   });
 
   const classes = cx('overview-aggregate-card', { 'is-loading': loading });
@@ -53,6 +67,7 @@ const ActiveTransformationPlans = ({ activePlans, loading }) => {
 
 ActiveTransformationPlans.propTypes = {
   activePlans: PropTypes.array,
+  allRequestsWithTasks: PropTypes.array,
   loading: PropTypes.bool
 };
 

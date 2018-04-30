@@ -8,8 +8,8 @@ export const activeTransformationPlansFilter = transformationPlans =>
     if (transformationPlan.miq_requests.length > 0) {
       const [mostRecentRequest] = transformationPlan.miq_requests.slice(-1);
       return (
-        mostRecentRequest.status === 'active' ||
-        mostRecentRequest.status === 'pending'
+        mostRecentRequest.request_state === 'active' ||
+        mostRecentRequest.request_state === 'pending'
       );
     }
     return false;
@@ -20,8 +20,8 @@ export const finishedTransformationPlansFilter = transformationPlans =>
     if (transformationPlan.miq_requests.length > 0) {
       const [mostRecentRequest] = transformationPlan.miq_requests.slice(-1);
       return (
-        mostRecentRequest.status === 'complete' ||
-        mostRecentRequest.status === 'failed'
+        mostRecentRequest.request_state === 'finished' ||
+        mostRecentRequest.request_state === 'failed'
       );
     }
     return false;

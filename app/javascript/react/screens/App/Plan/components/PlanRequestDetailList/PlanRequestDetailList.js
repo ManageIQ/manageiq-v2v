@@ -350,7 +350,7 @@ class PlanRequestDetailList extends React.Component {
                     style={{ width: 'inherit', backgroundColor: 'transparent' }}
                   />
                 );
-              } else if (task.completed && !task.completedSuccessfully) {
+              } else if (task.taskCompleted && !task.completedSuccessfully) {
                 leftContent = (
                   <ListView.Icon
                     type="pf"
@@ -359,7 +359,7 @@ class PlanRequestDetailList extends React.Component {
                     style={{ width: 'inherit', backgroundColor: 'transparent' }}
                   />
                 );
-              } else if (task.completed) {
+              } else if (task.taskCompleted) {
                 leftContent = (
                   <ListView.Icon
                     type="pf"
@@ -376,7 +376,7 @@ class PlanRequestDetailList extends React.Component {
               const lastUpdateDateTime = task.updated_on;
               const elapsedTime = IsoElpasedTime(
                 startDateTime,
-                task.completed ? lastUpdateDateTime : currentTime
+                task.taskCompleted ? lastUpdateDateTime : currentTime
               );
               const label = sprintf(
                 __('%s of %s Migrated'),
@@ -415,7 +415,7 @@ class PlanRequestDetailList extends React.Component {
                       <b>{__('Description')}: </b>
                       {task.options.progress.current_description}
                     </div>
-                    {task.completed && (
+                    {task.taskCompleted && (
                       <div>
                         <br />
                         <strong>Log:</strong>
@@ -431,7 +431,7 @@ class PlanRequestDetailList extends React.Component {
                 <ListView.Item
                   key={task.id}
                   leftContent={leftContent}
-                  heading={task.transformation_host_name}
+                  heading={task.vmName}
                   additionalInfo={[
                     <ListView.InfoItem
                       key={`${task.id}-times`}

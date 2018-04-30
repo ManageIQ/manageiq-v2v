@@ -20,5 +20,5 @@ test('displays the number of active transformation plans with an error', () => {
       .find('AggregateStatusNotification')
       .childAt(2)
       .text()
-  ).toBe('1');
+  ).toBe('2');
 });

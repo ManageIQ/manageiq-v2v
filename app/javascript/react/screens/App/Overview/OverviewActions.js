@@ -7,6 +7,7 @@ import {
   HIDE_MAPPING_WIZARD,
   FETCH_V2V_TRANSFORMATION_MAPPINGS,
   FETCH_V2V_TRANSFORMATION_PLANS,
+  FETCH_V2V_ALL_REQUESTS_WITH_TASKS,
   CREATE_V2V_TRANSFORMATION_PLAN_REQUEST,
   V2V_FETCH_CLUSTERS,
   V2V_SET_MIGRATIONS_FILTER
@@ -17,6 +18,7 @@ import {
   createTransformationPlanRequestData
 } from './overview.fixtures';
 import { requestTransformationPlansData } from './overview.transformationPlans.fixtures';
+import { requestRequestsWithTasks } from './overview.requestWithTasks.fixtures';
 import { requestClustersData } from './overview.clusters.fixtures';
 
 const mockMode = globalMockMode;
@@ -76,19 +78,65 @@ export const fetchTransformationMappingsAction = url => {
   return _getTransformationMappingsActionCreator(uri.toString());
 };
 
-const _getTransformationPlansActionCreator = url => dispatch => {
-  if (mockMode) {
-    return dispatch({
-      type: FETCH_V2V_TRANSFORMATION_PLANS,
-      payload: Promise.resolve(requestTransformationPlansData.response)
+const fetchTasksForAllRequests = (allRequests, dispatch) => {
+  if (allRequests.length > 0) {
+    dispatch({
+      type: FETCH_V2V_ALL_REQUESTS_WITH_TASKS,
+      payload: new Promise((resolve, reject) => {
+        API.post('/api/requests?expand=resource&attributes=miq_request_tasks', {
+          action: 'query',
+          resources: allRequests
+        })
+          .then(responseRequestsWithTasks => {
+            resolve(responseRequestsWithTasks);
+          })
+          .catch(e => reject(e));
+      })
     });
   }
-
-  return dispatch({
-    type: FETCH_V2V_TRANSFORMATION_PLANS,
-    payload: API.get(url)
-  });
 };
+
+const collectAllRequests = plan =>
+  plan.miq_requests.map(request => Object.assign({}, { href: request.href }));
+
+const _getTransformationPlansActionCreator = url => dispatch =>
+  dispatch({
+    type: 'FETCH_V2V_TRANSFORMATION_PLANS',
+    payload: new Promise((resolve, reject) => {
+      API.get(url)
+        .then(response => {
+          resolve(response);
+          const allPlansWithRequests = response.data.resources;
+
+          const allRequests = [];
+          const mergedRequests = [].concat(
+            ...allRequests.concat(
+              allPlansWithRequests.map(plan => collectAllRequests(plan))
+            )
+          );
+
+          fetchTasksForAllRequests(mergedRequests, dispatch);
+        })
+        .catch(e => reject(e));
+    })
+  }).catch(error => {
+    // redux-promise-middleware will automatically send:
+    // FETCH_V2V_TRANSFORMATION_PLANS_PENDING, FETCH_V2V_TRANSFORMATION_PLANS_FULFILLED,
+    // FETCH_V2V_TRANSFORMATION_PLANS_REJECTED
+
+    // to enable UI development without the database, i'm catching the error
+    // and passing some mock data thru the FULFILLED action after the REJECTED action is finished.
+    if (mockMode) {
+      dispatch({
+        type: `${FETCH_V2V_TRANSFORMATION_PLANS}_FULFILLED`,
+        payload: requestTransformationPlansData.response
+      });
+      dispatch({
+        type: `${FETCH_V2V_ALL_REQUESTS_WITH_TASKS}_FULFILLED`,
+        payload: requestRequestsWithTasks.response
+      });
+    }
+  });
 
 export const fetchTransformationPlansAction = url => {
   const uri = new URI(url);

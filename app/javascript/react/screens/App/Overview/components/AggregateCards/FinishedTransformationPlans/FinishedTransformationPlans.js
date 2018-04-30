@@ -19,7 +19,7 @@ const FinishedTransformationPlans = ({ finishedPlans, loading }) => {
 
   const failedPlans = finishedPlans.filter(plan => {
     const [mostRecentRequest] = plan.miq_requests.slice(-1);
-    return mostRecentRequest.status === 'failed';
+    return mostRecentRequest.status === 'Error';
   });
 
   const classes = cx('overview-aggregate-card', { 'is-loading': loading });
