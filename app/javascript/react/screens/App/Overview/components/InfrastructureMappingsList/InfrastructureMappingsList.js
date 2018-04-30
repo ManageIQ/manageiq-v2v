@@ -1,11 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import { Icon, ListView, Grid } from 'patternfly-react';
 import OverviewEmptyState from '../OverviewEmptyState/OverviewEmptyState';
-import { i18nProviderWrapperFactory } from '../../../../../../common/i18nProviderWrapperFactory';
-import LongDateTime from '../../../../../../components/dates/LongDateTime';
-
-const IntlDate = i18nProviderWrapperFactory()(LongDateTime);
 
 function clusterCount(mapping, clusterType) {
   return [
@@ -94,12 +91,7 @@ const InfrastructureMappingsList = ({
               >
                 <Grid.Col sm={12}>
                   {__('Completed: ')}
-                  <IntlDate
-                    data={{
-                      date: mapping.created_at,
-                      defaultValue: 'Default value'
-                    }}
-                  />
+                  {moment(mapping.created_at).format('YYYY-MM-DD HH:mm:ss A')}
                 </Grid.Col>
               </Grid.Row>
               <Grid.Row>
