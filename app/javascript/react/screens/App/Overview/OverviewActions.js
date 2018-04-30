@@ -129,11 +129,11 @@ const _getTransformationPlansActionCreator = url => dispatch =>
     if (mockMode) {
       dispatch({
         type: `${FETCH_V2V_TRANSFORMATION_PLANS}_FULFILLED`,
-        payload: requestTransformationPlansData.response
+        payload: Promise.resolve(requestTransformationPlansData.response)
       });
       dispatch({
         type: `${FETCH_V2V_ALL_REQUESTS_WITH_TASKS}_FULFILLED`,
-        payload: requestRequestsWithTasks.response
+        payload: Promise.resolve(requestRequestsWithTasks.response)
       });
     }
   });
