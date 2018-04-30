@@ -20,6 +20,9 @@ export const planWizardExitedAction = () => dispatch => {
   // Dispatch reset for all the wizard step forms here
   dispatch(reset('planWizardGeneralStep'));
   dispatch(reset('planWizardVMStep'));
+  dispatch({
+    type: V2V_VM_STEP_RESET
+  });
   dispatch(reset('planWizardOptionsStep'));
 };
 

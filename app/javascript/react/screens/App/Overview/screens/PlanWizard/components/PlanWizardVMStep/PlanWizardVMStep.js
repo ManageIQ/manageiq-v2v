@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Immutable from 'seamless-immutable';
 import { Field, reduxForm } from 'redux-form';
 import { length } from 'redux-form-validators';
+import { Button } from 'patternfly-react';
 import PlanWizardVMStepTable from './components/PlanWizardVMStepTable';
 import CSVDropzoneField from './components/CSVDropzoneField';
 
@@ -28,7 +29,13 @@ class PlanWizardVMStep extends React.Component {
       validateVmsUrl,
       validateVmsAction
     } = this.props;
+    // skip the header row
+    parsedRows.shift();
     validateVmsAction(validateVmsUrl, infrastructure_mapping_id, parsedRows);
+  };
+  onCSVParseFailure = errMsg => {
+    const { csvParseErrorAction } = this.props;
+    csvParseErrorAction(errMsg);
   };
   validateVms = () => {
     const {
@@ -43,6 +50,8 @@ class PlanWizardVMStep extends React.Component {
       vm_choice_radio,
       isValidatingVms,
       isRejectedValidatingVms,
+      isCSVParseError,
+      errorParsingCSV,
       valid_vms,
       invalid_vms,
       conflict_vms,
@@ -51,7 +60,7 @@ class PlanWizardVMStep extends React.Component {
     } = this.props;
     const discoveryMode = vm_choice_radio === 'vms_via_discovery';
 
-    if (isRejectedValidatingVms) {
+    if (isRejectedValidatingVms && !isCSVParseError) {
       return (
         <div className="wizard-pf-complete blank-slate-pf">
           <div className="wizard-pf-success-icon">
@@ -63,6 +72,28 @@ class PlanWizardVMStep extends React.Component {
           <p className="blank-slate-pf-secondary-action">
             {__('Sorry, there was an error validating VMs. Please try again.')}
           </p>
+        </div>
+      );
+    } else if (isRejectedValidatingVms && isCSVParseError) {
+      return (
+        <div className="wizard-pf-complete blank-slate-pf">
+          <div className="wizard-pf-success-icon">
+            <span className="pficon pficon-error-circle-o" />
+          </div>
+          <h3 className="blank-slate-pf-main-action">
+            {__('The selected file does not have the expected format.')}
+          </h3>
+          <h3 className="blank-slate-pf-main-action">{errorParsingCSV}</h3>
+          <p className="blank-slate-pf-secondary-action">
+            {__(
+              'See product documentation for the correct format of the .csv file'
+            )}
+          </p>
+          <div className="form-group">
+            <Button bsStyle="primary" onClick={csvImportAction}>
+              {__('Import')}
+            </Button>
+          </div>
         </div>
       );
     } else if ((isValidatingVms || !validationServiceCalled) && discoveryMode) {
@@ -101,8 +132,8 @@ class PlanWizardVMStep extends React.Component {
     ) {
       return (
         <CSVDropzoneField
-          columnNames={['name', 'host', 'provider']}
           onCSVParseSuccess={this.onCSVParseSuccess}
+          onCSVParseFailure={this.onCSVParseFailure}
         />
       );
     } else if (!isValidatingVms && validationServiceCalled) {
@@ -161,8 +192,11 @@ PlanWizardVMStep.propTypes = {
   validateVmsUrl: PropTypes.string.isRequired,
   validateVmsAction: PropTypes.func.isRequired,
   csvImportAction: PropTypes.func.isRequired,
+  csvParseErrorAction: PropTypes.func.isRequired,
   isValidatingVms: PropTypes.bool,
   isRejectedValidatingVms: PropTypes.bool,
+  isCSVParseError: PropTypes.bool,
+  errorParsingCSV: PropTypes.string,
   validationServiceCalled: PropTypes.bool,
   errorValidatingVms: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
   valid_vms: PropTypes.array,
@@ -174,6 +208,8 @@ PlanWizardVMStep.defaultProps = {
   vm_choice_radio: null,
   isValidatingVms: false,
   isRejectedValidatingVms: false,
+  isCSVParseError: false,
+  errorParsingCSV: '',
   validationServiceCalled: false,
   errorValidatingVms: null,
   valid_vms: [],

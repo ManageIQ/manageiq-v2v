@@ -59,3 +59,10 @@ export const csvImportAction = () => dispatch => {
     type: V2V_VM_STEP_RESET
   });
 };
+
+export const csvParseErrorAction = errMsg => dispatch => {
+  dispatch({
+    type: `${V2V_VALIDATE_VMS}_CSV_PARSE_ERROR`,
+    payload: errMsg
+  });
+};
