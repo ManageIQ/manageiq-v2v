@@ -380,8 +380,8 @@ class PlanRequestDetailList extends React.Component {
               );
               const label = sprintf(
                 __('%s of %s Migrated'),
-                task.diskSpaceCompletedGb ? task.diskSpaceCompletedGb : '0',
-                task.totalDiskSpaceGb ? task.totalDiskSpaceGb : '100%'
+                task.diskSpaceCompletedGb,
+                task.totalDiskSpaceGb
               );
 
               // const states = [];
@@ -431,7 +431,7 @@ class PlanRequestDetailList extends React.Component {
                 <ListView.Item
                   key={task.id}
                   leftContent={leftContent}
-                  heading={task.transformation_host_name}
+                  heading={task.vmName}
                   additionalInfo={[
                     <ListView.InfoItem
                       key={`${task.id}-times`}

@@ -49,6 +49,24 @@ const _formatPlanRequestDetails = data => {
         taskDetails.taskCompleted = true;
       }
 
+      if (!task.diskSpaceCompletedGb) {
+        taskDetails.diskSpaceCompletedGb = 0;
+      }
+
+      if (!task.percentComplete) {
+        taskDetails.percentComplete = '0';
+      }
+
+      if (!task.totalDiskSpaceGb) {
+        taskDetails.totalDiskSpaceGb = '100%';
+      }
+
+      const grepVMName = task.description.match(/\[(.*?)\]/);
+
+      if (grepVMName) {
+        [taskDetails.descriptionPrefix, taskDetails.vmName] = grepVMName;
+      }
+
       if (taskDetails.completed) {
         taskDetails.completedSuccessfully =
           task.options.progress.current_description ===
