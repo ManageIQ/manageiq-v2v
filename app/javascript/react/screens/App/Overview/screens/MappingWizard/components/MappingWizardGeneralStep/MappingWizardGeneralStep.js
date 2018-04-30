@@ -1,17 +1,9 @@
 import React from 'react';
 import { Field } from 'redux-form';
-import { required, length } from 'redux-form-validators';
+import { required } from 'redux-form-validators';
 import { Form } from 'patternfly-react';
 import { FormField } from '../../../../../common/forms/FormField';
-import {
-  MAX_LENGTH_NAMES,
-  MAX_LENGTH_DESCRIPTIONS,
-  nameHelp,
-  descriptionHelp,
-  nameRequired,
-  nameTooLong,
-  descriptionTooLong
-} from '../../../../../../../../common/constants'; // Oh my
+import { validation } from '../../../../../../../../common/constants'; // Oh my
 
 const MappingWizardGeneralStep = props => (
   <Form className="form-horizontal">
@@ -21,14 +13,12 @@ const MappingWizardGeneralStep = props => (
       required
       component={FormField}
       type="text"
-      help={__(nameHelp)}
+      help={validation.name.help}
+      maxLength={validation.name.maxLength}
+      maxLengthWarning={validation.name.maxLengthWarning}
       validate={[
         required({
-          msg: __(nameRequired)
-        }),
-        length({
-          max: MAX_LENGTH_NAMES,
-          msg: { tooLong: __(nameTooLong) }
+          msg: validation.name.requiredMessage
         })
       ]}
     />
@@ -37,13 +27,9 @@ const MappingWizardGeneralStep = props => (
       label={__('Description')}
       component={FormField}
       type="textarea"
-      help={__(descriptionHelp)}
-      validate={[
-        length({
-          max: MAX_LENGTH_DESCRIPTIONS,
-          msg: { tooLong: __(descriptionTooLong) }
-        })
-      ]}
+      help={validation.description.help}
+      maxLength={validation.description.maxLength}
+      maxLengthWarning={validation.description.maxLengthWarning}
     />
   </Form>
 );

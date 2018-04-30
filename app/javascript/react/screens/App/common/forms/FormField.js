@@ -15,22 +15,48 @@ export const FormField = ({
   labelWidth,
   meta: { touched, error },
   help,
+  maxLength,
+  maxLengthWarning,
   ...props
 }) => {
-  const formGroupProps = { key: { label }, controlId, ...props };
+  const warning =
+    maxLength && input.value.length >= maxLength && maxLengthWarning;
+  const validationState =
+    (touched && error && 'error') || (warning && 'warning') || null;
+  const formGroupProps = {
+    key: { label },
+    controlId,
+    validationState,
+    ...props
+  };
 
-  if (touched && error) formGroupProps.validationState = 'error';
+  const onChangeWithMaxLength = event => {
+    const newValue = event.target.value;
+    if (maxLength && newValue.length > maxLength) return; // Don't even tell redux-form about values over the max.
+    input.onChange(event);
+  };
 
   const renderField = () => {
     let field;
     switch (type) {
       case 'textarea':
         field = (
-          <Form.FormControl {...input} type={type} componentClass="textarea" />
+          <Form.FormControl
+            {...input}
+            onChange={onChangeWithMaxLength}
+            type={type}
+            componentClass="textarea"
+          />
         );
         break;
       case 'text':
-        field = <Form.FormControl {...input} type={type} />;
+        field = (
+          <Form.FormControl
+            {...input}
+            onChange={onChangeWithMaxLength}
+            type={type}
+          />
+        );
         break;
       case 'select':
         field = (
@@ -76,8 +102,10 @@ export const FormField = ({
       </Grid.Col>
       <Grid.Col sm={9}>
         {renderField()}
-        {(help || error) && (
-          <Form.HelpBlock>{(touched && error) || help}</Form.HelpBlock>
+        {(help || error || warning) && ( // If we have any of these, render one of them, in priority order.
+          <Form.HelpBlock>
+            {(touched && error) || warning || help}
+          </Form.HelpBlock>
         )}
       </Grid.Col>
     </Form.FormGroup>
@@ -95,5 +123,7 @@ FormField.propTypes = {
   optionValue: PropTypes.string,
   labelWidth: PropTypes.string,
   meta: PropTypes.object,
-  help: PropTypes.string
+  help: PropTypes.string,
+  maxLength: PropTypes.number,
+  maxLengthWarning: PropTypes.string
 };
