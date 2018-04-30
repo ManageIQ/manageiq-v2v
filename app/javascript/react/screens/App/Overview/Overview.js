@@ -17,6 +17,10 @@ class Overview extends React.Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      hasMadeInitialPlansFetch: false
+    };
+
     bindMethods(this, [
       'stopPolling',
       'startPolling',
@@ -46,11 +50,15 @@ class Overview extends React.Component {
 
     fetchClustersAction(fetchClustersUrl);
     fetchTransformationMappingsAction(fetchTransformationMappingsUrl);
-    fetchTransformationPlansAction(fetchTransformationPlansUrl);
-
-    this.startPolling();
+    fetchTransformationPlansAction(fetchTransformationPlansUrl).then(() => {
+      this.setState(() => ({
+        hasMadeInitialPlansFetch: true
+      }));
+      if (!this.pollingInterval) {
+        this.startPolling();
+      }
+    });
   }
-
   componentWillReceiveProps(nextProps) {
     const {
       isContinuingToPlan,
@@ -62,6 +70,7 @@ class Overview extends React.Component {
       continueToPlanAction,
       shouldReloadMappings
     } = this.props;
+    const { hasMadeInitialPlansFetch } = this.state;
 
     if (
       shouldReloadMappings !== nextProps.shouldReloadMappings &&
@@ -82,10 +91,49 @@ class Overview extends React.Component {
     } else if (
       !nextProps.mappingWizardVisible &&
       !nextProps.planWizardVisible &&
+      hasMadeInitialPlansFetch &&
       !this.pollingInterval
     ) {
       fetchTransformationPlansAction(fetchTransformationPlansUrl);
       this.startPolling();
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    const { finishedTransformationPlans, addNotificationAction } = this.props;
+    const { hasMadeInitialPlansFetch } = this.state;
+
+    if (
+      hasMadeInitialPlansFetch &&
+      finishedTransformationPlans.length >
+        prevProps.finishedTransformationPlans.length
+    ) {
+      const oldTransformationPlanIds = prevProps.finishedTransformationPlans.map(
+        plan => plan.id
+      );
+      const freshTransformationPlans = finishedTransformationPlans.filter(
+        plan => !oldTransformationPlanIds.includes(plan.id)
+      );
+
+      freshTransformationPlans.forEach(plan => {
+        const [mostRecentRequest] = plan.miq_requests.slice(-1);
+        const planStatus =
+          mostRecentRequest.status.toLowerCase() === 'complete';
+        const planStatusMessage = planStatus
+          ? `${mostRecentRequest.status}.`
+          : __('completed with errors.');
+
+        addNotificationAction({
+          message: `${plan.name} ${planStatusMessage}`,
+          notificationType: planStatus ? 'success' : 'error',
+          data: {
+            id: plan.id
+          },
+          persistent: !planStatus,
+          timerdelay: planStatus ? 8000 : null,
+          actionEnabled: true
+        });
+      });
     }
   }
 
@@ -244,6 +292,7 @@ Overview.propTypes = {
   store: PropTypes.object,
   showMappingWizardAction: PropTypes.func,
   showPlanWizardAction: PropTypes.func,
+  addNotificationAction: PropTypes.func,
   mappingWizardVisible: PropTypes.bool,
   planWizardVisible: PropTypes.bool,
   transformationPlans: PropTypes.array,
