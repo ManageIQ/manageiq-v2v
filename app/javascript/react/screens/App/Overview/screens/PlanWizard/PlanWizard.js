@@ -36,18 +36,32 @@ class PlanWizard extends React.Component {
       planWizardVMStep,
       planWizardOptionsStep,
       setPlansBodyAction,
-      setPlanScheduleAction
+      setPlanScheduleAction,
+      setMigrationsFilterAction
     } = this.props;
+
     if (activeStepIndex === 2) {
       const plansBody = createMigrationPlans(
         planWizardGeneralStep,
         planWizardVMStep
       );
+
       setPlanScheduleAction(
         planWizardOptionsStep.values.migration_plan_choice_radio
       );
-
       setPlansBodyAction(plansBody);
+
+      if (
+        planWizardOptionsStep.values.migration_plan_choice_radio ===
+        'migration_plan_now'
+      ) {
+        setMigrationsFilterAction('Migration Plans in Progress');
+      } else if (
+        planWizardOptionsStep.values.migration_plan_choice_radio ===
+        'migration_plan_later'
+      ) {
+        setMigrationsFilterAction('Migration Plans Not Started');
+      }
     }
 
     this.setState({
@@ -151,7 +165,8 @@ PlanWizard.propTypes = {
   planWizardOptionsStep: PropTypes.object,
   setPlansBodyAction: PropTypes.func,
   setPlanScheduleAction: PropTypes.func,
-  resetVmStepAction: PropTypes.func
+  resetVmStepAction: PropTypes.func,
+  setMigrationsFilterAction: PropTypes.func
 };
 PlanWizard.defaultProps = {
   hidePlanWizard: true,
