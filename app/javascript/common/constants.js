@@ -1,22 +1,20 @@
 export const MAX_LENGTH_NAMES = 24;
 export const MAX_LENGTH_DESCRIPTIONS = 128;
 
+const maxLengthIs = `Maximum length is %s characters.`;
+const requiredMaxLengthIs = `Required. ${maxLengthIs}`;
+const youHaveReachedMax = `You have reached the maximum length of %s characters.`;
+
 export const validation = {
   name: {
-    help: __(`Maximum length is ${MAX_LENGTH_NAMES} characters.`),
-    requiredMessage: __(
-      `Required. Maximum length is ${MAX_LENGTH_NAMES} characters`
-    ),
+    help: sprintf(__(maxLengthIs), MAX_LENGTH_NAMES),
+    requiredMessage: sprintf(__(requiredMaxLengthIs), MAX_LENGTH_NAMES),
     maxLength: MAX_LENGTH_NAMES,
-    maxLengthWarning: __(
-      `You have reached the maximum length of ${MAX_LENGTH_NAMES} characters.`
-    )
+    maxLengthWarning: sprintf(__(youHaveReachedMax), MAX_LENGTH_NAMES)
   },
   description: {
-    help: __(`Maximum length is ${MAX_LENGTH_DESCRIPTIONS} characters.`),
+    help: sprintf(__(maxLengthIs), MAX_LENGTH_DESCRIPTIONS),
     maxLength: MAX_LENGTH_DESCRIPTIONS,
-    maxLengthWarning: __(
-      `You have reached the maximum length of ${MAX_LENGTH_DESCRIPTIONS} characters.`
-    )
+    maxLengthWarning: sprintf(__(youHaveReachedMax), MAX_LENGTH_DESCRIPTIONS)
   }
 };
