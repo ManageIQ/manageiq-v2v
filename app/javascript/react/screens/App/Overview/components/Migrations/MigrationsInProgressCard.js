@@ -8,7 +8,8 @@ import {
   Icon,
   OverlayTrigger,
   Tooltip,
-  UtilizationBar
+  UtilizationBar,
+  Spinner
 } from 'patternfly-react';
 import { IsoElpasedTime } from '../../../../../../components/dates/IsoElapsedTime';
 
@@ -25,9 +26,10 @@ const MigrationsInProgressCard = ({ plan, handleClick }) => {
           </Card.Heading>
           <Card.Body>
             <EmptyState>
-              <EmptyState.Icon type="pf" name="pending" />
-              <EmptyState.Title>Initiating</EmptyState.Title>
-              <EmptyState.Info>Initiating your migration.</EmptyState.Info>
+              <Spinner loading size="lg" style={{ marginBottom: '15px' }} />
+              <EmptyState.Info>
+                Initiating migration. This might take a few minutes.
+              </EmptyState.Info>
             </EmptyState>
           </Card.Body>
         </Card>

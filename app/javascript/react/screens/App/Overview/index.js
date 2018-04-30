@@ -1,6 +1,8 @@
 import { connect } from 'react-redux';
 import Overview from './Overview';
 import * as OverviewActions from './OverviewActions';
+import * as NotificationActions from '../common/NotificationList/NotificationListActions';
+
 import reducer from './OverviewReducer';
 import {
   notStartedTransformationPlansFilter,
@@ -30,4 +32,8 @@ const mapStateToProps = (
 const mergeProps = (stateProps, dispatchProps, ownProps) =>
   Object.assign(stateProps, ownProps.data, dispatchProps);
 
-export default connect(mapStateToProps, OverviewActions, mergeProps)(Overview);
+export default connect(
+  mapStateToProps,
+  Object.assign(OverviewActions, NotificationActions),
+  mergeProps
+)(Overview);

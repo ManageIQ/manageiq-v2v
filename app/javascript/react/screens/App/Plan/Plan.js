@@ -4,56 +4,90 @@ import Immutable from 'seamless-immutable';
 import { Link } from 'react-router-dom';
 import { bindMethods, Breadcrumb, Spinner } from 'patternfly-react';
 import Toolbar from '../../../config/Toolbar';
-import PlanRequestDetailList from './components/PlanRequestDetailList';
+import PlanRequestDetailList from './components/PlanRequestDetailList/PlanRequestDetailList';
+import PlanVmsList from './components/PlanVmsList';
 import PlanEmptyState from './components/PlanEmptyState';
 
 class Plan extends React.Component {
-  // need to update ui-classic to React 16.3 to support this
-  // static getDerivedStateFromProps(nextProps, prevState) {
-  //   if (nextProps.planRequestTasks === prevState.planRequestTasks) {
-  //     return null;
-  //   }
-  //   return {
-  //     planRequestTasks,
-  //     planRequestTasksMutable: Immutable.asMutable(planRequestTasks)
-  //   };
-  // }
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (
+      !prevState.planNotStarted &&
+      nextProps.planRequestTasks === prevState.planRequestTasks
+    ) {
+      return null;
+    }
+    return {
+      planRequestTasks: nextProps.planRequestTasks,
+      planRequestTasksMutable: Immutable.asMutable(nextProps.planRequestTasks),
+      vms: nextProps.vms,
+      vmsMutable: Immutable.asMutable(nextProps.vms),
+      planNotStarted: nextProps.planRequestTasks.length === 0
+    };
+  }
 
   constructor(props) {
     super(props);
 
     this.state = {
-      planRequestTasksMutable: Immutable.asMutable(props.planRequestTasks)
+      planRequestTasksMutable: Immutable.asMutable(props.planRequestTasks),
+      vmsMutable: [],
+      planNotStarted: false,
+      planFinished: false
     };
 
     bindMethods(this, ['stopPolling', 'startPolling']);
   }
 
   componentDidMount() {
-    const { fetchPlanRequestsUrl, fetchPlanRequestsAction } = this.props;
-    fetchPlanRequestsAction(fetchPlanRequestsUrl);
-    this.startPolling();
-  }
+    const {
+      fetchPlanUrlBuilder,
+      fetchPlanAction,
+      planId,
+      fetchPlanRequestUrlBuilder,
+      fetchPlanRequestAction,
+      queryPlanVmsAction
+    } = this.props;
 
-  // Remove this after updating to 16.3
-  componentDidUpdate(prevProps) {
-    const { planRequestTasks } = this.props;
-    if (prevProps.planRequestTasks !== planRequestTasks) {
-      // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({
-        planRequestTasksMutable: Immutable.asMutable(planRequestTasks)
-      });
-    }
+    fetchPlanAction(fetchPlanUrlBuilder, planId).then(
+      ({ value: { data: plan } }) => {
+        const {
+          miq_requests,
+          options: {
+            config_info: { vm_ids }
+          }
+        } = plan;
+
+        if (miq_requests.length > 0) {
+          const [mostRecentRequest] = miq_requests.slice(-1);
+          const planRequestId = mostRecentRequest.id;
+          fetchPlanRequestAction(fetchPlanRequestUrlBuilder, planRequestId);
+          if (mostRecentRequest.status === 'active') {
+            this.startPolling(planRequestId);
+          } else if (
+            mostRecentRequest.status === 'complete' ||
+            mostRecentRequest.status === 'failed'
+          ) {
+            this.setState(() => ({
+              planFinished: true
+            }));
+          }
+        } else {
+          queryPlanVmsAction(vm_ids);
+        }
+      }
+    );
   }
 
   componentWillUnmount() {
+    const { resetPlanStateAction } = this.props;
     this.stopPolling();
+    resetPlanStateAction();
   }
 
-  startPolling() {
-    const { fetchPlanRequestsAction, fetchPlanRequestsUrl } = this.props;
+  startPolling(id) {
+    const { fetchPlanRequestAction, fetchPlanRequestUrlBuilder } = this.props;
     this.pollingInterval = setInterval(() => {
-      fetchPlanRequestsAction(fetchPlanRequestsUrl);
+      fetchPlanRequestAction(fetchPlanRequestUrlBuilder, id);
     }, 15000);
   }
 
@@ -67,12 +101,21 @@ class Plan extends React.Component {
   render() {
     const {
       planName,
-      isRejectedPlanRequests,
-      isFetchingPlanRequests,
-      planRequestsPreviouslyFetched
+      isRejectedPlanRequest,
+      isFetchingPlanRequest,
+      planRequestPreviouslyFetched,
+      isRejectedPlan,
+      isFetchingPlan,
+      isQueryingVms,
+      isRejectedVms
     } = this.props;
 
-    const { planRequestTasksMutable } = this.state;
+    const {
+      planRequestTasksMutable,
+      vmsMutable,
+      planNotStarted,
+      planFinished
+    } = this.state;
 
     return (
       <React.Fragment>
@@ -83,26 +126,27 @@ class Plan extends React.Component {
           <li>
             <Link to="/migration">{__('Migration')}</Link>
           </li>
-          {planRequestsPreviouslyFetched &&
-            !isRejectedPlanRequests &&
+          {!isRejectedPlan &&
             planName && <Breadcrumb.Item active>{planName}</Breadcrumb.Item>}
         </Toolbar>
 
         <Spinner
           loading={
-            isFetchingPlanRequests &&
-            !planRequestsPreviouslyFetched &&
-            !isRejectedPlanRequests
+            (isFetchingPlan || isFetchingPlanRequest || isQueryingVms) &&
+            !planRequestPreviouslyFetched
           }
         >
-          {planRequestsPreviouslyFetched &&
-            !isRejectedPlanRequests &&
+          {!planNotStarted &&
+            planRequestPreviouslyFetched &&
+            !isRejectedPlanRequest &&
             planRequestTasksMutable.length > 0 && (
               <PlanRequestDetailList
+                planFinished={planFinished}
                 planRequestTasks={planRequestTasksMutable}
               />
             )}
-          {planRequestsPreviouslyFetched &&
+          {!planNotStarted &&
+            planRequestPreviouslyFetched &&
             planRequestTasksMutable.length === 0 && (
               <PlanEmptyState
                 title="No Migration Tasks."
@@ -111,8 +155,20 @@ class Plan extends React.Component {
                 description="No VM migration tasks have been started for this plan. Please refresh and try again."
               />
             )}
+          {planNotStarted &&
+            !isRejectedVms &&
+            vmsMutable.length > 0 && <PlanVmsList planVms={vmsMutable} />}
+          {planNotStarted &&
+            vmsMutable.length === 0 && (
+              <PlanEmptyState
+                title="No VMs"
+                iconType="pf"
+                iconName="warning-triangle-o"
+                description="No VMs were returned for this migration plan. Please refresh and try again."
+              />
+            )}
         </Spinner>
-        {isRejectedPlanRequests && (
+        {(isRejectedPlanRequest || isRejectedPlan || isRejectedVms) && (
           <PlanEmptyState
             title="Unable to retrieve migration details."
             iconType="pf"
@@ -125,21 +181,30 @@ class Plan extends React.Component {
   }
 }
 Plan.propTypes = {
-  fetchPlanRequestsUrl: PropTypes.string.isRequired,
-  fetchPlanRequestsAction: PropTypes.func.isRequired,
+  fetchPlanRequestUrlBuilder: PropTypes.func.isRequired,
+  fetchPlanRequestAction: PropTypes.func.isRequired,
   planName: PropTypes.string,
   planRequestTasks: PropTypes.array,
-  isRejectedPlanRequests: PropTypes.bool,
-  isFetchingPlanRequests: PropTypes.bool,
-  planRequestsPreviouslyFetched: PropTypes.bool,
-  errorPlanRequests: PropTypes.object // eslint-disable-line react/no-unused-prop-types
+  isRejectedPlanRequest: PropTypes.bool,
+  isFetchingPlanRequest: PropTypes.bool,
+  planRequestPreviouslyFetched: PropTypes.bool,
+  errorPlanRequest: PropTypes.object, // eslint-disable-line react/no-unused-prop-types
+  fetchPlanUrlBuilder: PropTypes.func,
+  fetchPlanAction: PropTypes.func,
+  isFetchingPlan: PropTypes.bool,
+  isRejectedPlan: PropTypes.bool,
+  planId: PropTypes.string,
+  queryPlanVmsAction: PropTypes.func,
+  isQueryingVms: PropTypes.bool,
+  isRejectedVms: PropTypes.bool,
+  resetPlanStateAction: PropTypes.func
 };
 Plan.defaultProps = {
   planName: '',
   planRequestTasks: [],
-  isRejectedPlanRequests: false,
-  isFetchingPlanRequests: false,
-  planRequestsPreviouslyFetched: false,
-  errorPlanRequests: null
+  isRejectedPlanRequest: false,
+  isFetchingPlanRequest: false,
+  planRequestPreviouslyFetched: false,
+  errorPlanRequest: null
 };
 export default Plan;

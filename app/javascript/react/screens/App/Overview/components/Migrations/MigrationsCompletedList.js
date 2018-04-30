@@ -6,14 +6,14 @@ import { IsoElpasedTime } from '../../../../../../components/dates/IsoElapsedTim
 const MigrationsCompletedList = ({
   finishedTransformationPlans,
   retryClick,
-  loading
+  loading,
+  redirectTo
 }) => (
   <Grid.Col xs={12}>
-    <ListView style={{ marginTop: 0 }}>
+    <ListView className="plans-complete-list" style={{ marginTop: 0 }}>
       {finishedTransformationPlans.map(plan => {
         const [mostRecentRequest] = plan.miq_requests.slice(-1);
         const failed = mostRecentRequest.status === 'failed';
-
         const tasks = {};
         plan.miq_requests.forEach(request => {
           request.miq_request_tasks.forEach(task => {
@@ -33,6 +33,10 @@ const MigrationsCompletedList = ({
 
         return (
           <ListView.Item
+            className="plans-complete-list__list-item"
+            onClick={() => {
+              redirectTo(`/migration/plan/${plan.id}`);
+            }}
             key={plan.id}
             leftContent={
               <ListView.Icon
@@ -63,7 +67,8 @@ const MigrationsCompletedList = ({
             actions={
               (failed && (
                 <Button
-                  onClick={() => {
+                  onClick={e => {
+                    e.stopPropagation();
                     retryClick(plan.href);
                   }}
                   disabled={loading === plan.href}
@@ -83,7 +88,8 @@ const MigrationsCompletedList = ({
 MigrationsCompletedList.propTypes = {
   finishedTransformationPlans: PropTypes.array,
   retryClick: PropTypes.func,
-  loading: PropTypes.string
+  loading: PropTypes.string,
+  redirectTo: PropTypes.func
 };
 MigrationsCompletedList.defaultProps = {
   finishedTransformationPlans: [],

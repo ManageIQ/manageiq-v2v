@@ -76,24 +76,19 @@ export const fetchTransformationMappingsAction = url => {
   return _getTransformationMappingsActionCreator(uri.toString());
 };
 
-const _getTransformationPlansActionCreator = url => dispatch =>
-  dispatch({
-    type: 'FETCH_V2V_TRANSFORMATION_PLANS',
-    payload: API.get(url)
-  }).catch(error => {
-    // redux-promise-middleware will automatically send:
-    // FETCH_V2V_TRANSFORMATION_PLANS_PENDING, FETCH_V2V_TRANSFORMATION_PLANS_FULFILLED,
-    // FETCH_V2V_TRANSFORMATION_PLANS_REJECTED
+const _getTransformationPlansActionCreator = url => dispatch => {
+  if (mockMode) {
+    return dispatch({
+      type: FETCH_V2V_TRANSFORMATION_PLANS,
+      payload: Promise.resolve(requestTransformationPlansData.response)
+    });
+  }
 
-    // to enable UI development without the database, i'm catching the error
-    // and passing some mock data thru the FULFILLED action after the REJECTED action is finished.
-    if (mockMode) {
-      dispatch({
-        type: `${FETCH_V2V_TRANSFORMATION_PLANS}_FULFILLED`,
-        payload: requestTransformationPlansData.response
-      });
-    }
+  return dispatch({
+    type: FETCH_V2V_TRANSFORMATION_PLANS,
+    payload: API.get(url)
   });
+};
 
 export const fetchTransformationPlansAction = url => {
   const uri = new URI(url);

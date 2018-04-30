@@ -5,16 +5,22 @@ import { noop, Button, ListView, Grid, Icon } from 'patternfly-react';
 const MigrationsNotStartedList = ({
   migrateClick,
   notStartedPlans,
-  loading
+  loading,
+  redirectTo
 }) => (
   <Grid.Col xs={12}>
-    <ListView style={{ marginTop: 0 }}>
+    <ListView className="plans-not-started-list" style={{ marginTop: 0 }}>
       {notStartedPlans.map(plan => (
         <ListView.Item
+          className="plans-not-started-list__list-item"
+          onClick={() => {
+            redirectTo(`/migration/plan/${plan.id}`);
+          }}
           actions={
             <div>
               <Button
-                onClick={() => {
+                onClick={e => {
+                  e.stopPropagation();
                   migrateClick(plan.href);
                 }}
                 disabled={loading === plan.href}
@@ -43,7 +49,8 @@ const MigrationsNotStartedList = ({
 MigrationsNotStartedList.propTypes = {
   migrateClick: PropTypes.func,
   notStartedPlans: PropTypes.array,
-  loading: PropTypes.string
+  loading: PropTypes.string,
+  redirectTo: PropTypes.func
 };
 MigrationsNotStartedList.defaultProps = {
   migrateClick: noop,
