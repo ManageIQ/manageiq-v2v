@@ -9,6 +9,7 @@ Object {
   "planWizardOptionsStep": Object {},
   "planWizardVMStep": Object {},
   "resetVmStepAction": [Function],
+  "setMigrationsFilterAction": [Function],
   "setPlanScheduleAction": [Function],
   "setPlansBodyAction": [Function],
 }
