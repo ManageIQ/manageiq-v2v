@@ -10,10 +10,10 @@ import NotificationList from './screens/App/common/NotificationList';
 export default () => (
   <Provider store={store}>
     <Router>
-      <div>
+      <React.Fragment>
         <NotificationList />
         <Routes store={store} />
-      </div>
+      </React.Fragment>
     </Router>
   </Provider>
 );
