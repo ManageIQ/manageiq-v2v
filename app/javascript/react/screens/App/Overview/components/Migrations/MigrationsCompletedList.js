@@ -123,7 +123,7 @@ MigrationsCompletedList.propTypes = {
   finishedTransformationPlans: PropTypes.array,
   allRequestsWithTasks: PropTypes.array,
   retryClick: PropTypes.func,
-  loading: PropTypes.string,
+  loading: PropTypes.bool,
   redirectTo: PropTypes.func
 };
 MigrationsCompletedList.defaultProps = {

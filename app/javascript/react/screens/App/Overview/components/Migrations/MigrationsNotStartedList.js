@@ -71,7 +71,7 @@ const MigrationsNotStartedList = ({
 MigrationsNotStartedList.propTypes = {
   migrateClick: PropTypes.func,
   notStartedPlans: PropTypes.array,
-  loading: PropTypes.string,
+  loading: PropTypes.bool,
   redirectTo: PropTypes.func
 };
 MigrationsNotStartedList.defaultProps = {
