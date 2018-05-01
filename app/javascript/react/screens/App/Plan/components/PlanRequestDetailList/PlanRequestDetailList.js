@@ -350,7 +350,7 @@ class PlanRequestDetailList extends React.Component {
                     style={{ width: 'inherit', backgroundColor: 'transparent' }}
                   />
                 );
-              } else if (task.taskCompleted && !task.completedSuccessfully) {
+              } else if (task.completed && !task.completedSuccessfully) {
                 leftContent = (
                   <ListView.Icon
                     type="pf"
@@ -359,7 +359,7 @@ class PlanRequestDetailList extends React.Component {
                     style={{ width: 'inherit', backgroundColor: 'transparent' }}
                   />
                 );
-              } else if (task.taskCompleted) {
+              } else if (task.completed) {
                 leftContent = (
                   <ListView.Icon
                     type="pf"
@@ -376,7 +376,7 @@ class PlanRequestDetailList extends React.Component {
               const lastUpdateDateTime = task.updated_on;
               const elapsedTime = IsoElpasedTime(
                 startDateTime,
-                task.taskCompleted ? lastUpdateDateTime : currentTime
+                task.completed ? lastUpdateDateTime : currentTime
               );
               const label = sprintf(
                 __('%s of %s Migrated'),

@@ -35,7 +35,9 @@ const _formatPlanRequestDetails = data => {
           task.options && task.options.transformation_host_name,
         delivered_on: new Date(task.options.delivered_on),
         updated_on: new Date(task.updated_on),
-        completed: task.message === 'VM Transformations completed',
+        completed:
+          task.message === 'VM Transformations completed' ||
+          task.message === 'VM Transformations failed',
         state: task.state,
         status: task.status,
         options: {}
@@ -43,11 +45,6 @@ const _formatPlanRequestDetails = data => {
 
       taskDetails.options.progress = task.options.progress;
       taskDetails.options.virtv2v_wrapper = task.options.virtv2v_wrapper;
-
-      taskDetails.taskCompleted = task.completed;
-      if (task.status === 'Error') {
-        taskDetails.taskCompleted = true;
-      }
 
       if (!task.diskSpaceCompletedGb) {
         taskDetails.diskSpaceCompletedGb = '0';
@@ -70,7 +67,9 @@ const _formatPlanRequestDetails = data => {
       if (taskDetails.completed) {
         taskDetails.completedSuccessfully =
           task.options.progress.current_description ===
-          'Virtual machine migrated';
+            'Virtual machine migrated' ||
+          task.options.progress.current_description ===
+            'Mark source as migrated';
       }
       if (
         task.options &&
