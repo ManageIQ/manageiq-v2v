@@ -5,6 +5,7 @@ import { Form } from 'patternfly-react';
 import PropTypes from 'prop-types';
 import { FormField } from '../../../../../common/forms/FormField';
 import { BootstrapSelect } from '../../../../../common/forms/BootstrapSelect';
+import { validation } from '../../../../../../../../common/constants'; // Oh my
 
 const PlanWizardGeneralStep = ({ transformationMappings }) => (
   <Form className="form-horizontal">
@@ -25,14 +26,24 @@ const PlanWizardGeneralStep = ({ transformationMappings }) => (
       label={__('Name')}
       required
       component={FormField}
-      validate={[required({ msg: __('Required') })]}
       type="text"
+      help={validation.name.help}
+      maxLength={validation.name.maxLength}
+      maxLengthWarning={validation.name.maxLengthWarning}
+      validate={[
+        required({
+          msg: validation.name.requiredMessage
+        })
+      ]}
     />
     <Field
       name="description"
       label={__('Description')}
       component={FormField}
       type="textarea"
+      help={validation.description.help}
+      maxLength={validation.description.maxLength}
+      maxLengthWarning={validation.description.maxLengthWarning}
     />
     <Field
       name="vm_choice_radio"
