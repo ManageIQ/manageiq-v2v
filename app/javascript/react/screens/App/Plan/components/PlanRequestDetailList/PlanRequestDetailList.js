@@ -409,7 +409,7 @@ class PlanRequestDetailList extends React.Component {
                   <div>
                     <div>
                       <b>{__('Started')}: </b>
-                      {moment(startDateTime).format('YYYY-MM-DD HH:mm:ss A')}
+                      {moment(startDateTime).format('MMMM Do YYYY, h:mm a')}
                     </div>
                     <div>
                       <b>{__('Description')}: </b>
