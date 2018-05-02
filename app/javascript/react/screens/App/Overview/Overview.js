@@ -117,14 +117,22 @@ class Overview extends React.Component {
 
       freshTransformationPlans.forEach(plan => {
         const [mostRecentRequest] = plan.miq_requests.slice(-1);
-        const planStatus =
-          mostRecentRequest.status.toLowerCase() === 'complete';
-        const planStatusMessage = planStatus
-          ? `${mostRecentRequest.status}.`
-          : __('completed with errors.');
+
+        let planStatusMessage = sprintf(
+          __('%s completed with errors'),
+          plan.name
+        );
+        let planStatus = false;
+        if (mostRecentRequest.status === 'Ok') {
+          planStatusMessage = sprintf(
+            __('%s completed successfully'),
+            plan.name
+          );
+          planStatus = true;
+        }
 
         addNotificationAction({
-          message: `${plan.name} ${planStatusMessage}`,
+          message: planStatusMessage,
           notificationType: planStatus ? 'success' : 'error',
           data: {
             id: plan.id
