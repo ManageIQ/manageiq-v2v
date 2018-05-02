@@ -165,7 +165,10 @@ export default (state = initialState, action) => {
         .set('errorVms', action.payload);
 
     case RESET_PLAN_STATE:
-      return state.set('planRequestTasks', []).set('vms', []);
+      return state
+        .set('planRequestTasks', [])
+        .set('vms', [])
+        .set('planRequestPreviouslyFetched', false);
     default:
       return state;
   }
