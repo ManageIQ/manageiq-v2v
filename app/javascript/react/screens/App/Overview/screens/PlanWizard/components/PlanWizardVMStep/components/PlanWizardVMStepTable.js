@@ -183,7 +183,13 @@ class PlanWizardVMStepTable extends React.Component {
                     <Button bsStyle="link">
                       <Icon
                         type="pf"
-                        name={rowData.valid ? 'ok' : 'error-circle-o'}
+                        name={
+                          rowData.valid
+                            ? 'ok'
+                            : rowData.warning
+                              ? 'warning-triangle-o'
+                              : 'error-circle-o'
+                        }
                       />
                     </Button>
                   </OverlayTrigger>

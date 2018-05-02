@@ -28,9 +28,17 @@ const _formatValidVms = vms =>
 const _formatInvalidVms = vms =>
   vms &&
   vms.map(v => {
-    v.invalid = true;
     v.allocated_size = numeral(v.allocated_size).format('0.00b');
     v.reason = V2V_VM_POST_VALIDATION_REASONS[v.reason];
+    if (
+      v.reason === V2V_VM_POST_VALIDATION_REASONS.migrated ||
+      v.reason === V2V_VM_POST_VALIDATION_REASONS.in_other_plan
+    ) {
+      v.warning = true;
+    } else {
+      v.invalid = true;
+    }
+
     return v;
   });
 const _formatConflictVms = vms =>
