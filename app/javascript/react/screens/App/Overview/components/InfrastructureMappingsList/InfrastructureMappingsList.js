@@ -91,7 +91,7 @@ const InfrastructureMappingsList = ({
               >
                 <Grid.Col sm={12}>
                   {__('Completed: ')}
-                  {moment(mapping.created_at).format('YYYY-MM-DD HH:mm:ss A')}
+                  {moment(mapping.created_at).format('MMMM Do YYYY, h:mm a')}
                 </Grid.Col>
               </Grid.Row>
               <Grid.Row>
