@@ -10,7 +10,7 @@ const MigrationsNotStartedList = ({
   redirectTo
 }) => (
   <Grid.Col xs={12}>
-    <Spinner loading={loading}>
+    <Spinner loading={!!loading}>
       {notStartedPlans.length > 0 ? (
         <ListView className="plans-not-started-list" style={{ marginTop: 0 }}>
           {notStartedPlans.map(plan => (
@@ -71,7 +71,7 @@ const MigrationsNotStartedList = ({
 MigrationsNotStartedList.propTypes = {
   migrateClick: PropTypes.func,
   notStartedPlans: PropTypes.array,
-  loading: PropTypes.bool,
+  loading: PropTypes.string,
   redirectTo: PropTypes.func
 };
 MigrationsNotStartedList.defaultProps = {
