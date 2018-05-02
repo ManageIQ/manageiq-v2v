@@ -109,10 +109,8 @@ export const coreComponents = [
     name: 'PlanContainer',
     type: PlanContainer,
     data: {
-      fetchPlanUrlBuilder: id =>
-        `/api/service_templates/${id}/?attributes=miq_requests`,
-      fetchPlanRequestUrlBuilder: id =>
-        `/api/service_requests/${id}?attributes=miq_request_tasks`
+      fetchPlanUrl: '/api/service_templates',
+      fetchPlanRequestUrl: '/api/service_requests'
     },
     store: true
   },

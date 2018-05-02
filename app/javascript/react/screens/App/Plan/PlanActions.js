@@ -17,8 +17,9 @@ const _getPlanRequestActionCreator = url => dispatch =>
     payload: API.get(url)
   });
 
-export const fetchPlanRequestAction = (urlBuilder, id) => {
-  const uri = new URI(urlBuilder(id));
+export const fetchPlanRequestAction = (url, id) => {
+  const uri = new URI(`${url}/${id}`);
+  uri.addSearch({ attributes: 'miq_request_tasks' });
   return _getPlanRequestActionCreator(uri.toString());
 };
 
@@ -58,8 +59,9 @@ export const _getPlanActionCreator = url => dispatch =>
     })
   });
 
-export const fetchPlanAction = (urlBuilder, id) => {
-  const uri = new URI(urlBuilder(id));
+export const fetchPlanAction = (url, id) => {
+  const uri = new URI(`${url}/${id}`);
+  uri.addSearch({ attributes: 'miq_requests' });
   return _getPlanActionCreator(uri.toString());
 };
 
