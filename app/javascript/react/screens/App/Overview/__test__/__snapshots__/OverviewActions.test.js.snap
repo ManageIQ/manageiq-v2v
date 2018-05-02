@@ -37,3 +37,16 @@ Array [
   },
 ]
 `;
+
+exports[`fetchTransformationPlansAction dispatches PENDING and REJECTED actions 1`] = `
+Array [
+  Object {
+    "type": "FETCH_V2V_TRANSFORMATION_PLANS_PENDING",
+  },
+  Object {
+    "error": true,
+    "payload": [Error: Request failed with status code 404],
+    "type": "FETCH_V2V_TRANSFORMATION_PLANS_REJECTED",
+  },
+]
+`;

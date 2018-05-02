@@ -43,15 +43,9 @@ describe('FETCH_V2V_PLAN', () => {
   });
 
   describe('fetchPlanAction', () => {
-    let urlBuilder;
-    beforeEach(() => {
-      urlBuilder = jest.fn();
-      urlBuilder.mockReturnValueOnce(fetchPlanUrl);
-    });
-
     test('dispatches the PENDING and FULFILLED actions', () => {
       mockRequest(request);
-      return store.dispatch(fetchPlanAction(urlBuilder, id)).then(() => {
+      return store.dispatch(fetchPlanAction(fetchPlanUrl, id)).then(() => {
         expect(store.getActions()).toMatchSnapshot();
       });
     });
@@ -61,7 +55,7 @@ describe('FETCH_V2V_PLAN', () => {
         ...request,
         status: 404
       });
-      return store.dispatch(fetchPlanAction(urlBuilder, id)).catch(() => {
+      return store.dispatch(fetchPlanAction(fetchPlanUrl, id)).catch(() => {
         expect(store.getActions()).toMatchSnapshot();
       });
     });

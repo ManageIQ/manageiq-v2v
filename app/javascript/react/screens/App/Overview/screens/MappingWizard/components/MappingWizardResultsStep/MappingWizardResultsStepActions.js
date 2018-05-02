@@ -1,9 +1,6 @@
-import API, { globalMockMode } from '../../../../../../../../common/API';
+import API from '../../../../../../../../common/API';
 import { POST_V2V_TRANSFORM_MAPPINGS } from './MappingWizardResultsStepConstants';
 import { CONTINUE_TO_PLAN } from '../../../../OverviewConstants';
-import { requestTransformationMappingsData } from './mappingWizardResultsStep.fixtures';
-
-const mockMode = globalMockMode;
 
 export const continueToPlanAction = id => dispatch => {
   dispatch({
@@ -15,7 +12,7 @@ export const continueToPlanAction = id => dispatch => {
 const _postTransformMappingsActionCreator = (
   url,
   transformMappings
-) => dispatch => {
+) => dispatch =>
   dispatch({
     type: POST_V2V_TRANSFORM_MAPPINGS,
     payload: new Promise((resolve, reject) => {
@@ -24,17 +21,10 @@ const _postTransformMappingsActionCreator = (
           resolve(response);
         })
         .catch(e => {
-          if (mockMode) {
-            return dispatch({
-              type: `${POST_V2V_TRANSFORM_MAPPINGS}_FULFILLED`,
-              payload: requestTransformationMappingsData.response
-            });
-          }
-          return reject(e);
+          reject(e);
         });
     })
   });
-};
 
 export const postTransformMappingsAction = (url, transformMappings) =>
   _postTransformMappingsActionCreator(url, transformMappings);

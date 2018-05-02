@@ -24,7 +24,7 @@ Array [
         "transformResponse": Object {
           "0": [Function],
         },
-        "url": "/api/dummyPlan",
+        "url": "/api/dummyPlan/1?attributes=miq_requests",
         "validateStatus": [Function],
         "xsrfCookieName": "XSRF-TOKEN",
         "xsrfHeaderName": "X-XSRF-TOKEN",

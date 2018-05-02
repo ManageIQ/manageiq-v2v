@@ -40,42 +40,40 @@ class Plan extends React.Component {
 
   componentDidMount() {
     const {
-      fetchPlanUrlBuilder,
+      fetchPlanUrl,
       fetchPlanAction,
       planId,
-      fetchPlanRequestUrlBuilder,
+      fetchPlanRequestUrl,
       fetchPlanRequestAction,
       queryPlanVmsAction
     } = this.props;
 
-    fetchPlanAction(fetchPlanUrlBuilder, planId).then(
-      ({ value: { data: plan } }) => {
-        const {
-          miq_requests,
-          options: {
-            config_info: { vm_ids }
-          }
-        } = plan;
-
-        if (miq_requests.length > 0) {
-          const [mostRecentRequest] = miq_requests.slice(-1);
-          const planRequestId = mostRecentRequest.id;
-          fetchPlanRequestAction(fetchPlanRequestUrlBuilder, planRequestId);
-          if (mostRecentRequest.status === 'active') {
-            this.startPolling(planRequestId);
-          } else if (
-            mostRecentRequest.request_state === 'finished' ||
-            mostRecentRequest.status === 'Error'
-          ) {
-            this.setState(() => ({
-              planFinished: true
-            }));
-          }
-        } else {
-          queryPlanVmsAction(vm_ids);
+    fetchPlanAction(fetchPlanUrl, planId).then(({ value: { data: plan } }) => {
+      const {
+        miq_requests,
+        options: {
+          config_info: { vm_ids }
         }
+      } = plan;
+
+      if (miq_requests.length > 0) {
+        const [mostRecentRequest] = miq_requests.slice(-1);
+        const planRequestId = mostRecentRequest.id;
+        fetchPlanRequestAction(fetchPlanRequestUrl, planRequestId);
+        if (mostRecentRequest.status === 'active') {
+          this.startPolling(planRequestId);
+        } else if (
+          mostRecentRequest.request_state === 'finished' ||
+          mostRecentRequest.status === 'Error'
+        ) {
+          this.setState(() => ({
+            planFinished: true
+          }));
+        }
+      } else {
+        queryPlanVmsAction(vm_ids);
       }
-    );
+    });
   }
 
   componentWillUnmount() {
@@ -85,9 +83,9 @@ class Plan extends React.Component {
   }
 
   startPolling(id) {
-    const { fetchPlanRequestAction, fetchPlanRequestUrlBuilder } = this.props;
+    const { fetchPlanRequestAction, fetchPlanRequestUrl } = this.props;
     this.pollingInterval = setInterval(() => {
-      fetchPlanRequestAction(fetchPlanRequestUrlBuilder, id);
+      fetchPlanRequestAction(fetchPlanRequestUrl, id);
     }, 15000);
   }
 
@@ -181,7 +179,7 @@ class Plan extends React.Component {
   }
 }
 Plan.propTypes = {
-  fetchPlanRequestUrlBuilder: PropTypes.func.isRequired,
+  fetchPlanRequestUrl: PropTypes.string.isRequired,
   fetchPlanRequestAction: PropTypes.func.isRequired,
   planName: PropTypes.string,
   planRequestTasks: PropTypes.array,
@@ -189,7 +187,7 @@ Plan.propTypes = {
   isFetchingPlanRequest: PropTypes.bool,
   planRequestPreviouslyFetched: PropTypes.bool,
   errorPlanRequest: PropTypes.object, // eslint-disable-line react/no-unused-prop-types
-  fetchPlanUrlBuilder: PropTypes.func,
+  fetchPlanUrl: PropTypes.string,
   fetchPlanAction: PropTypes.func,
   isFetchingPlan: PropTypes.bool,
   isRejectedPlan: PropTypes.bool,
