@@ -1,15 +1,9 @@
 import URI from 'urijs';
-import API, { globalMockMode } from '../../../../../../../../common/API';
+import API from '../../../../../../../../common/API';
 import {
   FETCH_V2V_SOURCE_NETWORKS,
   FETCH_V2V_TARGET_NETWORKS
 } from './MappingWizardNetworksStepConstants';
-import {
-  requestSourceNetworksData,
-  requestTargetNetworksData
-} from './mappingWizardNetworksStep.fixtures';
-
-const mockMode = globalMockMode;
 
 const _filterSourceNetworks = response => {
   const { data } = response;
@@ -23,7 +17,7 @@ const _filterSourceNetworks = response => {
   };
 };
 
-const _getSourceNetworksActionCreator = (url, id) => dispatch => {
+const _getSourceNetworksActionCreator = url => dispatch =>
   dispatch({
     type: FETCH_V2V_SOURCE_NETWORKS,
     payload: new Promise((resolve, reject) => {
@@ -32,26 +26,17 @@ const _getSourceNetworksActionCreator = (url, id) => dispatch => {
           resolve(_filterSourceNetworks(response));
         })
         .catch(e => {
-          if (mockMode) {
-            return dispatch({
-              type: `${FETCH_V2V_SOURCE_NETWORKS}_FULFILLED`,
-              payload: _filterSourceNetworks(
-                requestSourceNetworksData(id).response
-              )
-            });
-          }
-          return reject(e);
+          reject(e);
         });
     })
   });
-};
 
 export const fetchSourceNetworksAction = (url, id) => {
   const uri = new URI(`${url}/${id}`);
   // creates url like: http://localhost:3000/api/clusters/1?attributes=lans
   uri.addSearch({ attributes: 'lans' });
 
-  return _getSourceNetworksActionCreator(uri.toString(), id);
+  return _getSourceNetworksActionCreator(uri.toString());
 };
 
 const _filterTargetNetworks = response => {
@@ -66,7 +51,7 @@ const _filterTargetNetworks = response => {
   };
 };
 
-const _getTargetNetworksActionCreator = (url, id) => dispatch => {
+const _getTargetNetworksActionCreator = url => dispatch =>
   dispatch({
     type: FETCH_V2V_TARGET_NETWORKS,
     payload: new Promise((resolve, reject) => {
@@ -75,24 +60,15 @@ const _getTargetNetworksActionCreator = (url, id) => dispatch => {
           resolve(_filterTargetNetworks(response));
         })
         .catch(e => {
-          if (mockMode) {
-            return dispatch({
-              type: `${FETCH_V2V_TARGET_NETWORKS}_FULFILLED`,
-              payload: _filterTargetNetworks(
-                requestTargetNetworksData(id).response
-              )
-            });
-          }
-          return reject(e);
+          reject(e);
         });
     })
   });
-};
 
 export const fetchTargetNetworksAction = (url, id) => {
   const uri = new URI(`${url}/${id}`);
   // creates url like: http://localhost:3000/api/clusters/1?attributes=lans
   uri.addSearch({ attributes: 'lans' });
 
-  return _getTargetNetworksActionCreator(uri.toString(), id);
+  return _getTargetNetworksActionCreator(uri.toString());
 };

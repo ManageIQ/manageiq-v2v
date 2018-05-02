@@ -42,7 +42,7 @@ describe('mappingWizard actions', () => {
     });
     return store
       .dispatch(actions.fetchSourceClustersAction(fetchSourceClustersUrl))
-      .then(() => {
+      .catch(() => {
         expect(store.getActions()).toMatchSnapshot();
       });
   });
@@ -67,7 +67,7 @@ describe('mappingWizard actions', () => {
     });
     return store
       .dispatch(actions.fetchTargetClustersAction(fetchTargetClustersUrl))
-      .then(() => {
+      .catch(() => {
         expect(store.getActions()).toMatchSnapshot();
       });
   });

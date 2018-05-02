@@ -16,9 +16,6 @@ import LongDateTime from './dates/LongDateTime';
 import RelativeDateTime from './dates/RelativeDateTime';
 import ShortDateTime from './dates/ShortDateTime';
 import MiqV2vUi from '../react';
-import { globalMockMode } from '../common/API';
-
-const mockMode = globalMockMode;
 
 export const coreComponents = [
   {
@@ -31,16 +28,14 @@ export const coreComponents = [
     name: 'MappingWizardClustersStepContainer',
     type: MappingWizardClustersStepContainer,
     data: {
-      fetchSourceClustersUrl: mockMode
-        ? '/api/dummyProviders'
-        : '/api/clusters?expand=resources' +
-          '&attributes=ext_management_system.emstype,v_parent_datacenter' +
-          '&filter[]=ext_management_system.emstype=vmwarews',
-      fetchTargetClustersUrl: mockMode
-        ? '/api/dummyProviders'
-        : '/api/clusters?expand=resources' +
-          '&attributes=ext_management_system.emstype,v_parent_datacenter' +
-          '&filter[]=ext_management_system.emstype=rhevm'
+      fetchSourceClustersUrl:
+        '/api/clusters?expand=resources' +
+        '&attributes=ext_management_system.emstype,v_parent_datacenter' +
+        '&filter[]=ext_management_system.emstype=vmwarews',
+      fetchTargetClustersUrl:
+        '/api/clusters?expand=resources' +
+        '&attributes=ext_management_system.emstype,v_parent_datacenter' +
+        '&filter[]=ext_management_system.emstype=rhevm'
     },
     store: true
   },
@@ -48,7 +43,7 @@ export const coreComponents = [
     name: 'MappingWizardDatastoresStepContainer',
     type: MappingWizardDatastoresStepContainer,
     data: {
-      fetchDatastoresUrl: mockMode ? '/api/dummyClusters' : 'api/clusters'
+      fetchDatastoresUrl: 'api/clusters'
     },
     store: true
   },
@@ -56,7 +51,7 @@ export const coreComponents = [
     name: 'MappingWizardNetworksStepContainer',
     type: MappingWizardNetworksStepContainer,
     data: {
-      fetchNetworksUrl: mockMode ? '/api/dummyClusters' : 'api/clusters'
+      fetchNetworksUrl: 'api/clusters'
     },
     store: true
   },
@@ -64,34 +59,28 @@ export const coreComponents = [
     name: 'MappingWizardResultsStepContainer',
     type: MappingWizardResultsStepContainer,
     data: {
-      postMappingsUrl: mockMode
-        ? '/api/dummyPostMappings'
-        : 'api/transformation_mappings'
+      postMappingsUrl: 'api/transformation_mappings'
     }
   },
   {
     name: 'PlanWizardVMStepContainer',
     type: PlanWizardVMStepContainer,
     data: {
-      validateVmsUrl: mockMode
-        ? '/api/dummyValidateVMUrl'
-        : '/api/transformation_mappings'
+      validateVmsUrl: '/api/transformation_mappings'
     }
   },
   {
     name: 'PlanWizardResultsStepContainer',
     type: PlanWizardResultsStepContainer,
     data: {
-      postPlansUrl: mockMode
-        ? '/api/dummyMigrationPlansAndRequests'
-        : '/api/service_templates'
+      postPlansUrl: '/api/service_templates'
     }
   },
   {
     name: 'PlanWizardContainer',
     type: PlanWizardContainer,
     data: {
-      url: mockMode ? '/api/dummyMigrationPlans' : '/api/migrationPlans'
+      url: '/api/migrationPlans'
     },
     store: true
   },
@@ -99,23 +88,20 @@ export const coreComponents = [
     name: 'OverviewContainer',
     type: OverviewContainer,
     data: {
-      fetchTransformationMappingsUrl: mockMode
-        ? '/api/dummyMappings'
-        : 'api/transformation_mappings?expand=resources' +
-          '&attributes=transformation_mapping_items',
-      fetchTransformationPlansUrl: mockMode
-        ? '/api/dummyTransformationPlans'
-        : '/api/service_templates/?' +
-          "filter[]=type='ServiceTemplateTransformationPlan'" +
-          '&expand=resources' +
-          '&attributes=name,miq_requests,options,created_at' +
-          '&sort_by=updated_at' +
-          '&sort_order=desc',
-      fetchClustersUrl: mockMode
-        ? '/api/dummyClusters'
-        : 'api/clusters/' +
-          '?attributes=v_parent_datacenter' +
-          '&expand=resources'
+      fetchTransformationMappingsUrl:
+        'api/transformation_mappings?expand=resources' +
+        '&attributes=transformation_mapping_items',
+      fetchTransformationPlansUrl:
+        '/api/service_templates/?' +
+        "filter[]=type='ServiceTemplateTransformationPlan'" +
+        '&expand=resources' +
+        '&attributes=name,miq_requests,options,created_at' +
+        '&sort_by=updated_at' +
+        '&sort_order=desc',
+      fetchClustersUrl:
+        'api/clusters/' +
+        '?attributes=v_parent_datacenter' +
+        '&expand=resources'
     },
     store: true
   },
@@ -124,13 +110,9 @@ export const coreComponents = [
     type: PlanContainer,
     data: {
       fetchPlanUrlBuilder: id =>
-        mockMode
-          ? '/api/dummyPlan'
-          : `/api/service_templates/${id}/?attributes=miq_requests`,
+        `/api/service_templates/${id}/?attributes=miq_requests`,
       fetchPlanRequestUrlBuilder: id =>
-        mockMode
-          ? '/api/dummyPlanRequest'
-          : `/api/service_requests/${id}?attributes=miq_request_tasks`
+        `/api/service_requests/${id}?attributes=miq_request_tasks`
     },
     store: true
   },
