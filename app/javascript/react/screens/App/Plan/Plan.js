@@ -21,7 +21,11 @@ class Plan extends React.Component {
       planRequestTasksMutable: Immutable.asMutable(nextProps.planRequestTasks),
       vms: nextProps.vms,
       vmsMutable: Immutable.asMutable(nextProps.vms),
-      planNotStarted: nextProps.planRequestTasks.length === 0
+      planNotStarted:
+        nextProps.plan &&
+        nextProps.plan.miq_requests &&
+        nextProps.plan.miq_requests.length === 0,
+      planRequestPreviouslyFetched: nextProps.planRequestPreviouslyFetched
     };
   }
 
@@ -32,8 +36,11 @@ class Plan extends React.Component {
       planRequestTasksMutable: Immutable.asMutable(props.planRequestTasks),
       vmsMutable: [],
       planNotStarted: false,
-      planFinished: false
+      planFinished: false,
+      planRequestPreviouslyFetched: false
     };
+
+    this.props.resetPlanStateAction();
 
     bindMethods(this, ['stopPolling', 'startPolling']);
   }
@@ -101,7 +108,6 @@ class Plan extends React.Component {
       planName,
       isRejectedPlanRequest,
       isFetchingPlanRequest,
-      planRequestPreviouslyFetched,
       isRejectedPlan,
       isFetchingPlan,
       isQueryingVms,
@@ -112,7 +118,8 @@ class Plan extends React.Component {
       planRequestTasksMutable,
       vmsMutable,
       planNotStarted,
-      planFinished
+      planFinished,
+      planRequestPreviouslyFetched
     } = this.state;
 
     return (
@@ -185,7 +192,7 @@ Plan.propTypes = {
   planRequestTasks: PropTypes.array,
   isRejectedPlanRequest: PropTypes.bool,
   isFetchingPlanRequest: PropTypes.bool,
-  planRequestPreviouslyFetched: PropTypes.bool,
+  planRequestPreviouslyFetched: PropTypes.bool, // eslint-disable-line react/no-unused-prop-types
   errorPlanRequest: PropTypes.object, // eslint-disable-line react/no-unused-prop-types
   fetchPlanUrl: PropTypes.string,
   fetchPlanAction: PropTypes.func,
