@@ -21,10 +21,7 @@ class Plan extends React.Component {
       planRequestTasksMutable: Immutable.asMutable(nextProps.planRequestTasks),
       vms: nextProps.vms,
       vmsMutable: Immutable.asMutable(nextProps.vms),
-      planNotStarted:
-        nextProps.plan &&
-        nextProps.plan.miq_requests &&
-        nextProps.plan.miq_requests.length === 0,
+      planNotStarted: nextProps.planRequestTasks.length === 0,
       planRequestPreviouslyFetched: nextProps.planRequestPreviouslyFetched
     };
   }
