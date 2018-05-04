@@ -22,7 +22,11 @@ const MigrationsInProgressCard = ({
     request => request.source_id === plan.id
   );
 
-  const [mostRecentRequest] = requestsOfAssociatedPlan.slice(-1);
+  const mostRecentRequest =
+    requestsOfAssociatedPlan.length > 0 &&
+    requestsOfAssociatedPlan.reduce(
+      (prev, current) => (prev.updated_on > current.updated_on ? prev : current)
+    );
 
   // if most recent request is still pending, show loading card
   if (!mostRecentRequest || mostRecentRequest.request_state === 'pending') {

@@ -18,7 +18,12 @@ const FinishedTransformationPlans = ({ finishedPlans, loading }) => {
       : 'Migration Plans Complete';
 
   const failedPlans = finishedPlans.filter(plan => {
-    const [mostRecentRequest] = plan.miq_requests.slice(-1);
+    const mostRecentRequest =
+      plan.miq_requests.length > 0 &&
+      plan.miq_requests.reduce(
+        (prev, current) =>
+          prev.updated_on > current.updated_on ? prev : current
+      );
     return mostRecentRequest.status === 'Error';
   });
 

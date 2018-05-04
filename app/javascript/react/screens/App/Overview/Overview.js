@@ -116,7 +116,10 @@ class Overview extends React.Component {
       );
 
       freshTransformationPlans.forEach(plan => {
-        const [mostRecentRequest] = plan.miq_requests.slice(-1);
+        const mostRecentRequest = plan.miq_requests.reduce(
+          (prev, current) =>
+            prev.updated_on > current.updated_on ? prev : current
+        );
 
         let planStatusMessage = sprintf(
           __('%s completed with errors'),

@@ -27,7 +27,12 @@ const ActiveTransformationPlans = ({
         request => request.source_id === plan.id
       );
 
-      const [mostRecentRequest] = requestsOfAssociatedPlan.slice(-1);
+      const mostRecentRequest =
+        requestsOfAssociatedPlan.length > 0 &&
+        requestsOfAssociatedPlan.reduce(
+          (prev, current) =>
+            prev.updated_on > current.updated_on ? prev : current
+        );
       return (
         mostRecentRequest &&
         mostRecentRequest.miq_request_tasks.some(
