@@ -10,7 +10,8 @@ import {
   FETCH_V2V_ALL_REQUESTS_WITH_TASKS,
   CREATE_V2V_TRANSFORMATION_PLAN_REQUEST,
   V2V_FETCH_CLUSTERS,
-  V2V_SET_MIGRATIONS_FILTER
+  V2V_SET_MIGRATIONS_FILTER,
+  V2V_RETRY_MIGRATION
 } from './OverviewConstants';
 
 export const showMappingWizardAction = () => dispatch => {
@@ -123,4 +124,9 @@ export const fetchClustersAction = url => {
 export const setMigrationsFilterAction = filter => ({
   type: V2V_SET_MIGRATIONS_FILTER,
   payload: filter
+});
+
+export const retryMigrationAction = planId => ({
+  type: V2V_RETRY_MIGRATION,
+  payload: planId
 });

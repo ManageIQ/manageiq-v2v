@@ -169,15 +169,17 @@ class Overview extends React.Component {
     }
   }
 
-  createTransformationPlanRequest(url) {
+  createTransformationPlanRequest(url, planId) {
     const {
       createTransformationPlanRequestAction,
       fetchTransformationPlansAction,
       fetchTransformationPlansUrl,
-      setMigrationsFilterAction
+      setMigrationsFilterAction,
+      retryMigrationAction
     } = this.props;
 
     createTransformationPlanRequestAction(url).then(() => {
+      retryMigrationAction(planId);
       setMigrationsFilterAction('Migration Plans in Progress');
       fetchTransformationPlansAction(fetchTransformationPlansUrl);
     });
@@ -344,6 +346,7 @@ Overview.propTypes = {
   clusters: PropTypes.array,
   migrationsFilter: PropTypes.string,
   setMigrationsFilterAction: PropTypes.func,
+  retryMigrationAction: PropTypes.func,
   history: PropTypes.object
 };
 export default Overview;

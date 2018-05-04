@@ -89,7 +89,7 @@ const MigrationsCompletedList = ({
                     <Button
                       onClick={e => {
                         e.stopPropagation();
-                        retryClick(plan.href);
+                        retryClick(plan.href, plan.id);
                       }}
                       disabled={loading === plan.href}
                     >

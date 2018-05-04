@@ -8,8 +8,11 @@ export const notStartedTransformationPlansFilter = transformationPlans =>
     transformationPlan => transformationPlan.miq_requests.length === 0
   );
 
-export const activeTransformationPlansFilter = transformationPlans =>
+export const activeTransformationPlansFilter = (transformationPlans, planId) =>
   transformationPlans.filter(transformationPlan => {
+    if (transformationPlan.id === planId) {
+      return true;
+    }
     if (transformationPlan.miq_requests.length > 0) {
       const mostRecentRequest = getMostRecentRequest(transformationPlan);
       return (
