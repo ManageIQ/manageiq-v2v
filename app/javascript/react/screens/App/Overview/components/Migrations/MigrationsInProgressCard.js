@@ -16,6 +16,7 @@ import { IsoElpasedTime } from '../../../../../../components/dates/IsoElapsedTim
 const MigrationsInProgressCard = ({
   plan,
   allRequestsWithTasks,
+  reloadCard,
   handleClick
 }) => {
   const requestsOfAssociatedPlan = allRequestsWithTasks.filter(
@@ -29,7 +30,11 @@ const MigrationsInProgressCard = ({
     );
 
   // if most recent request is still pending, show loading card
-  if (!mostRecentRequest || mostRecentRequest.request_state === 'pending') {
+  if (
+    reloadCard ||
+    !mostRecentRequest ||
+    mostRecentRequest.request_state === 'pending'
+  ) {
     return (
       <Grid.Col sm={12} md={6} lg={4}>
         <Card matchHeight>
@@ -229,6 +234,7 @@ const MigrationsInProgressCard = ({
 MigrationsInProgressCard.propTypes = {
   plan: PropTypes.object.isRequired,
   allRequestsWithTasks: PropTypes.array,
+  reloadCard: PropTypes.bool,
   handleClick: PropTypes.func
 };
 

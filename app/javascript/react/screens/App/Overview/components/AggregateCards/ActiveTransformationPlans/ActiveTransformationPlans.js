@@ -14,6 +14,7 @@ import {
 const ActiveTransformationPlans = ({
   activePlans,
   allRequestsWithTasks,
+  reloadCard,
   loading
 }) => {
   const countDescription =
@@ -43,6 +44,11 @@ const ActiveTransformationPlans = ({
     return [];
   });
 
+  let erroredPlansLen = erroredPlans.length;
+  if (erroredPlansLen > 0 && reloadCard) {
+    erroredPlansLen -= 1;
+  }
+
   const classes = cx('overview-aggregate-card', { 'is-loading': loading });
 
   return (
@@ -58,9 +64,9 @@ const ActiveTransformationPlans = ({
               <AggregateStatusNotification>
                 <Icon
                   type="pf"
-                  name={erroredPlans.length > 0 ? 'error-circle-o' : 'ok'}
+                  name={erroredPlansLen > 0 ? 'error-circle-o' : 'ok'}
                 />{' '}
-                {erroredPlans.length > 0 && erroredPlans.length}
+                {erroredPlansLen > 0}
               </AggregateStatusNotification>
             </AggregateStatusNotifications>
           </Card.Body>
@@ -73,6 +79,7 @@ const ActiveTransformationPlans = ({
 ActiveTransformationPlans.propTypes = {
   activePlans: PropTypes.array,
   allRequestsWithTasks: PropTypes.array,
+  reloadCard: PropTypes.bool,
   loading: PropTypes.bool
 };
 

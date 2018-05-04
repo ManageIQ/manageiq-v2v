@@ -201,6 +201,7 @@ class Overview extends React.Component {
       isRejectedTransformationMappings, // eslint-disable-line no-unused-vars
       transformationPlans,
       allRequestsWithTasks,
+      reloadCard,
       isFetchingAllRequestsWithTasks,
       requestsWithTasksPreviouslyFetched,
       notStartedTransformationPlans,
@@ -228,6 +229,7 @@ class Overview extends React.Component {
             <AggregateCards.ActiveTransformationPlans
               activePlans={activeTransformationPlans}
               allRequestsWithTasks={allRequestsWithTasks}
+              reloadCard={reloadCard}
               loading={
                 isFetchingAllRequestsWithTasks &&
                 !requestsWithTasksPreviouslyFetched
@@ -273,6 +275,7 @@ class Overview extends React.Component {
               setActiveFilter={setMigrationsFilterAction}
               transformationPlans={transformationPlans}
               allRequestsWithTasks={allRequestsWithTasks}
+              reloadCard={reloadCard}
               notStartedPlans={notStartedTransformationPlans}
               activeTransformationPlans={activeTransformationPlans}
               finishedTransformationPlans={finishedTransformationPlans}
@@ -323,6 +326,7 @@ Overview.propTypes = {
   planWizardVisible: PropTypes.bool,
   transformationPlans: PropTypes.array,
   allRequestsWithTasks: PropTypes.array,
+  reloadCard: PropTypes.bool,
   fetchTransformationPlansUrl: PropTypes.string,
   fetchTransformationPlansAction: PropTypes.func,
   isFetchingAllRequestsWithTasks: PropTypes.bool,

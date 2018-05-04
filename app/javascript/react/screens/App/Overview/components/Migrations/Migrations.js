@@ -11,6 +11,7 @@ const Migrations = ({
   setActiveFilter,
   transformationPlans,
   allRequestsWithTasks,
+  reloadCard,
   notStartedPlans,
   activeTransformationPlans,
   createMigrationPlanClick,
@@ -90,6 +91,7 @@ const Migrations = ({
             <MigrationsInProgressCards
               activeTransformationPlans={activeTransformationPlans}
               allRequestsWithTasks={allRequestsWithTasks}
+              reloadCard={reloadCard}
               loading={isCreatingTransformationPlanRequest !== null}
               redirectTo={redirectTo}
             />
@@ -114,6 +116,7 @@ Migrations.propTypes = {
   setActiveFilter: PropTypes.func,
   transformationPlans: PropTypes.array,
   allRequestsWithTasks: PropTypes.array,
+  reloadCard: PropTypes.bool,
   notStartedPlans: PropTypes.array,
   activeTransformationPlans: PropTypes.array,
   createMigrationPlanClick: PropTypes.func,

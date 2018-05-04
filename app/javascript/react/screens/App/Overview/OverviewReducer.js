@@ -123,7 +123,8 @@ export default (state = initialState, action) => {
         .set('isRejectedAllRequestsWithTasks', false)
         .set('errorAllRequestsWithTasks', null)
         .set('requestsWithTasksPreviouslyFetched', true)
-        .set('planId', '');
+        .set('planId', '')
+        .set('reloadCard', false);
     case `${FETCH_V2V_ALL_REQUESTS_WITH_TASKS}_REJECTED`:
       return state
         .set('errorAllRequestsWithTasks', action.payload)
@@ -156,7 +157,7 @@ export default (state = initialState, action) => {
     case V2V_SET_MIGRATIONS_FILTER:
       return state.set('migrationsFilter', action.payload);
     case V2V_RETRY_MIGRATION:
-      return state.set('planId', action.payload);
+      return state.set('planId', action.payload).set('reloadCard', true);
     default:
       return state;
   }
