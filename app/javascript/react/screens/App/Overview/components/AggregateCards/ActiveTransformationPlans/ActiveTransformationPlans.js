@@ -14,6 +14,7 @@ import {
 const ActiveTransformationPlans = ({
   activePlans,
   allRequestsWithTasks,
+  reloadCard,
   loading
 }) => {
   const countDescription =
@@ -27,7 +28,12 @@ const ActiveTransformationPlans = ({
         request => request.source_id === plan.id
       );
 
-      const [mostRecentRequest] = requestsOfAssociatedPlan.slice(-1);
+      const mostRecentRequest =
+        requestsOfAssociatedPlan.length > 0 &&
+        requestsOfAssociatedPlan.reduce(
+          (prev, current) =>
+            prev.updated_on > current.updated_on ? prev : current
+        );
       return (
         mostRecentRequest &&
         mostRecentRequest.miq_request_tasks.some(
@@ -37,6 +43,11 @@ const ActiveTransformationPlans = ({
     }
     return [];
   });
+
+  let erroredPlansLen = erroredPlans.length;
+  if (erroredPlansLen > 0 && reloadCard) {
+    erroredPlansLen -= 1;
+  }
 
   const classes = cx('overview-aggregate-card', { 'is-loading': loading });
 
@@ -53,9 +64,9 @@ const ActiveTransformationPlans = ({
               <AggregateStatusNotification>
                 <Icon
                   type="pf"
-                  name={erroredPlans.length > 0 ? 'error-circle-o' : 'ok'}
+                  name={erroredPlansLen > 0 ? 'error-circle-o' : 'ok'}
                 />{' '}
-                {erroredPlans.length > 0 && erroredPlans.length}
+                {erroredPlansLen > 0 && erroredPlansLen}
               </AggregateStatusNotification>
             </AggregateStatusNotifications>
           </Card.Body>
@@ -68,6 +79,7 @@ const ActiveTransformationPlans = ({
 ActiveTransformationPlans.propTypes = {
   activePlans: PropTypes.array,
   allRequestsWithTasks: PropTypes.array,
+  reloadCard: PropTypes.bool,
   loading: PropTypes.bool
 };
 

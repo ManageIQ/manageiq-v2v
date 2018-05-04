@@ -20,7 +20,12 @@ const MigrationsCompletedList = ({
               request => request.source_id === plan.id
             );
 
-            const [mostRecentRequest] = requestsOfAssociatedPlan.slice(-1);
+            const mostRecentRequest =
+              requestsOfAssociatedPlan.length > 0 &&
+              requestsOfAssociatedPlan.reduce(
+                (prev, current) =>
+                  prev.updated_on > current.updated_on ? prev : current
+              );
 
             const failed =
               mostRecentRequest && mostRecentRequest.status === 'Error';
@@ -85,7 +90,7 @@ const MigrationsCompletedList = ({
                     <Button
                       onClick={e => {
                         e.stopPropagation();
-                        retryClick(plan.href);
+                        retryClick(plan.href, plan.id);
                       }}
                       disabled={loading === plan.href}
                     >

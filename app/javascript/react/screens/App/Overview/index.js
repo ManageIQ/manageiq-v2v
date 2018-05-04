@@ -13,7 +13,7 @@ import {
 export const reducers = { overview: reducer, form: {} };
 
 const mapStateToProps = (
-  { overview, overview: { transformationPlans, allRequestsWithTasks } },
+  { overview, overview: { transformationPlans, allRequestsWithTasks, planId } },
   ownProps
 ) => ({
   ...overview,
@@ -22,7 +22,8 @@ const mapStateToProps = (
     transformationPlans
   ),
   activeTransformationPlans: activeTransformationPlansFilter(
-    transformationPlans
+    transformationPlans,
+    planId
   ),
   finishedTransformationPlans: finishedTransformationPlansFilter(
     transformationPlans

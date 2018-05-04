@@ -61,7 +61,10 @@ class Plan extends React.Component {
       } = plan;
 
       if (miq_requests.length > 0) {
-        const [mostRecentRequest] = miq_requests.slice(-1);
+        const mostRecentRequest = miq_requests.reduce(
+          (prev, current) =>
+            prev.updated_on > current.updated_on ? prev : current
+        );
         const planRequestId = mostRecentRequest.id;
         fetchPlanRequestAction(fetchPlanRequestUrl, planRequestId);
         if (mostRecentRequest.status === 'active') {

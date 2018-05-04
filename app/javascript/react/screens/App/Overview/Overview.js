@@ -116,7 +116,10 @@ class Overview extends React.Component {
       );
 
       freshTransformationPlans.forEach(plan => {
-        const [mostRecentRequest] = plan.miq_requests.slice(-1);
+        const mostRecentRequest = plan.miq_requests.reduce(
+          (prev, current) =>
+            prev.updated_on > current.updated_on ? prev : current
+        );
 
         let planStatusMessage = sprintf(
           __('%s completed with errors'),
@@ -166,15 +169,17 @@ class Overview extends React.Component {
     }
   }
 
-  createTransformationPlanRequest(url) {
+  createTransformationPlanRequest(url, planId) {
     const {
       createTransformationPlanRequestAction,
       fetchTransformationPlansAction,
       fetchTransformationPlansUrl,
-      setMigrationsFilterAction
+      setMigrationsFilterAction,
+      retryMigrationAction
     } = this.props;
 
     createTransformationPlanRequestAction(url).then(() => {
+      retryMigrationAction(planId);
       setMigrationsFilterAction('Migration Plans in Progress');
       fetchTransformationPlansAction(fetchTransformationPlansUrl);
     });
@@ -196,6 +201,7 @@ class Overview extends React.Component {
       isRejectedTransformationMappings, // eslint-disable-line no-unused-vars
       transformationPlans,
       allRequestsWithTasks,
+      reloadCard,
       isFetchingAllRequestsWithTasks,
       requestsWithTasksPreviouslyFetched,
       notStartedTransformationPlans,
@@ -223,6 +229,7 @@ class Overview extends React.Component {
             <AggregateCards.ActiveTransformationPlans
               activePlans={activeTransformationPlans}
               allRequestsWithTasks={allRequestsWithTasks}
+              reloadCard={reloadCard}
               loading={
                 isFetchingAllRequestsWithTasks &&
                 !requestsWithTasksPreviouslyFetched
@@ -268,6 +275,7 @@ class Overview extends React.Component {
               setActiveFilter={setMigrationsFilterAction}
               transformationPlans={transformationPlans}
               allRequestsWithTasks={allRequestsWithTasks}
+              reloadCard={reloadCard}
               notStartedPlans={notStartedTransformationPlans}
               activeTransformationPlans={activeTransformationPlans}
               finishedTransformationPlans={finishedTransformationPlans}
@@ -318,6 +326,7 @@ Overview.propTypes = {
   planWizardVisible: PropTypes.bool,
   transformationPlans: PropTypes.array,
   allRequestsWithTasks: PropTypes.array,
+  reloadCard: PropTypes.bool,
   fetchTransformationPlansUrl: PropTypes.string,
   fetchTransformationPlansAction: PropTypes.func,
   isFetchingAllRequestsWithTasks: PropTypes.bool,
@@ -341,6 +350,7 @@ Overview.propTypes = {
   clusters: PropTypes.array,
   migrationsFilter: PropTypes.string,
   setMigrationsFilterAction: PropTypes.func,
+  retryMigrationAction: PropTypes.func,
   history: PropTypes.object
 };
 export default Overview;

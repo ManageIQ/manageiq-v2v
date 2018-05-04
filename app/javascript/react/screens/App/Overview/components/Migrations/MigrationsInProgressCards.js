@@ -7,6 +7,7 @@ import MigrationInProgressCard from './MigrationsInProgressCard';
 const MigrationsInProgressCards = ({
   activeTransformationPlans,
   allRequestsWithTasks,
+  reloadCard,
   loading,
   redirectTo
 }) => (
@@ -21,6 +22,7 @@ const MigrationsInProgressCards = ({
                 <MigrationInProgressCard
                   plan={plan}
                   allRequestsWithTasks={allRequestsWithTasks}
+                  reloadCard={reloadCard}
                   key={plan.id}
                   handleClick={redirectTo}
                 />
@@ -53,6 +55,7 @@ const MigrationsInProgressCards = ({
 MigrationsInProgressCards.propTypes = {
   activeTransformationPlans: PropTypes.array,
   allRequestsWithTasks: PropTypes.array,
+  reloadCard: PropTypes.bool,
   loading: PropTypes.bool,
   redirectTo: PropTypes.func
 };
