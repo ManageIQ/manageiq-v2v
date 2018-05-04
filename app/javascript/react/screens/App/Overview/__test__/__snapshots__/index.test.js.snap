@@ -23,6 +23,7 @@ Object {
   "notStartedTransformationPlans": Array [],
   "planWizardVisible": false,
   "removeNotificationAction": [Function],
+  "retryMigrationAction": [Function],
   "setMigrationsFilterAction": [Function],
   "showMappingWizardAction": [Function],
   "showPlanWizardAction": [Function],

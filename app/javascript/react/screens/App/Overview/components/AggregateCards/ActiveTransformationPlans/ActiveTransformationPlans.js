@@ -66,7 +66,7 @@ const ActiveTransformationPlans = ({
                   type="pf"
                   name={erroredPlansLen > 0 ? 'error-circle-o' : 'ok'}
                 />{' '}
-                {erroredPlansLen > 0}
+                {erroredPlansLen > 0 && erroredPlansLen}
               </AggregateStatusNotification>
             </AggregateStatusNotifications>
           </Card.Body>
