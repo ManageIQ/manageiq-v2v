@@ -95,7 +95,7 @@ export const coreComponents = [
         '/api/service_templates/?' +
         "filter[]=type='ServiceTemplateTransformationPlan'" +
         '&expand=resources' +
-        '&attributes=name,miq_requests,options,created_at' +
+        '&attributes=name,description,miq_requests,options,created_at' +
         '&sort_by=updated_at' +
         '&sort_order=desc',
       fetchClustersUrl:
