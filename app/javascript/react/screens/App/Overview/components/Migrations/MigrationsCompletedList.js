@@ -60,6 +60,7 @@ const MigrationsCompletedList = ({
                   />
                 }
                 heading={plan.name}
+                description={plan.description}
                 additionalInfo={[
                   <ListView.InfoItem
                     key={`${plan.id}-migrated`}
