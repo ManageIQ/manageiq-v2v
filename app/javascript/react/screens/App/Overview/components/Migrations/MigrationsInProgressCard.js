@@ -96,7 +96,7 @@ const MigrationsInProgressCard = ({
   // UX business rule 4: reflect most request recent elapsed time
   const elapsedTime = IsoElpasedTime(
     new Date(mostRecentRequest.created_on),
-    new Date(mostRecentRequest.options.delivered_on)
+    new Date(mostRecentRequest.fulfilled_on)
   );
 
   // Tooltips
