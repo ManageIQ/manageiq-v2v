@@ -1,3 +1,11 @@
+.plan-request-details-list .list-view-pf-main-info {
+  padding: 10px 0;
+}
+
+.plan-request-details-list .list-view-pf-additional-info-item {
+  padding: 10px 0;
+}
+
 .plan-request-details-list .progress-description {
   overflow: visible;
   text-overflow: initial;
@@ -7,22 +15,16 @@
   width: 30%;
 }
 
-.plan-request-details-list .list-view-pf-actions {
-  margin-bottom: 10px;
-  margin-top: 10px;
-}
-
-.plan-request-details-list .list-view-pf-main-info {
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-
 .plan-request-details-list .utilization-bar-pf {
   min-width: 175px;
 }
 
 .plan-request-details-list .progress-description {
   margin-bottom: 7px;
+}
+
+.plan-request-details-list .progress {
+  margin-bottom: 0px;
 }
 
 .task-info-popover .popover-title {

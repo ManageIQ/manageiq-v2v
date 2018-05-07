@@ -71,3 +71,7 @@ export const fetchPlanAction = (url, id) => {
 export const resetPlanStateAction = () => ({
   type: RESET_PLAN_STATE
 });
+
+export const downloadLogAction = taskId => {
+  // todo: write download log api logic
+};
