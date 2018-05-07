@@ -141,7 +141,6 @@ class Overview extends React.Component {
             id: plan.id
           },
           persistent: !planStatus,
-          timerdelay: planStatus ? 8000 : null,
           actionEnabled: true
         });
       });
