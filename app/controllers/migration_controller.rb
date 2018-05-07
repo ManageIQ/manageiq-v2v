@@ -3,12 +3,7 @@
 class MigrationController < ApplicationController
   def index
     # this sets the active menu item, must match the item name in lib/miq_v2v_ui/engine.rb
-    @layout = case params[:page]
-              when 'infrastructure-mappings'
-                'infrastructure_mappings'
-              else
-                'overview'
-              end
+    @layout = 'migration'
   end
 
   menu_section :migration
