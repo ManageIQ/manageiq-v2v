@@ -109,7 +109,7 @@ const MigrationsCompletedList = ({
           iconType="pf"
           iconName="info"
           description={
-            <div>
+            <span>
               {__(
                 'There are no existing migration plans in a Completed state.'
               )}
@@ -117,7 +117,7 @@ const MigrationsCompletedList = ({
               {__(
                 'Make a selection in the dropdown to view plans in other states.'
               )}
-            </div>
+            </span>
           }
         />
       )}
