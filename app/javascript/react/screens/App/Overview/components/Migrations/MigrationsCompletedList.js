@@ -12,7 +12,7 @@ const MigrationsCompletedList = ({
   redirectTo
 }) => (
   <Grid.Col xs={12}>
-    <Spinner loading={loading}>
+    <Spinner loading={!!loading}>
       {finishedTransformationPlans.length > 0 ? (
         <ListView className="plans-complete-list" style={{ marginTop: 0 }}>
           {finishedTransformationPlans.map(plan => {
@@ -129,7 +129,7 @@ MigrationsCompletedList.propTypes = {
   finishedTransformationPlans: PropTypes.array,
   allRequestsWithTasks: PropTypes.array,
   retryClick: PropTypes.func,
-  loading: PropTypes.bool,
+  loading: PropTypes.string,
   redirectTo: PropTypes.func
 };
 MigrationsCompletedList.defaultProps = {
