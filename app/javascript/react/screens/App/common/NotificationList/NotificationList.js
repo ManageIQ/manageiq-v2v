@@ -13,9 +13,9 @@ class NotificationList extends React.Component {
     return (
       <ToastNotificationList>
         {notifications &&
-          notifications.map((notification, index) => (
+          notifications.map(notification => (
             <TimedToastNotification
-              key={index}
+              key={notification.key}
               type={notification.notificationType}
               persistent={notification.persistent}
               timerdelay={notification.timerdelay}

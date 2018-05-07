@@ -52,7 +52,7 @@ const MigrationsNotStartedList = ({
           iconType="pf"
           iconName="info"
           description={
-            <div>
+            <span>
               {__(
                 'There are no existing migration plans in a Not Started state.'
               )}
@@ -60,7 +60,7 @@ const MigrationsNotStartedList = ({
               {__(
                 'Make a selection in the dropdown to view plans in other states.'
               )}
-            </div>
+            </span>
           }
         />
       )}

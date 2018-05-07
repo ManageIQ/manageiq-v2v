@@ -11,7 +11,7 @@ export const addNotificationAction = notification => dispatch => {
     notificationType: notification.notificationType,
     data: notification.data,
     persistent: notification.persistent,
-    timerdelay: notification.timerdelay,
+    timerdelay: notification.timerdelay || 8000,
     actionEnabled: notification.actionEnabled
   });
 };
