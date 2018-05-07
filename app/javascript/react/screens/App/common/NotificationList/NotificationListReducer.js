@@ -1,4 +1,5 @@
 import Immutable from 'seamless-immutable';
+import uuid from 'uuid/v4';
 
 import {
   V2V_NOTIFICATION_ADD,
@@ -11,6 +12,7 @@ const initialState = Immutable({
 
 export default (state = initialState, action) => {
   const newNotification = {
+    key: uuid(),
     header: action.header,
     message: action.message,
     notificationType: action.notificationType,
@@ -30,8 +32,7 @@ export default (state = initialState, action) => {
       return state.set(
         'notifications',
         Immutable.asMutable(state.notifications).filter(
-          notification =>
-            action.key.notification.message !== notification.message
+          notification => action.key.notification.key !== notification.key
         )
       );
     default:
