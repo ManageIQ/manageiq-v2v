@@ -26,7 +26,12 @@ class PlanWizardResultsStep extends React.Component {
       <div className="plan-wizard-results-step-icon">
         <span className={migrationPlanIcon} />
       </div>
-      <h3 className="blank-slate-pf-main-action">{migrationPlanMessage}</h3>
+      <h3
+        className="blank-slate-pf-main-action"
+        id="migration-plan-results-message"
+      >
+        {migrationPlanMessage}
+      </h3>
       <p className="blank-slate-pf-secondary-action">
         {migrationPlanFollowupMessage}
       </p>
