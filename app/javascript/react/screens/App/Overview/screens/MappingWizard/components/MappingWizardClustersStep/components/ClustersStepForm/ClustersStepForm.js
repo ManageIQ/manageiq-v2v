@@ -156,6 +156,7 @@ class ClustersStepForm extends React.Component {
         >
           {sourceClusters && (
             <DualPaneMapperList
+              id="source_clusters"
               listTitle="Source Clusters"
               loading={isFetchingSourceClusters}
             >
@@ -188,6 +189,7 @@ class ClustersStepForm extends React.Component {
           )}
           {targetClusters && (
             <DualPaneMapperList
+              id="target_clusters"
               listTitle="Target Clusters"
               loading={isFetchingTargetClusters}
             >
