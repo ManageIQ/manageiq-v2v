@@ -100,7 +100,7 @@ export const FormField = ({
         {label}
         {required && ' *'}
       </Grid.Col>
-      <Grid.Col sm={9}>
+      <Grid.Col sm={9} id={input.name}>
         {renderField()}
         {(help || error || warning) && ( // If we have any of these, render one of them, in priority order.
           <Form.HelpBlock>
