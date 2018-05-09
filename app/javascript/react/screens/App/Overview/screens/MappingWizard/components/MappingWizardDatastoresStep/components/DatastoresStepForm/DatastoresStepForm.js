@@ -386,6 +386,7 @@ class DatastoresStepForm extends React.Component {
           }
         >
           <DualPaneMapperList
+            id="source_datastores"
             listTitle="Source Datastores"
             loading={isFetchingSourceDatastores}
           >
@@ -413,6 +414,7 @@ class DatastoresStepForm extends React.Component {
             />
           </DualPaneMapperList>
           <DualPaneMapperList
+            id="target_datastores"
             listTitle="Target Datastores"
             loading={isFetchingTargetDatastores}
           >

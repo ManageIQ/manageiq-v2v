@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { Spinner } from 'patternfly-react';
 
-const DualPaneMapperList = ({ children, listTitle, loading }) => {
+const DualPaneMapperList = ({ children, listTitle, loading, id }) => {
   const childrenArray = React.Children.toArray(children);
 
   const counter = childrenArray.find(
@@ -26,11 +26,11 @@ const DualPaneMapperList = ({ children, listTitle, loading }) => {
           <span id="listTitle">{listTitle}</span>
         </label>
         {counter ? (
-          <div className={classes}>
+          <div className={classes} id={id}>
             {loading ? <Spinner loading /> : listItems}
           </div>
         ) : (
-          <div className={classes}>
+          <div className={classes} id={id}>
             {loading ? <Spinner loading /> : children}
           </div>
         )}
@@ -43,6 +43,7 @@ const DualPaneMapperList = ({ children, listTitle, loading }) => {
 DualPaneMapperList.propTypes = {
   children: PropTypes.node,
   listTitle: PropTypes.string,
+  id: PropTypes.string,
   loading: PropTypes.bool
 };
 
