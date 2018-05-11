@@ -43,10 +43,10 @@ const MigrationsCompletedList = ({
             });
 
             const elapsedTime = IsoElpasedTime(
-              new Date(mostRecentRequest && mostRecentRequest.created_on),
               new Date(
                 mostRecentRequest && mostRecentRequest.options.delivered_on
-              )
+              ),
+              new Date(mostRecentRequest && mostRecentRequest.fulfilled_on)
             );
 
             return (
