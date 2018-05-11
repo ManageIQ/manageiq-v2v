@@ -274,7 +274,11 @@ class PlanRequestDetailList extends React.Component {
       pageChangeValue
     } = this.state;
 
-    const { downloadLogAction } = this.props;
+    const {
+      downloadLogAction,
+      isFetchingMigrationTaskLog,
+      addNotificationAction
+    } = this.props;
 
     const paginatedSortedFiltersTasks = this.filterSortPaginatePlanRequestTasks();
 
@@ -474,15 +478,23 @@ class PlanRequestDetailList extends React.Component {
                     </ListView.InfoItem>
                   ]}
                   actions={
-                    <a
-                      href="#"
-                      onClick={e => {
-                        e.preventDefault();
-                        downloadLogAction(task);
-                      }}
-                    >
-                      {__('Download Log')}
-                    </a>
+                    isFetchingMigrationTaskLog ? (
+                      <label htmlFor="downloadLog">
+                        <span id="downloadLogInProgress">
+                          {__('Download log in progress...')}
+                        </span>
+                      </label>
+                    ) : (
+                      <a
+                        href="#"
+                        onClick={e => {
+                          e.preventDefault();
+                          downloadLogAction(task, addNotificationAction);
+                        }}
+                      >
+                        {__('Download Log')}
+                      </a>
+                    )
                   }
                   stacked
                 />
@@ -513,7 +525,9 @@ class PlanRequestDetailList extends React.Component {
 
 PlanRequestDetailList.propTypes = {
   planRequestTasks: PropTypes.array,
-  downloadLogAction: PropTypes.func
+  downloadLogAction: PropTypes.func,
+  isFetchingMigrationTaskLog: PropTypes.bool,
+  addNotificationAction: PropTypes.func
 };
 
 export default PlanRequestDetailList;

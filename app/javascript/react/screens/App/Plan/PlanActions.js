@@ -74,7 +74,7 @@ export const resetPlanStateAction = () => ({
   type: RESET_PLAN_STATE
 });
 
-export const downloadLogAction = task => dispatch =>
+export const downloadLogAction = (task, addNotificationAction) => dispatch =>
   // todo: write download log api logic
   dispatch({
     type: FETCH_V2V_MIGRATION_TASK_LOG,
@@ -90,8 +90,23 @@ export const downloadLogAction = task => dispatch =>
               { type: 'text/plain;charset=utf-8' }
             );
             saveAs(file);
+            const successMsg = sprintf(
+              __('%s download successful'),
+              task.vmName
+            );
+            addNotificationAction({
+              message: successMsg,
+              notificationType: 'success',
+              persistent: true,
+              actionEnabled: false
+            });
           } else {
-            // error handling
+            addNotificationAction({
+              message: response.data.status_message,
+              notificationType: 'error',
+              persistent: true,
+              actionEnabled: false
+            });
           }
         })
         .catch(e => {
