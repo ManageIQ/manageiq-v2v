@@ -11,7 +11,7 @@ class MigrationLogController < ApplicationController
     render :json => {
       :log_contents   => task_results,
       :status         => task_status,
-      :status_message => task_status == "Ok" ? task_message : _("Could not retrieve migration log. Reason - '%{reason}'") % {:reason => task_message}
+      :status_message => task_message
     }
   end
 end

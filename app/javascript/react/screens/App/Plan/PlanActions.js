@@ -91,8 +91,8 @@ export const downloadLogAction = (task, addNotificationAction) => dispatch =>
             );
             saveAs(file);
             const successMsg = sprintf(
-              __('%s download successful'),
-              task.vmName
+              __('"%s" download successful'),
+              `${task.vmName}.log`
             );
             addNotificationAction({
               message: successMsg,
@@ -101,8 +101,13 @@ export const downloadLogAction = (task, addNotificationAction) => dispatch =>
               actionEnabled: false
             });
           } else {
+            const failureMsg = sprintf(
+              __('Failed to download "%s". Reason - "%s"'),
+              `${task.vmName}.log`,
+              response.data.status_message
+            );
             addNotificationAction({
-              message: response.data.status_message,
+              message: failureMsg,
               notificationType: 'error',
               persistent: true,
               actionEnabled: false
