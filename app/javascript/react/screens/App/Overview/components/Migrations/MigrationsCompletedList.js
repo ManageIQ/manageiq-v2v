@@ -24,7 +24,7 @@ const MigrationsCompletedList = ({
               requestsOfAssociatedPlan.length > 0 &&
               requestsOfAssociatedPlan.reduce(
                 (prev, current) =>
-                  prev.updated_on > current.updated_on ? prev : current
+                  prev.created_on > current.created_on ? prev : current
               );
 
             const failed =

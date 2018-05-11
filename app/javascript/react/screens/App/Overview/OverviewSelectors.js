@@ -1,6 +1,6 @@
 const getMostRecentRequest = plan =>
   plan.miq_requests.reduce(
-    (prev, current) => (prev.updated_on > current.updated_on ? prev : current)
+    (prev, current) => (prev.created_on > current.created_on ? prev : current)
   );
 
 export const notStartedTransformationPlansFilter = transformationPlans =>

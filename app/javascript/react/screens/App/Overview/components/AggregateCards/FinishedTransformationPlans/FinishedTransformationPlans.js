@@ -22,7 +22,7 @@ const FinishedTransformationPlans = ({ finishedPlans, loading }) => {
       plan.miq_requests.length > 0 &&
       plan.miq_requests.reduce(
         (prev, current) =>
-          prev.updated_on > current.updated_on ? prev : current
+          prev.created_on > current.created_on ? prev : current
       );
     return mostRecentRequest.status === 'Error';
   });
