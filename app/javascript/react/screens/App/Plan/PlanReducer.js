@@ -5,7 +5,8 @@ import {
   FETCH_V2V_PLAN_REQUEST,
   FETCH_V2V_PLAN,
   QUERY_V2V_PLAN_VMS,
-  RESET_PLAN_STATE
+  RESET_PLAN_STATE,
+  FETCH_V2V_MIGRATION_TASK_LOG
 } from './PlanConstants';
 
 export const initialState = Immutable({
@@ -169,6 +170,23 @@ export default (state = initialState, action) => {
         .set('planRequestTasks', [])
         .set('vms', [])
         .set('planRequestPreviouslyFetched', false);
+
+    case `${FETCH_V2V_MIGRATION_TASK_LOG}_PENDING`:
+      return state
+        .set('isFetchingMigrationTaskLog', true)
+        .set('isRejectedMigrationTaskLog', false);
+    case `${FETCH_V2V_MIGRATION_TASK_LOG}_FULFILLED`:
+      return state
+        .set('migrationTaskLog', action.payload.data)
+        .set('isFetchingMigrationTaskLog', false)
+        .set('isRejectedMigrationTaskLog', false)
+        .set('errorMigrationTaskLog', null);
+    case `${FETCH_V2V_MIGRATION_TASK_LOG}_REJECTED`:
+      return state
+        .set('isFetchingMigrationTaskLog', false)
+        .set('isRejectedMigrationTaskLog', true)
+        .set('errorMigrationTaskLog', action.payload);
+
     default:
       return state;
   }

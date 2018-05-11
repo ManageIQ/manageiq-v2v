@@ -478,7 +478,7 @@ class PlanRequestDetailList extends React.Component {
                       href="#"
                       onClick={e => {
                         e.preventDefault();
-                        downloadLogAction(task.id);
+                        downloadLogAction(task);
                       }}
                     >
                       {__('Download Log')}
