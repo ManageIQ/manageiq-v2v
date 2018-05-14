@@ -10,6 +10,8 @@ import {
   FETCH_V2V_MIGRATION_TASK_LOG
 } from './PlanConstants';
 
+import { V2V_NOTIFICATION_ADD } from '../common/NotificationList/NotificationConstants';
+
 // *****************************************************************************
 // * FETCH_V2V_PLAN_REQUEST
 // *****************************************************************************
@@ -74,7 +76,7 @@ export const resetPlanStateAction = () => ({
   type: RESET_PLAN_STATE
 });
 
-export const downloadLogAction = (task, addNotificationAction) => dispatch =>
+export const downloadLogAction = task => dispatch =>
   // todo: write download log api logic
   dispatch({
     type: FETCH_V2V_MIGRATION_TASK_LOG,
@@ -94,7 +96,8 @@ export const downloadLogAction = (task, addNotificationAction) => dispatch =>
               __('"%s" download successful'),
               `${task.vmName}.log`
             );
-            addNotificationAction({
+            dispatch({
+              type: V2V_NOTIFICATION_ADD,
               message: successMsg,
               notificationType: 'success',
               persistent: true,
@@ -106,7 +109,8 @@ export const downloadLogAction = (task, addNotificationAction) => dispatch =>
               `${task.vmName}.log`,
               response.data.status_message
             );
-            addNotificationAction({
+            dispatch({
+              type: V2V_NOTIFICATION_ADD,
               message: failureMsg,
               notificationType: 'error',
               persistent: true,
