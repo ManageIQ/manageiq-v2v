@@ -1,12 +1,16 @@
 import URI from 'urijs';
+import { saveAs } from 'file-saver';
 import API from '../../../../common/API';
 
 import {
   FETCH_V2V_PLAN_REQUEST,
   FETCH_V2V_PLAN,
   QUERY_V2V_PLAN_VMS,
-  RESET_PLAN_STATE
+  RESET_PLAN_STATE,
+  FETCH_V2V_MIGRATION_TASK_LOG
 } from './PlanConstants';
+
+import { V2V_NOTIFICATION_ADD } from '../common/NotificationList/NotificationConstants';
 
 // *****************************************************************************
 // * FETCH_V2V_PLAN_REQUEST
@@ -71,3 +75,51 @@ export const fetchPlanAction = (url, id) => {
 export const resetPlanStateAction = () => ({
   type: RESET_PLAN_STATE
 });
+
+export const downloadLogAction = task => dispatch =>
+  // todo: write download log api logic
+  dispatch({
+    type: FETCH_V2V_MIGRATION_TASK_LOG,
+    payload: new Promise((resolve, reject) => {
+      API.get(`/migration_log/download_migration_log/${task.id}`)
+        .then(response => {
+          resolve(response);
+          const v2vLogFileName = `${task.vmName}.log`;
+          if (response.data.status === 'Ok') {
+            const file = new File(
+              [response.data.log_contents],
+              v2vLogFileName,
+              { type: 'text/plain;charset=utf-8' }
+            );
+            saveAs(file);
+            const successMsg = sprintf(
+              __('"%s" download successful'),
+              `${task.vmName}.log`
+            );
+            dispatch({
+              type: V2V_NOTIFICATION_ADD,
+              message: successMsg,
+              notificationType: 'success',
+              persistent: true,
+              actionEnabled: false
+            });
+          } else {
+            const failureMsg = sprintf(
+              __('Failed to download "%s". Reason - "%s"'),
+              `${task.vmName}.log`,
+              response.data.status_message
+            );
+            dispatch({
+              type: V2V_NOTIFICATION_ADD,
+              message: failureMsg,
+              notificationType: 'error',
+              persistent: true,
+              actionEnabled: false
+            });
+          }
+        })
+        .catch(e => {
+          reject(e);
+        });
+    })
+  });

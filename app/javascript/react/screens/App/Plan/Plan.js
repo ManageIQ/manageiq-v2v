@@ -111,7 +111,9 @@ class Plan extends React.Component {
       isRejectedPlan,
       isFetchingPlan,
       isQueryingVms,
-      isRejectedVms
+      isRejectedVms,
+      downloadLogAction,
+      isFetchingMigrationTaskLog
     } = this.props;
 
     const {
@@ -148,6 +150,8 @@ class Plan extends React.Component {
               <PlanRequestDetailList
                 planFinished={planFinished}
                 planRequestTasks={planRequestTasksMutable}
+                downloadLogAction={downloadLogAction}
+                isFetchingMigrationTaskLog={isFetchingMigrationTaskLog}
               />
             )}
           {!planNotStarted &&
@@ -202,7 +206,9 @@ Plan.propTypes = {
   queryPlanVmsAction: PropTypes.func,
   isQueryingVms: PropTypes.bool,
   isRejectedVms: PropTypes.bool,
-  resetPlanStateAction: PropTypes.func
+  resetPlanStateAction: PropTypes.func,
+  downloadLogAction: PropTypes.func,
+  isFetchingMigrationTaskLog: PropTypes.bool
 };
 Plan.defaultProps = {
   planName: '',

@@ -274,6 +274,8 @@ class PlanRequestDetailList extends React.Component {
       pageChangeValue
     } = this.state;
 
+    const { downloadLogAction, isFetchingMigrationTaskLog } = this.props;
+
     const paginatedSortedFiltersTasks = this.filterSortPaginatePlanRequestTasks();
 
     return (
@@ -384,22 +386,6 @@ class PlanRequestDetailList extends React.Component {
                 task.totalDiskSpaceGb
               );
 
-              // const states = [];
-              // if (task.options.progress.states) {
-              //   Object.entries(task.options.progress.states).forEach(
-              //     ([key, value]) => {
-              //       states.push(
-              //         <div key={`key${task.id}`}>
-              //           <small>
-              //             <i>{key}:</i>&nbsp;
-              //             {value.description}
-              //           </small>
-              //         </div>
-              //       );
-              //     }
-              //   );
-              // }
-
               const popoverContent = (
                 <Popover
                   id={`popover${task.id}${n}`}
@@ -434,49 +420,77 @@ class PlanRequestDetailList extends React.Component {
                   heading={task.vmName}
                   additionalInfo={[
                     <ListView.InfoItem
+                      key={`${task.id}-message`}
+                      style={{
+                        flexDirection: 'column',
+                        alignItems: 'flex-start',
+                        marginRight: 80
+                      }}
+                    >
+                      <div>
+                        <span style={{ textTransform: 'capitalize' }}>
+                          {task.message}
+                        </span>
+                        &nbsp;
+                        {/* Todo: revisit FieldLevelHelp props in patternfly-react to support this */}
+                        <OverlayTrigger
+                          rootClose
+                          trigger="click"
+                          placement="left"
+                          overlay={popoverContent}
+                        >
+                          <Button bsStyle="link">
+                            <Icon type="pf" name="info" />
+                          </Button>
+                        </OverlayTrigger>
+                      </div>
+                      <div>
+                        <ListView.Icon type="fa" size="lg" name="clock-o" />
+                        {elapsedTime}
+                      </div>
+                    </ListView.InfoItem>,
+                    <ListView.InfoItem
                       key={`${task.id}-times`}
                       style={{ minWidth: 150, paddingRight: 20 }}
                     >
-                      <ListView.Icon type="fa" size="lg" name="clock-o" />
-                      {elapsedTime}
-                    </ListView.InfoItem>,
-                    <ListView.InfoItem key={`${task.id}-message`}>
-                      <span style={{ textTransform: 'capitalize' }}>
-                        {task.message}
-                      </span>
-                      &nbsp;
-                      {/* Todo: revisit FieldLevelHelp props in patternfly-react to support this */}
-                      <OverlayTrigger
-                        rootClose
-                        trigger="click"
-                        placement="left"
-                        overlay={popoverContent}
-                      >
-                        <Button bsStyle="link">
-                          <Icon type="pf" name="info" />
-                        </Button>
-                      </OverlayTrigger>
+                      <UtilizationBar
+                        now={task.percentComplete}
+                        min={0}
+                        max={100}
+                        description={label}
+                        label=" "
+                        usedTooltipFunction={(max, now) => (
+                          <Tooltip id={Date.now()}>
+                            {now} % {__('Migrated')}
+                          </Tooltip>
+                        )}
+                        availableTooltipFunction={(max, now) => (
+                          <Tooltip id={Date.now()}>
+                            {max - now} % {__('Remaining')}
+                          </Tooltip>
+                        )}
+                        descriptionPlacementTop
+                      />
                     </ListView.InfoItem>
                   ]}
                   actions={
-                    <UtilizationBar
-                      now={task.percentComplete}
-                      min={0}
-                      max={100}
-                      description={label}
-                      label=" "
-                      usedTooltipFunction={(max, now) => (
-                        <Tooltip id={Date.now()}>
-                          {now} % {__('Migrated')}
-                        </Tooltip>
-                      )}
-                      availableTooltipFunction={(max, now) => (
-                        <Tooltip id={Date.now()}>
-                          {max - now} % {__('Remaining')}
-                        </Tooltip>
-                      )}
-                      descriptionPlacementTop
-                    />
+                    isFetchingMigrationTaskLog ? (
+                      <label htmlFor="downloadLog">
+                        <span id="downloadLogInProgress">
+                          {__('Download log in progress...')}
+                        </span>
+                      </label>
+                    ) : (
+                      <a
+                        href="#"
+                        onClick={e => {
+                          e.preventDefault();
+                          downloadLogAction(task);
+                        }}
+                      >
+                        {__('Download Log')}
+                      </a>
+                    )
                   }
                   stacked
                 />
@@ -506,7 +520,9 @@ class PlanRequestDetailList extends React.Component {
 }
 
 PlanRequestDetailList.propTypes = {
-  planRequestTasks: PropTypes.array
+  planRequestTasks: PropTypes.array,
+  downloadLogAction: PropTypes.func,
+  isFetchingMigrationTaskLog: PropTypes.bool
 };
 
 export default PlanRequestDetailList;
