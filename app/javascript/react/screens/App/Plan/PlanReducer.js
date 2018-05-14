@@ -177,7 +177,6 @@ export default (state = initialState, action) => {
         .set('isRejectedMigrationTaskLog', false);
     case `${FETCH_V2V_MIGRATION_TASK_LOG}_FULFILLED`:
       return state
-        .set('migrationTaskLog', action.payload.data)
         .set('isFetchingMigrationTaskLog', false)
         .set('isRejectedMigrationTaskLog', false)
         .set('errorMigrationTaskLog', null);
