@@ -12,6 +12,7 @@ import * as AggregateCards from './components/AggregateCards';
 import InfrastructureMappingsList from './components/InfrastructureMappingsList/InfrastructureMappingsList';
 import Migrations from './components/Migrations/Migrations';
 import componentRegistry from '../../../../components/componentRegistry';
+import getMostRecentRequest from '../common/getMostRecentRequest';
 
 class Overview extends React.Component {
   constructor(props) {
@@ -116,10 +117,7 @@ class Overview extends React.Component {
       );
 
       freshTransformationPlans.forEach(plan => {
-        const mostRecentRequest = plan.miq_requests.reduce(
-          (prev, current) =>
-            prev.updated_on > current.updated_on ? prev : current
-        );
+        const mostRecentRequest = getMostRecentRequest(plan.miq_requests);
 
         let planStatusMessage = sprintf(
           __('%s completed with errors'),

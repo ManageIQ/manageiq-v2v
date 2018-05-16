@@ -10,6 +10,7 @@ import {
   AggregateStatusNotification,
   Spinner
 } from 'patternfly-react';
+import getMostRecentRequest from '../../../../common/getMostRecentRequest';
 
 const FinishedTransformationPlans = ({ finishedPlans, loading }) => {
   const countDescription =
@@ -19,11 +20,7 @@ const FinishedTransformationPlans = ({ finishedPlans, loading }) => {
 
   const failedPlans = finishedPlans.filter(plan => {
     const mostRecentRequest =
-      plan.miq_requests.length > 0 &&
-      plan.miq_requests.reduce(
-        (prev, current) =>
-          prev.updated_on > current.updated_on ? prev : current
-      );
+      plan.miq_requests.length > 0 && getMostRecentRequest(plan.miq_requests);
     return mostRecentRequest.status === 'Error';
   });
 

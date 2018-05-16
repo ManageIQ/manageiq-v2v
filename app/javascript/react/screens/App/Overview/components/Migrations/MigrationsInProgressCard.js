@@ -12,6 +12,7 @@ import {
   Spinner
 } from 'patternfly-react';
 import { IsoElpasedTime } from '../../../../../../components/dates/IsoElapsedTime';
+import getMostRecentRequest from '../../../common/getMostRecentRequest';
 
 const MigrationsInProgressCard = ({
   plan,
@@ -22,12 +23,9 @@ const MigrationsInProgressCard = ({
   const requestsOfAssociatedPlan = allRequestsWithTasks.filter(
     request => request.source_id === plan.id
   );
-
   const mostRecentRequest =
     requestsOfAssociatedPlan.length > 0 &&
-    requestsOfAssociatedPlan.reduce(
-      (prev, current) => (prev.updated_on > current.updated_on ? prev : current)
-    );
+    getMostRecentRequest(requestsOfAssociatedPlan);
 
   // if most recent request is still pending, show loading card
   if (

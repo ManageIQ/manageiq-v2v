@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { noop, Button, ListView, Grid, Spinner } from 'patternfly-react';
 import { IsoElpasedTime } from '../../../../../../components/dates/IsoElapsedTime';
 import OverviewEmptyState from '../OverviewEmptyState/OverviewEmptyState';
+import getMostRecentRequest from '../../../common/getMostRecentRequest';
 
 const MigrationsCompletedList = ({
   finishedTransformationPlans,
@@ -22,10 +23,7 @@ const MigrationsCompletedList = ({
 
             const mostRecentRequest =
               requestsOfAssociatedPlan.length > 0 &&
-              requestsOfAssociatedPlan.reduce(
-                (prev, current) =>
-                  prev.updated_on > current.updated_on ? prev : current
-              );
+              getMostRecentRequest(requestsOfAssociatedPlan);
 
             const failed =
               mostRecentRequest && mostRecentRequest.status === 'Error';
@@ -43,10 +41,10 @@ const MigrationsCompletedList = ({
             });
 
             const elapsedTime = IsoElpasedTime(
-              new Date(mostRecentRequest && mostRecentRequest.created_on),
               new Date(
                 mostRecentRequest && mostRecentRequest.options.delivered_on
-              )
+              ),
+              new Date(mostRecentRequest && mostRecentRequest.fulfilled_on)
             );
 
             return (
