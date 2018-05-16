@@ -146,7 +146,6 @@ class PlanWizardVMStep extends React.Component {
       if (combined.length) {
         return (
           <React.Fragment>
-            <h2>{__('VMs to be Migrated')}</h2>
             <Field
               name="selectedVms"
               component={PlanWizardVMStepTable}

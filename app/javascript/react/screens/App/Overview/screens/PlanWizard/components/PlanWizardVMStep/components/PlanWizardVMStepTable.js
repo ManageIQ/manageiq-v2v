@@ -535,6 +535,7 @@ class PlanWizardVMStepTable extends React.Component {
 
     return (
       <Grid fluid>
+        <h2>{__('VMs to be Migrated')}</h2>
         <Toolbar>
           <Filter>
             <Filter.TypeSelector
