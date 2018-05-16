@@ -6,7 +6,8 @@ import {
   FETCH_V2V_PLAN,
   QUERY_V2V_PLAN_VMS,
   RESET_PLAN_STATE,
-  FETCH_V2V_MIGRATION_TASK_LOG
+  FETCH_V2V_MIGRATION_TASK_LOG,
+  DOWNLOAD_LOG_CLICKED
 } from './PlanConstants';
 
 export const initialState = Immutable({
@@ -177,14 +178,42 @@ export default (state = initialState, action) => {
         .set('isRejectedMigrationTaskLog', false);
     case `${FETCH_V2V_MIGRATION_TASK_LOG}_FULFILLED`:
       return state
+        .set(
+          'downloadLogInProgressTaskIds',
+          state.downloadLogInProgressTaskIds.filter(
+            element =>
+              element !==
+              action.payload.config.url.substring(
+                action.payload.config.url.lastIndexOf('/') + 1
+              )
+          )
+        )
         .set('isFetchingMigrationTaskLog', false)
         .set('isRejectedMigrationTaskLog', false)
         .set('errorMigrationTaskLog', null);
     case `${FETCH_V2V_MIGRATION_TASK_LOG}_REJECTED`:
       return state
+        .set(
+          'downloadLogInProgressTaskIds',
+          state.downloadLogInProgressTaskIds.filter(
+            element =>
+              element !==
+              action.payload.config.url.substring(
+                action.payload.config.url.lastIndexOf('/') + 1
+              )
+          )
+        )
         .set('isFetchingMigrationTaskLog', false)
         .set('isRejectedMigrationTaskLog', true)
         .set('errorMigrationTaskLog', action.payload);
+
+    case DOWNLOAD_LOG_CLICKED:
+      return state.set(
+        'downloadLogInProgressTaskIds',
+        state.downloadLogInProgressTaskIds
+          ? state.downloadLogInProgressTaskIds.concat(action.payload)
+          : [action.payload]
+      );
 
     default:
       return state;
