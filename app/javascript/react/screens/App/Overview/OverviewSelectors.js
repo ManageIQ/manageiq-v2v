@@ -1,7 +1,4 @@
-const getMostRecentRequest = plan =>
-  plan.miq_requests.reduce(
-    (prev, current) => (prev.created_on > current.created_on ? prev : current)
-  );
+import getMostRecentRequest from '../common/getMostRecentRequest';
 
 export const notStartedTransformationPlansFilter = transformationPlans =>
   transformationPlans.filter(
@@ -14,7 +11,9 @@ export const activeTransformationPlansFilter = (transformationPlans, planId) =>
       return true;
     }
     if (transformationPlan.miq_requests.length > 0) {
-      const mostRecentRequest = getMostRecentRequest(transformationPlan);
+      const mostRecentRequest = getMostRecentRequest(
+        transformationPlan.miq_requests
+      );
       return (
         mostRecentRequest.request_state === 'active' ||
         mostRecentRequest.request_state === 'pending'
@@ -26,7 +25,9 @@ export const activeTransformationPlansFilter = (transformationPlans, planId) =>
 export const finishedTransformationPlansFilter = transformationPlans =>
   transformationPlans.filter(transformationPlan => {
     if (transformationPlan.miq_requests.length > 0) {
-      const mostRecentRequest = getMostRecentRequest(transformationPlan);
+      const mostRecentRequest = getMostRecentRequest(
+        transformationPlan.miq_requests
+      );
       return (
         mostRecentRequest.request_state === 'finished' ||
         mostRecentRequest.request_state === 'failed'

@@ -7,6 +7,7 @@ import Toolbar from '../../../config/Toolbar';
 import PlanRequestDetailList from './components/PlanRequestDetailList/PlanRequestDetailList';
 import PlanVmsList from './components/PlanVmsList';
 import PlanEmptyState from './components/PlanEmptyState';
+import getMostRecentRequest from '../common/getMostRecentRequest';
 
 class Plan extends React.Component {
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -61,10 +62,7 @@ class Plan extends React.Component {
       } = plan;
 
       if (miq_requests.length > 0) {
-        const mostRecentRequest = miq_requests.reduce(
-          (prev, current) =>
-            prev.created_on > current.created_on ? prev : current
-        );
+        const mostRecentRequest = getMostRecentRequest(miq_requests);
         const planRequestId = mostRecentRequest.id;
         fetchPlanRequestAction(fetchPlanRequestUrl, planRequestId);
         if (mostRecentRequest.status === 'active') {

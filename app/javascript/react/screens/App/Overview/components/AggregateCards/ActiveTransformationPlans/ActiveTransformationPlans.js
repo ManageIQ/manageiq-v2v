@@ -10,6 +10,7 @@ import {
   AggregateStatusNotification,
   Spinner
 } from 'patternfly-react';
+import getMostRecentRequest from '../../../../common/getMostRecentRequest';
 
 const ActiveTransformationPlans = ({
   activePlans,
@@ -27,13 +28,9 @@ const ActiveTransformationPlans = ({
       const requestsOfAssociatedPlan = allRequestsWithTasks.filter(
         request => request.source_id === plan.id
       );
-
       const mostRecentRequest =
         requestsOfAssociatedPlan.length > 0 &&
-        requestsOfAssociatedPlan.reduce(
-          (prev, current) =>
-            prev.created_on > current.created_on ? prev : current
-        );
+        getMostRecentRequest(requestsOfAssociatedPlan);
       return (
         mostRecentRequest &&
         mostRecentRequest.miq_request_tasks.some(
