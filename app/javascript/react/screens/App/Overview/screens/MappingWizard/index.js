@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
-import MappingWizard from './MappingWizard';
+import async from '../../../common/reactLoadable';
+
 import * as MappingWizardActions from './MappingWizardActions';
 import {
   mappingWizardOverviewFilter,
@@ -7,6 +8,13 @@ import {
 } from './MappingWizardSelectors';
 
 import reducer from './MappingWizardReducer';
+
+const MappingWizard = async({
+  loader: () =>
+    import('./MappingWizard' /* webpackChunkName: 'mapping-wizard' */),
+  modules: ['./MappingWizard'],
+  webpack: () => [require.resolveWeak('./MappingWizard')]
+});
 
 export const reducers = { mappingWizard: reducer };
 

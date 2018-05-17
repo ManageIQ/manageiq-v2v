@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
-import PlanWizard from './PlanWizard';
+import async from '../../../common/reactLoadable';
+
 import * as PlanWizardActions from './PlanWizardActions';
 import {
   planWizardOverviewFilter,
@@ -8,6 +9,12 @@ import {
 import { setMigrationsFilterAction } from '../../OverviewActions';
 
 import reducer from './PlanWizardReducer';
+
+const PlanWizard = async({
+  loader: () => import('./PlanWizard' /* webpackChunkName: 'plan-wizard' */),
+  modules: ['./PlanWizard'],
+  webpack: () => [require.resolveWeak('./PlanWizard')]
+});
 
 export const reducers = { planWizard: reducer };
 
