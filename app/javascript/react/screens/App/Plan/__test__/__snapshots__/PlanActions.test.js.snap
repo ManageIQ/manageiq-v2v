@@ -6,47 +6,7 @@ Array [
     "type": "FETCH_V2V_PLAN_PENDING",
   },
   Object {
-    "payload": Object {
-      "config": Object {
-        "data": undefined,
-        "headers": Object {
-          "Accept": "application/json, text/plain, */*",
-          "X-Auth-Token": "",
-          "X-Requested-With": "XMLHttpRequest",
-        },
-        "maxContentLength": -1,
-        "method": "get",
-        "params": Object {},
-        "timeout": 0,
-        "transformRequest": Object {
-          "0": [Function],
-        },
-        "transformResponse": Object {
-          "0": [Function],
-        },
-        "url": "/api/dummyPlan/1?attributes=miq_requests",
-        "validateStatus": [Function],
-        "xsrfCookieName": "XSRF-TOKEN",
-        "xsrfHeaderName": "X-XSRF-TOKEN",
-      },
-      "data": null,
-      "headers": undefined,
-      "status": 200,
-    },
     "type": "FETCH_V2V_PLAN_FULFILLED",
-  },
-]
-`;
-
-exports[`FETCH_V2V_PLAN fetchPlanAction dispatches the PENDING and REJECTED actions 1`] = `
-Array [
-  Object {
-    "type": "FETCH_V2V_PLAN_PENDING",
-  },
-  Object {
-    "error": true,
-    "payload": [Error: Request failed with status code 404],
-    "type": "FETCH_V2V_PLAN_REJECTED",
   },
 ]
 `;

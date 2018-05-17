@@ -7,3 +7,4 @@ global.__ = str => str;
 global.n__ = str => str;
 global.sprintf = str => str;
 global.Jed = { sprintf: str => str };
+global.API.get = jest.fn(() => Promise.resolve());

@@ -98,6 +98,9 @@
     ],
     "moduleNameMapper": {
       "^.+\\.(png|gif|css|scss)$": "identity-obj-proxy"
+    },
+    "globals": {
+      "API": {}
     }
   },
   "license": "Apache-2.0"
