@@ -7,7 +7,8 @@ import {
   FETCH_V2V_PLAN,
   QUERY_V2V_PLAN_VMS,
   RESET_PLAN_STATE,
-  FETCH_V2V_MIGRATION_TASK_LOG
+  FETCH_V2V_MIGRATION_TASK_LOG,
+  DOWNLOAD_LOG_CLICKED
 } from './PlanConstants';
 
 import { V2V_NOTIFICATION_ADD } from '../common/NotificationList/NotificationConstants';
@@ -76,8 +77,11 @@ export const resetPlanStateAction = () => ({
   type: RESET_PLAN_STATE
 });
 
-export const downloadLogAction = task => dispatch =>
-  // todo: write download log api logic
+export const downloadLogAction = task => dispatch => {
+  dispatch({
+    type: DOWNLOAD_LOG_CLICKED,
+    payload: task.id
+  });
   dispatch({
     type: FETCH_V2V_MIGRATION_TASK_LOG,
     payload: new Promise((resolve, reject) => {
@@ -123,3 +127,4 @@ export const downloadLogAction = task => dispatch =>
         });
     })
   });
+};

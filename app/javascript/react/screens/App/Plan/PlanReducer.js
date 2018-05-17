@@ -6,7 +6,8 @@ import {
   FETCH_V2V_PLAN,
   QUERY_V2V_PLAN_VMS,
   RESET_PLAN_STATE,
-  FETCH_V2V_MIGRATION_TASK_LOG
+  FETCH_V2V_MIGRATION_TASK_LOG,
+  DOWNLOAD_LOG_CLICKED
 } from './PlanConstants';
 
 export const initialState = Immutable({
@@ -24,6 +25,23 @@ export const initialState = Immutable({
   errorVms: null,
   vms: []
 });
+
+const excludeDownloadDoneTaskId = (
+  allDownloadLogInProgressTaskIds,
+  urlForDownload
+) =>
+  allDownloadLogInProgressTaskIds.filter(
+    element =>
+      element !== urlForDownload.substring(urlForDownload.lastIndexOf('/') + 1)
+  );
+
+const includeDownloadInProgressTaskId = (
+  allDownloadLogInProgressTaskIds,
+  taskId
+) =>
+  allDownloadLogInProgressTaskIds
+    ? allDownloadLogInProgressTaskIds.concat(taskId)
+    : [taskId];
 
 const _formatPlanRequestDetails = data => {
   const tasks = [];
@@ -177,14 +195,37 @@ export default (state = initialState, action) => {
         .set('isRejectedMigrationTaskLog', false);
     case `${FETCH_V2V_MIGRATION_TASK_LOG}_FULFILLED`:
       return state
+        .set(
+          'downloadLogInProgressTaskIds',
+          excludeDownloadDoneTaskId(
+            state.downloadLogInProgressTaskIds,
+            action.payload.config.url
+          )
+        )
         .set('isFetchingMigrationTaskLog', false)
         .set('isRejectedMigrationTaskLog', false)
         .set('errorMigrationTaskLog', null);
     case `${FETCH_V2V_MIGRATION_TASK_LOG}_REJECTED`:
       return state
+        .set(
+          'downloadLogInProgressTaskIds',
+          excludeDownloadDoneTaskId(
+            state.downloadLogInProgressTaskIds,
+            action.payload.config.url
+          )
+        )
         .set('isFetchingMigrationTaskLog', false)
         .set('isRejectedMigrationTaskLog', true)
         .set('errorMigrationTaskLog', action.payload);
+
+    case DOWNLOAD_LOG_CLICKED:
+      return state.set(
+        'downloadLogInProgressTaskIds',
+        includeDownloadInProgressTaskId(
+          state.downloadLogInProgressTaskIds,
+          action.payload
+        )
+      );
 
     default:
       return state;
