@@ -26,6 +26,23 @@ export const initialState = Immutable({
   vms: []
 });
 
+const excludeDownloadDoneTaskId = (
+  allDownloadLogInProgressTaskIds,
+  urlForDownload
+) =>
+  allDownloadLogInProgressTaskIds.filter(
+    element =>
+      element !== urlForDownload.substring(urlForDownload.lastIndexOf('/') + 1)
+  );
+
+const includeDownloadInProgressTaskId = (
+  allDownloadLogInProgressTaskIds,
+  taskId
+) =>
+  allDownloadLogInProgressTaskIds
+    ? allDownloadLogInProgressTaskIds.concat(taskId)
+    : [taskId];
+
 const _formatPlanRequestDetails = data => {
   const tasks = [];
   if (data.miq_request_tasks && data.miq_request_tasks.length) {
@@ -180,12 +197,9 @@ export default (state = initialState, action) => {
       return state
         .set(
           'downloadLogInProgressTaskIds',
-          state.downloadLogInProgressTaskIds.filter(
-            element =>
-              element !==
-              action.payload.config.url.substring(
-                action.payload.config.url.lastIndexOf('/') + 1
-              )
+          excludeDownloadDoneTaskId(
+            state.downloadLogInProgressTaskIds,
+            action.payload.config.url
           )
         )
         .set('isFetchingMigrationTaskLog', false)
@@ -195,12 +209,9 @@ export default (state = initialState, action) => {
       return state
         .set(
           'downloadLogInProgressTaskIds',
-          state.downloadLogInProgressTaskIds.filter(
-            element =>
-              element !==
-              action.payload.config.url.substring(
-                action.payload.config.url.lastIndexOf('/') + 1
-              )
+          excludeDownloadDoneTaskId(
+            state.downloadLogInProgressTaskIds,
+            action.payload.config.url
           )
         )
         .set('isFetchingMigrationTaskLog', false)
@@ -210,9 +221,10 @@ export default (state = initialState, action) => {
     case DOWNLOAD_LOG_CLICKED:
       return state.set(
         'downloadLogInProgressTaskIds',
-        state.downloadLogInProgressTaskIds
-          ? state.downloadLogInProgressTaskIds.concat(action.payload)
-          : [action.payload]
+        includeDownloadInProgressTaskId(
+          state.downloadLogInProgressTaskIds,
+          action.payload
+        )
       );
 
     default:
