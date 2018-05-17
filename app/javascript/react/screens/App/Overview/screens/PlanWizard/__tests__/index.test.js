@@ -6,7 +6,6 @@ import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import { reducer as formReducer } from 'redux-form';
 import { initialState } from '../../../overview.fixtures';
-import PlanWizard from '../PlanWizard';
 import PlanWizardContainer from '../index';
 import { reducers } from '../../../index';
 
@@ -40,8 +39,10 @@ describe('Plan Wizard integration test', () => {
     const store = generateStore();
     const wrapper = mountComponent(store);
 
-    // query the unconnected component to assert reduced props
-    const component = wrapper.find(PlanWizard);
+    // * query the unconnected component to assert reduced props
+    // * because we are async loading PlanWizard with react-loadable, we need to
+    //   refer to it as 'LoadableComponent'
+    const component = wrapper.find('LoadableComponent');
 
     expect(component.props()).toMatchSnapshot();
   });

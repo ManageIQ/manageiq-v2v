@@ -6,7 +6,6 @@ import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import { reducer as formReducer } from 'redux-form';
 import { initialState } from '../../../overview.fixtures';
-import MappingWizard from '../MappingWizard';
 import MappingWizardContainer from '../index';
 import { reducers } from '../../../index';
 
@@ -38,8 +37,10 @@ describe('Mapping Wizard integration test', () => {
     const store = generateStore();
     const wrapper = mountComponent(store);
 
-    // query the unconnected component to assert reduced props
-    const component = wrapper.find(MappingWizard);
+    // * query the unconnected component to assert reduced props
+    // * because we are async loading MappingWizard with react-loadable, we need to
+    //   refer to it as 'LoadableComponent'
+    const component = wrapper.find('LoadableComponent');
 
     expect(component.props()).toMatchSnapshot();
   });

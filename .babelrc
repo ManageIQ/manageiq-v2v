@@ -23,11 +23,12 @@
     "transform-class-properties",
     "transform-export-extensions",
     "transform-object-rest-spread",
-    "transform-object-assign"
+    "transform-object-assign",
+    "syntax-dynamic-import"
   ],
   "env": {
     "test": {
-      "plugins": ["transform-es2015-modules-commonjs"]
+      "plugins": ["transform-es2015-modules-commonjs", "dynamic-import-node"]
     }
   }
 }

@@ -6,27 +6,11 @@ Object {
   "hideMappingWizard": false,
   "hideMappingWizardAction": [Function],
   "hideWarningModalAction": [Function],
-  "mappingWizardClustersStep": Object {},
-  "mappingWizardDatastoresStep": Object {},
+  "mappingWizardClustersStep": undefined,
+  "mappingWizardDatastoresStep": undefined,
   "mappingWizardExitedAction": [Function],
-  "mappingWizardGeneralStep": Object {
-    "registeredFields": Object {
-      "description": Object {
-        "count": 1,
-        "name": "description",
-        "type": "Field",
-      },
-      "name": Object {
-        "count": 1,
-        "name": "name",
-        "type": "Field",
-      },
-    },
-    "syncErrors": Object {
-      "name": "Required. Maximum length is %s characters.",
-    },
-  },
-  "mappingWizardNetworksStep": Object {},
+  "mappingWizardGeneralStep": undefined,
+  "mappingWizardNetworksStep": undefined,
   "setTransformationsBodyAction": [Function],
   "showAlertAction": [Function],
   "showWarningModalAction": [Function],
