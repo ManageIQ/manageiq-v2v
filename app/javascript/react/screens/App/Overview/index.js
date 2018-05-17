@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import Overview from './Overview';
+import async from '../common/reactLoadable';
 import * as OverviewActions from './OverviewActions';
 import * as NotificationActions from '../common/NotificationList/NotificationListActions';
 
@@ -11,6 +11,12 @@ import {
 } from './OverviewSelectors';
 
 export const reducers = { overview: reducer, form: {} };
+
+const Overview = async({
+  loader: () => import('./Overview' /* webpackChunkName: 'overview' */),
+  modules: ['./Overview'],
+  webpack: () => [require.resolveWeak('./Overview')]
+});
 
 const mapStateToProps = (
   { overview, overview: { transformationPlans, allRequestsWithTasks, planId } },
