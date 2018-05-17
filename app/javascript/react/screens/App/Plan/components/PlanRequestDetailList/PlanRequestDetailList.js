@@ -401,6 +401,10 @@ class PlanRequestDetailList extends React.Component {
                       <b>{__('Description')}: </b>
                       {task.options.progress.current_description}
                     </div>
+                    <div>
+                      <b>{__('Conversion Host')}: </b>
+                      {task.options.transformation_host_name}
+                    </div>
                     {task.taskCompleted && (
                       <div>
                         <br />
