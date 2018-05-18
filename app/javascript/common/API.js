@@ -1,35 +1,31 @@
-import axios from 'axios';
-
-const getAuthToken = () =>
-  localStorage.miq_token ? localStorage.miq_token : '';
-
-axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-axios.defaults.headers.common['X-Auth-Token'] = getAuthToken();
+const API = window.API; // eslint-disable-line prefer-destructuring
 
 export default {
   get(url, headers = {}, params = {}) {
-    return axios.get(url, {
+    return API.get(url, {
+      transformResponse: e => ({ data: e }),
       headers,
       params
     });
   },
   put(url, data = {}, headers = {}) {
-    return axios.put(url, data, {
+    return API.put(url, data, {
       headers
     });
   },
   post(url, data = {}, headers = {}) {
-    return axios.post(url, data, {
-      headers
+    return API.post(url, data, {
+      headers,
+      transformResponse: e => ({ data: e })
     });
   },
   delete(url, headers = {}) {
-    return axios.delete(url, {
+    return API.delete(url, {
       headers
     });
   },
   patch(url, data = {}, headers = {}) {
-    return axios.patch(url, data, {
+    return API.patch(url, data, {
       headers
     });
   }

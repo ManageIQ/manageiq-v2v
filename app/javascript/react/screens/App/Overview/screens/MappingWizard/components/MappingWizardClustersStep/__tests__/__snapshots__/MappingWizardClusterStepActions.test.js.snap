@@ -6,47 +6,7 @@ Array [
     "type": "FETCH_V2V_SOURCE_CLUSTERS_PENDING",
   },
   Object {
-    "payload": Object {
-      "config": Object {
-        "data": undefined,
-        "headers": Object {
-          "Accept": "application/json, text/plain, */*",
-          "X-Auth-Token": "",
-          "X-Requested-With": "XMLHttpRequest",
-        },
-        "maxContentLength": -1,
-        "method": "get",
-        "params": Object {},
-        "timeout": 0,
-        "transformRequest": Object {
-          "0": [Function],
-        },
-        "transformResponse": Object {
-          "0": [Function],
-        },
-        "url": "/api/dummyProviders",
-        "validateStatus": [Function],
-        "xsrfCookieName": "XSRF-TOKEN",
-        "xsrfHeaderName": "X-XSRF-TOKEN",
-      },
-      "data": null,
-      "headers": undefined,
-      "status": 200,
-    },
     "type": "FETCH_V2V_SOURCE_CLUSTERS_FULFILLED",
-  },
-]
-`;
-
-exports[`mappingWizard actions should fetch source clusters and return PENDING and REJECTED action 1`] = `
-Array [
-  Object {
-    "type": "FETCH_V2V_SOURCE_CLUSTERS_PENDING",
-  },
-  Object {
-    "error": true,
-    "payload": [Error: Request failed with status code 404],
-    "type": "FETCH_V2V_SOURCE_CLUSTERS_REJECTED",
   },
 ]
 `;
@@ -57,47 +17,7 @@ Array [
     "type": "FETCH_V2V_TARGET_CLUSTERS_PENDING",
   },
   Object {
-    "payload": Object {
-      "config": Object {
-        "data": undefined,
-        "headers": Object {
-          "Accept": "application/json, text/plain, */*",
-          "X-Auth-Token": "",
-          "X-Requested-With": "XMLHttpRequest",
-        },
-        "maxContentLength": -1,
-        "method": "get",
-        "params": Object {},
-        "timeout": 0,
-        "transformRequest": Object {
-          "0": [Function],
-        },
-        "transformResponse": Object {
-          "0": [Function],
-        },
-        "url": "/api/dummyProviders",
-        "validateStatus": [Function],
-        "xsrfCookieName": "XSRF-TOKEN",
-        "xsrfHeaderName": "X-XSRF-TOKEN",
-      },
-      "data": null,
-      "headers": undefined,
-      "status": 200,
-    },
     "type": "FETCH_V2V_TARGET_CLUSTERS_FULFILLED",
-  },
-]
-`;
-
-exports[`mappingWizard actions should fetch target clusters and return PENDING and REJECTED action 1`] = `
-Array [
-  Object {
-    "type": "FETCH_V2V_TARGET_CLUSTERS_PENDING",
-  },
-  Object {
-    "error": true,
-    "payload": [Error: Request failed with status code 404],
-    "type": "FETCH_V2V_TARGET_CLUSTERS_REJECTED",
   },
 ]
 `;
