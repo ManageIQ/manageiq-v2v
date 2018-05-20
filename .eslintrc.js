@@ -6,7 +6,7 @@ module.exports = {
   globals: {
     $: true,
     __: true,
-    sprintf: true,
+    sprintf: true
   },
   extends: [
     'standard',

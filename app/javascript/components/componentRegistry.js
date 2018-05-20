@@ -1,33 +1,64 @@
 import React from 'react';
 import { i18nProviderWrapperFactory } from '../common/i18nProviderWrapperFactory';
+import forEach from 'lodash/forEach';
+import map from 'lodash/map';
 
-const { componentRegistry } = window.ManageIQ.react;
+const componentRegistry = {
+  registry: {},
 
-// extends current MIQ componentRegistry with i18nProviderWrapper
-componentRegistry.markup = (name, data, store) => {
-  const currentComponent = componentRegistry.getComponent(name);
+  register({ name = null, type = null, store = true, data = true }) {
+    if (!name || !type) {
+      throw new Error('Component name or type is missing');
+    }
+    if (this.registry[name]) {
+      throw new Error(`Component name already taken: ${name}`);
+    }
 
-  if (!currentComponent) {
-    throw new Error(
-      `Component not found:  ${name} among ${this.registeredComponents()}`
+    this.registry[name] = { type, store, data };
+    return this.registry;
+  },
+
+  registerMultiple(componentObjs) {
+    return forEach(componentObjs, obj => this.register(obj));
+  },
+
+  getComponent(name) {
+    return this.registry[name];
+  },
+
+  registeredComponents() {
+    return map(this.registry, (value, key) => key).join(', ');
+  },
+
+  markup(name, data, store) {
+    const currentComponent = this.getComponent(name);
+
+    if (!currentComponent) {
+      throw new Error(
+        `Component not found:  ${name} among ${this.registeredComponents()}`
+      );
+    }
+    const WrappedComponent = i18nProviderWrapperFactory(new Date())(
+      currentComponent.type
+    );
+
+    // todo: should component registry `markup` actually merge {data} instead?
+    // it would be nice to account for `ownProps` (assuming props are not always coming from store)
+    return (
+      <WrappedComponent
+        data={
+          currentComponent.data
+            ? Object.assign({}, data, currentComponent.data)
+            : undefined
+        }
+        store={currentComponent.store ? store : undefined}
+      />
     );
   }
-  const WrappedComponent = i18nProviderWrapperFactory(new Date())(
-    currentComponent.type
-  );
-
-  // todo: should component registry `markup` actually merge {data} instead?
-  // it would be nice to account for `ownProps` (assuming props are not always coming from store)
-  return (
-    <WrappedComponent
-      data={
-        currentComponent.data
-          ? Object.assign({}, data, currentComponent.data)
-          : undefined
-      }
-      store={currentComponent.store ? store : undefined}
-    />
-  );
 };
+
+const coreComponets = [];
+
+componentRegistry.registerMultiple(coreComponets);
 
 export default componentRegistry;
