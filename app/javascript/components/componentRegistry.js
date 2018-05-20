@@ -1,7 +1,5 @@
 import React from 'react';
 import { i18nProviderWrapperFactory } from '../common/i18nProviderWrapperFactory';
-import forEach from 'lodash/forEach';
-import map from 'lodash/map';
 
 const componentRegistry = {
   registry: {},
@@ -19,7 +17,7 @@ const componentRegistry = {
   },
 
   registerMultiple(componentObjs) {
-    return forEach(componentObjs, obj => this.register(obj));
+    return componentObjs.forEach(obj => this.register(obj));
   },
 
   getComponent(name) {
@@ -27,7 +25,7 @@ const componentRegistry = {
   },
 
   registeredComponents() {
-    return map(this.registry, (value, key) => key).join(', ');
+    return Object.keys(this.registry).join(', ');
   },
 
   markup(name, data, store) {
