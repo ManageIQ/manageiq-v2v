@@ -9,9 +9,6 @@ import {
 } from 'patternfly-react';
 import { focus } from 'redux-form';
 
-const $ = require('jquery');
-require('bootstrap-select');
-
 export class BootstrapSelect extends React.Component {
   constructor(props) {
     super(props);
