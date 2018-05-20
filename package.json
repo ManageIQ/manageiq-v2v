@@ -60,7 +60,6 @@
     "bootstrap-select": "~1.12.4",
     "classnames": "^2.2.5",
     "csv": "^2.0.0",
-    "cx": "^18.4.1",
     "file-saver": "^1.3.8",
     "intl": "~1.2.5",
     "jquery": "~3.2.1",
