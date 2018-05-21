@@ -34,8 +34,6 @@ test('clicking on a plan fires redirectTo with the path to its details page', ()
   );
 });
 
-// This depends on https://github.com/priley86/miq_v2v_ui_plugin/pull/229
-// being merged to alpha
 test.skip('clicking on the Migrate button fires migrateClick with the correct API endpoint', () => {
   const e = {
     stopPropagation: jest.fn()
