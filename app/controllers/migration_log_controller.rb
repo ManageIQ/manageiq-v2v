@@ -1,4 +1,7 @@
 class MigrationLogController < ApplicationController
+  before_action :check_privileges
+  after_action :cleanup_action
+
   def download_migration_log
     plan_task = ServiceTemplateTransformationPlanTask.find(params[:id])
     miq_tasks_id = plan_task.transformation_log_queue()
