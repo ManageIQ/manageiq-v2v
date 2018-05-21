@@ -8,7 +8,8 @@ import {
   QUERY_V2V_PLAN_VMS,
   RESET_PLAN_STATE,
   FETCH_V2V_MIGRATION_TASK_LOG,
-  DOWNLOAD_LOG_CLICKED
+  DOWNLOAD_LOG_CLICKED,
+  DOWNLOAD_LOG_COMPLETED
 } from './PlanConstants';
 
 import { V2V_NOTIFICATION_ADD } from '../common/NotificationList/NotificationConstants';
@@ -88,6 +89,10 @@ export const downloadLogAction = task => dispatch => {
       API.get(`/migration_log/download_migration_log/${task.id}`)
         .then(response => {
           resolve(response);
+          dispatch({
+            type: DOWNLOAD_LOG_COMPLETED,
+            payload: task.id
+          });
           const v2vLogFileName = `${task.vmName}.log`;
           if (response.data.status === 'Ok') {
             const file = new File(
@@ -123,6 +128,10 @@ export const downloadLogAction = task => dispatch => {
           }
         })
         .catch(e => {
+          dispatch({
+            type: DOWNLOAD_LOG_COMPLETED,
+            payload: task.id
+          });
           reject(e);
         });
     })

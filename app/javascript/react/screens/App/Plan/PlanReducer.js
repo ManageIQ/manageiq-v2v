@@ -7,7 +7,8 @@ import {
   QUERY_V2V_PLAN_VMS,
   RESET_PLAN_STATE,
   FETCH_V2V_MIGRATION_TASK_LOG,
-  DOWNLOAD_LOG_CLICKED
+  DOWNLOAD_LOG_CLICKED,
+  DOWNLOAD_LOG_COMPLETED
 } from './PlanConstants';
 
 export const initialState = Immutable({
@@ -26,14 +27,8 @@ export const initialState = Immutable({
   vms: []
 });
 
-const excludeDownloadDoneTaskId = (
-  allDownloadLogInProgressTaskIds,
-  urlForDownload
-) =>
-  allDownloadLogInProgressTaskIds.filter(
-    element =>
-      element !== urlForDownload.substring(urlForDownload.lastIndexOf('/') + 1)
-  );
+const excludeDownloadDoneTaskId = (allDownloadLogInProgressTaskIds, taskId) =>
+  allDownloadLogInProgressTaskIds.filter(element => element !== taskId);
 
 const includeDownloadInProgressTaskId = (
   allDownloadLogInProgressTaskIds,
@@ -195,25 +190,11 @@ export default (state = initialState, action) => {
         .set('isRejectedMigrationTaskLog', false);
     case `${FETCH_V2V_MIGRATION_TASK_LOG}_FULFILLED`:
       return state
-        .set(
-          'downloadLogInProgressTaskIds',
-          excludeDownloadDoneTaskId(
-            state.downloadLogInProgressTaskIds,
-            action.payload.config.url
-          )
-        )
         .set('isFetchingMigrationTaskLog', false)
         .set('isRejectedMigrationTaskLog', false)
         .set('errorMigrationTaskLog', null);
     case `${FETCH_V2V_MIGRATION_TASK_LOG}_REJECTED`:
       return state
-        .set(
-          'downloadLogInProgressTaskIds',
-          excludeDownloadDoneTaskId(
-            state.downloadLogInProgressTaskIds,
-            action.payload.config.url
-          )
-        )
         .set('isFetchingMigrationTaskLog', false)
         .set('isRejectedMigrationTaskLog', true)
         .set('errorMigrationTaskLog', action.payload);
@@ -222,6 +203,14 @@ export default (state = initialState, action) => {
       return state.set(
         'downloadLogInProgressTaskIds',
         includeDownloadInProgressTaskId(
+          state.downloadLogInProgressTaskIds,
+          action.payload
+        )
+      );
+    case DOWNLOAD_LOG_COMPLETED:
+      return state.set(
+        'downloadLogInProgressTaskIds',
+        excludeDownloadDoneTaskId(
           state.downloadLogInProgressTaskIds,
           action.payload
         )
