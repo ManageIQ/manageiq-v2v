@@ -1,6 +1,6 @@
 # ManageIQ V2V UI plugin
 
-[![Build Status](https://travis-ci.org/priley86/miq_v2v_ui_plugin.svg?branch=master)](https://travis-ci.org/priley86/miq_v2v_ui_plugin)
+[![Build Status](https://travis-ci.org/ManageIQ/miq_v2v_ui_plugin.svg?branch=master)](https://travis-ci.org/ManageIQ/miq_v2v_ui_plugin)
 
 The aim of this plugin is to provide UI infrastructure to ManageIQ for the V2V effort.
 
