@@ -7,6 +7,7 @@ import {
   Grid,
   Icon,
   OverlayTrigger,
+  Popover,
   Tooltip,
   UtilizationBar,
   Spinner
@@ -55,9 +56,11 @@ const MigrationsInProgressCard = ({
   // UX business rule 1: reflect failed immediately if any single task has failed
   // in the most recent request
   let failed = false;
+  let failedVms = 0;
   mostRecentRequest.miq_request_tasks.forEach(task => {
     if (task.status === 'Error') {
       failed = true;
+      failedVms += 1;
     }
   });
 
@@ -167,24 +170,45 @@ const MigrationsInProgressCard = ({
   return (
     <Grid.Col sm={12} md={6} lg={4}>
       <Card
-        onClick={() => {
-          handleClick(`/migration/plan/${plan.id}`);
+        onClick={e => {
+          if (!e.target.classList.contains('pficon-error-circle-o')) {
+            handleClick(`/migration/plan/${plan.id}`);
+          }
         }}
         matchHeight
         className="in-progress"
       >
         <Card.Heading>
-          <OverlayTrigger
-            overlay={
-              <Tooltip id={`description_${plan.id}`}>{plan.name}</Tooltip>
-            }
-            placement="top"
-            trigger={['hover']}
-            delay={500}
-            rootClose={false}
-          >
-            <h3 className="card-pf-title">
-              {failed && (
+          <h3 className="card-pf-title">
+            {failed && (
+              <OverlayTrigger
+                overlay={
+                  <Popover
+                    id={`description_${plan.id}`}
+                    title={sprintf('%s', plan.name)}
+                  >
+                    <Icon
+                      type="pf"
+                      name="error-circle-o"
+                      size="sm"
+                      style={{
+                        width: 'inherit',
+                        backgroundColor: 'transparent',
+                        paddingRight: 5
+                      }}
+                    />
+                    {sprintf(
+                      __('%s of %s VM migrations failed.'),
+                      failedVms,
+                      totalVMs
+                    )}
+                  </Popover>
+                }
+                placement="top"
+                trigger={['hover']}
+                delay={500}
+                rootClose={false}
+              >
                 <Icon
                   type="pf"
                   name="error-circle-o"
@@ -195,10 +219,10 @@ const MigrationsInProgressCard = ({
                     paddingRight: 10
                   }}
                 />
-              )}
-              {plan.name}
-            </h3>
-          </OverlayTrigger>
+              </OverlayTrigger>
+            )}
+            {plan.name}
+          </h3>
         </Card.Heading>
         <Card.Body>
           <UtilizationBar
