@@ -428,7 +428,8 @@ class PlanRequestDetailList extends React.Component {
                       style={{
                         flexDirection: 'column',
                         alignItems: 'flex-start',
-                        marginRight: 80
+                        marginRight: 80,
+                        minWidth: 200
                       }}
                     >
                       <div>
