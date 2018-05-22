@@ -399,7 +399,7 @@ class PlanRequestDetailList extends React.Component {
                     </div>
                     <div>
                       <b>{__('Description')}: </b>
-                      {task.options.progress.current_description}
+                      {task.options.progress && task.options.progress.current_description}
                     </div>
                     {task.taskCompleted && (
                       <div>
