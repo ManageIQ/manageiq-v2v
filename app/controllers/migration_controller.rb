@@ -10,10 +10,11 @@ class MigrationController < ApplicationController
     @page_title = _('Migration')
   end
 
-  def center_div_partial
-    "layouts/center_div_v2v"
+  helper do
+    def layout_full_center
+      "layouts/center_div_v2v"
+    end
   end
-  helper_method :center_div_partial
 
   menu_section :migration
 end
