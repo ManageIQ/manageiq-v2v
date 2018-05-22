@@ -1,6 +1,6 @@
-# ManageIQ V2V UI plugin
+# ManageIQ V2V plugin
 
-[![Build Status](https://travis-ci.org/ManageIQ/miq_v2v_ui_plugin.svg?branch=master)](https://travis-ci.org/ManageIQ/miq_v2v_ui_plugin)
+[![Build Status](https://travis-ci.org/ManageIQ/manageiq-v2v.svg?branch=master)](https://travis-ci.org/ManageIQ/manageiq-v2v)
 
 ## Purpose
 
@@ -31,8 +31,8 @@ V2V plugin is now installed in the appliance build of ManageIQ. You can find it 
 
 For development, you need to checkout manageiq, manageiq-ui-classic, and the v2v plugin next to each other and setup the gem overrides.
 
-Make sure to add this `miq_v2v_ui` gem to your `bundler.d/Gemfile.dev.rb` in `manageiq`:
+Make sure to add this `manageiq-v2v` gem to your `bundler.d/Gemfile.dev.rb` in `manageiq`:
 
 ```ruby
-override_gem 'miq_v2v_ui', :path => File.expand_path('../../miq_v2v_ui_plugin/', __dir__)
+override_gem 'manageiq-v2v', :path => File.expand_path('../../manageiq-v2v/', __dir__)
 ```

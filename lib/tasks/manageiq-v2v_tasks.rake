@@ -1,4 +1,4 @@
 # desc "Explaining what the task does"
-# task :miq_v2v_ui do
+# task :manageiq-v2v do
 #   # Task goes here
 # end

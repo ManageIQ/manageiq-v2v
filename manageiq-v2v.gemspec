@@ -1,17 +1,16 @@
 $LOAD_PATH.push File.expand_path('../lib', __FILE__)
 
 # Maintain your gem's version:
-require 'miq_v2v_ui/version'
+require 'manageiq/v2v/version'
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
-  s.name        = 'miq_v2v_ui'
-  s.version     = MiqV2vUI::VERSION
-  s.authors     = ['Patrick Riley']
-  s.email       = ['priley86@gmail.com']
+  s.name        = 'manageiq-v2v'
+  s.version     = ManageIQ::V2V::VERSION
+  s.authors     = ['ManageIQ Authors']
   s.homepage    = 'http://www.manageiq.org'
-  s.summary     = 'ManageIQ v2v plugin'
-  s.description = 'ManageIQ plugin'
+  s.summary     = 'ManageIQ plugin for v2v trasformations'
+  s.description = 'ManageIQ plugin for v2v trasformations'
   s.license     = 'MIT'
 
   s.files = Dir['{app,config,db,lib}/**/*', 'Rakefile', 'README.md']

@@ -10,4 +10,4 @@ window.v2v = {
 };
 
 // Another way to mount the component is via JS - e.g.
-// v2v.mount('v2v_ui_plugin', '#reactRoot');
+// v2v.mount('manageiq-v2v', '#reactRoot');
