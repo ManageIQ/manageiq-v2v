@@ -7,6 +7,13 @@ class MigrationController < ApplicationController
   def index
     # this sets the active menu item, must match the item name in lib/miq_v2v_ui/engine.rb
     @layout = 'migration'
+    @page_title = _('Migration')
+  end
+
+  helper do
+    def layout_full_center
+      "layouts/full_center_v2v"
+    end
   end
 
   menu_section :migration
