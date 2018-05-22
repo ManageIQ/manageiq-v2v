@@ -12,7 +12,7 @@ class MigrationController < ApplicationController
 
   helper do
     def layout_full_center
-      "layouts/center_div_v2v"
+      "layouts/full_center_v2v"
     end
   end
 
