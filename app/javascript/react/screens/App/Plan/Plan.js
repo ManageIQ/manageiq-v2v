@@ -65,12 +65,9 @@ class Plan extends React.Component {
         const mostRecentRequest = getMostRecentRequest(miq_requests);
         const planRequestId = mostRecentRequest.id;
         fetchPlanRequestAction(fetchPlanRequestUrl, planRequestId);
-        if (mostRecentRequest.status === 'active') {
+        if (mostRecentRequest.fulfilled_on === null) {
           this.startPolling(planRequestId);
-        } else if (
-          mostRecentRequest.request_state === 'finished' ||
-          mostRecentRequest.status === 'Error'
-        ) {
+        } else {
           this.setState(() => ({
             planFinished: true
           }));
