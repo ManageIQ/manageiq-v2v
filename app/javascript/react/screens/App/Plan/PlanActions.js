@@ -1,6 +1,7 @@
 import URI from 'urijs';
 import { saveAs } from 'file-saver';
 import API from '../../../../common/API';
+import http from '../../../../common/http';
 
 import {
   FETCH_V2V_PLAN_REQUEST,
