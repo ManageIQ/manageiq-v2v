@@ -1,6 +1,7 @@
 import URI from 'urijs';
 import { saveAs } from 'file-saver';
 import API from '../../../../common/API';
+import http from '../../../../common/http';
 
 import {
   FETCH_V2V_PLAN_REQUEST,
@@ -86,7 +87,8 @@ export const downloadLogAction = task => dispatch => {
   dispatch({
     type: FETCH_V2V_MIGRATION_TASK_LOG,
     payload: new Promise((resolve, reject) => {
-      API.get(`/migration_log/download_migration_log/${task.id}`)
+      http
+        .get(`/migration_log/download_migration_log/${task.id}`)
         .then(response => {
           resolve(response);
           dispatch({

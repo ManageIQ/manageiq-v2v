@@ -1,4 +1,4 @@
-const API = window.API; // eslint-disable-line prefer-destructuring
+const { API } = window;
 
 export default {
   get(url, headers = {}, params = {}) {
