@@ -36,9 +36,10 @@ const componentRegistry = {
         `Component not found:  ${name} among ${this.registeredComponents()}`
       );
     }
-    const WrappedComponent = i18nProviderWrapperFactory(new Date())(
-      currentComponent.type
-    );
+    // FIXME: figure out a way to mock i18nProviderWrapperFactory for componentRegistry specs
+    const WrappedComponent = window.it
+      ? currentComponent.type
+      : i18nProviderWrapperFactory(new Date())(currentComponent.type);
 
     // todo: should component registry `markup` actually merge {data} instead?
     // it would be nice to account for `ownProps` (assuming props are not always coming from store)
