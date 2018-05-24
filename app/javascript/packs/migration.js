@@ -1,8 +1,13 @@
-// require('../migration');
 import componentRegistry from '../components/componentRegistry';
 import { coreComponents } from '../components';
+import { mount } from '../components/mounter';
 
 componentRegistry.registerMultiple(coreComponents);
 
+window.v2v = {
+  mount,
+  componentRegistry
+};
+
 // Another way to mount the component is via JS - e.g.
-// ManageIQ.react.mount('v2v_ui_plugin', '#reactRoot');
+// v2v.mount('v2v_ui_plugin', '#reactRoot');
