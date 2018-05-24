@@ -90,7 +90,7 @@ export const coreComponents = [
     data: {
       fetchTransformationMappingsUrl:
         'api/transformation_mappings?expand=resources' +
-        '&attributes=transformation_mapping_items',
+        '&attributes=transformation_mapping_items,service_templates',
       fetchTransformationPlansUrl:
         '/api/service_templates/?' +
         "filter[]=type='ServiceTemplateTransformationPlan'" +
