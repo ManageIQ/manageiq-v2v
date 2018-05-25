@@ -16,7 +16,8 @@ import {
   V2V_SET_MIGRATIONS_FILTER,
   V2V_RETRY_MIGRATION,
   SHOW_DELETE_CONFIRMATION_MODAL,
-  HIDE_DELETE_CONFIRMATION_MODAL
+  HIDE_DELETE_CONFIRMATION_MODAL,
+  SET_MAPPING_TO_DELETE
 } from './OverviewConstants';
 
 export const initialState = Immutable({
@@ -165,6 +166,9 @@ export default (state = initialState, action) => {
     case SHOW_DELETE_CONFIRMATION_MODAL:
     case HIDE_DELETE_CONFIRMATION_MODAL:
       return state.set('showDeleteConfirmationModal', action.payload);
+
+    case SET_MAPPING_TO_DELETE:
+      return state.set('mappingToDelete', action.payload);
 
     default:
       return state;

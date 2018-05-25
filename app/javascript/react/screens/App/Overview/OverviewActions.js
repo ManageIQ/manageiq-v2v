@@ -13,7 +13,8 @@ import {
   V2V_SET_MIGRATIONS_FILTER,
   V2V_RETRY_MIGRATION,
   SHOW_DELETE_CONFIRMATION_MODAL,
-  HIDE_DELETE_CONFIRMATION_MODAL
+  HIDE_DELETE_CONFIRMATION_MODAL,
+  SET_MAPPING_TO_DELETE
 } from './OverviewConstants';
 
 export const showMappingWizardAction = () => dispatch => {
@@ -145,3 +146,10 @@ export const hideDeleteConfirmationModalAction = () => ({
   type: HIDE_DELETE_CONFIRMATION_MODAL,
   payload: false
 });
+
+export const setMappingToDeleteAction = mapping => dispatch => {
+  dispatch({
+    type: SET_MAPPING_TO_DELETE,
+    payload: mapping
+  });
+};

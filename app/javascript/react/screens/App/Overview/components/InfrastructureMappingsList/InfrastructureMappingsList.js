@@ -29,7 +29,8 @@ const InfrastructureMappingsList = ({
   transformationMappings,
   createInfraMappingClick,
   inProgressRequestsTransformationMappings,
-  showDeleteConfirmationModalAction
+  showDeleteConfirmationModalAction,
+  setMappingToDeleteAction
 }) => (
   <Grid.Col
     xs={12}
@@ -120,6 +121,7 @@ const InfrastructureMappingsList = ({
                       type="pf"
                       name="delete"
                       onClick={e => {
+                        setMappingToDeleteAction(mapping);
                         showDeleteConfirmationModalAction();
                       }}
                     />
@@ -195,7 +197,8 @@ InfrastructureMappingsList.propTypes = {
   transformationMappings: PropTypes.array,
   createInfraMappingClick: PropTypes.func,
   inProgressRequestsTransformationMappings: PropTypes.array,
-  showDeleteConfirmationModalAction: PropTypes.func
+  showDeleteConfirmationModalAction: PropTypes.func,
+  setMappingToDeleteAction: PropTypes.func
 };
 
 export default InfrastructureMappingsList;

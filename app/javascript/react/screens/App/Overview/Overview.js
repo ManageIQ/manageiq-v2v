@@ -205,7 +205,8 @@ class Overview extends React.Component {
       setMigrationsFilterAction,
       showDeleteConfirmationModal,
       showDeleteConfirmationModalAction,
-      hideDeleteConfirmationModalAction
+      hideDeleteConfirmationModalAction,
+      setMappingToDeleteAction
     } = this.props;
 
     const inProgressRequestsTransformationMappings = () => {
@@ -306,6 +307,7 @@ class Overview extends React.Component {
             showDeleteConfirmationModalAction={
               showDeleteConfirmationModalAction
             }
+            setMappingToDeleteAction={setMappingToDeleteAction}
           />
           <Modal
             show={showDeleteConfirmationModal}
@@ -396,6 +398,7 @@ Overview.propTypes = {
   history: PropTypes.object,
   showDeleteConfirmationModal: PropTypes.bool,
   showDeleteConfirmationModalAction: PropTypes.func,
-  hideDeleteConfirmationModalAction: PropTypes.func
+  hideDeleteConfirmationModalAction: PropTypes.func,
+  setMappingToDeleteAction: PropTypes.func
 };
 export default Overview;
