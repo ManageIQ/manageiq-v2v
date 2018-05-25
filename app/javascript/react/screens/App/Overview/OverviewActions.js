@@ -11,7 +11,9 @@ import {
   CREATE_V2V_TRANSFORMATION_PLAN_REQUEST,
   V2V_FETCH_CLUSTERS,
   V2V_SET_MIGRATIONS_FILTER,
-  V2V_RETRY_MIGRATION
+  V2V_RETRY_MIGRATION,
+  SHOW_DELETE_CONFIRMATION_MODAL,
+  HIDE_DELETE_CONFIRMATION_MODAL
 } from './OverviewConstants';
 
 export const showMappingWizardAction = () => dispatch => {
@@ -132,4 +134,14 @@ export const setMigrationsFilterAction = filter => ({
 export const retryMigrationAction = planId => ({
   type: V2V_RETRY_MIGRATION,
   payload: planId
+});
+
+export const showDeleteConfirmationModalAction = () => ({
+  type: SHOW_DELETE_CONFIRMATION_MODAL,
+  payload: true
+});
+
+export const hideDeleteConfirmationModalAction = () => ({
+  type: HIDE_DELETE_CONFIRMATION_MODAL,
+  payload: false
 });

@@ -1,6 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, Breadcrumb, CardGrid, Spinner } from 'patternfly-react';
+import {
+  Card,
+  Breadcrumb,
+  CardGrid,
+  Spinner,
+  Button,
+  Icon,
+  Modal
+} from 'patternfly-react';
 import Toolbar from '../../../config/Toolbar';
 import * as AggregateCards from './components/AggregateCards';
 import InfrastructureMappingsList from './components/InfrastructureMappingsList/InfrastructureMappingsList';
@@ -194,7 +202,10 @@ class Overview extends React.Component {
       isCreatingTransformationPlanRequest,
       clusters,
       migrationsFilter,
-      setMigrationsFilterAction
+      setMigrationsFilterAction,
+      showDeleteConfirmationModal,
+      showDeleteConfirmationModalAction,
+      hideDeleteConfirmationModalAction
     } = this.props;
 
     const inProgressRequestsTransformationMappings = () => {
@@ -292,7 +303,39 @@ class Overview extends React.Component {
             transformationMappings={transformationMappings}
             createInfraMappingClick={showMappingWizardAction}
             inProgressRequestsTransformationMappings={inProgressRequestsTransformationMappings()}
+            showDeleteConfirmationModalAction={
+              showDeleteConfirmationModalAction
+            }
           />
+          <Modal
+            show={showDeleteConfirmationModal}
+            onHide={hideDeleteConfirmationModalAction}
+          >
+            <Modal.Header>
+              <Modal.CloseButton onClick={hideDeleteConfirmationModalAction} />
+              <Modal.Title>{__('Delete Infrastructure Mapping')}</Modal.Title>
+            </Modal.Header>
+            <Modal.Body className="warning-modal-body">
+              <div className="warning-modal-body--icon">
+                <Icon type="pf" name="delete" />
+              </div>
+              <div className="warning-modal-body--list">
+                <h3>{}</h3>
+              </div>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button
+                bsStyle="default"
+                className="btn-cancel"
+                onClick={hideDeleteConfirmationModalAction}
+              >
+                {__('Cancel')}
+              </Button>
+              <Button bsStyle="primary" onClick={e => {}}>
+                {__('Delete')}
+              </Button>
+            </Modal.Footer>
+          </Modal>
         </Spinner>
       </div>
     );
@@ -350,6 +393,9 @@ Overview.propTypes = {
   migrationsFilter: PropTypes.string,
   setMigrationsFilterAction: PropTypes.func,
   retryMigrationAction: PropTypes.func,
-  history: PropTypes.object
+  history: PropTypes.object,
+  showDeleteConfirmationModal: PropTypes.bool,
+  showDeleteConfirmationModalAction: PropTypes.func,
+  hideDeleteConfirmationModalAction: PropTypes.func
 };
 export default Overview;

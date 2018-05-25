@@ -28,7 +28,8 @@ const InfrastructureMappingsList = ({
   clusters,
   transformationMappings,
   createInfraMappingClick,
-  inProgressRequestsTransformationMappings
+  inProgressRequestsTransformationMappings,
+  showDeleteConfirmationModalAction
 }) => (
   <Grid.Col
     xs={12}
@@ -115,7 +116,13 @@ const InfrastructureMappingsList = ({
                       name="delete"
                     />
                   ) : (
-                    <Icon type="pf" name="delete" onClick={e => {}} />
+                    <Icon
+                      type="pf"
+                      name="delete"
+                      onClick={e => {
+                        showDeleteConfirmationModalAction();
+                      }}
+                    />
                   )
                 }
               >
@@ -187,7 +194,8 @@ InfrastructureMappingsList.propTypes = {
   clusters: PropTypes.array,
   transformationMappings: PropTypes.array,
   createInfraMappingClick: PropTypes.func,
-  inProgressRequestsTransformationMappings: PropTypes.array
+  inProgressRequestsTransformationMappings: PropTypes.array,
+  showDeleteConfirmationModalAction: PropTypes.func
 };
 
 export default InfrastructureMappingsList;

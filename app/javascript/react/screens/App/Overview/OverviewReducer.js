@@ -14,7 +14,9 @@ import {
   V2V_FETCH_CLUSTERS,
   CONTINUE_TO_PLAN,
   V2V_SET_MIGRATIONS_FILTER,
-  V2V_RETRY_MIGRATION
+  V2V_RETRY_MIGRATION,
+  SHOW_DELETE_CONFIRMATION_MODAL,
+  HIDE_DELETE_CONFIRMATION_MODAL
 } from './OverviewConstants';
 
 export const initialState = Immutable({
@@ -43,7 +45,8 @@ export const initialState = Immutable({
   isContinuingToPlan: false,
   shouldReloadMappings: false,
   clusters: [],
-  migrationsFilter: 'Migration Plans Not Started'
+  migrationsFilter: 'Migration Plans Not Started',
+  showDeleteConfirmationModal: false
 });
 
 export default (state = initialState, action) => {
@@ -158,6 +161,11 @@ export default (state = initialState, action) => {
       return state.set('migrationsFilter', action.payload);
     case V2V_RETRY_MIGRATION:
       return state.set('planId', action.payload).set('reloadCard', true);
+
+    case SHOW_DELETE_CONFIRMATION_MODAL:
+    case HIDE_DELETE_CONFIRMATION_MODAL:
+      return state.set('showDeleteConfirmationModal', action.payload);
+
     default:
       return state;
   }
