@@ -369,6 +369,15 @@ class NetworksStepForm extends React.Component {
       'is-hidden': !selectedCluster
     });
 
+    const counter = (
+      <DualPaneMapperCount
+        selectedItems={selectedSourceNetworks.length}
+        totalItems={
+          sourceNetworksFilter(groupedSourceNetworks, input.value).length
+        }
+      />
+    );
+
     return (
       <div className={classes}>
         <DualPaneMapper
@@ -384,6 +393,7 @@ class NetworksStepForm extends React.Component {
             id="source_networks"
             listTitle="Source Networks"
             loading={isFetchingSourceNetworks}
+            counter={counter}
           >
             {groupedSourceNetworks &&
               sourceNetworksFilter(groupedSourceNetworks, input.value).map(
@@ -405,12 +415,6 @@ class NetworksStepForm extends React.Component {
                   />
                 )
               )}
-            <DualPaneMapperCount
-              selectedItems={selectedSourceNetworks.length}
-              totalItems={
-                sourceNetworksFilter(groupedSourceNetworks, input.value).length
-              }
-            />
           </DualPaneMapperList>
           <DualPaneMapperList
             id="target_networks"
