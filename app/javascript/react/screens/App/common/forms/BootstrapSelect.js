@@ -1,19 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Form,
-  FormGroup,
-  Grid,
-  ControlLabel,
-  bindMethods
-} from 'patternfly-react';
+import { Form, FormGroup, Grid, ControlLabel } from 'patternfly-react';
 import { focus } from 'redux-form';
 
 export class BootstrapSelect extends React.Component {
-  constructor(props) {
-    super(props);
-    bindMethods(this, ['renderFormGroup']);
-  }
   componentDidMount() {
     const {
       input,

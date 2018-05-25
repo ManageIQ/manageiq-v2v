@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { bindMethods } from 'patternfly-react';
 import cx from 'classnames';
 
 import DualPaneMapper from '../../../DualPaneMapper/DualPaneMapper';
@@ -21,24 +20,11 @@ import {
 } from './helpers';
 
 class DatastoresStepForm extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      selectedSourceDatastores: [],
-      selectedTargetDatastore: null,
-      selectedNode: null
-    };
-
-    bindMethods(this, [
-      'selectSourceDatastore',
-      'selectTargetDatastore',
-      'addDatastoreMapping',
-      'selectNode',
-      'removeNode',
-      'removeAll'
-    ]);
-  }
+  state = {
+    selectedSourceDatastores: [],
+    selectedTargetDatastore: null,
+    selectedNode: null
+  };
 
   componentWillReceiveProps(nextProps) {
     if (
@@ -52,7 +38,7 @@ class DatastoresStepForm extends React.Component {
     }
   }
 
-  selectSourceDatastore(sourceDatastore) {
+  selectSourceDatastore = sourceDatastore => {
     const { selectedTargetDatastore, selectedSourceDatastores } = this.state;
     const { value: datastoresStepMappings } = this.props.input;
     const { showAlertAction, hideAlertAction } = this.props;
@@ -109,9 +95,9 @@ class DatastoresStepForm extends React.Component {
         };
       });
     }
-  }
+  };
 
-  selectTargetDatastore(targetDatastore) {
+  selectTargetDatastore = targetDatastore => {
     const { selectedSourceDatastores } = this.state;
     const { value: datastoresStepMappings } = this.props.input;
     const { showAlertAction, hideAlertAction } = this.props;
@@ -140,9 +126,9 @@ class DatastoresStepForm extends React.Component {
       hideAlertAction();
       this.setState(() => ({ selectedTargetDatastore: targetDatastore }));
     }
-  }
+  };
 
-  addDatastoreMapping() {
+  addDatastoreMapping = () => {
     const { input, selectedCluster, selectedClusterMapping } = this.props;
 
     const { selectedTargetDatastore } = this.state;
@@ -253,9 +239,9 @@ class DatastoresStepForm extends React.Component {
         selectedSourceDatastores: []
       };
     });
-  }
+  };
 
-  selectNode(selectedNode) {
+  selectNode = selectedNode => {
     const { value: datastoresStepMappings, onChange } = this.props.input;
     const isTargetDatastore = selectedNode.nodes;
 
@@ -334,9 +320,9 @@ class DatastoresStepForm extends React.Component {
       onChange(updatedMappings);
     }
     this.setState(() => ({ selectedNode }));
-  }
+  };
 
-  removeNode() {
+  removeNode = () => {
     const { value: datastoresStepMappings, onChange } = this.props.input;
     const { selectedNode } = this.state;
 
@@ -348,12 +334,12 @@ class DatastoresStepForm extends React.Component {
     onChange(updatedMappings);
 
     this.setState(() => ({ selectedNode: null }));
-  }
+  };
 
-  removeAll() {
+  removeAll = () => {
     const { input } = this.props;
     input.onChange([]);
-  }
+  };
 
   render() {
     const {

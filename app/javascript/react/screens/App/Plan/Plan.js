@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Immutable from 'seamless-immutable';
 import { Link } from 'react-router-dom';
-import { bindMethods, Breadcrumb, Spinner } from 'patternfly-react';
+import { Breadcrumb, Spinner } from 'patternfly-react';
 import Toolbar from '../../../config/Toolbar';
 import PlanRequestDetailList from './components/PlanRequestDetailList/PlanRequestDetailList';
 import PlanVmsList from './components/PlanVmsList';
@@ -39,8 +39,6 @@ class Plan extends React.Component {
     };
 
     this.props.resetPlanStateAction();
-
-    bindMethods(this, ['stopPolling', 'startPolling']);
   }
 
   componentDidMount() {
@@ -84,19 +82,19 @@ class Plan extends React.Component {
     resetPlanStateAction();
   }
 
-  startPolling(id) {
+  startPolling = id => {
     const { fetchPlanRequestAction, fetchPlanRequestUrl } = this.props;
     this.pollingInterval = setInterval(() => {
       fetchPlanRequestAction(fetchPlanRequestUrl, id);
     }, 15000);
-  }
+  };
 
-  stopPolling() {
+  stopPolling = () => {
     if (this.pollingInterval) {
       clearInterval(this.pollingInterval);
       this.pollingInterval = null;
     }
-  }
+  };
 
   render() {
     const {

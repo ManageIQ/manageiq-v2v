@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { bindMethods } from 'patternfly-react';
 
 import DualPaneMapper from '../../../DualPaneMapper/DualPaneMapper';
 import DualPaneMapperList from '../../../DualPaneMapper/DualPaneMapperList';
@@ -12,26 +11,13 @@ import { updateMapping, createNewMapping } from './helpers';
 import { sourceClustersFilter } from '../../MappingWizardClustersStepSelectors';
 
 class ClustersStepForm extends React.Component {
-  constructor(props) {
-    super(props);
+  state = {
+    selectedTargetCluster: null,
+    selectedSourceClusters: [],
+    selectedMapping: null
+  };
 
-    this.state = {
-      selectedTargetCluster: null,
-      selectedSourceClusters: [],
-      selectedMapping: null
-    };
-
-    bindMethods(this, [
-      'selectSourceCluster',
-      'selectTargetCluster',
-      'addMapping',
-      'selectMapping',
-      'removeMapping',
-      'removeAll'
-    ]);
-  }
-
-  selectSourceCluster(sourceCluster) {
+  selectSourceCluster = sourceCluster => {
     this.setState(prevState => {
       const isAlreadySelected = prevState.selectedSourceClusters.some(
         cluster => cluster.id === sourceCluster.id
@@ -50,13 +36,13 @@ class ClustersStepForm extends React.Component {
         ]
       };
     });
-  }
+  };
 
-  selectTargetCluster(targetCluster) {
+  selectTargetCluster = targetCluster => {
     this.setState(() => ({ selectedTargetCluster: targetCluster }));
-  }
+  };
 
-  addMapping() {
+  addMapping = () => {
     const {
       input: { value: clustersStepMappings, onChange }
     } = this.props;
@@ -87,9 +73,9 @@ class ClustersStepForm extends React.Component {
       selectedTargetCluster: null,
       selectedSourceClusters: []
     }));
-  }
+  };
 
-  selectMapping(selectedMapping) {
+  selectMapping = selectedMapping => {
     const { input } = this.props;
     input.onChange(
       input.value.map(mapping => {
@@ -102,9 +88,9 @@ class ClustersStepForm extends React.Component {
       })
     );
     this.setState(() => ({ selectedMapping }));
-  }
+  };
 
-  removeMapping() {
+  removeMapping = () => {
     const { input } = this.props;
     this.setState(prevState => {
       const clustersStepMappings = input.value;
@@ -121,12 +107,12 @@ class ClustersStepForm extends React.Component {
         selectedMapping: null
       };
     });
-  }
+  };
 
-  removeAll() {
+  removeAll = () => {
     const { input } = this.props;
     input.onChange([]);
-  }
+  };
 
   render() {
     const {

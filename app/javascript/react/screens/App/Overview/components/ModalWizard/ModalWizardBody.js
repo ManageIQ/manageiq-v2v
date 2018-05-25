@@ -1,25 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {
-  bindMethods,
-  noop,
-  EmptyState,
-  Spinner,
-  Wizard,
-  Alert
-} from 'patternfly-react';
+import { noop, EmptyState, Spinner, Wizard, Alert } from 'patternfly-react';
 
 // NOTE: This may be a good component to move up to patternfly-react.
 // Let's try to avoid putting any application-specific code in here.
 
 class ModalWizardBody extends React.Component {
-  constructor() {
-    super();
-    bindMethods(this, ['onStepClick', 'stepProps', 'renderLoading']);
-  }
-
-  onStepClick(stepIndex, disableGoto) {
+  onStepClick = (stepIndex, disableGoto) => {
     const { steps, goToStep, disableNextStep, activeStepIndex } = this.props;
     const nextStepClicked = stepIndex === activeStepIndex + 1;
     if (disableGoto || (nextStepClicked && disableNextStep)) return;
@@ -28,9 +16,9 @@ class ModalWizardBody extends React.Component {
     if (step && step.onClick) {
       step.onClick();
     }
-  }
+  };
 
-  stepProps(stepIndex, title) {
+  stepProps = (stepIndex, title) => {
     const { activeStep } = this.props;
     const label = (stepIndex + 1).toString();
     return {
@@ -41,9 +29,9 @@ class ModalWizardBody extends React.Component {
       title,
       activeStep
     };
-  }
+  };
 
-  renderLoading() {
+  renderLoading = () => {
     const { loadingTitle, loadingMessage } = this.props;
     return (
       <Wizard.Row>
@@ -60,7 +48,7 @@ class ModalWizardBody extends React.Component {
         </Wizard.Main>
       </Wizard.Row>
     );
-  }
+  };
 
   render() {
     const {

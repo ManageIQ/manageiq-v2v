@@ -63,7 +63,7 @@
     "lodash.orderby": "^4.6.0",
     "moment": "^2.22.0",
     "numeral": "^2.0.6",
-    "patternfly-react": "2.2.0",
+    "patternfly-react": "2.3.4",
     "prop-types": "^15.6.0",
     "react": "^16.3.1",
     "react-dom": "^16.3.1",

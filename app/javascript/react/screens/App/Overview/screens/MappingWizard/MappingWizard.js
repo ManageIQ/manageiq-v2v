@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { bindMethods, noop, Button, Icon, Wizard } from 'patternfly-react';
+import { noop, Button, Icon, Wizard } from 'patternfly-react';
 import {
   createTransformationMappings,
   getMappedSourceClusters,
@@ -18,18 +18,14 @@ const mappingWizardSteps = [
 ];
 
 class MappingWizard extends React.Component {
-  constructor() {
-    super();
-    this.state = { activeStepIndex: 0 };
-    bindMethods(this, ['prevStep', 'nextStep', 'goToStep']);
-  }
+  state = { activeStepIndex: 0 };
 
-  prevStep() {
+  prevStep = () => {
     const { activeStepIndex } = this.state;
     this.setState({ activeStepIndex: Math.max(activeStepIndex - 1, 0) });
-  }
+  };
 
-  nextStep() {
+  nextStep = () => {
     const { activeStepIndex } = this.state;
     const {
       mappingWizardGeneralStep,
@@ -134,9 +130,9 @@ class MappingWizard extends React.Component {
         )
       });
     }
-  }
+  };
 
-  goToStep(activeStepIndex) {
+  goToStep = activeStepIndex => {
     const { activeStepIndex: currentStep } = this.state;
 
     if (currentStep === 2 && activeStepIndex === 3) {
@@ -144,7 +140,7 @@ class MappingWizard extends React.Component {
     } else {
       this.setState(() => ({ activeStepIndex }));
     }
-  }
+  };
 
   render() {
     const {

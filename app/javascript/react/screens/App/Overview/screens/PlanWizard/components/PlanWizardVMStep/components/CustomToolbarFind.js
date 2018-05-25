@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { bindMethods, noop, Button, Icon, FormControl } from 'patternfly-react';
+import { noop, Button, Icon, FormControl } from 'patternfly-react';
 
 /**
  * This is a custom toolbar find w/ limited functionality of Toolbar.Find
@@ -10,31 +10,21 @@ import { bindMethods, noop, Button, Icon, FormControl } from 'patternfly-react';
  * This should be added in a future release.
  */
 class CustomToolbarFind extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      dropdownShown: false,
-      currentValue: ''
-    };
+  state = {
+    dropdownShown: false,
+    currentValue: ''
+  };
 
-    bindMethods(this, [
-      'toggleDropdownShown',
-      'hideDropdown',
-      'onValueKeyPress',
-      'handleValueChange'
-    ]);
-  }
-
-  onValueKeyPress(keyEvent) {
+  onValueKeyPress = keyEvent => {
     const { onEnter } = this.props;
     const { currentValue } = this.state;
 
     if (keyEvent.key === 'Enter' && onEnter) {
       onEnter(currentValue);
     }
-  }
+  };
 
-  handleValueChange(event) {
+  handleValueChange = event => {
     const { onChange } = this.props;
 
     this.setState({ currentValue: event.target.value });
@@ -42,17 +32,17 @@ class CustomToolbarFind extends React.Component {
     if (onChange) {
       onChange(event.target.value);
     }
-  }
+  };
 
-  hideDropdown() {
+  hideDropdown = () => {
     const { onExit } = this.props;
     this.setState({ dropdownShown: false });
     onExit();
-  }
+  };
 
-  toggleDropdownShown() {
+  toggleDropdownShown = () => {
     this.setState(prevState => ({ dropdownShown: !prevState.dropdownShown }));
-  }
+  };
 
   render() {
     const { dropdownShown, currentValue } = this.state;

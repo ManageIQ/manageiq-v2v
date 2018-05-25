@@ -1,12 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { noop, Spinner, bindMethods } from 'patternfly-react';
+import { noop, Spinner } from 'patternfly-react';
 
 class PlanWizardResultsStep extends React.Component {
-  constructor(props) {
-    super(props);
-    bindMethods(this, ['renderResult']);
-  }
   componentDidMount() {
     const {
       postPlansUrl,

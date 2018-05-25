@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { noop, bindMethods } from 'patternfly-react';
+import { noop } from 'patternfly-react';
 import { Field, reduxForm } from 'redux-form';
 import { length } from 'redux-form-validators';
 import NetworksStepForm from './components/NetworksStepForm/NetworksStepForm';
@@ -8,16 +8,10 @@ import { BootstrapSelect } from '../../../../../common/forms/BootstrapSelect';
 import { getClusterOptions } from '../helpers';
 
 class MappingWizardNetworksStep extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      selectedCluster: undefined, // dropdown selected cluster
-      selectedClusterMapping: null // cluster mapping from step-2 associated with selected source cluster
-    };
-
-    bindMethods(this, ['selectSourceCluster']);
-  }
+  state = {
+    selectedCluster: undefined, // dropdown selected cluster
+    selectedClusterMapping: null // cluster mapping from step-2 associated with selected source cluster
+  };
 
   componentWillMount() {
     const { clusterMappings, pristine } = this.props;
@@ -67,7 +61,7 @@ class MappingWizardNetworksStep extends React.Component {
     }
   }
 
-  selectSourceCluster(sourceClusterId) {
+  selectSourceCluster = sourceClusterId => {
     // when dropdown selection occurs for source cluster, we go retrieve the
     // newworks for that cluster
     const {
@@ -94,7 +88,7 @@ class MappingWizardNetworksStep extends React.Component {
 
     fetchSourceNetworksAction(fetchNetworksUrl, sourceClusterId);
     fetchTargetNetworksAction(fetchNetworksUrl, targetCluster.id);
-  }
+  };
 
   render() {
     const {
