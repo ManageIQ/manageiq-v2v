@@ -143,6 +143,13 @@ class ClustersStepForm extends React.Component {
       selectedMapping
     } = this.state;
 
+    const counter = (
+      <DualPaneMapperCount
+        selectedItems={selectedSourceClusters.length}
+        totalItems={sourceClustersFilter(sourceClusters, input.value).length}
+      />
+    );
+
     return (
       <div className="dual-pane-mapper-form">
         <DualPaneMapper
@@ -159,6 +166,7 @@ class ClustersStepForm extends React.Component {
               id="source_clusters"
               listTitle="Source Clusters"
               loading={isFetchingSourceClusters}
+              counter={counter}
             >
               {sourceClustersFilter(sourceClusters, input.value).map(item => (
                 <DualPaneMapperListItem
@@ -179,12 +187,6 @@ class ClustersStepForm extends React.Component {
                   handleKeyPress={this.selectSourceCluster}
                 />
               ))}
-              <DualPaneMapperCount
-                selectedItems={selectedSourceClusters.length}
-                totalItems={
-                  sourceClustersFilter(sourceClusters, input.value).length
-                }
-              />
             </DualPaneMapperList>
           )}
           {targetClusters && (

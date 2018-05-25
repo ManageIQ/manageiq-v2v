@@ -374,6 +374,13 @@ class DatastoresStepForm extends React.Component {
       'is-hidden': !selectedCluster
     });
 
+    const counter = (
+      <DualPaneMapperCount
+        selectedItems={selectedSourceDatastores.length}
+        totalItems={sourceDatastoreFilter(sourceDatastores, input.value).length}
+      />
+    );
+
     return (
       <div className={classes}>
         <DualPaneMapper
@@ -389,6 +396,7 @@ class DatastoresStepForm extends React.Component {
             id="source_datastores"
             listTitle="Source Datastores"
             loading={isFetchingSourceDatastores}
+            counter={counter}
           >
             {sourceDatastores &&
               sourceDatastoreFilter(sourceDatastores, input.value).map(item => (
@@ -406,12 +414,6 @@ class DatastoresStepForm extends React.Component {
                   handleKeyPress={this.selectSourceDatastore}
                 />
               ))}
-            <DualPaneMapperCount
-              selectedItems={selectedSourceDatastores.length}
-              totalItems={
-                sourceDatastoreFilter(sourceDatastores, input.value).length
-              }
-            />
           </DualPaneMapperList>
           <DualPaneMapperList
             id="target_datastores"
