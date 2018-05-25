@@ -159,7 +159,9 @@ class ClustersStepForm extends React.Component {
                   item={item}
                   text={
                     item.v_parent_datacenter
-                      ? `${item.v_parent_datacenter} \\ ${item.name}`
+                      ? `${item.ext_management_system.name} \\ ${
+                          item.v_parent_datacenter
+                        } \\ ${item.name}`
                       : `${item.name}`
                   }
                   key={item.id}
@@ -186,7 +188,9 @@ class ClustersStepForm extends React.Component {
                   item={item}
                   text={
                     item.v_parent_datacenter
-                      ? `${item.v_parent_datacenter} \\ ${item.name}`
+                      ? `${item.ext_management_system.name} \\ ${
+                          item.v_parent_datacenter
+                        } \\ ${item.name}`
                       : `${item.name}`
                   }
                   key={item.id}

@@ -8,8 +8,12 @@ import {
 const _filterSourceDatastores = response => {
   const { data } = response;
   if (data.storages) {
+    const sourceDatastores = data.storages.map(storage => ({
+      ...storage,
+      providerName: data.ext_management_system.name
+    }));
     return {
-      sourceDatastores: data.storages
+      sourceDatastores
     };
   }
   return {
@@ -34,7 +38,7 @@ const _getSourceDatastoresActionCreator = url => dispatch =>
 export const fetchSourceDatastoresAction = (url, id) => {
   const uri = new URI(`${url}/${id}`);
   // creates url like: http://localhost:3000/api/clusters/1?attributes=storages
-  uri.addSearch({ attributes: 'storages' });
+  uri.addSearch({ attributes: 'storages,ext_management_system.name' });
 
   return _getSourceDatastoresActionCreator(uri.toString());
 };
@@ -42,8 +46,12 @@ export const fetchSourceDatastoresAction = (url, id) => {
 const _filterTargetDatastores = response => {
   const { data } = response;
   if (data.storages) {
+    const targetDatastores = data.storages.map(storage => ({
+      ...storage,
+      providerName: data.ext_management_system.name
+    }));
     return {
-      targetDatastores: data.storages
+      targetDatastores
     };
   }
   return {
@@ -66,7 +74,7 @@ const _getTargetDatastoresActionCreator = url => dispatch =>
 export const fetchTargetDatastoresAction = (url, id) => {
   const uri = new URI(`${url}/${id}`);
   // creates url like: http://localhost:3000/api/clusters/1?attributes=storages
-  uri.addSearch({ attributes: 'storages' });
+  uri.addSearch({ attributes: 'storages,ext_management_system.name' });
 
   return _getTargetDatastoresActionCreator(uri.toString());
 };

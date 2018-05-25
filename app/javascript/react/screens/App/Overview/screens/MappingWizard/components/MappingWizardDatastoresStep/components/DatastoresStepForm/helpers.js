@@ -35,14 +35,16 @@ export const targetDatastoreAvailableSpace = (
 
 export const sourceDatastoreInfo = sourceDatastore =>
   sprintf(
-    __('%s (%s)'),
+    __('%s \\ %s (%s)'),
+    sourceDatastore.providerName,
     sourceDatastore.name,
     numeral(datastoreUsedSpace(sourceDatastore)).format('0.00b')
   );
 
 export const targetDatastoreInfo = (targetDatastore, datastoresStepMappings) =>
   sprintf(
-    __('%s (%s avail)'),
+    __('%s \\ %s (%s avail)'),
+    targetDatastore.providerName,
     targetDatastore.name,
     numeral(
       targetDatastoreAvailableSpace(targetDatastore, datastoresStepMappings)

@@ -30,11 +30,11 @@ export const coreComponents = [
     data: {
       fetchSourceClustersUrl:
         '/api/clusters?expand=resources' +
-        '&attributes=ext_management_system.emstype,v_parent_datacenter' +
+        '&attributes=ext_management_system.emstype,v_parent_datacenter,ext_management_system.name' +
         '&filter[]=ext_management_system.emstype=vmwarews',
       fetchTargetClustersUrl:
         '/api/clusters?expand=resources' +
-        '&attributes=ext_management_system.emstype,v_parent_datacenter' +
+        '&attributes=ext_management_system.emstype,v_parent_datacenter,ext_management_system.name' +
         '&filter[]=ext_management_system.emstype=rhevm'
     },
     store: true
