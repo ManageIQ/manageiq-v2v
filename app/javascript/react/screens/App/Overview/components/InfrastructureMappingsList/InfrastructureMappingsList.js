@@ -101,7 +101,10 @@ const InfrastructureMappingsList = ({
                         ? __('Associated Plan')
                         : __('Associated Plans')}
                     </ListView.InfoItem>
-                  ) : null
+                  ) : null,
+                  <ListView.InfoItem key={3}>
+                    <Icon type="pf" name="delete" onClick={e => {}} />
+                  </ListView.InfoItem>
                 ]}
               >
                 <Grid.Row
