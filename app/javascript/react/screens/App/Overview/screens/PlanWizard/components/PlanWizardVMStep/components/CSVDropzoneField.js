@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import csv from 'csv';
+import utf8 from 'utf8';
 import { bindMethods, Button, EmptyState } from 'patternfly-react';
 import Dropzone from 'react-dropzone';
 
@@ -67,7 +68,7 @@ class CSVDropzoneField extends React.Component {
   }
 
   trimWhiteSpaces = csvRows =>
-    csvRows.map(row => row.map(value => value.trim()));
+    csvRows.map(row => row.map(value => utf8.decode(value).trim()));
 
   mapCSVColumnNameToKey = headerRow => {
     headerRow[headerRow.findIndex(k => k === __('Name'))] = 'name';
