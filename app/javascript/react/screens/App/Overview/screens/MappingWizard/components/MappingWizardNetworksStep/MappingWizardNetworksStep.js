@@ -8,14 +8,10 @@ import { BootstrapSelect } from '../../../../../common/forms/BootstrapSelect';
 import { getClusterOptions } from '../helpers';
 
 class MappingWizardNetworksStep extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      selectedCluster: undefined, // dropdown selected cluster
-      selectedClusterMapping: null // cluster mapping from step-2 associated with selected source cluster
-    };
-  }
+  state = {
+    selectedCluster: undefined, // dropdown selected cluster
+    selectedClusterMapping: null // cluster mapping from step-2 associated with selected source cluster
+  };
 
   componentWillMount() {
     const { clusterMappings, pristine } = this.props;

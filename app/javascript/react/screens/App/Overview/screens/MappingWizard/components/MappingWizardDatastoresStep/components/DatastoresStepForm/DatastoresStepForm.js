@@ -20,15 +20,11 @@ import {
 } from './helpers';
 
 class DatastoresStepForm extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      selectedSourceDatastores: [],
-      selectedTargetDatastore: null,
-      selectedNode: null
-    };
-  }
+  state = {
+    selectedSourceDatastores: [],
+    selectedTargetDatastore: null,
+    selectedNode: null
+  };
 
   componentWillReceiveProps(nextProps) {
     if (

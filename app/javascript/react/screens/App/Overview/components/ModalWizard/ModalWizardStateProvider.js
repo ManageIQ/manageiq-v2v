@@ -2,10 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 class ModalWizardStateProvider extends React.Component {
-  constructor() {
-    super();
-    this.state = { activeStepIndex: 0 };
-  }
+  state = { activeStepIndex: 0 };
 
   prevStep = () => {
     const { activeStepIndex } = this.state;

@@ -10,13 +10,10 @@ import { noop, Button, Icon, FormControl } from 'patternfly-react';
  * This should be added in a future release.
  */
 class CustomToolbarFind extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      dropdownShown: false,
-      currentValue: ''
-    };
-  }
+  state = {
+    dropdownShown: false,
+    currentValue: ''
+  };
 
   onValueKeyPress = keyEvent => {
     const { onEnter } = this.props;

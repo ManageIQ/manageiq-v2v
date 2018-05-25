@@ -12,10 +12,7 @@ const planWizardSteps = [
 ];
 
 class PlanWizard extends React.Component {
-  constructor() {
-    super();
-    this.state = { activeStepIndex: 0 };
-  }
+  state = { activeStepIndex: 0 };
 
   prevStep = () => {
     const { resetVmStepAction } = this.props;

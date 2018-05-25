@@ -8,14 +8,10 @@ import { BootstrapSelect } from '../../../../../common/forms/BootstrapSelect';
 import { getClusterOptions } from '../helpers';
 
 class MappingWizardDatastoresStep extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      selectedCluster: undefined,
-      selectedClusterMapping: null
-    };
-  }
+  state = {
+    selectedCluster: undefined,
+    selectedClusterMapping: null
+  };
 
   componentWillMount() {
     const { clusterMappings, pristine } = this.props;

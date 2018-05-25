@@ -11,15 +11,11 @@ import { updateMapping, createNewMapping } from './helpers';
 import { sourceClustersFilter } from '../../MappingWizardClustersStepSelectors';
 
 class ClustersStepForm extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      selectedTargetCluster: null,
-      selectedSourceClusters: [],
-      selectedMapping: null
-    };
-  }
+  state = {
+    selectedTargetCluster: null,
+    selectedSourceClusters: [],
+    selectedMapping: null
+  };
 
   selectSourceCluster = sourceCluster => {
     this.setState(prevState => {

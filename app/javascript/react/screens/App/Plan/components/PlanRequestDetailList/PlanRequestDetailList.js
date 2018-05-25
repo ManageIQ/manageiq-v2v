@@ -43,32 +43,29 @@ class PlanRequestDetailList extends React.Component {
     };
   }
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      // filter states
-      filterTypes: ACTIVE_PLAN_FILTER_TYPES,
-      currentFilterType: ACTIVE_PLAN_FILTER_TYPES[0],
-      currentValue: '',
-      activeFilters: [],
+  state = {
+    // filter states
+    filterTypes: ACTIVE_PLAN_FILTER_TYPES,
+    currentFilterType: ACTIVE_PLAN_FILTER_TYPES[0],
+    currentValue: '',
+    activeFilters: [],
 
-      // sort states
-      sortFields: ACTIVE_PLAN_SORT_FIELDS,
-      currentSortType: ACTIVE_PLAN_SORT_FIELDS[0],
-      isSortNumeric: ACTIVE_PLAN_SORT_FIELDS[0].isNumeric,
-      isSortAscending: true,
+    // sort states
+    sortFields: ACTIVE_PLAN_SORT_FIELDS,
+    currentSortType: ACTIVE_PLAN_SORT_FIELDS[0],
+    isSortNumeric: ACTIVE_PLAN_SORT_FIELDS[0].isNumeric,
+    isSortAscending: true,
 
-      // pagination default states
-      pagination: {
-        page: 1,
-        perPage: 5,
-        perPageOptions: [5, 10, 15]
-      },
+    // pagination default states
+    pagination: {
+      page: 1,
+      perPage: 5,
+      perPageOptions: [5, 10, 15]
+    },
 
-      // page input value
-      pageChangeValue: 1
-    };
-  }
+    // page input value
+    pageChangeValue: 1
+  };
 
   onValueKeyPress = keyEvent => {
     const { currentValue, currentFilterType } = this.state;

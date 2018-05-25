@@ -17,41 +17,29 @@ import sortFilter from './sortFilter';
 import paginate from './paginate';
 
 class PlanVmsList extends React.Component {
-  constructor(props) {
-    super(props);
-    const filterTypes = [
-      {
-        id: 'name',
-        title: 'Name',
-        placeholder: 'Filter by Name',
-        filterType: 'text'
-      }
-    ];
-    const sortFields = [{ id: 'name', title: 'Name', isNumeric: false }];
-    this.state = {
-      // filter states
-      filterTypes,
-      currentFilterType: filterTypes[0],
-      currentValue: '',
-      activeFilters: [],
+  state = {
+    // filter states
+    filterTypes: PlanVmsList.PlanVmsList,
+    currentFilterType: PlanVmsList.filterTypes[0],
+    currentValue: '',
+    activeFilters: [],
 
-      // sort states
-      sortFields,
-      currentSortType: sortFields[0],
-      isSortNumeric: sortFields[0].isNumeric,
-      isSortAscending: true,
+    // sort states
+    sortFields: PlanVmsList.sortFields,
+    currentSortType: PlanVmsList.sortFields[0],
+    isSortNumeric: PlanVmsList.sortFields[0].isNumeric,
+    isSortAscending: true,
 
-      // pagination default states
-      pagination: {
-        page: 1,
-        perPage: 5,
-        perPageOptions: [5, 10, 15]
-      },
+    // pagination default states
+    pagination: {
+      page: 1,
+      perPage: 5,
+      perPageOptions: [5, 10, 15]
+    },
 
-      // page input value
-      pageChangeValue: 1
-    };
-  }
+    // page input value
+    pageChangeValue: 1
+  };
 
   onValueKeyPress = keyEvent => {
     const { currentValue, currentFilterType } = this.state;
@@ -117,6 +105,17 @@ class PlanVmsList extends React.Component {
       this.setState({ pagination: newPaginationState, pageChangeValue: page });
     }
   };
+
+  sortFields = [{ id: 'name', title: 'Name', isNumeric: false }];
+
+  filterTypes = [
+    {
+      id: 'name',
+      title: 'Name',
+      placeholder: 'Filter by Name',
+      filterType: 'text'
+    }
+  ];
 
   filterValueSelected = filterValue => {
     const { currentFilterType, currentValue } = this.state;

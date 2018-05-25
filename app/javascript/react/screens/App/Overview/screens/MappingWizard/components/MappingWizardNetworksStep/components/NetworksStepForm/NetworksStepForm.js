@@ -19,15 +19,11 @@ import {
 } from './helpers';
 
 class NetworksStepForm extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      selectedSourceNetworks: [],
-      selectedTargetNetwork: null,
-      selectedNode: null
-    };
-  }
+  state = {
+    selectedSourceNetworks: [],
+    selectedTargetNetwork: null,
+    selectedNode: null
+  };
 
   componentWillReceiveProps(nextProps) {
     if (

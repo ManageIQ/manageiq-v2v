@@ -7,18 +7,7 @@ const i18nProviderWrapperFactory = initialNow => WrappedComponent => {
   const wrappedName = getDisplayName(WrappedComponent);
 
   class I18nProviderWrapper extends React.Component {
-    constructor(props) {
-      super(props);
-      // this.state = { i18nLoaded: i18n.loaded };
-      this.state = { i18nLoaded: true };
-
-      // todo: load i18n from the server created locale
-      // if (!i18n.loaded) {
-      // i18n.ready.then(() => {
-      // this.setState({ i18nLoaded: true });
-      // });
-      // }
-    }
+    state = { i18nLoaded: true };
 
     render() {
       if (!this.state.i18nLoaded) {

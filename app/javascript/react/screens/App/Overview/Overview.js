@@ -12,10 +12,6 @@ class Overview extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      hasMadeInitialPlansFetch: false
-    };
-
     this.mappingWizard = componentRegistry.markup(
       'MappingWizardContainer',
       props.store
@@ -25,6 +21,10 @@ class Overview extends React.Component {
       props.store
     );
   }
+
+  state = {
+    hasMadeInitialPlansFetch: false
+  };
 
   componentDidMount() {
     const {
