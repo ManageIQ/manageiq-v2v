@@ -27,7 +27,8 @@ function clusterName(clusters, clusterId) {
 const InfrastructureMappingsList = ({
   clusters,
   transformationMappings,
-  createInfraMappingClick
+  createInfraMappingClick,
+  inProgressRequestsTransformationMappings
 }) => (
   <Grid.Col
     xs={12}
@@ -101,11 +102,22 @@ const InfrastructureMappingsList = ({
                         ? __('Associated Plan')
                         : __('Associated Plans')}
                     </ListView.InfoItem>
-                  ) : null,
-                  <ListView.InfoItem key={3}>
-                    <Icon type="pf" name="delete" onClick={e => {}} />
-                  </ListView.InfoItem>
+                  ) : null
                 ]}
+                actions={
+                  inProgressRequestsTransformationMappings.find(
+                    inProgressRequestsTransformationMapping =>
+                      inProgressRequestsTransformationMapping === mapping.id
+                  ) ? (
+                    <Icon
+                      type="pf"
+                      className="delete-infra-mapping-icon-disabled"
+                      name="delete"
+                    />
+                  ) : (
+                    <Icon type="pf" name="delete" onClick={e => {}} />
+                  )
+                }
               >
                 <Grid.Row
                   style={{
@@ -174,7 +186,8 @@ const InfrastructureMappingsList = ({
 InfrastructureMappingsList.propTypes = {
   clusters: PropTypes.array,
   transformationMappings: PropTypes.array,
-  createInfraMappingClick: PropTypes.func
+  createInfraMappingClick: PropTypes.func,
+  inProgressRequestsTransformationMappings: PropTypes.array
 };
 
 export default InfrastructureMappingsList;

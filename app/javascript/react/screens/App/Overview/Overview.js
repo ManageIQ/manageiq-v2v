@@ -197,6 +197,20 @@ class Overview extends React.Component {
       setMigrationsFilterAction
     } = this.props;
 
+    const inProgressRequestsTransformationMappings = () => {
+      const mappings = [];
+
+      allRequestsWithTasks
+        .filter(request => request.fulfilled_on === null)
+        .map(request =>
+          mappings.push(
+            request.service_template.options.config_info
+              .transformation_mapping_id
+          )
+        );
+      return mappings;
+    };
+
     const aggregateDataCards = (
       <div className="row-cards-pf">
         <Card.HeightMatching selector={['.card-pf-match-height']}>
@@ -277,6 +291,7 @@ class Overview extends React.Component {
             clusters={clusters}
             transformationMappings={transformationMappings}
             createInfraMappingClick={showMappingWizardAction}
+            inProgressRequestsTransformationMappings={inProgressRequestsTransformationMappings()}
           />
         </Spinner>
       </div>

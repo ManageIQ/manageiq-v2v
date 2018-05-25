@@ -57,10 +57,13 @@ const fetchTasksForAllRequests = (allRequests, dispatch) => {
     dispatch({
       type: FETCH_V2V_ALL_REQUESTS_WITH_TASKS,
       payload: new Promise((resolve, reject) => {
-        API.post('/api/requests?expand=resource&attributes=miq_request_tasks', {
-          action: 'query',
-          resources: allRequests
-        })
+        API.post(
+          '/api/requests?expand=resource&attributes=miq_request_tasks,service_template',
+          {
+            action: 'query',
+            resources: allRequests
+          }
+        )
           .then(responseRequestsWithTasks => {
             resolve(responseRequestsWithTasks);
           })
