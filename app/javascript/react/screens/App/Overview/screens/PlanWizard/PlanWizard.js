@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { bindMethods, noop, Button, Icon, Wizard } from 'patternfly-react';
+import { noop, Button, Icon, Wizard } from 'patternfly-react';
 import { createMigrationPlans } from './helpers';
 import PlanWizardBody from './PlanWizardBody';
 
@@ -15,10 +15,9 @@ class PlanWizard extends React.Component {
   constructor() {
     super();
     this.state = { activeStepIndex: 0 };
-    bindMethods(this, ['prevStep', 'nextStep', 'goToStep']);
   }
 
-  prevStep() {
+  prevStep = () => {
     const { resetVmStepAction } = this.props;
     const { activeStepIndex } = this.state;
 
@@ -27,9 +26,9 @@ class PlanWizard extends React.Component {
       resetVmStepAction();
     }
     this.setState({ activeStepIndex: Math.max(activeStepIndex - 1, 0) });
-  }
+  };
 
-  nextStep() {
+  nextStep = () => {
     const { activeStepIndex } = this.state;
     const {
       planWizardGeneralStep,
@@ -67,11 +66,11 @@ class PlanWizard extends React.Component {
     this.setState({
       activeStepIndex: Math.min(activeStepIndex + 1, planWizardSteps.length - 1)
     });
-  }
+  };
 
-  goToStep(activeStepIndex) {
+  goToStep = activeStepIndex => {
     this.setState({ activeStepIndex });
-  }
+  };
 
   render() {
     const {

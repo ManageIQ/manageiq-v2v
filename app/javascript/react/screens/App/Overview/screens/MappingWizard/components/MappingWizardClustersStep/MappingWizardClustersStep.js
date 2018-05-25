@@ -1,21 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, noop, bindMethods } from 'patternfly-react';
+import { Button, noop } from 'patternfly-react';
 import { Field, reduxForm } from 'redux-form';
 import { length } from 'redux-form-validators';
 
 import ClustersStepForm from './components/ClustersStepForm/ClustersStepForm';
 
 class MappingWizardClustersStep extends React.Component {
-  constructor(props) {
-    super(props);
-    bindMethods(this, ['fetchClusters']);
-  }
   componentDidMount() {
     this.fetchClusters();
   }
 
-  fetchClusters() {
+  fetchClusters = () => {
     const {
       fetchSourceClustersUrl,
       fetchSourceClustersAction,
@@ -25,7 +21,7 @@ class MappingWizardClustersStep extends React.Component {
 
     fetchSourceClustersAction(fetchSourceClustersUrl);
     fetchTargetClustersAction(fetchTargetClustersUrl);
-  }
+  };
 
   render() {
     const {

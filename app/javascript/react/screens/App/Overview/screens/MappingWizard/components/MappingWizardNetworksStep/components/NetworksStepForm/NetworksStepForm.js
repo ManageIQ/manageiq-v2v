@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { bindMethods } from 'patternfly-react';
 import cx from 'classnames';
 
 import DualPaneMapper from '../../../DualPaneMapper/DualPaneMapper';
@@ -28,15 +27,6 @@ class NetworksStepForm extends React.Component {
       selectedTargetNetwork: null,
       selectedNode: null
     };
-
-    bindMethods(this, [
-      'selectSourceNetwork',
-      'selectTargetNetwork',
-      'addNetworkMapping',
-      'selectNode',
-      'removeNode',
-      'removeAll'
-    ]);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -51,7 +41,7 @@ class NetworksStepForm extends React.Component {
     }
   }
 
-  selectSourceNetwork(sourceNetwork) {
+  selectSourceNetwork = sourceNetwork => {
     this.setState(prevState => {
       const isAlreadySelected = prevState.selectedSourceNetworks.some(
         selectedSourceNetwork =>
@@ -72,13 +62,13 @@ class NetworksStepForm extends React.Component {
         ]
       };
     });
-  }
+  };
 
-  selectTargetNetwork(targetNetwork) {
+  selectTargetNetwork = targetNetwork => {
     this.setState(() => ({ selectedTargetNetwork: targetNetwork }));
-  }
+  };
 
-  addNetworkMapping() {
+  addNetworkMapping = () => {
     const {
       input: { value: networksStepMappings, onChange },
       selectedCluster,
@@ -199,9 +189,9 @@ class NetworksStepForm extends React.Component {
       selectedTargetNetwork: null,
       selectedSourceNetworks: []
     }));
-  }
+  };
 
-  selectNode(selectedNode) {
+  selectNode = selectedNode => {
     const { value: networksStepMappings, onChange } = this.props.input;
     const isTargetNetwork = selectedNode.nodes;
 
@@ -280,9 +270,9 @@ class NetworksStepForm extends React.Component {
       onChange(updatedMappings);
     }
     this.setState(() => ({ selectedNode }));
-  }
+  };
 
-  removeNode() {
+  removeNode = () => {
     const { value: networksStepMappings, onChange } = this.props.input;
     const { selectedNode } = this.state;
     const isTargetNetwork = selectedNode.nodes;
@@ -343,12 +333,12 @@ class NetworksStepForm extends React.Component {
 
     onChange(updatedMappings);
     this.setState(() => ({ selectedNode: null }));
-  }
+  };
 
-  removeAll() {
+  removeAll = () => {
     const { input } = this.props;
     input.onChange([]);
-  }
+  };
 
   render() {
     const {

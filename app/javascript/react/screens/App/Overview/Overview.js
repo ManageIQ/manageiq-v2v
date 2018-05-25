@@ -1,12 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  bindMethods,
-  Card,
-  Breadcrumb,
-  CardGrid,
-  Spinner
-} from 'patternfly-react';
+import { Card, Breadcrumb, CardGrid, Spinner } from 'patternfly-react';
 import Toolbar from '../../../config/Toolbar';
 import * as AggregateCards from './components/AggregateCards';
 import InfrastructureMappingsList from './components/InfrastructureMappingsList/InfrastructureMappingsList';
@@ -21,13 +15,6 @@ class Overview extends React.Component {
     this.state = {
       hasMadeInitialPlansFetch: false
     };
-
-    bindMethods(this, [
-      'stopPolling',
-      'startPolling',
-      'createTransformationPlanRequest',
-      'redirectTo'
-    ]);
 
     this.mappingWizard = componentRegistry.markup(
       'MappingWizardContainer',
@@ -149,7 +136,7 @@ class Overview extends React.Component {
     this.stopPolling();
   }
 
-  startPolling() {
+  startPolling = () => {
     const {
       fetchTransformationPlansAction,
       fetchTransformationPlansUrl
@@ -157,16 +144,16 @@ class Overview extends React.Component {
     this.pollingInterval = setInterval(() => {
       fetchTransformationPlansAction(fetchTransformationPlansUrl);
     }, 15000);
-  }
+  };
 
-  stopPolling() {
+  stopPolling = () => {
     if (this.pollingInterval) {
       clearInterval(this.pollingInterval);
       this.pollingInterval = null;
     }
-  }
+  };
 
-  createTransformationPlanRequest(url, planId) {
+  createTransformationPlanRequest = (url, planId) => {
     const {
       createTransformationPlanRequestAction,
       fetchTransformationPlansAction,
@@ -180,12 +167,12 @@ class Overview extends React.Component {
       setMigrationsFilterAction('Migration Plans in Progress');
       fetchTransformationPlansAction(fetchTransformationPlansUrl);
     });
-  }
+  };
 
-  redirectTo(path) {
+  redirectTo = path => {
     const { history } = this.props;
     history.push(path);
-  }
+  };
 
   render() {
     const {

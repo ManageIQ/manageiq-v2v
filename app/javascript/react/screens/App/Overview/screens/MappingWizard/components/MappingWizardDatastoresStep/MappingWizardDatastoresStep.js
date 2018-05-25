@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import { length } from 'redux-form-validators';
-import { noop, bindMethods } from 'patternfly-react';
+import { noop } from 'patternfly-react';
 import DatastoresStepForm from './components/DatastoresStepForm/DatastoresStepForm';
 import { BootstrapSelect } from '../../../../../common/forms/BootstrapSelect';
 import { getClusterOptions } from '../helpers';
@@ -15,8 +15,6 @@ class MappingWizardDatastoresStep extends React.Component {
       selectedCluster: undefined,
       selectedClusterMapping: null
     };
-
-    bindMethods(this, ['selectSourceCluster']);
   }
 
   componentWillMount() {
@@ -66,7 +64,7 @@ class MappingWizardDatastoresStep extends React.Component {
     }
   }
 
-  selectSourceCluster(sourceClusterId) {
+  selectSourceCluster = sourceClusterId => {
     // when dropdown selection occurs for source cluster, we go retrieve the datastores for that
     // cluster
     const {
@@ -93,7 +91,7 @@ class MappingWizardDatastoresStep extends React.Component {
 
     fetchSourceDatastoresAction(fetchDatastoresUrl, sourceClusterId);
     fetchTargetDatastoresAction(fetchDatastoresUrl, targetCluster.id);
-  }
+  };
 
   render() {
     const {

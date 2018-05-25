@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import csv from 'csv';
 import utf8 from 'utf8';
-import { bindMethods, Button, EmptyState } from 'patternfly-react';
+import { Button, EmptyState } from 'patternfly-react';
 import Dropzone from 'react-dropzone';
 
 // Unfortunately, this is the recommended way to trigger the file dialog programmatically.
@@ -10,26 +10,16 @@ import Dropzone from 'react-dropzone';
 let dropzoneRef;
 
 class CSVDropzoneField extends React.Component {
-  constructor() {
-    super();
-    bindMethods(this, [
-      'onFileDrop',
-      'handleUnparsedFile',
-      'trimWhiteSpaces',
-      'mapCSVColumnNameToKey'
-    ]);
-  }
-
-  onFileDrop(acceptedFiles, rejectedFiles) {
+  onFileDrop = (acceptedFiles, rejectedFiles) => {
     if (acceptedFiles && acceptedFiles.length > 0) {
       this.handleUnparsedFile(acceptedFiles[0]);
     } else {
       // eslint-disable-next-line no-restricted-globals
       alert('Invalid file extension. Only .csv files are accepted.');
     }
-  }
+  };
 
-  handleUnparsedFile(fileHandle) {
+  handleUnparsedFile = fileHandle => {
     const { onCSVParseSuccess, onCSVParseFailure } = this.props;
     if (fileHandle) {
       const reader = new FileReader();
@@ -65,7 +55,7 @@ class CSVDropzoneField extends React.Component {
       };
       reader.readAsBinaryString(fileHandle);
     }
-  }
+  };
 
   trimWhiteSpaces = csvRows =>
     csvRows.map(row => row.map(value => utf8.decode(value).trim()));

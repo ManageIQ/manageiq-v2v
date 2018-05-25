@@ -6,7 +6,6 @@ import * as sort from 'sortabular';
 import * as resolve from 'table-resolver';
 import { compose } from 'recompose';
 import {
-  bindMethods,
   paginate,
   noop,
   Button,
@@ -65,29 +64,6 @@ class PlanWizardVMStepTable extends React.Component {
 
     // enables our custom header formatters extensions to reactabular
     this.customHeaderFormatters = Table.customHeaderFormattersDefinition;
-
-    bindMethods(this, [
-      'onFindAction',
-      'onFindExit',
-      'filteredSearchedRows',
-      'removeFilter',
-      'clearFilters',
-      'selectFilterType',
-      'updateCurrentValue',
-      'customHeaderFormatters',
-      'onPageInput',
-      'onSubmit',
-      'onPerPageSelect',
-      'onFirstPage',
-      'onPreviousPage',
-      'onNextPage',
-      'onLastPage',
-      'onRow',
-      'onSelectAllRows',
-      'onSelectRow',
-      'setPage',
-      'totalPages'
-    ]);
 
     const filterTypes = [
       {
@@ -296,37 +272,37 @@ class PlanWizardVMStepTable extends React.Component {
       pageChangeValue: 1
     };
   }
-  onFirstPage() {
+  onFirstPage = () => {
     this.setPage(1);
-  }
-  onLastPage() {
+  };
+  onLastPage = () => {
     const { page } = this.state.pagination;
     const totalPages = this.totalPages();
     if (page < totalPages) {
       this.setPage(totalPages);
     }
-  }
-  onNextPage() {
+  };
+  onNextPage = () => {
     const { page } = this.state.pagination;
     if (page < this.totalPages()) {
       this.setPage(this.state.pagination.page + 1);
     }
-  }
-  onPageInput(e) {
+  };
+  onPageInput = e => {
     this.setState({ pageChangeValue: e.target.value });
-  }
-  onPerPageSelect(eventKey, e) {
+  };
+  onPerPageSelect = (eventKey, e) => {
     const newPaginationState = Object.assign({}, this.state.pagination);
     newPaginationState.perPage = eventKey;
     newPaginationState.page = 1;
     this.setState({ pagination: newPaginationState });
-  }
-  onPreviousPage() {
+  };
+  onPreviousPage = () => {
     if (this.state.pagination.page > 1) {
       this.setPage(this.state.pagination.page - 1);
     }
-  }
-  onRow(row, { rowIndex }) {
+  };
+  onRow = (row, { rowIndex }) => {
     const { selectedRows } = this.state;
     const selected = selectedRows.indexOf(row.id) > -1;
     return {
@@ -337,8 +313,8 @@ class PlanWizardVMStepTable extends React.Component {
       }),
       role: 'row'
     };
-  }
-  onSelectAllRows(event) {
+  };
+  onSelectAllRows = event => {
     const { input } = this.props;
     const { rows, selectedRows } = this.state;
     const { checked } = event.target;
@@ -384,8 +360,8 @@ class PlanWizardVMStepTable extends React.Component {
         selectedRows: updatedSelections
       });
     }
-  }
-  onSelectRow(event, row) {
+  };
+  onSelectRow = (event, row) => {
     const { input } = this.props;
     const { rows, selectedRows } = this.state;
     const selectedRowIndex = rows.findIndex(r => r.id === row.id);
@@ -408,11 +384,11 @@ class PlanWizardVMStepTable extends React.Component {
         selectedRows: updatedSelectedRows
       });
     }
-  }
-  onSubmit() {
+  };
+  onSubmit = () => {
     this.setPage(this.state.pageChangeValue);
-  }
-  onValueKeyPress(keyEvent) {
+  };
+  onValueKeyPress = keyEvent => {
     const { currentValue, currentFilterType } = this.state;
 
     if (keyEvent.key === 'Enter' && currentValue && currentValue.length > 0) {
@@ -421,15 +397,15 @@ class PlanWizardVMStepTable extends React.Component {
       keyEvent.stopPropagation();
       keyEvent.preventDefault();
     }
-  }
-  onFindAction(value) {
+  };
+  onFindAction = value => {
     // clear filters and set search text (search and filter are independent for now)
     this.setState({ activeFilters: [], searchFilterValue: value });
-  }
-  onFindExit() {
+  };
+  onFindExit = () => {
     this.setState({ searchFilterValue: '' });
-  }
-  setPage(value) {
+  };
+  setPage = value => {
     const page = Number(value);
     if (
       !Number.isNaN(value) &&
@@ -441,8 +417,8 @@ class PlanWizardVMStepTable extends React.Component {
       newPaginationState.page = page;
       this.setState({ pagination: newPaginationState, pageChangeValue: page });
     }
-  }
-  currentRows(filteredRows) {
+  };
+  currentRows = filteredRows => {
     const { sortingColumns, columns, pagination } = this.state;
 
     return compose(
@@ -454,20 +430,20 @@ class PlanWizardVMStepTable extends React.Component {
         strategy: sort.strategies.byProperty
       })
     )(filteredRows);
-  }
+  };
 
-  totalPages() {
+  totalPages = () => {
     const { rows } = this.state;
     const { perPage } = this.state.pagination;
     return Math.ceil(rows.length / perPage);
-  }
+  };
 
-  selectFilterType(filterType) {
+  selectFilterType = filterType => {
     const { currentFilterType } = this.state;
     if (currentFilterType !== filterType) {
       this.setState({ currentValue: '', currentFilterType: filterType });
     }
-  }
+  };
 
   filterAdded = (field, value) => {
     let filterText = field.title;
@@ -482,11 +458,11 @@ class PlanWizardVMStepTable extends React.Component {
     this.setState({ activeFilters });
   };
 
-  updateCurrentValue(event) {
+  updateCurrentValue = event => {
     this.setState({ currentValue: event.target.value });
-  }
+  };
 
-  removeFilter(filter) {
+  removeFilter = filter => {
     const { activeFilters } = this.state;
 
     const index = activeFilters.indexOf(filter);
@@ -497,11 +473,11 @@ class PlanWizardVMStepTable extends React.Component {
       ];
       this.setState({ activeFilters: updated });
     }
-  }
-  clearFilters() {
+  };
+  clearFilters = () => {
     this.setState({ activeFilters: [] });
-  }
-  filteredSearchedRows() {
+  };
+  filteredSearchedRows = () => {
     const { activeFilters, searchFilterValue, rows } = this.state;
     if (activeFilters && activeFilters.length) {
       return rowFilter(activeFilters, rows);
@@ -509,7 +485,7 @@ class PlanWizardVMStepTable extends React.Component {
       return searchFilter(searchFilterValue, rows);
     }
     return rows;
-  }
+  };
 
   render() {
     const {
