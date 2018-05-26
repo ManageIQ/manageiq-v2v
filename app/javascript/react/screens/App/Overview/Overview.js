@@ -182,6 +182,16 @@ class Overview extends React.Component {
     history.push(path);
   };
 
+  displayDeleteMessage = mappingToDelete => {
+    const mappingNameStyled = `<strong>${mappingToDelete.name}</strong>`;
+    const regularDeleteMessage = sprintf(
+      __('Are you sure you want to delete the infrastructure mapping %s ?'),
+      mappingNameStyled
+    );
+
+    return <div dangerouslySetInnerHTML={{ __html: regularDeleteMessage }} />;
+  };
+
   render() {
     const {
       showMappingWizardAction,
@@ -206,7 +216,8 @@ class Overview extends React.Component {
       showDeleteConfirmationModal,
       showDeleteConfirmationModalAction,
       hideDeleteConfirmationModalAction,
-      setMappingToDeleteAction
+      setMappingToDeleteAction,
+      mappingToDelete
     } = this.props;
 
     const inProgressRequestsTransformationMappings = () => {
@@ -322,7 +333,10 @@ class Overview extends React.Component {
                 <Icon type="pf" name="delete" />
               </div>
               <div className="warning-modal-body--list">
-                <h3>{}</h3>
+                <h3>
+                  {mappingToDelete &&
+                    this.displayDeleteMessage(mappingToDelete)}
+                </h3>
               </div>
             </Modal.Body>
             <Modal.Footer>
@@ -399,6 +413,7 @@ Overview.propTypes = {
   showDeleteConfirmationModal: PropTypes.bool,
   showDeleteConfirmationModalAction: PropTypes.func,
   hideDeleteConfirmationModalAction: PropTypes.func,
-  setMappingToDeleteAction: PropTypes.func
+  setMappingToDeleteAction: PropTypes.func,
+  mappingToDelete: PropTypes.object
 };
 export default Overview;
