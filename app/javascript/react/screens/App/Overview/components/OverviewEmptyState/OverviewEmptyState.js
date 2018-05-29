@@ -4,19 +4,26 @@ import { Button, EmptyState } from 'patternfly-react';
 
 const OverviewEmptyState = ({
   showWizardAction,
+  buttonHref,
   description,
   buttonText,
   title,
   iconType,
-  iconName
+  iconName,
+  ...props
 }) => (
-  <EmptyState className="overview">
+  <EmptyState className="overview" {...props}>
     <EmptyState.Icon type={iconType} name={iconName} />
     <EmptyState.Title>{title}</EmptyState.Title>
     <EmptyState.Info>{description}</EmptyState.Info>
     {buttonText && (
       <EmptyState.Action>
-        <Button bsStyle="primary" bsSize="large" onClick={showWizardAction}>
+        <Button
+          bsStyle="primary"
+          bsSize="large"
+          onClick={showWizardAction}
+          href={buttonHref}
+        >
           {sprintf(__('%s'), buttonText)}
         </Button>
       </EmptyState.Action>
@@ -26,6 +33,7 @@ const OverviewEmptyState = ({
 
 OverviewEmptyState.propTypes = {
   showWizardAction: PropTypes.func,
+  buttonHref: PropTypes.string,
   description: PropTypes.node,
   buttonText: PropTypes.string,
   title: PropTypes.string,
@@ -35,7 +43,9 @@ OverviewEmptyState.propTypes = {
 OverviewEmptyState.defaultProps = {
   title: ' ',
   iconType: 'pf',
-  iconName: 'add-circle-o'
+  iconName: 'add-circle-o',
+  showWizardAction: null,
+  buttonHref: null
 };
 
 export default OverviewEmptyState;

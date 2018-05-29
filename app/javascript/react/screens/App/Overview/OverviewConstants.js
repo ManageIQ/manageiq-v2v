@@ -10,6 +10,10 @@ export const CONTINUE_TO_PLAN = 'CONTINUE_TO_PLAN';
 export const V2V_SET_MIGRATIONS_FILTER = 'V2V_SET_MIGRATIONS_FILTER';
 export const V2V_RETRY_MIGRATION = 'V2V_RETRY_MIGRATION';
 
+export const FETCH_PROVIDERS = 'FETCH_PROVIDERS';
+export const FETCH_PROVIDERS_URL =
+  '/api/providers?expand=resources&attributes=type&filter[]=or%20type=ManageIQ::Providers::Redhat::InfraManager&filter[]=type=ManageIQ::Providers::Vmware::InfraManager';
+
 export const FETCH_V2V_TRANSFORMATION_MAPPINGS =
   'FETCH_V2V_TRANSFORMATION_MAPPINGS';
 

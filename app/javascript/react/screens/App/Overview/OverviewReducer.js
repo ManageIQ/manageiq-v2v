@@ -7,6 +7,7 @@ import {
   SHOW_PLAN_WIZARD,
   HIDE_PLAN_WIZARD,
   PLAN_WIZARD_EXITED,
+  FETCH_PROVIDERS,
   FETCH_V2V_TRANSFORMATION_MAPPINGS,
   FETCH_V2V_TRANSFORMATION_PLANS,
   FETCH_V2V_ALL_REQUESTS_WITH_TASKS,
@@ -28,6 +29,10 @@ export const initialState = Immutable({
   planWizardVisible: false,
   hidePlanWizard: true,
   planWizardId: null,
+  hasSufficientProviders: false,
+  isRejectedProviders: false,
+  isFetchingProviders: false,
+  errorProviders: null,
   transformationMappings: [],
   isRejectedTransformationMappings: false,
   isFetchingTransformationMappings: false,
@@ -82,6 +87,36 @@ export default (state = initialState, action) => {
       return state.set('hidePlanWizard', true).set('planWizardId', null);
     case PLAN_WIZARD_EXITED:
       return state.set('planWizardVisible', false);
+
+    case `${FETCH_PROVIDERS}_PENDING`:
+      return state.set('isFetchingProviders', true);
+
+    case `${FETCH_PROVIDERS}_FULFILLED`:
+      return (() => {
+        const insufficient = state
+          .set('hasSufficientProviders', false)
+          .set('isFetchingProviders', false)
+          .set('isRejectedProviders', false);
+        if (!action.payload.data || !action.payload.data.resources) {
+          return insufficient;
+        }
+        const providers = action.payload.data.resources;
+        // Providers are sufficient if Vmware and Redhat providers are both present.
+        const sufficient =
+          providers.some(
+            p => p.type === 'ManageIQ::Providers::Vmware::InfraManager'
+          ) &&
+          providers.some(
+            p => p.type === 'ManageIQ::Providers::Redhat::InfraManager'
+          );
+        return insufficient.set('hasSufficientProviders', sufficient);
+      })();
+
+    case `${FETCH_PROVIDERS}_REJECTED`:
+      return state
+        .set('errorProviders', action.payload)
+        .set('isFetchingProviders', false)
+        .set('isRejectedProviders', true);
 
     case `${FETCH_V2V_TRANSFORMATION_MAPPINGS}_PENDING`:
       return state.set('isFetchingTransformationMappings', true);
