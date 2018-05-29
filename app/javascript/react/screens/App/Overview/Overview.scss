@@ -86,6 +86,11 @@ hr {
   color: #fff;
 }
 
+// Patternfly 3.25 compatibility
+.wizard-pf-main {
+  margin-left: initial;
+}
+
 // The below style could be moved to core for the ConfirmModal component (or first, to the CSS in patternfly-react for that)
 
 .confirm-warning-icon {
