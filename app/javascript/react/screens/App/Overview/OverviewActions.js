@@ -9,7 +9,9 @@ import {
   FETCH_PROVIDERS_URL,
   FETCH_V2V_TRANSFORMATION_MAPPINGS,
   FETCH_V2V_TRANSFORMATION_PLANS,
+  FETCH_V2V_ARCHIVED_TRANSFORMATION_PLANS,
   FETCH_V2V_ALL_REQUESTS_WITH_TASKS,
+  FETCH_V2V_ALL_ARCHIVED_PLAN_REQUESTS_WITH_TASKS,
   CREATE_V2V_TRANSFORMATION_PLAN_REQUEST,
   V2V_FETCH_CLUSTERS,
   V2V_SET_MIGRATIONS_FILTER,
@@ -18,8 +20,20 @@ import {
   HIDE_DELETE_CONFIRMATION_MODAL,
   SET_MAPPING_TO_DELETE,
   YES_TO_DELETE_AND_HIDE_DELETE_CONFIRMATION_MODAL,
-  DELETE_INFRASTRUCTURE_MAPPING
+  DELETE_INFRASTRUCTURE_MAPPING,
+  SHOW_CONFIRM_MODAL,
+  HIDE_CONFIRM_MODAL,
+  ARCHIVE_TRANSFORMATION_PLAN
 } from './OverviewConstants';
+
+export const showConfirmModalAction = modalOptions => ({
+  type: SHOW_CONFIRM_MODAL,
+  payload: modalOptions
+});
+
+export const hideConfirmModalAction = () => ({
+  type: HIDE_CONFIRM_MODAL
+});
 
 export const showMappingWizardAction = () => dispatch => {
   dispatch({
@@ -66,10 +80,12 @@ export const fetchTransformationMappingsAction = url => {
   return _getTransformationMappingsActionCreator(uri.toString());
 };
 
-const fetchTasksForAllRequests = (allRequests, dispatch) => {
+const fetchTasksForAllRequests = (allRequests, archived, dispatch) => {
   if (allRequests.length > 0) {
     dispatch({
-      type: FETCH_V2V_ALL_REQUESTS_WITH_TASKS,
+      type: archived
+        ? FETCH_V2V_ALL_ARCHIVED_PLAN_REQUESTS_WITH_TASKS
+        : FETCH_V2V_ALL_REQUESTS_WITH_TASKS,
       payload: new Promise((resolve, reject) => {
         API.post(
           '/api/requests?expand=resource&attributes=miq_request_tasks,service_template',
@@ -90,9 +106,11 @@ const fetchTasksForAllRequests = (allRequests, dispatch) => {
 const collectAllRequests = plan =>
   plan.miq_requests.map(request => Object.assign({}, { href: request.href }));
 
-const _getTransformationPlansActionCreator = url => dispatch =>
+const _getTransformationPlansActionCreator = (url, archived) => dispatch =>
   dispatch({
-    type: FETCH_V2V_TRANSFORMATION_PLANS,
+    type: archived
+      ? FETCH_V2V_ARCHIVED_TRANSFORMATION_PLANS
+      : FETCH_V2V_TRANSFORMATION_PLANS,
     payload: new Promise((resolve, reject) => {
       API.get(url)
         .then(response => {
@@ -106,15 +124,15 @@ const _getTransformationPlansActionCreator = url => dispatch =>
             )
           );
 
-          fetchTasksForAllRequests(mergedRequests, dispatch);
+          fetchTasksForAllRequests(mergedRequests, archived, dispatch);
         })
         .catch(e => reject(e));
     })
   });
 
-export const fetchTransformationPlansAction = url => {
+export const fetchTransformationPlansAction = ({ url, archived }) => {
   const uri = new URI(url);
-  return _getTransformationPlansActionCreator(uri.toString());
+  return _getTransformationPlansActionCreator(uri.toString(), archived);
 };
 
 export const continueToPlanAction = id => dispatch => {
@@ -184,4 +202,15 @@ export const deleteInfrastructureMappingAction = mapping => dispatch => {
         .catch(e => reject(e));
     })
   });
+};
+
+const _archiveTransformationPlanActionCreator = url => dispatch =>
+  dispatch({
+    type: ARCHIVE_TRANSFORMATION_PLAN,
+    payload: API.post(url, { action: 'archive' })
+  });
+
+export const archiveTransformationPlanAction = (url, id) => {
+  const uri = new URI(`${url}/${id}`);
+  return _archiveTransformationPlanActionCreator(uri.toString());
 };

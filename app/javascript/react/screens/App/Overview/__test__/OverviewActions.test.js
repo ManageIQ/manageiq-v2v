@@ -35,7 +35,12 @@ describe('fetchTransformationPlansAction', () => {
     });
 
     return store
-      .dispatch(fetchTransformationPlansAction(fetchTransformationPlansUrl))
+      .dispatch(
+        fetchTransformationPlansAction({
+          url: fetchTransformationPlansUrl,
+          archived: false
+        })
+      )
       .then(() => {
         expect(store.getActions()).toMatchSnapshot();
       });
@@ -51,7 +56,12 @@ describe('fetchTransformationPlansAction', () => {
     });
 
     return store
-      .dispatch(fetchTransformationPlansAction(fetchTransformationPlansUrl))
+      .dispatch(
+        fetchTransformationPlansAction({
+          url: fetchTransformationPlansUrl,
+          archived: false
+        })
+      )
       .catch(() => {
         expect(store.getActions()).toMatchSnapshot();
       });

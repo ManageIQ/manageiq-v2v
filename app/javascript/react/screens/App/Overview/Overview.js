@@ -8,6 +8,8 @@ import Migrations from './components/Migrations/Migrations';
 import OverviewEmptyState from './components/OverviewEmptyState/OverviewEmptyState';
 import componentRegistry from '../../../../components/componentRegistry';
 import getMostRecentRequest from '../common/getMostRecentRequest';
+import ConfirmModal from '../common/ConfirmModal';
+import { MIGRATIONS_FILTERS } from './OverviewConstants';
 
 class Overview extends React.Component {
   constructor(props) {
@@ -41,7 +43,10 @@ class Overview extends React.Component {
     fetchProvidersAction();
     fetchClustersAction(fetchClustersUrl);
     fetchTransformationMappingsAction(fetchTransformationMappingsUrl);
-    fetchTransformationPlansAction(fetchTransformationPlansUrl).then(() => {
+    fetchTransformationPlansAction({
+      url: fetchTransformationPlansUrl,
+      archived: false
+    }).then(() => {
       this.setState(() => ({
         hasMadeInitialPlansFetch: true
       }));
@@ -85,7 +90,10 @@ class Overview extends React.Component {
       hasMadeInitialPlansFetch &&
       !this.pollingInterval
     ) {
-      fetchTransformationPlansAction(fetchTransformationPlansUrl);
+      fetchTransformationPlansAction({
+        url: fetchTransformationPlansUrl,
+        archived: false
+      });
       this.startPolling();
     }
   }
@@ -154,7 +162,10 @@ class Overview extends React.Component {
       fetchTransformationPlansUrl
     } = this.props;
     this.pollingInterval = setInterval(() => {
-      fetchTransformationPlansAction(fetchTransformationPlansUrl);
+      fetchTransformationPlansAction({
+        url: fetchTransformationPlansUrl,
+        archived: false
+      });
     }, 15000);
   };
 
@@ -176,8 +187,11 @@ class Overview extends React.Component {
 
     createTransformationPlanRequestAction(url).then(() => {
       retryMigrationAction(planId);
-      setMigrationsFilterAction('Migration Plans in Progress');
-      fetchTransformationPlansAction(fetchTransformationPlansUrl);
+      setMigrationsFilterAction(MIGRATIONS_FILTERS.inProgress);
+      fetchTransformationPlansAction({
+        url: fetchTransformationPlansUrl,
+        archived: false
+      });
     });
   };
 
@@ -216,7 +230,20 @@ class Overview extends React.Component {
       setMappingToDeleteAction,
       mappingToDelete,
       yesToDeleteInfrastructureMappingAction,
-      deleteInfrastructureMappingAction
+      deleteInfrastructureMappingAction,
+      confirmModalVisible,
+      confirmModalOptions,
+      showConfirmModalAction,
+      hideConfirmModalAction,
+      fetchTransformationPlansAction,
+      fetchTransformationPlansUrl,
+      fetchArchivedTransformationPlansUrl,
+      archivedTransformationPlans,
+      allArchivedPlanRequestsWithTasks,
+      archiveTransformationPlanAction,
+      archiveTransformationPlanUrl,
+      isFetchingArchivedTransformationPlans,
+      addNotificationAction
     } = this.props;
 
     const inProgressRequestsTransformationMappings = () => {
@@ -293,6 +320,10 @@ class Overview extends React.Component {
               setActiveFilter={setMigrationsFilterAction}
               transformationPlans={transformationPlans}
               allRequestsWithTasks={allRequestsWithTasks}
+              archivedTransformationPlans={archivedTransformationPlans}
+              allArchivedPlanRequestsWithTasks={
+                allArchivedPlanRequestsWithTasks
+              }
               reloadCard={reloadCard}
               notStartedPlans={notStartedTransformationPlans}
               activeTransformationPlans={activeTransformationPlans}
@@ -305,6 +336,19 @@ class Overview extends React.Component {
                 isCreatingTransformationPlanRequest
               }
               redirectTo={this.redirectTo}
+              showConfirmModalAction={showConfirmModalAction}
+              hideConfirmModalAction={hideConfirmModalAction}
+              fetchTransformationPlansAction={fetchTransformationPlansAction}
+              fetchTransformationPlansUrl={fetchTransformationPlansUrl}
+              fetchArchivedTransformationPlansUrl={
+                fetchArchivedTransformationPlansUrl
+              }
+              isFetchingArchivedTransformationPlans={
+                isFetchingArchivedTransformationPlans
+              }
+              archiveTransformationPlanAction={archiveTransformationPlanAction}
+              archiveTransformationPlanUrl={archiveTransformationPlanUrl}
+              addNotificationAction={addNotificationAction}
             />
           )}
           {hasSufficientProviders ? (
@@ -344,6 +388,11 @@ class Overview extends React.Component {
             />
           )}
         </Spinner>
+        <ConfirmModal
+          show={confirmModalVisible}
+          onCancel={hideConfirmModalAction}
+          {...confirmModalOptions}
+        />
       </div>
     );
 
@@ -412,6 +461,16 @@ Overview.propTypes = {
   yesToDeleteInfrastructureMapping: PropTypes.bool,
   fetchProvidersAction: PropTypes.func,
   isFetchingProviders: PropTypes.bool,
-  hasSufficientProviders: PropTypes.bool
+  hasSufficientProviders: PropTypes.bool,
+  confirmModalVisible: PropTypes.bool,
+  confirmModalOptions: PropTypes.object,
+  showConfirmModalAction: PropTypes.func,
+  hideConfirmModalAction: PropTypes.func,
+  fetchArchivedTransformationPlansUrl: PropTypes.string,
+  archivedTransformationPlans: PropTypes.array,
+  allArchivedPlanRequestsWithTasks: PropTypes.array,
+  isFetchingArchivedTransformationPlans: PropTypes.string,
+  archiveTransformationPlanAction: PropTypes.func,
+  archiveTransformationPlanUrl: PropTypes.string
 };
 export default Overview;

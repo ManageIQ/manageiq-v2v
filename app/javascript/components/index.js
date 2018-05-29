@@ -88,12 +88,22 @@ export const coreComponents = [
     name: 'OverviewContainer',
     type: OverviewContainer,
     data: {
+      archiveTransformationPlanUrl: '/api/service_templates',
       fetchTransformationMappingsUrl:
         'api/transformation_mappings?expand=resources' +
         '&attributes=transformation_mapping_items,service_templates',
       fetchTransformationPlansUrl:
         '/api/service_templates/?' +
         "filter[]=type='ServiceTemplateTransformationPlan'" +
+        '&filter[]=deleted_on=nil' +
+        '&expand=resources' +
+        '&attributes=name,description,miq_requests,options,created_at' +
+        '&sort_by=updated_at' +
+        '&sort_order=desc',
+      fetchArchivedTransformationPlansUrl:
+        '/api/service_templates/?' +
+        "filter[]=type='ServiceTemplateTransformationPlan'" +
+        '&filter[]=deleted_on!=nil' +
         '&expand=resources' +
         '&attributes=name,description,miq_requests,options,created_at' +
         '&sort_by=updated_at' +

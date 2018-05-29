@@ -5,6 +5,7 @@ import MigrationsInProgressCards from './MigrationsInProgressCards';
 import MigrationsNotStartedList from './MigrationsNotStartedList';
 import MigrationsCompletedList from './MigrationsCompletedList';
 import OverviewEmptyState from '../OverviewEmptyState/OverviewEmptyState';
+import { MIGRATIONS_FILTERS } from '../../OverviewConstants';
 
 const Migrations = ({
   activeFilter,
@@ -18,20 +19,42 @@ const Migrations = ({
   createTransformationPlanRequestClick,
   isCreatingTransformationPlanRequest,
   finishedTransformationPlans,
-  redirectTo
+  redirectTo,
+  showConfirmModalAction,
+  hideConfirmModalAction,
+  fetchTransformationPlansAction,
+  fetchTransformationPlansUrl,
+  fetchArchivedTransformationPlansUrl,
+  isFetchingArchivedTransformationPlans,
+  archivedTransformationPlans,
+  allArchivedPlanRequestsWithTasks,
+  archiveTransformationPlanAction,
+  archiveTransformationPlanUrl,
+  addNotificationAction
 }) => {
   const filterOptions = [
-    __('Migration Plans Not Started'),
-    __('Migration Plans in Progress'),
-    __('Migration Plans Completed')
+    MIGRATIONS_FILTERS.notStarted,
+    MIGRATIONS_FILTERS.inProgress,
+    MIGRATIONS_FILTERS.completed,
+    MIGRATIONS_FILTERS.archived
   ];
+
+  const onSelect = eventKey => {
+    if (eventKey === MIGRATIONS_FILTERS.archived) {
+      fetchTransformationPlansAction({
+        url: fetchArchivedTransformationPlansUrl,
+        archived: true
+      });
+    }
+    setActiveFilter(eventKey);
+  };
 
   return (
     <React.Fragment>
       <Grid.Col xs={12}>
         <div className="heading-with-link-container">
           <div className="pull-left">
-            <h3>{__('Migrations')}</h3>
+            <h3>{__('Migration Plans')}</h3>
           </div>
           <div className="pull-right">
             {/** todo: create IconLink in patternfly-react * */}
@@ -52,11 +75,9 @@ const Migrations = ({
           <div style={{ marginBottom: 15 }}>
             <DropdownButton
               bsStyle="default"
-              title={sprintf('%s', activeFilter)}
+              title={sprintf(__('%s'), activeFilter)}
               id="dropdown-filter"
-              onSelect={eventKey => {
-                setActiveFilter(eventKey);
-              }}
+              onSelect={eventKey => onSelect(eventKey)}
             >
               {filterOptions.map((filter, i) => (
                 <MenuItem
@@ -64,7 +85,7 @@ const Migrations = ({
                   active={filter === activeFilter}
                   key={i}
                 >
-                  {sprintf('%s', filter)}
+                  {sprintf(__('%s'), filter)}
                 </MenuItem>
               ))}
             </DropdownButton>
@@ -81,7 +102,7 @@ const Migrations = ({
       </Grid.Col>
       {transformationPlans.length > 0 && (
         <React.Fragment>
-          {activeFilter === 'Migration Plans Not Started' && (
+          {activeFilter === MIGRATIONS_FILTERS.notStarted && (
             <MigrationsNotStartedList
               notStartedPlans={notStartedPlans}
               migrateClick={createTransformationPlanRequestClick}
@@ -89,7 +110,7 @@ const Migrations = ({
               redirectTo={redirectTo}
             />
           )}
-          {activeFilter === 'Migration Plans in Progress' && (
+          {activeFilter === MIGRATIONS_FILTERS.inProgress && (
             <MigrationsInProgressCards
               activeTransformationPlans={activeTransformationPlans}
               allRequestsWithTasks={allRequestsWithTasks}
@@ -98,13 +119,29 @@ const Migrations = ({
               redirectTo={redirectTo}
             />
           )}
-          {activeFilter === 'Migration Plans Completed' && (
+          {activeFilter === MIGRATIONS_FILTERS.completed && (
             <MigrationsCompletedList
               finishedTransformationPlans={finishedTransformationPlans}
               allRequestsWithTasks={allRequestsWithTasks}
               retryClick={createTransformationPlanRequestClick}
               loading={isCreatingTransformationPlanRequest}
               redirectTo={redirectTo}
+              showConfirmModalAction={showConfirmModalAction}
+              hideConfirmModalAction={hideConfirmModalAction}
+              archiveTransformationPlanAction={archiveTransformationPlanAction}
+              archiveTransformationPlanUrl={archiveTransformationPlanUrl}
+              fetchTransformationPlansAction={fetchTransformationPlansAction}
+              fetchTransformationPlansUrl={fetchTransformationPlansUrl}
+              addNotificationAction={addNotificationAction}
+            />
+          )}
+          {activeFilter === MIGRATIONS_FILTERS.archived && (
+            <MigrationsCompletedList
+              finishedTransformationPlans={archivedTransformationPlans}
+              allRequestsWithTasks={allArchivedPlanRequestsWithTasks}
+              redirectTo={redirectTo}
+              loading={isFetchingArchivedTransformationPlans}
+              archived
             />
           )}
         </React.Fragment>
@@ -125,7 +162,18 @@ Migrations.propTypes = {
   createTransformationPlanRequestClick: PropTypes.func,
   isCreatingTransformationPlanRequest: PropTypes.string,
   finishedTransformationPlans: PropTypes.array,
-  redirectTo: PropTypes.func
+  redirectTo: PropTypes.func,
+  showConfirmModalAction: PropTypes.func,
+  hideConfirmModalAction: PropTypes.func,
+  fetchTransformationPlansAction: PropTypes.func,
+  fetchTransformationPlansUrl: PropTypes.string,
+  fetchArchivedTransformationPlansUrl: PropTypes.string,
+  archivedTransformationPlans: PropTypes.array,
+  allArchivedPlanRequestsWithTasks: PropTypes.array,
+  isFetchingArchivedTransformationPlans: PropTypes.string,
+  archiveTransformationPlanAction: PropTypes.func,
+  archiveTransformationPlanUrl: PropTypes.string,
+  addNotificationAction: PropTypes.func
 };
 Migrations.defaultProps = {
   transformationPlans: [],

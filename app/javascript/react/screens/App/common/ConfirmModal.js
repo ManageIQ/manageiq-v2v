@@ -14,6 +14,8 @@ const ConfirmModal = props => {
     confirmButtonLabel,
     onCancel,
     onConfirm,
+    disableCancelButton,
+    disableConfirmButton,
     ...otherProps
   } = props;
   return (
@@ -37,10 +39,19 @@ const ConfirmModal = props => {
         )}
       </Modal.Body>
       <Modal.Footer>
-        <Button bsStyle="default" className="btn-cancel" onClick={onCancel}>
+        <Button
+          bsStyle="default"
+          className="btn-cancel"
+          onClick={onCancel}
+          disabled={disableCancelButton}
+        >
           {cancelButtonLabel}
         </Button>
-        <Button bsStyle="primary" onClick={onConfirm}>
+        <Button
+          bsStyle="primary"
+          onClick={onConfirm}
+          disabled={disableConfirmButton}
+        >
           {confirmButtonLabel}
         </Button>
       </Modal.Footer>
@@ -56,7 +67,9 @@ ConfirmModal.propTypes = {
   cancelButtonLabel: PropTypes.string,
   confirmButtonLabel: PropTypes.string,
   onCancel: PropTypes.func,
-  onConfirm: PropTypes.func
+  onConfirm: PropTypes.func,
+  disableCancelButton: PropTypes.bool,
+  disableConfirmButton: PropTypes.bool
 };
 
 ConfirmModal.defaultProps = {
