@@ -67,7 +67,7 @@ class PlanWizardResultsStep extends React.Component {
             {__('Error Creating Migration Plans')}
           </h3>
           <p className="blank-slate-pf-secondary-action">
-            {__("We're' sorry, something went wrong. Please try again.")}
+            {__("We're sorry, something went wrong. Please try again.")}
           </p>
           <button type="button" className="btn btn-lg btn-primary">
             {__('Retry')}
