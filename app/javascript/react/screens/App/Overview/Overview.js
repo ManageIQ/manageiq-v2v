@@ -237,6 +237,7 @@ class Overview extends React.Component {
       );
       return <div>{deleteMessageAboutPlansUsingMapping}</div>;
     }
+    return '';
   };
 
   displayDeleteMessage = mappingToDelete => {
@@ -280,14 +281,16 @@ class Overview extends React.Component {
     const inProgressRequestsTransformationMappings = () => {
       const mappings = [];
 
-      allRequestsWithTasks
-        .filter(request => request.fulfilled_on === null)
-        .map(request =>
-          mappings.push(
-            request.service_template.options.config_info
-              .transformation_mapping_id
-          )
-        );
+      if (allRequestsWithTasks) {
+        allRequestsWithTasks
+          .filter(request => request.fulfilled_on === null)
+          .map(request =>
+            mappings.push(
+              request.service_template.options.config_info
+                .transformation_mapping_id
+            )
+          );
+      }
       return mappings;
     };
 
@@ -480,6 +483,7 @@ Overview.propTypes = {
   setMappingToDeleteAction: PropTypes.func,
   mappingToDelete: PropTypes.object,
   yesToDeleteInfrastructureMappingAction: PropTypes.func,
-  deleteInfrastructureMappingAction: PropTypes.func
+  deleteInfrastructureMappingAction: PropTypes.func,
+  yesToDeleteInfrastructureMapping: PropTypes.bool
 };
 export default Overview;
