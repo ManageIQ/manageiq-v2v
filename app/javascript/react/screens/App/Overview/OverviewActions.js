@@ -14,7 +14,9 @@ import {
   V2V_RETRY_MIGRATION,
   SHOW_DELETE_CONFIRMATION_MODAL,
   HIDE_DELETE_CONFIRMATION_MODAL,
-  SET_MAPPING_TO_DELETE
+  SET_MAPPING_TO_DELETE,
+  YES_TO_DELETE_AND_HIDE_DELETE_CONFIRMATION_MODAL,
+  DELETE_INFRASTRUCTURE_MAPPING
 } from './OverviewConstants';
 
 export const showMappingWizardAction = () => dispatch => {
@@ -151,5 +153,26 @@ export const setMappingToDeleteAction = mapping => dispatch => {
   dispatch({
     type: SET_MAPPING_TO_DELETE,
     payload: mapping
+  });
+};
+
+export const yesToDeleteInfrastructureMappingAction = () => dispatch => {
+  dispatch({
+    type: YES_TO_DELETE_AND_HIDE_DELETE_CONFIRMATION_MODAL
+  });
+};
+
+export const deleteInfrastructureMappingAction = mapping => dispatch => {
+  dispatch({
+    type: DELETE_INFRASTRUCTURE_MAPPING,
+    payload: new Promise((resolve, reject) => {
+      API.post(`/api/transformation_mappings/${mapping.id}`, {
+        action: 'delete'
+      })
+        .then(response => {
+          resolve(response);
+        })
+        .catch(e => reject(e));
+    })
   });
 };

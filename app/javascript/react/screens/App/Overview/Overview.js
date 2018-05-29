@@ -96,7 +96,11 @@ class Overview extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { finishedTransformationPlans, addNotificationAction } = this.props;
+    const {
+      finishedTransformationPlans,
+      addNotificationAction,
+      yesToDeleteInfrastructureMapping
+    } = this.props;
     const { hasMadeInitialPlansFetch } = this.state;
 
     if (
@@ -137,6 +141,11 @@ class Overview extends React.Component {
           actionEnabled: true
         });
       });
+    }
+
+    if (yesToDeleteInfrastructureMapping) {
+      const { deleteInfrastructureMappingAction, mappingToDelete } = this.props;
+      deleteInfrastructureMappingAction(mappingToDelete);
     }
   }
 
@@ -264,7 +273,8 @@ class Overview extends React.Component {
       showDeleteConfirmationModalAction,
       hideDeleteConfirmationModalAction,
       setMappingToDeleteAction,
-      mappingToDelete
+      mappingToDelete,
+      yesToDeleteInfrastructureMappingAction
     } = this.props;
 
     const inProgressRequestsTransformationMappings = () => {
@@ -398,7 +408,10 @@ class Overview extends React.Component {
               >
                 {__('Cancel')}
               </Button>
-              <Button bsStyle="primary" onClick={e => {}}>
+              <Button
+                bsStyle="primary"
+                onClick={yesToDeleteInfrastructureMappingAction}
+              >
                 {__('Delete')}
               </Button>
             </Modal.Footer>
@@ -465,6 +478,8 @@ Overview.propTypes = {
   showDeleteConfirmationModalAction: PropTypes.func,
   hideDeleteConfirmationModalAction: PropTypes.func,
   setMappingToDeleteAction: PropTypes.func,
-  mappingToDelete: PropTypes.object
+  mappingToDelete: PropTypes.object,
+  yesToDeleteInfrastructureMappingAction: PropTypes.func,
+  deleteInfrastructureMappingAction: PropTypes.func
 };
 export default Overview;
