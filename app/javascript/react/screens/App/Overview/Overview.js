@@ -339,7 +339,7 @@ class Overview extends React.Component {
                 'The VMWare and Red Hat Virtualization providers must be configured before attempting a migration.'
               )}
               buttonText={__('Configure Providers')}
-              buttonHref="/ems_cloud/show_list"
+              buttonHref="/ems_infra/show_list"
               className="full-page-empty"
             />
           )}
