@@ -192,47 +192,35 @@ class Overview extends React.Component {
   };
 
   unUsedMappingInPlans = mappingToDelete => {
-    const mappings = [];
     const planNames = [];
 
-    const { transformationPlans, allRequestsWithTasks } = this.props;
-    const notStartedPlans = transformationPlans.filter(
-      plan => plan.miq_requests.length === 0
+    const {
+      notStartedTransformationPlans,
+      finishedWithErrorTransformationPlans
+    } = this.props;
+
+    const plansWithMappingToBeDeleted = notStartedTransformationPlans.filter(
+      plan =>
+        plan.options.config_info.transformation_mapping_id ===
+        mappingToDelete.id
     );
+    plansWithMappingToBeDeleted.map(plan => planNames.push(plan.name));
 
-    notStartedPlans.map(plan =>
-      mappings.push(plan.options.config_info.transformation_mapping_id)
+    const plansWithErrorWithMappingToBeDeleted = finishedWithErrorTransformationPlans.filter(
+      plan =>
+        plan.options.config_info.transformation_mapping_id ===
+        mappingToDelete.id
     );
+    plansWithErrorWithMappingToBeDeleted.map(plan => planNames.push(plan.name));
 
-    notStartedPlans.map(plan => planNames.push(plan.name));
-
-    const requestsCompletedWithErrors = allRequestsWithTasks.filter(
-      request =>
-        request.request_state === 'finished' && request.status === 'Error'
-    );
-
-    requestsCompletedWithErrors.map(request =>
-      mappings.push(
-        request.service_template.options.config_info.transformation_mapping_id
-      )
-    );
-
-    requestsCompletedWithErrors.map(request =>
-      planNames.push(request.service_template.name)
-    );
-
-    const dedupedPlanNames = Array.from(new Set(planNames));
-
-    if (mappings.find(mappingId => mappingId === mappingToDelete.id)) {
+    if (planNames.length > 0) {
       const deleteMessageAboutUnMigratedVMs = __(
         'The infrastructure mapping is associated with migration plans that include unmigrated VMs. Deleting the mapping will prevent you from migrating the VMs in these plans:'
       );
       const deleteMessageAboutPlansUsingMapping = (
         <div>
           <h4>{deleteMessageAboutUnMigratedVMs}</h4>
-          <strong>
-            {dedupedPlanNames.map(plan => <ul key={plan}>{plan}</ul>)}
-          </strong>
+          <strong>{planNames.map(plan => <ul key={plan}>{plan}</ul>)}</strong>
         </div>
       );
       return <div>{deleteMessageAboutPlansUsingMapping}</div>;
@@ -281,15 +269,10 @@ class Overview extends React.Component {
     const inProgressRequestsTransformationMappings = () => {
       const mappings = [];
 
-      if (allRequestsWithTasks) {
-        allRequestsWithTasks
-          .filter(request => request.fulfilled_on === null)
-          .map(request =>
-            mappings.push(
-              request.service_template.options.config_info
-                .transformation_mapping_id
-            )
-          );
+      if (activeTransformationPlans) {
+        activeTransformationPlans.map(plan =>
+          mappings.push(plan.options.config_info.transformation_mapping_id)
+        );
       }
       return mappings;
     };
@@ -459,6 +442,7 @@ Overview.propTypes = {
   notStartedTransformationPlans: PropTypes.array,
   activeTransformationPlans: PropTypes.array,
   finishedTransformationPlans: PropTypes.array,
+  finishedWithErrorTransformationPlans: PropTypes.array,
   transformationMappings: PropTypes.array,
   fetchTransformationMappingsUrl: PropTypes.string,
   fetchTransformationMappingsAction: PropTypes.func,

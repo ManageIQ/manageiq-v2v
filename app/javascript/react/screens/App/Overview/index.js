@@ -7,7 +7,8 @@ import reducer from './OverviewReducer';
 import {
   notStartedTransformationPlansFilter,
   activeTransformationPlansFilter,
-  finishedTransformationPlansFilter
+  finishedTransformationPlansFilter,
+  finishedWithErrorTransformationPlansFilter
 } from './OverviewSelectors';
 
 export const reducers = { overview: reducer, form: {} };
@@ -26,6 +27,9 @@ const mapStateToProps = (
     planId
   ),
   finishedTransformationPlans: finishedTransformationPlansFilter(
+    transformationPlans
+  ),
+  finishedWithErrorTransformationPlans: finishedWithErrorTransformationPlansFilter(
     transformationPlans
   )
 });

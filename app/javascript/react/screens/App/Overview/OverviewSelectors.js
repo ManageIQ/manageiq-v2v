@@ -35,3 +35,17 @@ export const finishedTransformationPlansFilter = transformationPlans =>
     }
     return false;
   });
+
+export const finishedWithErrorTransformationPlansFilter = transformationPlans =>
+  transformationPlans.filter(transformationPlan => {
+    if (transformationPlan.miq_requests.length > 0) {
+      const mostRecentRequest = getMostRecentRequest(
+        transformationPlan.miq_requests
+      );
+      return (
+        mostRecentRequest.request_state === 'finished' &&
+        mostRecentRequest.status === 'Error'
+      );
+    }
+    return false;
+  });

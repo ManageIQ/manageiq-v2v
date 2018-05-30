@@ -15,6 +15,7 @@ Object {
   "fetchTransformationPlansAction": [Function],
   "fetchTransformationPlansUrl": "/api/dummyTransformationPlans",
   "finishedTransformationPlans": Array [],
+  "finishedWithErrorTransformationPlans": Array [],
   "hideDeleteConfirmationModalAction": [Function],
   "hideMappingWizard": false,
   "hidePlanWizard": false,
