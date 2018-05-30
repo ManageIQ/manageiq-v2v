@@ -18,7 +18,6 @@ import {
   UtilizationBar,
   PAGINATION_VIEW
 } from 'patternfly-react';
-import { IsoElpasedTime } from '../../../../../../components/dates/IsoElapsedTime';
 import listFilter from '../listFilter';
 import sortFilter from '../sortFilter';
 import paginate from '../paginate';
@@ -370,13 +369,6 @@ class PlanRequestDetailList extends React.Component {
               } else {
                 leftContent = <Spinner loading />;
               }
-              const currentTime = new Date();
-              const startDateTime = task.delivered_on;
-              const lastUpdateDateTime = task.updated_on;
-              const elapsedTime = IsoElpasedTime(
-                startDateTime,
-                task.completed ? lastUpdateDateTime : currentTime
-              );
               const label = sprintf(
                 __('%s of %s Migrated'),
                 task.diskSpaceCompletedGb,
@@ -392,7 +384,9 @@ class PlanRequestDetailList extends React.Component {
                   <div>
                     <div>
                       <b>{__('Started')}: </b>
-                      {moment(startDateTime).format('MMMM Do YYYY, h:mm a')}
+                      {moment(task.startDateTime).format(
+                        'MMMM Do YYYY, h:mm a'
+                      )}
                     </div>
                     <div>
                       <b>{__('Description')}: </b>
@@ -449,7 +443,7 @@ class PlanRequestDetailList extends React.Component {
                       </div>
                       <div>
                         <ListView.Icon type="fa" size="lg" name="clock-o" />
-                        {elapsedTime}
+                        {task.elapsedTime}
                       </div>
                     </ListView.InfoItem>,
                     <ListView.InfoItem
