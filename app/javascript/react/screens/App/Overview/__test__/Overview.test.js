@@ -24,12 +24,14 @@ describe('Overview component', () => {
   };
   let showMappingWizardAction;
   let showPlanWizardAction;
+  let fetchProvidersAction;
   let fetchTransformationMappingsAction;
   let fetchTransformationPlansAction;
   let fetchClustersAction;
   beforeEach(() => {
     showMappingWizardAction = jest.fn();
     showPlanWizardAction = jest.fn();
+    fetchProvidersAction = jest.fn();
     fetchTransformationMappingsAction = jest.fn();
     fetchTransformationPlansAction = jest.fn();
     fetchClustersAction = jest.fn();
@@ -43,6 +45,7 @@ describe('Overview component', () => {
           {...baseProps}
           showMappingWizardAction={showMappingWizardAction}
           showPlanWizardAction={showPlanWizardAction}
+          fetchProvidersAction={fetchProvidersAction}
           fetchTransformationMappingsAction={fetchTransformationMappingsAction}
           fetchTransformationPlansAction={fetchTransformationPlansAction}
           fetchClustersAction={fetchClustersAction}
@@ -59,6 +62,7 @@ describe('Overview component', () => {
           transformationMappings={transformationMappings}
           showMappingWizardAction={showMappingWizardAction}
           showPlanWizardAction={showPlanWizardAction}
+          fetchProvidersAction={fetchProvidersAction}
           fetchTransformationMappingsAction={fetchTransformationMappingsAction}
           fetchTransformationPlansAction={fetchTransformationPlansAction}
           fetchClustersAction={fetchClustersAction}
@@ -77,6 +81,7 @@ describe('Overview component', () => {
           {...baseProps}
           showMappingWizardAction={showMappingWizardAction}
           showPlanWizardAction={showPlanWizardAction}
+          fetchProvidersAction={fetchProvidersAction}
           fetchTransformationMappingsAction={fetchTransformationMappingsAction}
           fetchTransformationPlansAction={fetchTransformationPlansAction}
           fetchClustersAction={fetchClustersAction}
