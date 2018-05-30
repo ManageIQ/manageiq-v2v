@@ -1,14 +1,14 @@
 export const FINISHED_PLAN_FILTER_TYPES = [
   {
-    id: 'transformation_host_name',
-    title: 'Host Name',
-    placeholder: 'Filter by Host Name',
+    id: 'vmName',
+    title: __('VM Name'),
+    placeholder: __('Filter by VM Name'),
     filterType: 'text'
   },
   {
     id: 'status',
-    title: 'Status',
-    placeholder: 'Filter by Status',
+    title: __('Status'),
+    placeholder: __('Filter by Status'),
     filterType: 'select',
     filterValues: [{ title: 'Ok', id: 'Ok' }, { title: 'Error', id: 'Error' }]
   }
@@ -16,45 +16,49 @@ export const FINISHED_PLAN_FILTER_TYPES = [
 
 export const ACTIVE_PLAN_FILTER_TYPES = [
   {
-    id: 'transformation_host_name',
-    title: 'Host Name',
-    placeholder: 'Filter by Host Name',
+    id: 'vmName',
+    title: __('VM Name'),
+    placeholder: __('Filter by VM Name'),
     filterType: 'text'
   },
   {
     id: 'message',
-    title: 'Status',
-    placeholder: 'Filter by Status',
+    title: __('Status'),
+    placeholder: __('Filter by Status'),
     filterType: 'select',
     filterValues: [
-      { title: 'Pending', id: 'Pending' },
-      { title: 'Validating', id: 'Validating' },
-      { title: 'Pre-migration', id: 'Pre-migration' },
-      { title: 'Migrating', id: 'Migrating' },
+      { title: __('Pending'), id: 'Pending' },
+      { title: __('Validating'), id: 'Validating' },
+      { title: __('Pre-migration'), id: 'Pre-migration' },
+      { title: __('Migrating'), id: 'Migrating' },
       {
-        title: 'VM Transformations completed',
+        title: __('VM Transformations completed'),
         id: 'VM Transformations completed'
+      },
+      {
+        title: __('VM Transformations failed'),
+        id: 'VM Transformations failed'
       }
     ]
   }
 ];
 
 export const FINISHED_PLAN_SORT_FIELDS = [
-  { id: 'delivered_on', title: 'Started', isNumeric: true },
+  { id: 'elapsedTime', title: __('Started'), isNumeric: false },
   {
-    id: 'transformation_host_name',
-    title: 'Host Name',
+    id: 'vmName',
+    title: __('VM Name'),
     isNumeric: false
   },
-  { id: 'status', title: 'Status', isNumeric: false }
+  { id: 'status', title: __('Status'), isNumeric: false }
 ];
 
 export const ACTIVE_PLAN_SORT_FIELDS = [
-  { id: 'delivered_on', title: 'Started', isNumeric: true },
+  { id: 'elapsedTime', title: __('Started'), isNumeric: false },
   {
-    id: 'transformation_host_name',
-    title: 'Host Name',
+    id: 'vmName',
+    title: __('VM Name'),
     isNumeric: false
   },
-  { id: 'message', title: 'Status', isNumeric: false }
+  { id: 'message', title: __('Status'), isNumeric: false }
 ];
