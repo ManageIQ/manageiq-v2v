@@ -196,8 +196,10 @@ const InfrastructureMappingsList = ({
       ) : (
         <OverviewEmptyState
           showWizardAction={createInfraMappingClick}
-          description="Create an infrastructure mapping to later be used by a migration plan."
-          buttonText="Create Infrastructure Mapping"
+          description={__(
+            'Create an infrastructure mapping to later be used by a migration plan.'
+          )}
+          buttonText={__('Create Infrastructure Mapping')}
         />
       )}
     </Grid.Col>
