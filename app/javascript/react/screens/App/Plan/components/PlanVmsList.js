@@ -19,13 +19,11 @@ import paginate from './paginate';
 class PlanVmsList extends React.Component {
   state = {
     // filter states
-    filterTypes: PlanVmsList.PlanVmsList,
     currentFilterType: PlanVmsList.filterTypes[0],
     currentValue: '',
     activeFilters: [],
 
     // sort states
-    sortFields: PlanVmsList.sortFields,
     currentSortType: PlanVmsList.sortFields[0],
     isSortNumeric: PlanVmsList.sortFields[0].isNumeric,
     isSortAscending: true,
@@ -105,17 +103,6 @@ class PlanVmsList extends React.Component {
       this.setState({ pagination: newPaginationState, pageChangeValue: page });
     }
   };
-
-  sortFields = [{ id: 'name', title: 'Name', isNumeric: false }];
-
-  filterTypes = [
-    {
-      id: 'name',
-      title: 'Name',
-      placeholder: 'Filter by Name',
-      filterType: 'text'
-    }
-  ];
 
   filterValueSelected = filterValue => {
     const { currentFilterType, currentValue } = this.state;
@@ -230,9 +217,7 @@ class PlanVmsList extends React.Component {
   render() {
     const {
       activeFilters,
-      filterTypes,
       currentFilterType,
-      sortFields,
       currentSortType,
       isSortNumeric,
       isSortAscending,
@@ -248,14 +233,14 @@ class PlanVmsList extends React.Component {
           <Toolbar>
             <Filter>
               <Filter.TypeSelector
-                filterTypes={filterTypes}
+                filterTypes={PlanVmsList.filterTypes}
                 currentFilterType={currentFilterType}
               />
               {this.renderInput()}
             </Filter>
             <Sort>
               <Sort.TypeSelector
-                sortTypes={sortFields}
+                sortTypes={PlanVmsList.sortFields}
                 currentSortType={currentSortType}
                 onSortTypeSelected={this.updateCurrentSortType}
               />
@@ -372,5 +357,16 @@ class PlanVmsList extends React.Component {
 PlanVmsList.propTypes = {
   planVms: PropTypes.array
 };
+
+PlanVmsList.sortFields = [{ id: 'name', title: 'Name', isNumeric: false }];
+
+PlanVmsList.filterTypes = [
+  {
+    id: 'name',
+    title: 'Name',
+    placeholder: 'Filter by Name',
+    filterType: 'text'
+  }
+];
 
 export default PlanVmsList;
