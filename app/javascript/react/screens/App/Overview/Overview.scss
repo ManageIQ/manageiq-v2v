@@ -96,6 +96,19 @@ hr {
   margin-left: initial;
 }
 
+// Patternfly 3.25 compatibility - comes from patternfly/patternfly#910, made specific to v2v for gaprindashvili
+.miq-v2v .content-view-pf-pagination .form-group {
+  .pagination-pf-pagesize.bootstrap-select.btn-group,
+  .pagination-pf-pagesize.btn-group {
+    display: flex;
+    float: none;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 5px;
+    width: auto;
+  }
+}
+
 // The below style could be moved to core for the ConfirmModal component (or first, to the CSS in patternfly-react for that)
 
 .confirm-warning-icon {
