@@ -143,7 +143,7 @@ class PlanRequestDetailList extends React.Component {
   };
 
   clearFilters = () => {
-    this.setState({ activeFilters: [] });
+    this.setState({ activeFilters: [], currentValue: '' });
   };
   removeFilter = filter => {
     const { activeFilters } = this.state;
@@ -317,7 +317,6 @@ class PlanRequestDetailList extends React.Component {
                         onRemove={this.removeFilter}
                         filterData={item}
                       >
-                        {__('label=')}
                         {item.label}
                       </Filter.Item>
                     ))}
