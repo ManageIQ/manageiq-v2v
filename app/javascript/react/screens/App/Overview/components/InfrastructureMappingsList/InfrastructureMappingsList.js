@@ -39,7 +39,7 @@ const InfrastructureMappingsList = ({
   notStartedTransformationPlans,
   finishedWithErrorTransformationPlans
 }) => (
-  <div>
+  <React.Fragment>
     <Grid.Col
       xs={12}
       style={{
@@ -129,6 +129,7 @@ const InfrastructureMappingsList = ({
                         type="pf"
                         name="delete"
                         onClick={e => {
+                          e.stopPropagation();
                           setMappingToDeleteAction(mapping);
                           showDeleteConfirmationModalAction();
                         }}
@@ -212,7 +213,7 @@ const InfrastructureMappingsList = ({
         finishedWithErrorTransformationPlans
       }
     />
-  </div>
+  </React.Fragment>
 );
 
 InfrastructureMappingsList.propTypes = {
