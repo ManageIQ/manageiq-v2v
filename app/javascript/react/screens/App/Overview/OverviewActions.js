@@ -37,13 +37,7 @@ export const showPlanWizardAction = id => dispatch => {
 export const fetchProvidersAction = () => dispatch => {
   dispatch({
     type: FETCH_PROVIDERS,
-    payload: new Promise((resolve, reject) => {
-      API.get(FETCH_PROVIDERS_URL)
-        .then(responseProviders => {
-          resolve(responseProviders);
-        })
-        .catch(e => reject(e));
-    })
+    payload: API.get(FETCH_PROVIDERS_URL)
   });
 };
 
