@@ -4,7 +4,7 @@
 
 ## Purpose
 
-The purpose of this repository is to provide UI infrastrucutre to ManageIQ for the V2V effort. V2V is an acronym for virtual to virtual, referring to the process of importing virtual machines from one virtualization platform to another. This plugin allows a consumer to define infrastructure mappings and migration plans for migrating VM clusters from
+The purpose of this repository is to provide UI infrastrucutre to ManageIQ for the V2V effort. V2V is an acronym for virtual to virtual, referring to the process of importing virtual machines from one virtualization platform to another.
 
 ### Current features
 
@@ -15,7 +15,7 @@ The purpose of this repository is to provide UI infrastrucutre to ManageIQ for t
 ### Architecture Goals
 
 * Use REST API communication with [ManageIQ API](http://manageiq.org/docs/api)
-* Create a [ManageIQ Plugin](https://github.com/ManageIQ/guides/blob/master/developer_setup/plugins.md)/ seperate Rails Engine to handle V2V interactions
+* Create a [ManageIQ Plugin](https://github.com/ManageIQ/guides/blob/master/developer_setup/plugins.md)/seperate Rails Engine to handle V2V interactions
 * Use Ryan Florence's [folder structure](https://gist.github.com/ryanflorence/daafb1e3cb8ad740b346) for React apps within a Rails application.
 * Adds Compute -> Migration section to ManageIQ.
 
