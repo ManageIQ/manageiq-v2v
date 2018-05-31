@@ -11,7 +11,12 @@ import {
   CREATE_V2V_TRANSFORMATION_PLAN_REQUEST,
   V2V_FETCH_CLUSTERS,
   V2V_SET_MIGRATIONS_FILTER,
-  V2V_RETRY_MIGRATION
+  V2V_RETRY_MIGRATION,
+  SHOW_DELETE_CONFIRMATION_MODAL,
+  HIDE_DELETE_CONFIRMATION_MODAL,
+  SET_MAPPING_TO_DELETE,
+  YES_TO_DELETE_AND_HIDE_DELETE_CONFIRMATION_MODAL,
+  DELETE_INFRASTRUCTURE_MAPPING
 } from './OverviewConstants';
 
 export const showMappingWizardAction = () => dispatch => {
@@ -57,10 +62,13 @@ const fetchTasksForAllRequests = (allRequests, dispatch) => {
     dispatch({
       type: FETCH_V2V_ALL_REQUESTS_WITH_TASKS,
       payload: new Promise((resolve, reject) => {
-        API.post('/api/requests?expand=resource&attributes=miq_request_tasks', {
-          action: 'query',
-          resources: allRequests
-        })
+        API.post(
+          '/api/requests?expand=resource&attributes=miq_request_tasks,service_template',
+          {
+            action: 'query',
+            resources: allRequests
+          }
+        )
           .then(responseRequestsWithTasks => {
             resolve(responseRequestsWithTasks);
           })
@@ -130,3 +138,41 @@ export const retryMigrationAction = planId => ({
   type: V2V_RETRY_MIGRATION,
   payload: planId
 });
+
+export const showDeleteConfirmationModalAction = () => ({
+  type: SHOW_DELETE_CONFIRMATION_MODAL,
+  payload: true
+});
+
+export const hideDeleteConfirmationModalAction = () => ({
+  type: HIDE_DELETE_CONFIRMATION_MODAL,
+  payload: false
+});
+
+export const setMappingToDeleteAction = mapping => dispatch => {
+  dispatch({
+    type: SET_MAPPING_TO_DELETE,
+    payload: mapping
+  });
+};
+
+export const yesToDeleteInfrastructureMappingAction = () => dispatch => {
+  dispatch({
+    type: YES_TO_DELETE_AND_HIDE_DELETE_CONFIRMATION_MODAL
+  });
+};
+
+export const deleteInfrastructureMappingAction = mapping => dispatch => {
+  dispatch({
+    type: DELETE_INFRASTRUCTURE_MAPPING,
+    payload: new Promise((resolve, reject) => {
+      API.post(`/api/transformation_mappings/${mapping.id}`, {
+        action: 'delete'
+      })
+        .then(response => {
+          resolve(response);
+        })
+        .catch(e => reject(e));
+    })
+  });
+};

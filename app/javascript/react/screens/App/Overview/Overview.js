@@ -88,7 +88,11 @@ class Overview extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { finishedTransformationPlans, addNotificationAction } = this.props;
+    const {
+      finishedTransformationPlans,
+      addNotificationAction,
+      yesToDeleteInfrastructureMapping
+    } = this.props;
     const { hasMadeInitialPlansFetch } = this.state;
 
     if (
@@ -129,6 +133,11 @@ class Overview extends React.Component {
           actionEnabled: true
         });
       });
+    }
+
+    if (yesToDeleteInfrastructureMapping) {
+      const { deleteInfrastructureMappingAction, mappingToDelete } = this.props;
+      deleteInfrastructureMappingAction(mappingToDelete);
     }
   }
 
@@ -191,11 +200,30 @@ class Overview extends React.Component {
       notStartedTransformationPlans,
       activeTransformationPlans,
       finishedTransformationPlans,
+      finishedWithErrorTransformationPlans,
       isCreatingTransformationPlanRequest,
       clusters,
       migrationsFilter,
-      setMigrationsFilterAction
+      setMigrationsFilterAction,
+      showDeleteConfirmationModal,
+      showDeleteConfirmationModalAction,
+      hideDeleteConfirmationModalAction,
+      setMappingToDeleteAction,
+      mappingToDelete,
+      yesToDeleteInfrastructureMappingAction,
+      deleteInfrastructureMappingAction
     } = this.props;
+
+    const inProgressRequestsTransformationMappings = () => {
+      const mappings = [];
+
+      if (activeTransformationPlans) {
+        activeTransformationPlans.map(plan =>
+          mappings.push(plan.options.config_info.transformation_mapping_id)
+        );
+      }
+      return mappings;
+    };
 
     const aggregateDataCards = (
       <div className="row-cards-pf">
@@ -277,6 +305,26 @@ class Overview extends React.Component {
             clusters={clusters}
             transformationMappings={transformationMappings}
             createInfraMappingClick={showMappingWizardAction}
+            inProgressRequestsTransformationMappings={inProgressRequestsTransformationMappings()}
+            showDeleteConfirmationModalAction={
+              showDeleteConfirmationModalAction
+            }
+            setMappingToDeleteAction={setMappingToDeleteAction}
+            showDeleteConfirmationModal={showDeleteConfirmationModal}
+            hideDeleteConfirmationModalAction={
+              hideDeleteConfirmationModalAction
+            }
+            mappingToDelete={mappingToDelete}
+            yesToDeleteInfrastructureMappingAction={
+              yesToDeleteInfrastructureMappingAction
+            }
+            notStartedTransformationPlans={notStartedTransformationPlans}
+            finishedWithErrorTransformationPlans={
+              finishedWithErrorTransformationPlans
+            }
+            deleteInfrastructureMappingAction={
+              deleteInfrastructureMappingAction
+            }
           />
         </Spinner>
       </div>
@@ -318,6 +366,7 @@ Overview.propTypes = {
   notStartedTransformationPlans: PropTypes.array,
   activeTransformationPlans: PropTypes.array,
   finishedTransformationPlans: PropTypes.array,
+  finishedWithErrorTransformationPlans: PropTypes.array,
   transformationMappings: PropTypes.array,
   fetchTransformationMappingsUrl: PropTypes.string,
   fetchTransformationMappingsAction: PropTypes.func,
@@ -335,6 +384,14 @@ Overview.propTypes = {
   migrationsFilter: PropTypes.string,
   setMigrationsFilterAction: PropTypes.func,
   retryMigrationAction: PropTypes.func,
-  history: PropTypes.object
+  history: PropTypes.object,
+  showDeleteConfirmationModal: PropTypes.bool,
+  showDeleteConfirmationModalAction: PropTypes.func,
+  hideDeleteConfirmationModalAction: PropTypes.func,
+  setMappingToDeleteAction: PropTypes.func,
+  mappingToDelete: PropTypes.object,
+  yesToDeleteInfrastructureMappingAction: PropTypes.func,
+  deleteInfrastructureMappingAction: PropTypes.func,
+  yesToDeleteInfrastructureMapping: PropTypes.bool
 };
 export default Overview;

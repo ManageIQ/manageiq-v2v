@@ -14,7 +14,12 @@ import {
   V2V_FETCH_CLUSTERS,
   CONTINUE_TO_PLAN,
   V2V_SET_MIGRATIONS_FILTER,
-  V2V_RETRY_MIGRATION
+  V2V_RETRY_MIGRATION,
+  SHOW_DELETE_CONFIRMATION_MODAL,
+  HIDE_DELETE_CONFIRMATION_MODAL,
+  SET_MAPPING_TO_DELETE,
+  YES_TO_DELETE_AND_HIDE_DELETE_CONFIRMATION_MODAL,
+  DELETE_INFRASTRUCTURE_MAPPING
 } from './OverviewConstants';
 
 export const initialState = Immutable({
@@ -43,7 +48,8 @@ export const initialState = Immutable({
   isContinuingToPlan: false,
   shouldReloadMappings: false,
   clusters: [],
-  migrationsFilter: 'Migration Plans Not Started'
+  migrationsFilter: 'Migration Plans Not Started',
+  showDeleteConfirmationModal: false
 });
 
 export default (state = initialState, action) => {
@@ -158,6 +164,38 @@ export default (state = initialState, action) => {
       return state.set('migrationsFilter', action.payload);
     case V2V_RETRY_MIGRATION:
       return state.set('planId', action.payload).set('reloadCard', true);
+
+    case SHOW_DELETE_CONFIRMATION_MODAL:
+    case HIDE_DELETE_CONFIRMATION_MODAL:
+      return state
+        .set('yesToDeleteInfrastructureMapping', false)
+        .set('showDeleteConfirmationModal', action.payload);
+
+    case SET_MAPPING_TO_DELETE:
+      return state.set('mappingToDelete', action.payload);
+
+    case YES_TO_DELETE_AND_HIDE_DELETE_CONFIRMATION_MODAL:
+      return state
+        .set('yesToDeleteInfrastructureMapping', true)
+        .set('showDeleteConfirmationModal', false);
+
+    case `${DELETE_INFRASTRUCTURE_MAPPING}_PENDING`:
+      return state
+        .set('yesToDeleteInfrastructureMapping', false)
+        .set('isDeletingInfrastructureMapping', action.payload);
+    case `${DELETE_INFRASTRUCTURE_MAPPING}_FULFILLED`:
+      return state
+        .set('deleteInfrastructureMappingResponse', action.payload.data)
+        .set('isDeletingInfrastructureMapping', null)
+        .set('isRejectedInfrastructureMapping', false)
+        .set('shouldReloadMappings', true)
+        .set('errorDeleteInfrastructureMapping', null);
+    case `${DELETE_INFRASTRUCTURE_MAPPING}_REJECTED`:
+      return state
+        .set('errorDeleteInfrastructureMapping', action.payload)
+        .set('isRejectedInfrastructureMapping', true)
+        .set('isDeletingInfrastructureMapping', null);
+
     default:
       return state;
   }
