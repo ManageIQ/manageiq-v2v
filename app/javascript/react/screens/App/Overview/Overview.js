@@ -5,6 +5,7 @@ import Toolbar from '../../../config/Toolbar';
 import * as AggregateCards from './components/AggregateCards';
 import InfrastructureMappingsList from './components/InfrastructureMappingsList/InfrastructureMappingsList';
 import Migrations from './components/Migrations/Migrations';
+import OverviewEmptyState from './components/OverviewEmptyState/OverviewEmptyState';
 import componentRegistry from '../../../../components/componentRegistry';
 import getMostRecentRequest from '../common/getMostRecentRequest';
 
@@ -28,6 +29,7 @@ class Overview extends React.Component {
 
   componentDidMount() {
     const {
+      fetchProvidersAction,
       fetchClustersUrl,
       fetchClustersAction,
       fetchTransformationMappingsUrl,
@@ -36,6 +38,7 @@ class Overview extends React.Component {
       fetchTransformationPlansAction
     } = this.props;
 
+    fetchProvidersAction();
     fetchClustersAction(fetchClustersUrl);
     fetchTransformationMappingsAction(fetchTransformationMappingsUrl);
     fetchTransformationPlansAction(fetchTransformationPlansUrl).then(() => {
@@ -185,6 +188,8 @@ class Overview extends React.Component {
 
   render() {
     const {
+      isFetchingProviders,
+      hasSufficientProviders,
       showMappingWizardAction,
       showPlanWizardAction,
       mappingWizardVisible,
@@ -275,6 +280,7 @@ class Overview extends React.Component {
         {aggregateDataCards}
         <Spinner
           loading={
+            isFetchingProviders ||
             isFetchingTransformationMappings ||
             (isFetchingAllRequestsWithTasks &&
               !requestsWithTasksPreviouslyFetched)
@@ -301,31 +307,42 @@ class Overview extends React.Component {
               redirectTo={this.redirectTo}
             />
           )}
-          <InfrastructureMappingsList
-            clusters={clusters}
-            transformationMappings={transformationMappings}
-            createInfraMappingClick={showMappingWizardAction}
-            inProgressRequestsTransformationMappings={inProgressRequestsTransformationMappings()}
-            showDeleteConfirmationModalAction={
-              showDeleteConfirmationModalAction
-            }
-            setMappingToDeleteAction={setMappingToDeleteAction}
-            showDeleteConfirmationModal={showDeleteConfirmationModal}
-            hideDeleteConfirmationModalAction={
-              hideDeleteConfirmationModalAction
-            }
-            mappingToDelete={mappingToDelete}
-            yesToDeleteInfrastructureMappingAction={
-              yesToDeleteInfrastructureMappingAction
-            }
-            notStartedTransformationPlans={notStartedTransformationPlans}
-            finishedWithErrorTransformationPlans={
-              finishedWithErrorTransformationPlans
-            }
-            deleteInfrastructureMappingAction={
-              deleteInfrastructureMappingAction
-            }
-          />
+          {hasSufficientProviders ? (
+            <InfrastructureMappingsList
+              clusters={clusters}
+              transformationMappings={transformationMappings}
+              createInfraMappingClick={showMappingWizardAction}
+              inProgressRequestsTransformationMappings={inProgressRequestsTransformationMappings()}
+              showDeleteConfirmationModalAction={
+                showDeleteConfirmationModalAction
+              }
+              setMappingToDeleteAction={setMappingToDeleteAction}
+              showDeleteConfirmationModal={showDeleteConfirmationModal}
+              hideDeleteConfirmationModalAction={
+                hideDeleteConfirmationModalAction
+              }
+              mappingToDelete={mappingToDelete}
+              yesToDeleteInfrastructureMappingAction={
+                yesToDeleteInfrastructureMappingAction
+              }
+              notStartedTransformationPlans={notStartedTransformationPlans}
+              finishedWithErrorTransformationPlans={
+                finishedWithErrorTransformationPlans
+              }
+              deleteInfrastructureMappingAction={
+                deleteInfrastructureMappingAction
+              }
+            />
+          ) : (
+            <OverviewEmptyState
+              description={__(
+                'The VMWare and Red Hat Virtualization providers must be configured before attempting a migration.'
+              )}
+              buttonText={__('Configure Providers')}
+              buttonHref="/ems_infra/show_list"
+              className="full-page-empty"
+            />
+          )}
         </Spinner>
       </div>
     );
@@ -392,6 +409,9 @@ Overview.propTypes = {
   mappingToDelete: PropTypes.object,
   yesToDeleteInfrastructureMappingAction: PropTypes.func,
   deleteInfrastructureMappingAction: PropTypes.func,
-  yesToDeleteInfrastructureMapping: PropTypes.bool
+  yesToDeleteInfrastructureMapping: PropTypes.bool,
+  fetchProvidersAction: PropTypes.func,
+  isFetchingProviders: PropTypes.bool,
+  hasSufficientProviders: PropTypes.bool
 };
 export default Overview;

@@ -72,8 +72,10 @@ const Migrations = ({
         ) : (
           <OverviewEmptyState
             showWizardAction={createMigrationPlanClick}
-            description="Create a migration plan to select VMs for migration."
-            buttonText="Create Migration Plan"
+            description={__(
+              'Create a migration plan to select VMs for migration.'
+            )}
+            buttonText={__('Create Migration Plan')}
           />
         )}
       </Grid.Col>

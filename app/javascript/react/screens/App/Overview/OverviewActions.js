@@ -5,6 +5,8 @@ import {
   SHOW_MAPPING_WIZARD,
   SHOW_PLAN_WIZARD,
   HIDE_MAPPING_WIZARD,
+  FETCH_PROVIDERS,
+  FETCH_PROVIDERS_URL,
   FETCH_V2V_TRANSFORMATION_MAPPINGS,
   FETCH_V2V_TRANSFORMATION_PLANS,
   FETCH_V2V_ALL_REQUESTS_WITH_TASKS,
@@ -29,6 +31,13 @@ export const showPlanWizardAction = id => dispatch => {
   dispatch({
     type: SHOW_PLAN_WIZARD,
     payload: id
+  });
+};
+
+export const fetchProvidersAction = () => dispatch => {
+  dispatch({
+    type: FETCH_PROVIDERS,
+    payload: API.get(FETCH_PROVIDERS_URL)
   });
 };
 
