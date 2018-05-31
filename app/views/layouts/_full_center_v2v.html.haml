@@ -3,3 +3,7 @@
 
 .container-fluid.container-pf-nav-pf-vertical.container-pf-nav-pf-vertical-with-sub-menus{:style => "overflow: hidden; height: 100%;"}
   = yield
+
+:javascript
+  // gaprindashvili-specific hack to support v2v-specific styling even for dialogs (outside #reactRoot)
+  $('body').addClass('miq-v2v');
