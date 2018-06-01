@@ -53,7 +53,7 @@ export const initialState = Immutable({
   isContinuingToPlan: false,
   shouldReloadMappings: false,
   clusters: [],
-  migrationsFilter: 'Migration Plans Not Started',
+  migrationsFilter: __('Migration Plans Not Started'),
   showDeleteConfirmationModal: false
 });
 
