@@ -377,7 +377,7 @@ class NetworksStepForm extends React.Component {
         >
           <DualPaneMapperList
             id="source_networks"
-            listTitle="Source Networks"
+            listTitle={__('Source Networks')}
             loading={isFetchingSourceNetworks}
             counter={counter}
           >
@@ -406,7 +406,7 @@ class NetworksStepForm extends React.Component {
           </DualPaneMapperList>
           <DualPaneMapperList
             id="target_networks"
-            listTitle="Target Networks"
+            listTitle={__('Target Networks')}
             loading={isFetchingTargetNetworks}
           >
             {targetNetworks &&

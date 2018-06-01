@@ -151,10 +151,12 @@ class Plan extends React.Component {
             planRequestPreviouslyFetched &&
             planRequestTasksMutable.length === 0 && (
               <PlanEmptyState
-                title="No Migration Tasks."
+                title={__('No Migration Tasks.')}
                 iconType="pf"
                 iconName="warning-triangle-o"
-                description="No VM migration tasks have been started for this plan. Please refresh and try again."
+                description={__(
+                  'No VM migration tasks have been started for this plan. Please refresh and try again.'
+                )}
               />
             )}
           {planNotStarted &&
@@ -163,19 +165,23 @@ class Plan extends React.Component {
           {planNotStarted &&
             vmsMutable.length === 0 && (
               <PlanEmptyState
-                title="No VMs"
+                title={__('No VMs')}
                 iconType="pf"
                 iconName="warning-triangle-o"
-                description="No VMs were returned for this migration plan. Please refresh and try again."
+                description={__(
+                  'No VMs were returned for this migration plan. Please refresh and try again.'
+                )}
               />
             )}
         </Spinner>
         {(isRejectedPlanRequest || isRejectedPlan || isRejectedVms) && (
           <PlanEmptyState
-            title="Unable to retrieve migration details."
+            title={__('Unable to retrieve migration details.')}
             iconType="pf"
             iconName="error-circle-o"
-            description="Sorry, we were unable to retrieve migration details at this time. Please refresh and try again."
+            description={__(
+              'Sorry, we were unable to retrieve migration details at this time. Please refresh and try again.'
+            )}
           />
         )}
       </React.Fragment>

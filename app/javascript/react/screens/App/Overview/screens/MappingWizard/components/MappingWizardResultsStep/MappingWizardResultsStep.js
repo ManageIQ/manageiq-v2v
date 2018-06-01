@@ -28,10 +28,10 @@ class MappingWizardResultsStep extends React.Component {
         <div className="wizard-pf-process blank-slate-pf">
           <Spinner loading size="lg" className="blank-slate-pf-icon" />
           <h3 className="blank-slate-pf-main-action">
-            Creating Infrastructure Mapping...
+            {__('Creating Infrastructure Mapping...')}
           </h3>
           <p className="blank-slate-pf-secondary-action">
-            Please wait while infrastructure mapping is created.
+            {__('Please wait while infrastructure mapping is created.')}
           </p>
         </div>
       );
@@ -42,10 +42,10 @@ class MappingWizardResultsStep extends React.Component {
             <span className="pficon pficon-error-circle-o" />
           </div>
           <h3 className="blank-slate-pf-main-action">
-            Error Creating Infrastructure Mapping
+            {__('Error Creating Infrastructure Mapping')}
           </h3>
           <p className="blank-slate-pf-secondary-action">
-            We&apos;re sorry, something went wrong. Please try again.
+            {__("We're sorry, something went wrong. Please try again.")}
           </p>
           <button type="button" className="btn btn-lg btn-primary">
             Retry
@@ -59,7 +59,10 @@ class MappingWizardResultsStep extends React.Component {
             <span className="glyphicon glyphicon-ok-circle" />
           </div>
           <h3 className="blank-slate-pf-main-action">
-            All mappings in {transformationsBody.name} have been mapped.
+            {sprintf(
+              __('All mappings in %s have been mapped.'),
+              transformationsBody.name
+            )}
           </h3>
           <p className="blank-slate-pf-secondary-action">
             <Button
@@ -68,9 +71,9 @@ class MappingWizardResultsStep extends React.Component {
                 continueToPlanAction(transformationMappingsResult.id)
               }
             >
-              Continue to the plan wizard
+              {__('Continue to the plan wizard')}
             </Button>
-            to create a migration plan using the infrastructure mapping.
+            {__('to create a migration plan using the infrastructure mapping.')}
           </p>
         </div>
       );

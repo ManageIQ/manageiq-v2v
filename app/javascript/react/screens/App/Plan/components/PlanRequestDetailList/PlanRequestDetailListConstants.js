@@ -10,7 +10,10 @@ export const FINISHED_PLAN_FILTER_TYPES = [
     title: __('Status'),
     placeholder: __('Filter by Status'),
     filterType: 'select',
-    filterValues: [{ title: 'Ok', id: 'Ok' }, { title: 'Error', id: 'Error' }]
+    filterValues: [
+      { title: __('Ok'), id: 'Ok' },
+      { title: __('Error'), id: 'Error' }
+    ]
   }
 ];
 

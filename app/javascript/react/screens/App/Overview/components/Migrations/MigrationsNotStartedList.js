@@ -28,7 +28,7 @@ const MigrationsNotStartedList = ({
                     }}
                     disabled={loading === plan.href}
                   >
-                    Migrate
+                    {__('Migrate')}
                   </Button>
                 </div>
               }

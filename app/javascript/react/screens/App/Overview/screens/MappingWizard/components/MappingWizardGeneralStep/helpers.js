@@ -20,7 +20,7 @@ export const asyncValidate = (values, dispatch, props) =>
           newTransformationName
         )
       );
-      const error = { name: 'Please enter a unique name' };
+      const error = { name: __('Please enter a unique name') };
       reject(error);
     } else {
       resolve();
