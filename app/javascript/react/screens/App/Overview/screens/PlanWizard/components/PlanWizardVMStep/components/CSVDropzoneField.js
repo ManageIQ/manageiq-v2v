@@ -84,7 +84,7 @@ class CSVDropzoneField extends React.Component {
         >
           <EmptyState>
             <EmptyState.Icon type="pf" name="import" />
-            <EmptyState.Title />
+            <EmptyState.Title>{__('Import File')}</EmptyState.Title>
             <EmptyState.Info>
               {__('Import a file including a list of VMs to be migrated.')}
             </EmptyState.Info>
