@@ -305,7 +305,7 @@ class PlanVmsList extends React.Component {
                     key={`${task.id}-message`}
                     style={{ minWidth: 150, paddingRight: 20 }}
                   >
-                    Not started
+                    {__('Not started')}
                   </ListView.InfoItem>
                 ]}
                 actions={
@@ -313,7 +313,7 @@ class PlanVmsList extends React.Component {
                     now={0}
                     min={0}
                     max={100}
-                    description="0 GBs Migrated"
+                    description={__('0 GBs Migrated')}
                     label=" "
                     usedTooltipFunction={(max, now) => (
                       <Tooltip id={Date.now()}>
@@ -358,13 +358,13 @@ PlanVmsList.propTypes = {
   planVms: PropTypes.array
 };
 
-PlanVmsList.sortFields = [{ id: 'name', title: 'Name', isNumeric: false }];
+PlanVmsList.sortFields = [{ id: 'name', title: __('Name'), isNumeric: false }];
 
 PlanVmsList.filterTypes = [
   {
     id: 'name',
-    title: 'Name',
-    placeholder: 'Filter by Name',
+    title: __('Name'),
+    placeholder: __('Filter by Name'),
     filterType: 'text'
   }
 ];
