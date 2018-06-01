@@ -176,7 +176,7 @@ class Overview extends React.Component {
 
     createTransformationPlanRequestAction(url).then(() => {
       retryMigrationAction(planId);
-      setMigrationsFilterAction('Migration Plans in Progress');
+      setMigrationsFilterAction(__('Migration Plans in Progress'));
       fetchTransformationPlansAction(fetchTransformationPlansUrl);
     });
   };
@@ -350,9 +350,11 @@ class Overview extends React.Component {
     const toolbarContent = (
       <Toolbar>
         <Breadcrumb.Item href="/dashboard/maintab?tab=compute">
-          Compute
+          {__('Compute')}
         </Breadcrumb.Item>
-        <Breadcrumb.Item active>Migration</Breadcrumb.Item>
+        <Breadcrumb.Item active>
+          {__('Migration')}
+        </Breadcrumb.Item>
       </Toolbar>
     );
 
