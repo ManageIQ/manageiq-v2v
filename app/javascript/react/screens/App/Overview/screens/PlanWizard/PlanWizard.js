@@ -51,12 +51,12 @@ class PlanWizard extends React.Component {
         planWizardOptionsStep.values.migration_plan_choice_radio ===
         'migration_plan_now'
       ) {
-        setMigrationsFilterAction('Migration Plans in Progress');
+        setMigrationsFilterAction(__('Migration Plans in Progress'));
       } else if (
         planWizardOptionsStep.values.migration_plan_choice_radio ===
         'migration_plan_later'
       ) {
-        setMigrationsFilterAction('Migration Plans Not Started');
+        setMigrationsFilterAction(__('Migration Plans Not Started'));
       }
     }
 
