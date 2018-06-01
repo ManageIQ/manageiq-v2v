@@ -20,8 +20,8 @@ const ActiveTransformationPlans = ({
 }) => {
   const countDescription =
     activePlans.length === 1
-      ? 'Migration Plan In Progress'
-      : 'Migration Plans In Progress';
+      ? __('Migration Plan In Progress')
+      : __('Migration Plans In Progress');
 
   const erroredPlans = activePlans.filter(plan => {
     if (allRequestsWithTasks && allRequestsWithTasks.length > 0) {
