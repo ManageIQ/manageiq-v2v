@@ -14,8 +14,8 @@ import {
 const InfrastructureMappings = ({ mappings, loading }) => {
   const countDescription =
     mappings.length === 1
-      ? 'Infrastructure Mapping'
-      : 'Infrastructure Mappings';
+      ? __('Infrastructure Mapping')
+      : __('Infrastructure Mappings');
 
   const classes = cx('overview-aggregate-card', { 'is-loading': loading });
 

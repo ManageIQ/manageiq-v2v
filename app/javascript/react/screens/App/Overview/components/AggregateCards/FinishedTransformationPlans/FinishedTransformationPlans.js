@@ -15,8 +15,8 @@ import getMostRecentRequest from '../../../../common/getMostRecentRequest';
 const FinishedTransformationPlans = ({ finishedPlans, loading }) => {
   const countDescription =
     finishedPlans.length === 1
-      ? 'Migration Plan Complete'
-      : 'Migration Plans Complete';
+      ? __('Migration Plan Complete')
+      : __('Migration Plans Complete');
 
   const failedPlans = finishedPlans.filter(plan => {
     const mostRecentRequest =

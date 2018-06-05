@@ -15,7 +15,7 @@ class CSVDropzoneField extends React.Component {
       this.handleUnparsedFile(acceptedFiles[0]);
     } else {
       // eslint-disable-next-line no-restricted-globals
-      alert('Invalid file extension. Only .csv files are accepted.');
+      alert(__('Invalid file extension. Only .csv files are accepted.'));
     }
   };
 

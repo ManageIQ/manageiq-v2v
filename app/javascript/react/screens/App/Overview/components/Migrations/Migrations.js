@@ -21,9 +21,9 @@ const Migrations = ({
   redirectTo
 }) => {
   const filterOptions = [
-    'Migration Plans Not Started',
-    'Migration Plans in Progress',
-    'Migration Plans Completed'
+    __('Migration Plans Not Started'),
+    __('Migration Plans in Progress'),
+    __('Migration Plans Completed')
   ];
 
   return (

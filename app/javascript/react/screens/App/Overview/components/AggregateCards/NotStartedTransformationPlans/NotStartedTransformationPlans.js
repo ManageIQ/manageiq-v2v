@@ -14,8 +14,8 @@ import {
 const NotStartedTransformationPlans = ({ notStartedPlans, loading }) => {
   const countDescription =
     notStartedPlans.length === 1
-      ? 'Migration Plan Not Started'
-      : 'Migration Plans Not Started';
+      ? __('Migration Plan Not Started')
+      : __('Migration Plans Not Started');
 
   const classes = cx('overview-aggregate-card', { 'is-loading': loading });
 

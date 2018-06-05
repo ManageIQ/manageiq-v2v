@@ -10,7 +10,8 @@ const vmSelectionCellFormatter = (
 ) => {
   const disabled = rowData.invalid || rowData.conflict;
   const checkboxId = id || `select${rowIndex}`;
-  const checkboxLabel = label || `Select row ${rowIndex}`;
+  const checkboxLabel =
+    label || sprintf(__('Select row %s'), rowIndex.toString());
   return (
     <Table.SelectionCell>
       <Table.Checkbox

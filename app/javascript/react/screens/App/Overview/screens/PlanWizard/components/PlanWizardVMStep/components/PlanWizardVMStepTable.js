@@ -68,20 +68,20 @@ class PlanWizardVMStepTable extends React.Component {
     const filterTypes = [
       {
         id: 'name',
-        title: 'VM Name',
-        placeholder: 'Filter by VM Name',
+        title: __('VM Name'),
+        placeholder: __('Filter by VM Name'),
         filterType: 'text'
       },
       {
         id: 'cluster',
-        title: 'Source Cluster',
-        placeholder: 'Filter by Source Cluster',
+        title: __('Source Cluster'),
+        placeholder: __('Filter by Source Cluster'),
         filterType: 'text'
       },
       {
         id: 'path',
-        title: 'Path',
-        placeholder: 'Filter by Path',
+        title: __('Path'),
+        placeholder: __('Filter by Path'),
         filterType: 'text'
       }
     ];

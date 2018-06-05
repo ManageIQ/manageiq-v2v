@@ -380,7 +380,7 @@ class DatastoresStepForm extends React.Component {
         >
           <DualPaneMapperList
             id="source_datastores"
-            listTitle="Source Datastores"
+            listTitle={__('Source Datastores')}
             loading={isFetchingSourceDatastores}
             counter={counter}
           >
@@ -403,7 +403,7 @@ class DatastoresStepForm extends React.Component {
           </DualPaneMapperList>
           <DualPaneMapperList
             id="target_datastores"
-            listTitle="Target Datastores"
+            listTitle={__('Target Datastores')}
             loading={isFetchingTargetDatastores}
           >
             {targetDatastores &&

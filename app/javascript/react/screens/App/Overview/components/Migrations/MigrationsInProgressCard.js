@@ -44,7 +44,7 @@ const MigrationsInProgressCard = ({
             <EmptyState>
               <Spinner loading size="lg" style={{ marginBottom: '15px' }} />
               <EmptyState.Info>
-                Initiating migration. This might take a few minutes.
+                {__('Initiating migration. This might take a few minutes.')}
               </EmptyState.Info>
             </EmptyState>
           </Card.Body>
