@@ -13,25 +13,42 @@ const unUsedMappingInPlans = (
     plan =>
       plan.options.config_info.transformation_mapping_id === mappingToDelete.id
   );
-  plansWithMappingToBeDeleted.map(plan => planNames.push(plan.name));
+  plansWithMappingToBeDeleted.map(plan =>
+    planNames.push({ name: plan.name, id: plan.id })
+  );
 
   const plansWithErrorWithMappingToBeDeleted = finishedWithErrorTransformationPlans.filter(
     plan =>
       plan.options.config_info.transformation_mapping_id === mappingToDelete.id
   );
-  plansWithErrorWithMappingToBeDeleted.map(plan => planNames.push(plan.name));
+  plansWithErrorWithMappingToBeDeleted.map(plan =>
+    planNames.push({ name: plan.name, id: plan.id })
+  );
 
   if (planNames.length > 0) {
-    const deleteMessageAboutUnMigratedVMs = __(
-      'The infrastructure mapping is associated with migration plans that include unmigrated VMs. Deleting the mapping will prevent you from migrating the VMs in these plans:'
-    );
-    const deleteMessageAboutPlansUsingMapping = (
+    const deleteMessageAboutUnMigratedVMs = (
       <div>
-        <h4>{deleteMessageAboutUnMigratedVMs}</h4>
-        <strong>{planNames.map(plan => <ul key={plan}>{plan}</ul>)}</strong>
+        <h4>
+          {__(
+            'The infrastructure mapping is associated with migration plans that include unmigrated VMs. Deleting the mapping will prevent you from migrating the VMs in these plans:'
+          )}
+        </h4>
       </div>
     );
-    return <div>{deleteMessageAboutPlansUsingMapping}</div>;
+
+    const deleteMessageAboutPlansUsingMapping = (
+      <div className="warning-modal-body-enable-scrollbar">
+        <strong>
+          {planNames.map(plan => <ul key={plan.id}>{plan.name}</ul>)}
+        </strong>
+      </div>
+    );
+    return (
+      <div>
+        {deleteMessageAboutUnMigratedVMs}
+        {deleteMessageAboutPlansUsingMapping}
+      </div>
+    );
   }
   return '';
 };
