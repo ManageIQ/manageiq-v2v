@@ -2,9 +2,14 @@ import { addLocaleData } from 'react-intl';
 
 // hard wired to english for now
 import en from 'react-intl/locale-data/en';
+import fr from 'react-intl/locale-data/fr';
+import es from 'react-intl/locale-data/es';
+import ja from 'react-intl/locale-data/ja';
+import zh_CN from 'react-intl/locale-data/zh';
 
 class I18n {
   constructor(locale, timezone) {
+    zh_CN[0].locale = 'zh_CN';
     this.fallbackIntl = !global.Intl;
 
     [this.locale] = locale.split('-');
@@ -14,7 +19,7 @@ class I18n {
     // this.ready = this.init();
 
     // hard wired for now
-    addLocaleData([...en]);
+    addLocaleData([...en, ...fr, ...es, ...ja, ...zh_CN]);
     this.loaded = true;
   }
 
