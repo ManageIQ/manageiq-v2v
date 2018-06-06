@@ -25,22 +25,36 @@ const _formatValidVms = vms =>
     v.reason = V2V_VM_POST_VALIDATION_REASONS[v.reason];
     return v;
   });
-const _formatInvalidVms = vms =>
-  vms &&
-  vms.map(v => {
-    v.allocated_size = numeral(v.allocated_size).format('0.00b');
-    v.reason = V2V_VM_POST_VALIDATION_REASONS[v.reason];
-    if (
-      v.reason === V2V_VM_POST_VALIDATION_REASONS.migrated ||
-      v.reason === V2V_VM_POST_VALIDATION_REASONS.in_other_plan
-    ) {
-      v.warning = true;
-    } else {
-      v.invalid = true;
-    }
 
-    return v;
-  });
+const _formatInvalidVms = vms => {
+  const uniqueIds = [...new Set(vms.map(value => value.id))];
+  return (
+    vms &&
+    vms.map(v => {
+      v.allocated_size = numeral(v.allocated_size).format('0.00b');
+      v.reason = V2V_VM_POST_VALIDATION_REASONS[v.reason];
+      if (
+        v.reason === V2V_VM_POST_VALIDATION_REASONS.migrated ||
+        v.reason === V2V_VM_POST_VALIDATION_REASONS.in_other_plan
+      ) {
+        v.warning = true;
+      } else {
+        v.invalid = true;
+      }
+
+      const index = v.id && uniqueIds.indexOf(v.id);
+      if (index > -1) {
+        uniqueIds.splice(index, 1);
+      } else if (index === -1) {
+        v.reason = V2V_VM_POST_VALIDATION_REASONS.duplicate;
+        v.warning = false;
+        v.invalid = true;
+      }
+      return v;
+    })
+  );
+};
+
 const _formatConflictVms = vms =>
   vms &&
   vms.map(v => {
