@@ -18,10 +18,12 @@ export const initialState = Immutable({
   planRequestPreviouslyFetched: false,
   errorPlanRequest: null,
   planRequestTasks: [],
+  planRequestFailed: false,
   isFetchingPlan: false,
   isRejectedPlan: false,
   errorPlan: null,
   plan: {},
+  planArchived: false,
   isQueryingVms: false,
   isRejectedVms: false,
   errorVms: null,
@@ -142,6 +144,7 @@ export default (state = initialState, action) => {
           return state
             .set('planRequestPreviouslyFetched', true)
             .set('planRequestTasks', newTasks)
+            .set('planRequestFailed', payload.data.status === 'Error')
             .set('isRejectedPlanRequest', false)
             .set('errorPlanRequest', null)
             .set('isFetchingPlanRequest', false);
@@ -165,6 +168,7 @@ export default (state = initialState, action) => {
       return state
         .set('plan', action.payload.data)
         .set('planName', action.payload.data.name)
+        .set('planArchived', !!action.payload.data.deleted_on)
         .set('isFetchingPlan', false)
         .set('isRejectedPlan', false)
         .set('errorPlan', null);
