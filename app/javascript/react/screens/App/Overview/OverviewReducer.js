@@ -10,7 +10,9 @@ import {
   FETCH_PROVIDERS,
   FETCH_V2V_TRANSFORMATION_MAPPINGS,
   FETCH_V2V_TRANSFORMATION_PLANS,
+  FETCH_V2V_ARCHIVED_TRANSFORMATION_PLANS,
   FETCH_V2V_ALL_REQUESTS_WITH_TASKS,
+  FETCH_V2V_ALL_ARCHIVED_PLAN_REQUESTS_WITH_TASKS,
   CREATE_V2V_TRANSFORMATION_PLAN_REQUEST,
   V2V_FETCH_CLUSTERS,
   CONTINUE_TO_PLAN,
@@ -20,7 +22,11 @@ import {
   HIDE_DELETE_CONFIRMATION_MODAL,
   SET_MAPPING_TO_DELETE,
   YES_TO_DELETE_AND_HIDE_DELETE_CONFIRMATION_MODAL,
-  DELETE_INFRASTRUCTURE_MAPPING
+  DELETE_INFRASTRUCTURE_MAPPING,
+  SHOW_CONFIRM_MODAL,
+  HIDE_CONFIRM_MODAL,
+  MIGRATIONS_FILTERS,
+  ARCHIVE_TRANSFORMATION_PLAN
 } from './OverviewConstants';
 
 export const initialState = Immutable({
@@ -40,12 +46,19 @@ export const initialState = Immutable({
   isRejectedTransformationPlans: false,
   isFetchingTransformationPlans: false,
   errorTransformationPlans: null,
-  plansPreviouslyFetched: false,
   allRequestsWithTasks: [],
   isRejectedAllRequestsWithTasks: false,
   isFetchingAllRequestsWithTasks: false,
   errorAllRequestsWithTasks: null,
   requestsWithTasksPreviouslyFetched: false,
+  archivedTransformationPlans: [],
+  isRejectedArchivedTransformationPlans: false,
+  isFetchingArchivedTransformationPlans: '',
+  errorArchivedTransformationPlans: null,
+  allArchivedPlanRequestsWithTasks: [],
+  isRejectedAllArchivedPlanRequestsWithTasks: false,
+  isFetchingAllArchivedPlanRequestsWithTasks: false,
+  errorAllArchivedPlanRequestsWithTasks: null,
   createTransformationPlanRequestResponse: {},
   isRejectedCreateTranformationPlanRequest: false,
   isCreatingTransformationPlanRequest: null,
@@ -53,12 +66,23 @@ export const initialState = Immutable({
   isContinuingToPlan: false,
   shouldReloadMappings: false,
   clusters: [],
-  migrationsFilter: 'Migration Plans Not Started',
-  showDeleteConfirmationModal: false
+  migrationsFilter: MIGRATIONS_FILTERS.notStarted,
+  showDeleteConfirmationModal: false,
+  confirmModalVisible: false,
+  confirmModalOptions: {},
+  isArchivingTransformationPlan: false,
+  isRejectedArchivingTransformationPlan: false,
+  errorArchivingTransformationPlan: null
 });
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case SHOW_CONFIRM_MODAL:
+      return state
+        .set('confirmModalOptions', action.payload)
+        .set('confirmModalVisible', true);
+    case HIDE_CONFIRM_MODAL:
+      return state.set('confirmModalVisible', false);
     case SHOW_MAPPING_WIZARD:
       return Immutable.merge(state, {
         mappingWizardVisible: true,
@@ -146,14 +170,28 @@ export default (state = initialState, action) => {
         .set('transformationPlans', action.payload.data.resources)
         .set('isFetchingTransformationPlans', false)
         .set('isRejectedTransformationPlans', false)
-        .set('errorTransformationPlans', null)
-        .set('plansPreviouslyFetched', true);
+        .set('errorTransformationPlans', null);
     case `${FETCH_V2V_TRANSFORMATION_PLANS}_REJECTED`:
       return state
         .set('errorTransformationPlans', action.payload)
         .set('isRejectedTransformationPlans', true)
-        .set('isFetchingTransformationPlans', false)
-        .set('plansPreviouslyFetched', false);
+        .set('isFetchingTransformationPlans', false);
+
+    case `${FETCH_V2V_ARCHIVED_TRANSFORMATION_PLANS}_PENDING`:
+      return state
+        .set('isFetchingArchivedTransformationPlans', 'true')
+        .set('isRejectedArchivedTransformationPlans', false);
+    case `${FETCH_V2V_ARCHIVED_TRANSFORMATION_PLANS}_FULFILLED`:
+      return state
+        .set('archivedTransformationPlans', action.payload.data.resources)
+        .set('isFetchingArchivedTransformationPlans', '')
+        .set('isRejectedArchivedTransformationPlans', false)
+        .set('errorArchivedTransformationPlans', null);
+    case `${FETCH_V2V_ARCHIVED_TRANSFORMATION_PLANS}_REJECTED`:
+      return state
+        .set('errorArchivedTransformationPlans', action.payload)
+        .set('isRejectedArchivedTransformationPlans', true)
+        .set('isFetchingArchivedTransformationPlans', '');
 
     case `${FETCH_V2V_ALL_REQUESTS_WITH_TASKS}_PENDING`:
       return state.set('isFetchingAllRequestsWithTasks', true);
@@ -172,6 +210,22 @@ export default (state = initialState, action) => {
         .set('isRejectedAllRequestsWithTasks', true)
         .set('isFetchingAllRequestsWithTasks', false)
         .set('requestsWithTasksPreviouslyFetched', false);
+
+    case `${FETCH_V2V_ALL_ARCHIVED_PLAN_REQUESTS_WITH_TASKS}_PENDING`:
+      return state
+        .set('isFetchingAllArchivedPlanRequestsWithTasks', true)
+        .set('isRejectedAllArchivedPlanRequestsWithTasks', false);
+    case `${FETCH_V2V_ALL_ARCHIVED_PLAN_REQUESTS_WITH_TASKS}_FULFILLED`:
+      return state
+        .set('allArchivedPlanRequestsWithTasks', action.payload.data.results)
+        .set('isFetchingAllArchivedPlanRequestsWithTasks', false)
+        .set('isRejectedAllArchivedPlanRequestsWithTasks', false)
+        .set('errorAllArchivedPlanRequestsWithTasks', null);
+    case `${FETCH_V2V_ALL_ARCHIVED_PLAN_REQUESTS_WITH_TASKS}_REJECTED`:
+      return state
+        .set('errorAllArchivedPlanRequestsWithTasks', action.payload)
+        .set('isRejectedAllArchivedPlanRequestsWithTasks', true)
+        .set('isFetchingAllArchivedPlanRequestsWithTasks', false);
 
     case `${V2V_FETCH_CLUSTERS}_FULFILLED`:
       return state.set('clusters', action.payload.data.resources);
@@ -230,6 +284,21 @@ export default (state = initialState, action) => {
         .set('errorDeleteInfrastructureMapping', action.payload)
         .set('isRejectedInfrastructureMapping', true)
         .set('isDeletingInfrastructureMapping', null);
+
+    case `${ARCHIVE_TRANSFORMATION_PLAN}_PENDING`:
+      return state
+        .set('isArchivingTransformationPlan', true)
+        .set('isRejectedArchivingTransformationPlan', false);
+    case `${ARCHIVE_TRANSFORMATION_PLAN}_FULFILLED`:
+      return state
+        .set('isArchivingTransformationPlan', false)
+        .set('isRejectedArchivingTransformationPlan', false)
+        .set('errorArchivingTransformationPlan', null);
+    case `${ARCHIVE_TRANSFORMATION_PLAN}_REJECTED`:
+      return state
+        .set('isArchivingTransformationPlan', false)
+        .set('errorArchivingTransformationPlan', action.payload)
+        .set('isRejectedArchivingTransformationPlan', true);
 
     default:
       return state;

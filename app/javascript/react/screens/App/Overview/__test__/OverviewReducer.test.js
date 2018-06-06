@@ -38,7 +38,6 @@ describe('fetching transformation plans', () => {
 
     expect(state).toEqual({
       ...initialState,
-      plansPreviouslyFetched: true,
       transformationPlans: payload.data.resources
     });
   });
@@ -50,8 +49,7 @@ describe('fetching transformation plans', () => {
     };
     const prevState = Immutable({
       ...initialState,
-      isFetchingTransformationPlans: true,
-      plansPreviouslyFetched: true
+      isFetchingTransformationPlans: true
     });
     const state = overviewReducer(prevState, action);
 

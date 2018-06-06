@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { noop, Button, ListView, Grid, Spinner } from 'patternfly-react';
+import { noop, Button, ListView, Grid, Spinner, Icon } from 'patternfly-react';
 import { IsoElpasedTime } from '../../../../../../components/dates/IsoElapsedTime';
 import OverviewEmptyState from '../OverviewEmptyState/OverviewEmptyState';
 import getMostRecentRequest from '../../../common/getMostRecentRequest';
@@ -10,7 +10,15 @@ const MigrationsCompletedList = ({
   allRequestsWithTasks,
   retryClick,
   loading,
-  redirectTo
+  redirectTo,
+  showConfirmModalAction,
+  hideConfirmModalAction,
+  archiveTransformationPlanAction,
+  archiveTransformationPlanUrl,
+  fetchTransformationPlansAction,
+  fetchTransformationPlansUrl,
+  addNotificationAction,
+  archived
 }) => (
   <Grid.Col xs={12}>
     <Spinner loading={!!loading}>
@@ -36,8 +44,8 @@ const MigrationsCompletedList = ({
             });
 
             let succeedCount = 0;
-            Object.values(tasks).forEach(value => {
-              if (value) succeedCount += 1;
+            Object.keys(tasks).forEach(key => {
+              if (tasks[key]) succeedCount += 1;
             });
 
             const elapsedTime = IsoElpasedTime(
@@ -47,6 +55,67 @@ const MigrationsCompletedList = ({
               new Date(mostRecentRequest && mostRecentRequest.fulfilled_on)
             );
 
+            const archiveMigrationWarningText = (
+              <React.Fragment>
+                <p>
+                  {__('Are you sure you want to archive migration plan ')}
+                  <strong>{plan.name}</strong>?
+                </p>
+                {failed && (
+                  <p>
+                    {__(
+                      'This plan includes VMs that failed to migrate. If you archive the plan, you will not be able to retry the failed migrations.'
+                    )}
+                  </p>
+                )}
+              </React.Fragment>
+            );
+
+            const confirmModalBaseProps = {
+              title: __('Archive Migration Plan'),
+              body: archiveMigrationWarningText,
+              icon: failed && (
+                <Icon
+                  className="confirm-warning-icon"
+                  type="pf"
+                  name="warning-triangle-o"
+                />
+              ),
+              confirmButtonLabel: __('Archive')
+            };
+
+            const onConfirm = () => {
+              showConfirmModalAction({
+                ...confirmModalBaseProps,
+                disableCancelButton: true,
+                disableConfirmButton: true
+              });
+              archiveTransformationPlanAction(
+                archiveTransformationPlanUrl,
+                plan.id
+              )
+                .then(() => {
+                  addNotificationAction({
+                    message: sprintf(__('%s successfully archived'), plan.name),
+                    notificationType: 'success',
+                    persistent: false
+                  });
+
+                  return fetchTransformationPlansAction({
+                    url: fetchTransformationPlansUrl,
+                    archived: false
+                  });
+                })
+                .then(() => {
+                  hideConfirmModalAction();
+                });
+            };
+
+            const confirmModalOptions = {
+              ...confirmModalBaseProps,
+              onConfirm
+            };
+
             return (
               <ListView.Item
                 className="plans-complete-list__list-item"
@@ -55,12 +124,28 @@ const MigrationsCompletedList = ({
                 }}
                 key={plan.id}
                 leftContent={
-                  <ListView.Icon
-                    type="pf"
-                    name={failed ? 'error-circle-o' : 'ok'}
-                    size="md"
-                    style={{ width: 'inherit', backgroundColor: 'transparent' }}
-                  />
+                  archived ? (
+                    <ListView.Icon
+                      type="fa"
+                      name="archive"
+                      size="md"
+                      style={{
+                        width: 'inherit',
+                        backgroundColor: 'transparent',
+                        border: 'none'
+                      }}
+                    />
+                  ) : (
+                    <ListView.Icon
+                      type="pf"
+                      name={failed ? 'error-circle-o' : 'ok'}
+                      size="md"
+                      style={{
+                        width: 'inherit',
+                        backgroundColor: 'transparent'
+                      }}
+                    />
+                  )
                 }
                 heading={plan.name}
                 description={plan.description}
@@ -84,18 +169,29 @@ const MigrationsCompletedList = ({
                   </ListView.InfoItem>
                 ]}
                 actions={
-                  (failed && (
-                    <Button
-                      onClick={e => {
-                        e.stopPropagation();
-                        retryClick(plan.href, plan.id);
-                      }}
-                      disabled={loading === plan.href}
-                    >
-                      Retry
-                    </Button>
-                  )) ||
-                  (!failed && <div style={{ width: 50 }} />)
+                  !archived && (
+                    <React.Fragment>
+                      {failed && (
+                        <Button
+                          onClick={e => {
+                            e.stopPropagation();
+                            retryClick(plan.href, plan.id);
+                          }}
+                          disabled={loading === plan.href}
+                        >
+                          {__('Retry')}
+                        </Button>
+                      )}
+                      <Button
+                        onClick={e => {
+                          e.stopPropagation();
+                          showConfirmModalAction(confirmModalOptions);
+                        }}
+                      >
+                        {__('Archive')}
+                      </Button>
+                    </React.Fragment>
+                  )
                 }
               />
             );
@@ -103,14 +199,22 @@ const MigrationsCompletedList = ({
         </ListView>
       ) : (
         <OverviewEmptyState
-          title={__('No Migration Plans Completed')}
+          title={
+            archived
+              ? __('No Archived Migration Plans')
+              : __('No Completed Migration Plans')
+          }
           iconType="pf"
           iconName="info"
           description={
             <span>
-              {__(
-                'There are no existing migration plans in a Completed state.'
-              )}
+              {archived
+                ? __(
+                    'There are no exisitng migration plans in an Archived state.'
+                  )
+                : __(
+                    'There are no existing migration plans in a Completed state.'
+                  )}
               <br />{' '}
               {__(
                 'Make a selection in the dropdown to view plans in other states.'
@@ -128,7 +232,15 @@ MigrationsCompletedList.propTypes = {
   allRequestsWithTasks: PropTypes.array,
   retryClick: PropTypes.func,
   loading: PropTypes.string,
-  redirectTo: PropTypes.func
+  redirectTo: PropTypes.func,
+  showConfirmModalAction: PropTypes.func,
+  hideConfirmModalAction: PropTypes.func,
+  archived: PropTypes.bool,
+  archiveTransformationPlanAction: PropTypes.func,
+  archiveTransformationPlanUrl: PropTypes.string,
+  fetchTransformationPlansAction: PropTypes.func,
+  fetchTransformationPlansUrl: PropTypes.string,
+  addNotificationAction: PropTypes.func
 };
 MigrationsCompletedList.defaultProps = {
   finishedTransformationPlans: [],

@@ -4,6 +4,7 @@ exports[`Overview integration test should mount the Overview with mapStateToProp
 Object {
   "activeTransformationPlans": Array [],
   "addNotificationAction": [Function],
+  "archiveTransformationPlanAction": [Function],
   "clusters": Array [],
   "continueToPlanAction": [Function],
   "createTransformationPlanRequestAction": [Function],
@@ -17,6 +18,7 @@ Object {
   "fetchTransformationPlansUrl": "/api/dummyTransformationPlans",
   "finishedTransformationPlans": Array [],
   "finishedWithErrorTransformationPlans": Array [],
+  "hideConfirmModalAction": [Function],
   "hideDeleteConfirmationModalAction": [Function],
   "hideMappingWizard": false,
   "hidePlanWizard": false,
@@ -31,6 +33,7 @@ Object {
   "retryMigrationAction": [Function],
   "setMappingToDeleteAction": [Function],
   "setMigrationsFilterAction": [Function],
+  "showConfirmModalAction": [Function],
   "showDeleteConfirmationModalAction": [Function],
   "showMappingWizardAction": [Function],
   "showPlanWizardAction": [Function],

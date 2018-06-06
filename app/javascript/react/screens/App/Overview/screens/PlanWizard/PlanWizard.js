@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { noop, Button, Icon, Wizard } from 'patternfly-react';
 import { createMigrationPlans } from './helpers';
 import PlanWizardBody from './PlanWizardBody';
+import { MIGRATIONS_FILTERS } from '../../OverviewConstants';
 
 const planWizardSteps = [
   'planWizardGeneralStep',
@@ -51,12 +52,12 @@ class PlanWizard extends React.Component {
         planWizardOptionsStep.values.migration_plan_choice_radio ===
         'migration_plan_now'
       ) {
-        setMigrationsFilterAction('Migration Plans in Progress');
+        setMigrationsFilterAction(MIGRATIONS_FILTERS.inProgress);
       } else if (
         planWizardOptionsStep.values.migration_plan_choice_radio ===
         'migration_plan_later'
       ) {
-        setMigrationsFilterAction('Migration Plans Not Started');
+        setMigrationsFilterAction(MIGRATIONS_FILTERS.notStarted);
       }
     }
 
