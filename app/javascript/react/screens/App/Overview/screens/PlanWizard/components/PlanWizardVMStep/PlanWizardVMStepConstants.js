@@ -7,5 +7,6 @@ export const V2V_VM_POST_VALIDATION_REASONS = {
   in_other_plan: __('VM exists in a different migration plan'),
   migrated: __('VM has already been migrated'),
   not_exist: __('VM does not exist'),
-  ok: __('VM available for migration')
+  ok: __('VM available for migration'),
+  duplicate: __('Duplicate VM')
 };
