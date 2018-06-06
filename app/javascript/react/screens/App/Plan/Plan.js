@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Immutable from 'seamless-immutable';
 import { Link } from 'react-router-dom';
-import { Breadcrumb, Spinner } from 'patternfly-react';
+import { Breadcrumb, Spinner, Icon } from 'patternfly-react';
 import Toolbar from '../../../config/Toolbar';
 import PlanRequestDetailList from './components/PlanRequestDetailList/PlanRequestDetailList';
 import PlanVmsList from './components/PlanVmsList';
@@ -99,6 +99,8 @@ class Plan extends React.Component {
   render() {
     const {
       planName,
+      planArchived,
+      planRequestFailed,
       isRejectedPlanRequest,
       isFetchingPlanRequest,
       isRejectedPlan,
@@ -117,6 +119,19 @@ class Plan extends React.Component {
       planRequestPreviouslyFetched
     } = this.state;
 
+    const icons = {
+      inProgress: <Icon type="pf" name="spinner2" />,
+      success: <Icon type="pf" name="ok" />,
+      failed: <Icon type="pf" name="error-circle-o" />,
+      archived: <Icon type="fa" name="archive" />
+    };
+    const breadcrumbIcon =
+      (planRequestFailed && icons.failed) ||
+      (planArchived && icons.archived) ||
+      (planFinished && icons.success) ||
+      (!planNotStarted && icons.inProgress) ||
+      null;
+
     return (
       <React.Fragment>
         <Toolbar>
@@ -127,7 +142,12 @@ class Plan extends React.Component {
             <Link to="/migration">{__('Migration')}</Link>
           </li>
           {!isRejectedPlan &&
-            planName && <Breadcrumb.Item active>{planName}</Breadcrumb.Item>}
+            planName && (
+              <Breadcrumb.Item active>
+                {breadcrumbIcon}
+                {breadcrumbIcon ? ` ${planName}` : planName}
+              </Breadcrumb.Item>
+            )}
         </Toolbar>
 
         <Spinner
@@ -192,6 +212,8 @@ Plan.propTypes = {
   fetchPlanRequestUrl: PropTypes.string.isRequired,
   fetchPlanRequestAction: PropTypes.func.isRequired,
   planName: PropTypes.string,
+  planRequestFailed: PropTypes.bool,
+  planArchived: PropTypes.bool,
   planRequestTasks: PropTypes.array,
   isRejectedPlanRequest: PropTypes.bool,
   isFetchingPlanRequest: PropTypes.bool,
