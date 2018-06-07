@@ -8,5 +8,6 @@ export const V2V_VM_POST_VALIDATION_REASONS = {
   migrated: __('VM has already been migrated'),
   not_exist: __('VM does not exist'),
   ok: __('VM available for migration'),
-  duplicate: __('Duplicate VM')
+  duplicate: __('Duplicate VM'),
+  no_info_available: __('No information available')
 };

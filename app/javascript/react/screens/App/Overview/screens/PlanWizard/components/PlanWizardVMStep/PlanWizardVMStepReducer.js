@@ -30,6 +30,17 @@ const manageDuplicateVMRows = (vm, vmIndex, uniqueIds) => {
   }
 };
 
+const manageBlankReason = vm => {
+  if (!vm.reason) {
+    vm.reason = V2V_VM_POST_VALIDATION_REASONS.no_info_available;
+  }
+};
+
+const manageOddCSVImportErrors = (vm, vmIndex, uniqueIds) => {
+  manageDuplicateVMRows(vm, vmIndex, uniqueIds);
+  manageBlankReason(vm);
+};
+
 const _formatValidVms = vms => {
   const uniqueIds = vms && [...new Set(vms.map(value => value.id))];
   let vIndex = 0;
@@ -40,7 +51,7 @@ const _formatValidVms = vms => {
       v.valid = true;
       v.allocated_size = numeral(v.allocated_size).format('0.00b');
       v.reason = V2V_VM_POST_VALIDATION_REASONS[v.reason];
-      manageDuplicateVMRows(v, vIndex, uniqueIds);
+      manageOddCSVImportErrors(v, vIndex, uniqueIds);
       return v;
     })
   );
@@ -63,7 +74,7 @@ const _formatInvalidVms = vms => {
       } else {
         v.invalid = true;
       }
-      manageDuplicateVMRows(v, vIndex, uniqueIds);
+      manageOddCSVImportErrors(v, vIndex, uniqueIds);
       return v;
     })
   );
