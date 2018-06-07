@@ -30,14 +30,21 @@ const manageDuplicateVMRows = (vm, vmIndex, uniqueIds) => {
   }
 };
 
-const _formatValidVms = vms =>
-  vms &&
-  vms.map(v => {
-    v.valid = true;
-    v.allocated_size = numeral(v.allocated_size).format('0.00b');
-    v.reason = V2V_VM_POST_VALIDATION_REASONS[v.reason];
-    return v;
-  });
+const _formatValidVms = vms => {
+  const uniqueIds = vms && [...new Set(vms.map(value => value.id))];
+  let vIndex = 0;
+  return (
+    vms &&
+    vms.map(v => {
+      vIndex += 1;
+      v.valid = true;
+      v.allocated_size = numeral(v.allocated_size).format('0.00b');
+      v.reason = V2V_VM_POST_VALIDATION_REASONS[v.reason];
+      manageDuplicateVMRows(v, vIndex, uniqueIds);
+      return v;
+    })
+  );
+};
 
 const _formatInvalidVms = vms => {
   const uniqueIds = vms && [...new Set(vms.map(value => value.id))];
