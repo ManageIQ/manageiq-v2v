@@ -3,7 +3,7 @@ import { Field, reduxForm } from 'redux-form';
 import { Form } from 'patternfly-react';
 import { FormField } from '../../../../../common/forms/FormField';
 
-const PlanWizardOptionsStep = () => (
+const PlanWizardScheduleStep = () => (
   <Form className="form-horizontal">
     <Field
       name="migration_plan_choice_radio"
@@ -26,6 +26,6 @@ const PlanWizardOptionsStep = () => (
 );
 
 export default reduxForm({
-  form: 'planWizardOptionsStep',
+  form: 'planWizardScheduleStep',
   destroyOnUnmount: false
-})(PlanWizardOptionsStep);
+})(PlanWizardScheduleStep);

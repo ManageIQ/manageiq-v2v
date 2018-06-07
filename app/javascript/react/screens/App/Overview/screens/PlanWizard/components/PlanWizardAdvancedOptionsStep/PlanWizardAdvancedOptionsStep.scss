@@ -1,0 +1,28 @@
+.table-view-pf-select.with-label {
+  width: 110px;
+}
+
+.table-view-pf-select-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.table-view-pf-footer {
+  background: $color-pf-black-150;
+  &-count {
+    font-weight: 600;
+    white-space: pre;
+  }
+}
+
+.bootstrap-select.btn-group.form-control.preMigrationPlaybook_select,
+.bootstrap-select.btn-group.form-control.postMigrationPlaybook_select {
+  margin-bottom: 20px;
+}
+
+.playbook-services-toolbar .toolbar-pf {
+  background: $color-pf-black-150;
+  border: 1px solid #d1d1d1;
+  border-bottom: none;
+}

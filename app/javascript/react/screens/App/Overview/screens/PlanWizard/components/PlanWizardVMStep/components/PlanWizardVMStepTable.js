@@ -21,9 +21,9 @@ import {
   PAGINATION_VIEW
 } from 'patternfly-react';
 
-import rowFilter from './rowFilter';
-import searchFilter from './searchFilter';
-import CustomToolbarFind from './CustomToolbarFind';
+import rowFilter from '../../common/rowFilter';
+import searchFilter from '../../common/searchFilter';
+import CustomToolbarFind from '../../common/CustomToolbarFind';
 import vmSelectionHeaderCellFormatter from './vmSelectionHeaderCellFormatter';
 import vmSelectionCellFormatter from './vmSelectionCellFormatter';
 
