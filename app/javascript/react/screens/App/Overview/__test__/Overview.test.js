@@ -28,6 +28,8 @@ describe('Overview component', () => {
   let fetchTransformationMappingsAction;
   let fetchTransformationPlansAction;
   let fetchClustersAction;
+  let fetchNetworksAction;
+  let fetchDatastoresAction;
   beforeEach(() => {
     showMappingWizardAction = jest.fn();
     showPlanWizardAction = jest.fn();
@@ -35,6 +37,8 @@ describe('Overview component', () => {
     fetchTransformationMappingsAction = jest.fn();
     fetchTransformationPlansAction = jest.fn();
     fetchClustersAction = jest.fn();
+    fetchNetworksAction = jest.fn();
+    fetchDatastoresAction = jest.fn();
     fetchTransformationPlansAction.mockReturnValue(Promise.resolve());
   });
 
@@ -49,6 +53,8 @@ describe('Overview component', () => {
           fetchTransformationMappingsAction={fetchTransformationMappingsAction}
           fetchTransformationPlansAction={fetchTransformationPlansAction}
           fetchClustersAction={fetchClustersAction}
+          fetchDatastoresAction={fetchDatastoresAction}
+          fetchNetworksAction={fetchNetworksAction}
         />
       );
 
@@ -66,6 +72,8 @@ describe('Overview component', () => {
           fetchTransformationMappingsAction={fetchTransformationMappingsAction}
           fetchTransformationPlansAction={fetchTransformationPlansAction}
           fetchClustersAction={fetchClustersAction}
+          fetchDatastoresAction={fetchDatastoresAction}
+          fetchNetworksAction={fetchNetworksAction}
         />
       );
 
@@ -85,6 +93,8 @@ describe('Overview component', () => {
           fetchTransformationMappingsAction={fetchTransformationMappingsAction}
           fetchTransformationPlansAction={fetchTransformationPlansAction}
           fetchClustersAction={fetchClustersAction}
+          fetchDatastoresAction={fetchDatastoresAction}
+          fetchNetworksAction={fetchNetworksAction}
         />
       );
     });

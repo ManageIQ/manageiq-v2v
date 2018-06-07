@@ -26,7 +26,9 @@ import {
   SHOW_CONFIRM_MODAL,
   HIDE_CONFIRM_MODAL,
   MIGRATIONS_FILTERS,
-  ARCHIVE_TRANSFORMATION_PLAN
+  ARCHIVE_TRANSFORMATION_PLAN,
+  FETCH_NETWORKS,
+  FETCH_DATASTORES
 } from './OverviewConstants';
 
 export const initialState = Immutable({
@@ -72,7 +74,15 @@ export const initialState = Immutable({
   confirmModalOptions: {},
   isArchivingTransformationPlan: false,
   isRejectedArchivingTransformationPlan: false,
-  errorArchivingTransformationPlan: null
+  errorArchivingTransformationPlan: null,
+  isFetchingClusters: false,
+  isRejectedClusters: false,
+  datastores: [],
+  isFetchingDatastores: false,
+  isRejectedDatastores: false,
+  networks: [],
+  isFetchingNetworks: false,
+  isRejectedNetworks: false
 });
 
 export default (state = initialState, action) => {
@@ -154,12 +164,12 @@ export default (state = initialState, action) => {
           .set('isContinuingToPlan', false);
       }
       return state
-        .set('sourceClusters', [])
+        .set('transformationMappings', [])
         .set('isFetchingTransformationMappings', false)
         .set('isRejectedTransformationMappings', false);
     case `${FETCH_V2V_TRANSFORMATION_MAPPINGS}_REJECTED`:
       return state
-        .set('errorSourceClusters', action.payload)
+        .set('errorTransformationMappings', action.payload)
         .set('isRejectedTransformationMappings', true)
         .set('isFetchingTransformationMappings', false);
 
@@ -227,8 +237,47 @@ export default (state = initialState, action) => {
         .set('isRejectedAllArchivedPlanRequestsWithTasks', true)
         .set('isFetchingAllArchivedPlanRequestsWithTasks', false);
 
+    case `${V2V_FETCH_CLUSTERS}_PENDING`:
+      return state.set('isFetchingClusters', true);
     case `${V2V_FETCH_CLUSTERS}_FULFILLED`:
-      return state.set('clusters', action.payload.data.resources);
+      return state
+        .set('clusters', action.payload.data.resources)
+        .set('isFetchingClusters', false)
+        .set('isRejectedClusters', false)
+        .set('errorClusters', null);
+    case `${V2V_FETCH_CLUSTERS}_REJECTED`:
+      return state
+        .set('errorClusters', action.payload)
+        .set('isRejectedClusters', true)
+        .set('isFetchingClusters', false);
+
+    case `${FETCH_NETWORKS}_PENDING`:
+      return state.set('isFetchingNetworks', true);
+    case `${FETCH_NETWORKS}_FULFILLED`:
+      return state
+        .set('networks', action.payload.data.resources)
+        .set('isFetchingNetworks', false)
+        .set('isRejectedNetworks', false)
+        .set('errorNetworks', null);
+    case `${FETCH_NETWORKS}_REJECTED`:
+      return state
+        .set('errorNetworks', action.payload)
+        .set('isRejectedNetworks', true)
+        .set('isFetchingNetworks', false);
+
+    case `${FETCH_DATASTORES}_PENDING`:
+      return state.set('isFetchingDatastores', true);
+    case `${FETCH_DATASTORES}_FULFILLED`:
+      return state
+        .set('datastores', action.payload.data.resources)
+        .set('isFetchingDatastores', false)
+        .set('isRejectedDatastores', false)
+        .set('errorDatastores', null);
+    case `${FETCH_DATASTORES}_REJECTED`:
+      return state
+        .set('errorDatastores', action.payload)
+        .set('isRejectedDatastores', true)
+        .set('isFetchingDatastores', false);
 
     case `${CREATE_V2V_TRANSFORMATION_PLAN_REQUEST}_PENDING`:
       return state.set('isCreatingTransformationPlanRequest', action.payload);

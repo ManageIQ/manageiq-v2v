@@ -37,9 +37,15 @@ class Overview extends React.Component {
       fetchTransformationMappingsUrl,
       fetchTransformationMappingsAction,
       fetchTransformationPlansUrl,
-      fetchTransformationPlansAction
+      fetchTransformationPlansAction,
+      fetchNetworksUrl,
+      fetchNetworksAction,
+      fetchDatastoresUrl,
+      fetchDatastoresAction
     } = this.props;
 
+    fetchNetworksAction(fetchNetworksUrl);
+    fetchDatastoresAction(fetchDatastoresUrl);
     fetchProvidersAction();
     fetchClustersAction(fetchClustersUrl);
     fetchTransformationMappingsAction(fetchTransformationMappingsUrl);
@@ -72,7 +78,6 @@ class Overview extends React.Component {
       shouldReloadMappings !== nextProps.shouldReloadMappings &&
       nextProps.shouldReloadMappings
     ) {
-      // refetech our mappings so that plan wizard has this newly created mapping
       fetchTransformationMappingsAction(fetchTransformationMappingsUrl);
     } else if (
       isContinuingToPlan !== nextProps.isContinuingToPlan &&
@@ -210,7 +215,7 @@ class Overview extends React.Component {
       planWizardVisible,
       transformationMappings,
       isFetchingTransformationMappings,
-      isRejectedTransformationMappings, // eslint-disable-line no-unused-vars
+      isRejectedTransformationMappings,
       transformationPlans,
       allRequestsWithTasks,
       reloadCard,
@@ -222,6 +227,8 @@ class Overview extends React.Component {
       finishedWithErrorTransformationPlans,
       isCreatingTransformationPlanRequest,
       clusters,
+      isFetchingClusters,
+      isRejectedClusters,
       migrationsFilter,
       setMigrationsFilterAction,
       showDeleteConfirmationModal,
@@ -243,7 +250,13 @@ class Overview extends React.Component {
       archiveTransformationPlanAction,
       archiveTransformationPlanUrl,
       isFetchingArchivedTransformationPlans,
-      addNotificationAction
+      addNotificationAction,
+      networks,
+      isFetchingNetworks,
+      isRejectedNetworks,
+      datastores,
+      isFetchingDatastores,
+      isRejectedDatastores
     } = this.props;
 
     const inProgressRequestsTransformationMappings = () => {
@@ -309,6 +322,9 @@ class Overview extends React.Component {
           loading={
             isFetchingProviders ||
             isFetchingTransformationMappings ||
+            isFetchingClusters ||
+            isFetchingDatastores ||
+            isFetchingNetworks ||
             (isFetchingAllRequestsWithTasks &&
               !requestsWithTasksPreviouslyFetched)
           }
@@ -354,7 +370,15 @@ class Overview extends React.Component {
           {hasSufficientProviders ? (
             <InfrastructureMappingsList
               clusters={clusters}
+              datastores={datastores}
+              networks={networks}
               transformationMappings={transformationMappings}
+              error={
+                isRejectedTransformationMappings ||
+                isRejectedClusters ||
+                isRejectedDatastores ||
+                isRejectedNetworks
+              }
               createInfraMappingClick={showMappingWizardAction}
               inProgressRequestsTransformationMappings={inProgressRequestsTransformationMappings()}
               showDeleteConfirmationModalAction={
@@ -447,6 +471,14 @@ Overview.propTypes = {
   fetchClustersAction: PropTypes.func,
   fetchClustersUrl: PropTypes.string,
   clusters: PropTypes.array,
+  isFetchingClusters: PropTypes.bool,
+  isRejectedClusters: PropTypes.bool,
+  networks: PropTypes.array,
+  isFetchingNetworks: PropTypes.bool,
+  isRejectedNetworks: PropTypes.bool,
+  datastores: PropTypes.array,
+  isFetchingDatastores: PropTypes.bool,
+  isRejectedDatastores: PropTypes.bool,
   migrationsFilter: PropTypes.string,
   setMigrationsFilterAction: PropTypes.func,
   retryMigrationAction: PropTypes.func,
@@ -471,6 +503,10 @@ Overview.propTypes = {
   allArchivedPlanRequestsWithTasks: PropTypes.array,
   isFetchingArchivedTransformationPlans: PropTypes.string,
   archiveTransformationPlanAction: PropTypes.func,
-  archiveTransformationPlanUrl: PropTypes.string
+  archiveTransformationPlanUrl: PropTypes.string,
+  fetchNetworksUrl: PropTypes.string,
+  fetchNetworksAction: PropTypes.func,
+  fetchDatastoresUrl: PropTypes.string,
+  fetchDatastoresAction: PropTypes.func
 };
 export default Overview;

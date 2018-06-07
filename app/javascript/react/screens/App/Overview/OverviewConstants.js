@@ -14,6 +14,8 @@ export const HIDE_CONFIRM_MODAL = 'HIDE_CONFIRM_MODAL';
 export const ARCHIVE_TRANSFORMATION_PLAN = 'ARCHIVE_TRANSFORMATION_PLAN';
 
 export const FETCH_PROVIDERS = 'FETCH_PROVIDERS';
+export const FETCH_NETWORKS = 'FETCH_NETWORKS';
+export const FETCH_DATASTORES = 'FETCH_DATASTORES';
 export const FETCH_PROVIDERS_URL =
   '/api/providers?expand=resources&attributes=type&filter[]=or%20type=ManageIQ::Providers::Redhat::InfraManager&filter[]=type=ManageIQ::Providers::Vmware::InfraManager';
 
