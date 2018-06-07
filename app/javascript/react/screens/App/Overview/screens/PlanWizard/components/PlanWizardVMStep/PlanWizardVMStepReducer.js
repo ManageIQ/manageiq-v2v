@@ -17,6 +17,19 @@ const initialState = Immutable({
   conflict_vms: []
 });
 
+const manageDuplicateVMRows = (vm, vmIndex, uniqueIds) => {
+  const index = vm.id && uniqueIds.indexOf(vm.id);
+  if (index > -1) {
+    uniqueIds.splice(index, 1);
+  } else if (index === -1) {
+    vm.reason = V2V_VM_POST_VALIDATION_REASONS.duplicate;
+    vm.warning = false;
+    vm.valid = false;
+    vm.invalid = true;
+    vm.id = `duplicate-${vm.id}-${vmIndex}`;
+  }
+};
+
 const _formatValidVms = vms =>
   vms &&
   vms.map(v => {
@@ -27,10 +40,12 @@ const _formatValidVms = vms =>
   });
 
 const _formatInvalidVms = vms => {
-  const uniqueIds = [...new Set(vms.map(value => value.id))];
+  const uniqueIds = vms && [...new Set(vms.map(value => value.id))];
+  let vIndex = 0;
   return (
     vms &&
     vms.map(v => {
+      vIndex += 1;
       v.allocated_size = numeral(v.allocated_size).format('0.00b');
       v.reason = V2V_VM_POST_VALIDATION_REASONS[v.reason];
       if (
@@ -41,15 +56,7 @@ const _formatInvalidVms = vms => {
       } else {
         v.invalid = true;
       }
-
-      const index = v.id && uniqueIds.indexOf(v.id);
-      if (index > -1) {
-        uniqueIds.splice(index, 1);
-      } else if (index === -1) {
-        v.reason = V2V_VM_POST_VALIDATION_REASONS.duplicate;
-        v.warning = false;
-        v.invalid = true;
-      }
+      manageDuplicateVMRows(v, vIndex, uniqueIds);
       return v;
     })
   );
