@@ -43,11 +43,9 @@ const manageOddCSVImportErrors = (vm, vmIndex, uniqueIds) => {
 
 const _formatValidVms = vms => {
   const uniqueIds = vms && [...new Set(vms.map(value => value.id))];
-  let vIndex = 0;
   return (
     vms &&
-    vms.map(v => {
-      vIndex += 1;
+    vms.map((v, vIndex) => {
       v.valid = true;
       v.allocated_size = numeral(v.allocated_size).format('0.00b');
       v.reason = V2V_VM_POST_VALIDATION_REASONS[v.reason];
@@ -59,11 +57,9 @@ const _formatValidVms = vms => {
 
 const _formatInvalidVms = vms => {
   const uniqueIds = vms && [...new Set(vms.map(value => value.id))];
-  let vIndex = 0;
   return (
     vms &&
-    vms.map(v => {
-      vIndex += 1;
+    vms.map((v, vIndex) => {
       v.allocated_size = numeral(v.allocated_size).format('0.00b');
       v.reason = V2V_VM_POST_VALIDATION_REASONS[v.reason];
       if (
