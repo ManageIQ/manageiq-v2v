@@ -98,7 +98,7 @@ export const coreComponents = [
         '/api/service_templates/?' +
         "filter[]=type='ServiceTemplateTransformationPlan'" +
         '&filter[]=active=true' +
-        '&expand=resources' +
+        '&expand=resources,schedules' +
         '&attributes=name,description,miq_requests,options,created_at' +
         '&sort_by=updated_at' +
         '&sort_order=desc',

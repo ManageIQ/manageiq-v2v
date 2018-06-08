@@ -225,7 +225,11 @@ class Overview extends React.Component {
       isRejectedNetworks,
       datastores,
       isFetchingDatastores,
-      isRejectedDatastores
+      isRejectedDatastores,
+      toggleScheduleMigrationModal,
+      scheduleMigrationModal,
+      scheduleMigrationPlanId,
+      scheduleMigration
     } = this.props;
 
     const inProgressRequestsTransformationMappings = () => {
@@ -309,6 +313,10 @@ class Overview extends React.Component {
               archiveTransformationPlanAction={archiveTransformationPlanAction}
               archiveTransformationPlanUrl={archiveTransformationPlanUrl}
               addNotificationAction={addNotificationAction}
+              toggleScheduleMigrationModal={toggleScheduleMigrationModal}
+              scheduleMigrationModal={scheduleMigrationModal}
+              scheduleMigrationPlanId={scheduleMigrationPlanId}
+              scheduleMigration={scheduleMigration}
             />
           )}
           {hasSufficientProviders ? (
@@ -432,6 +440,10 @@ Overview.propTypes = {
   fetchNetworksUrl: PropTypes.string,
   fetchNetworksAction: PropTypes.func,
   fetchDatastoresUrl: PropTypes.string,
-  fetchDatastoresAction: PropTypes.func
+  fetchDatastoresAction: PropTypes.func,
+  toggleScheduleMigrationModal: PropTypes.func,
+  scheduleMigrationModal: PropTypes.bool,
+  scheduleMigrationPlanId: PropTypes.string,
+  scheduleMigration: PropTypes.func
 };
 export default Overview;

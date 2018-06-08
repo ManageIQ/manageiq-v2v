@@ -38,7 +38,9 @@ import {
   MIGRATIONS_FILTERS,
   ARCHIVE_TRANSFORMATION_PLAN,
   FETCH_NETWORKS,
-  FETCH_DATASTORES
+  FETCH_DATASTORES,
+  V2V_TOGGLE_SCHEDULE_MIGRATION_MODAL,
+  V2V_SCHEDULE_MIGRATION
 } from './OverviewConstants';
 
 export const initialState = Immutable({
@@ -92,7 +94,12 @@ export const initialState = Immutable({
   isRejectedDatastores: false,
   networks: [],
   isFetchingNetworks: false,
-  isRejectedNetworks: false
+  isRejectedNetworks: false,
+  scheduleMigrationModal: false,
+  scheduleMigrationPlanId: null,
+  isSchedulingMigration: false,
+  isRejectedSchedulingMigration: false,
+  errorSchedulingMigration: false
 });
 
 export default (state = initialState, action) => {
@@ -334,6 +341,27 @@ export default (state = initialState, action) => {
         .set('isArchivingTransformationPlan', false)
         .set('errorArchivingTransformationPlan', action.payload)
         .set('isRejectedArchivingTransformationPlan', true);
+    case V2V_TOGGLE_SCHEDULE_MIGRATION_MODAL:
+      if (action.payload !== undefined) {
+        return state
+          .set('scheduleMigrationPlanId', action.payload.planId)
+          .set('scheduleMigrationModal', !state.scheduleMigrationModal);
+      }
+      return state.set('scheduleMigrationPlanId', null).set('scheduleMigrationModal', !state.scheduleMigrationModal);
+    case `${V2V_SCHEDULE_MIGRATION}_PENDING`:
+      return state.set('isSchedulingMigration', true).set('isRejectedSchedulingMigration', false);
+    case `${V2V_SCHEDULE_MIGRATION}_FULFILLED`:
+      return state
+        .set('isSchedulingMigration', false)
+        .set('isRejectedSchedulingMigration', false)
+        .set('errorSchedulingMigration', null)
+        .set('scheduleMigrationModal', false);
+    case `${V2V_SCHEDULE_MIGRATION}_REJECTED`:
+      return state
+        .set('isSchedulingMigration', false)
+        .set('isRejectedSchedulingMigration', true)
+        .set('errorSchedulingMigration', action.payload)
+        .set('scheduleMigrationModal', false);
 
     default:
       return state;
