@@ -17,30 +17,65 @@ const initialState = Immutable({
   conflict_vms: []
 });
 
-const _formatValidVms = vms =>
-  vms &&
-  vms.map(v => {
-    v.valid = true;
-    v.allocated_size = numeral(v.allocated_size).format('0.00b');
-    v.reason = V2V_VM_POST_VALIDATION_REASONS[v.reason];
-    return v;
-  });
-const _formatInvalidVms = vms =>
-  vms &&
-  vms.map(v => {
-    v.allocated_size = numeral(v.allocated_size).format('0.00b');
-    v.reason = V2V_VM_POST_VALIDATION_REASONS[v.reason];
-    if (
-      v.reason === V2V_VM_POST_VALIDATION_REASONS.migrated ||
-      v.reason === V2V_VM_POST_VALIDATION_REASONS.in_other_plan
-    ) {
-      v.warning = true;
-    } else {
-      v.invalid = true;
-    }
+const manageDuplicateVMRows = (vm, vmIndex, uniqueIds) => {
+  const index = vm.id && uniqueIds.indexOf(vm.id);
+  if (index > -1) {
+    uniqueIds.splice(index, 1);
+  } else if (index === -1) {
+    vm.reason = V2V_VM_POST_VALIDATION_REASONS.duplicate;
+    vm.warning = false;
+    vm.valid = false;
+    vm.invalid = true;
+    vm.id = `duplicate-${vm.id}-${vmIndex}`;
+  }
+};
 
-    return v;
-  });
+const manageBlankReason = vm => {
+  if (!vm.reason) {
+    vm.reason = V2V_VM_POST_VALIDATION_REASONS.no_info_available;
+  }
+};
+
+const manageOddCSVImportErrors = (vm, vmIndex, uniqueIds) => {
+  manageDuplicateVMRows(vm, vmIndex, uniqueIds);
+  manageBlankReason(vm);
+};
+
+const _formatValidVms = vms => {
+  const uniqueIds = vms && [...new Set(vms.map(value => value.id))];
+  return (
+    vms &&
+    vms.map((v, vIndex) => {
+      v.valid = true;
+      v.allocated_size = numeral(v.allocated_size).format('0.00b');
+      v.reason = V2V_VM_POST_VALIDATION_REASONS[v.reason];
+      manageOddCSVImportErrors(v, vIndex, uniqueIds);
+      return v;
+    })
+  );
+};
+
+const _formatInvalidVms = vms => {
+  const uniqueIds = vms && [...new Set(vms.map(value => value.id))];
+  return (
+    vms &&
+    vms.map((v, vIndex) => {
+      v.allocated_size = numeral(v.allocated_size).format('0.00b');
+      v.reason = V2V_VM_POST_VALIDATION_REASONS[v.reason];
+      if (
+        v.reason === V2V_VM_POST_VALIDATION_REASONS.migrated ||
+        v.reason === V2V_VM_POST_VALIDATION_REASONS.in_other_plan
+      ) {
+        v.warning = true;
+      } else {
+        v.invalid = true;
+      }
+      manageOddCSVImportErrors(v, vIndex, uniqueIds);
+      return v;
+    })
+  );
+};
+
 const _formatConflictVms = vms =>
   vms &&
   vms.map(v => {
