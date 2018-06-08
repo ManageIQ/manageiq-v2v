@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Immutable from 'seamless-immutable';
 import { Icon, ListView, Grid } from 'patternfly-react';
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
-import { pluralize } from '../../../../../../common/helpers';
+import { simplePluralize } from '../../../../../../common/helpers';
 import OverviewEmptyState from '../OverviewEmptyState/OverviewEmptyState';
 import DeleteInfrastructureMappingConfirmationModal from '../../components/DeleteInfrastructureMappingConfirmationModal/DeleteInfrastructureMappingConfirmationModal';
 import MappingSource from './components/MappingSource';
@@ -223,12 +223,20 @@ class InfrastructureMappingsList extends React.Component {
                                 <div className="mappings-expand-label">
                                   <strong>{sourceLanCount}</strong>
                                   {` `}
-                                  {pluralize(sourceLanCount, 'Source Network')}
+                                  {simplePluralize(
+                                    sourceLanCount,
+                                    __('Source Network'),
+                                    __('Source Networks')
+                                  )}
                                 </div>
                                 <div className="mappings-expand-label">
                                   <strong>{targetLanCount}</strong>
                                   {` `}
-                                  {pluralize(targetLanCount, 'Target Network')}
+                                  {simplePluralize(
+                                    targetLanCount,
+                                    __('Target Network'),
+                                    __('Target Networks')
+                                  )}
                                 </div>
                               </div>
                             </ListView.Expand>
@@ -247,17 +255,19 @@ class InfrastructureMappingsList extends React.Component {
                                 <div className="mappings-expand-label">
                                   <strong>{sourceDatastoreCount}</strong>
                                   {` `}
-                                  {pluralize(
+                                  {simplePluralize(
                                     sourceDatastoreCount,
-                                    'Source Datastore'
+                                    __('Source Datastore'),
+                                    __('Source Datastores')
                                   )}
                                 </div>
                                 <div className="mappings-expand-label">
                                   <strong>{targetDatastoreCount}</strong>
                                   {` `}
-                                  {pluralize(
+                                  {simplePluralize(
                                     targetDatastoreCount,
-                                    'Target Datastore'
+                                    __('Target Datastore'),
+                                    __('Target Datastores')
                                   )}
                                 </div>
                               </div>
@@ -277,17 +287,19 @@ class InfrastructureMappingsList extends React.Component {
                                 <div className="mappings-expand-label">
                                   <strong>{sourceClusterCount}</strong>
                                   {` `}
-                                  {pluralize(
+                                  {simplePluralize(
                                     sourceClusterCount,
-                                    'Source Cluster'
+                                    __('Source Cluster'),
+                                    __('Source Clusters')
                                   )}
                                 </div>
                                 <div className="mappings-expand-label">
                                   <strong>{targetClusterCount}</strong>
                                   {` `}
-                                  {pluralize(
+                                  {simplePluralize(
                                     targetClusterCount,
-                                    'Target Cluster'
+                                    __('Target Cluster'),
+                                    __('Target Clusters')
                                   )}
                                 </div>
                               </div>
@@ -306,9 +318,10 @@ class InfrastructureMappingsList extends React.Component {
                                 <Icon type="pf" name="catalog" />
                                 <strong>{associatedPlansCount}</strong>
                                 {` `}
-                                {pluralize(
+                                {simplePluralize(
                                   associatedPlansCount,
-                                  'Associated Plan'
+                                  __('Associated Plan'),
+                                  __('Associated Plans')
                                 )}
                               </ListView.Expand>
                             </ListView.InfoItem>
