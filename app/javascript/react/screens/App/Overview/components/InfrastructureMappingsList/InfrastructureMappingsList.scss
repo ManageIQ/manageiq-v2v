@@ -40,6 +40,14 @@
     }
   }
 
+  .infra-mapping-header-row {
+    & > [class*='col-'] {
+      &:nth-child(even) {
+        padding-left: 0px;
+      }
+    }
+  }
+
   // custom mapping styles - match mapping row heights
   // and show borders around mapping row groups
   .infra-mapping-networks-row,
@@ -96,6 +104,6 @@
     border: 1px solid black;
   }
   .infra-mapping-item-target {
-    border: 1px solid blue;
+    border: 1px solid $color-pf-blue-400;
   }
 }

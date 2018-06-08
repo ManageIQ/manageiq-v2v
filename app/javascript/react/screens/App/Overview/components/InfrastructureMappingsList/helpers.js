@@ -125,7 +125,7 @@ export const mapInfrastructureMappings = (
     }
   });
 
-  // create unique networks mappings by unique target network
+  // create unique networks mappings by unique target network (using ems_uid)
   const targetNetworks = {};
   networkMappingItems.forEach(networkMapping => {
     const clusterMapping =
@@ -155,12 +155,19 @@ export const mapInfrastructureMappings = (
         targetNetwork,
         targetCluster
       };
-      if (targetNetworks[targetNetwork.id]) {
-        targetNetworks[targetNetwork.id].sources.push(source);
+      // LANs are currently duplicated in the backend database model, so
+      // we dedupe them using uid_ems attribute for now.
+      if (targetNetworks[targetNetwork.uid_ems]) {
+        const duplicatedLanIndex = targetNetworks[
+          targetNetwork.uid_ems
+        ].sources.findIndex(s => s.uid_ems === sourceNetwork.uid_ems);
+        if (duplicatedLanIndex === -1) {
+          targetNetworks[targetNetwork.uid_ems].sources.push(source);
+        }
       } else {
-        targetNetworks[targetNetwork.id] = {};
-        targetNetworks[targetNetwork.id].target = target;
-        targetNetworks[targetNetwork.id].sources = [source];
+        targetNetworks[targetNetwork.uid_ems] = {};
+        targetNetworks[targetNetwork.uid_ems].target = target;
+        targetNetworks[targetNetwork.uid_ems].sources = [source];
       }
     }
   });

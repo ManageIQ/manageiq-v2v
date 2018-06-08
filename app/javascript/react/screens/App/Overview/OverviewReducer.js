@@ -121,10 +121,8 @@ export default (state = initialState, action) => {
       return state.set('hidePlanWizard', true).set('planWizardId', null);
     case PLAN_WIZARD_EXITED:
       return state.set('planWizardVisible', false);
-
     case `${FETCH_PROVIDERS}_PENDING`:
       return state.set('isFetchingProviders', true);
-
     case `${FETCH_PROVIDERS}_FULFILLED`:
       return (() => {
         const insufficient = state
@@ -145,13 +143,11 @@ export default (state = initialState, action) => {
           );
         return insufficient.set('hasSufficientProviders', sufficient);
       })();
-
     case `${FETCH_PROVIDERS}_REJECTED`:
       return state
         .set('errorProviders', action.payload)
         .set('isFetchingProviders', false)
         .set('isRejectedProviders', true);
-
     case `${FETCH_V2V_TRANSFORMATION_MAPPINGS}_PENDING`:
       return state.set('isFetchingTransformationMappings', true);
     case `${FETCH_V2V_TRANSFORMATION_MAPPINGS}_FULFILLED`:
@@ -172,7 +168,6 @@ export default (state = initialState, action) => {
         .set('errorTransformationMappings', action.payload)
         .set('isRejectedTransformationMappings', true)
         .set('isFetchingTransformationMappings', false);
-
     case `${FETCH_V2V_TRANSFORMATION_PLANS}_PENDING`:
       return state.set('isFetchingTransformationPlans', true);
     case `${FETCH_V2V_TRANSFORMATION_PLANS}_FULFILLED`:
@@ -186,7 +181,6 @@ export default (state = initialState, action) => {
         .set('errorTransformationPlans', action.payload)
         .set('isRejectedTransformationPlans', true)
         .set('isFetchingTransformationPlans', false);
-
     case `${FETCH_V2V_ARCHIVED_TRANSFORMATION_PLANS}_PENDING`:
       return state
         .set('isFetchingArchivedTransformationPlans', 'true')
@@ -202,7 +196,6 @@ export default (state = initialState, action) => {
         .set('errorArchivedTransformationPlans', action.payload)
         .set('isRejectedArchivedTransformationPlans', true)
         .set('isFetchingArchivedTransformationPlans', '');
-
     case `${FETCH_V2V_ALL_REQUESTS_WITH_TASKS}_PENDING`:
       return state.set('isFetchingAllRequestsWithTasks', true);
     case `${FETCH_V2V_ALL_REQUESTS_WITH_TASKS}_FULFILLED`:
@@ -220,7 +213,6 @@ export default (state = initialState, action) => {
         .set('isRejectedAllRequestsWithTasks', true)
         .set('isFetchingAllRequestsWithTasks', false)
         .set('requestsWithTasksPreviouslyFetched', false);
-
     case `${FETCH_V2V_ALL_ARCHIVED_PLAN_REQUESTS_WITH_TASKS}_PENDING`:
       return state
         .set('isFetchingAllArchivedPlanRequestsWithTasks', true)
@@ -236,7 +228,6 @@ export default (state = initialState, action) => {
         .set('errorAllArchivedPlanRequestsWithTasks', action.payload)
         .set('isRejectedAllArchivedPlanRequestsWithTasks', true)
         .set('isFetchingAllArchivedPlanRequestsWithTasks', false);
-
     case `${V2V_FETCH_CLUSTERS}_PENDING`:
       return state.set('isFetchingClusters', true);
     case `${V2V_FETCH_CLUSTERS}_FULFILLED`:
@@ -250,7 +241,6 @@ export default (state = initialState, action) => {
         .set('errorClusters', action.payload)
         .set('isRejectedClusters', true)
         .set('isFetchingClusters', false);
-
     case `${FETCH_NETWORKS}_PENDING`:
       return state.set('isFetchingNetworks', true);
     case `${FETCH_NETWORKS}_FULFILLED`:
@@ -264,7 +254,6 @@ export default (state = initialState, action) => {
         .set('errorNetworks', action.payload)
         .set('isRejectedNetworks', true)
         .set('isFetchingNetworks', false);
-
     case `${FETCH_DATASTORES}_PENDING`:
       return state.set('isFetchingDatastores', true);
     case `${FETCH_DATASTORES}_FULFILLED`:
@@ -278,7 +267,6 @@ export default (state = initialState, action) => {
         .set('errorDatastores', action.payload)
         .set('isRejectedDatastores', true)
         .set('isFetchingDatastores', false);
-
     case `${CREATE_V2V_TRANSFORMATION_PLAN_REQUEST}_PENDING`:
       return state.set('isCreatingTransformationPlanRequest', action.payload);
     case `${CREATE_V2V_TRANSFORMATION_PLAN_REQUEST}_FULFILLED`:
@@ -292,7 +280,6 @@ export default (state = initialState, action) => {
         .set('errorCreateTransformationPlanRequest', action.payload)
         .set('isRejectedCreateTranformationPlanRequest', true)
         .set('isCreatingTransformationPlanRequest', null);
-
     case CONTINUE_TO_PLAN:
       return state
         .set('isContinuingToPlan', true)
@@ -302,21 +289,17 @@ export default (state = initialState, action) => {
       return state.set('migrationsFilter', action.payload);
     case V2V_RETRY_MIGRATION:
       return state.set('planId', action.payload).set('reloadCard', true);
-
     case SHOW_DELETE_CONFIRMATION_MODAL:
     case HIDE_DELETE_CONFIRMATION_MODAL:
       return state
         .set('yesToDeleteInfrastructureMapping', false)
         .set('showDeleteConfirmationModal', action.payload);
-
     case SET_MAPPING_TO_DELETE:
       return state.set('mappingToDelete', action.payload);
-
     case YES_TO_DELETE_AND_HIDE_DELETE_CONFIRMATION_MODAL:
       return state
         .set('yesToDeleteInfrastructureMapping', true)
         .set('showDeleteConfirmationModal', false);
-
     case `${DELETE_INFRASTRUCTURE_MAPPING}_PENDING`:
       return state
         .set('yesToDeleteInfrastructureMapping', false)
@@ -333,7 +316,6 @@ export default (state = initialState, action) => {
         .set('errorDeleteInfrastructureMapping', action.payload)
         .set('isRejectedInfrastructureMapping', true)
         .set('isDeletingInfrastructureMapping', null);
-
     case `${ARCHIVE_TRANSFORMATION_PLAN}_PENDING`:
       return state
         .set('isArchivingTransformationPlan', true)

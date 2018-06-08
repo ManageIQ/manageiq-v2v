@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 import {
   Button,
   Icon,
@@ -18,6 +17,7 @@ import {
   UtilizationBar,
   PAGINATION_VIEW
 } from 'patternfly-react';
+import { formatDateTime } from '../../../../../../components/dates/MomentDate';
 import listFilter from '../listFilter';
 import sortFilter from '../sortFilter';
 import paginate from '../paginate';
@@ -383,9 +383,7 @@ class PlanRequestDetailList extends React.Component {
                   <div>
                     <div>
                       <b>{__('Started')}: </b>
-                      {moment(task.startDateTime).format(
-                        'MMMM Do YYYY, h:mm a'
-                      )}
+                      {formatDateTime(task.startDateTime)}
                     </div>
                     <div>
                       <b>{__('Description')}: </b>

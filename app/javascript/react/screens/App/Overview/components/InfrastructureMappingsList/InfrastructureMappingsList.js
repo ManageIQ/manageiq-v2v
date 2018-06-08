@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 import Immutable from 'seamless-immutable';
 import { Icon, ListView, Grid } from 'patternfly-react';
+import { formatDateTime } from '../../../../../../components/dates/MomentDate';
+import { pluralize } from '../../../../../../common/helpers';
 import OverviewEmptyState from '../OverviewEmptyState/OverviewEmptyState';
 import DeleteInfrastructureMappingConfirmationModal from '../../components/DeleteInfrastructureMappingConfirmationModal/DeleteInfrastructureMappingConfirmationModal';
 import MappingSource from './components/MappingSource';
@@ -124,7 +125,8 @@ class InfrastructureMappingsList extends React.Component {
                     }}
                   >
                     <Icon type="pf" name="add-circle-o" />
-                    &nbsp;{__('Create Infrastructure Mapping')}
+                    {` `}
+                    {__('Create Infrastructure Mapping')}
                   </a>
                 </div>
               </div>
@@ -199,9 +201,7 @@ class InfrastructureMappingsList extends React.Component {
                         description={
                           <small>
                             {__('Completed: ')}
-                            {moment(mapping.created_at).format(
-                              'MMMM Do YYYY, h:mm a'
-                            )}
+                            {formatDateTime(mapping.created_at)}
                           </small>
                         }
                         stacked
@@ -221,16 +221,14 @@ class InfrastructureMappingsList extends React.Component {
                               <Icon type="pf" name="network" />
                               <div className="mappings-expand-label-group">
                                 <div className="mappings-expand-label">
-                                  <strong>{sourceLanCount}</strong>&nbsp;
-                                  {sourceLanCount === 1
-                                    ? __('Source Network')
-                                    : __('Source Networks')}
+                                  <strong>{sourceLanCount}</strong>
+                                  {` `}
+                                  {pluralize(sourceLanCount, 'Source Network')}
                                 </div>
                                 <div className="mappings-expand-label">
-                                  <strong>{targetLanCount}</strong>&nbsp;
-                                  {targetLanCount === 1
-                                    ? __('Target Network')
-                                    : __('Target Networks')}
+                                  <strong>{targetLanCount}</strong>
+                                  {` `}
+                                  {pluralize(targetLanCount, 'Target Network')}
                                 </div>
                               </div>
                             </ListView.Expand>
@@ -247,16 +245,20 @@ class InfrastructureMappingsList extends React.Component {
                               <Icon type="fa" name="database" />
                               <div className="mappings-expand-label-group">
                                 <div className="mappings-expand-label">
-                                  <strong>{sourceDatastoreCount}</strong>&nbsp;
-                                  {sourceDatastoreCount === 1
-                                    ? __('Source Datastore')
-                                    : __('Source Datastores')}
+                                  <strong>{sourceDatastoreCount}</strong>
+                                  {` `}
+                                  {pluralize(
+                                    sourceDatastoreCount,
+                                    'Source Datastore'
+                                  )}
                                 </div>
                                 <div className="mappings-expand-label">
-                                  <strong>{targetDatastoreCount}</strong>&nbsp;
-                                  {targetDatastoreCount === 1
-                                    ? __('Target Datastore')
-                                    : __('Target Datastores')}
+                                  <strong>{targetDatastoreCount}</strong>
+                                  {` `}
+                                  {pluralize(
+                                    targetDatastoreCount,
+                                    'Target Datastore'
+                                  )}
                                 </div>
                               </div>
                             </ListView.Expand>
@@ -273,16 +275,20 @@ class InfrastructureMappingsList extends React.Component {
                               <Icon type="pf" name="cluster" />
                               <div className="mappings-expand-label-group">
                                 <div className="mappings-expand-label">
-                                  <strong>{sourceClusterCount}</strong>&nbsp;
-                                  {sourceClusterCount === 1
-                                    ? __('Source Cluster')
-                                    : __('Source Clusters')}
+                                  <strong>{sourceClusterCount}</strong>
+                                  {` `}
+                                  {pluralize(
+                                    sourceClusterCount,
+                                    'Source Cluster'
+                                  )}
                                 </div>
                                 <div className="mappings-expand-label">
-                                  <strong>{targetClusterCount}</strong>&nbsp;
-                                  {targetClusterCount === 1
-                                    ? __('Target Cluster')
-                                    : __('Target Clusters')}
+                                  <strong>{targetClusterCount}</strong>
+                                  {` `}
+                                  {pluralize(
+                                    targetClusterCount,
+                                    'Target Cluster'
+                                  )}
                                 </div>
                               </div>
                             </ListView.Expand>
@@ -298,10 +304,12 @@ class InfrastructureMappingsList extends React.Component {
                                 }}
                               >
                                 <Icon type="pf" name="catalog" />
-                                <strong>{associatedPlansCount}</strong>&nbsp;
-                                {associatedPlansCount === 1
-                                  ? __('Associated Plan')
-                                  : __('Associated Plans')}
+                                <strong>{associatedPlansCount}</strong>
+                                {` `}
+                                {pluralize(
+                                  associatedPlansCount,
+                                  'Associated Plan'
+                                )}
                               </ListView.Expand>
                             </ListView.InfoItem>
                           ) : null
@@ -334,11 +342,11 @@ class InfrastructureMappingsList extends React.Component {
                           <Grid.Col sm={12}>
                             {mapping.expandType === 0 && (
                               <React.Fragment>
-                                <Grid.Row>
+                                <Grid.Row className="infra-mapping-header-row">
                                   <Grid.Col xs={6}>
                                     <b>{__('Source Networks')}</b>
                                   </Grid.Col>
-                                  <Grid.Col xs={6} style={{ paddingLeft: 0 }}>
+                                  <Grid.Col xs={6}>
                                     <b>{__('Target Networks')}</b>
                                   </Grid.Col>
                                 </Grid.Row>
@@ -382,11 +390,11 @@ class InfrastructureMappingsList extends React.Component {
                             )}
                             {mapping.expandType === 1 && (
                               <React.Fragment>
-                                <Grid.Row>
+                                <Grid.Row className="infra-mapping-header-row">
                                   <Grid.Col xs={6}>
                                     <b>{__('Source Datastores')}</b>
                                   </Grid.Col>
-                                  <Grid.Col xs={6} style={{ paddingLeft: 0 }}>
+                                  <Grid.Col xs={6}>
                                     <b>{__('Target Datastores')}</b>
                                   </Grid.Col>
                                 </Grid.Row>
@@ -432,11 +440,11 @@ class InfrastructureMappingsList extends React.Component {
                             )}
                             {mapping.expandType === 2 && (
                               <React.Fragment>
-                                <Grid.Row>
+                                <Grid.Row className="infra-mapping-header-row">
                                   <Grid.Col xs={6}>
                                     <b>{__('Source Clusters')}</b>
                                   </Grid.Col>
-                                  <Grid.Col xs={6} style={{ paddingLeft: 0 }}>
+                                  <Grid.Col xs={6}>
                                     <b>{__('Target Clusters')}</b>
                                   </Grid.Col>
                                 </Grid.Row>
@@ -496,7 +504,9 @@ class InfrastructureMappingsList extends React.Component {
                                       ? mapping.service_templates.map(
                                           (plan, id) => (
                                             <div key={id}>
-                                              <span>{plan.name}</span>&nbsp;&nbsp;
+                                              <span>{plan.name}</span>
+                                              {` `}
+                                              {` `}
                                             </div>
                                           )
                                         )
