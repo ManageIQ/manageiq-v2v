@@ -7,6 +7,8 @@ import {
   HIDE_MAPPING_WIZARD,
   FETCH_PROVIDERS,
   FETCH_PROVIDERS_URL,
+  FETCH_DATASTORES,
+  FETCH_NETWORKS,
   FETCH_V2V_TRANSFORMATION_MAPPINGS,
   FETCH_V2V_TRANSFORMATION_PLANS,
   FETCH_V2V_ARCHIVED_TRANSFORMATION_PLANS,
@@ -154,6 +156,28 @@ const _getClustersActionCreator = url => dispatch =>
 export const fetchClustersAction = url => {
   const uri = new URI(url);
   return _getClustersActionCreator(uri.toString());
+};
+
+const _getDatastoresActionCreator = url => dispatch =>
+  dispatch({
+    type: `${FETCH_DATASTORES}`,
+    payload: API.get(url)
+  });
+
+export const fetchDatastoresAction = url => {
+  const uri = new URI(url);
+  return _getDatastoresActionCreator(uri.toString());
+};
+
+const _getNetworksActionCreator = url => dispatch =>
+  dispatch({
+    type: `${FETCH_NETWORKS}`,
+    payload: API.get(url)
+  });
+
+export const fetchNetworksAction = url => {
+  const uri = new URI(url);
+  return _getNetworksActionCreator(uri.toString());
 };
 
 export const setMigrationsFilterAction = filter => ({

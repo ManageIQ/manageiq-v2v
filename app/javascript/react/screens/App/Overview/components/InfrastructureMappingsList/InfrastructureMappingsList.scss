@@ -1,0 +1,109 @@
+.list-view-pf-additional-info-item {
+  .mappings-expand-label-group {
+    display: inline-block;
+  }
+  .mappings-expand-label {
+    line-height: 16px;
+    text-align: left;
+  }
+}
+
+.infra-mappings-list-view {
+  .list-view-pf-description {
+    width: 30%;
+
+    .list-group-item-heading {
+      padding-left: 30px;
+      margin-bottom: 0px;
+    }
+    .list-group-item-text {
+      padding-left: 30px;
+      padding-top: 3px;
+    }
+  }
+  @media (min-width: 992px) {
+    .list-view-pf-description {
+      width: 30%;
+    }
+  }
+  .list-view-pf-additional-info-item {
+    .fa,
+    .pficon {
+      font-size: 19px;
+    }
+    strong {
+      font-size: 13px;
+    }
+    .list-view-pf-expand {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .infra-mapping-header-row {
+    & > [class*='col-'] {
+      &:nth-child(even) {
+        padding-left: 0px;
+      }
+    }
+  }
+
+  // custom mapping styles - match mapping row heights
+  // and show borders around mapping row groups
+  .infra-mapping-networks-row,
+  .infra-mapping-datastores-row,
+  .infra-mapping-clusters-row {
+    display: flex;
+    flex-wrap: wrap;
+    & > [class*='col-'] {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 10px;
+      margin-top: 10px;
+      &:nth-child(odd) {
+        padding-right: 0px;
+      }
+      &:nth-child(even) {
+        padding-left: 0px;
+      }
+    }
+    .arrow-wrapper {
+      width: 25%;
+      height: 30px;
+      margin-top: 14px;
+    }
+    .arrow-stem {
+      background: transparent;
+      width: calc(100% - 15px);
+      height: 5px;
+      border-bottom: 1.5px solid black;
+      margin-top: 3px;
+    }
+    .arrow-head {
+      border-top: 8px solid transparent;
+      border-left: 12px solid black;
+      border-bottom: 8px solid transparent;
+    }
+    .arrow-wrapper,
+    .arrow-stem,
+    .arrow-head {
+      float: left;
+    }
+  }
+  .infra-mapping-source-container {
+    display: flex;
+    flex-direction: row;
+  }
+  .infra-mapping-item-source,
+  .infra-mapping-item-target {
+    height: 100%;
+    padding: 10px;
+    width: 75%;
+  }
+  .infra-mapping-item-source {
+    border: 1px solid black;
+  }
+  .infra-mapping-item-target {
+    border: 1px solid $color-pf-blue-400;
+  }
+}

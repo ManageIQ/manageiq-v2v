@@ -12,7 +12,17 @@ export const initialState = Immutable({
   transformationPlans: [],
   fetchTransformationPlansUrl: '/api/dummyTransformationPlans',
   clusters: [],
-  fetchClustersUrl: '/api/dummyClusters'
+  isRejectedClusters: false,
+  isFetchingClusters: false,
+  fetchClustersUrl: '/api/dummyClusters',
+  datastores: [],
+  isRejectedDatastores: false,
+  isFetchingDatastores: false,
+  fetchDatastoresUrl: '/api/dummyDatastores',
+  networks: [],
+  isRejectedNetworks: false,
+  isFetchingNetworks: false,
+  fetchNetworksUrl: '/api/dummyNetworks'
 });
 
 export const transformationMappings = [
