@@ -72,6 +72,16 @@ export const networkGroupingForRep = (
   );
 };
 
+export const targetNetworkGroupingForRep = (
+  targetNetworkRep,
+  groupedTargetNetworks
+) => {
+  const targetNetworks = groupedTargetNetworks[targetNetworkRep.uid_ems];
+  return targetNetworks.map(targetNetwork =>
+    targetNetworkWithTreeViewAttrs(targetNetwork)
+  );
+};
+
 export const dedupeMappedSourceNetworks = networksMapping => {
   const { nodes: sourceNetworks, ...targetNetwork } = networksMapping;
   const groupedNetworks = groupByUidEms(sourceNetworks);
