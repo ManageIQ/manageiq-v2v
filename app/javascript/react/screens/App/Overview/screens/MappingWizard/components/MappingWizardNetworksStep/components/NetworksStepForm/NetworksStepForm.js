@@ -15,7 +15,8 @@ import {
   networkGroupingForRep,
   mappingsForTreeView,
   mappingWithTargetNetworkRemoved,
-  mappingWithSourceNetworkRemoved
+  mappingWithSourceNetworkRemoved,
+  getRepresentatives
 } from './helpers';
 
 class NetworksStepForm extends React.Component {
@@ -339,6 +340,7 @@ class NetworksStepForm extends React.Component {
   render() {
     const {
       groupedSourceNetworks,
+      groupedTargetNetworks,
       targetNetworks,
       isFetchingSourceNetworks,
       isFetchingTargetNetworks,
@@ -409,8 +411,8 @@ class NetworksStepForm extends React.Component {
             listTitle={__('Target Networks')}
             loading={isFetchingTargetNetworks}
           >
-            {targetNetworks &&
-              targetNetworks.map(targetNetwork => (
+            {groupedTargetNetworks &&
+              getRepresentatives(groupedTargetNetworks).map(targetNetwork => (
                 <DualPaneMapperListItem
                   item={targetNetwork}
                   text={`${targetNetwork.providerName} \\ ${

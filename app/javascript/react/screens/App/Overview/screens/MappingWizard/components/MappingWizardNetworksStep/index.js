@@ -12,7 +12,10 @@ const mapStateToProps = ({ mappingWizardNetworksStep, form }, ownProps) => ({
   ...mappingWizardNetworksStep,
   ...ownProps.data,
   clusterMappings: form.mappingWizardClustersStep.values.clusterMappings,
-  groupedSourceNetworks: groupByUidEms(mappingWizardNetworksStep.sourceNetworks)
+  groupedSourceNetworks: groupByUidEms(
+    mappingWizardNetworksStep.sourceNetworks
+  ),
+  groupedTargetNetworks: groupByUidEms(mappingWizardNetworksStep.targetNetworks)
 });
 
 const actions = {

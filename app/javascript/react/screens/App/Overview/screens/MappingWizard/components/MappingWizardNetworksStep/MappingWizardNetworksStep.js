@@ -96,6 +96,7 @@ class MappingWizardNetworksStep extends React.Component {
       isFetchingSourceNetworks,
       isFetchingTargetNetworks,
       groupedSourceNetworks,
+      groupedTargetNetworks,
       targetNetworks,
       form
     } = this.props;
@@ -126,7 +127,7 @@ class MappingWizardNetworksStep extends React.Component {
           name="networksMappings"
           component={NetworksStepForm}
           groupedSourceNetworks={groupedSourceNetworks}
-          targetNetworks={targetNetworks}
+          groupedTargetNetworks={groupedTargetNetworks}
           selectedCluster={selectedCluster}
           selectedClusterMapping={selectedClusterMapping}
           isFetchingSourceNetworks={isFetchingSourceNetworks}
