@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Immutable from 'seamless-immutable';
-import { Icon, ListView, Grid } from 'patternfly-react';
+import { Button, Icon, ListView, Grid } from 'patternfly-react';
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
 import { simplePluralize } from '../../../../../../common/helpers';
 import OverviewEmptyState from '../OverviewEmptyState/OverviewEmptyState';
@@ -333,21 +333,24 @@ class InfrastructureMappingsList extends React.Component {
                               inProgressRequestsTransformationMapping ===
                               mapping.id
                           ) ? (
-                            <Icon
-                              type="pf"
-                              className="delete-infra-mapping-icon-disabled"
-                              name="delete"
-                            />
+                            <Button bsStyle="link" disabled>
+                              <Icon
+                                type="pf"
+                                className="delete-infra-mapping-icon-disabled"
+                                name="delete"
+                              />
+                            </Button>
                           ) : (
-                            <Icon
-                              type="pf"
-                              name="delete"
+                            <Button
+                              bsStyle="link"
                               onClick={e => {
                                 e.stopPropagation();
                                 setMappingToDeleteAction(mapping);
                                 showDeleteConfirmationModalAction();
                               }}
-                            />
+                            >
+                              <Icon type="pf" name="delete" />
+                            </Button>
                           )
                         }
                       >
