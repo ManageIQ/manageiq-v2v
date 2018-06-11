@@ -37,26 +37,6 @@ class InfrastructureMappingsList extends React.Component {
     };
   }
 
-  sourceCount = (mapping, sourceType) =>
-    [
-      ...new Set(
-        mapping
-          .filter(item => item.source_type.toLowerCase() === sourceType)
-          .map(item => item.source_id)
-      )
-    ].length;
-
-  destinationCount = (mapping, destinationType) =>
-    [
-      ...new Set(
-        mapping
-          .filter(
-            item => item.destination_type.toLowerCase() === destinationType
-          )
-          .map(item => item.destination_id)
-      )
-    ].length;
-
   clusterName = cluster =>
     `${cluster.v_parent_datacenter} \\ ${cluster.ext_management_system.name} ${
       cluster.name
@@ -155,30 +135,6 @@ class InfrastructureMappingsList extends React.Component {
                   id="infrastructure_mappings"
                 >
                   {transformationMappingsMutable.map(mapping => {
-                    const sourceClusterCount = this.sourceCount(
-                      mapping.transformation_mapping_items,
-                      'emscluster'
-                    );
-                    const targetClusterCount = this.destinationCount(
-                      mapping.transformation_mapping_items,
-                      'emscluster'
-                    );
-                    const sourceDatastoreCount = this.sourceCount(
-                      mapping.transformation_mapping_items,
-                      'storage'
-                    );
-                    const targetDatastoreCount = this.destinationCount(
-                      mapping.transformation_mapping_items,
-                      'storage'
-                    );
-                    const sourceLanCount = this.sourceCount(
-                      mapping.transformation_mapping_items,
-                      'lan'
-                    );
-                    const targetLanCount = this.destinationCount(
-                      mapping.transformation_mapping_items,
-                      'lan'
-                    );
                     const associatedPlansCount =
                       mapping.service_templates &&
                       mapping.service_templates.length;
@@ -194,13 +150,36 @@ class InfrastructureMappingsList extends React.Component {
                       networks
                     );
 
+                    let sourceClusterCount = 0;
+                    let targetClusterCount = 0;
+                    Object.keys(targetClusters).forEach(key => {
+                      targetClusterCount += 1;
+                      sourceClusterCount +=
+                        targetClusters[key].sourceClusters.length;
+                    });
+
+                    let sourceDatastoreCount = 0;
+                    let targetDatastoreCount = 0;
+                    Object.keys(targetDatastores).forEach(key => {
+                      targetDatastoreCount += 1;
+                      sourceDatastoreCount +=
+                        targetDatastores[key].sources.length;
+                    });
+
+                    let sourceLanCount = 0;
+                    let targetLanCount = 0;
+                    Object.keys(targetNetworks).forEach(key => {
+                      targetLanCount += 1;
+                      sourceLanCount += targetNetworks[key].sources.length;
+                    });
+
                     return (
                       <ListView.Item
                         key={mapping.id}
                         heading={mapping.name}
                         description={
                           <small>
-                            {__('Completed: ')}
+                            {__('Created: ')}
                             {formatDateTime(mapping.created_at)}
                           </small>
                         }
