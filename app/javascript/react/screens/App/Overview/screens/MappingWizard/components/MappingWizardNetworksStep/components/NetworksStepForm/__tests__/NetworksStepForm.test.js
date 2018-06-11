@@ -74,7 +74,7 @@ describe('#addNetworkMapping', () => {
       });
 
       test('and there already exists a mapping for the target cluster', () => {
-        const [mappedTargetNetwork, targetNetworkToMap] = targetNetworks;
+        const [mappedTargetNetwork, , targetNetworkToMap] = targetNetworks;
         const [, , mappedSourceNetwork] = sourceNetworks;
         const srcNetworks = [...networkGrouping, mappedSourceNetwork];
         const groupedNetworks = groupByUidEms(srcNetworks);
@@ -100,10 +100,7 @@ describe('#addNetworkMapping', () => {
             {...props}
             input={input}
             groupedSourceNetworks={groupByUidEms(srcNetworks)}
-            groupedTargetNetworks={groupByUidEms([
-              mappedTargetNetwork,
-              targetNetworkToMap
-            ])}
+            groupedTargetNetworks={groupByUidEms(targetNetworks)}
           />
         );
         const [networkGroupRep] = networkGrouping;
