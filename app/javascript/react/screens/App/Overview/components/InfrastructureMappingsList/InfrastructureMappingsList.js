@@ -188,7 +188,7 @@ class InfrastructureMappingsList extends React.Component {
                         compoundExpanded={mapping.expanded}
                         onCloseCompoundExpand={() => this.closeExpand(mapping)}
                         additionalInfo={[
-                          <ListView.InfoItem key={0}>
+                          <ListView.InfoItem key={0} id="networks">
                             <ListView.Expand
                               expanded={
                                 mapping.expanded && mapping.expandType === 0
@@ -220,7 +220,7 @@ class InfrastructureMappingsList extends React.Component {
                               </div>
                             </ListView.Expand>
                           </ListView.InfoItem>,
-                          <ListView.InfoItem key={1}>
+                          <ListView.InfoItem key={1} id="datastores">
                             <ListView.Expand
                               expanded={
                                 mapping.expanded && mapping.expandType === 1
@@ -252,7 +252,7 @@ class InfrastructureMappingsList extends React.Component {
                               </div>
                             </ListView.Expand>
                           </ListView.InfoItem>,
-                          <ListView.InfoItem key={2}>
+                          <ListView.InfoItem key={2} id="clusters">
                             <ListView.Expand
                               expanded={
                                 mapping.expanded && mapping.expandType === 2
@@ -285,7 +285,7 @@ class InfrastructureMappingsList extends React.Component {
                             </ListView.Expand>
                           </ListView.InfoItem>,
                           associatedPlansCount ? (
-                            <ListView.InfoItem key={3}>
+                            <ListView.InfoItem key={3} id="associated-plans">
                               <ListView.Expand
                                 expanded={
                                   mapping.expanded && mapping.expandType === 3
