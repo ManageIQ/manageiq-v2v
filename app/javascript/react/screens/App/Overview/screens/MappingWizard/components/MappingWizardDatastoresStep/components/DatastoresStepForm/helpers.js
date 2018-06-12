@@ -66,6 +66,16 @@ export const targetDatastoreTreeViewInfo = (
   );
 };
 
+export const negativeAvailableSpace = (targetDatastore, sourceDatastores) => {
+  const { free_space } = targetDatastore;
+  const availableSpace = free_space - totalUsedSpace(sourceDatastores);
+
+  if (numeral(availableSpace).format('0.00b') < 0) {
+    return true;
+  }
+  return false;
+};
+
 export const errorMessage = __(
   'The size of the selected source datastores exceeds the available space in the target datastore'
 );
