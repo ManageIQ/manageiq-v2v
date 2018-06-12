@@ -13,10 +13,8 @@ import {
   targetDatastoreTreeViewInfo,
   sourceDatastoreInfo,
   targetDatastoreInfo,
-  targetDatastoreAvailableSpace,
-  totalUsedSpace,
-  errorMessage,
-  updateMappings
+  updateMappings,
+  negativeAvailableSpace
 } from './helpers';
 
 class DatastoresStepForm extends React.Component {
@@ -36,80 +34,25 @@ class DatastoresStepForm extends React.Component {
   }
 
   selectSourceDatastore = sourceDatastore => {
-    const { selectedTargetDatastore, selectedSourceDatastores } = this.state;
-    const { value: datastoresStepMappings } = this.props.input;
-    const { showAlertAction, hideAlertAction } = this.props;
-
-    const mappingExistsForTargetDatastore =
-      selectedTargetDatastore &&
-      datastoresStepMappings.some(targetClusterWithDatastoreMappings =>
-        targetClusterWithDatastoreMappings.nodes.some(
-          targetDatastoreWithSourceDatastores => targetDatastoreWithSourceDatastores.id === selectedTargetDatastore.id
-        )
+    this.setState(prevState => {
+      const isAlreadySelected = prevState.selectedSourceDatastores.some(
+        datastore => datastore.id === sourceDatastore.id
       );
-
-    const isNotAlreadySelected = !selectedSourceDatastores.some(datastore => datastore.id === sourceDatastore.id);
-
-    if (
-      selectedTargetDatastore &&
-      mappingExistsForTargetDatastore &&
-      isNotAlreadySelected &&
-      targetDatastoreAvailableSpace(selectedTargetDatastore, datastoresStepMappings) <
-        totalUsedSpace([...selectedSourceDatastores, sourceDatastore])
-    ) {
-      showAlertAction(errorMessage);
-    } else if (
-      selectedTargetDatastore &&
-      isNotAlreadySelected &&
-      selectedTargetDatastore.free_space < totalUsedSpace([...selectedSourceDatastores, sourceDatastore])
-    ) {
-      showAlertAction(errorMessage);
-    } else {
-      this.setState(prevState => {
-        const isAlreadySelected = prevState.selectedSourceDatastores.some(
-          datastore => datastore.id === sourceDatastore.id
-        );
-        if (isAlreadySelected) {
-          return {
-            selectedSourceDatastores: prevState.selectedSourceDatastores.filter(
-              datastore => datastore.id !== sourceDatastore.id
-            )
-          };
-        }
-        hideAlertAction();
+      if (isAlreadySelected) {
         return {
-          selectedSourceDatastores: [...prevState.selectedSourceDatastores, sourceDatastore]
+          selectedSourceDatastores: prevState.selectedSourceDatastores.filter(
+            datastore => datastore.id !== sourceDatastore.id
+          )
         };
-      });
-    }
+      }
+      return {
+        selectedSourceDatastores: [...prevState.selectedSourceDatastores, sourceDatastore]
+      };
+    });
   };
 
   selectTargetDatastore = targetDatastore => {
-    const { selectedSourceDatastores } = this.state;
-    const { value: datastoresStepMappings } = this.props.input;
-    const { showAlertAction, hideAlertAction } = this.props;
-
-    const mappingExistsForTargetDatastore = datastoresStepMappings.some(targetClusterWithDatastoreMappings =>
-      targetClusterWithDatastoreMappings.nodes.some(
-        targetDatastoreWithSourceDatastores => targetDatastoreWithSourceDatastores.id === targetDatastore.id
-      )
-    );
-
-    if (
-      selectedSourceDatastores.length > 0 &&
-      mappingExistsForTargetDatastore &&
-      targetDatastoreAvailableSpace(targetDatastore, datastoresStepMappings) < totalUsedSpace(selectedSourceDatastores)
-    ) {
-      showAlertAction(errorMessage);
-    } else if (
-      selectedSourceDatastores.length > 0 &&
-      targetDatastore.free_space < totalUsedSpace(selectedSourceDatastores)
-    ) {
-      showAlertAction(errorMessage);
-    } else {
-      hideAlertAction();
-      this.setState(() => ({ selectedTargetDatastore: targetDatastore }));
-    }
+    this.setState(() => ({ selectedTargetDatastore: targetDatastore }));
   };
 
   addDatastoreMapping = () => {
@@ -140,6 +83,9 @@ class DatastoresStepForm extends React.Component {
                   prevState.selectedTargetDatastore,
                   prevState.selectedSourceDatastores
                 ),
+                icon: negativeAvailableSpace(prevState.selectedTargetDatastore, prevState.selectedSourceDatastores)
+                  ? 'pficon-warning-triangle-o'
+                  : 'fa fa-folder',
                 selectable: true,
                 selected: false,
                 state: {
@@ -173,6 +119,9 @@ class DatastoresStepForm extends React.Component {
                         mapping,
                         mapping.nodes.concat(prevState.selectedSourceDatastores)
                       ),
+                      icon: negativeAvailableSpace(mapping, mapping.nodes.concat(prevState.selectedSourceDatastores))
+                        ? 'pficon-warning-triangle-o'
+                        : 'fa fa-folder',
                       nodes: mapping.nodes.concat(
                         prevState.selectedSourceDatastores.map(datastore => ({
                           ...datastore,
@@ -197,6 +146,9 @@ class DatastoresStepForm extends React.Component {
                   prevState.selectedTargetDatastore,
                   prevState.selectedSourceDatastores
                 ),
+                icon: negativeAvailableSpace(prevState.selectedTargetDatastore, prevState.selectedSourceDatastores)
+                  ? 'pficon-warning-triangle-o'
+                  : 'fa fa-folder',
                 selectable: true,
                 selected: false,
                 state: {
@@ -392,7 +344,5 @@ DatastoresStepForm.propTypes = {
   sourceDatastores: PropTypes.array,
   targetDatastores: PropTypes.array,
   isFetchingSourceDatastores: PropTypes.bool,
-  isFetchingTargetDatastores: PropTypes.bool,
-  showAlertAction: PropTypes.func,
-  hideAlertAction: PropTypes.func
+  isFetchingTargetDatastores: PropTypes.bool
 };
