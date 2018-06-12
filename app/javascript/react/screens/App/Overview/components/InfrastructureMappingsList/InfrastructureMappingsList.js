@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Immutable from 'seamless-immutable';
-import { Icon, ListView, Grid } from 'patternfly-react';
+import { Button, Icon, ListView, Grid } from 'patternfly-react';
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
 import { simplePluralize } from '../../../../../../common/helpers';
 import OverviewEmptyState from '../OverviewEmptyState/OverviewEmptyState';
@@ -36,26 +36,6 @@ class InfrastructureMappingsList extends React.Component {
       transformationMappingsMutable: mutableMappings
     };
   }
-
-  sourceCount = (mapping, sourceType) =>
-    [
-      ...new Set(
-        mapping
-          .filter(item => item.source_type.toLowerCase() === sourceType)
-          .map(item => item.source_id)
-      )
-    ].length;
-
-  destinationCount = (mapping, destinationType) =>
-    [
-      ...new Set(
-        mapping
-          .filter(
-            item => item.destination_type.toLowerCase() === destinationType
-          )
-          .map(item => item.destination_id)
-      )
-    ].length;
 
   clusterName = cluster =>
     `${cluster.v_parent_datacenter} \\ ${cluster.ext_management_system.name} ${
@@ -155,30 +135,6 @@ class InfrastructureMappingsList extends React.Component {
                   id="infrastructure_mappings"
                 >
                   {transformationMappingsMutable.map(mapping => {
-                    const sourceClusterCount = this.sourceCount(
-                      mapping.transformation_mapping_items,
-                      'emscluster'
-                    );
-                    const targetClusterCount = this.destinationCount(
-                      mapping.transformation_mapping_items,
-                      'emscluster'
-                    );
-                    const sourceDatastoreCount = this.sourceCount(
-                      mapping.transformation_mapping_items,
-                      'storage'
-                    );
-                    const targetDatastoreCount = this.destinationCount(
-                      mapping.transformation_mapping_items,
-                      'storage'
-                    );
-                    const sourceLanCount = this.sourceCount(
-                      mapping.transformation_mapping_items,
-                      'lan'
-                    );
-                    const targetLanCount = this.destinationCount(
-                      mapping.transformation_mapping_items,
-                      'lan'
-                    );
                     const associatedPlansCount =
                       mapping.service_templates &&
                       mapping.service_templates.length;
@@ -194,13 +150,36 @@ class InfrastructureMappingsList extends React.Component {
                       networks
                     );
 
+                    let sourceClusterCount = 0;
+                    let targetClusterCount = 0;
+                    Object.keys(targetClusters).forEach(key => {
+                      targetClusterCount += 1;
+                      sourceClusterCount +=
+                        targetClusters[key].sourceClusters.length;
+                    });
+
+                    let sourceDatastoreCount = 0;
+                    let targetDatastoreCount = 0;
+                    Object.keys(targetDatastores).forEach(key => {
+                      targetDatastoreCount += 1;
+                      sourceDatastoreCount +=
+                        targetDatastores[key].sources.length;
+                    });
+
+                    let sourceLanCount = 0;
+                    let targetLanCount = 0;
+                    Object.keys(targetNetworks).forEach(key => {
+                      targetLanCount += 1;
+                      sourceLanCount += targetNetworks[key].sources.length;
+                    });
+
                     return (
                       <ListView.Item
                         key={mapping.id}
                         heading={mapping.name}
                         description={
                           <small>
-                            {__('Completed: ')}
+                            {__('Created: ')}
                             {formatDateTime(mapping.created_at)}
                           </small>
                         }
@@ -209,7 +188,7 @@ class InfrastructureMappingsList extends React.Component {
                         compoundExpanded={mapping.expanded}
                         onCloseCompoundExpand={() => this.closeExpand(mapping)}
                         additionalInfo={[
-                          <ListView.InfoItem key={0}>
+                          <ListView.InfoItem key={0} id="networks">
                             <ListView.Expand
                               expanded={
                                 mapping.expanded && mapping.expandType === 0
@@ -241,7 +220,7 @@ class InfrastructureMappingsList extends React.Component {
                               </div>
                             </ListView.Expand>
                           </ListView.InfoItem>,
-                          <ListView.InfoItem key={1}>
+                          <ListView.InfoItem key={1} id="datastores">
                             <ListView.Expand
                               expanded={
                                 mapping.expanded && mapping.expandType === 1
@@ -273,7 +252,7 @@ class InfrastructureMappingsList extends React.Component {
                               </div>
                             </ListView.Expand>
                           </ListView.InfoItem>,
-                          <ListView.InfoItem key={2}>
+                          <ListView.InfoItem key={2} id="clusters">
                             <ListView.Expand
                               expanded={
                                 mapping.expanded && mapping.expandType === 2
@@ -306,7 +285,7 @@ class InfrastructureMappingsList extends React.Component {
                             </ListView.Expand>
                           </ListView.InfoItem>,
                           associatedPlansCount ? (
-                            <ListView.InfoItem key={3}>
+                            <ListView.InfoItem key={3} id="associated-plans">
                               <ListView.Expand
                                 expanded={
                                   mapping.expanded && mapping.expandType === 3
@@ -333,21 +312,24 @@ class InfrastructureMappingsList extends React.Component {
                               inProgressRequestsTransformationMapping ===
                               mapping.id
                           ) ? (
-                            <Icon
-                              type="pf"
-                              className="delete-infra-mapping-icon-disabled"
-                              name="delete"
-                            />
+                            <Button bsStyle="link" disabled>
+                              <Icon
+                                type="pf"
+                                className="delete-infra-mapping-icon-disabled"
+                                name="delete"
+                              />
+                            </Button>
                           ) : (
-                            <Icon
-                              type="pf"
-                              name="delete"
+                            <Button
+                              bsStyle="link"
                               onClick={e => {
                                 e.stopPropagation();
                                 setMappingToDeleteAction(mapping);
                                 showDeleteConfirmationModalAction();
                               }}
-                            />
+                            >
+                              <Icon type="pf" name="delete" />
+                            </Button>
                           )
                         }
                       >

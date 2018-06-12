@@ -160,7 +160,9 @@ export const mapInfrastructureMappings = (
       if (targetNetworks[targetNetwork.uid_ems]) {
         const duplicatedLanIndex = targetNetworks[
           targetNetwork.uid_ems
-        ].sources.findIndex(s => s.uid_ems === sourceNetwork.uid_ems);
+        ].sources.findIndex(
+          s => s.sourceNetwork.uid_ems === sourceNetwork.uid_ems
+        );
         if (duplicatedLanIndex === -1) {
           targetNetworks[targetNetwork.uid_ems].sources.push(source);
         }
