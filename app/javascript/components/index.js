@@ -91,7 +91,9 @@ export const coreComponents = [
       archiveTransformationPlanUrl: '/api/service_templates',
       fetchTransformationMappingsUrl:
         'api/transformation_mappings?expand=resources' +
-        '&attributes=transformation_mapping_items,service_templates',
+        '&attributes=transformation_mapping_items,service_templates' +
+        '&sort_by=updated_at' +
+        '&sort_order=desc',
       fetchTransformationPlansUrl:
         '/api/service_templates/?' +
         "filter[]=type='ServiceTemplateTransformationPlan'" +
