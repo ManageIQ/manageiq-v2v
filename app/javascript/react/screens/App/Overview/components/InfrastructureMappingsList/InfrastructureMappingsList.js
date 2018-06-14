@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Immutable from 'seamless-immutable';
 import { Button, Icon, ListView, Grid } from 'patternfly-react';
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
-import { simplePluralize } from '../../../../../../common/helpers';
 import OverviewEmptyState from '../OverviewEmptyState/OverviewEmptyState';
 import DeleteInfrastructureMappingConfirmationModal from '../../components/DeleteInfrastructureMappingConfirmationModal/DeleteInfrastructureMappingConfirmationModal';
 import MappingSource from './components/MappingSource';
@@ -200,21 +199,23 @@ class InfrastructureMappingsList extends React.Component {
                               <Icon type="pf" name="network" />
                               <div className="mappings-expand-label-group">
                                 <div className="mappings-expand-label">
-                                  <strong>{sourceLanCount}</strong>
-                                  {` `}
-                                  {simplePluralize(
-                                    sourceLanCount,
-                                    __('Source Network'),
-                                    __('Source Networks')
+                                  {sprintf(
+                                    n__(
+                                      '%d Source Network',
+                                      '%d Source Networks',
+                                      sourceLanCount
+                                    ),
+                                    sourceLanCount
                                   )}
                                 </div>
                                 <div className="mappings-expand-label">
-                                  <strong>{targetLanCount}</strong>
-                                  {` `}
-                                  {simplePluralize(
-                                    targetLanCount,
-                                    __('Target Network'),
-                                    __('Target Networks')
+                                  {sprintf(
+                                    n__(
+                                      '%d Target Network',
+                                      '%d Target Networks',
+                                      targetLanCount
+                                    ),
+                                    targetLanCount
                                   )}
                                 </div>
                               </div>
@@ -232,21 +233,23 @@ class InfrastructureMappingsList extends React.Component {
                               <Icon type="fa" name="database" />
                               <div className="mappings-expand-label-group">
                                 <div className="mappings-expand-label">
-                                  <strong>{sourceDatastoreCount}</strong>
-                                  {` `}
-                                  {simplePluralize(
-                                    sourceDatastoreCount,
-                                    __('Source Datastore'),
-                                    __('Source Datastores')
+                                  {sprintf(
+                                    n__(
+                                      '%d Source Datastore',
+                                      '%d Source Datastores',
+                                      sourceDatastoreCount
+                                    ),
+                                    sourceDatastoreCount
                                   )}
                                 </div>
                                 <div className="mappings-expand-label">
-                                  <strong>{targetDatastoreCount}</strong>
-                                  {` `}
-                                  {simplePluralize(
-                                    targetDatastoreCount,
-                                    __('Target Datastore'),
-                                    __('Target Datastores')
+                                  {sprintf(
+                                    n__(
+                                      '%d Target Datastore',
+                                      '%d Target Datastores',
+                                      targetDatastoreCount
+                                    ),
+                                    targetDatastoreCount
                                   )}
                                 </div>
                               </div>
@@ -264,21 +267,23 @@ class InfrastructureMappingsList extends React.Component {
                               <Icon type="pf" name="cluster" />
                               <div className="mappings-expand-label-group">
                                 <div className="mappings-expand-label">
-                                  <strong>{sourceClusterCount}</strong>
-                                  {` `}
-                                  {simplePluralize(
-                                    sourceClusterCount,
-                                    __('Source Cluster'),
-                                    __('Source Clusters')
+                                  {sprintf(
+                                    n__(
+                                      '%d Source Cluster',
+                                      '%d Source Clusters',
+                                      sourceClusterCount
+                                    ),
+                                    sourceClusterCount
                                   )}
                                 </div>
                                 <div className="mappings-expand-label">
-                                  <strong>{targetClusterCount}</strong>
-                                  {` `}
-                                  {simplePluralize(
-                                    targetClusterCount,
-                                    __('Target Cluster'),
-                                    __('Target Clusters')
+                                  {sprintf(
+                                    n__(
+                                      '%d Target Cluster',
+                                      '%d Target Clusters',
+                                      targetClusterCount
+                                    ),
+                                    targetClusterCount
                                   )}
                                 </div>
                               </div>
@@ -295,12 +300,13 @@ class InfrastructureMappingsList extends React.Component {
                                 }}
                               >
                                 <Icon type="pf" name="catalog" />
-                                <strong>{associatedPlansCount}</strong>
-                                {` `}
-                                {simplePluralize(
-                                  associatedPlansCount,
-                                  __('Associated Plan'),
-                                  __('Associated Plans')
+                                {sprintf(
+                                  n__(
+                                    '%d Associated Plan',
+                                    '%d Associated Plans',
+                                    associatedPlansCount
+                                  ),
+                                  associatedPlansCount
                                 )}
                               </ListView.Expand>
                             </ListView.InfoItem>
