@@ -557,7 +557,6 @@ class PlanWizardVMStepTable extends React.Component {
                       onRemove={this.removeFilter}
                       filterData={item}
                     >
-                      {__('label=')}
                       {item.label}
                     </Filter.Item>
                   ))}
