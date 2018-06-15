@@ -12,7 +12,7 @@ import {
   UtilizationBar,
   Spinner
 } from 'patternfly-react';
-import { IsoElpasedTime } from '../../../../../../components/dates/IsoElapsedTime';
+import TickingIsoElapsedTime from '../../../../../../components/dates/TickingIsoElapsedTime';
 import getMostRecentRequest from '../../../common/getMostRecentRequest';
 
 const MigrationsInProgressCard = ({
@@ -104,9 +104,8 @@ const MigrationsInProgressCard = ({
   );
 
   // UX business rule 4: reflect most request recent elapsed time
-  const elapsedTime = IsoElpasedTime(
-    new Date(mostRecentRequest.created_on),
-    Date.now()
+  const elapsedTime = (
+    <TickingIsoElapsedTime startTime={mostRecentRequest.created_on} />
   );
 
   // Tooltips

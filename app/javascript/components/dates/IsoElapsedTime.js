@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-export const IsoElpasedTime = (startTime, endTime) => {
+export const IsoElapsedTime = (startTime, endTime) => {
   let elapsedHours = moment(endTime).diff(startTime, 'hours');
   const elapsedMinutes = moment(endTime).diff(startTime, 'minutes') % 60;
   const elapsedSeconds = moment(endTime).diff(startTime, 'seconds') % 60;

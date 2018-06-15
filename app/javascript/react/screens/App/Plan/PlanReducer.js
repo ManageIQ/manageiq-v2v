@@ -1,6 +1,6 @@
 import Immutable from 'seamless-immutable';
 import numeral from 'numeral';
-import { IsoElpasedTime } from '../../../../components/dates/IsoElapsedTime';
+import { IsoElapsedTime } from '../../../../components/dates/IsoElapsedTime';
 
 import {
   FETCH_V2V_PLAN_REQUEST,
@@ -84,7 +84,7 @@ const _formatPlanRequestDetails = data => {
       const currentTime = new Date();
       const startDateTime = taskDetails.delivered_on;
       const lastUpdateDateTime = taskDetails.updated_on;
-      taskDetails.elapsedTime = IsoElpasedTime(
+      taskDetails.elapsedTime = IsoElapsedTime(
         startDateTime,
         taskDetails.completed ? lastUpdateDateTime : currentTime
       );
