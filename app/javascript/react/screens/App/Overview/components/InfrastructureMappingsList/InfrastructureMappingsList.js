@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Immutable from 'seamless-immutable';
+import EllipsisWithTooltip from 'react-ellipsis-with-tooltip';
 import { Button, Icon, ListView, Grid } from 'patternfly-react';
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
 import OverviewEmptyState from '../OverviewEmptyState/OverviewEmptyState';
@@ -177,10 +178,9 @@ class InfrastructureMappingsList extends React.Component {
                         key={mapping.id}
                         heading={mapping.name}
                         description={
-                          <small>
-                            {__('Created: ')}
-                            {formatDateTime(mapping.created_at)}
-                          </small>
+                          <EllipsisWithTooltip id={mapping.description}>
+                            <small>{mapping.description}</small>
+                          </EllipsisWithTooltip>
                         }
                         stacked
                         compoundExpand
@@ -482,14 +482,9 @@ class InfrastructureMappingsList extends React.Component {
                               <React.Fragment>
                                 <Grid.Row>
                                   <Grid.Col xs={12}>
-                                    <b>
-                                      {__('Infrastructure Mapping Description')}
-                                    </b>
-                                  </Grid.Col>
-                                </Grid.Row>
-                                <Grid.Row>
-                                  <Grid.Col xs={12}>
-                                    {mapping.description}
+                                    <b>{__('Created:')}</b>
+                                    {` `}
+                                    {formatDateTime(mapping.created_at)}
                                   </Grid.Col>
                                 </Grid.Row>
                                 <br />
