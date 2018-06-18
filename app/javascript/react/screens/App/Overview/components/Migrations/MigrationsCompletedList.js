@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { noop, Button, ListView, Grid, Spinner, Icon } from 'patternfly-react';
-import { IsoElpasedTime } from '../../../../../../components/dates/IsoElapsedTime';
+import { IsoElapsedTime } from '../../../../../../components/dates/IsoElapsedTime';
 import OverviewEmptyState from '../OverviewEmptyState/OverviewEmptyState';
 import getMostRecentRequest from '../../../common/getMostRecentRequest';
 
@@ -48,7 +48,7 @@ const MigrationsCompletedList = ({
               if (tasks[key]) succeedCount += 1;
             });
 
-            const elapsedTime = IsoElpasedTime(
+            const elapsedTime = IsoElapsedTime(
               new Date(
                 mostRecentRequest && mostRecentRequest.options.delivered_on
               ),

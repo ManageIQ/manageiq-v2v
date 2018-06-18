@@ -27,6 +27,7 @@ import {
   ACTIVE_PLAN_SORT_FIELDS,
   FINISHED_PLAN_SORT_FIELDS
 } from './PlanRequestDetailListConstants';
+import TickingIsoElapsedTime from '../../../../../../components/dates/TickingIsoElapsedTime';
 
 class PlanRequestDetailList extends React.Component {
   static getDerivedStateFromProps(nextProps) {
@@ -440,7 +441,12 @@ class PlanRequestDetailList extends React.Component {
                       </div>
                       <div>
                         <ListView.Icon type="fa" size="lg" name="clock-o" />
-                        {task.elapsedTime}
+                        <TickingIsoElapsedTime
+                          startTime={task.startDateTime}
+                          endTime={
+                            task.completed ? task.lastUpdateDateTime : null
+                          }
+                        />
                       </div>
                     </ListView.InfoItem>,
                     <ListView.InfoItem
