@@ -1,5 +1,5 @@
 {
-  "name": "miq_v2v_ui",
+  "name": "manageiq-v2v",
   "version": "0.0.0",
   "scripts": {
     "test": "npm run lint && jest",

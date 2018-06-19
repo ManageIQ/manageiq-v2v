@@ -1,1 +1,1 @@
-Vmdb::Gettext::Domains.add_domain('MiqV2vUI', MiqV2vUI::Engine.root.join('locale').to_s, :po)
+Vmdb::Gettext::Domains.add_domain('ManageIQ::V2V', ManageIQ::V2V::Engine.root.join('locale').to_s, :po)

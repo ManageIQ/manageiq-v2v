@@ -1,6 +1,6 @@
-module MiqV2vUI
+module ManageIQ::V2V
   class Engine < ::Rails::Engine
-    isolate_namespace MiqV2vUI
+    isolate_namespace ManageIQ::V2V
 
     def vmdb_plugin?
       true

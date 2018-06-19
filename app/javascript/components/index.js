@@ -15,7 +15,7 @@ import IsoDate from './dates/IsoDate';
 import LongDateTime from './dates/LongDateTime';
 import RelativeDateTime from './dates/RelativeDateTime';
 import ShortDateTime from './dates/ShortDateTime';
-import MiqV2vUi from '../react';
+import ManageIQV2V from '../react';
 
 export const coreComponents = [
   {
@@ -158,7 +158,7 @@ export const coreComponents = [
     data: true,
     store: false
   },
-  { name: 'v2v_ui_plugin', type: MiqV2vUi }
+  { name: 'manageiq-v2v', type: ManageIQV2V }
 ];
 
 export const componentSettings = component =>
