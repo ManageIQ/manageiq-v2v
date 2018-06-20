@@ -163,7 +163,7 @@ export default (state = initialState, action) => {
       return state
         .set('plan', action.payload.data)
         .set('planName', action.payload.data.name)
-        .set('planArchived', action.payload.data.archived)
+        .set('planArchived', !!action.payload.data.archived)
         .set('isFetchingPlan', false)
         .set('isRejectedPlan', false)
         .set('errorPlan', null);
