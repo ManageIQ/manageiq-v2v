@@ -97,7 +97,7 @@ export const coreComponents = [
       fetchTransformationPlansUrl:
         '/api/service_templates/?' +
         "filter[]=type='ServiceTemplateTransformationPlan'" +
-        '&filter[]=deleted_on=nil' +
+        '&filter[]=active=true' +
         '&expand=resources' +
         '&attributes=name,description,miq_requests,options,created_at' +
         '&sort_by=updated_at' +
@@ -105,7 +105,7 @@ export const coreComponents = [
       fetchArchivedTransformationPlansUrl:
         '/api/service_templates/?' +
         "filter[]=type='ServiceTemplateTransformationPlan'" +
-        '&filter[]=deleted_on!=nil' +
+        '&filter[]=archived=true' +
         '&expand=resources' +
         '&attributes=name,description,miq_requests,options,created_at' +
         '&sort_by=updated_at' +
