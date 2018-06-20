@@ -12,7 +12,7 @@ module MiqV2vUI
 
     initializer 'plugin' do
       Menu::CustomLoader.register(
-        ::Settings.product.transformation == true ? Menu::Item.new('migration', N_('Migration'), 'miq_report', {:feature => 'miq_report', :any => true}, '/migration', :default, :compute) : nil
+        ::Settings.product.transformation == true ? Menu::Item.new('migration', N_('Migration'), 'migration', {:feature => 'migration', :any => true}, '/migration', :default, :compute) : nil
       )
     end
   end
