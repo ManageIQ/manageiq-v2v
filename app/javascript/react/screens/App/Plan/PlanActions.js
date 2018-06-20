@@ -68,7 +68,7 @@ export const _getPlanActionCreator = url => dispatch =>
 
 export const fetchPlanAction = (url, id) => {
   const uri = new URI(`${url}/${id}`);
-  uri.addSearch({ attributes: 'miq_requests' });
+  uri.addSearch({ attributes: 'miq_requests,archived,active' });
   return _getPlanActionCreator(uri.toString());
 };
 
