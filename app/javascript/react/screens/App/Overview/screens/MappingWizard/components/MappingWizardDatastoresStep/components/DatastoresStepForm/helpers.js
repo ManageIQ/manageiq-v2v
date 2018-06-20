@@ -1,5 +1,3 @@
-import numeral from 'numeral';
-
 export const datastoreUsedSpace = (datastore = {}) => datastore.total_space - datastore.free_space;
 
 export const totalUsedSpace = (datastores = []) =>
@@ -22,42 +20,12 @@ export const targetDatastoreAvailableSpace = (targetDatastore, datastoresStepMap
 };
 
 export const sourceDatastoreInfo = sourceDatastore =>
-  sprintf(
-    __('%s \\ %s (%s)'),
-    sourceDatastore.providerName,
-    sourceDatastore.name,
-    numeral(datastoreUsedSpace(sourceDatastore)).format('0.00b')
-  );
+  sprintf(__('%s \\ %s'), sourceDatastore.providerName, sourceDatastore.name);
 
 export const targetDatastoreInfo = (targetDatastore, datastoresStepMappings) =>
-  sprintf(
-    __('%s \\ %s (%s avail)'),
-    targetDatastore.providerName,
-    targetDatastore.name,
-    numeral(targetDatastoreAvailableSpace(targetDatastore, datastoresStepMappings)).format('0.00b')
-  );
+  sprintf(__('%s \\ %s'), targetDatastore.providerName, targetDatastore.name);
 
-export const targetDatastoreTreeViewInfo = (targetDatastore, sourceDatastores) => {
-  const { total_space, free_space } = targetDatastore;
-  const availableSpace = free_space - totalUsedSpace(sourceDatastores);
-
-  return sprintf(
-    __('%s (%s total, %s avail)'),
-    targetDatastore.name,
-    numeral(total_space).format('0.00b'),
-    numeral(availableSpace).format('0.00b')
-  );
-};
-
-export const negativeAvailableSpace = (targetDatastore, sourceDatastores) => {
-  const { free_space } = targetDatastore;
-  const availableSpace = free_space - totalUsedSpace(sourceDatastores);
-
-  if (numeral(availableSpace).format('0.00b') < 0) {
-    return true;
-  }
-  return false;
-};
+export const targetDatastoreTreeViewInfo = targetDatastore => targetDatastore.name;
 
 export const errorMessage = __(
   'The size of the selected source datastores exceeds the available space in the target datastore'

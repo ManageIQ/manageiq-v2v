@@ -9,13 +9,7 @@ import DualPaneMapperListItem from '../../../DualPaneMapper/DualPaneMapperListIt
 import MappingWizardTreeView from '../../../MappingWizardTreeView/MappingWizardTreeView';
 
 import { sourceDatastoreFilter } from '../../MappingWizardDatastoresStepSelectors';
-import {
-  targetDatastoreTreeViewInfo,
-  sourceDatastoreInfo,
-  targetDatastoreInfo,
-  updateMappings,
-  negativeAvailableSpace
-} from './helpers';
+import { targetDatastoreTreeViewInfo, sourceDatastoreInfo, targetDatastoreInfo, updateMappings } from './helpers';
 
 class DatastoresStepForm extends React.Component {
   state = {
@@ -83,9 +77,6 @@ class DatastoresStepForm extends React.Component {
                   prevState.selectedTargetDatastore,
                   prevState.selectedSourceDatastores
                 ),
-                icon: negativeAvailableSpace(prevState.selectedTargetDatastore, prevState.selectedSourceDatastores)
-                  ? 'pficon-warning-triangle-o'
-                  : 'fa fa-folder',
                 selectable: true,
                 selected: false,
                 state: {
@@ -119,9 +110,6 @@ class DatastoresStepForm extends React.Component {
                         mapping,
                         mapping.nodes.concat(prevState.selectedSourceDatastores)
                       ),
-                      icon: negativeAvailableSpace(mapping, mapping.nodes.concat(prevState.selectedSourceDatastores))
-                        ? 'pficon-warning-triangle-o'
-                        : 'fa fa-folder',
                       nodes: mapping.nodes.concat(
                         prevState.selectedSourceDatastores.map(datastore => ({
                           ...datastore,
@@ -146,9 +134,6 @@ class DatastoresStepForm extends React.Component {
                   prevState.selectedTargetDatastore,
                   prevState.selectedSourceDatastores
                 ),
-                icon: negativeAvailableSpace(prevState.selectedTargetDatastore, prevState.selectedSourceDatastores)
-                  ? 'pficon-warning-triangle-o'
-                  : 'fa fa-folder',
                 selectable: true,
                 selected: false,
                 state: {
