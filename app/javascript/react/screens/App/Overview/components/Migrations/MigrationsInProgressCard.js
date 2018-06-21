@@ -131,7 +131,7 @@ const MigrationsInProgressCard = ({
     if (max > 0) {
       return (
         <Tooltip id={id}>
-          {sprintf(__('%s%% Remaining'), Math.round((max - now) / max * 100))}
+          {sprintf(__('%s%% Remaining'), Math.round(((max - now) / max) * 100))}
         </Tooltip>
       );
     }
@@ -141,7 +141,7 @@ const MigrationsInProgressCard = ({
     if (max > 0) {
       return (
         <Tooltip id={id}>
-          {sprintf(__('%s%% Complete'), Math.round(now / max * 100))}
+          {sprintf(__('%s%% Complete'), Math.round((now / max) * 100))}
         </Tooltip>
       );
     }

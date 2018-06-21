@@ -14,6 +14,7 @@ const mapStateToProps = ({ planWizardVMStep, form }, ownProps) => ({
     form.planWizardGeneralStep.values.infrastructure_mapping
 });
 
-export default connect(mapStateToProps, PlanWizardVMStepActions)(
-  PlanWizardVMStep
-);
+export default connect(
+  mapStateToProps,
+  PlanWizardVMStepActions
+)(PlanWizardVMStep);

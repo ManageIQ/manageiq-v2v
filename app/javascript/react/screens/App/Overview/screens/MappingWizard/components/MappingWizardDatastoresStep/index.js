@@ -22,6 +22,8 @@ const actions = {
 const mergeProps = (stateProps, dispatchProps, ownProps) =>
   Object.assign(stateProps, ownProps.data, dispatchProps);
 
-export default connect(mapStateToProps, actions, mergeProps)(
-  MappingWizardDatastoresStep
-);
+export default connect(
+  mapStateToProps,
+  actions,
+  mergeProps
+)(MappingWizardDatastoresStep);
