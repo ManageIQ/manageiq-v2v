@@ -11,8 +11,8 @@ import MappingWizardTreeView from '../../../MappingWizardTreeView/MappingWizardT
 import {
   sourceNetworksFilter,
   clustersMappingWithTreeViewAttrs,
+  targetNetworkWithTreeViewAttrs,
   networkGroupingForRep,
-  targetNetworkGroupingForRep,
   mappingsForTreeView,
   mappingWithTargetNetworkRemoved,
   mappingWithSourceNetworkRemoved,
@@ -70,8 +70,7 @@ class NetworksStepForm extends React.Component {
       input: { value: networksStepMappings, onChange },
       selectedCluster,
       selectedClusterMapping,
-      groupedSourceNetworks,
-      groupedTargetNetworks
+      groupedSourceNetworks
     } = this.props;
 
     const { selectedTargetNetwork, selectedSourceNetworks } = this.state;
@@ -91,30 +90,26 @@ class NetworksStepForm extends React.Component {
     if (networksStepMappings.length === 0 || noMappingForTargetCluster) {
       // ADD A NETWORKS STEP MAPPING
       //   targetCluster
-      //   -- selectedTargetNetwork (switch 1)
+      //   -- selectedTargetNetwork
       //   ----  [...network groupings for selected source networks]
-      //   -- selectedTargetNetwork (switch 2)
-      //   ----  [...network groupings for selected source networks]
-      //   ...
       const networksStepMappingToAdd = {
         ...clustersMappingWithTreeViewAttrs(selectedClusterMapping),
-        nodes: targetNetworkGroupingForRep(
-          selectedTargetNetwork,
-          groupedTargetNetworks
-        ).map(targetNetwork => ({
-          ...targetNetwork,
-          nodes: selectedSourceNetworks.reduce(
-            (sourceNetworks, sourceNetworkGroupRep) => [
-              ...sourceNetworks,
-              ...networkGroupingForRep(
-                sourceNetworkGroupRep,
-                groupedSourceNetworks,
-                selectedCluster
-              )
-            ],
-            []
-          )
-        }))
+        nodes: [
+          {
+            ...targetNetworkWithTreeViewAttrs(selectedTargetNetwork),
+            nodes: selectedSourceNetworks.reduce(
+              (sourceNetworks, sourceNetworkGroupRep) => [
+                ...sourceNetworks,
+                ...networkGroupingForRep(
+                  sourceNetworkGroupRep,
+                  groupedSourceNetworks,
+                  selectedCluster
+                )
+              ],
+              []
+            )
+          }
+        ]
       };
       onChange([...networksStepMappings, networksStepMappingToAdd]);
     } else {
@@ -127,18 +122,13 @@ class NetworksStepForm extends React.Component {
           } else if (addingToExistingMapping) {
             // ADD TO EXISTING NETWORKS MAPPING
             //   matchingTargetCluster
-            //   -- selectedTargetNetwork (switch 1)
+            //   -- selectedTargetNetwork
             //   ---- [...alreadyMappedSourceNetworks, ...network groupings for selected source networks]
-            //   -- selectedTargetNetwork (switch 2)
-            //   ---- [...alreadyMappedSourceNetworks, ...network groupings for selected source networks]
-            //   ...
             return {
               ...targetClusterWithNetworkMappings,
               nodes: targetClusterWithNetworkMappings.nodes.map(
                 networkMapping => {
-                  if (
-                    networkMapping.uid_ems === selectedTargetNetwork.uid_ems
-                  ) {
+                  if (networkMapping.id === selectedTargetNetwork.id) {
                     return {
                       ...networkMapping,
                       nodes: [
@@ -165,20 +155,14 @@ class NetworksStepForm extends React.Component {
           // ADD TO EXISTING NETWORKS STEP MAPPING
           //   matchingTargetCluster
           //   -- existingNetworkMapping(s)
-          //   -- selectedTargetNetwork (switch 1)
+          //   -- selectedTargetNetwork
           //   ---- [...network groupings for selected source networks]
-          //   -- selectedTargetNetwork (switch 2)
-          //   ---- [...network groupings for selected source networks]
-          //   ...
           return {
             ...targetClusterWithNetworkMappings,
             nodes: [
               ...targetClusterWithNetworkMappings.nodes,
-              ...targetNetworkGroupingForRep(
-                selectedTargetNetwork,
-                groupedTargetNetworks
-              ).map(targetNetwork => ({
-                ...targetNetwork,
+              {
+                ...targetNetworkWithTreeViewAttrs(selectedTargetNetwork),
                 nodes: selectedSourceNetworks.reduce(
                   (sourceNetworks, networkGroupRep) => [
                     ...sourceNetworks,
@@ -190,7 +174,7 @@ class NetworksStepForm extends React.Component {
                   ],
                   []
                 )
-              }))
+              }
             ]
           };
         }
