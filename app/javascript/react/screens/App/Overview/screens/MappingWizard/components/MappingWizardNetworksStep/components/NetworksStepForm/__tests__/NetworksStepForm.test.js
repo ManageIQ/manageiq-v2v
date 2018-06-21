@@ -41,7 +41,7 @@ describe('#addNetworkMapping', () => {
             {...props}
             input={input}
             groupedSourceNetworks={groupByUidEms(networkGrouping)}
-            targetNetworks={[targetNetworkToMap]}
+            groupedTargetNetworks={groupByUidEms([targetNetworkToMap])}
           />
         );
         const [networkGroupRep] = networkGrouping;
@@ -74,7 +74,7 @@ describe('#addNetworkMapping', () => {
       });
 
       test('and there already exists a mapping for the target cluster', () => {
-        const [mappedTargetNetwork, targetNetworkToMap] = targetNetworks;
+        const [mappedTargetNetwork, , targetNetworkToMap] = targetNetworks;
         const [, , mappedSourceNetwork] = sourceNetworks;
         const srcNetworks = [...networkGrouping, mappedSourceNetwork];
         const groupedNetworks = groupByUidEms(srcNetworks);
@@ -100,7 +100,7 @@ describe('#addNetworkMapping', () => {
             {...props}
             input={input}
             groupedSourceNetworks={groupByUidEms(srcNetworks)}
-            targetNetworks={[mappedTargetNetwork, targetNetworkToMap]}
+            groupedTargetNetworks={groupByUidEms(targetNetworks)}
           />
         );
         const [networkGroupRep] = networkGrouping;
@@ -162,7 +162,7 @@ describe('#addNetworkMapping', () => {
           {...props}
           input={input}
           groupedSourceNetworks={groupByUidEms(srcNetworks)}
-          targetNetworks={[mappedTargetNetwork]}
+          groupedTargetNetworks={groupByUidEms([mappedTargetNetwork])}
         />
       );
       const [networkGroupRep] = networkGrouping;
@@ -207,10 +207,14 @@ describe('#removeNode', () => {
     ...sourceNetworkGroupOne,
     ...sourceNetworkGroupTwo
   ]);
+  const groupedTargetNetworks = groupByUidEms([
+    targetNetworkOne,
+    targetNetworkTwo
+  ]);
   props = {
     ...props,
     groupedSourceNetworks,
-    targetNetworks
+    groupedTargetNetworks
   };
   describe('when removing a target network', () => {
     const nodeToRemove = {

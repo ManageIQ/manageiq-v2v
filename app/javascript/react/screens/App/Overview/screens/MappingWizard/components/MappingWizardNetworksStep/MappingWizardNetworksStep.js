@@ -96,7 +96,7 @@ class MappingWizardNetworksStep extends React.Component {
       isFetchingSourceNetworks,
       isFetchingTargetNetworks,
       groupedSourceNetworks,
-      targetNetworks,
+      groupedTargetNetworks,
       form
     } = this.props;
 
@@ -126,7 +126,7 @@ class MappingWizardNetworksStep extends React.Component {
           name="networksMappings"
           component={NetworksStepForm}
           groupedSourceNetworks={groupedSourceNetworks}
-          targetNetworks={targetNetworks}
+          groupedTargetNetworks={groupedTargetNetworks}
           selectedCluster={selectedCluster}
           selectedClusterMapping={selectedClusterMapping}
           isFetchingSourceNetworks={isFetchingSourceNetworks}
@@ -143,7 +143,6 @@ MappingWizardNetworksStep.propTypes = {
   fetchNetworksUrl: PropTypes.string,
   fetchSourceNetworksAction: PropTypes.func,
   fetchTargetNetworksAction: PropTypes.func,
-  targetNetworks: PropTypes.arrayOf(PropTypes.object),
   isFetchingSourceNetworks: PropTypes.bool,
   isRejectedSourceNetworks: PropTypes.bool,
   isFetchingTargetNetworks: PropTypes.bool,
@@ -151,14 +150,14 @@ MappingWizardNetworksStep.propTypes = {
   form: PropTypes.string,
   pristine: PropTypes.bool,
   showAlertAction: PropTypes.func,
-  groupedSourceNetworks: PropTypes.object
+  groupedSourceNetworks: PropTypes.object,
+  groupedTargetNetworks: PropTypes.object
 };
 MappingWizardNetworksStep.defaultProps = {
   clusterMappings: [],
   fetchNetworksUrl: '',
   fetchSourceNetworksAction: noop,
   fetchTargetNetworksAction: noop,
-  targetNetworks: [],
   isFetchingSourceNetworks: false,
   isRejectedSourceNetworks: false,
   isFetchingTargetNetworks: false,

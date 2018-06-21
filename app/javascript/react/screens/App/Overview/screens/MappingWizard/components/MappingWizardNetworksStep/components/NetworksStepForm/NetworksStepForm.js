@@ -15,7 +15,8 @@ import {
   networkGroupingForRep,
   mappingsForTreeView,
   mappingWithTargetNetworkRemoved,
-  mappingWithSourceNetworkRemoved
+  mappingWithSourceNetworkRemoved,
+  getRepresentatives
 } from './helpers';
 
 class NetworksStepForm extends React.Component {
@@ -339,7 +340,7 @@ class NetworksStepForm extends React.Component {
   render() {
     const {
       groupedSourceNetworks,
-      targetNetworks,
+      groupedTargetNetworks,
       isFetchingSourceNetworks,
       isFetchingTargetNetworks,
       input,
@@ -409,8 +410,8 @@ class NetworksStepForm extends React.Component {
             listTitle={__('Target Networks')}
             loading={isFetchingTargetNetworks}
           >
-            {targetNetworks &&
-              targetNetworks.map(targetNetwork => (
+            {groupedTargetNetworks &&
+              getRepresentatives(groupedTargetNetworks).map(targetNetwork => (
                 <DualPaneMapperListItem
                   item={targetNetwork}
                   text={`${targetNetwork.providerName} \\ ${
@@ -419,7 +420,7 @@ class NetworksStepForm extends React.Component {
                   key={targetNetwork.id}
                   selected={
                     selectedTargetNetwork &&
-                    selectedTargetNetwork.id === targetNetwork.id
+                    selectedTargetNetwork.uid_ems === targetNetwork.uid_ems
                   }
                   handleClick={this.selectTargetNetwork}
                   handleKeyPress={this.selectTargetNetwork}
@@ -442,7 +443,7 @@ class NetworksStepForm extends React.Component {
 NetworksStepForm.propTypes = {
   input: PropTypes.object,
   groupedSourceNetworks: PropTypes.object,
-  targetNetworks: PropTypes.array,
+  groupedTargetNetworks: PropTypes.object,
   isFetchingSourceNetworks: PropTypes.bool,
   isFetchingTargetNetworks: PropTypes.bool,
   selectedCluster: PropTypes.object,

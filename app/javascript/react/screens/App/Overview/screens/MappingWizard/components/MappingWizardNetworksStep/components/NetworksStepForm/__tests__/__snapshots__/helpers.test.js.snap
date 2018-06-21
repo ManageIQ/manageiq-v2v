@@ -87,9 +87,9 @@ Object {
     },
   ],
   "parent_id": null,
-  "switch_id": "10000000000008",
+  "switch_id": "10000000000000",
   "tag": null,
-  "uid_ems": "00000000-0000-0000-0000-000000000009",
+  "uid_ems": "00000000-0000-0000-0000-000000000000",
   "updated_on": "2017-06-01T04:24:18Z",
 }
 `;
@@ -182,9 +182,9 @@ Object {
     },
   ],
   "parent_id": null,
-  "switch_id": "10000000000008",
+  "switch_id": "10000000000000",
   "tag": null,
-  "uid_ems": "00000000-0000-0000-0000-000000000009",
+  "uid_ems": "00000000-0000-0000-0000-000000000000",
   "updated_on": "2017-06-01T04:24:18Z",
 }
 `;
@@ -220,7 +220,7 @@ Object {
       "href": "http://localhost:3000/api/lans/10000000000020",
       "id": "1-2",
       "mac_changes": null,
-      "name": "RHV Cluster 1 - ovirtmgmt2",
+      "name": "RHV Cluster 1 - ovirtmgmt1",
       "nodes": Array [
         Object {
           "allow_promiscuous": null,
@@ -241,9 +241,9 @@ Object {
         },
       ],
       "parent_id": null,
-      "switch_id": "10000000000015",
+      "switch_id": "10000000000001",
       "tag": null,
-      "uid_ems": "00000000-0000-0000-0000-000000000009",
+      "uid_ems": "00000000-0000-0000-0000-000000000000",
       "updated_on": "2017-06-01T04:24:19Z",
     },
   ],
@@ -306,9 +306,9 @@ Array [
           },
         ],
         "parent_id": null,
-        "switch_id": "10000000000008",
+        "switch_id": "10000000000000",
         "tag": null,
-        "uid_ems": "00000000-0000-0000-0000-000000000009",
+        "uid_ems": "00000000-0000-0000-0000-000000000000",
         "updated_on": "2017-06-01T04:24:18Z",
       },
     ],
@@ -450,10 +450,10 @@ Object {
   "state": Object {
     "expanded": true,
   },
-  "switch_id": "10000000000008",
+  "switch_id": "10000000000000",
   "tag": null,
   "text": "RHV Cluster 1 - ovirtmgmt1",
-  "uid_ems": "00000000-0000-0000-0000-000000000009",
+  "uid_ems": "00000000-0000-0000-0000-000000000000",
   "updated_on": "2017-06-01T04:24:18Z",
 }
 `;

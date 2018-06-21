@@ -81,9 +81,20 @@ export const dedupeMappedSourceNetworks = networksMapping => {
   };
 };
 
+export const dedupeMappedTargetNetworks = networksStepMapping => {
+  const { nodes: networksMappings, ...targetCluster } = networksStepMapping;
+  const groupedMappings = groupByUidEms(networksMappings);
+  return {
+    ...targetCluster,
+    nodes: getRepresentatives(groupedMappings)
+  };
+};
+
 export const mappingsForTreeView = mappings =>
   mappings.reduce((updatedMappings, networksStepMapping) => {
-    const { nodes: networksMappings } = networksStepMapping;
+    const { nodes: networksMappings } = dedupeMappedTargetNetworks(
+      networksStepMapping
+    );
     const updatedNetworksMappings = networksMappings.reduce(
       (dedupedMappings, networksMapping) => [
         ...dedupedMappings,
