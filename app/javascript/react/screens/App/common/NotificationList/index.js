@@ -13,6 +13,8 @@ const mapStateToProps = ({ notifications }, ownProps) => ({
 const mergeProps = (stateProps, dispatchProps, ownProps) =>
   Object.assign(stateProps, ownProps.data, dispatchProps);
 
-export default connect(mapStateToProps, NotificationListActions, mergeProps)(
-  NotificationList
-);
+export default connect(
+  mapStateToProps,
+  NotificationListActions,
+  mergeProps
+)(NotificationList);
