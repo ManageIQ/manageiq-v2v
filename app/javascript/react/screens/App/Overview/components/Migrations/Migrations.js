@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Immutable from 'seamless-immutable';
 import { noop, DropdownButton, Grid, Icon, MenuItem } from 'patternfly-react';
 import MigrationsInProgressCards from './MigrationsInProgressCards';
 import MigrationsNotStartedList from './MigrationsNotStartedList';
@@ -101,10 +102,10 @@ const Migrations = ({
         )}
       </Grid.Col>
       {plansExist && (
-        <React.Fragment>
+        <div className="migrations">
           {activeFilter === MIGRATIONS_FILTERS.notStarted && (
             <MigrationsNotStartedList
-              notStartedPlans={notStartedPlans}
+              notStartedPlans={Immutable.asMutable(notStartedPlans, { deep: true })}
               migrateClick={createTransformationPlanRequestClick}
               loading={isCreatingTransformationPlanRequest}
               redirectTo={redirectTo}
@@ -129,7 +130,7 @@ const Migrations = ({
           )}
           {activeFilter === MIGRATIONS_FILTERS.completed && (
             <MigrationsCompletedList
-              finishedTransformationPlans={finishedTransformationPlans}
+              finishedTransformationPlans={Immutable.asMutable(finishedTransformationPlans, { deep: true })}
               allRequestsWithTasks={allRequestsWithTasks}
               retryClick={createTransformationPlanRequestClick}
               loading={isCreatingTransformationPlanRequest}
@@ -152,7 +153,7 @@ const Migrations = ({
               archived
             />
           )}
-        </React.Fragment>
+        </div>
       )}
     </React.Fragment>
   );
