@@ -6,6 +6,7 @@ import {
   sourceNetworkWithTreeViewAttrs,
   networkGroupingForRep,
   dedupeMappedSourceNetworks,
+  dedupeMappedTargetNetworks,
   mappingsForTreeView,
   mappingWithTargetNetworkRemoved,
   mappingWithSourceNetworkRemoved
@@ -81,6 +82,16 @@ test("dedupeMappedSourceNetworks reduces a network mapping's source networks to 
   };
 
   expect(dedupeMappedSourceNetworks(networksMapping)).toMatchSnapshot();
+});
+
+test("dedupeMappedTargetNetworks reduces a networks step mapping's nodes to representatives of each target network grouping", () => {
+  const [targetNetworkSwitchOne, targetNetworkSwitchTwo] = targetNetworks;
+  const networksStepMapping = {
+    ...targetCluster,
+    nodes: [targetNetworkSwitchOne, targetNetworkSwitchTwo]
+  };
+
+  expect(dedupeMappedTargetNetworks(networksStepMapping).nodes).toHaveLength(1);
 });
 
 test('mappingsForTreeView reduces source networks to representatives for all networks step mappings', () => {
