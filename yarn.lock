@@ -1799,7 +1799,7 @@ class-utils@^0.3.5:
     isobject "^3.0.0"
     static-extend "^0.1.1"
 
-classnames@^2.2.5:
+classnames@^2.2.0, classnames@^2.2.5:
   version "2.2.6"
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
 
@@ -3083,7 +3083,7 @@ history@^4.7.2:
     value-equal "^0.4.0"
     warning "^3.0.0"
 
-hoist-non-react-statics@^2.3.1, hoist-non-react-statics@^2.5.0, hoist-non-react-statics@^2.5.4:
+hoist-non-react-statics@^2.1.1, hoist-non-react-statics@^2.3.1, hoist-non-react-statics@^2.5.0, hoist-non-react-statics@^2.5.4:
   version "2.5.5"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.5.5.tgz#c5903cf409c0dfd908f388e619d86b9c1174cb47"
 
@@ -4134,7 +4134,7 @@ lodash.unescape@4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/lodash.unescape/-/lodash.unescape-4.0.1.tgz#bf2249886ce514cda112fae9218cdc065211fc9c"
 
-lodash@^4.13.1, lodash@^4.15.0, lodash@^4.17.10, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0:
+lodash@^4.13.1, lodash@^4.15.0, lodash@^4.17.10, lodash@^4.17.2, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0:
   version "4.17.10"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.10.tgz#1b7793cf7259ea38fb3661d4d38b3260af8ae4e7"
 
@@ -4823,28 +4823,30 @@ patternfly-bootstrap-treeview@~2.1.0:
     bootstrap "3.3.x"
     jquery ">= 2.1.x"
 
-patternfly-react@2.3.4:
-  version "2.3.4"
-  resolved "https://registry.yarnpkg.com/patternfly-react/-/patternfly-react-2.3.4.tgz#6fd9697617b5cbb4f0400ce5eef1a2fce2b01f20"
+patternfly-react@2.10.1:
+  version "2.10.1"
+  resolved "https://registry.yarnpkg.com/patternfly-react/-/patternfly-react-2.10.1.tgz#eb1cfd0e32a4b956d8ac238ec12415db9b63625a"
   dependencies:
     bootstrap-slider-without-jquery "^10.0.0"
     breakjs "^1.0.0"
     classnames "^2.2.5"
     css-element-queries "^1.0.1"
-    patternfly "^3.42.0"
+    patternfly "^3.51.0"
     react-bootstrap "^0.32.1"
     react-bootstrap-switch "^15.5.3"
+    react-bootstrap-typeahead "^3.1.3"
     react-c3js "^0.1.20"
+    react-click-outside "^3.0.1"
     react-fontawesome "^1.6.1"
-    reactabular-table "^8.13.0"
+    reactabular-table "^8.14.0"
     recompose "^0.26.0"
   optionalDependencies:
     sortabular "^1.5.1"
     table-resolver "^3.2.0"
 
-patternfly@^3.42.0:
-  version "3.51.0"
-  resolved "https://registry.yarnpkg.com/patternfly/-/patternfly-3.51.0.tgz#210deac861e0734927fb5d61d7353a5a40d9c0ff"
+patternfly@^3.51.0:
+  version "3.51.2"
+  resolved "https://registry.yarnpkg.com/patternfly/-/patternfly-3.51.2.tgz#6a2cf76377495ebea8f1f17329bcf87e07f2f61a"
   dependencies:
     bootstrap "~3.3.7"
     font-awesome "^4.7.0"
@@ -4914,6 +4916,10 @@ pluralize@^7.0.0:
 pn@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/pn/-/pn-1.1.0.tgz#e2f4cef0e219f463c179ab37463e4e1ecdccbafb"
+
+popper.js@^1.14.1:
+  version "1.14.3"
+  resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.14.3.tgz#1438f98d046acf7b4d78cd502bf418ac64d4f095"
 
 posix-character-classes@^0.1.0:
   version "0.1.1"
@@ -5059,7 +5065,7 @@ prop-types-extra@^1.0.1:
     react-is "^16.3.2"
     warning "^3.0.0"
 
-prop-types@^15.5.10, prop-types@^15.5.6, prop-types@^15.5.7, prop-types@^15.6.0, prop-types@^15.6.1:
+prop-types@^15.5.10, prop-types@^15.5.6, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1:
   version "15.6.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.2.tgz#05d5ca77b4453e985d60fc7ff8c859094a497102"
   dependencies:
@@ -5128,6 +5134,21 @@ react-bootstrap-switch@^15.5.3:
   version "15.5.3"
   resolved "https://registry.yarnpkg.com/react-bootstrap-switch/-/react-bootstrap-switch-15.5.3.tgz#97287791d4ec0d1892d142542e7e5248002b1251"
 
+react-bootstrap-typeahead@^3.1.3:
+  version "3.1.4"
+  resolved "https://registry.yarnpkg.com/react-bootstrap-typeahead/-/react-bootstrap-typeahead-3.1.4.tgz#970106959e0491f29fdeeb5dd7f51ca87b83c2e2"
+  dependencies:
+    classnames "^2.2.0"
+    escape-string-regexp "^1.0.5"
+    invariant "^2.2.1"
+    lodash "^4.17.2"
+    prop-types "^15.5.8"
+    prop-types-extra "^1.0.1"
+    react-onclickoutside "^6.1.1"
+    react-overlays "^0.8.1"
+    react-popper "^0.10.4"
+    warning "^3.0.0"
+
 react-bootstrap@^0.32.1:
   version "0.32.1"
   resolved "https://registry.yarnpkg.com/react-bootstrap/-/react-bootstrap-0.32.1.tgz#60624c1b48a39d773ef6cce6421a4f33ecc166bb"
@@ -5150,6 +5171,12 @@ react-c3js@^0.1.20:
   resolved "https://registry.yarnpkg.com/react-c3js/-/react-c3js-0.1.20.tgz#561bb211bd691be42af39726d11bab42d09f3e7b"
   dependencies:
     c3 "^0.4.11"
+
+react-click-outside@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/react-click-outside/-/react-click-outside-3.0.1.tgz#6e77e84d2f17afaaac26dbad743cbbf909f5e24c"
+  dependencies:
+    hoist-non-react-statics "^2.1.1"
 
 react-dom@^16.3.1:
   version "16.4.1"
@@ -5196,7 +5223,11 @@ react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
 
-react-overlays@^0.8.0:
+react-onclickoutside@^6.1.1:
+  version "6.7.1"
+  resolved "https://registry.yarnpkg.com/react-onclickoutside/-/react-onclickoutside-6.7.1.tgz#6a5b5b8b4eae6b776259712c89c8a2b36b17be93"
+
+react-overlays@^0.8.0, react-overlays@^0.8.1:
   version "0.8.3"
   resolved "https://registry.yarnpkg.com/react-overlays/-/react-overlays-0.8.3.tgz#fad65eea5b24301cca192a169f5dddb0b20d3ac5"
   dependencies:
@@ -5206,6 +5237,13 @@ react-overlays@^0.8.0:
     prop-types-extra "^1.0.1"
     react-transition-group "^2.2.0"
     warning "^3.0.0"
+
+react-popper@^0.10.4:
+  version "0.10.4"
+  resolved "https://registry.yarnpkg.com/react-popper/-/react-popper-0.10.4.tgz#af2a415ea22291edd504678d7afda8a6ee3295aa"
+  dependencies:
+    popper.js "^1.14.1"
+    prop-types "^15.6.1"
 
 react-prop-types@^0.4.0:
   version "0.4.0"
@@ -5282,7 +5320,7 @@ react@^16.3.1:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
 
-reactabular-table@^8.13.0:
+reactabular-table@^8.14.0:
   version "8.14.0"
   resolved "https://registry.yarnpkg.com/reactabular-table/-/reactabular-table-8.14.0.tgz#2ce05de47d499db91678fa9518505ea509bf3d7f"
   dependencies:
