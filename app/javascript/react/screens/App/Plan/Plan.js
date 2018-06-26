@@ -94,6 +94,7 @@ class Plan extends React.Component {
 
   render() {
     const {
+      plan,
       planName,
       planArchived,
       planRequestFailed,
@@ -104,7 +105,13 @@ class Plan extends React.Component {
       isQueryingVms,
       isRejectedVms,
       downloadLogAction,
-      downloadLogInProgressTaskIds
+      downloadLogInProgressTaskIds,
+      fetchAnsiblePlaybookTemplateAction,
+      fetchPlanUrl,
+      ansiblePlaybookTemplate,
+      fetchOrchestrationStackUrl,
+      fetchOrchestrationStackAction,
+      orchestrationStack
     } = this.props;
 
     const {
@@ -150,10 +157,17 @@ class Plan extends React.Component {
             !isRejectedPlanRequest &&
             planRequestTasksMutable.length > 0 && (
               <PlanRequestDetailList
+                plan={plan}
                 planFinished={planFinished}
                 planRequestTasks={planRequestTasksMutable}
                 downloadLogAction={downloadLogAction}
                 downloadLogInProgressTaskIds={downloadLogInProgressTaskIds}
+                fetchAnsiblePlaybookTemplateAction={fetchAnsiblePlaybookTemplateAction}
+                fetchAnsiblePlaybookTemplateUrl={fetchPlanUrl}
+                ansiblePlaybookTemplate={ansiblePlaybookTemplate}
+                fetchOrchestrationStackUrl={fetchOrchestrationStackUrl}
+                fetchOrchestrationStackAction={fetchOrchestrationStackAction}
+                orchestrationStack={orchestrationStack}
               />
             )}
           {!planNotStarted &&
@@ -212,7 +226,13 @@ Plan.propTypes = {
   isRejectedVms: PropTypes.bool,
   resetPlanStateAction: PropTypes.func,
   downloadLogAction: PropTypes.func,
-  downloadLogInProgressTaskIds: PropTypes.array
+  downloadLogInProgressTaskIds: PropTypes.array,
+  plan: PropTypes.object,
+  fetchAnsiblePlaybookTemplateAction: PropTypes.func,
+  ansiblePlaybookTemplate: PropTypes.object,
+  fetchOrchestrationStackUrl: PropTypes.string,
+  fetchOrchestrationStackAction: PropTypes.func,
+  orchestrationStack: PropTypes.object
 };
 Plan.defaultProps = {
   planName: '',

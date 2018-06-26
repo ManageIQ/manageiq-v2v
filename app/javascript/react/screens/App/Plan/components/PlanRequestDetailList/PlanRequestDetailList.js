@@ -15,7 +15,9 @@ import {
   Sort,
   Tooltip,
   UtilizationBar,
-  PAGINATION_VIEW
+  PAGINATION_VIEW,
+  DropdownButton,
+  MenuItem
 } from 'patternfly-react';
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
 import listFilter from '../listFilter';
@@ -232,6 +234,41 @@ class PlanRequestDetailList extends React.Component {
     );
   };
 
+  onSelect = (eventKey, task) => {
+    const { downloadLogAction, fetchOrchestrationStackUrl, fetchOrchestrationStackAction } = this.props;
+    if (eventKey === 'migration') {
+      downloadLogAction(task);
+    } else {
+      fetchOrchestrationStackAction(fetchOrchestrationStackUrl, eventKey, task);
+    }
+  };
+
+  overlayTriggerClick = task => {
+    if (task.options.playbooks) {
+      const playbookStatuses = task.options.playbooks;
+      let runningPlaybook = null;
+
+      for (const scheduleType in playbookStatuses) {
+        if (playbookStatuses[scheduleType].job_state === 'active') {
+          runningPlaybook = scheduleType;
+        }
+      }
+
+      if (runningPlaybook) {
+        const {
+          plan: {
+            options: { config_info }
+          },
+          fetchAnsiblePlaybookTemplateUrl,
+          fetchAnsiblePlaybookTemplateAction
+        } = this.props;
+        const configInfoKey = `${runningPlaybook}_service_id`;
+
+        fetchAnsiblePlaybookTemplateAction(fetchAnsiblePlaybookTemplateUrl, config_info[configInfoKey]);
+      }
+    }
+  };
+
   render() {
     const {
       activeFilters,
@@ -245,7 +282,7 @@ class PlanRequestDetailList extends React.Component {
       pageChangeValue
     } = this.state;
 
-    const { downloadLogAction, downloadLogInProgressTaskIds } = this.props;
+    const { downloadLogInProgressTaskIds, ansiblePlaybookTemplate } = this.props;
 
     const paginatedSortedFiltersTasks = this.filterSortPaginatePlanRequestTasks();
 
@@ -344,10 +381,18 @@ class PlanRequestDetailList extends React.Component {
                       <b>{__('Started')}: </b>
                       {formatDateTime(task.startDateTime)}
                     </div>
-                    <div>
-                      <b>{__('Description')}: </b>
-                      {task.options.progress && task.options.progress.current_description}
-                    </div>
+                    {task.options.prePlaybookRunning || task.options.postPlaybookRunning ? (
+                      <div>
+                        <b>{__('Running playbook service')}: </b>
+                        {ansiblePlaybookTemplate.name}
+                      </div>
+                    ) : (
+                      <div>
+                        <b>{__('Description')}: </b>
+                        {task.options.progress &&
+                          V2V_MIGRATION_STATUS_MESSAGES[task.options.progress.current_description]}
+                      </div>
+                    )}
                     <div>
                       <b>{__('Conversion Host')}: </b>
                       {task.transformation_host_name}
@@ -384,7 +429,13 @@ class PlanRequestDetailList extends React.Component {
                         <span style={{ textTransform: 'capitalize' }}>{task.message}</span>
                         &nbsp;
                         {/* Todo: revisit FieldLevelHelp props in patternfly-react to support this */}
-                        <OverlayTrigger rootClose trigger="click" placement="left" overlay={popoverContent}>
+                        <OverlayTrigger
+                          rootClose
+                          trigger="click"
+                          onEnter={() => this.overlayTriggerClick(task)}
+                          placement="left"
+                          overlay={popoverContent}
+                        >
                           <Button bsStyle="link">
                             <Icon type="pf" name="info" />
                           </Button>
@@ -426,15 +477,20 @@ class PlanRequestDetailList extends React.Component {
                         <span id="downloadLogInProgress">{__('Download log in progress...')}</span>
                       </label>
                     ) : (
-                      <a
-                        href="#"
-                        onClick={e => {
-                          e.preventDefault();
-                          downloadLogAction(task);
-                        }}
+                      <DropdownButton
+                        id={`${task.id}-${task.descriptionPrefix}_download_log_dropdown`}
+                        title={__('Download Log')}
+                        pullRight
+                        onSelect={eventKey => this.onSelect(eventKey, task)}
                       >
-                        {__('Download Log')}
-                      </a>
+                        {(task.options.prePlaybookRunning || task.options.prePlaybookComplete) && (
+                          <MenuItem eventKey="preMigration">{__('Pre-migration log')}</MenuItem>
+                        )}
+                        <MenuItem eventKey="migration">{__('Migration log')}</MenuItem>
+                        {(task.options.postPlaybookRunning || task.options.postPlaybookComplete) && (
+                          <MenuItem eventKey="postMigration">{__('Post-migration log')}</MenuItem>
+                        )}
+                      </DropdownButton>
                     )
                   }
                   stacked
@@ -467,7 +523,13 @@ class PlanRequestDetailList extends React.Component {
 PlanRequestDetailList.propTypes = {
   planRequestTasks: PropTypes.array,
   downloadLogAction: PropTypes.func,
-  downloadLogInProgressTaskIds: PropTypes.array
+  downloadLogInProgressTaskIds: PropTypes.array,
+  plan: PropTypes.object,
+  fetchAnsiblePlaybookTemplateUrl: PropTypes.string,
+  fetchAnsiblePlaybookTemplateAction: PropTypes.func,
+  ansiblePlaybookTemplate: PropTypes.object,
+  fetchOrchestrationStackUrl: PropTypes.string,
+  fetchOrchestrationStackAction: PropTypes.func
 };
 
 export default PlanRequestDetailList;

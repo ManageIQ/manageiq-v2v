@@ -10,7 +10,11 @@ import {
   RESET_PLAN_STATE,
   FETCH_V2V_MIGRATION_TASK_LOG,
   DOWNLOAD_LOG_CLICKED,
-  DOWNLOAD_LOG_COMPLETED
+  DOWNLOAD_LOG_COMPLETED,
+  FETCH_V2V_ANSIBLE_PLAYBOOK_TEMPLATE,
+  V2V_MIGRATION_STATUS_MESSAGES,
+  STATUS_MESSAGE_KEYS,
+  FETCH_V2V_ORCHESTRATION_STACK
 } from './PlanConstants';
 
 export const initialState = Immutable({
@@ -28,7 +32,15 @@ export const initialState = Immutable({
   isQueryingVms: false,
   isRejectedVms: false,
   errorVms: null,
-  vms: []
+  vms: [],
+  isFetchingAnsiblePlaybookTemplate: false,
+  isRejectedAnsiblePlaybookTemplate: false,
+  errorAnsiblePlaybookTemplate: null,
+  ansiblePlaybookTemplate: {},
+  isFetchingOrchestrationStack: false,
+  isRejectedOrchestrationStack: false,
+  errorOrchestrationStack: null,
+  orchestrationStack: {}
 });
 
 const excludeDownloadDoneTaskId = (allDownloadLogInProgressTaskIds, taskId) =>
@@ -51,6 +63,18 @@ const processVMTasks = vmTasks => {
       status: task.status,
       options: {}
     };
+
+    if (task.options.playbooks) {
+      taskDetails.options.prePlaybookRunning =
+        task.options.playbooks.pre && task.options.playbooks.pre.job_state === 'active';
+      taskDetails.options.postPlaybookRunning =
+        task.options.playbooks.post && task.options.playbooks.post.job_state === 'active';
+      taskDetails.options.prePlaybookComplete =
+        task.options.playbooks.pre && task.options.playbooks.pre.job_state === 'finished';
+      taskDetails.options.postPlaybookComplete =
+        task.options.playbooks.post && task.options.playbooks.post.job_state === 'finished';
+      taskDetails.options.playbooks = task.options.playbooks;
+    }
 
     taskDetails.options.progress = task.options.progress;
     taskDetails.options.virtv2v_wrapper = task.options.virtv2v_wrapper;
@@ -184,6 +208,34 @@ export default (state = initialState, action) => {
         .set('isFetchingMigrationTaskLog', false)
         .set('isRejectedMigrationTaskLog', true)
         .set('errorMigrationTaskLog', action.payload);
+
+    case `${FETCH_V2V_ANSIBLE_PLAYBOOK_TEMPLATE}_PENDING`:
+      return state.set('isFetchingAnsiblePlaybookTemplate', true).set('isRejectedAnsiblePlaybookTemplate', false);
+    case `${FETCH_V2V_ANSIBLE_PLAYBOOK_TEMPLATE}_FULFILLED`:
+      return state
+        .set('ansiblePlaybookTemplate', action.payload.data)
+        .set('isFetchingAnsiblePlaybookTemplate', false)
+        .set('isRejectedAnsiblePlaybookTemplate', false)
+        .set('errorAnsiblePlaybookTemplate', null);
+    case `${FETCH_V2V_ANSIBLE_PLAYBOOK_TEMPLATE}_REJECTED`:
+      return state
+        .set('isFetchingAnsiblePlaybookTemplate', false)
+        .set('isRejectedAnsiblePlaybookTemplate', true)
+        .set('errorAnsiblePlaybookTemplate', action.payload);
+
+    case `${FETCH_V2V_ORCHESTRATION_STACK}_PENDING`:
+      return state.set('isFetchingOrchestrationStack', true).set('isRejectedOrchestrationStack', false);
+    case `${FETCH_V2V_ORCHESTRATION_STACK}_FULFILLED`:
+      return state
+        .set('orchestrationStack', action.payload.data)
+        .set('isFetchingOrchestrationStack', false)
+        .set('isRejectedOrchestrationStack', false)
+        .set('errorOrchestrationStack', null);
+    case `${FETCH_V2V_ORCHESTRATION_STACK}_REJECTED`:
+      return state
+        .set('isFetchingOrchestrationStack', false)
+        .set('isRejectedOrchestrationStack', true)
+        .set('errorOrchestrationStack', action.payload);
 
     case DOWNLOAD_LOG_CLICKED:
       return state.set(
