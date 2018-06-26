@@ -67,7 +67,9 @@ const processVMTasks = vmTasks => {
       options: {}
     };
 
-    if (task.options.playbooks) {
+    const hasPlaybookService = task.options.playbooks;
+
+    if (hasPlaybookService) {
       taskDetails.options.prePlaybookRunning =
         task.options.playbooks.pre && task.options.playbooks.pre.job_state === 'active';
       taskDetails.options.postPlaybookRunning =

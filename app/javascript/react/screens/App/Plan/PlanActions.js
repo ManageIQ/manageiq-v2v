@@ -53,6 +53,13 @@ const _getOrchestrationStackActionCreator = (url, playbookScheduleType, task) =>
             type: DOWNLOAD_LOG_COMPLETED,
             payload: task.id
           });
+          dispatch({
+            type: V2V_NOTIFICATION_ADD,
+            message: e.error.message,
+            notificationType: 'error',
+            persistent: true,
+            actionEnabled: false
+          });
           reject(e);
         })
     )

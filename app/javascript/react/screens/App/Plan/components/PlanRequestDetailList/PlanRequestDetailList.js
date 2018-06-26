@@ -247,7 +247,7 @@ class PlanRequestDetailList extends React.Component {
   overlayTriggerClick = task => {
     if (task.options.playbooks) {
       const playbookStatuses = task.options.playbooks;
-      let runningPlaybook = null;
+      let runningPlaybook;
 
       for (const scheduleType in playbookStatuses) {
         if (playbookStatuses[scheduleType].job_state === 'active') {
