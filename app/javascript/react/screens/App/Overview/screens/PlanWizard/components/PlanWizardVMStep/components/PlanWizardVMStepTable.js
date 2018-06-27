@@ -159,13 +159,7 @@ class PlanWizardVMStepTable extends React.Component {
                     <Button bsStyle="link">
                       <Icon
                         type="pf"
-                        name={
-                          rowData.valid
-                            ? 'ok'
-                            : rowData.warning
-                              ? 'warning-triangle-o'
-                              : 'error-circle-o'
-                        }
+                        name={rowData.valid ? 'ok' : rowData.warning ? 'warning-triangle-o' : 'error-circle-o'}
                       />
                     </Button>
                   </OverlayTrigger>
@@ -324,14 +318,9 @@ class PlanWizardVMStepTable extends React.Component {
 
     if (checked) {
       const selectableRows = currentRows.filter(r => !r.invalid && !r.conflict);
-      const updatedSelections = [
-        ...new Set([...selectableRows.map(r => r.id), ...selectedRows])
-      ];
+      const updatedSelections = [...new Set([...selectableRows.map(r => r.id), ...selectedRows])];
       const updatedRows = rows.map(
-        r =>
-          updatedSelections.indexOf(r.id) > -1
-            ? PlanWizardVMStepTable.selectRow(r)
-            : r
+        r => (updatedSelections.indexOf(r.id) > -1 ? PlanWizardVMStepTable.selectRow(r) : r)
       );
 
       input.onChange(updatedSelections);
@@ -343,14 +332,9 @@ class PlanWizardVMStepTable extends React.Component {
       });
     } else {
       const ids = currentRows.map(r => r.id);
-      const updatedSelections = selectedRows.filter(
-        r => !(ids.indexOf(r) > -1)
-      );
+      const updatedSelections = selectedRows.filter(r => !(ids.indexOf(r) > -1));
       const updatedRows = rows.map(
-        r =>
-          updatedSelections.indexOf(r.id) > -1
-            ? r
-            : PlanWizardVMStepTable.deselectRow(r)
+        r => (updatedSelections.indexOf(r.id) > -1 ? r : PlanWizardVMStepTable.deselectRow(r))
       );
 
       input.onChange(updatedSelections);
@@ -407,12 +391,7 @@ class PlanWizardVMStepTable extends React.Component {
   };
   setPage = value => {
     const page = Number(value);
-    if (
-      !Number.isNaN(value) &&
-      value !== '' &&
-      page > 0 &&
-      page <= this.totalPages()
-    ) {
+    if (!Number.isNaN(value) && value !== '' && page > 0 && page <= this.totalPages()) {
       const newPaginationState = Object.assign({}, this.state.pagination);
       newPaginationState.page = page;
       this.setState({ pagination: newPaginationState, pageChangeValue: page });
@@ -450,10 +429,7 @@ class PlanWizardVMStepTable extends React.Component {
     filterText += ': ';
     filterText += value;
 
-    const activeFilters = [
-      ...this.state.activeFilters,
-      { label: filterText, field, value }
-    ];
+    const activeFilters = [...this.state.activeFilters, { label: filterText, field, value }];
 
     this.setState({ activeFilters });
   };
@@ -467,10 +443,7 @@ class PlanWizardVMStepTable extends React.Component {
 
     const index = activeFilters.indexOf(filter);
     if (index > -1) {
-      const updated = [
-        ...activeFilters.slice(0, index),
-        ...activeFilters.slice(index + 1)
-      ];
+      const updated = [...activeFilters.slice(0, index), ...activeFilters.slice(index + 1)];
       this.setState({ activeFilters: updated });
     }
   };
@@ -546,17 +519,12 @@ class PlanWizardVMStepTable extends React.Component {
             activeFilters.length > 0 && (
               <Toolbar.Results>
                 <h5>
-                  {filteredRows.length}{' '}
-                  {filteredRows.length === 1 ? __('Result') : __('Results')}
+                  {filteredRows.length} {filteredRows.length === 1 ? __('Result') : __('Results')}
                 </h5>
                 <Filter.ActiveLabel>{__('Active Filters')}:</Filter.ActiveLabel>
                 <Filter.List>
                   {activeFilters.map((item, index) => (
-                    <Filter.Item
-                      key={index}
-                      onRemove={this.removeFilter}
-                      filterData={item}
-                    >
+                    <Filter.Item key={index} onRemove={this.removeFilter} filterData={item}>
                       {item.label}
                     </Filter.Item>
                   ))}
@@ -594,11 +562,7 @@ class PlanWizardVMStepTable extends React.Component {
           }}
         >
           <Table.Header headerRows={resolve.headerRows({ columns })} />
-          <Table.Body
-            rows={sortedPaginatedRows.rows || []}
-            rowKey="id"
-            onRow={this.onRow}
-          />
+          <Table.Body rows={sortedPaginatedRows.rows || []} rowKey="id" onRow={this.onRow} />
         </Table.PfProvider>
         <PaginationRow
           viewType={PAGINATION_VIEW.TABLE}

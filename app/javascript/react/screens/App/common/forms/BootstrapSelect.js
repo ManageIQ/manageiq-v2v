@@ -62,9 +62,7 @@ export class BootstrapSelect extends React.Component {
               </option>
             ))}
           </select>
-          {visited &&
-            !active &&
-            error && <Form.HelpBlock>{error}</Form.HelpBlock>}
+          {visited && !active && error && <Form.HelpBlock>{error}</Form.HelpBlock>}
         </Grid.Col>
       </FormGroup>
     );

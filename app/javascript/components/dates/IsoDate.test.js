@@ -13,16 +13,12 @@ describe('Date', () => {
   const IntlDate = i18nProviderWrapperFactory(now)(IsoDate);
 
   it('formats date', () => {
-    const wrapper = mount(
-      <IntlDate data={{ date, defaultValue: 'Default value' }} />
-    );
+    const wrapper = mount(<IntlDate data={{ date, defaultValue: 'Default value' }} />);
     expect(toJson(wrapper.find('IsoDate'))).toMatchSnapshot();
   });
 
   it('renders default value', () => {
-    const wrapper = mount(
-      <IntlDate data={{ date: null, defaultValue: 'Default value' }} />
-    );
+    const wrapper = mount(<IntlDate data={{ date: null, defaultValue: 'Default value' }} />);
 
     expect(toJson(wrapper.find('IsoDate'))).toMatchSnapshot();
   });

@@ -1,8 +1,5 @@
 import { reset } from 'redux-form';
-import {
-  HIDE_MAPPING_WIZARD,
-  MAPPING_WIZARD_EXITED
-} from '../../OverviewConstants';
+import { HIDE_MAPPING_WIZARD, MAPPING_WIZARD_EXITED } from '../../OverviewConstants';
 
 import {
   V2V_SET_TRANSFORMATIONS_BODY,

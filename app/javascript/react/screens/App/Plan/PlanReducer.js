@@ -32,13 +32,8 @@ export const initialState = Immutable({
 const excludeDownloadDoneTaskId = (allDownloadLogInProgressTaskIds, taskId) =>
   allDownloadLogInProgressTaskIds.filter(element => element !== taskId);
 
-const includeDownloadInProgressTaskId = (
-  allDownloadLogInProgressTaskIds,
-  taskId
-) =>
-  allDownloadLogInProgressTaskIds
-    ? allDownloadLogInProgressTaskIds.concat(taskId)
-    : [taskId];
+const includeDownloadInProgressTaskId = (allDownloadLogInProgressTaskIds, taskId) =>
+  allDownloadLogInProgressTaskIds ? allDownloadLogInProgressTaskIds.concat(taskId) : [taskId];
 
 const _formatPlanRequestDetails = data => {
   const tasks = [];
@@ -47,13 +42,10 @@ const _formatPlanRequestDetails = data => {
       const taskDetails = {
         id: task.id,
         message: task.message,
-        transformation_host_name:
-          task.options && task.options.transformation_host_name,
+        transformation_host_name: task.options && task.options.transformation_host_name,
         delivered_on: new Date(task.options.delivered_on),
         updated_on: new Date(task.updated_on),
-        completed:
-          task.message === 'VM Transformations completed' ||
-          task.message === 'VM Transformations failed',
+        completed: task.message === 'VM Transformations completed' || task.message === 'VM Transformations failed',
         state: task.state,
         status: task.status,
         options: {}
@@ -87,33 +79,18 @@ const _formatPlanRequestDetails = data => {
 
       if (taskDetails.completed) {
         taskDetails.completedSuccessfully =
-          task.options.progress.current_description ===
-            'Virtual machine migrated' ||
-          task.options.progress.current_description ===
-            'Mark source as migrated';
+          task.options.progress.current_description === 'Virtual machine migrated' ||
+          task.options.progress.current_description === 'Mark source as migrated';
       }
-      if (
-        task.options &&
-        task.options.virtv2v_disks &&
-        task.options.virtv2v_disks.length
-      ) {
-        taskDetails.totalDiskSpace = task.options.virtv2v_disks.reduce(
-          (a, b) => a + b.size,
-          0
-        );
-        taskDetails.totalDiskSpaceGb = numeral(
-          taskDetails.totalDiskSpace
-        ).format('0.00b');
+      if (task.options && task.options.virtv2v_disks && task.options.virtv2v_disks.length) {
+        taskDetails.totalDiskSpace = task.options.virtv2v_disks.reduce((a, b) => a + b.size, 0);
+        taskDetails.totalDiskSpaceGb = numeral(taskDetails.totalDiskSpace).format('0.00b');
 
         const percentComplete =
-          task.options.virtv2v_disks.reduce((a, b) => a + b.percent, 0) /
-          (100 * task.options.virtv2v_disks.length);
+          task.options.virtv2v_disks.reduce((a, b) => a + b.percent, 0) / (100 * task.options.virtv2v_disks.length);
 
-        taskDetails.diskSpaceCompleted =
-          percentComplete * taskDetails.totalDiskSpace;
-        taskDetails.diskSpaceCompletedGb = numeral(
-          taskDetails.diskSpaceCompleted
-        ).format('0.00b');
+        taskDetails.diskSpaceCompleted = percentComplete * taskDetails.totalDiskSpace;
+        taskDetails.diskSpaceCompletedGb = numeral(taskDetails.diskSpaceCompleted).format('0.00b');
         taskDetails.percentComplete = Math.round(percentComplete * 1000) / 10;
       }
       tasks.push(taskDetails);
@@ -122,15 +99,12 @@ const _formatPlanRequestDetails = data => {
   return tasks;
 };
 
-const _deepCompare = (prevTasks, newTasks) =>
-  JSON.stringify(prevTasks) === JSON.stringify(newTasks);
+const _deepCompare = (prevTasks, newTasks) => JSON.stringify(prevTasks) === JSON.stringify(newTasks);
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case `${FETCH_V2V_PLAN_REQUEST}_PENDING`:
-      return state
-        .set('isFetchingPlanRequest', true)
-        .set('isRejectedPlanRequest', false);
+      return state.set('isFetchingPlanRequest', true).set('isRejectedPlanRequest', false);
     case `${FETCH_V2V_PLAN_REQUEST}_FULFILLED`: {
       const { payload } = action;
       if (payload.data) {
@@ -194,9 +168,7 @@ export default (state = initialState, action) => {
         .set('planRequestPreviouslyFetched', false);
 
     case `${FETCH_V2V_MIGRATION_TASK_LOG}_PENDING`:
-      return state
-        .set('isFetchingMigrationTaskLog', true)
-        .set('isRejectedMigrationTaskLog', false);
+      return state.set('isFetchingMigrationTaskLog', true).set('isRejectedMigrationTaskLog', false);
     case `${FETCH_V2V_MIGRATION_TASK_LOG}_FULFILLED`:
       return state
         .set('isFetchingMigrationTaskLog', false)
@@ -211,18 +183,12 @@ export default (state = initialState, action) => {
     case DOWNLOAD_LOG_CLICKED:
       return state.set(
         'downloadLogInProgressTaskIds',
-        includeDownloadInProgressTaskId(
-          state.downloadLogInProgressTaskIds,
-          action.payload
-        )
+        includeDownloadInProgressTaskId(state.downloadLogInProgressTaskIds, action.payload)
       );
     case DOWNLOAD_LOG_COMPLETED:
       return state.set(
         'downloadLogInProgressTaskIds',
-        excludeDownloadDoneTaskId(
-          state.downloadLogInProgressTaskIds,
-          action.payload
-        )
+        excludeDownloadDoneTaskId(state.downloadLogInProgressTaskIds, action.payload)
       );
 
     default:

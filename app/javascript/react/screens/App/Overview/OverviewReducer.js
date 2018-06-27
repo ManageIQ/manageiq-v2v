@@ -88,9 +88,7 @@ export const initialState = Immutable({
 export default (state = initialState, action) => {
   switch (action.type) {
     case SHOW_CONFIRM_MODAL:
-      return state
-        .set('confirmModalOptions', action.payload)
-        .set('confirmModalVisible', true);
+      return state.set('confirmModalOptions', action.payload).set('confirmModalVisible', true);
     case HIDE_CONFIRM_MODAL:
       return state.set('confirmModalVisible', false);
     case SHOW_MAPPING_WIZARD:
@@ -102,10 +100,7 @@ export default (state = initialState, action) => {
       const { payload } = action;
       return state
         .set('hideMappingWizard', true)
-        .set(
-          'shouldReloadMappings',
-          (payload && payload.shouldReloadMappings) || false
-        );
+        .set('shouldReloadMappings', (payload && payload.shouldReloadMappings) || false);
     }
     case MAPPING_WIZARD_EXITED:
       return state.set('mappingWizardVisible', false);
@@ -135,12 +130,8 @@ export default (state = initialState, action) => {
         const providers = action.payload.data.resources;
         // Providers are sufficient if Vmware and Redhat providers are both present.
         const sufficient =
-          providers.some(
-            p => p.type === 'ManageIQ::Providers::Vmware::InfraManager'
-          ) &&
-          providers.some(
-            p => p.type === 'ManageIQ::Providers::Redhat::InfraManager'
-          );
+          providers.some(p => p.type === 'ManageIQ::Providers::Vmware::InfraManager') &&
+          providers.some(p => p.type === 'ManageIQ::Providers::Redhat::InfraManager');
         return insufficient.set('hasSufficientProviders', sufficient);
       })();
     case `${FETCH_PROVIDERS}_REJECTED`:
@@ -291,15 +282,11 @@ export default (state = initialState, action) => {
       return state.set('planId', action.payload).set('reloadCard', true);
     case SHOW_DELETE_CONFIRMATION_MODAL:
     case HIDE_DELETE_CONFIRMATION_MODAL:
-      return state
-        .set('yesToDeleteInfrastructureMapping', false)
-        .set('showDeleteConfirmationModal', action.payload);
+      return state.set('yesToDeleteInfrastructureMapping', false).set('showDeleteConfirmationModal', action.payload);
     case SET_MAPPING_TO_DELETE:
       return state.set('mappingToDelete', action.payload);
     case YES_TO_DELETE_AND_HIDE_DELETE_CONFIRMATION_MODAL:
-      return state
-        .set('yesToDeleteInfrastructureMapping', true)
-        .set('showDeleteConfirmationModal', false);
+      return state.set('yesToDeleteInfrastructureMapping', true).set('showDeleteConfirmationModal', false);
     case `${DELETE_INFRASTRUCTURE_MAPPING}_PENDING`:
       return state
         .set('yesToDeleteInfrastructureMapping', false)
@@ -317,9 +304,7 @@ export default (state = initialState, action) => {
         .set('isRejectedInfrastructureMapping', true)
         .set('isDeletingInfrastructureMapping', null);
     case `${ARCHIVE_TRANSFORMATION_PLAN}_PENDING`:
-      return state
-        .set('isArchivingTransformationPlan', true)
-        .set('isRejectedArchivingTransformationPlan', false);
+      return state.set('isArchivingTransformationPlan', true).set('isRejectedArchivingTransformationPlan', false);
     case `${ARCHIVE_TRANSFORMATION_PLAN}_FULFILLED`:
       return state
         .set('isArchivingTransformationPlan', false)

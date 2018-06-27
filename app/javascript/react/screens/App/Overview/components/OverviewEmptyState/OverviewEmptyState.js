@@ -18,12 +18,7 @@ const OverviewEmptyState = ({
     <EmptyState.Info>{description}</EmptyState.Info>
     {buttonText && (
       <EmptyState.Action>
-        <Button
-          bsStyle="primary"
-          bsSize="large"
-          onClick={showWizardAction}
-          href={buttonHref}
-        >
+        <Button bsStyle="primary" bsSize="large" onClick={showWizardAction} href={buttonHref}>
           {sprintf(__('%s'), buttonText)}
         </Button>
       </EmptyState.Action>

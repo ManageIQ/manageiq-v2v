@@ -4,11 +4,7 @@ import { shallow } from 'enzyme';
 import NetworksStepForm from '../NetworksStepForm';
 import { groupByUidEms } from '../../../MappingWizardNetworksStepSelectors';
 
-import {
-  clustersMappingWithTreeViewAttrs,
-  targetNetworkWithTreeViewAttrs,
-  networkGroupingForRep
-} from '../helpers';
+import { clustersMappingWithTreeViewAttrs, targetNetworkWithTreeViewAttrs, networkGroupingForRep } from '../helpers';
 
 import {
   sourceNetworks,
@@ -62,11 +58,7 @@ describe('#addNetworkMapping', () => {
             nodes: [
               {
                 ...targetNetworkWithTreeViewAttrs(targetNetworkToMap),
-                nodes: networkGroupingForRep(
-                  networkGroupRep,
-                  groupByUidEms(networkGrouping),
-                  props.selectedCluster
-                )
+                nodes: networkGroupingForRep(networkGroupRep, groupByUidEms(networkGrouping), props.selectedCluster)
               }
             ]
           }
@@ -83,11 +75,7 @@ describe('#addNetworkMapping', () => {
           nodes: [
             {
               ...targetNetworkWithTreeViewAttrs(mappedTargetNetwork),
-              nodes: networkGroupingForRep(
-                mappedSourceNetwork,
-                groupedNetworks,
-                props.selectedCluster
-              )
+              nodes: networkGroupingForRep(mappedSourceNetwork, groupedNetworks, props.selectedCluster)
             }
           ]
         };
@@ -122,11 +110,7 @@ describe('#addNetworkMapping', () => {
               ...networksStepMapping.nodes,
               {
                 ...targetNetworkWithTreeViewAttrs(targetNetworkToMap),
-                nodes: networkGroupingForRep(
-                  networkGroupRep,
-                  groupedNetworks,
-                  props.selectedCluster
-                )
+                nodes: networkGroupingForRep(networkGroupRep, groupedNetworks, props.selectedCluster)
               }
             ]
           }
@@ -144,11 +128,7 @@ describe('#addNetworkMapping', () => {
         nodes: [
           {
             ...targetNetworkWithTreeViewAttrs(mappedTargetNetwork),
-            nodes: networkGroupingForRep(
-              mappedSourceNetwork,
-              groupedNetworks,
-              sourceCluster
-            )
+            nodes: networkGroupingForRep(mappedSourceNetwork, groupedNetworks, sourceCluster)
           }
         ]
       };
@@ -185,11 +165,7 @@ describe('#addNetworkMapping', () => {
               ...targetNetworkWithTreeViewAttrs(mappedTargetNetwork),
               nodes: [
                 ...networksStepMapping.nodes[0].nodes,
-                ...networkGroupingForRep(
-                  networkGroupRep,
-                  groupedNetworks,
-                  props.selectedCluster
-                )
+                ...networkGroupingForRep(networkGroupRep, groupedNetworks, props.selectedCluster)
               ]
             }
           ]
@@ -203,14 +179,8 @@ describe('#removeNode', () => {
   const [targetNetworkOne, targetNetworkTwo] = targetNetworks;
   const sourceNetworkGroupOne = sourceNetworks.slice(0, 2);
   const sourceNetworkGroupTwo = sourceNetworks.slice(2, 3);
-  const groupedSourceNetworks = groupByUidEms([
-    ...sourceNetworkGroupOne,
-    ...sourceNetworkGroupTwo
-  ]);
-  const groupedTargetNetworks = groupByUidEms([
-    targetNetworkOne,
-    targetNetworkTwo
-  ]);
+  const groupedSourceNetworks = groupByUidEms([...sourceNetworkGroupOne, ...sourceNetworkGroupTwo]);
+  const groupedTargetNetworks = groupByUidEms([targetNetworkOne, targetNetworkTwo]);
   props = {
     ...props,
     groupedSourceNetworks,
@@ -284,9 +254,7 @@ describe('#removeNode', () => {
       };
       const wrapper = shallow(<NetworksStepForm {...props} input={input} />);
 
-      wrapper.find('MappingWizardTreeView').prop('selectNode')(
-        groupRepresentative
-      );
+      wrapper.find('MappingWizardTreeView').prop('selectNode')(groupRepresentative);
       wrapper.find('MappingWizardTreeView').prop('removeNode')();
 
       expect(input.onChange).toHaveBeenLastCalledWith([
@@ -321,9 +289,7 @@ describe('#removeNode', () => {
       };
       const wrapper = shallow(<NetworksStepForm input={input} />);
 
-      wrapper.find('MappingWizardTreeView').prop('selectNode')(
-        groupRepresentative
-      );
+      wrapper.find('MappingWizardTreeView').prop('selectNode')(groupRepresentative);
       wrapper.find('MappingWizardTreeView').prop('removeNode')();
 
       expect(input.onChange).toHaveBeenLastCalledWith([

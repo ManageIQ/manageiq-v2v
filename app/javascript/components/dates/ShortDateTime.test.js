@@ -13,9 +13,7 @@ describe('ShortDateTime', () => {
   const IntlDate = i18nProviderWrapperFactory(now)(ShortDateTime);
 
   it('formats date', () => {
-    const wrapper = mount(
-      <IntlDate data={{ date, defaultValue: 'Default value' }} />
-    );
+    const wrapper = mount(<IntlDate data={{ date, defaultValue: 'Default value' }} />);
 
     expect(toJson(wrapper.find('ShortDateTime'))).toMatchSnapshot();
   });
@@ -35,9 +33,7 @@ describe('ShortDateTime', () => {
   });
 
   it('renders default value', () => {
-    const wrapper = mount(
-      <IntlDate data={{ date: null, defaultValue: 'Default value' }} />
-    );
+    const wrapper = mount(<IntlDate data={{ date: null, defaultValue: 'Default value' }} />);
 
     expect(toJson(wrapper.find('ShortDateTime'))).toMatchSnapshot();
   });

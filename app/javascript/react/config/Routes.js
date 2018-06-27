@@ -9,11 +9,7 @@ const Routes = ({ store }) =>
   links.map(({ path, component }) => {
     const coreComponent = componentSettings(component);
     if (coreComponent) {
-      const markup = componentRegistry.markup(
-        coreComponent.name,
-        coreComponent.data,
-        store
-      );
+      const markup = componentRegistry.markup(coreComponent.name, coreComponent.data, store);
       return (
         <Route
           exact
@@ -23,11 +19,7 @@ const Routes = ({ store }) =>
             if (props.match.isExact) {
               return (
                 <React.Fragment>
-                  {componentRegistry.markup(
-                    coreComponent.name,
-                    { ...coreComponent.data, ...props },
-                    store
-                  )}
+                  {componentRegistry.markup(coreComponent.name, { ...coreComponent.data, ...props }, store)}
                 </React.Fragment>
               );
             }

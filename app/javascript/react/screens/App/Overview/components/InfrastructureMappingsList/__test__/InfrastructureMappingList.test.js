@@ -17,9 +17,7 @@ test('it shows the create infra mapping empty state when there are no transforma
       createInfraMappingClick={createInfraMappingClick}
     />
   );
-  expect(wrapper.find(OverviewEmptyState).props().buttonText).toBe(
-    'Create Infrastructure Mapping'
-  );
+  expect(wrapper.find(OverviewEmptyState).props().buttonText).toBe('Create Infrastructure Mapping');
 });
 
 test('it shows the error empty state when there is an error loading mappings', () => {
@@ -30,7 +28,5 @@ test('it shows the error empty state when there is an error loading mappings', (
       error
     />
   );
-  expect(wrapper.find(OverviewEmptyState).props().iconName).toBe(
-    'error-circle-o'
-  );
+  expect(wrapper.find(OverviewEmptyState).props().iconName).toBe('error-circle-o');
 });

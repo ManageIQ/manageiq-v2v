@@ -25,12 +25,7 @@ const WarningModal = ({
       backdropClassName="warning-modal"
     >
       <Modal.Header>
-        <button
-          className="close"
-          onClick={hideWarningModalAction}
-          aria-hidden="true"
-          aria-label="Close"
-        >
+        <button className="close" onClick={hideWarningModalAction} aria-hidden="true" aria-label="Close">
           <Icon type="pf" name="close" />
         </button>
         <Modal.Title>{sprintf(__('Unmapped %s'), currentStep)}</Modal.Title>
@@ -40,38 +35,19 @@ const WarningModal = ({
           <Icon type="pf" name="warning-triangle-o" />
         </div>
         <div className="warning-modal-body--list">
-          <h3>
-            {sprintf(
-              __('The following source clusters have no mapped %s'),
-              currentStep.toLowerCase()
-            )}
-          </h3>
+          <h3>{sprintf(__('The following source clusters have no mapped %s'), currentStep.toLowerCase())}</h3>
           <ul>
             {sourceClustersWithoutMappings &&
-              sourceClustersWithoutMappings.map(sourceCluster => (
-                <li key={sourceCluster.id}>{sourceCluster.name}</li>
-              ))}
+              sourceClustersWithoutMappings.map(sourceCluster => <li key={sourceCluster.id}>{sourceCluster.name}</li>)}
           </ul>
         </div>
       </Modal.Body>
       <Modal.Footer className="warning-modal-footer">
-        <Button
-          bsStyle="default"
-          className="btn-cancel"
-          onClick={hideWarningModalAction}
-        >
+        <Button bsStyle="default" className="btn-cancel" onClick={hideWarningModalAction}>
           {__('Cancel')}
         </Button>
-        <Button
-          bsStyle="primary"
-          onClick={onFinalStep ? hideWarningModalAction : nextStep}
-          autoFocus
-        >
-          {onFinalStep
-            ? __('Close')
-            : activeStepIndex === 3
-              ? __('Create')
-              : __('Continue')}
+        <Button bsStyle="primary" onClick={onFinalStep ? hideWarningModalAction : nextStep} autoFocus>
+          {onFinalStep ? __('Close') : activeStepIndex === 3 ? __('Create') : __('Continue')}
         </Button>
       </Modal.Footer>
     </Modal>

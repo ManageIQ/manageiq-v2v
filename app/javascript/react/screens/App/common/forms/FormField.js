@@ -19,10 +19,8 @@ export const FormField = ({
   maxLengthWarning,
   ...props
 }) => {
-  const warning =
-    maxLength && input.value.length >= maxLength && maxLengthWarning;
-  const validationState =
-    (touched && error && 'error') || (warning && 'warning') || null;
+  const warning = maxLength && input.value.length >= maxLength && maxLengthWarning;
+  const validationState = (touched && error && 'error') || (warning && 'warning') || null;
   const formGroupProps = {
     key: { label },
     controlId,
@@ -40,23 +38,10 @@ export const FormField = ({
     let field;
     switch (type) {
       case 'textarea':
-        field = (
-          <Form.FormControl
-            {...input}
-            onChange={onChangeWithMaxLength}
-            type={type}
-            componentClass="textarea"
-          />
-        );
+        field = <Form.FormControl {...input} onChange={onChangeWithMaxLength} type={type} componentClass="textarea" />;
         break;
       case 'text':
-        field = (
-          <Form.FormControl
-            {...input}
-            onChange={onChangeWithMaxLength}
-            type={type}
-          />
-        );
+        field = <Form.FormControl {...input} onChange={onChangeWithMaxLength} type={type} />;
         break;
       case 'select':
         field = (
@@ -74,12 +59,7 @@ export const FormField = ({
         field = options.map(val => (
           <div key={val.id}>
             <label htmlFor={input.name}>
-              <Field
-                name={input.name}
-                component="input"
-                type="radio"
-                value={val.id}
-              />
+              <Field name={input.name} component="input" type="radio" value={val.id} />
               {` ${val.name}`}
             </label>
             <br />
@@ -93,18 +73,16 @@ export const FormField = ({
 
   return (
     <Form.FormGroup {...formGroupProps}>
-      <Grid.Col
-        componentClass={Form.ControlLabel}
-        sm={Number.parseInt(labelWidth, 10) || 2}
-      >
+      <Grid.Col componentClass={Form.ControlLabel} sm={Number.parseInt(labelWidth, 10) || 2}>
         {label}
         {required && ' *'}
       </Grid.Col>
       <Grid.Col sm={9} id={input.name}>
         {renderField()}
-        {(help || error || warning) && ( // If we have any of these, render one of them, in priority order.
+        {(help || error || warning) && (
           <Form.HelpBlock>
-            {(touched && error) || warning || help}
+            {(touched && error) || warning || help // If we have any of these, render one of them, in priority order.
+            }
           </Form.HelpBlock>
         )}
       </Grid.Col>

@@ -115,16 +115,11 @@ const clustersData = {
       v_parent_datacenter: 'Datacenter'
     }
   ],
-  actions: [
-    { name: 'query', method: 'post', href: 'http://0.0.0.0:8080/api/clusters' }
-  ],
+  actions: [{ name: 'query', method: 'post', href: 'http://0.0.0.0:8080/api/clusters' }],
   links: {
-    self:
-      'http://0.0.0.0:8080/api/clusters?attributes=v_parent_datacenter\u0026expand=resources\u0026offset=0',
-    first:
-      'http://0.0.0.0:8080/api/clusters?attributes=v_parent_datacenter\u0026expand=resources\u0026offset=0',
-    last:
-      'http://0.0.0.0:8080/api/clusters?attributes=v_parent_datacenter\u0026expand=resources\u0026offset=0'
+    self: 'http://0.0.0.0:8080/api/clusters?attributes=v_parent_datacenter\u0026expand=resources\u0026offset=0',
+    first: 'http://0.0.0.0:8080/api/clusters?attributes=v_parent_datacenter\u0026expand=resources\u0026offset=0',
+    last: 'http://0.0.0.0:8080/api/clusters?attributes=v_parent_datacenter\u0026expand=resources\u0026offset=0'
   }
 };
 

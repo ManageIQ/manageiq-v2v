@@ -1,9 +1,6 @@
 import Immutable from 'seamless-immutable';
 
-import {
-  FETCH_V2V_TRANSFORMATION_PLANS,
-  V2V_SET_MIGRATIONS_FILTER
-} from '../OverviewConstants';
+import { FETCH_V2V_TRANSFORMATION_PLANS, V2V_SET_MIGRATIONS_FILTER } from '../OverviewConstants';
 import overviewReducer, { initialState } from '../OverviewReducer';
 import { transformationPlans } from '../overview.transformationPlans.fixtures';
 

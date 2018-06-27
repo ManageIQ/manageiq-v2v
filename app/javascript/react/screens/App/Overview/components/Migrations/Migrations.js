@@ -80,11 +80,7 @@ const Migrations = ({
               onSelect={eventKey => onSelect(eventKey)}
             >
               {filterOptions.map((filter, i) => (
-                <MenuItem
-                  eventKey={filter}
-                  active={filter === activeFilter}
-                  key={i}
-                >
+                <MenuItem eventKey={filter} active={filter === activeFilter} key={i}>
                   {sprintf(__('%s'), filter)}
                 </MenuItem>
               ))}
@@ -93,9 +89,7 @@ const Migrations = ({
         ) : (
           <OverviewEmptyState
             showWizardAction={createMigrationPlanClick}
-            description={__(
-              'Create a migration plan to select VMs for migration.'
-            )}
+            description={__('Create a migration plan to select VMs for migration.')}
             buttonText={__('Create Migration Plan')}
           />
         )}

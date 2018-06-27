@@ -7,10 +7,7 @@ import {
   requestSourceClustersData,
   requestTargetClustersData
 } from '../mappingWizardClustersStep.fixtures';
-import {
-  mockRequest,
-  mockReset
-} from '../../../../../../../../../common/mockRequests';
+import { mockRequest, mockReset } from '../../../../../../../../../common/mockRequests';
 
 const middlewares = [thunk, promiseMiddleware()];
 const mockStore = configureMockStore(middlewares);
@@ -28,11 +25,9 @@ describe('mappingWizard actions', () => {
       fetchSourceClustersUrl,
       status: 200
     });
-    return store
-      .dispatch(actions.fetchSourceClustersAction(fetchSourceClustersUrl))
-      .then(() => {
-        expect(store.getActions()).toMatchSnapshot();
-      });
+    return store.dispatch(actions.fetchSourceClustersAction(fetchSourceClustersUrl)).then(() => {
+      expect(store.getActions()).toMatchSnapshot();
+    });
   });
   it('should fetch source clusters and return PENDING and REJECTED action', () => {
     const { fetchSourceClustersUrl } = requestSourceClustersData;
@@ -40,11 +35,9 @@ describe('mappingWizard actions', () => {
       fetchSourceClustersUrl,
       status: 404
     });
-    return store
-      .dispatch(actions.fetchSourceClustersAction(fetchSourceClustersUrl))
-      .catch(() => {
-        expect(store.getActions()).toMatchSnapshot();
-      });
+    return store.dispatch(actions.fetchSourceClustersAction(fetchSourceClustersUrl)).catch(() => {
+      expect(store.getActions()).toMatchSnapshot();
+    });
   });
 
   it('should fetch target clusters and return PENDING and FULFILLED action', () => {
@@ -53,11 +46,9 @@ describe('mappingWizard actions', () => {
       fetchTargetClustersUrl,
       status: 200
     });
-    return store
-      .dispatch(actions.fetchTargetClustersAction(fetchTargetClustersUrl))
-      .then(() => {
-        expect(store.getActions()).toMatchSnapshot();
-      });
+    return store.dispatch(actions.fetchTargetClustersAction(fetchTargetClustersUrl)).then(() => {
+      expect(store.getActions()).toMatchSnapshot();
+    });
   });
   it('should fetch target clusters and return PENDING and REJECTED action', () => {
     const { fetchTargetClustersUrl } = requestTargetClustersData;
@@ -65,10 +56,8 @@ describe('mappingWizard actions', () => {
       fetchTargetClustersUrl,
       status: 404
     });
-    return store
-      .dispatch(actions.fetchTargetClustersAction(fetchTargetClustersUrl))
-      .catch(() => {
-        expect(store.getActions()).toMatchSnapshot();
-      });
+    return store.dispatch(actions.fetchTargetClustersAction(fetchTargetClustersUrl)).catch(() => {
+      expect(store.getActions()).toMatchSnapshot();
+    });
   });
 });

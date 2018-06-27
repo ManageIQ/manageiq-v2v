@@ -12,11 +12,6 @@ const mapStateToProps = ({ planWizardResultsStep, planWizard }, ownProps) => ({
   ...ownProps.data
 });
 
-const mergeProps = (stateProps, dispatchProps, ownProps) =>
-  Object.assign(stateProps, ownProps.data, dispatchProps);
+const mergeProps = (stateProps, dispatchProps, ownProps) => Object.assign(stateProps, ownProps.data, dispatchProps);
 
-export default connect(
-  mapStateToProps,
-  PlanWizardResultsStepActions,
-  mergeProps
-)(PlanWizardResultsStep);
+export default connect(mapStateToProps, PlanWizardResultsStepActions, mergeProps)(PlanWizardResultsStep);

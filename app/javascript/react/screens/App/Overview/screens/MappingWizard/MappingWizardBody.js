@@ -9,18 +9,10 @@ class MappingWizardBody extends React.Component {
   constructor(props) {
     super(props);
 
-    this.mappingWizardClustersStepContainer = componentRegistry.markup(
-      'MappingWizardClustersStepContainer'
-    );
-    this.mappingWizardDatastoresStepContainer = componentRegistry.markup(
-      'MappingWizardDatastoresStepContainer'
-    );
-    this.mappingWizardNetworksStepContainer = componentRegistry.markup(
-      'MappingWizardNetworksStepContainer'
-    );
-    this.mappingWizardResultsStepContainer = componentRegistry.markup(
-      'MappingWizardResultsStepContainer'
-    );
+    this.mappingWizardClustersStepContainer = componentRegistry.markup('MappingWizardClustersStepContainer');
+    this.mappingWizardDatastoresStepContainer = componentRegistry.markup('MappingWizardDatastoresStepContainer');
+    this.mappingWizardNetworksStepContainer = componentRegistry.markup('MappingWizardNetworksStepContainer');
+    this.mappingWizardResultsStepContainer = componentRegistry.markup('MappingWizardResultsStepContainer');
   }
   shouldComponentUpdate(nextProps, nextState) {
     return JSON.stringify(this.props) !== JSON.stringify(nextProps);

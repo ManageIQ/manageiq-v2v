@@ -1,11 +1,7 @@
 import Immutable from 'seamless-immutable';
 import numeral from 'numeral';
 
-import {
-  V2V_VALIDATE_VMS,
-  V2V_VM_STEP_RESET,
-  V2V_VM_POST_VALIDATION_REASONS
-} from './PlanWizardVMStepConstants';
+import { V2V_VALIDATE_VMS, V2V_VM_STEP_RESET, V2V_VM_POST_VALIDATION_REASONS } from './PlanWizardVMStepConstants';
 
 const initialState = Immutable({
   isValidatingVms: false,
@@ -88,9 +84,7 @@ const _formatConflictVms = vms =>
 export default (state = initialState, action) => {
   switch (action.type) {
     case `${V2V_VALIDATE_VMS}_PENDING`:
-      return state
-        .set('isValidatingVms', true)
-        .set('isRejectedValidatingVms', false);
+      return state.set('isValidatingVms', true).set('isRejectedValidatingVms', false);
     case `${V2V_VALIDATE_VMS}_FULFILLED`: {
       const { payload } = action;
       if (payload && payload.data) {

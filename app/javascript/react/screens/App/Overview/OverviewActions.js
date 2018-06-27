@@ -85,17 +85,12 @@ export const fetchTransformationMappingsAction = url => {
 const fetchTasksForAllRequests = (allRequests, archived, dispatch) => {
   if (allRequests.length > 0) {
     dispatch({
-      type: archived
-        ? FETCH_V2V_ALL_ARCHIVED_PLAN_REQUESTS_WITH_TASKS
-        : FETCH_V2V_ALL_REQUESTS_WITH_TASKS,
+      type: archived ? FETCH_V2V_ALL_ARCHIVED_PLAN_REQUESTS_WITH_TASKS : FETCH_V2V_ALL_REQUESTS_WITH_TASKS,
       payload: new Promise((resolve, reject) => {
-        API.post(
-          '/api/requests?expand=resource&attributes=miq_request_tasks,service_template',
-          {
-            action: 'query',
-            resources: allRequests
-          }
-        )
+        API.post('/api/requests?expand=resource&attributes=miq_request_tasks,service_template', {
+          action: 'query',
+          resources: allRequests
+        })
           .then(responseRequestsWithTasks => {
             resolve(responseRequestsWithTasks);
           })
@@ -105,14 +100,11 @@ const fetchTasksForAllRequests = (allRequests, archived, dispatch) => {
   }
 };
 
-const collectAllRequests = plan =>
-  plan.miq_requests.map(request => Object.assign({}, { href: request.href }));
+const collectAllRequests = plan => plan.miq_requests.map(request => Object.assign({}, { href: request.href }));
 
 const _getTransformationPlansActionCreator = (url, archived) => dispatch =>
   dispatch({
-    type: archived
-      ? FETCH_V2V_ARCHIVED_TRANSFORMATION_PLANS
-      : FETCH_V2V_TRANSFORMATION_PLANS,
+    type: archived ? FETCH_V2V_ARCHIVED_TRANSFORMATION_PLANS : FETCH_V2V_TRANSFORMATION_PLANS,
     payload: new Promise((resolve, reject) => {
       API.get(url)
         .then(response => {
@@ -121,9 +113,7 @@ const _getTransformationPlansActionCreator = (url, archived) => dispatch =>
 
           const allRequests = [];
           const mergedRequests = [].concat(
-            ...allRequests.concat(
-              allPlansWithRequests.map(plan => collectAllRequests(plan))
-            )
+            ...allRequests.concat(allPlansWithRequests.map(plan => collectAllRequests(plan)))
           );
 
           fetchTasksForAllRequests(mergedRequests, archived, dispatch);

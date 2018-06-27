@@ -56,9 +56,7 @@ const PlanWizardGeneralStep = ({ transformationMappings }) => (
           id: 'vms_via_csv'
         },
         {
-          name: __(
-            'Choose from a list of VMs discovered in the selected infrastructure mapping'
-          ),
+          name: __('Choose from a list of VMs discovered in the selected infrastructure mapping'),
           id: 'vms_via_discovery'
         }
       ]}

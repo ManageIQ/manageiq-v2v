@@ -9,10 +9,7 @@ export const continueToPlanAction = id => dispatch => {
   });
 };
 
-const _postTransformMappingsActionCreator = (
-  url,
-  transformMappings
-) => dispatch =>
+const _postTransformMappingsActionCreator = (url, transformMappings) => dispatch =>
   dispatch({
     type: POST_V2V_TRANSFORM_MAPPINGS,
     payload: new Promise((resolve, reject) => {

@@ -26,9 +26,7 @@ describe('RelativeDateTime', () => {
   });
 
   it('renders default value', () => {
-    const wrapper = mount(
-      <IntlDate data={{ date: null, defaultValue: 'Default value' }} />
-    );
+    const wrapper = mount(<IntlDate data={{ date: null, defaultValue: 'Default value' }} />);
 
     expect(toJson(wrapper.find('RelativeDateTime'))).toMatchSnapshot();
   });

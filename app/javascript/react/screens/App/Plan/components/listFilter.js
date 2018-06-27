@@ -17,9 +17,7 @@ export default function listFilter(activeFilters, tasks) {
   if (activeFilters && activeFilters.length && tasks && tasks.length) {
     const filteredTasks = [];
     tasks.forEach(task => {
-      const match = activeFilters.every(
-        filter => `${task[filter.field.id] || ''}`.indexOf(filter.value) > -1
-      );
+      const match = activeFilters.every(filter => `${task[filter.field.id] || ''}`.indexOf(filter.value) > -1);
       if (match) {
         filteredTasks.push(task);
       }

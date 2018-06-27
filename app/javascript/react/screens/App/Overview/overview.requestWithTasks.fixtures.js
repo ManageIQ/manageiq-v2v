@@ -210,10 +210,8 @@ export const allRequestsWithTasks = Immutable({
             virtv2v_status: 'active',
             virtv2v_wrapper: {
               state_file: '/tmp/v2v-import-20180406T083602-116599.state',
-              v2v_log:
-                '/var/log/vdsm/import/v2v-import-20180406T083602-116599.log',
-              wrapper_log:
-                '/var/log/vdsm/import/v2v-import-20180406T083602-116599-wrapper.log'
+              v2v_log: '/var/log/vdsm/import/v2v-import-20180406T083602-116599.log',
+              wrapper_log: '/var/log/vdsm/import/v2v-import-20180406T083602-116599-wrapper.log'
             },
             workflow_settings: {
               resource_action_id: '22'
@@ -335,10 +333,8 @@ export const allRequestsWithTasks = Immutable({
             virtv2v_status: 'active',
             virtv2v_wrapper: {
               state_file: '/tmp/v2v-import-20180406T083602-116599.state',
-              v2v_log:
-                '/var/log/vdsm/import/v2v-import-20180406T083602-116599.log',
-              wrapper_log:
-                '/var/log/vdsm/import/v2v-import-20180406T083602-116599-wrapper.log'
+              v2v_log: '/var/log/vdsm/import/v2v-import-20180406T083602-116599.log',
+              wrapper_log: '/var/log/vdsm/import/v2v-import-20180406T083602-116599-wrapper.log'
             },
             workflow_settings: {
               resource_action_id: '22'
@@ -549,10 +545,8 @@ export const allRequestsWithTasks = Immutable({
             virtv2v_status: 'active',
             virtv2v_wrapper: {
               state_file: '/tmp/v2v-import-20180406T083602-116599.state',
-              v2v_log:
-                '/var/log/vdsm/import/v2v-import-20180406T083602-116599.log',
-              wrapper_log:
-                '/var/log/vdsm/import/v2v-import-20180406T083602-116599-wrapper.log'
+              v2v_log: '/var/log/vdsm/import/v2v-import-20180406T083602-116599.log',
+              wrapper_log: '/var/log/vdsm/import/v2v-import-20180406T083602-116599-wrapper.log'
             },
             workflow_settings: {
               resource_action_id: '22'
@@ -745,10 +739,8 @@ export const allRequestsWithTasks = Immutable({
             virtv2v_status: 'active',
             virtv2v_wrapper: {
               state_file: '/tmp/v2v-import-20180406T083602-116599.state',
-              v2v_log:
-                '/var/log/vdsm/import/v2v-import-20180406T083602-116599.log',
-              wrapper_log:
-                '/var/log/vdsm/import/v2v-import-20180406T083602-116599-wrapper.log'
+              v2v_log: '/var/log/vdsm/import/v2v-import-20180406T083602-116599.log',
+              wrapper_log: '/var/log/vdsm/import/v2v-import-20180406T083602-116599-wrapper.log'
             },
             workflow_settings: {
               resource_action_id: '22'
@@ -959,10 +951,8 @@ export const allRequestsWithTasks = Immutable({
             virtv2v_status: 'active',
             virtv2v_wrapper: {
               state_file: '/tmp/v2v-import-20180406T083602-116599.state',
-              v2v_log:
-                '/var/log/vdsm/import/v2v-import-20180406T083602-116599.log',
-              wrapper_log:
-                '/var/log/vdsm/import/v2v-import-20180406T083602-116599-wrapper.log'
+              v2v_log: '/var/log/vdsm/import/v2v-import-20180406T083602-116599.log',
+              wrapper_log: '/var/log/vdsm/import/v2v-import-20180406T083602-116599-wrapper.log'
             },
             workflow_settings: {
               resource_action_id: '22'
@@ -1155,10 +1145,8 @@ export const allRequestsWithTasks = Immutable({
             virtv2v_status: 'active',
             virtv2v_wrapper: {
               state_file: '/tmp/v2v-import-20180406T083602-116599.state',
-              v2v_log:
-                '/var/log/vdsm/import/v2v-import-20180406T083602-116599.log',
-              wrapper_log:
-                '/var/log/vdsm/import/v2v-import-20180406T083602-116599-wrapper.log'
+              v2v_log: '/var/log/vdsm/import/v2v-import-20180406T083602-116599.log',
+              wrapper_log: '/var/log/vdsm/import/v2v-import-20180406T083602-116599-wrapper.log'
             },
             workflow_settings: {
               resource_action_id: '22'
@@ -1370,10 +1358,8 @@ export const allRequestsWithTasks = Immutable({
             virtv2v_status: 'active',
             virtv2v_wrapper: {
               state_file: '/tmp/v2v-import-20180406T083602-116599.state',
-              v2v_log:
-                '/var/log/vdsm/import/v2v-import-20180406T083602-116599.log',
-              wrapper_log:
-                '/var/log/vdsm/import/v2v-import-20180406T083602-116599-wrapper.log'
+              v2v_log: '/var/log/vdsm/import/v2v-import-20180406T083602-116599.log',
+              wrapper_log: '/var/log/vdsm/import/v2v-import-20180406T083602-116599-wrapper.log'
             },
             workflow_settings: {
               resource_action_id: '22'
@@ -1566,10 +1552,8 @@ export const allRequestsWithTasks = Immutable({
             virtv2v_status: 'active',
             virtv2v_wrapper: {
               state_file: '/tmp/v2v-import-20180406T083602-116599.state',
-              v2v_log:
-                '/var/log/vdsm/import/v2v-import-20180406T083602-116599.log',
-              wrapper_log:
-                '/var/log/vdsm/import/v2v-import-20180406T083602-116599-wrapper.log'
+              v2v_log: '/var/log/vdsm/import/v2v-import-20180406T083602-116599.log',
+              wrapper_log: '/var/log/vdsm/import/v2v-import-20180406T083602-116599-wrapper.log'
             },
             workflow_settings: {
               resource_action_id: '22'
@@ -1780,10 +1764,8 @@ export const allRequestsWithTasks = Immutable({
             virtv2v_status: 'active',
             virtv2v_wrapper: {
               state_file: '/tmp/v2v-import-20180406T083602-116599.state',
-              v2v_log:
-                '/var/log/vdsm/import/v2v-import-20180406T083602-116599.log',
-              wrapper_log:
-                '/var/log/vdsm/import/v2v-import-20180406T083602-116599-wrapper.log'
+              v2v_log: '/var/log/vdsm/import/v2v-import-20180406T083602-116599.log',
+              wrapper_log: '/var/log/vdsm/import/v2v-import-20180406T083602-116599-wrapper.log'
             },
             workflow_settings: {
               resource_action_id: '22'
@@ -1976,10 +1958,8 @@ export const allRequestsWithTasks = Immutable({
             virtv2v_status: 'active',
             virtv2v_wrapper: {
               state_file: '/tmp/v2v-import-20180406T083602-116599.state',
-              v2v_log:
-                '/var/log/vdsm/import/v2v-import-20180406T083602-116599.log',
-              wrapper_log:
-                '/var/log/vdsm/import/v2v-import-20180406T083602-116599-wrapper.log'
+              v2v_log: '/var/log/vdsm/import/v2v-import-20180406T083602-116599.log',
+              wrapper_log: '/var/log/vdsm/import/v2v-import-20180406T083602-116599-wrapper.log'
             },
             workflow_settings: {
               resource_action_id: '22'

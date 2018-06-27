@@ -1,9 +1,6 @@
 import URI from 'urijs';
 import API from '../../../../../../../../common/API';
-import {
-  FETCH_V2V_SOURCE_CLUSTERS,
-  FETCH_V2V_TARGET_CLUSTERS
-} from './MappingWizardClustersStepConstants';
+import { FETCH_V2V_SOURCE_CLUSTERS, FETCH_V2V_TARGET_CLUSTERS } from './MappingWizardClustersStepConstants';
 
 const _getSourceClustersActionCreator = url => dispatch =>
   dispatch({
