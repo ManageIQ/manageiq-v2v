@@ -183,8 +183,7 @@ const sampleTask = {
     virtv2v_wrapper: {
       state_file: '/tmp/v2v-import-20180406T083602-116599.state',
       v2v_log: '/var/log/vdsm/import/v2v-import-20180406T083602-116599.log',
-      wrapper_log:
-        '/var/log/vdsm/import/v2v-import-20180406T083602-116599-wrapper.log'
+      wrapper_log: '/var/log/vdsm/import/v2v-import-20180406T083602-116599-wrapper.log'
     },
     workflow_settings: {
       resource_action_id: '22'
@@ -231,8 +230,7 @@ for (let i = 0; i < 30; i += 1) {
   } else if (i % 5 === 4) {
     copy.message = 'VM Transformations completed';
     if (i % 2 === 0) {
-      copy.options.progress.current_description =
-        'Virtual machine migration failed.';
+      copy.options.progress.current_description = 'Virtual machine migration failed.';
     } else {
       copy.options.progress.current_description = 'Virtual machine migrated';
     }
@@ -241,9 +239,7 @@ for (let i = 0; i < 30; i += 1) {
   copy.options.transformation_host_name = `rhvh${i}.example.com`;
   for (let j = 0; j < copy.options.virtv2v_disks.length; j += 1) {
     copy.options.virtv2v_disks[j].percent = Math.floor(Math.random() * 100);
-    copy.options.virtv2v_disks[j].size = Math.floor(
-      Math.random() * 17179869184
-    );
+    copy.options.virtv2v_disks[j].size = Math.floor(Math.random() * 17179869184);
   }
   sampleTasks.push(copy);
 }
@@ -263,22 +259,17 @@ for (let i = 0; i < 30; i += 1) {
   copy.message = 'VM Transformations completed';
 
   if (i % 5 === 4) {
-    copy.options.progress.current_description =
-      'Virtual machine migration failed.';
+    copy.options.progress.current_description = 'Virtual machine migration failed.';
     copy.status = 'Error';
     for (let j = 0; j < copy.options.virtv2v_disks.length; j += 1) {
       copy.options.virtv2v_disks[j].percent = Math.floor(Math.random() * 100);
-      copy.options.virtv2v_disks[j].size = Math.floor(
-        Math.random() * 17179869184
-      );
+      copy.options.virtv2v_disks[j].size = Math.floor(Math.random() * 17179869184);
     }
   } else {
     copy.options.progress.current_description = 'Virtual machine migrated';
     for (let j = 0; j < copy.options.virtv2v_disks.length; j += 1) {
       copy.options.virtv2v_disks[j].percent = 100;
-      copy.options.virtv2v_disks[j].size = Math.floor(
-        Math.random() * 17179869184
-      );
+      copy.options.virtv2v_disks[j].size = Math.floor(Math.random() * 17179869184);
     }
   }
 
@@ -303,9 +294,7 @@ for (let i = 0; i < 30; i += 1) {
   copy.options.progress.current_description = 'Virtual machine migrated';
   for (let j = 0; j < copy.options.virtv2v_disks.length; j += 1) {
     copy.options.virtv2v_disks[j].percent = 100;
-    copy.options.virtv2v_disks[j].size = Math.floor(
-      Math.random() * 17179869184
-    );
+    copy.options.virtv2v_disks[j].size = Math.floor(Math.random() * 17179869184);
   }
 
   copy.options.transformation_host_name = `rhvh${i}.example.com`;

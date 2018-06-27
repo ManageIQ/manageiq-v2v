@@ -161,5 +161,4 @@ export const coreComponents = [
   { name: 'v2v_ui_plugin', type: MiqV2vUi }
 ];
 
-export const componentSettings = component =>
-  coreComponents.find(n => n.type === component);
+export const componentSettings = component => coreComponents.find(n => n.type === component);

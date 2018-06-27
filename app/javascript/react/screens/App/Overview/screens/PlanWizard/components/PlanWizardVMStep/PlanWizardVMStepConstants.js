@@ -10,7 +10,5 @@ export const V2V_VM_POST_VALIDATION_REASONS = {
   ok: __('VM available for migration'),
   duplicate: __('Duplicate VM'),
   inactive: __('VM is inactive'),
-  no_info_available: __(
-    'VM unavailable for migration, no information available'
-  )
+  no_info_available: __('VM unavailable for migration, no information available')
 };

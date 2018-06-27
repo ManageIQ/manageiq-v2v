@@ -1,10 +1,7 @@
 import { connect } from 'react-redux';
 import PlanWizard from './PlanWizard';
 import * as PlanWizardActions from './PlanWizardActions';
-import {
-  planWizardOverviewFilter,
-  planWizardFormFilter
-} from './PlanWizardSelectors';
+import { planWizardOverviewFilter, planWizardFormFilter } from './PlanWizardSelectors';
 import { setMigrationsFilterAction } from '../../OverviewActions';
 
 import reducer from './PlanWizardReducer';
@@ -26,7 +23,6 @@ const actions = {
   setMigrationsFilterAction
 };
 
-const mergeProps = (stateProps, dispatchProps, ownProps) =>
-  Object.assign(stateProps, ownProps.data, dispatchProps);
+const mergeProps = (stateProps, dispatchProps, ownProps) => Object.assign(stateProps, ownProps.data, dispatchProps);
 
 export default connect(mapStateToProps, actions, mergeProps)(PlanWizard);

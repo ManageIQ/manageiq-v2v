@@ -1,15 +1,9 @@
 import Immutable from 'seamless-immutable';
 
 import networksReducer from '../MappingWizardNetworksStepReducer';
-import {
-  FETCH_V2V_SOURCE_NETWORKS,
-  FETCH_V2V_TARGET_NETWORKS
-} from '../MappingWizardNetworksStepConstants';
+import { FETCH_V2V_SOURCE_NETWORKS, FETCH_V2V_TARGET_NETWORKS } from '../MappingWizardNetworksStepConstants';
 
-import {
-  sourceClusterNetworks,
-  targetClusterNetworks
-} from '../mappingWizardNetworksStep.fixtures';
+import { sourceClusterNetworks, targetClusterNetworks } from '../mappingWizardNetworksStep.fixtures';
 
 const initialState = Immutable({
   isFetchingSourceNetworks: false,
@@ -59,9 +53,7 @@ describe('fetching source networks', () => {
       type: `${FETCH_V2V_SOURCE_NETWORKS}_FULFILLED`,
       payload
     };
-    const prevState = initialState
-      .set('isRejectedSourceNetworks', true)
-      .set('isFetchingSourceNetworks', true);
+    const prevState = initialState.set('isRejectedSourceNetworks', true).set('isFetchingSourceNetworks', true);
     const state = networksReducer(prevState, action);
 
     expect(state).toMatchSnapshot();
@@ -98,9 +90,7 @@ describe('fetching target networks', () => {
       type: `${FETCH_V2V_TARGET_NETWORKS}_FULFILLED`,
       payload
     };
-    const prevState = initialState
-      .set('isRejectedTargetNetworks', true)
-      .set('isFetchingTargetNetworks', true);
+    const prevState = initialState.set('isRejectedTargetNetworks', true).set('isFetchingTargetNetworks', true);
     const state = networksReducer(prevState, action);
 
     expect(state).toMatchSnapshot();

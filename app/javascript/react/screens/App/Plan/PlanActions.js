@@ -97,16 +97,9 @@ export const downloadLogAction = task => dispatch => {
           });
           const v2vLogFileName = `${task.vmName}.log`;
           if (response.data.status === 'Ok') {
-            const file = new File(
-              [response.data.log_contents],
-              v2vLogFileName,
-              { type: 'text/plain;charset=utf-8' }
-            );
+            const file = new File([response.data.log_contents], v2vLogFileName, { type: 'text/plain;charset=utf-8' });
             saveAs(file);
-            const successMsg = sprintf(
-              __('"%s" download successful'),
-              `${task.vmName}.log`
-            );
+            const successMsg = sprintf(__('"%s" download successful'), `${task.vmName}.log`);
             dispatch({
               type: V2V_NOTIFICATION_ADD,
               message: successMsg,

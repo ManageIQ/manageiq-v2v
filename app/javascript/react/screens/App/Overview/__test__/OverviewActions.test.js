@@ -3,10 +3,7 @@ import thunk from 'redux-thunk';
 import promiseMiddleware from 'redux-promise-middleware';
 import { mockRequest, mockReset } from '../../../../../common/mockRequests';
 
-import {
-  fetchTransformationPlansAction,
-  setMigrationsFilterAction
-} from '../OverviewActions';
+import { fetchTransformationPlansAction, setMigrationsFilterAction } from '../OverviewActions';
 import { requestTransformationPlansData } from '../overview.transformationPlans.fixtures';
 import { V2V_SET_MIGRATIONS_FILTER } from '../OverviewConstants';
 
@@ -20,10 +17,7 @@ afterEach(() => {
 });
 
 describe('fetchTransformationPlansAction', () => {
-  const {
-    fetchTransformationPlansUrl,
-    response
-  } = requestTransformationPlansData;
+  const { fetchTransformationPlansUrl, response } = requestTransformationPlansData;
 
   test('dispatches PENDING and FULFILLED actions', () => {
     mockRequest({

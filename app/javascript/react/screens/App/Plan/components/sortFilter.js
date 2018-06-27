@@ -10,12 +10,7 @@
  *  ...
  * }]
  */
-export default function sortFilter(
-  currentSortType,
-  isSortNumeric,
-  isSortAscending,
-  tasks
-) {
+export default function sortFilter(currentSortType, isSortNumeric, isSortAscending, tasks) {
   if (currentSortType && tasks && tasks.length) {
     if (isSortNumeric) {
       // handle numbers and dates

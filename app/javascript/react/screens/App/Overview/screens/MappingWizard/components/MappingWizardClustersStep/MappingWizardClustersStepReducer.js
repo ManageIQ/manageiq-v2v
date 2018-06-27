@@ -1,9 +1,6 @@
 import Immutable from 'seamless-immutable';
 
-import {
-  FETCH_V2V_SOURCE_CLUSTERS,
-  FETCH_V2V_TARGET_CLUSTERS
-} from './MappingWizardClustersStepConstants';
+import { FETCH_V2V_SOURCE_CLUSTERS, FETCH_V2V_TARGET_CLUSTERS } from './MappingWizardClustersStepConstants';
 
 const initialState = Immutable({
   sourceClusters: [],
@@ -19,15 +16,9 @@ const initialState = Immutable({
 export default (state = initialState, action) => {
   switch (action.type) {
     case `${FETCH_V2V_SOURCE_CLUSTERS}_PENDING`:
-      return state
-        .set('isFetchingSourceClusters', true)
-        .set('isRejectedSourceClusters', false);
+      return state.set('isFetchingSourceClusters', true).set('isRejectedSourceClusters', false);
     case `${FETCH_V2V_SOURCE_CLUSTERS}_FULFILLED`:
-      if (
-        action.payload.data &&
-        action.payload.data.resources &&
-        action.payload.data.resources[0]
-      ) {
+      if (action.payload.data && action.payload.data.resources && action.payload.data.resources[0]) {
         return state
           .set('sourceClusters', action.payload.data.resources)
           .set('isRejectedSourceClusters', false)
@@ -43,15 +34,9 @@ export default (state = initialState, action) => {
         .set('isRejectedSourceClusters', true)
         .set('isFetchingSourceClusters', false);
     case `${FETCH_V2V_TARGET_CLUSTERS}_PENDING`:
-      return state
-        .set('isFetchingTargetClusters', true)
-        .set('isRejectedTargetClusters', false);
+      return state.set('isFetchingTargetClusters', true).set('isRejectedTargetClusters', false);
     case `${FETCH_V2V_TARGET_CLUSTERS}_FULFILLED`:
-      if (
-        action.payload.data &&
-        action.payload.data.resources &&
-        action.payload.data.resources[0]
-      ) {
+      if (action.payload.data && action.payload.data.resources && action.payload.data.resources[0]) {
         return state
           .set('targetClusters', action.payload.data.resources)
           .set('isRejectedTargetClusters', false)

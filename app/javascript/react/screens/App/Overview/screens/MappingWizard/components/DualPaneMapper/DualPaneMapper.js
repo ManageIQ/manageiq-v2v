@@ -6,11 +6,7 @@ import { Button } from 'patternfly-react';
 const DualPaneMapper = ({ children, handleButtonClick, validMapping }) => (
   <div className="dual-pane-mapper-container">
     <div className="dual-pane-mapper">{children}</div>
-    <Button
-      bsStyle="primary"
-      disabled={validMapping}
-      onClick={handleButtonClick}
-    >
+    <Button bsStyle="primary" disabled={validMapping} onClick={handleButtonClick}>
       {__('Add Mapping')}
     </Button>
   </div>

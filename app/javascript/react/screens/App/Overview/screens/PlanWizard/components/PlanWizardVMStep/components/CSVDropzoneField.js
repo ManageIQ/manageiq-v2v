@@ -29,11 +29,7 @@ class CSVDropzoneField extends React.Component {
             csvRows = this.trimWhiteSpaces(csvRows);
             const headerRow = this.mapCSVColumnNameToKey(csvRows[0]);
             if (!headerRow.find(element => element === 'name')) {
-              onCSVParseFailure(
-                __(
-                  "Error: Required column 'Name' does not exist in the .CSV file"
-                )
-              );
+              onCSVParseFailure(__("Error: Required column 'Name' does not exist in the .CSV file"));
               return;
             }
             const rowObjects = csvRows.map(row =>
@@ -47,9 +43,7 @@ class CSVDropzoneField extends React.Component {
             );
             onCSVParseSuccess(rowObjects);
           } else {
-            onCSVParseFailure(
-              err ? `${err}` : __('Error: Possibly a blank .CSV file')
-            );
+            onCSVParseFailure(err ? `${err}` : __('Error: Possibly a blank .CSV file'));
           }
         });
       };
@@ -57,8 +51,7 @@ class CSVDropzoneField extends React.Component {
     }
   };
 
-  trimWhiteSpaces = csvRows =>
-    csvRows.map(row => row.map(value => utf8.decode(value).trim()));
+  trimWhiteSpaces = csvRows => csvRows.map(row => row.map(value => utf8.decode(value).trim()));
 
   mapCSVColumnNameToKey = headerRow => {
     headerRow[headerRow.findIndex(k => k === __('Name'))] = 'name';
@@ -85,9 +78,7 @@ class CSVDropzoneField extends React.Component {
           <EmptyState>
             <EmptyState.Icon type="pf" name="import" />
             <EmptyState.Title>{__('Import File')}</EmptyState.Title>
-            <EmptyState.Info>
-              {__('Import a file including a list of VMs to be migrated.')}
-            </EmptyState.Info>
+            <EmptyState.Info>{__('Import a file including a list of VMs to be migrated.')}</EmptyState.Info>
             <EmptyState.Action>
               <Button
                 bsStyle="primary"

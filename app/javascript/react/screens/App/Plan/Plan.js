@@ -11,10 +11,7 @@ import getMostRecentRequest from '../common/getMostRecentRequest';
 
 class Plan extends React.Component {
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (
-      !prevState.planNotStarted &&
-      nextProps.planRequestTasks === prevState.planRequestTasks
-    ) {
+    if (!prevState.planNotStarted && nextProps.planRequestTasks === prevState.planRequestTasks) {
       return null;
     }
     return {
@@ -135,9 +132,7 @@ class Plan extends React.Component {
     return (
       <React.Fragment>
         <Toolbar>
-          <Breadcrumb.Item href="/dashboard/maintab?tab=compute">
-            {__('Compute')}
-          </Breadcrumb.Item>
+          <Breadcrumb.Item href="/dashboard/maintab?tab=compute">{__('Compute')}</Breadcrumb.Item>
           <li>
             <Link to="/migration">{__('Migration')}</Link>
           </li>
@@ -150,12 +145,7 @@ class Plan extends React.Component {
             )}
         </Toolbar>
 
-        <Spinner
-          loading={
-            (isFetchingPlan || isFetchingPlanRequest || isQueryingVms) &&
-            !planRequestPreviouslyFetched
-          }
-        >
+        <Spinner loading={(isFetchingPlan || isFetchingPlanRequest || isQueryingVms) && !planRequestPreviouslyFetched}>
           {!planNotStarted &&
             planRequestPreviouslyFetched &&
             !isRejectedPlanRequest &&
@@ -174,23 +164,17 @@ class Plan extends React.Component {
                 title={__('No Migration Tasks.')}
                 iconType="pf"
                 iconName="warning-triangle-o"
-                description={__(
-                  'No VM migration tasks have been started for this plan. Please refresh and try again.'
-                )}
+                description={__('No VM migration tasks have been started for this plan. Please refresh and try again.')}
               />
             )}
-          {planNotStarted &&
-            !isRejectedVms &&
-            vmsMutable.length > 0 && <PlanVmsList planVms={vmsMutable} />}
+          {planNotStarted && !isRejectedVms && vmsMutable.length > 0 && <PlanVmsList planVms={vmsMutable} />}
           {planNotStarted &&
             vmsMutable.length === 0 && (
               <PlanEmptyState
                 title={__('No VMs')}
                 iconType="pf"
                 iconName="warning-triangle-o"
-                description={__(
-                  'No VMs were returned for this migration plan. Please refresh and try again.'
-                )}
+                description={__('No VMs were returned for this migration plan. Please refresh and try again.')}
               />
             )}
         </Spinner>
@@ -199,9 +183,9 @@ class Plan extends React.Component {
             title={__('Unable to retrieve migration details.')}
             iconType="pf"
             iconName="error-circle-o"
-            description={__(
-              'Sorry, we were unable to retrieve migration details at this time. Please refresh and try again.'
-            )}
+            description={
+              __('Sorry, we were unable to retrieve migration details at this time. Please refresh and try again.') // prettier-ignore
+            }
           />
         )}
       </React.Fragment>

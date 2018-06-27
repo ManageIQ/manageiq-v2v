@@ -13,32 +13,15 @@ import {
 
 export const reducers = { overview: reducer, form: {} };
 
-const mapStateToProps = (
-  { overview, overview: { transformationPlans, allRequestsWithTasks, planId } },
-  ownProps
-) => ({
+const mapStateToProps = ({ overview, overview: { transformationPlans, allRequestsWithTasks, planId } }, ownProps) => ({
   ...overview,
   ...ownProps.data,
-  notStartedTransformationPlans: notStartedTransformationPlansFilter(
-    transformationPlans
-  ),
-  activeTransformationPlans: activeTransformationPlansFilter(
-    transformationPlans,
-    planId
-  ),
-  finishedTransformationPlans: finishedTransformationPlansFilter(
-    transformationPlans
-  ),
-  finishedWithErrorTransformationPlans: finishedWithErrorTransformationPlansFilter(
-    transformationPlans
-  )
+  notStartedTransformationPlans: notStartedTransformationPlansFilter(transformationPlans),
+  activeTransformationPlans: activeTransformationPlansFilter(transformationPlans, planId),
+  finishedTransformationPlans: finishedTransformationPlansFilter(transformationPlans),
+  finishedWithErrorTransformationPlans: finishedWithErrorTransformationPlansFilter(transformationPlans)
 });
 
-const mergeProps = (stateProps, dispatchProps, ownProps) =>
-  Object.assign(stateProps, ownProps.data, dispatchProps);
+const mergeProps = (stateProps, dispatchProps, ownProps) => Object.assign(stateProps, ownProps.data, dispatchProps);
 
-export default connect(
-  mapStateToProps,
-  Object.assign(OverviewActions, NotificationActions),
-  mergeProps
-)(Overview);
+export default connect(mapStateToProps, Object.assign(OverviewActions, NotificationActions), mergeProps)(Overview);

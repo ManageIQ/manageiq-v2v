@@ -15,14 +15,8 @@ class Overview extends React.Component {
   constructor(props) {
     super(props);
 
-    this.mappingWizard = componentRegistry.markup(
-      'MappingWizardContainer',
-      props.store
-    );
-    this.planWizard = componentRegistry.markup(
-      'PlanWizardContainer',
-      props.store
-    );
+    this.mappingWizard = componentRegistry.markup('MappingWizardContainer', props.store);
+    this.planWizard = componentRegistry.markup('PlanWizardContainer', props.store);
   }
 
   state = {
@@ -74,15 +68,9 @@ class Overview extends React.Component {
     } = this.props;
     const { hasMadeInitialPlansFetch } = this.state;
 
-    if (
-      shouldReloadMappings !== nextProps.shouldReloadMappings &&
-      nextProps.shouldReloadMappings
-    ) {
+    if (shouldReloadMappings !== nextProps.shouldReloadMappings && nextProps.shouldReloadMappings) {
       fetchTransformationMappingsAction(fetchTransformationMappingsUrl);
-    } else if (
-      isContinuingToPlan !== nextProps.isContinuingToPlan &&
-      !nextProps.isContinuingToPlan
-    ) {
+    } else if (isContinuingToPlan !== nextProps.isContinuingToPlan && !nextProps.isContinuingToPlan) {
       continueToPlanAction(planWizardId);
     }
 
@@ -104,21 +92,11 @@ class Overview extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const {
-      finishedTransformationPlans,
-      addNotificationAction,
-      yesToDeleteInfrastructureMapping
-    } = this.props;
+    const { finishedTransformationPlans, addNotificationAction, yesToDeleteInfrastructureMapping } = this.props;
     const { hasMadeInitialPlansFetch } = this.state;
 
-    if (
-      hasMadeInitialPlansFetch &&
-      finishedTransformationPlans.length >
-        prevProps.finishedTransformationPlans.length
-    ) {
-      const oldTransformationPlanIds = prevProps.finishedTransformationPlans.map(
-        plan => plan.id
-      );
+    if (hasMadeInitialPlansFetch && finishedTransformationPlans.length > prevProps.finishedTransformationPlans.length) {
+      const oldTransformationPlanIds = prevProps.finishedTransformationPlans.map(plan => plan.id);
       const freshTransformationPlans = finishedTransformationPlans.filter(
         plan => !oldTransformationPlanIds.includes(plan.id)
       );
@@ -126,16 +104,10 @@ class Overview extends React.Component {
       freshTransformationPlans.forEach(plan => {
         const mostRecentRequest = getMostRecentRequest(plan.miq_requests);
 
-        let planStatusMessage = sprintf(
-          __('%s completed with errors'),
-          plan.name
-        );
+        let planStatusMessage = sprintf(__('%s completed with errors'), plan.name);
         let planStatus = false;
         if (mostRecentRequest.status === 'Ok') {
-          planStatusMessage = sprintf(
-            __('%s completed successfully'),
-            plan.name
-          );
+          planStatusMessage = sprintf(__('%s completed successfully'), plan.name);
           planStatus = true;
         }
 
@@ -162,10 +134,7 @@ class Overview extends React.Component {
   }
 
   startPolling = () => {
-    const {
-      fetchTransformationPlansAction,
-      fetchTransformationPlansUrl
-    } = this.props;
+    const { fetchTransformationPlansAction, fetchTransformationPlansUrl } = this.props;
     this.pollingInterval = setInterval(() => {
       fetchTransformationPlansAction({
         url: fetchTransformationPlansUrl,
@@ -263,9 +232,7 @@ class Overview extends React.Component {
       const mappings = [];
 
       if (activeTransformationPlans) {
-        activeTransformationPlans.map(plan =>
-          mappings.push(plan.options.config_info.transformation_mapping_id)
-        );
+        activeTransformationPlans.map(plan => mappings.push(plan.options.config_info.transformation_mapping_id));
       }
       return mappings;
     };
@@ -276,10 +243,7 @@ class Overview extends React.Component {
           <CardGrid.Col xs={6} sm={3}>
             <AggregateCards.NotStartedTransformationPlans
               notStartedPlans={notStartedTransformationPlans}
-              loading={
-                isFetchingAllRequestsWithTasks &&
-                !requestsWithTasksPreviouslyFetched
-              }
+              loading={isFetchingAllRequestsWithTasks && !requestsWithTasksPreviouslyFetched}
             />
           </CardGrid.Col>
           <CardGrid.Col xs={6} sm={3}>
@@ -287,19 +251,13 @@ class Overview extends React.Component {
               activePlans={activeTransformationPlans}
               allRequestsWithTasks={allRequestsWithTasks}
               reloadCard={reloadCard}
-              loading={
-                isFetchingAllRequestsWithTasks &&
-                !requestsWithTasksPreviouslyFetched
-              }
+              loading={isFetchingAllRequestsWithTasks && !requestsWithTasksPreviouslyFetched}
             />
           </CardGrid.Col>
           <CardGrid.Col xs={6} sm={3}>
             <AggregateCards.FinishedTransformationPlans
               finishedPlans={finishedTransformationPlans}
-              loading={
-                isFetchingAllRequestsWithTasks &&
-                !requestsWithTasksPreviouslyFetched
-              }
+              loading={isFetchingAllRequestsWithTasks && !requestsWithTasksPreviouslyFetched}
             />
           </CardGrid.Col>
           <CardGrid.Col xs={6} sm={3}>
@@ -313,10 +271,7 @@ class Overview extends React.Component {
     );
 
     const overviewContent = (
-      <div
-        className="row cards-pf"
-        style={{ overflow: 'auto', paddingBottom: 1, height: '100%' }}
-      >
+      <div className="row cards-pf" style={{ overflow: 'auto', paddingBottom: 1, height: '100%' }}>
         {aggregateDataCards}
         <Spinner
           loading={
@@ -325,8 +280,7 @@ class Overview extends React.Component {
             isFetchingClusters ||
             isFetchingDatastores ||
             isFetchingNetworks ||
-            (isFetchingAllRequestsWithTasks &&
-              !requestsWithTasksPreviouslyFetched)
+            (isFetchingAllRequestsWithTasks && !requestsWithTasksPreviouslyFetched)
           }
           style={{ marginTop: 200 }}
         >
@@ -337,31 +291,21 @@ class Overview extends React.Component {
               transformationPlans={transformationPlans}
               allRequestsWithTasks={allRequestsWithTasks}
               archivedTransformationPlans={archivedTransformationPlans}
-              allArchivedPlanRequestsWithTasks={
-                allArchivedPlanRequestsWithTasks
-              }
+              allArchivedPlanRequestsWithTasks={allArchivedPlanRequestsWithTasks}
               reloadCard={reloadCard}
               notStartedPlans={notStartedTransformationPlans}
               activeTransformationPlans={activeTransformationPlans}
               finishedTransformationPlans={finishedTransformationPlans}
               createMigrationPlanClick={showPlanWizardAction}
-              createTransformationPlanRequestClick={
-                this.createTransformationPlanRequest
-              }
-              isCreatingTransformationPlanRequest={
-                isCreatingTransformationPlanRequest
-              }
+              createTransformationPlanRequestClick={this.createTransformationPlanRequest}
+              isCreatingTransformationPlanRequest={isCreatingTransformationPlanRequest}
               redirectTo={this.redirectTo}
               showConfirmModalAction={showConfirmModalAction}
               hideConfirmModalAction={hideConfirmModalAction}
               fetchTransformationPlansAction={fetchTransformationPlansAction}
               fetchTransformationPlansUrl={fetchTransformationPlansUrl}
-              fetchArchivedTransformationPlansUrl={
-                fetchArchivedTransformationPlansUrl
-              }
-              isFetchingArchivedTransformationPlans={
-                isFetchingArchivedTransformationPlans
-              }
+              fetchArchivedTransformationPlansUrl={fetchArchivedTransformationPlansUrl}
+              isFetchingArchivedTransformationPlans={isFetchingArchivedTransformationPlans}
               archiveTransformationPlanAction={archiveTransformationPlanAction}
               archiveTransformationPlanUrl={archiveTransformationPlanUrl}
               addNotificationAction={addNotificationAction}
@@ -374,57 +318,38 @@ class Overview extends React.Component {
               networks={networks}
               transformationMappings={transformationMappings}
               error={
-                isRejectedTransformationMappings ||
-                isRejectedClusters ||
-                isRejectedDatastores ||
-                isRejectedNetworks
+                isRejectedTransformationMappings || isRejectedClusters || isRejectedDatastores || isRejectedNetworks
               }
               createInfraMappingClick={showMappingWizardAction}
               inProgressRequestsTransformationMappings={inProgressRequestsTransformationMappings()}
-              showDeleteConfirmationModalAction={
-                showDeleteConfirmationModalAction
-              }
+              showDeleteConfirmationModalAction={showDeleteConfirmationModalAction}
               setMappingToDeleteAction={setMappingToDeleteAction}
               showDeleteConfirmationModal={showDeleteConfirmationModal}
-              hideDeleteConfirmationModalAction={
-                hideDeleteConfirmationModalAction
-              }
+              hideDeleteConfirmationModalAction={hideDeleteConfirmationModalAction}
               mappingToDelete={mappingToDelete}
-              yesToDeleteInfrastructureMappingAction={
-                yesToDeleteInfrastructureMappingAction
-              }
+              yesToDeleteInfrastructureMappingAction={yesToDeleteInfrastructureMappingAction}
               notStartedTransformationPlans={notStartedTransformationPlans}
-              finishedWithErrorTransformationPlans={
-                finishedWithErrorTransformationPlans
-              }
-              deleteInfrastructureMappingAction={
-                deleteInfrastructureMappingAction
-              }
+              finishedWithErrorTransformationPlans={finishedWithErrorTransformationPlans}
+              deleteInfrastructureMappingAction={deleteInfrastructureMappingAction}
             />
           ) : (
             <OverviewEmptyState
-              description={__(
-                'The VMWare and Red Hat Virtualization providers must be configured before attempting a migration.'
-              )}
+              description={
+                __('The VMWare and Red Hat Virtualization providers must be configured before attempting a migration.') // prettier-ignore
+              }
               buttonText={__('Configure Providers')}
               buttonHref="/ems_infra/show_list"
               className="full-page-empty"
             />
           )}
         </Spinner>
-        <ConfirmModal
-          show={confirmModalVisible}
-          onCancel={hideConfirmModalAction}
-          {...confirmModalOptions}
-        />
+        <ConfirmModal show={confirmModalVisible} onCancel={hideConfirmModalAction} {...confirmModalOptions} />
       </div>
     );
 
     const toolbarContent = (
       <Toolbar>
-        <Breadcrumb.Item href="/dashboard/maintab?tab=compute">
-          {__('Compute')}
-        </Breadcrumb.Item>
+        <Breadcrumb.Item href="/dashboard/maintab?tab=compute">{__('Compute')}</Breadcrumb.Item>
         <Breadcrumb.Item active>{__('Migration')}</Breadcrumb.Item>
       </Toolbar>
     );

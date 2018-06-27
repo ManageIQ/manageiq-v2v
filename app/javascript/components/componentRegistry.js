@@ -32,9 +32,7 @@ const componentRegistry = {
     const currentComponent = this.getComponent(name);
 
     if (!currentComponent) {
-      throw new Error(
-        `Component not found:  ${name} among ${this.registeredComponents()}`
-      );
+      throw new Error(`Component not found:  ${name} among ${this.registeredComponents()}`);
     }
     // FIXME: figure out a way to mock i18nProviderWrapperFactory for componentRegistry specs
     const WrappedComponent = window.it
@@ -45,11 +43,7 @@ const componentRegistry = {
     // it would be nice to account for `ownProps` (assuming props are not always coming from store)
     return (
       <WrappedComponent
-        data={
-          currentComponent.data
-            ? Object.assign({}, data, currentComponent.data)
-            : undefined
-        }
+        data={currentComponent.data ? Object.assign({}, data, currentComponent.data) : undefined}
         store={currentComponent.store ? store : undefined}
       />
     );

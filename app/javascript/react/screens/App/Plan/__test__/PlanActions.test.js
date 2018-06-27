@@ -3,11 +3,7 @@ import thunk from 'redux-thunk';
 import promiseMiddleware from 'redux-promise-middleware';
 import { mockRequest, mockReset } from '../../../../../common/mockRequests';
 
-import {
-  _getPlanActionCreator,
-  fetchPlanAction,
-  resetPlanStateAction
-} from '../PlanActions';
+import { _getPlanActionCreator, fetchPlanAction, resetPlanStateAction } from '../PlanActions';
 import { requestPlanData } from '../plan.fixtures';
 import { FETCH_V2V_PLAN, RESET_PLAN_STATE } from '../PlanConstants';
 

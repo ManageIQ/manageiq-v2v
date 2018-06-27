@@ -2,16 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { noop, Table } from 'patternfly-react';
 
-const vmSelectionCellFormatter = (
-  { rowData, rowIndex },
-  onSelectRow,
-  id,
-  label
-) => {
+const vmSelectionCellFormatter = ({ rowData, rowIndex }, onSelectRow, id, label) => {
   const disabled = rowData.invalid || rowData.conflict;
   const checkboxId = id || `select${rowIndex}`;
-  const checkboxLabel =
-    label || sprintf(__('Select row %s'), rowIndex.toString());
+  const checkboxLabel = label || sprintf(__('Select row %s'), rowIndex.toString());
   return (
     <Table.SelectionCell>
       <Table.Checkbox

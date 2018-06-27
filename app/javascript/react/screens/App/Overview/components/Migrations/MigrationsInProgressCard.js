@@ -15,25 +15,12 @@ import {
 import TickingIsoElapsedTime from '../../../../../../components/dates/TickingIsoElapsedTime';
 import getMostRecentRequest from '../../../common/getMostRecentRequest';
 
-const MigrationsInProgressCard = ({
-  plan,
-  allRequestsWithTasks,
-  reloadCard,
-  handleClick
-}) => {
-  const requestsOfAssociatedPlan = allRequestsWithTasks.filter(
-    request => request.source_id === plan.id
-  );
-  const mostRecentRequest =
-    requestsOfAssociatedPlan.length > 0 &&
-    getMostRecentRequest(requestsOfAssociatedPlan);
+const MigrationsInProgressCard = ({ plan, allRequestsWithTasks, reloadCard, handleClick }) => {
+  const requestsOfAssociatedPlan = allRequestsWithTasks.filter(request => request.source_id === plan.id);
+  const mostRecentRequest = requestsOfAssociatedPlan.length > 0 && getMostRecentRequest(requestsOfAssociatedPlan);
 
   // if most recent request is still pending, show loading card
-  if (
-    reloadCard ||
-    !mostRecentRequest ||
-    mostRecentRequest.request_state === 'pending'
-  ) {
+  if (reloadCard || !mostRecentRequest || mostRecentRequest.request_state === 'pending') {
     return (
       <Grid.Col sm={12} md={6} lg={4}>
         <Card matchHeight>
@@ -43,9 +30,7 @@ const MigrationsInProgressCard = ({
           <Card.Body>
             <EmptyState>
               <Spinner loading size="lg" style={{ marginBottom: '15px' }} />
-              <EmptyState.Info>
-                {__('Initiating migration. This might take a few minutes.')}
-              </EmptyState.Info>
+              <EmptyState.Info>{__('Initiating migration. This might take a few minutes.')}</EmptyState.Info>
             </EmptyState>
           </Card.Body>
         </Card>
@@ -70,8 +55,7 @@ const MigrationsInProgressCard = ({
   requestsOfAssociatedPlan.forEach(request => {
     request.miq_request_tasks.forEach(task => {
       tasks[task.source_id] = tasks[task.source_id] || {};
-      tasks[task.source_id].completed =
-        task.status === 'Ok' && task.state === 'finished';
+      tasks[task.source_id].completed = task.status === 'Ok' && task.state === 'finished';
       tasks[task.source_id].virtv2v_disks = task.options.virtv2v_disks;
     });
   });
@@ -89,8 +73,7 @@ const MigrationsInProgressCard = ({
     const taskDisks = tasks[task].virtv2v_disks;
     if (taskDisks && taskDisks.length) {
       const totalTaskDiskSpace = taskDisks.reduce((a, b) => a + b.size, 0);
-      const percentComplete =
-        taskDisks.reduce((a, b) => a + b.percent, 0) / (100 * taskDisks.length);
+      const percentComplete = taskDisks.reduce((a, b) => a + b.percent, 0) / (100 * taskDisks.length);
       const taskDiskSpaceCompleted = percentComplete * totalTaskDiskSpace;
 
       totalDiskSpace += totalTaskDiskSpace;
@@ -99,72 +82,44 @@ const MigrationsInProgressCard = ({
   });
 
   const totalDiskSpaceGb = numeral(totalDiskSpace).format('0.00b');
-  const totalMigratedDiskSpaceGb = numeral(totalMigratedDiskSpace).format(
-    '0.00b'
-  );
+  const totalMigratedDiskSpaceGb = numeral(totalMigratedDiskSpace).format('0.00b');
 
   // UX business rule 4: reflect most request recent elapsed time
-  const elapsedTime = (
-    <TickingIsoElapsedTime startTime={mostRecentRequest.created_on} />
-  );
+  const elapsedTime = <TickingIsoElapsedTime startTime={mostRecentRequest.created_on} />;
 
   // Tooltips
   const vmBarLabel = (
     <span>
-      <strong className="label-strong">
-        {sprintf(__('%s of %s VMs'), completedVMs, totalVMs)}
-      </strong>{' '}
-      {__('migrated')}
+      <strong className="label-strong">{sprintf(__('%s of %s VMs'), completedVMs, totalVMs)}</strong> {__('migrated')}
     </span>
   );
 
   const diskSpaceBarLabel = (
     <span>
-      <strong className="label-strong">
-        {sprintf(__('%s of %s'), totalMigratedDiskSpaceGb, totalDiskSpaceGb)}
-      </strong>{' '}
+      <strong className="label-strong">{sprintf(__('%s of %s'), totalMigratedDiskSpaceGb, totalDiskSpaceGb)}</strong>{' '}
       {__('migrated')}
     </span>
   );
 
   const availableTooltip = (id, max, now) => {
     if (max > 0) {
-      return (
-        <Tooltip id={id}>
-          {sprintf(__('%s%% Remaining'), Math.round((max - now) / max * 100))}
-        </Tooltip>
-      );
+      return <Tooltip id={id}>{sprintf(__('%s%% Remaining'), Math.round((max - now) / max * 100))}</Tooltip>;
     }
     return <Tooltip id={id}>{__('No Data')}</Tooltip>;
   };
   const usedTooltip = (id, max, now) => {
     if (max > 0) {
-      return (
-        <Tooltip id={id}>
-          {sprintf(__('%s%% Complete'), Math.round(now / max * 100))}
-        </Tooltip>
-      );
+      return <Tooltip id={id}>{sprintf(__('%s%% Complete'), Math.round(now / max * 100))}</Tooltip>;
     }
     return <Tooltip id={id}>{__('No Data')}</Tooltip>;
   };
 
-  const usedVmTooltip = () =>
-    usedTooltip(`used-vm-${plan.id}`, totalVMs, completedVMs);
-  const availableVmTooltip = () =>
-    availableTooltip(`available-vm-${plan.id}`, totalVMs, completedVMs);
+  const usedVmTooltip = () => usedTooltip(`used-vm-${plan.id}`, totalVMs, completedVMs);
+  const availableVmTooltip = () => availableTooltip(`available-vm-${plan.id}`, totalVMs, completedVMs);
 
-  const usedDiskSpaceTooltip = () =>
-    usedTooltip(
-      `total-disk-${plan.id}`,
-      totalDiskSpace,
-      totalMigratedDiskSpace
-    );
+  const usedDiskSpaceTooltip = () => usedTooltip(`total-disk-${plan.id}`, totalDiskSpace, totalMigratedDiskSpace);
   const availableDiskSpaceTooltip = () =>
-    availableTooltip(
-      `migrated-disk-${plan.id}`,
-      totalDiskSpace,
-      totalMigratedDiskSpace
-    );
+    availableTooltip(`migrated-disk-${plan.id}`, totalDiskSpace, totalMigratedDiskSpace);
 
   return (
     <Grid.Col sm={12} md={6} lg={4}>
@@ -182,10 +137,7 @@ const MigrationsInProgressCard = ({
             {failed && (
               <OverlayTrigger
                 overlay={
-                  <Popover
-                    id={`description_${plan.id}`}
-                    title={sprintf('%s', plan.name)}
-                  >
+                  <Popover id={`description_${plan.id}`} title={sprintf('%s', plan.name)}>
                     <Icon
                       type="pf"
                       name="error-circle-o"
@@ -196,11 +148,7 @@ const MigrationsInProgressCard = ({
                         paddingRight: 5
                       }}
                     />
-                    {sprintf(
-                      __('%s of %s VM migrations failed.'),
-                      failedVms,
-                      totalVMs
-                    )}
+                    {sprintf(__('%s of %s VM migrations failed.'), failedVms, totalVMs)}
                   </Popover>
                 }
                 placement="top"

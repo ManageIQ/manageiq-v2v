@@ -39,9 +39,7 @@ test('sourceNetworksFilter should return a representative for each source networ
       }
     ]
   };
-  expect(
-    sourceNetworksFilter(groupByUidEms(sourceNetworks), [networksStepMapping])
-  ).toMatchSnapshot();
+  expect(sourceNetworksFilter(groupByUidEms(sourceNetworks), [networksStepMapping])).toMatchSnapshot();
 });
 
 test('clustersMappingWithTreeViewAttrs adds extra attributes for display in TreeView', () => {
@@ -56,9 +54,7 @@ test('sourceNetworkWithTreeViewAttrs adds extra attributes for display in TreeVi
   const [sourceNetwork] = sourceNetworks;
   const selectedCluster = sourceCluster;
 
-  expect(
-    sourceNetworkWithTreeViewAttrs(sourceNetwork, selectedCluster)
-  ).toMatchSnapshot();
+  expect(sourceNetworkWithTreeViewAttrs(sourceNetwork, selectedCluster)).toMatchSnapshot();
 });
 
 test('networkGroupingForRep returns the network grouping, with TreeView attrs, for a representative', () => {
@@ -66,13 +62,7 @@ test('networkGroupingForRep returns the network grouping, with TreeView attrs, f
   const groupedSourceNetworks = groupByUidEms(networkGrouping);
   const selectedCluster = sourceCluster;
 
-  expect(
-    networkGroupingForRep(
-      sourceNetworkRep,
-      groupedSourceNetworks,
-      selectedCluster
-    )
-  ).toMatchSnapshot();
+  expect(networkGroupingForRep(sourceNetworkRep, groupedSourceNetworks, selectedCluster)).toMatchSnapshot();
 });
 
 test("dedupeMappedSourceNetworks reduces a network mapping's source networks to representatives", () => {
@@ -126,12 +116,7 @@ describe('mappingWithTargetNetworkRemoved', () => {
       nodes: [nodeToRemove, nodeShouldRemain]
     };
 
-    expect(
-      mappingWithTargetNetworkRemoved(
-        networksStepMapping,
-        targetNetworkToRemove
-      )
-    ).toMatchSnapshot();
+    expect(mappingWithTargetNetworkRemoved(networksStepMapping, targetNetworkToRemove)).toMatchSnapshot();
   });
 
   test('returns null if no networks mappings remain', () => {
@@ -140,12 +125,7 @@ describe('mappingWithTargetNetworkRemoved', () => {
       nodes: [nodeToRemove]
     };
 
-    expect(
-      mappingWithTargetNetworkRemoved(
-        networksStepMapping,
-        targetNetworkToRemove
-      )
-    ).toMatchSnapshot();
+    expect(mappingWithTargetNetworkRemoved(networksStepMapping, targetNetworkToRemove)).toMatchSnapshot();
   });
 });
 
@@ -160,9 +140,7 @@ describe('mappingWithSourceNetworkRemoved', () => {
       nodes: [...networkGrouping, sourceNetworkShouldRemain]
     };
 
-    expect(
-      mappingWithSourceNetworkRemoved(networksMapping, sourceNetworkToRemove)
-    ).toMatchSnapshot();
+    expect(mappingWithSourceNetworkRemoved(networksMapping, sourceNetworkToRemove)).toMatchSnapshot();
   });
 
   test('returns null if no source networks remain', () => {
@@ -171,8 +149,6 @@ describe('mappingWithSourceNetworkRemoved', () => {
       nodes: [sourceNetworkToRemove]
     };
 
-    expect(
-      mappingWithSourceNetworkRemoved(networksMapping, sourceNetworkToRemove)
-    ).toMatchSnapshot();
+    expect(mappingWithSourceNetworkRemoved(networksMapping, sourceNetworkToRemove)).toMatchSnapshot();
   });
 });

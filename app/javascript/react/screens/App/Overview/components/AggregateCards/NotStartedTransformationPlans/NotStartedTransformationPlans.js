@@ -13,9 +13,7 @@ import {
 
 const NotStartedTransformationPlans = ({ notStartedPlans, loading }) => {
   const countDescription =
-    notStartedPlans.length === 1
-      ? __('Migration Plan Not Started')
-      : __('Migration Plans Not Started');
+    notStartedPlans.length === 1 ? __('Migration Plan Not Started') : __('Migration Plans Not Started');
 
   const classes = cx('overview-aggregate-card', { 'is-loading': loading });
 
@@ -23,8 +21,7 @@ const NotStartedTransformationPlans = ({ notStartedPlans, loading }) => {
     <Card className={classes} accented aggregated matchHeight>
       <Spinner loading={loading}>
         <Card.Title>
-          <AggregateStatusCount>{notStartedPlans.length}</AggregateStatusCount>{' '}
-          {countDescription}
+          <AggregateStatusCount>{notStartedPlans.length}</AggregateStatusCount> {countDescription}
         </Card.Title>
         {notStartedPlans.length > 0 && (
           <Card.Body className="overview-aggregate-card--body">

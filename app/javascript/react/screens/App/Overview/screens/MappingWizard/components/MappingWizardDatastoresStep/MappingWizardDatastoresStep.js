@@ -29,17 +29,10 @@ class MappingWizardDatastoresStep extends React.Component {
   componentDidMount() {}
 
   componentWillReceiveProps(nextProps) {
-    const {
-      showAlertAction,
-      isRejectedSourceDatastores,
-      isRejectedTargetDatastores
-    } = this.props;
+    const { showAlertAction, isRejectedSourceDatastores, isRejectedTargetDatastores } = this.props;
 
     const { selectedCluster, selectedClusterMapping } = this.state;
-    if (
-      isRejectedSourceDatastores !== nextProps.isRejectedSourceDatastores &&
-      nextProps.isRejectedSourceDatastores
-    ) {
+    if (isRejectedSourceDatastores !== nextProps.isRejectedSourceDatastores && nextProps.isRejectedSourceDatastores) {
       const msg = sprintf(
         __('Error retrieving cluster datastores: %s, ID: %s'),
         selectedCluster.name,
@@ -71,17 +64,13 @@ class MappingWizardDatastoresStep extends React.Component {
     } = this.props;
 
     const selectedClusterMapping = clusterMappings.find(clusterMapping =>
-      clusterMapping.nodes.some(
-        sourceCluster => sourceCluster.id === sourceClusterId
-      )
+      clusterMapping.nodes.some(sourceCluster => sourceCluster.id === sourceClusterId)
     );
 
     const { nodes: sourceClusters, ...targetCluster } = selectedClusterMapping;
 
     this.setState(() => ({
-      selectedCluster: sourceClusters.find(
-        sourceCluster => sourceCluster.id === sourceClusterId
-      ),
+      selectedCluster: sourceClusters.find(sourceCluster => sourceCluster.id === sourceClusterId),
       selectedClusterMapping
     }));
 
@@ -119,9 +108,7 @@ class MappingWizardDatastoresStep extends React.Component {
           option_key="id"
           option_value="name"
           onSelect={this.selectSourceCluster}
-          pre_selected_value={
-            clusterOptions.length === 1 ? clusterOptions[0].id : ''
-          }
+          pre_selected_value={clusterOptions.length === 1 ? clusterOptions[0].id : ''}
           choose_text={`<${__('Select a source cluster')}>`}
           render_within_form="true"
           form_name={form}

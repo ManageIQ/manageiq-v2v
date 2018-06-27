@@ -1,9 +1,6 @@
 import { reset } from 'redux-form';
 import { HIDE_PLAN_WIZARD, PLAN_WIZARD_EXITED } from '../../OverviewConstants';
-import {
-  V2V_SET_PLANS_BODY,
-  V2V_SET_PLAN_SCHEDULE
-} from './PlanWizardConstants';
+import { V2V_SET_PLANS_BODY, V2V_SET_PLAN_SCHEDULE } from './PlanWizardConstants';
 
 import { V2V_VM_STEP_RESET } from './components/PlanWizardVMStep/PlanWizardVMStepConstants';
 
