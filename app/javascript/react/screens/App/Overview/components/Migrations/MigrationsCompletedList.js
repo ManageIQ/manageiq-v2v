@@ -57,9 +57,8 @@ const MigrationsCompletedList = ({
                 </p>
                 {failed && (
                   <p>
-                    {__(
-                      'This plan includes VMs that failed to migrate. If you archive the plan, you will not be able to retry the failed migrations.'
-                    )}
+                    {__('This plan includes VMs that failed to migrate. If you archive the plan, you will not be able to retry the failed migrations.') // prettier-ignore
+                    }
                   </p>
                 )}
               </React.Fragment>

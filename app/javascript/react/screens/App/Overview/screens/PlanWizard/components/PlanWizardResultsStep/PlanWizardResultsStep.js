@@ -62,9 +62,7 @@ class PlanWizardResultsStep extends React.Component {
       return this.renderResult(migrationPlanSaved, migrationPlanFollowupMessage, 'pficon pficon-ok');
     } else if (planSchedule === 'migration_plan_now' && migrationPlansResult && migrationRequestsResult) {
       const migrationPlanProgress = sprintf(__(" Migration Plan: '%s' is in progress"), plansBody.name);
-      const migrationPlanFollowupMessage = __(
-        'This may take a long time. Progress of the plan will be shown in the Migration area'
-      );
+      const migrationPlanFollowupMessage = __('This may take a long time. Progress of the plan will be shown in the Migration area'); // prettier-ignore
       return this.renderResult(migrationPlanProgress, migrationPlanFollowupMessage, 'fa fa-clock-o');
     }
     return null;

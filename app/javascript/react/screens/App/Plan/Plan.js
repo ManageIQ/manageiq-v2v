@@ -183,9 +183,9 @@ class Plan extends React.Component {
             title={__('Unable to retrieve migration details.')}
             iconType="pf"
             iconName="error-circle-o"
-            description={__(
-              'Sorry, we were unable to retrieve migration details at this time. Please refresh and try again.'
-            )}
+            description={
+              __('Sorry, we were unable to retrieve migration details at this time. Please refresh and try again.') // prettier-ignore
+            }
           />
         )}
       </React.Fragment>

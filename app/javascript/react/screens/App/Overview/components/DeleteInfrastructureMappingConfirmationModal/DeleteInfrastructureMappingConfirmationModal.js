@@ -19,9 +19,8 @@ const unUsedMappingInPlans = (mappingToDelete, notStartedTransformationPlans, fi
     const deleteMessageAboutUnMigratedVMs = (
       <div>
         <h4>
-          {__(
-            'The infrastructure mapping is associated with migration plans that include unmigrated VMs. Deleting the mapping will prevent you from migrating the VMs in these plans:'
-          )}
+          {__('The infrastructure mapping is associated with migration plans that include unmigrated VMs. Deleting the mapping will prevent you from migrating the VMs in these plans:') // prettier-ignore
+          }
         </h4>
       </div>
     );
