@@ -37,10 +37,8 @@ const MigrationsCompletedList = ({
               mostRecentRequest && mostRecentRequest.status === 'Error';
 
             const tasks = {};
-            requestsOfAssociatedPlan.forEach(request => {
-              request.miq_request_tasks.forEach(task => {
-                tasks[task.source_id] = task.status === 'Ok';
-              });
+            mostRecentRequest.miq_request_tasks.forEach(task => {
+              tasks[task.source_id] = task.status === 'Ok';
             });
 
             let succeedCount = 0;
