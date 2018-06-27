@@ -51,23 +51,14 @@ class ModalWizardBody extends React.Component {
   };
 
   render() {
-    const {
-      loaded,
-      steps,
-      activeStepIndex,
-      alertText,
-      alertType,
-      hideAlertAction,
-      stepButtonsDisabled
-    } = this.props;
+    const { loaded, steps, activeStepIndex, alertText, alertType, hideAlertAction, stepButtonsDisabled } = this.props;
     const step = steps[activeStepIndex];
 
     if (!loaded) {
       return this.renderLoading();
     }
 
-    const renderedStep =
-      step && step.render && step.render(activeStepIndex, step.title);
+    const renderedStep = step && step.render && step.render(activeStepIndex, step.title);
 
     const alertClasses = cx('modal-wizard-alert--alert', {
       'is-visible': alertText
@@ -76,11 +67,7 @@ class ModalWizardBody extends React.Component {
     return (
       <React.Fragment>
         <div className="modal-wizard-alert">
-          <Alert
-            className={alertClasses}
-            type={alertType}
-            onDismiss={hideAlertAction}
-          >
+          <Alert className={alertClasses} type={alertType} onDismiss={hideAlertAction}>
             {alertText}
           </Alert>
         </div>
@@ -99,10 +86,7 @@ class ModalWizardBody extends React.Component {
         />
         <Wizard.Row>
           <Wizard.Main>
-            <Wizard.Contents
-              stepIndex={activeStepIndex}
-              activeStepIndex={activeStepIndex}
-            >
+            <Wizard.Contents stepIndex={activeStepIndex} activeStepIndex={activeStepIndex}>
               {renderedStep}
             </Wizard.Contents>
           </Wizard.Main>

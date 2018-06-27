@@ -9,27 +9,11 @@ export const IsoElapsedTime = (startTime, endTime) => {
 
   let elapsedTime;
   if (elapsedDays >= 2) {
-    elapsedTime = sprintf(
-      __('%s days %02s:%02s:%02s'),
-      elapsedDays,
-      elapsedHours,
-      elapsedMinutes,
-      elapsedSeconds
-    );
+    elapsedTime = sprintf(__('%s days %02s:%02s:%02s'), elapsedDays, elapsedHours, elapsedMinutes, elapsedSeconds);
   } else if (elapsedDays === 1) {
-    elapsedTime = sprintf(
-      __('1 day %02s:%02s:%02s'),
-      elapsedHours,
-      elapsedMinutes,
-      elapsedSeconds
-    );
+    elapsedTime = sprintf(__('1 day %02s:%02s:%02s'), elapsedHours, elapsedMinutes, elapsedSeconds);
   } else {
-    elapsedTime = sprintf(
-      __('%02s:%02s:%02s'),
-      elapsedHours,
-      elapsedMinutes,
-      elapsedSeconds
-    );
+    elapsedTime = sprintf(__('%02s:%02s:%02s'), elapsedHours, elapsedMinutes, elapsedSeconds);
   }
   return elapsedTime;
 };

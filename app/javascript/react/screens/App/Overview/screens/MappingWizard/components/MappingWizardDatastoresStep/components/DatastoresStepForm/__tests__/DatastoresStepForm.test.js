@@ -2,12 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import DatastoresStepForm from '../DatastoresStepForm';
 
-import {
-  sourceClusters,
-  targetClusters,
-  sourceDatastores,
-  targetDatastores
-} from '../DatastoresStepForm.fixtures';
+import { sourceClusters, targetClusters, sourceDatastores, targetDatastores } from '../DatastoresStepForm.fixtures';
 
 let selectedCluster;
 let targetCluster;
@@ -37,10 +32,7 @@ describe('#removeNode', () => {
 
   test('removes selected target datastore along with its mapped source datastores', () => {
     const [datastore1, datastore2, datastore3] = sourceDatastores;
-    const [
-      targetDatastoreToRemove,
-      targetDatastoreShouldRemain
-    ] = targetDatastores;
+    const [targetDatastoreToRemove, targetDatastoreShouldRemain] = targetDatastores;
     input = {
       ...input,
       value: [
@@ -148,10 +140,7 @@ describe('#removeNode', () => {
 
   test('removes entire node if all source datastores are removed', () => {
     const [datastoreToRemove, datastoreShouldRemain] = sourceDatastores;
-    const [
-      targetDatastoreToRemove,
-      targetDatastoreShouldRemain
-    ] = targetDatastores;
+    const [targetDatastoreToRemove, targetDatastoreShouldRemain] = targetDatastores;
     input = {
       ...input,
       value: [

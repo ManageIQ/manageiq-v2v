@@ -7,9 +7,7 @@ export const createTransformationMappings = (
   const clustersUrlRegEx = /\/api\/clusters\/\d{1,}/;
   const clusterTransformationMappings = mappingWizardClustersStep.values.clusterMappings.reduce(
     (clusterTransformationsArray, targetClusterWithSourceClusters) => {
-      const destination = targetClusterWithSourceClusters.href.match(
-        clustersUrlRegEx
-      )[0];
+      const destination = targetClusterWithSourceClusters.href.match(clustersUrlRegEx)[0];
       const transformations = targetClusterWithSourceClusters.nodes.reduce(
         (clusterTransformations, sourceCluster) =>
           clusterTransformations.concat({
@@ -25,68 +23,44 @@ export const createTransformationMappings = (
 
   const datastoresUrlRegEx = /\/api\/data_stores\/\d{1,}/;
   const datastoreTransformationMappings = mappingWizardDatastoresStep.values.datastoresMappings.reduce(
-    (
-      datastoreTransformationsPerTargetCluster,
-      targetClusterWithDatastoreMappings
-    ) => {
+    (datastoreTransformationsPerTargetCluster, targetClusterWithDatastoreMappings) => {
       const datastoreTransformationsForTargetCluster = targetClusterWithDatastoreMappings.nodes.reduce(
-        (
-          datastoreTransformationsPerDatastoreMapping,
-          targetDatastoreWithSourceDatastores
-        ) => {
+        (datastoreTransformationsPerDatastoreMapping, targetDatastoreWithSourceDatastores) => {
           const datastoreTransformations = targetDatastoreWithSourceDatastores.nodes.reduce(
             (transformations, sourceDatastore) =>
               transformations.concat({
                 source: sourceDatastore.href.match(datastoresUrlRegEx)[0],
-                destination: targetDatastoreWithSourceDatastores.href.match(
-                  datastoresUrlRegEx
-                )[0]
+                destination: targetDatastoreWithSourceDatastores.href.match(datastoresUrlRegEx)[0]
               }),
             []
           );
-          return datastoreTransformationsPerDatastoreMapping.concat(
-            datastoreTransformations
-          );
+          return datastoreTransformationsPerDatastoreMapping.concat(datastoreTransformations);
         },
         []
       );
-      return datastoreTransformationsPerTargetCluster.concat(
-        datastoreTransformationsForTargetCluster
-      );
+      return datastoreTransformationsPerTargetCluster.concat(datastoreTransformationsForTargetCluster);
     },
     []
   );
 
   const networksUrlRegEx = /\/api\/lans\/\d{1,}/;
   const networkTransformationMappings = mappingWizardNetworksStep.values.networksMappings.reduce(
-    (
-      networkTransformationsPerTargetCluster,
-      targetClusterWithNetworkMappings
-    ) => {
+    (networkTransformationsPerTargetCluster, targetClusterWithNetworkMappings) => {
       const networkTransformationsForTargetCluster = targetClusterWithNetworkMappings.nodes.reduce(
-        (
-          networkTransformationsPerNetworkMapping,
-          targetNetworkWithSourceNetworks
-        ) => {
+        (networkTransformationsPerNetworkMapping, targetNetworkWithSourceNetworks) => {
           const networkTransformations = targetNetworkWithSourceNetworks.nodes.reduce(
             (transformations, sourceNetwork) =>
               transformations.concat({
                 source: sourceNetwork.href.match(networksUrlRegEx)[0],
-                destination: targetNetworkWithSourceNetworks.href.match(
-                  networksUrlRegEx
-                )[0]
+                destination: targetNetworkWithSourceNetworks.href.match(networksUrlRegEx)[0]
               }),
             []
           );
-          return networkTransformationsPerNetworkMapping.concat(
-            networkTransformations
-          );
+          return networkTransformationsPerNetworkMapping.concat(networkTransformations);
         },
         []
       );
-      return networkTransformationsPerTargetCluster.concat(
-        networkTransformationsForTargetCluster
-      );
+      return networkTransformationsPerTargetCluster.concat(networkTransformationsForTargetCluster);
     },
     []
   );
@@ -105,8 +79,7 @@ export const createTransformationMappings = (
 
 export const getMappedSourceClusters = clusterMappings =>
   clusterMappings.reduce(
-    (sourceClusters, targetClusterWithSourceClusters) =>
-      sourceClusters.concat(targetClusterWithSourceClusters.nodes),
+    (sourceClusters, targetClusterWithSourceClusters) => sourceClusters.concat(targetClusterWithSourceClusters.nodes),
     []
   );
 

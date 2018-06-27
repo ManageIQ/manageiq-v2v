@@ -21,7 +21,4 @@ const mapStateToProps = ({ overview: { transformationMappings } }) => ({
 
 const actions = { showAlertAction, hideAlertAction };
 
-export default connect(
-  mapStateToProps,
-  actions
-)(MappingWizardGeneralStepForm);
+export default connect(mapStateToProps, actions)(MappingWizardGeneralStepForm);

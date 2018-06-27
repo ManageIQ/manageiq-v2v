@@ -2,10 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import { srcClusters, tgtClusters } from '../clustersStepForm.fixtures';
-import {
-  targetClusterWithExtendedData,
-  sourceClusterWithExtendedData
-} from '../helpers';
+import { targetClusterWithExtendedData, sourceClusterWithExtendedData } from '../helpers';
 
 import ClustersStepForm from '../ClustersStepForm';
 
@@ -86,10 +83,7 @@ describe('#addMapping', () => {
     expect(input.onChange).toHaveBeenLastCalledWith([
       {
         ...targetClusterWithExtendedData(targetClusterToAddTo),
-        nodes: [
-          sourceClusterWithExtendedData(mappedSourceCluster),
-          sourceClusterWithExtendedData(sourceClusterToMap)
-        ]
+        nodes: [sourceClusterWithExtendedData(mappedSourceCluster), sourceClusterWithExtendedData(sourceClusterToMap)]
       }
     ]);
 

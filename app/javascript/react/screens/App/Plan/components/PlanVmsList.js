@@ -92,12 +92,7 @@ class PlanVmsList extends React.Component {
 
   setPage = value => {
     const page = Number(value);
-    if (
-      !Number.isNaN(value) &&
-      value !== '' &&
-      page > 0 &&
-      page <= this.totalPages()
-    ) {
+    if (!Number.isNaN(value) && value !== '' && page > 0 && page <= this.totalPages()) {
       const newPaginationState = Object.assign({}, this.state.pagination);
       newPaginationState.page = page;
       this.setState({ pagination: newPaginationState, pageChangeValue: page });
@@ -123,10 +118,7 @@ class PlanVmsList extends React.Component {
     const { activeFilters } = this.state;
     const index = activeFilters.indexOf(filter);
     if (index > -1) {
-      const updated = [
-        ...activeFilters.slice(0, index),
-        ...activeFilters.slice(index + 1)
-      ];
+      const updated = [...activeFilters.slice(0, index), ...activeFilters.slice(index + 1)];
       this.setState({ activeFilters: updated });
     }
   };
@@ -136,22 +128,11 @@ class PlanVmsList extends React.Component {
   };
 
   filterSortPaginatePlanVms = () => {
-    const {
-      activeFilters,
-      currentSortType,
-      isSortNumeric,
-      isSortAscending,
-      pagination
-    } = this.state;
+    const { activeFilters, currentSortType, isSortNumeric, isSortAscending, pagination } = this.state;
     const { planVms } = this.props;
 
     return paginate(
-      sortFilter(
-        currentSortType,
-        isSortNumeric,
-        isSortAscending,
-        listFilter(activeFilters, planVms)
-      ),
+      sortFilter(currentSortType, isSortNumeric, isSortAscending, listFilter(activeFilters, planVms)),
       pagination.page,
       pagination.perPage
     );
@@ -181,10 +162,7 @@ class PlanVmsList extends React.Component {
     filterText += value.title || value;
 
     this.setState(prevState => ({
-      activeFilters: [
-        ...prevState.activeFilters,
-        { label: filterText, field, value: value.title || value }
-      ],
+      activeFilters: [...prevState.activeFilters, { label: filterText, field, value: value.title || value }],
       pagination: {
         ...prevState.pagination,
         page: 1
@@ -232,10 +210,7 @@ class PlanVmsList extends React.Component {
         <Grid.Row>
           <Toolbar>
             <Filter>
-              <Filter.TypeSelector
-                filterTypes={PlanVmsList.filterTypes}
-                currentFilterType={currentFilterType}
-              />
+              <Filter.TypeSelector filterTypes={PlanVmsList.filterTypes} currentFilterType={currentFilterType} />
               {this.renderInput()}
             </Filter>
             <Sort>
@@ -255,20 +230,12 @@ class PlanVmsList extends React.Component {
                 <Toolbar.Results>
                   <h5>
                     {paginatedSortedFiltersVms.itemCount}{' '}
-                    {paginatedSortedFiltersVms.itemCount === 1
-                      ? __('Result')
-                      : __('Results')}
+                    {paginatedSortedFiltersVms.itemCount === 1 ? __('Result') : __('Results')}
                   </h5>
-                  <Filter.ActiveLabel>
-                    {__('Active Filters')}:
-                  </Filter.ActiveLabel>
+                  <Filter.ActiveLabel>{__('Active Filters')}:</Filter.ActiveLabel>
                   <Filter.List>
                     {activeFilters.map((item, index) => (
-                      <Filter.Item
-                        key={index}
-                        onRemove={this.removeFilter}
-                        filterData={item}
-                      >
+                      <Filter.Item key={index} onRemove={this.removeFilter} filterData={item}>
                         {__('label=')}
                         {item.label}
                       </Filter.Item>
@@ -294,17 +261,11 @@ class PlanVmsList extends React.Component {
                 key={task.id}
                 heading={task.name}
                 additionalInfo={[
-                  <ListView.InfoItem
-                    key={`${task.id}-times`}
-                    style={{ minWidth: 150, paddingRight: 20 }}
-                  >
+                  <ListView.InfoItem key={`${task.id}-times`} style={{ minWidth: 150, paddingRight: 20 }}>
                     <ListView.Icon type="fa" size="lg" name="clock-o" />
                     {'00:00:00'}
                   </ListView.InfoItem>,
-                  <ListView.InfoItem
-                    key={`${task.id}-message`}
-                    style={{ minWidth: 150, paddingRight: 20 }}
-                  >
+                  <ListView.InfoItem key={`${task.id}-message`} style={{ minWidth: 150, paddingRight: 20 }}>
                     {__('Not started')}
                   </ListView.InfoItem>
                 ]}

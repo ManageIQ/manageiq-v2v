@@ -3,9 +3,7 @@ export const MAX_LENGTH_DESCRIPTIONS = 128;
 
 const maxLengthIs = __('Maximum length is %s characters.');
 const requiredMaxLengthIs = __('Required. Maximum length is %s characters.');
-const youHaveReachedMax = __(
-  'You have reached the maximum length of %s characters.'
-);
+const youHaveReachedMax = __('You have reached the maximum length of %s characters.');
 
 export const validation = {
   name: {

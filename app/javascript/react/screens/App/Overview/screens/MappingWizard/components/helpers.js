@@ -1,10 +1,7 @@
 export const getClusterOptions = clusterMappings => {
   const sourceClustersWithAssociatedTargetClusters = clusterMappings.reduce(
     (mappings, targetClusterWithSourceClusters) => {
-      const {
-        nodes: sourceClusters,
-        ...targetCluster
-      } = targetClusterWithSourceClusters;
+      const { nodes: sourceClusters, ...targetCluster } = targetClusterWithSourceClusters;
       const sourceToTargetMappings = sourceClusters.map(sourceCluster => ({
         sourceCluster,
         targetCluster,
@@ -19,7 +16,6 @@ export const getClusterOptions = clusterMappings => {
   );
 
   return sourceClustersWithAssociatedTargetClusters.map(
-    ({ sourceClusterMappedToTargetCluster }) =>
-      sourceClusterMappedToTargetCluster
+    ({ sourceClusterMappedToTargetCluster }) => sourceClusterMappedToTargetCluster
   );
 };

@@ -31,12 +31,8 @@ import TickingIsoElapsedTime from '../../../../../../components/dates/TickingIso
 
 class PlanRequestDetailList extends React.Component {
   static getDerivedStateFromProps(nextProps) {
-    const filterTypes = nextProps.planFinished
-      ? FINISHED_PLAN_FILTER_TYPES
-      : ACTIVE_PLAN_FILTER_TYPES;
-    const sortFields = nextProps.planFinished
-      ? FINISHED_PLAN_SORT_FIELDS
-      : ACTIVE_PLAN_SORT_FIELDS;
+    const filterTypes = nextProps.planFinished ? FINISHED_PLAN_FILTER_TYPES : ACTIVE_PLAN_FILTER_TYPES;
+    const sortFields = nextProps.planFinished ? FINISHED_PLAN_SORT_FIELDS : ACTIVE_PLAN_SORT_FIELDS;
     return {
       filterTypes,
       sortFields
@@ -120,12 +116,7 @@ class PlanRequestDetailList extends React.Component {
 
   setPage = value => {
     const page = Number(value);
-    if (
-      !Number.isNaN(value) &&
-      value !== '' &&
-      page > 0 &&
-      page <= this.totalPages()
-    ) {
+    if (!Number.isNaN(value) && value !== '' && page > 0 && page <= this.totalPages()) {
       const newPaginationState = Object.assign({}, this.state.pagination);
       newPaginationState.page = page;
       this.setState({ pagination: newPaginationState, pageChangeValue: page });
@@ -150,10 +141,7 @@ class PlanRequestDetailList extends React.Component {
     const { activeFilters } = this.state;
     const index = activeFilters.indexOf(filter);
     if (index > -1) {
-      const updated = [
-        ...activeFilters.slice(0, index),
-        ...activeFilters.slice(index + 1)
-      ];
+      const updated = [...activeFilters.slice(0, index), ...activeFilters.slice(index + 1)];
       this.setState({ activeFilters: updated });
     }
   };
@@ -168,22 +156,11 @@ class PlanRequestDetailList extends React.Component {
   };
 
   filterSortPaginatePlanRequestTasks = tasks => {
-    const {
-      activeFilters,
-      currentSortType,
-      isSortNumeric,
-      isSortAscending,
-      pagination
-    } = this.state;
+    const { activeFilters, currentSortType, isSortNumeric, isSortAscending, pagination } = this.state;
     const { planRequestTasks } = this.props;
 
     return paginate(
-      sortFilter(
-        currentSortType,
-        isSortNumeric,
-        isSortAscending,
-        listFilter(activeFilters, planRequestTasks)
-      ),
+      sortFilter(currentSortType, isSortNumeric, isSortAscending, listFilter(activeFilters, planRequestTasks)),
       pagination.page,
       pagination.perPage
     );
@@ -213,10 +190,7 @@ class PlanRequestDetailList extends React.Component {
     filterText += value.title || value;
 
     this.setState(prevState => ({
-      activeFilters: [
-        ...prevState.activeFilters,
-        { label: filterText, field, value: value.title || value }
-      ],
+      activeFilters: [...prevState.activeFilters, { label: filterText, field, value: value.title || value }],
       pagination: {
         ...prevState.pagination,
         page: 1
@@ -304,20 +278,12 @@ class PlanRequestDetailList extends React.Component {
                 <Toolbar.Results>
                   <h5>
                     {paginatedSortedFiltersTasks.itemCount}{' '}
-                    {paginatedSortedFiltersTasks.itemCount === 1
-                      ? __('Result')
-                      : __('Results')}
+                    {paginatedSortedFiltersTasks.itemCount === 1 ? __('Result') : __('Results')}
                   </h5>
-                  <Filter.ActiveLabel>
-                    {__('Active Filters')}:
-                  </Filter.ActiveLabel>
+                  <Filter.ActiveLabel>{__('Active Filters')}:</Filter.ActiveLabel>
                   <Filter.List>
                     {activeFilters.map((item, index) => (
-                      <Filter.Item
-                        key={index}
-                        onRemove={this.removeFilter}
-                        filterData={item}
-                      >
+                      <Filter.Item key={index} onRemove={this.removeFilter} filterData={item}>
                         {item.label}
                       </Filter.Item>
                     ))}
@@ -369,18 +335,10 @@ class PlanRequestDetailList extends React.Component {
               } else {
                 leftContent = <Spinner loading />;
               }
-              const label = sprintf(
-                __('%s of %s Migrated'),
-                task.diskSpaceCompletedGb,
-                task.totalDiskSpaceGb
-              );
+              const label = sprintf(__('%s of %s Migrated'), task.diskSpaceCompletedGb, task.totalDiskSpaceGb);
 
               const popoverContent = (
-                <Popover
-                  id={`popover${task.id}${n}`}
-                  title={task.message}
-                  className="task-info-popover"
-                >
+                <Popover id={`popover${task.id}${n}`} title={task.message} className="task-info-popover">
                   <div>
                     <div>
                       <b>{__('Started')}: </b>
@@ -388,8 +346,7 @@ class PlanRequestDetailList extends React.Component {
                     </div>
                     <div>
                       <b>{__('Description')}: </b>
-                      {task.options.progress &&
-                        task.options.progress.current_description}
+                      {task.options.progress && task.options.progress.current_description}
                     </div>
                     <div>
                       <b>{__('Conversion Host')}: </b>
@@ -400,8 +357,7 @@ class PlanRequestDetailList extends React.Component {
                         <br />
                         <strong>Log:</strong>
                         <br />
-                        {task.options.virtv2v_wrapper &&
-                          task.options.virtv2v_wrapper.v2v_log}
+                        {task.options.virtv2v_wrapper && task.options.virtv2v_wrapper.v2v_log}
                       </div>
                     )}
                   </div>
@@ -423,17 +379,10 @@ class PlanRequestDetailList extends React.Component {
                       }}
                     >
                       <div>
-                        <span style={{ textTransform: 'capitalize' }}>
-                          {task.message}
-                        </span>
+                        <span style={{ textTransform: 'capitalize' }}>{task.message}</span>
                         &nbsp;
                         {/* Todo: revisit FieldLevelHelp props in patternfly-react to support this */}
-                        <OverlayTrigger
-                          rootClose
-                          trigger="click"
-                          placement="left"
-                          overlay={popoverContent}
-                        >
+                        <OverlayTrigger rootClose trigger="click" placement="left" overlay={popoverContent}>
                           <Button bsStyle="link">
                             <Icon type="pf" name="info" />
                           </Button>
@@ -443,16 +392,11 @@ class PlanRequestDetailList extends React.Component {
                         <ListView.Icon type="fa" size="lg" name="clock-o" />
                         <TickingIsoElapsedTime
                           startTime={task.startDateTime}
-                          endTime={
-                            task.completed ? task.lastUpdateDateTime : null
-                          }
+                          endTime={task.completed ? task.lastUpdateDateTime : null}
                         />
                       </div>
                     </ListView.InfoItem>,
-                    <ListView.InfoItem
-                      key={`${task.id}-times`}
-                      style={{ minWidth: 150, paddingRight: 20 }}
-                    >
+                    <ListView.InfoItem key={`${task.id}-times`} style={{ minWidth: 150, paddingRight: 20 }}>
                       <UtilizationBar
                         now={task.percentComplete}
                         min={0}
@@ -475,13 +419,9 @@ class PlanRequestDetailList extends React.Component {
                   ]}
                   actions={
                     downloadLogInProgressTaskIds &&
-                    downloadLogInProgressTaskIds.find(
-                      element => element === task.id
-                    ) ? (
+                    downloadLogInProgressTaskIds.find(element => element === task.id) ? (
                       <label htmlFor="downloadLog">
-                        <span id="downloadLogInProgress">
-                          {__('Download log in progress...')}
-                        </span>
+                        <span id="downloadLogInProgress">{__('Download log in progress...')}</span>
                       </label>
                     ) : (
                       <a

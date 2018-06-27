@@ -12,9 +12,7 @@ export default function searchFilter(searchFilterValue, rows) {
   if (searchFilterValue && rows && rows.length) {
     const filteredRows = [];
     rows.forEach(row => {
-      const match = Object.values(row).some(
-        value => `${value || ''}`.indexOf(searchFilterValue) > -1
-      );
+      const match = Object.values(row).some(value => `${value || ''}`.indexOf(searchFilterValue) > -1);
       if (match) {
         filteredRows.push(row);
       }

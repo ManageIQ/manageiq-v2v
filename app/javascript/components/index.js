@@ -161,5 +161,4 @@ export const coreComponents = [
   { name: 'manageiq-v2v', type: ManageIQV2V }
 ];
 
-export const componentSettings = component =>
-  coreComponents.find(n => n.type === component);
+export const componentSettings = component => coreComponents.find(n => n.type === component);

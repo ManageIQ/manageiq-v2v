@@ -1,9 +1,6 @@
 import Immutable from 'seamless-immutable';
 
-import {
-  POST_V2V_MIGRATION_PLANS,
-  POST_V2V_MIGRATION_REQUESTS
-} from './PlanWizardResultsStepConstants';
+import { POST_V2V_MIGRATION_PLANS, POST_V2V_MIGRATION_REQUESTS } from './PlanWizardResultsStepConstants';
 
 const initialState = Immutable({
   isPostingPlans: true,

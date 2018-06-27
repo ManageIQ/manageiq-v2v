@@ -1,9 +1,6 @@
 import Immutable from 'seamless-immutable';
 
-import {
-  FETCH_V2V_SOURCE_NETWORKS,
-  FETCH_V2V_TARGET_NETWORKS
-} from './MappingWizardNetworksStepConstants';
+import { FETCH_V2V_SOURCE_NETWORKS, FETCH_V2V_TARGET_NETWORKS } from './MappingWizardNetworksStepConstants';
 
 const initialState = Immutable({
   isFetchingSourceNetworks: false,
@@ -19,9 +16,7 @@ const initialState = Immutable({
 export default (state = initialState, action) => {
   switch (action.type) {
     case `${FETCH_V2V_SOURCE_NETWORKS}_PENDING`:
-      return state
-        .set('isFetchingSourceNetworks', true)
-        .set('isRejectedSourceNetworks', false);
+      return state.set('isFetchingSourceNetworks', true).set('isRejectedSourceNetworks', false);
     case `${FETCH_V2V_SOURCE_NETWORKS}_FULFILLED`:
       return state
         .set('sourceNetworks', action.payload.sourceNetworks)
@@ -34,9 +29,7 @@ export default (state = initialState, action) => {
         .set('isFetchingSourceNetworks', false);
 
     case `${FETCH_V2V_TARGET_NETWORKS}_PENDING`:
-      return state
-        .set('isFetchingTargetNetworks', true)
-        .set('isRejectedTargetNetworks', false);
+      return state.set('isFetchingTargetNetworks', true).set('isRejectedTargetNetworks', false);
     case `${FETCH_V2V_TARGET_NETWORKS}_FULFILLED`:
       return state
         .set('targetNetworks', action.payload.targetNetworks)

@@ -1,15 +1,9 @@
 import Immutable from 'seamless-immutable';
 
 import datastoresReducer from '../MappingWizardDatastoresStepReducer';
-import {
-  FETCH_V2V_SOURCE_DATASTORES,
-  FETCH_V2V_TARGET_DATASTORES
-} from '../MappingWizardDatastoresStepConstants';
+import { FETCH_V2V_SOURCE_DATASTORES, FETCH_V2V_TARGET_DATASTORES } from '../MappingWizardDatastoresStepConstants';
 
-import {
-  sourceClusterDatastores,
-  targetClusterDatastores
-} from '../mappingWizardDatastoresStep.fixtures';
+import { sourceClusterDatastores, targetClusterDatastores } from '../mappingWizardDatastoresStep.fixtures';
 
 const initialState = Immutable({
   isFetchingSourceDatastores: false,
@@ -59,9 +53,7 @@ describe('fetching source datastores', () => {
       type: `${FETCH_V2V_SOURCE_DATASTORES}_FULFILLED`,
       payload
     };
-    const prevState = initialState
-      .set('isRejectedSourceDatastores', true)
-      .set('isFetchingSourceDatastores', true);
+    const prevState = initialState.set('isRejectedSourceDatastores', true).set('isFetchingSourceDatastores', true);
     const state = datastoresReducer(prevState, action);
 
     expect(state).toMatchSnapshot();
@@ -98,9 +90,7 @@ describe('fetching target datastores', () => {
       type: `${FETCH_V2V_TARGET_DATASTORES}_FULFILLED`,
       payload
     };
-    const prevState = initialState
-      .set('isRejectedTargetDatastores', true)
-      .set('isFetchingTargetDatastores', true);
+    const prevState = initialState.set('isRejectedTargetDatastores', true).set('isFetchingTargetDatastores', true);
     const state = datastoresReducer(prevState, action);
 
     expect(state).toMatchSnapshot();

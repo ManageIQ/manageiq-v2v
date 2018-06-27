@@ -6,12 +6,7 @@ import { noop, Table } from 'patternfly-react';
  * Extends PatternFly React selection header cell formatter
  * b/c if the CSV input has conflicting/invalid rows, we should disable select all
  */
-const vmSelectionHeaderCellFormatter = ({
-  cellProps,
-  column,
-  rows,
-  onSelectAllRows
-}) => {
+const vmSelectionHeaderCellFormatter = ({ cellProps, column, rows, onSelectAllRows }) => {
   const disabledRows = rows.filter(r => r.invalid || r.conflict).length > 0;
   const unselectedRows = rows.filter(r => !r.selected).length > 0;
   const id = cellProps.id || 'selectAll';

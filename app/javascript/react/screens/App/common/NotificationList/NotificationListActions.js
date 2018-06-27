@@ -1,7 +1,4 @@
-import {
-  V2V_NOTIFICATION_ADD,
-  V2V_NOTIFICATION_REMOVE
-} from './NotificationConstants';
+import { V2V_NOTIFICATION_ADD, V2V_NOTIFICATION_REMOVE } from './NotificationConstants';
 
 export const addNotificationAction = notification => dispatch => {
   dispatch({

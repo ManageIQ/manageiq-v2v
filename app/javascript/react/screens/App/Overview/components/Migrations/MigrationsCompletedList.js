@@ -25,16 +25,12 @@ const MigrationsCompletedList = ({
       {finishedTransformationPlans.length > 0 ? (
         <ListView className="plans-complete-list" style={{ marginTop: 0 }}>
           {finishedTransformationPlans.map(plan => {
-            const requestsOfAssociatedPlan = allRequestsWithTasks.filter(
-              request => request.source_id === plan.id
-            );
+            const requestsOfAssociatedPlan = allRequestsWithTasks.filter(request => request.source_id === plan.id);
 
             const mostRecentRequest =
-              requestsOfAssociatedPlan.length > 0 &&
-              getMostRecentRequest(requestsOfAssociatedPlan);
+              requestsOfAssociatedPlan.length > 0 && getMostRecentRequest(requestsOfAssociatedPlan);
 
-            const failed =
-              mostRecentRequest && mostRecentRequest.status === 'Error';
+            const failed = mostRecentRequest && mostRecentRequest.status === 'Error';
 
             const tasks = {};
             requestsOfAssociatedPlan.forEach(request => {
@@ -49,9 +45,7 @@ const MigrationsCompletedList = ({
             });
 
             const elapsedTime = IsoElapsedTime(
-              new Date(
-                mostRecentRequest && mostRecentRequest.options.delivered_on
-              ),
+              new Date(mostRecentRequest && mostRecentRequest.options.delivered_on),
               new Date(mostRecentRequest && mostRecentRequest.fulfilled_on)
             );
 
@@ -74,13 +68,7 @@ const MigrationsCompletedList = ({
             const confirmModalBaseProps = {
               title: __('Archive Migration Plan'),
               body: archiveMigrationWarningText,
-              icon: failed && (
-                <Icon
-                  className="confirm-warning-icon"
-                  type="pf"
-                  name="warning-triangle-o"
-                />
-              ),
+              icon: failed && <Icon className="confirm-warning-icon" type="pf" name="warning-triangle-o" />,
               confirmButtonLabel: __('Archive')
             };
 
@@ -90,10 +78,7 @@ const MigrationsCompletedList = ({
                 disableCancelButton: true,
                 disableConfirmButton: true
               });
-              archiveTransformationPlanAction(
-                archiveTransformationPlanUrl,
-                plan.id
-              )
+              archiveTransformationPlanAction(archiveTransformationPlanUrl, plan.id)
                 .then(() => {
                   addNotificationAction({
                     message: sprintf(__('%s successfully archived'), plan.name),
@@ -150,17 +135,9 @@ const MigrationsCompletedList = ({
                 heading={plan.name}
                 description={plan.description}
                 additionalInfo={[
-                  <ListView.InfoItem
-                    key={`${plan.id}-migrated`}
-                    style={{ paddingRight: 40 }}
-                  >
-                    <ListView.Icon type="pf" size="lg" name="screen" />&nbsp;<strong
-                    >
-                      {succeedCount}
-                    </strong>{' '}
-                    {__('of')} &nbsp;<strong>
-                      {Object.keys(tasks).length}{' '}
-                    </strong>
+                  <ListView.InfoItem key={`${plan.id}-migrated`} style={{ paddingRight: 40 }}>
+                    <ListView.Icon type="pf" size="lg" name="screen" />&nbsp;<strong>{succeedCount}</strong> {__('of')}{' '}
+                    &nbsp;<strong>{Object.keys(tasks).length} </strong>
                     {__('VMs successfully migrated.')}
                   </ListView.InfoItem>,
                   <ListView.InfoItem key={`${plan.id}-elapsed`}>
@@ -199,26 +176,15 @@ const MigrationsCompletedList = ({
         </ListView>
       ) : (
         <OverviewEmptyState
-          title={
-            archived
-              ? __('No Archived Migration Plans')
-              : __('No Completed Migration Plans')
-          }
+          title={archived ? __('No Archived Migration Plans') : __('No Completed Migration Plans')}
           iconType="pf"
           iconName="info"
           description={
             <span>
               {archived
-                ? __(
-                    'There are no exisitng migration plans in an Archived state.'
-                  )
-                : __(
-                    'There are no existing migration plans in a Completed state.'
-                  )}
-              <br />{' '}
-              {__(
-                'Make a selection in the dropdown to view plans in other states.'
-              )}
+                ? __('There are no exisitng migration plans in an Archived state.')
+                : __('There are no existing migration plans in a Completed state.')}
+              <br /> {__('Make a selection in the dropdown to view plans in other states.')}
             </span>
           }
         />

@@ -17,15 +17,10 @@ class InfrastructureMappingsList extends React.Component {
     if (nextProps.transformationMappings === prevState.transformationMappings) {
       return null;
     }
-    const mutableMappings = Immutable.asMutable(
-      nextProps.transformationMappings,
-      { deep: true }
-    );
+    const mutableMappings = Immutable.asMutable(nextProps.transformationMappings, { deep: true });
 
     mutableMappings.forEach((mapping, i) => {
-      const existing = prevState.transformationMappingsMutable.find(
-        m => m.id === mapping.id
-      );
+      const existing = prevState.transformationMappingsMutable.find(m => m.id === mapping.id);
       if (existing) {
         mapping.expanded = existing.expanded || false;
         mapping.expandType = existing.expandType || null;
@@ -37,10 +32,7 @@ class InfrastructureMappingsList extends React.Component {
     };
   }
 
-  clusterName = cluster =>
-    `${cluster.v_parent_datacenter} \\ ${cluster.ext_management_system.name} ${
-      cluster.name
-    }`;
+  clusterName = cluster => `${cluster.v_parent_datacenter} \\ ${cluster.ext_management_system.name} ${cluster.name}`;
 
   toggleExpand = (mapping, key) => {
     if (key === mapping.expandType) {
@@ -118,32 +110,18 @@ class InfrastructureMappingsList extends React.Component {
                   iconName="error-circle-o"
                   description={
                     <React.Fragment>
-                      <span>
-                        {__(
-                          'There was an error loading Infrastructure Mappings.'
-                        )}
-                      </span>
+                      <span>{__('There was an error loading Infrastructure Mappings.')}</span>
                       <br />
                       <span>{__('Please refresh and try again.')}</span>
                     </React.Fragment>
                   }
                 />
               ) : (
-                <ListView
-                  style={{ marginTop: 10 }}
-                  className="infra-mappings-list-view"
-                  id="infrastructure_mappings"
-                >
+                <ListView style={{ marginTop: 10 }} className="infra-mappings-list-view" id="infrastructure_mappings">
                   {transformationMappingsMutable.map(mapping => {
-                    const associatedPlansCount =
-                      mapping.service_templates &&
-                      mapping.service_templates.length;
+                    const associatedPlansCount = mapping.service_templates && mapping.service_templates.length;
 
-                    const {
-                      targetClusters,
-                      targetDatastores,
-                      targetNetworks
-                    } = mapInfrastructureMappings(
+                    const { targetClusters, targetDatastores, targetNetworks } = mapInfrastructureMappings(
                       mapping.transformation_mapping_items,
                       clusters,
                       datastores,
@@ -154,16 +132,14 @@ class InfrastructureMappingsList extends React.Component {
                     let targetClusterCount = 0;
                     Object.keys(targetClusters).forEach(key => {
                       targetClusterCount += 1;
-                      sourceClusterCount +=
-                        targetClusters[key].sourceClusters.length;
+                      sourceClusterCount += targetClusters[key].sourceClusters.length;
                     });
 
                     let sourceDatastoreCount = 0;
                     let targetDatastoreCount = 0;
                     Object.keys(targetDatastores).forEach(key => {
                       targetDatastoreCount += 1;
-                      sourceDatastoreCount +=
-                        targetDatastores[key].sources.length;
+                      sourceDatastoreCount += targetDatastores[key].sources.length;
                     });
 
                     let sourceLanCount = 0;
@@ -189,9 +165,7 @@ class InfrastructureMappingsList extends React.Component {
                         additionalInfo={[
                           <ListView.InfoItem key={0} id="networks">
                             <ListView.Expand
-                              expanded={
-                                mapping.expanded && mapping.expandType === 0
-                              }
+                              expanded={mapping.expanded && mapping.expandType === 0}
                               toggleExpanded={() => {
                                 this.toggleExpand(mapping, 0);
                               }}
@@ -200,21 +174,13 @@ class InfrastructureMappingsList extends React.Component {
                               <div className="mappings-expand-label-group">
                                 <div className="mappings-expand-label">
                                   {sprintf(
-                                    n__(
-                                      '%d Source Network',
-                                      '%d Source Networks',
-                                      sourceLanCount
-                                    ),
+                                    n__('%d Source Network', '%d Source Networks', sourceLanCount),
                                     sourceLanCount
                                   )}
                                 </div>
                                 <div className="mappings-expand-label">
                                   {sprintf(
-                                    n__(
-                                      '%d Target Network',
-                                      '%d Target Networks',
-                                      targetLanCount
-                                    ),
+                                    n__('%d Target Network', '%d Target Networks', targetLanCount),
                                     targetLanCount
                                   )}
                                 </div>
@@ -223,9 +189,7 @@ class InfrastructureMappingsList extends React.Component {
                           </ListView.InfoItem>,
                           <ListView.InfoItem key={1} id="datastores">
                             <ListView.Expand
-                              expanded={
-                                mapping.expanded && mapping.expandType === 1
-                              }
+                              expanded={mapping.expanded && mapping.expandType === 1}
                               toggleExpanded={() => {
                                 this.toggleExpand(mapping, 1);
                               }}
@@ -234,21 +198,13 @@ class InfrastructureMappingsList extends React.Component {
                               <div className="mappings-expand-label-group">
                                 <div className="mappings-expand-label">
                                   {sprintf(
-                                    n__(
-                                      '%d Source Datastore',
-                                      '%d Source Datastores',
-                                      sourceDatastoreCount
-                                    ),
+                                    n__('%d Source Datastore', '%d Source Datastores', sourceDatastoreCount),
                                     sourceDatastoreCount
                                   )}
                                 </div>
                                 <div className="mappings-expand-label">
                                   {sprintf(
-                                    n__(
-                                      '%d Target Datastore',
-                                      '%d Target Datastores',
-                                      targetDatastoreCount
-                                    ),
+                                    n__('%d Target Datastore', '%d Target Datastores', targetDatastoreCount),
                                     targetDatastoreCount
                                   )}
                                 </div>
@@ -257,9 +213,7 @@ class InfrastructureMappingsList extends React.Component {
                           </ListView.InfoItem>,
                           <ListView.InfoItem key={2} id="clusters">
                             <ListView.Expand
-                              expanded={
-                                mapping.expanded && mapping.expandType === 2
-                              }
+                              expanded={mapping.expanded && mapping.expandType === 2}
                               toggleExpanded={() => {
                                 this.toggleExpand(mapping, 2);
                               }}
@@ -268,21 +222,13 @@ class InfrastructureMappingsList extends React.Component {
                               <div className="mappings-expand-label-group">
                                 <div className="mappings-expand-label">
                                   {sprintf(
-                                    n__(
-                                      '%d Source Cluster',
-                                      '%d Source Clusters',
-                                      sourceClusterCount
-                                    ),
+                                    n__('%d Source Cluster', '%d Source Clusters', sourceClusterCount),
                                     sourceClusterCount
                                   )}
                                 </div>
                                 <div className="mappings-expand-label">
                                   {sprintf(
-                                    n__(
-                                      '%d Target Cluster',
-                                      '%d Target Clusters',
-                                      targetClusterCount
-                                    ),
+                                    n__('%d Target Cluster', '%d Target Clusters', targetClusterCount),
                                     targetClusterCount
                                   )}
                                 </div>
@@ -292,20 +238,14 @@ class InfrastructureMappingsList extends React.Component {
                           associatedPlansCount ? (
                             <ListView.InfoItem key={3} id="associated-plans">
                               <ListView.Expand
-                                expanded={
-                                  mapping.expanded && mapping.expandType === 3
-                                }
+                                expanded={mapping.expanded && mapping.expandType === 3}
                                 toggleExpanded={() => {
                                   this.toggleExpand(mapping, 3);
                                 }}
                               >
                                 <Icon type="pf" name="catalog" />
                                 {sprintf(
-                                  n__(
-                                    '%d Associated Plan',
-                                    '%d Associated Plans',
-                                    associatedPlansCount
-                                  ),
+                                  n__('%d Associated Plan', '%d Associated Plans', associatedPlansCount),
                                   associatedPlansCount
                                 )}
                               </ListView.Expand>
@@ -315,15 +255,10 @@ class InfrastructureMappingsList extends React.Component {
                         actions={
                           inProgressRequestsTransformationMappings.find(
                             inProgressRequestsTransformationMapping =>
-                              inProgressRequestsTransformationMapping ===
-                              mapping.id
+                              inProgressRequestsTransformationMapping === mapping.id
                           ) ? (
                             <Button bsStyle="link" disabled>
-                              <Icon
-                                type="pf"
-                                className="delete-infra-mapping-icon-disabled"
-                                name="delete"
-                              />
+                              <Icon type="pf" className="delete-infra-mapping-icon-disabled" name="delete" />
                             </Button>
                           ) : (
                             <Button
@@ -355,33 +290,21 @@ class InfrastructureMappingsList extends React.Component {
                                 {Object.keys(targetNetworks).map(key => {
                                   const mappedTarget = targetNetworks[key];
                                   return (
-                                    <Grid.Row
-                                      key={key}
-                                      className="infra-mapping-networks-row"
-                                    >
+                                    <Grid.Row key={key} className="infra-mapping-networks-row">
                                       <Grid.Col xs={6}>
                                         <MappingSource>
                                           {mappedTarget.sources.map(source => (
                                             <div key={source.sourceNetwork.id}>
-                                              {this.clusterName(
-                                                source.sourceCluster
-                                              )}
-                                              {` \\ ${
-                                                source.sourceNetwork.name
-                                              } `}
+                                              {this.clusterName(source.sourceCluster)}
+                                              {` \\ ${source.sourceNetwork.name} `}
                                             </div>
                                           ))}
                                         </MappingSource>
                                       </Grid.Col>
                                       <Grid.Col xs={6}>
                                         <MappingTarget>
-                                          {this.clusterName(
-                                            mappedTarget.target.targetCluster
-                                          )}
-                                          {` \\ ${
-                                            mappedTarget.target.targetNetwork
-                                              .name
-                                          } `}
+                                          {this.clusterName(mappedTarget.target.targetCluster)}
+                                          {` \\ ${mappedTarget.target.targetNetwork.name} `}
                                         </MappingTarget>
                                       </Grid.Col>
                                     </Grid.Row>
@@ -403,35 +326,21 @@ class InfrastructureMappingsList extends React.Component {
                                 {Object.keys(targetDatastores).map(key => {
                                   const mappedTarget = targetDatastores[key];
                                   return (
-                                    <Grid.Row
-                                      key={key}
-                                      className="infra-mapping-datastores-row"
-                                    >
+                                    <Grid.Row key={key} className="infra-mapping-datastores-row">
                                       <Grid.Col xs={6}>
                                         <MappingSource>
                                           {mappedTarget.sources.map(source => (
-                                            <div
-                                              key={source.sourceDatastore.id}
-                                            >
-                                              {this.clusterName(
-                                                source.sourceCluster
-                                              )}
-                                              {` \\ ${
-                                                source.sourceDatastore.name
-                                              } `}
+                                            <div key={source.sourceDatastore.id}>
+                                              {this.clusterName(source.sourceCluster)}
+                                              {` \\ ${source.sourceDatastore.name} `}
                                             </div>
                                           ))}
                                         </MappingSource>
                                       </Grid.Col>
                                       <Grid.Col xs={6}>
                                         <MappingTarget>
-                                          {this.clusterName(
-                                            mappedTarget.target.targetCluster
-                                          )}
-                                          {` \\ ${
-                                            mappedTarget.target.targetDatastore
-                                              .name
-                                          } `}
+                                          {this.clusterName(mappedTarget.target.targetCluster)}
+                                          {` \\ ${mappedTarget.target.targetDatastore.name} `}
                                         </MappingTarget>
                                       </Grid.Col>
                                     </Grid.Row>
@@ -453,25 +362,16 @@ class InfrastructureMappingsList extends React.Component {
                                 {Object.keys(targetClusters).map(key => {
                                   const target = targetClusters[key];
                                   return (
-                                    <Grid.Row
-                                      key={key}
-                                      className="infra-mapping-clusters-row"
-                                    >
+                                    <Grid.Row key={key} className="infra-mapping-clusters-row">
                                       <Grid.Col xs={6}>
                                         <MappingSource>
                                           {target.sourceClusters.map(source => (
-                                            <div key={source.id}>
-                                              {this.clusterName(source)}
-                                            </div>
+                                            <div key={source.id}>{this.clusterName(source)}</div>
                                           ))}
                                         </MappingSource>
                                       </Grid.Col>
                                       <Grid.Col xs={6}>
-                                        <MappingTarget>
-                                          {this.clusterName(
-                                            target.targetCluster
-                                          )}
-                                        </MappingTarget>
+                                        <MappingTarget>{this.clusterName(target.targetCluster)}</MappingTarget>
                                       </Grid.Col>
                                     </Grid.Row>
                                   );
@@ -497,15 +397,13 @@ class InfrastructureMappingsList extends React.Component {
                                   <Grid.Col xs={12}>
                                     {' '}
                                     {associatedPlansCount > 0
-                                      ? mapping.service_templates.map(
-                                          (plan, id) => (
-                                            <div key={id}>
-                                              <span>{plan.name}</span>
-                                              {` `}
-                                              {` `}
-                                            </div>
-                                          )
-                                        )
+                                      ? mapping.service_templates.map((plan, id) => (
+                                          <div key={id}>
+                                            <span>{plan.name}</span>
+                                            {` `}
+                                            {` `}
+                                          </div>
+                                        ))
                                       : null}
                                   </Grid.Col>
                                 </Grid.Row>
@@ -522,9 +420,7 @@ class InfrastructureMappingsList extends React.Component {
           ) : (
             <OverviewEmptyState
               showWizardAction={createInfraMappingClick}
-              description={__(
-                'Create an infrastructure mapping to later be used by a migration plan.'
-              )}
+              description={__('Create an infrastructure mapping to later be used by a migration plan.')}
               buttonText={__('Create Infrastructure Mapping')}
             />
           )}
@@ -533,13 +429,9 @@ class InfrastructureMappingsList extends React.Component {
           showDeleteConfirmationModal={showDeleteConfirmationModal}
           hideDeleteConfirmationModalAction={hideDeleteConfirmationModalAction}
           mappingToDelete={mappingToDelete}
-          yesToDeleteInfrastructureMappingAction={
-            yesToDeleteInfrastructureMappingAction
-          }
+          yesToDeleteInfrastructureMappingAction={yesToDeleteInfrastructureMappingAction}
           notStartedTransformationPlans={notStartedTransformationPlans}
-          finishedWithErrorTransformationPlans={
-            finishedWithErrorTransformationPlans
-          }
+          finishedWithErrorTransformationPlans={finishedWithErrorTransformationPlans}
         />
       </React.Fragment>
     );

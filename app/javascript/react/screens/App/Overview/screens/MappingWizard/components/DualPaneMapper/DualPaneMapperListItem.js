@@ -3,13 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import EllipsisWithTooltip from 'react-ellipsis-with-tooltip';
 
-const DualPaneMapperListItem = ({
-  item,
-  text,
-  selected,
-  handleClick,
-  handleKeyPress
-}) => {
+const DualPaneMapperListItem = ({ item, text, selected, handleClick, handleKeyPress }) => {
   const classes = cx('dual-pane-mapper-item', { selected });
 
   return (

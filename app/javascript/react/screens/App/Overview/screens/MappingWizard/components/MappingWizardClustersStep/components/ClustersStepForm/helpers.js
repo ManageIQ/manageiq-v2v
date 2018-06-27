@@ -14,11 +14,7 @@ export const sourceClusterWithExtendedData = sourceCluster => ({
   icon: 'fa fa-file-o'
 });
 
-export const updateMapping = (
-  clustersStepMapping,
-  targetClusterToAddTo,
-  sourceClustersToAdd
-) => {
+export const updateMapping = (clustersStepMapping, targetClusterToAddTo, sourceClustersToAdd) => {
   const { nodes: sourceClusters, ...targetCluster } = clustersStepMapping;
 
   if (targetCluster.id === targetClusterToAddTo.id) {
@@ -26,9 +22,7 @@ export const updateMapping = (
       ...targetCluster,
       nodes: [
         ...sourceClusters,
-        ...sourceClustersToAdd.map(sourceCluster =>
-          sourceClusterWithExtendedData(sourceCluster)
-        )
+        ...sourceClustersToAdd.map(sourceCluster => sourceClusterWithExtendedData(sourceCluster))
       ]
     };
   }
@@ -37,7 +31,5 @@ export const updateMapping = (
 
 export const createNewMapping = (targetCluster, sourceClusters) => ({
   ...targetClusterWithExtendedData(targetCluster),
-  nodes: sourceClusters.map(sourceCluster =>
-    sourceClusterWithExtendedData(sourceCluster)
-  )
+  nodes: sourceClusters.map(sourceCluster => sourceClusterWithExtendedData(sourceCluster))
 });

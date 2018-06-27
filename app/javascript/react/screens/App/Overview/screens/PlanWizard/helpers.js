@@ -1,11 +1,7 @@
-export const createMigrationPlans = (
-  planWizardGeneralStep,
-  planWizardVMStep
-) => {
+export const createMigrationPlans = (planWizardGeneralStep, planWizardVMStep) => {
   const planName = planWizardGeneralStep.values.name;
   const planDescription = planWizardGeneralStep.values.description;
-  const infrastructureMapping =
-    planWizardGeneralStep.values.infrastructure_mapping;
+  const infrastructureMapping = planWizardGeneralStep.values.infrastructure_mapping;
   const vms = planWizardVMStep.values.selectedVms;
 
   return {

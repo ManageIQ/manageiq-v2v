@@ -6,20 +6,12 @@ import reducer from './MappingWizardResultsStepReducer';
 
 export const reducers = { mappingWizardResultsStep: reducer };
 
-const mapStateToProps = (
-  { mappingWizardResultsStep, mappingWizard },
-  ownProps
-) => ({
+const mapStateToProps = ({ mappingWizardResultsStep, mappingWizard }, ownProps) => ({
   ...mappingWizardResultsStep,
   ...mappingWizard,
   ...ownProps.data
 });
 
-const mergeProps = (stateProps, dispatchProps, ownProps) =>
-  Object.assign(stateProps, ownProps.data, dispatchProps);
+const mergeProps = (stateProps, dispatchProps, ownProps) => Object.assign(stateProps, ownProps.data, dispatchProps);
 
-export default connect(
-  mapStateToProps,
-  MappingWizardResultsStepActions,
-  mergeProps
-)(MappingWizardResultsStep);
+export default connect(mapStateToProps, MappingWizardResultsStepActions, mergeProps)(MappingWizardResultsStep);

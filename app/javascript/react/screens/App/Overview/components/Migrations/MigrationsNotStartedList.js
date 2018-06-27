@@ -3,12 +3,7 @@ import PropTypes from 'prop-types';
 import { noop, Button, ListView, Grid, Icon, Spinner } from 'patternfly-react';
 import OverviewEmptyState from '../OverviewEmptyState/OverviewEmptyState';
 
-const MigrationsNotStartedList = ({
-  migrateClick,
-  notStartedPlans,
-  loading,
-  redirectTo
-}) => (
+const MigrationsNotStartedList = ({ migrateClick, notStartedPlans, loading, redirectTo }) => (
   <Grid.Col xs={12}>
     <Spinner loading={!!loading}>
       {notStartedPlans.length > 0 ? (
@@ -38,8 +33,7 @@ const MigrationsNotStartedList = ({
               additionalInfo={[
                 <ListView.InfoItem key={plan.id}>
                   <Icon type="pf" name="virtual-machine" />
-                  <strong>{plan.options.config_info.vm_ids.length}</strong>{' '}
-                  {__('VMs')}
+                  <strong>{plan.options.config_info.vm_ids.length}</strong> {__('VMs')}
                 </ListView.InfoItem>
               ]}
               key={plan.id}
@@ -53,13 +47,8 @@ const MigrationsNotStartedList = ({
           iconName="info"
           description={
             <span>
-              {__(
-                'There are no existing migration plans in a Not Started state.'
-              )}
-              <br />{' '}
-              {__(
-                'Make a selection in the dropdown to view plans in other states.'
-              )}
+              {__('There are no existing migration plans in a Not Started state.')}
+              <br /> {__('Make a selection in the dropdown to view plans in other states.')}
             </span>
           }
         />

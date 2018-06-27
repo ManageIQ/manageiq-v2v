@@ -10,26 +10,17 @@ export const getRepresentatives = (groupedNetworks = {}) => {
   return representatives;
 };
 
-export const sourceNetworksFilter = (
-  groupedSourceNetworks,
-  networksStepMappings
-) => {
-  const mappedNetworks = networksStepMappings.reduce(
-    (mappedNetworksArray, targetClusterWithNetworkMappings) => {
-      const sourceNetworks = targetClusterWithNetworkMappings.nodes.reduce(
-        (networks, networkMapping) => [...networks, ...networkMapping.nodes],
-        []
-      );
-      return [...mappedNetworksArray, ...sourceNetworks];
-    },
-    []
-  );
+export const sourceNetworksFilter = (groupedSourceNetworks, networksStepMappings) => {
+  const mappedNetworks = networksStepMappings.reduce((mappedNetworksArray, targetClusterWithNetworkMappings) => {
+    const sourceNetworks = targetClusterWithNetworkMappings.nodes.reduce(
+      (networks, networkMapping) => [...networks, ...networkMapping.nodes],
+      []
+    );
+    return [...mappedNetworksArray, ...sourceNetworks];
+  }, []);
 
   return getRepresentatives(groupedSourceNetworks).filter(
-    network =>
-      !mappedNetworks.some(
-        mappedNetwork => mappedNetwork.uid_ems === network.uid_ems
-      )
+    network => !mappedNetworks.some(mappedNetwork => mappedNetwork.uid_ems === network.uid_ems)
   );
 };
 
@@ -49,10 +40,7 @@ export const targetNetworkWithTreeViewAttrs = targetNetwork => ({
   }
 });
 
-export const sourceNetworkWithTreeViewAttrs = (
-  sourceNetwork,
-  selectedCluster
-) => ({
+export const sourceNetworkWithTreeViewAttrs = (sourceNetwork, selectedCluster) => ({
   ...sourceNetwork,
   text: sourceNetwork.name,
   icon: 'fa fa-file-o',
@@ -61,15 +49,9 @@ export const sourceNetworkWithTreeViewAttrs = (
   selected: false
 });
 
-export const networkGroupingForRep = (
-  sourceNetworkRep,
-  groupedSourceNetworks,
-  selectedCluster
-) => {
+export const networkGroupingForRep = (sourceNetworkRep, groupedSourceNetworks, selectedCluster) => {
   const sourceNetworks = groupedSourceNetworks[sourceNetworkRep.uid_ems];
-  return sourceNetworks.map(sourceNetwork =>
-    sourceNetworkWithTreeViewAttrs(sourceNetwork, selectedCluster)
-  );
+  return sourceNetworks.map(sourceNetwork => sourceNetworkWithTreeViewAttrs(sourceNetwork, selectedCluster));
 };
 
 export const dedupeMappedSourceNetworks = networksMapping => {
@@ -92,14 +74,9 @@ export const dedupeMappedTargetNetworks = networksStepMapping => {
 
 export const mappingsForTreeView = mappings =>
   mappings.reduce((updatedMappings, networksStepMapping) => {
-    const { nodes: networksMappings } = dedupeMappedTargetNetworks(
-      networksStepMapping
-    );
+    const { nodes: networksMappings } = dedupeMappedTargetNetworks(networksStepMapping);
     const updatedNetworksMappings = networksMappings.reduce(
-      (dedupedMappings, networksMapping) => [
-        ...dedupedMappings,
-        dedupeMappedSourceNetworks(networksMapping)
-      ],
+      (dedupedMappings, networksMapping) => [...dedupedMappings, dedupeMappedSourceNetworks(networksMapping)],
       []
     );
     const updatedMapping = {
@@ -109,14 +86,10 @@ export const mappingsForTreeView = mappings =>
     return [...updatedMappings, updatedMapping];
   }, []);
 
-export const mappingWithTargetNetworkRemoved = (
-  networksStepMapping,
-  targetNetworkToRemove
-) => {
+export const mappingWithTargetNetworkRemoved = (networksStepMapping, targetNetworkToRemove) => {
   const { nodes: networksMappings, ...targetCluster } = networksStepMapping;
   const updatedNetworksMappings = networksMappings.filter(
-    targetNetworkWithSourceNetworks =>
-      targetNetworkWithSourceNetworks.id !== targetNetworkToRemove.id
+    targetNetworkWithSourceNetworks => targetNetworkWithSourceNetworks.id !== targetNetworkToRemove.id
   );
   return updatedNetworksMappings.length === 0
     ? null
@@ -126,10 +99,7 @@ export const mappingWithTargetNetworkRemoved = (
       };
 };
 
-export const mappingWithSourceNetworkRemoved = (
-  networksMapping,
-  sourceNetworkToRemove
-) => {
+export const mappingWithSourceNetworkRemoved = (networksMapping, sourceNetworkToRemove) => {
   const { nodes: sourceNetworks, ...targetNetwork } = networksMapping;
   const updatedSourceNetworks = sourceNetworks.filter(
     sourceNetwork => sourceNetwork.uid_ems !== sourceNetworkToRemove.uid_ems
