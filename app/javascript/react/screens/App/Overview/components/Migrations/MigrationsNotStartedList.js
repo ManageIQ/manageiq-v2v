@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import EllipsisWithTooltip from 'react-ellipsis-with-tooltip';
 import { noop, Button, ListView, Grid, Icon, Spinner } from 'patternfly-react';
 import OverviewEmptyState from '../OverviewEmptyState/OverviewEmptyState';
 
@@ -34,7 +35,13 @@ const MigrationsNotStartedList = ({
               }
               leftContent={<div />}
               heading={plan.name}
-              description={plan.description}
+              description={
+                <EllipsisWithTooltip id={plan.description}>
+                  <React.Fragment>
+                    {plan.description}
+                  </React.Fragment>
+                </EllipsisWithTooltip>
+              }
               additionalInfo={[
                 <ListView.InfoItem key={plan.id}>
                   <Icon type="pf" name="virtual-machine" />
