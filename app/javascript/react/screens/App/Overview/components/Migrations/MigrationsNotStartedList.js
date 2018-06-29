@@ -37,9 +37,7 @@ const MigrationsNotStartedList = ({
               heading={plan.name}
               description={
                 <EllipsisWithTooltip id={plan.description}>
-                  <React.Fragment>
-                    {plan.description}
-                  </React.Fragment>
+                  <React.Fragment>{plan.description}</React.Fragment>
                 </EllipsisWithTooltip>
               }
               additionalInfo={[
