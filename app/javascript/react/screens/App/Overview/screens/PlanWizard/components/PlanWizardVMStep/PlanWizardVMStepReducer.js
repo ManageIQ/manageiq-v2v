@@ -76,14 +76,32 @@ const _formatInvalidVms = vms => {
   );
 };
 
-const _formatConflictVms = vms =>
-  vms &&
-  vms.map(v => {
-    v.conflict = true;
-    v.allocated_size = numeral(v.allocated_size).format('0.00b');
-    v.reason = V2V_VM_POST_VALIDATION_REASONS[v.reason];
-    return v;
-  });
+const _formatConflictVms = vms => {
+  const inactiveVM = vms && vms.filter(vm => vm.cluster === '' || vm.path === '');
+  const inactiveVMCount = inactiveVM.length;
+  const vmCount = inactiveVMCount > 0 ? vms.length - inactiveVMCount : vms.length;
+  const uniqueIds = vms && [...new Set(vms.map(value => value.id))];
+  return (
+    vms &&
+    vms.map((v, vIndex) => {
+      v.allocated_size = numeral(v.allocated_size).format('0.00b');
+      v.reason = V2V_VM_POST_VALIDATION_REASONS[v.reason];
+
+      if (v.cluster === '' || v.path === '') {
+        v.reason = V2V_VM_POST_VALIDATION_REASONS.inactive;
+        v.invalid = true;
+      } else if (vmCount === 1) {
+        v.reason = V2V_VM_POST_VALIDATION_REASONS.ok;
+        v.valid = true;
+      } else if (vmCount > 1) {
+        v.warning = true;
+      }
+
+      manageOddCSVImportErrors(v, vIndex, uniqueIds);
+      return v;
+    })
+  );
+};
 
 export default (state = initialState, action) => {
   switch (action.type) {
