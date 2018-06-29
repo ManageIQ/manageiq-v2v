@@ -14,4 +14,8 @@ const mapStateToProps = ({ mappingWizardResultsStep, mappingWizard }, ownProps) 
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => Object.assign(stateProps, ownProps.data, dispatchProps);
 
-export default connect(mapStateToProps, MappingWizardResultsStepActions, mergeProps)(MappingWizardResultsStep);
+export default connect(
+  mapStateToProps,
+  MappingWizardResultsStepActions,
+  mergeProps
+)(MappingWizardResultsStep);

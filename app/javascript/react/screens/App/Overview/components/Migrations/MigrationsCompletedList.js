@@ -33,9 +33,10 @@ const MigrationsCompletedList = ({
             const failed = mostRecentRequest && mostRecentRequest.status === 'Error';
 
             const tasks = {};
-            if(mostRecentRequest) mostRecentRequest.miq_request_tasks.forEach(task => {
-              tasks[task.source_id] = task.status === 'Ok';
-            });
+            if (mostRecentRequest)
+              mostRecentRequest.miq_request_tasks.forEach(task => {
+                tasks[task.source_id] = task.status === 'Ok';
+              });
 
             let succeedCount = 0;
             Object.keys(tasks).forEach(key => {

@@ -48,6 +48,7 @@ module.exports = {
     'react/prefer-stateless-function': 'warn',
     'react/forbid-prop-types': 'off',
     'react/require-default-props': 'off',
+    'react/sort-comp': 'off',
     'standard/computed-property-even-spacing': 'off'
   },
   parser: 'babel-eslint'
