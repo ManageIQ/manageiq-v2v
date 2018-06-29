@@ -20,6 +20,7 @@ module.exports = {
   ],
   plugins: ['prettier', 'jest', 'react'],
   rules: {
+    'prettier/prettier': 'error',
     camelcase: 'off',
     'jsx-a11y/anchor-is-valid': 'off',
     'import/prefer-default-export': 'off',
@@ -47,7 +48,6 @@ module.exports = {
     'react/prefer-stateless-function': 'warn',
     'react/forbid-prop-types': 'off',
     'react/require-default-props': 'off',
-    'react/sort-comp': 'off',
     'standard/computed-property-even-spacing': 'off'
   },
   parser: 'babel-eslint'
