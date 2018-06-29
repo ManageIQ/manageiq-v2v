@@ -13,4 +13,8 @@ const mapStateToProps = ({ mappingWizardClustersStep }, ownProps) => ({
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => Object.assign(stateProps, ownProps.data, dispatchProps);
 
-export default connect(mapStateToProps, MappingWizardClustersStepActions, mergeProps)(MappingWizardClustersStep);
+export default connect(
+  mapStateToProps,
+  MappingWizardClustersStepActions,
+  mergeProps
+)(MappingWizardClustersStep);

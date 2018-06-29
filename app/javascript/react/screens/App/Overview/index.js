@@ -24,4 +24,8 @@ const mapStateToProps = ({ overview, overview: { transformationPlans, allRequest
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => Object.assign(stateProps, ownProps.data, dispatchProps);
 
-export default connect(mapStateToProps, Object.assign(OverviewActions, NotificationActions), mergeProps)(Overview);
+export default connect(
+  mapStateToProps,
+  Object.assign(OverviewActions, NotificationActions),
+  mergeProps
+)(Overview);

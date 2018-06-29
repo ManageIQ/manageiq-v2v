@@ -22,4 +22,8 @@ const mapStateToProps = ({ plan }, { data }) => {
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => Object.assign(stateProps, ownProps.data, dispatchProps);
 
-export default connect(mapStateToProps, Object.assign(PlanActions, NotificationActions), mergeProps)(Plan);
+export default connect(
+  mapStateToProps,
+  Object.assign(PlanActions, NotificationActions),
+  mergeProps
+)(Plan);

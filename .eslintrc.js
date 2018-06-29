@@ -20,6 +20,7 @@ module.exports = {
   ],
   plugins: ['prettier', 'jest', 'react'],
   rules: {
+    'prettier/prettier': 'error',
     camelcase: 'off',
     'jsx-a11y/anchor-is-valid': 'off',
     'import/prefer-default-export': 'off',
