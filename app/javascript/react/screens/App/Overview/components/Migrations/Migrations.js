@@ -119,6 +119,7 @@ const Migrations = ({
             <MigrationsCompletedList
               finishedTransformationPlans={finishedTransformationPlans}
               allRequestsWithTasks={allRequestsWithTasks}
+              allTasks={allRequestsWithTasks.map(request => request.miq_request_tasks)}
               retryClick={createTransformationPlanRequestClick}
               loading={isCreatingTransformationPlanRequest}
               redirectTo={redirectTo}
