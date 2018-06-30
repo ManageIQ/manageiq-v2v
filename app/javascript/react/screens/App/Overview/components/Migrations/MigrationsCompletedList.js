@@ -4,11 +4,11 @@ import { noop, Button, ListView, Grid, Spinner, Icon } from 'patternfly-react';
 import { IsoElapsedTime } from '../../../../../../components/dates/IsoElapsedTime';
 import OverviewEmptyState from '../OverviewEmptyState/OverviewEmptyState';
 import getMostRecentRequest from '../../../common/getMostRecentRequest';
+import commonUtilitiesHelper from '../../../common/commonUtilitiesHelper';
 
 const MigrationsCompletedList = ({
   finishedTransformationPlans,
   allRequestsWithTasks,
-  allTasks,
   retryClick,
   loading,
   redirectTo,
@@ -34,49 +34,29 @@ const MigrationsCompletedList = ({
             const failed = mostRecentRequest && mostRecentRequest.status === 'Error';
 
             const tasks = {};
-            if (plan.options.config_info.vm_ids.length > 1) {
+            if (requestsOfAssociatedPlan.length > 0) {
+              const allTasks = requestsOfAssociatedPlan.map(request => request.miq_request_tasks);
+
               const flattenAllTasks = [];
-              allTasks.map(task => task.map(arrayElement => flattenAllTasks.push(arrayElement)));
+              commonUtilitiesHelper.flattenArray(allTasks, flattenAllTasks);
 
-              const planVMTasks = flattenAllTasks.filter(task => plan.options.config_info.vm_ids.indexOf(task.source_id) > -1);
-
-              const groupBy = (items, key) => items.reduce(
-                (result, item) => ({
-                  ...result,
-                  [item[key]]: [
-                    ...(result[item[key]] || []),
-                    item,
-                  ],
-                }),
-                {},
-              );
-
-              const groupedArrReq = groupBy(planVMTasks, 'miq_request_id');
-
-              const getMostRecentTaskFromGroup = tasks2 =>
-                tasks2.reduce((prev, current) => (prev.created_on > current.created_on ? prev : current));
-
-              const vmTasks = [];
-              // vmTasks.push(plan.options.config_info.vm_ids.map(vmId => getMostRecentTaskFromGroup(groupedArr[vmId])));
-              vmTasks.push(plan.miq_requests.map(request => groupedArrReq[request.id]));
-
-              const flattenVMTasks = [];
-              vmTasks.map(task => task.map(arrayElement => arrayElement.map(t => flattenVMTasks.push(t))));
-
-              const groupedByVMId = groupBy(flattenVMTasks, 'source_id');
+              const groupedByVMId = commonUtilitiesHelper.groupBy(flattenAllTasks, 'source_id');
 
               const vmTasksForRequestOfPlan = [];
-              vmTasksForRequestOfPlan.push(plan.options.config_info.vm_ids.map(vmId => getMostRecentTaskFromGroup(groupedByVMId[vmId])));
+              vmTasksForRequestOfPlan.push(
+                plan.options.config_info.vm_ids.map(vmId =>
+                  commonUtilitiesHelper.getMostRecentEntityByCreationDate(groupedByVMId[vmId])
+                )
+              );
 
               const flattenVMTasksForRequestOfPlan = [];
-              vmTasksForRequestOfPlan.map(task => task.map(arrayElement => flattenVMTasksForRequestOfPlan.push(arrayElement)));
+              commonUtilitiesHelper.flattenArray(vmTasksForRequestOfPlan, flattenVMTasksForRequestOfPlan);
 
               flattenVMTasksForRequestOfPlan.forEach(task => {
                 tasks[task.source_id] = task.status === 'Ok';
               });
             } else if (mostRecentRequest) {
-
-               mostRecentRequest.miq_request_tasks.forEach(task => {
+              mostRecentRequest.miq_request_tasks.forEach(task => {
                 tasks[task.source_id] = task.status === 'Ok';
               });
             }
@@ -236,7 +216,6 @@ const MigrationsCompletedList = ({
 MigrationsCompletedList.propTypes = {
   finishedTransformationPlans: PropTypes.array,
   allRequestsWithTasks: PropTypes.array,
-  allTasks: PropTypes.array,
   retryClick: PropTypes.func,
   loading: PropTypes.string,
   redirectTo: PropTypes.func,
