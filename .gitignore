@@ -23,3 +23,6 @@ tmp/
 
 # IDE - VSCode
 .vscode/*
+
+# You guys should check out http://todolist.site/  (brew install todolist)
+.todos.json
