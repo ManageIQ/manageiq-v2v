@@ -1,13 +1,13 @@
 import Immutable from 'seamless-immutable';
 
 import {
-  validateProviders,
-  validateClusters,
-  validateNetworks,
-  validateDatastores,
-  validateTransformationMappings,
-  validatePlans,
-  validateRequests
+  validateOverviewClusters,
+  validateOverviewDatastores,
+  validateOverviewNetworks,
+  validateOverviewPlans,
+  validateOverviewProviders,
+  validateOverviewRequests,
+  validateOverviewMappings
 } from './OverviewValidators';
 
 import {
@@ -143,7 +143,7 @@ export default (state = initialState, action) => {
           return insufficient;
         }
         const providers = action.payload.data.resources;
-        validateProviders(providers);
+        validateOverviewProviders(providers);
         // Providers are sufficient if Vmware and Redhat providers are both present.
         const sufficient =
           providers.some(
@@ -163,7 +163,7 @@ export default (state = initialState, action) => {
       return state.set('isFetchingTransformationMappings', true);
     case `${FETCH_V2V_TRANSFORMATION_MAPPINGS}_FULFILLED`:
       if (action.payload.data && action.payload.data.resources) {
-        validateTransformationMappings(action.payload.data.resources);
+        validateOverviewMappings(action.payload.data.resources);
         return state
           .set('transformationMappings', action.payload.data.resources)
           .set('isRejectedTransformationMappings', false)
@@ -183,7 +183,7 @@ export default (state = initialState, action) => {
     case `${FETCH_V2V_TRANSFORMATION_PLANS}_PENDING`:
       return state.set('isFetchingTransformationPlans', true);
     case `${FETCH_V2V_TRANSFORMATION_PLANS}_FULFILLED`:
-      validatePlans(action.payload.data.resources);
+      validateOverviewPlans(action.payload.data.resources);
       return state
         .set('transformationPlans', action.payload.data.resources)
         .set('isFetchingTransformationPlans', false)
@@ -199,7 +199,7 @@ export default (state = initialState, action) => {
         .set('isFetchingArchivedTransformationPlans', 'true')
         .set('isRejectedArchivedTransformationPlans', false);
     case `${FETCH_V2V_ARCHIVED_TRANSFORMATION_PLANS}_FULFILLED`:
-      validatePlans(action.payload.data.resources);
+      validateOverviewPlans(action.payload.data.resources);
       return state
         .set('archivedTransformationPlans', action.payload.data.resources)
         .set('isFetchingArchivedTransformationPlans', '')
@@ -213,7 +213,7 @@ export default (state = initialState, action) => {
     case `${FETCH_V2V_ALL_REQUESTS_WITH_TASKS}_PENDING`:
       return state.set('isFetchingAllRequestsWithTasks', true);
     case `${FETCH_V2V_ALL_REQUESTS_WITH_TASKS}_FULFILLED`:
-      validateRequests(action.payload.data.results);
+      validateOverviewRequests(action.payload.data.results);
       return state
         .set('allRequestsWithTasks', action.payload.data.results)
         .set('isFetchingAllRequestsWithTasks', false)
@@ -233,7 +233,7 @@ export default (state = initialState, action) => {
         .set('isFetchingAllArchivedPlanRequestsWithTasks', true)
         .set('isRejectedAllArchivedPlanRequestsWithTasks', false);
     case `${FETCH_V2V_ALL_ARCHIVED_PLAN_REQUESTS_WITH_TASKS}_FULFILLED`:
-      validateRequests(action.payload.data.results);
+      validateOverviewRequests(action.payload.data.results);
       return state
         .set('allArchivedPlanRequestsWithTasks', action.payload.data.results)
         .set('isFetchingAllArchivedPlanRequestsWithTasks', false)
@@ -247,7 +247,7 @@ export default (state = initialState, action) => {
     case `${V2V_FETCH_CLUSTERS}_PENDING`:
       return state.set('isFetchingClusters', true);
     case `${V2V_FETCH_CLUSTERS}_FULFILLED`:
-      validateClusters(action.payload.data.resources);
+      validateOverviewClusters(action.payload.data.resources);
       return state
         .set('clusters', action.payload.data.resources)
         .set('isFetchingClusters', false)
@@ -261,7 +261,7 @@ export default (state = initialState, action) => {
     case `${FETCH_NETWORKS}_PENDING`:
       return state.set('isFetchingNetworks', true);
     case `${FETCH_NETWORKS}_FULFILLED`:
-      validateNetworks(action.payload.data.resources);
+      validateOverviewNetworks(action.payload.data.resources);
       return state
         .set('networks', action.payload.data.resources)
         .set('isFetchingNetworks', false)
@@ -275,7 +275,7 @@ export default (state = initialState, action) => {
     case `${FETCH_DATASTORES}_PENDING`:
       return state.set('isFetchingDatastores', true);
     case `${FETCH_DATASTORES}_FULFILLED`:
-      validateDatastores(action.payload.data.resources);
+      validateOverviewDatastores(action.payload.data.resources);
       return state
         .set('datastores', action.payload.data.resources)
         .set('isFetchingDatastores', false)
