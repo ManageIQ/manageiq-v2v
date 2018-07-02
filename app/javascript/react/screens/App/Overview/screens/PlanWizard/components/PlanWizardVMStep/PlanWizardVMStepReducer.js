@@ -77,11 +77,11 @@ const _formatInvalidVms = vms => {
 };
 
 const _formatConflictVms = vms => {
-  const inactiveVM =
-    vms && vms.filter(vm => vm.cluster === '' || vm.path === '');
-  const inactiveVMCount = inactiveVM.length;
+  const inactiveVMCount =
+    (vms && vms.filter(vm => vm.cluster === '' || vm.path === '').length) || 0;
+  const allVMCount = (vms && vms.length) || 0;
   const vmCount =
-    inactiveVMCount > 0 ? vms.length - inactiveVMCount : vms.length;
+    inactiveVMCount > 0 ? allVMCount - inactiveVMCount : allVMCount;
   const uniqueIds = vms && [...new Set(vms.map(value => value.id))];
   return (
     vms &&
