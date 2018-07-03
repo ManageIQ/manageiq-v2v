@@ -20,13 +20,11 @@ const MigrationsInProgressCard = ({ plan, allRequestsWithTasks, reloadCard, hand
   const mostRecentRequest = requestsOfAssociatedPlan.length > 0 && getMostRecentRequest(requestsOfAssociatedPlan);
 
 
-  // === TODO FIXME THIS IS MOCK MUTATION CODE TO BE REMOVED ===
+  // === TODO FIXME-- THE BELOW IS MOCK MUTATION CODE TO BE REMOVED ===
   // This code:
   // * sticks a fake active pre-playbook in the first migration on the screen
   // * sticks a fake active post-playbook in the third migration on the screen
-
   const a = window.dangerousGlobalAccumulator;
-
   const mockTasks = mostRecentRequest.miq_request_tasks.map((task, i) => ({
     ...task,
     options: {
@@ -45,14 +43,20 @@ const MigrationsInProgressCard = ({ plan, allRequestsWithTasks, reloadCard, hand
       }
     }
   }));
-
   window.dangerousGlobalAccumulator++;
   const mostRecentTasks = mockTasks;
-
-  // ^^^ TODO FIXME THIS IS MOCK MUTATION CODE TO BE REMOVED ^^^
+  // ^^^ TODO FIXME-- THE ABOVE IS MOCK MUTATION CODE TO BE REMOVED ^^^
   // We should remove the above code when the real API data is in place.
   
   // const mostRecentTasks = mostRecentRequest.miq_request_tasks;
+
+  const getActivePlaybook = task => {
+    if (!task || !task.options || !task.options.playbooks) return {};
+    const { options: { playbooks } } = task;
+    if (playbooks.pre.status === 'Active') return playbooks.pre;
+    if (playbooks.post.status === 'Active') return playbooks.post;
+    return {};
+  };
 
   const playbooksByTaskId = mostRecentTasks.reduce(
     (map, task) => ({
@@ -67,6 +71,7 @@ const MigrationsInProgressCard = ({ plan, allRequestsWithTasks, reloadCard, hand
     return playbooks.pre.status === 'Active' || playbooks.post.status === 'Active';
   });
   const isSomePlaybookActive = tasksWithActivePlaybooks.length > 0;
+  const activePlaybook = getActivePlaybook(tasksWithActivePlaybooks[0]);
 
   // if most recent request is still pending, show loading card
   if (reloadCard || !mostRecentRequest || mostRecentRequest.request_state === 'pending') {
@@ -93,12 +98,18 @@ const MigrationsInProgressCard = ({ plan, allRequestsWithTasks, reloadCard, hand
       <Grid.Col sm={12} md={6} lg={4}>
         <Card matchHeight>
           <Card.Heading>
-            <h3 className="card-pf-title">PLAN NAME!</h3>
+            <h3 className="card-pf-title">{plan.name}</h3>
           </Card.Heading>
           <Card.Body>
             <EmptyState>
               <Spinner loading size="lg" style={{ marginBottom: '15px' }} />
-              <EmptyState.Info>{__('Initiating migration. This might take a few minutes.')}</EmptyState.Info>
+              <EmptyState.Info>
+                {__('Running playbook service ')}
+                <strong>{activePlaybook.last_task}</strong>
+                {/* TODO/FIXME MJT:  ^^ I'm not sure if this is the string we want here. */}
+                <br />
+                {__('This might take a few minutes.')}
+              </EmptyState.Info>
             </EmptyState>
           </Card.Body>
         </Card>
