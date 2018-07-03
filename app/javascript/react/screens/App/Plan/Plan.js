@@ -43,8 +43,8 @@ class Plan extends React.Component {
       fetchPlanUrl,
       fetchPlanAction,
       planId,
-      fetchPlanRequestUrl,
-      fetchPlanRequestAction,
+      fetchTasksForAllRequestsForPlanUrl,
+      fetchTasksForAllRequestsForPlanAction,
       queryPlanVmsAction
     } = this.props;
 
@@ -58,10 +58,9 @@ class Plan extends React.Component {
 
       if (miq_requests.length > 0) {
         const mostRecentRequest = getMostRecentRequest(miq_requests);
-        const planRequestId = mostRecentRequest.id;
-        fetchPlanRequestAction(fetchPlanRequestUrl, planRequestId);
+        fetchTasksForAllRequestsForPlanAction(fetchTasksForAllRequestsForPlanUrl, miq_requests);
         if (mostRecentRequest.request_state === 'active') {
-          this.startPolling(planRequestId);
+          this.startPolling(miq_requests);
         } else {
           this.setState(() => ({
             planFinished: true
@@ -79,10 +78,10 @@ class Plan extends React.Component {
     resetPlanStateAction();
   }
 
-  startPolling = id => {
-    const { fetchPlanRequestAction, fetchPlanRequestUrl } = this.props;
+  startPolling = requests => {
+    const { fetchTasksForAllRequestsForPlanAction, fetchTasksForAllRequestsForPlanUrl } = this.props;
     this.pollingInterval = setInterval(() => {
-      fetchPlanRequestAction(fetchPlanRequestUrl, id);
+      fetchTasksForAllRequestsForPlanAction(fetchTasksForAllRequestsForPlanUrl, requests);
     }, 15000);
   };
 
@@ -193,8 +192,8 @@ class Plan extends React.Component {
   }
 }
 Plan.propTypes = {
-  fetchPlanRequestUrl: PropTypes.string.isRequired,
-  fetchPlanRequestAction: PropTypes.func.isRequired,
+  fetchTasksForAllRequestsForPlanUrl: PropTypes.string.isRequired,
+  fetchTasksForAllRequestsForPlanAction: PropTypes.func.isRequired,
   planName: PropTypes.string,
   planRequestFailed: PropTypes.bool,
   planArchived: PropTypes.bool,

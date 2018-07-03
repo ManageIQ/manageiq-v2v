@@ -133,7 +133,7 @@ export const coreComponents = [
     type: PlanContainer,
     data: {
       fetchPlanUrl: '/api/service_templates',
-      fetchPlanRequestUrl: '/api/service_requests'
+      fetchTasksForAllRequestsForPlanUrl: '/api/requests?expand=resource&attributes=miq_request_tasks'
     },
     store: true
   },
