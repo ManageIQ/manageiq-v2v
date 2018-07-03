@@ -13,7 +13,7 @@ export const clustersSchema = array()
           name: string().required()
         })
         .required(),
-      v_parent_datacenter: string().required()
+      v_parent_datacenter: string().nullable()
     })
   )
   .nullable();
