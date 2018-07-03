@@ -1,3 +1,4 @@
+import './polyfills';
 import componentRegistry from '../components/componentRegistry';
 import { coreComponents } from '../components';
 import { mount } from '../components/mounter';
