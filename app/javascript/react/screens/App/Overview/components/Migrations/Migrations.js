@@ -49,6 +49,10 @@ const Migrations = ({
     setActiveFilter(eventKey);
   };
 
+  // TODO FIXME MJT: Remove this and every reference to it.
+  window.dangerousGlobalAccumulator = 0;
+  // This is to make it easy to do my lazy throwaway mock code.
+
   return (
     <React.Fragment>
       <Grid.Col xs={12}>

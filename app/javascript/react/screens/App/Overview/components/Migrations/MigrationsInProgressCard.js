@@ -19,6 +19,55 @@ const MigrationsInProgressCard = ({ plan, allRequestsWithTasks, reloadCard, hand
   const requestsOfAssociatedPlan = allRequestsWithTasks.filter(request => request.source_id === plan.id);
   const mostRecentRequest = requestsOfAssociatedPlan.length > 0 && getMostRecentRequest(requestsOfAssociatedPlan);
 
+
+  // === TODO FIXME THIS IS MOCK MUTATION CODE TO BE REMOVED ===
+  // This code:
+  // * sticks a fake active pre-playbook in the first migration on the screen
+  // * sticks a fake active post-playbook in the third migration on the screen
+
+  const a = window.dangerousGlobalAccumulator;
+
+  const mockTasks = mostRecentRequest.miq_request_tasks.map((task, i) => ({
+    ...task,
+    options: {
+      ...task.options,
+      playbooks: {
+        pre: {
+          job_id: 4,
+          status: (a === 0 && i === 0 ? "Active" : "Succeeded"),
+          last_task: "Task name"
+        },
+        post: {
+          job_id: 5,
+          status: (a === 2 && i === 0 ? "Active" : "Succeeded"),
+          last_task: "Task name"
+        }
+      }
+    }
+  }));
+
+  window.dangerousGlobalAccumulator++;
+  const mostRecentTasks = mockTasks;
+
+  // ^^^ TODO FIXME THIS IS MOCK MUTATION CODE TO BE REMOVED ^^^
+  // We should remove the above code when the real API data is in place.
+  
+  // const mostRecentTasks = mostRecentRequest.miq_request_tasks;
+
+  const playbooksByTaskId = mostRecentTasks.reduce(
+    (map, task) => ({
+      ...map,
+      [task.id]: task.options.playbooks
+    }),
+    {}
+  );
+
+  const tasksWithActivePlaybooks = mostRecentTasks.filter(task => {
+    const playbooks = playbooksByTaskId[task.id];
+    return playbooks.pre.status === 'Active' || playbooks.post.status === 'Active';
+  });
+  const isSomePlaybookActive = tasksWithActivePlaybooks.length > 0;
+
   // if most recent request is still pending, show loading card
   if (reloadCard || !mostRecentRequest || mostRecentRequest.request_state === 'pending') {
     return (
@@ -26,6 +75,25 @@ const MigrationsInProgressCard = ({ plan, allRequestsWithTasks, reloadCard, hand
         <Card matchHeight>
           <Card.Heading>
             <h3 className="card-pf-title">{plan.name}</h3>
+          </Card.Heading>
+          <Card.Body>
+            <EmptyState>
+              <Spinner loading size="lg" style={{ marginBottom: '15px' }} />
+              <EmptyState.Info>{__('Initiating migration. This might take a few minutes.')}</EmptyState.Info>
+            </EmptyState>
+          </Card.Body>
+        </Card>
+      </Grid.Col>
+    );
+  }
+
+  // If we have active Ansible Playbooks, display their status instead of the overall status.
+  if (isSomePlaybookActive) {
+    return (
+      <Grid.Col sm={12} md={6} lg={4}>
+        <Card matchHeight>
+          <Card.Heading>
+            <h3 className="card-pf-title">PLAN NAME!</h3>
           </Card.Heading>
           <Card.Body>
             <EmptyState>
@@ -59,6 +127,11 @@ const MigrationsInProgressCard = ({ plan, allRequestsWithTasks, reloadCard, hand
       tasks[task.source_id].virtv2v_disks = task.options.virtv2v_disks;
     });
   });
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////
+  // TODO / FIXME MJT: Hmm. Maybe we want to look at ALL tasks on all requests, for playbooks?
+  //                   (and not just on the mostRecentRequest)
+  ////////////////////////////////////////////////////////////////////////////////////////////////////
 
   let completedVMs = 0;
   const totalVMs = Object.keys(tasks).length;
