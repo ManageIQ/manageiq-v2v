@@ -17,7 +17,7 @@ export const transformationPlans = Immutable({
           vm_ids: ['1', '3']
         }
       },
-      created_at: '2018-05-01T12:15:00Z',
+      created_on: '2018-05-01T12:15:00Z',
       id: '10',
       miq_requests: []
     },
@@ -81,7 +81,7 @@ export const transformationPlans = Immutable({
           vm_ids: ['1', '3']
         }
       },
-      created_at: '2018-05-01T12:13:50Z',
+      created_on: '2018-05-01T12:13:50Z',
       id: '30',
       miq_requests: [
         {
@@ -166,7 +166,7 @@ export const transformationPlans = Immutable({
           vm_ids: ['1', '3']
         }
       },
-      created_at: '2018-05-01T12:13:50',
+      created_on: '2018-05-01T12:13:50',
       id: '40',
       miq_requests: [
         {
@@ -217,7 +217,7 @@ export const transformationPlans = Immutable({
           vm_ids: ['1', '3']
         }
       },
-      created_at: '2018-05-01T12:13:50Z',
+      created_on: '2018-05-01T12:13:50Z',
       id: '50',
       miq_requests: [
         {
@@ -268,7 +268,7 @@ export const transformationPlans = Immutable({
           vm_ids: ['1', '3']
         }
       },
-      created_at: '2018-05-01T12:13:50Z',
+      created_on: '2018-05-01T12:13:50Z',
       id: '60',
       miq_requests: [
         {
