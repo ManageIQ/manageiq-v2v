@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`groupByUidEms creates a mapping of networks organized by uid_ems 1`] = `
+exports[`uniqueNetworks creates a mapping of networks organized by uid_ems and lan id 1`] = `
 Object {
-  "VMWareCluster1-vm_network1": Array [
+  "1-1\\\\VMWareCluster1-vm_network1": Array [
     Object {
       "allow_promiscuous": null,
       "computed_allow_promiscuous": null,
@@ -20,6 +20,8 @@ Object {
       "uid_ems": "VMWareCluster1-vm_network1",
       "updated_on": "2017-06-01T04:24:18Z",
     },
+  ],
+  "1-2\\\\VMWareCluster1-vm_network1": Array [
     Object {
       "allow_promiscuous": null,
       "computed_allow_promiscuous": null,
@@ -38,7 +40,7 @@ Object {
       "updated_on": "2017-06-01T04:24:18Z",
     },
   ],
-  "VMWareCluster1-vm_network2": Array [
+  "1-3\\\\VMWareCluster1-vm_network2": Array [
     Object {
       "allow_promiscuous": null,
       "computed_allow_promiscuous": null,
@@ -57,7 +59,7 @@ Object {
       "updated_on": "2017-06-01T04:24:18Z",
     },
   ],
-  "VMWareCluster1-vm_network3": Array [
+  "1-4\\\\VMWareCluster1-vm_network3": Array [
     Object {
       "allow_promiscuous": null,
       "computed_allow_promiscuous": null,

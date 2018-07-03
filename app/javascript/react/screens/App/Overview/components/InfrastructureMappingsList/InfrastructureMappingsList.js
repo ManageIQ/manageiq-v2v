@@ -297,6 +297,9 @@ class InfrastructureMappingsList extends React.Component {
                                             <div key={source.sourceNetwork.id}>
                                               {this.clusterName(source.sourceCluster)}
                                               {` \\ ${source.sourceNetwork.name} `}
+                                              {` \\ `}
+                                              {__('Switch')}
+                                              {` ${source.sourceNetwork.switch_id} `}
                                             </div>
                                           ))}
                                         </MappingSource>

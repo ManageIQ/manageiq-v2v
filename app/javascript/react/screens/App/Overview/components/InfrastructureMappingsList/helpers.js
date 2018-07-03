@@ -1,3 +1,5 @@
+import { networkKey } from '../../../common/networkKey';
+
 export const mapInfrastructureMappings = (transformation_mapping_items, clusters, datastores, networks) => {
   /**
    * map the target source -> destination clusters/networks/datastores for
@@ -105,7 +107,7 @@ export const mapInfrastructureMappings = (transformation_mapping_items, clusters
     }
   });
 
-  // create unique networks mappings by unique target network (using ems_uid)
+  // create unique networks mappings by unique target network (using ems_uid + lan id )
   const targetNetworks = {};
   networkMappingItems.forEach(networkMapping => {
     const clusterMapping = clustersByMappingId[networkMapping.transformation_mapping_id];
@@ -125,18 +127,19 @@ export const mapInfrastructureMappings = (transformation_mapping_items, clusters
         targetCluster
       };
       // LANs are currently duplicated in the backend database model, so
-      // we dedupe them using uid_ems attribute for now.
-      if (targetNetworks[targetNetwork.uid_ems]) {
-        const duplicatedLanIndex = targetNetworks[targetNetwork.uid_ems].sources.findIndex(
-          s => s.sourceNetwork.uid_ems === sourceNetwork.uid_ems
+      // we dedupe them using uid_ems + lan id attribute for now.
+      const targetNetworkKey = networkKey(targetNetwork);
+      if (targetNetworks[targetNetworkKey]) {
+        const duplicatedLanIndex = targetNetworks[targetNetworkKey].sources.findIndex(
+          s => networkKey(s.sourceNetwork) === networkKey(sourceNetwork)
         );
         if (duplicatedLanIndex === -1) {
-          targetNetworks[targetNetwork.uid_ems].sources.push(source);
+          targetNetworks[targetNetworkKey].sources.push(source);
         }
       } else {
-        targetNetworks[targetNetwork.uid_ems] = {};
-        targetNetworks[targetNetwork.uid_ems].target = target;
-        targetNetworks[targetNetwork.uid_ems].sources = [source];
+        targetNetworks[targetNetworkKey] = {};
+        targetNetworks[targetNetworkKey].target = target;
+        targetNetworks[targetNetworkKey].sources = [source];
       }
     }
   });

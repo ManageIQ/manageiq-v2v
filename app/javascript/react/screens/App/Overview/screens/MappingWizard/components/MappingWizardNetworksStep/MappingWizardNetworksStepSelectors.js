@@ -1,8 +1,12 @@
-export const groupByUidEms = (networks = []) =>
+import { networkKey } from '../../../../../common/networkKey';
+
+export const uniqueNetworks = (networks = []) =>
   networks.reduce(
     (networksMap, network) => ({
       ...networksMap,
-      [network.uid_ems]: networksMap[network.uid_ems] ? [...networksMap[network.uid_ems], network] : [network]
+      [networkKey(network)]: networksMap[networkKey(network)]
+        ? [...networksMap[networkKey(network)], network]
+        : [network]
     }),
     {}
   );
