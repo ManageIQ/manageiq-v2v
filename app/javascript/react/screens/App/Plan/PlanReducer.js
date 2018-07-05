@@ -1,6 +1,7 @@
 import Immutable from 'seamless-immutable';
 import numeral from 'numeral';
 import commonUtilitiesHelper from '../common/commonUtilitiesHelper';
+import getMostRecentVMTasksFromRequests from '../Overview/components/Migrations/helpers/getMostRecentVMTasksFromRequests';
 
 import {
   FETCH_V2V_PLAN,
@@ -98,22 +99,9 @@ const processVMTasks = vmTasks => {
   return tasks;
 };
 
-const allVMTasksForRequestOfPlan = (vm_ids, requestWithTasks) => {
-  const allTasks = requestWithTasks.map(request => request.miq_request_tasks);
-
-  const flattenAllTasks = [];
-  commonUtilitiesHelper.flattenArray(allTasks, flattenAllTasks);
-
-  const groupedByVMId = commonUtilitiesHelper.groupBy(flattenAllTasks, 'source_id');
-
-  const vmTasksForRequestOfPlan = [];
-  vmTasksForRequestOfPlan.push(
-    vm_ids.map(vmId => commonUtilitiesHelper.getMostRecentEntityByCreationDate(groupedByVMId[vmId]))
-  );
-
-  const flattenVMTasksForRequestOfPlan = [];
-  commonUtilitiesHelper.flattenArray(vmTasksForRequestOfPlan, flattenVMTasksForRequestOfPlan);
-  return processVMTasks(flattenVMTasksForRequestOfPlan);
+const allVMTasksForRequestOfPlan = (requestWithTasks, vm_ids) => {
+  const tasksOfPlan = getMostRecentVMTasksFromRequests(requestWithTasks, vm_ids);
+  return processVMTasks(tasksOfPlan);
 };
 
 export default (state = initialState, action) => {
@@ -141,7 +129,7 @@ export default (state = initialState, action) => {
         return state
           .set(
             'planRequestTasks',
-            allVMTasksForRequestOfPlan(state.plan.options.config_info.vm_ids, action.payload.data.results)
+            allVMTasksForRequestOfPlan(action.payload.data.results, state.plan.options.config_info.vm_ids)
           )
           .set('allRequestsWithTasksForPlan', action.payload.data.results)
           .set('planRequestPreviouslyFetched', true)
