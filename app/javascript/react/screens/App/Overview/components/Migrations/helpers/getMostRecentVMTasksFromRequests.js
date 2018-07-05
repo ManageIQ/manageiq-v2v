@@ -4,7 +4,7 @@ const getMostRecentVMTasksFromRequests = (requests, vm_ids) => {
   const allTasks = requests.map(request => request.miq_request_tasks);
 
   const flattenAllTasks = [];
-  commonUtilitiesHelper.flattenArray(allTasks, flattenAllTasks);
+  commonUtilitiesHelper.flatten(allTasks, flattenAllTasks);
 
   const groupedByVMId = commonUtilitiesHelper.groupBy(flattenAllTasks, 'source_id');
 
@@ -14,7 +14,7 @@ const getMostRecentVMTasksFromRequests = (requests, vm_ids) => {
   );
 
   const flattenVMTasksForRequestOfPlan = [];
-  commonUtilitiesHelper.flattenArray(vmTasksForRequestOfPlan, flattenVMTasksForRequestOfPlan);
+  commonUtilitiesHelper.flatten(vmTasksForRequestOfPlan, flattenVMTasksForRequestOfPlan);
 
   return flattenVMTasksForRequestOfPlan;
 };
