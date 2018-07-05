@@ -4,7 +4,7 @@ import { noop, Button, ListView, Grid, Spinner, Icon } from 'patternfly-react';
 import { IsoElapsedTime } from '../../../../../../components/dates/IsoElapsedTime';
 import OverviewEmptyState from '../OverviewEmptyState/OverviewEmptyState';
 import getMostRecentRequest from '../../../common/getMostRecentRequest';
-import commonUtilitiesHelper from '../../../common/commonUtilitiesHelper';
+import getMostRecentVMTasksFromRequests from './helpers/getMostRecentVMTasksFromRequests';
 
 const MigrationsCompletedList = ({
   finishedTransformationPlans,
@@ -34,32 +34,15 @@ const MigrationsCompletedList = ({
             const failed = mostRecentRequest && mostRecentRequest.status === 'Error';
 
             const tasks = {};
+            let tasksOfPlan = {};
             if (requestsOfAssociatedPlan.length > 0) {
-              const allTasks = requestsOfAssociatedPlan.map(request => request.miq_request_tasks);
-
-              const flattenAllTasks = [];
-              commonUtilitiesHelper.flattenArray(allTasks, flattenAllTasks);
-
-              const groupedByVMId = commonUtilitiesHelper.groupBy(flattenAllTasks, 'source_id');
-
-              const vmTasksForRequestOfPlan = [];
-              vmTasksForRequestOfPlan.push(
-                plan.options.config_info.vm_ids.map(vmId =>
-                  commonUtilitiesHelper.getMostRecentEntityByCreationDate(groupedByVMId[vmId])
-                )
-              );
-
-              const flattenVMTasksForRequestOfPlan = [];
-              commonUtilitiesHelper.flattenArray(vmTasksForRequestOfPlan, flattenVMTasksForRequestOfPlan);
-
-              flattenVMTasksForRequestOfPlan.forEach(task => {
-                tasks[task.source_id] = task.status === 'Ok';
-              });
+              tasksOfPlan = getMostRecentVMTasksFromRequests(requestsOfAssociatedPlan, plan.options.config_info.vm_ids);
             } else if (mostRecentRequest) {
-              mostRecentRequest.miq_request_tasks.forEach(task => {
-                tasks[task.source_id] = task.status === 'Ok';
-              });
+              tasksOfPlan = mostRecentRequest.miq_request_tasks;
             }
+            tasksOfPlan.forEach(task => {
+              tasks[task.source_id] = task.status === 'Ok';
+            });
             let succeedCount = 0;
             Object.keys(tasks).forEach(key => {
               if (tasks[key]) succeedCount += 1;
