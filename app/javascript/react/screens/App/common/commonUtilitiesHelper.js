@@ -11,7 +11,7 @@ const commonUtilitiesHelper = {
       {}
     ),
 
-  flattenArray: (arrayItems, flattenedArray) =>
+  flatten: (arrayItems, flattenedArray) =>
     arrayItems.map(task => task.map(arrayElement => flattenedArray.push(arrayElement)))
 };
 
