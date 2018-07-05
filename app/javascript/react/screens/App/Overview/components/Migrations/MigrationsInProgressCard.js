@@ -14,6 +14,7 @@ import {
 } from 'patternfly-react';
 import TickingIsoElapsedTime from '../../../../../../components/dates/TickingIsoElapsedTime';
 import getMostRecentRequest from '../../../common/getMostRecentRequest';
+import getMostRecentVMTasksFromRequests from './helpers/getMostRecentVMTasksFromRequests';
 
 const MigrationsInProgressCard = ({ plan, allRequestsWithTasks, reloadCard, handleClick }) => {
   const requestsOfAssociatedPlan = allRequestsWithTasks.filter(request => request.source_id === plan.id);
@@ -52,12 +53,17 @@ const MigrationsInProgressCard = ({ plan, allRequestsWithTasks, reloadCard, hand
   // UX business rule 2: aggregrate the tasks across requests reflecting current status of all tasks,
   // (gather the last status for the vm, gather the last storage for use in UX bussiness rule 3)
   const tasks = {};
-  if (mostRecentRequest)
-    mostRecentRequest.miq_request_tasks.forEach(task => {
-      tasks[task.source_id] = tasks[task.source_id] || {};
-      tasks[task.source_id].completed = task.status === 'Ok' && task.state === 'finished';
-      tasks[task.source_id].virtv2v_disks = task.options.virtv2v_disks;
-    });
+  let tasksOfPlan = {};
+  if (requestsOfAssociatedPlan.length > 0) {
+    tasksOfPlan = getMostRecentVMTasksFromRequests(requestsOfAssociatedPlan, plan.options.config_info.vm_ids);
+  } else if (mostRecentRequest) {
+    tasksOfPlan = mostRecentRequest.miq_request_tasks;
+  }
+  tasksOfPlan.forEach(task => {
+    tasks[task.source_id] = tasks[task.source_id] || {};
+    tasks[task.source_id].completed = task.status === 'Ok' && task.state === 'finished';
+    tasks[task.source_id].virtv2v_disks = task.options.virtv2v_disks;
+  });
 
   let completedVMs = 0;
   const totalVMs = Object.keys(tasks).length;
