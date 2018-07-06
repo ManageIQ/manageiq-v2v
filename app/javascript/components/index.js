@@ -112,7 +112,7 @@ export const coreComponents = [
         '&sort_order=desc',
       fetchClustersUrl:
         'api/clusters/' +
-        '?attributes=ext_management_system.emstype,v_parent_datacenter,ext_management_system.name' +
+        '?attributes=ext_management_system.emstype,v_parent_datacenter,ext_management_system.name,lans,storages' +
         '&expand=resources',
       fetchNetworksUrl: 'api/lans/?expand=resources',
       fetchDatastoresUrl: 'api/data_stores?expand=resources'
