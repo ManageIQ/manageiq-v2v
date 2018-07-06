@@ -1,3 +1,4 @@
+import Immutable from 'seamless-immutable';
 import { networkKey } from '../../../common/networkKey';
 
 export const mapInfrastructureMappings = (transformation_mapping_items, clusters, datastores, networks) => {
@@ -113,8 +114,12 @@ export const mapInfrastructureMappings = (transformation_mapping_items, clusters
     const clusterMapping = clustersByMappingId[networkMapping.transformation_mapping_id];
     const sourceCluster = clusters.find(c => c.id === clusterMapping.source_id);
     const targetCluster = clusters.find(c => c.id === clusterMapping.destination_id);
-    const sourceNetwork = networks.find(d => d.id === networkMapping.source_id);
-    const targetNetwork = networks.find(d => d.id === networkMapping.destination_id);
+
+    const sn = networks.find(d => d.id === networkMapping.source_id);
+    const sourceNetwork = Immutable.set(sn, 'clusterId', sourceCluster.id);
+
+    const tn = networks.find(d => d.id === networkMapping.destination_id);
+    const targetNetwork = Immutable.set(tn, 'clusterId', targetCluster.id);
 
     if (clusterMapping && sourceCluster && targetCluster && sourceNetwork && targetNetwork) {
       const source = {

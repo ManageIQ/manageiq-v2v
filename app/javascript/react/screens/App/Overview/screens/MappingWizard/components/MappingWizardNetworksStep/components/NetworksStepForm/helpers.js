@@ -33,7 +33,7 @@ export const clustersMappingWithTreeViewAttrs = clusterMapping => ({
 
 export const targetNetworkWithTreeViewAttrs = targetNetwork => ({
   ...targetNetwork,
-  text: targetNetwork.name,
+  text: `${targetNetwork.providerName} \\ ${targetNetwork.name}`,
   selectable: true,
   selected: false,
   state: {
@@ -43,7 +43,7 @@ export const targetNetworkWithTreeViewAttrs = targetNetwork => ({
 
 export const sourceNetworkWithTreeViewAttrs = (sourceNetwork, selectedCluster) => ({
   ...sourceNetwork,
-  text: `${sourceNetwork.name} \\ ${__('Switch')} ${sourceNetwork.switch_id}`,
+  text: `${sourceNetwork.providerName} \\ ${sourceNetwork.name}`,
   icon: 'fa fa-file-o',
   sourceClusterId: selectedCluster.id,
   selectable: true,

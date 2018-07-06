@@ -305,9 +305,7 @@ class NetworksStepForm extends React.Component {
               sourceNetworksFilter(groupedSourceNetworks, input.value).map(sourceNetwork => (
                 <DualPaneMapperListItem
                   item={sourceNetwork}
-                  text={`${sourceNetwork.providerName} \\ ${sourceNetwork.name} \\ ${__('Switch')} ${
-                    sourceNetwork.switch_id
-                  }`}
+                  text={`${sourceNetwork.providerName} \\ ${sourceNetwork.name}`}
                   key={sourceNetwork.id}
                   selected={
                     selectedSourceNetworks &&
