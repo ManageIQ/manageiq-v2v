@@ -81,7 +81,7 @@ test("dedupeMappedTargetNetworks reduces a networks step mapping's nodes to repr
     nodes: [targetNetworkSwitchOne, targetNetworkSwitchTwo]
   };
 
-  expect(dedupeMappedTargetNetworks(networksStepMapping).nodes).toHaveLength(2);
+  expect(dedupeMappedTargetNetworks(networksStepMapping).nodes).toHaveLength(1);
 });
 
 test('mappingsForTreeView reduces source networks to representatives for all networks step mappings', () => {

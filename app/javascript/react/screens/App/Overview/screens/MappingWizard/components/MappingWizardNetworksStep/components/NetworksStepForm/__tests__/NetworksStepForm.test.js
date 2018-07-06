@@ -30,7 +30,7 @@ beforeEach(() => {
 describe('#addNetworkMapping', () => {
   describe('maps a network grouping to the selected target network', () => {
     describe('when a mapping does not exist for the target network', () => {
-      xit('and there is no mapping for the target cluster', () => {
+      test('and there is no mapping for the target cluster', () => {
         const [targetNetworkToMap] = targetNetworks;
         const wrapper = shallow(
           <NetworksStepForm
@@ -118,7 +118,7 @@ describe('#addNetworkMapping', () => {
       });
     });
 
-    xit('when a mapping exists for the target network', () => {
+    test('when a mapping exists for the target network', () => {
       const [mappedTargetNetwork] = targetNetworks;
       const [, , mappedSourceNetwork] = sourceNetworks;
       const srcNetworks = [...networkGrouping, mappedSourceNetwork];
@@ -177,11 +177,9 @@ describe('#addNetworkMapping', () => {
 
 describe('#removeNode', () => {
   const [targetNetworkOne, targetNetworkTwo] = targetNetworks;
-
-  const sourceNetworkOne = sourceNetworks.slice(0, 1);
-  const sourceNetworkTwo = sourceNetworks.slice(1, 2);
-
-  const groupedSourceNetworks = uniqueNetworks([...sourceNetworkOne, ...sourceNetworkTwo]);
+  const sourceNetworkGroupOne = sourceNetworks.slice(0, 2);
+  const sourceNetworkGroupTwo = sourceNetworks.slice(2, 3);
+  const groupedSourceNetworks = uniqueNetworks([...sourceNetworkGroupOne, ...sourceNetworkGroupTwo]);
   const groupedTargetNetworks = uniqueNetworks([targetNetworkOne, targetNetworkTwo]);
   props = {
     ...props,
@@ -191,11 +189,11 @@ describe('#removeNode', () => {
   describe('when removing a target network', () => {
     const nodeToRemove = {
       ...targetNetworkOne,
-      nodes: sourceNetworkOne
+      nodes: sourceNetworkGroupOne
     };
     const nodeShouldRemain = {
       ...targetNetworkTwo,
-      nodes: sourceNetworkTwo
+      nodes: sourceNetworkGroupTwo
     };
     test('it also removes all of the mapped source networks', () => {
       const networksStepMapping = {
@@ -238,7 +236,7 @@ describe('#removeNode', () => {
   });
 
   describe('when removing a source network', () => {
-    const [groupRepresentative] = sourceNetworkOne;
+    const [groupRepresentative] = sourceNetworkGroupOne;
 
     test('it removes the entire source network grouping', () => {
       const networksStepMapping = {
@@ -246,7 +244,7 @@ describe('#removeNode', () => {
         nodes: [
           {
             ...targetNetworkOne,
-            nodes: [...sourceNetworkOne, ...sourceNetworkTwo]
+            nodes: [...sourceNetworkGroupOne, ...sourceNetworkGroupTwo]
           }
         ]
       };
@@ -265,7 +263,7 @@ describe('#removeNode', () => {
           nodes: [
             {
               ...targetNetworkOne,
-              nodes: sourceNetworkTwo
+              nodes: sourceNetworkGroupTwo
             }
           ]
         }
@@ -275,11 +273,11 @@ describe('#removeNode', () => {
     test('it removes the entire networks mapping if no source networks remain', () => {
       const mappingToRemove = {
         ...targetNetworkOne,
-        nodes: sourceNetworkOne
+        nodes: sourceNetworkGroupOne
       };
       const mappingShouldRemain = {
         ...targetNetworkTwo,
-        nodes: sourceNetworkTwo
+        nodes: sourceNetworkGroupTwo
       };
       const networksStepMapping = {
         ...targetCluster,
