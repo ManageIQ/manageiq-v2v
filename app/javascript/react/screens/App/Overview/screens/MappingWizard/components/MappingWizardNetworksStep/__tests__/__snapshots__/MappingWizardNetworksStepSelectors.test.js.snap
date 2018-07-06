@@ -1,10 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`groupByUidEms creates a mapping of networks organized by uid_ems 1`] = `
+exports[`uniqueNetworks creates a mapping of grouped networks 1`] = `
 Object {
-  "VMWareCluster1-vm_network1": Array [
+  "1\\\\VMWareCluster1-vm_network1": Array [
     Object {
       "allow_promiscuous": null,
+      "clusterId": "1",
       "computed_allow_promiscuous": null,
       "computed_forged_transmits": null,
       "computed_mac_changes": null,
@@ -22,6 +23,7 @@ Object {
     },
     Object {
       "allow_promiscuous": null,
+      "clusterId": "1",
       "computed_allow_promiscuous": null,
       "computed_forged_transmits": null,
       "computed_mac_changes": null,
@@ -38,9 +40,10 @@ Object {
       "updated_on": "2017-06-01T04:24:18Z",
     },
   ],
-  "VMWareCluster1-vm_network2": Array [
+  "1\\\\VMWareCluster1-vm_network2": Array [
     Object {
       "allow_promiscuous": null,
+      "clusterId": "1",
       "computed_allow_promiscuous": null,
       "computed_forged_transmits": null,
       "computed_mac_changes": null,
@@ -57,9 +60,10 @@ Object {
       "updated_on": "2017-06-01T04:24:18Z",
     },
   ],
-  "VMWareCluster1-vm_network3": Array [
+  "1\\\\VMWareCluster1-vm_network3": Array [
     Object {
       "allow_promiscuous": null,
+      "clusterId": "1",
       "computed_allow_promiscuous": null,
       "computed_forged_transmits": null,
       "computed_mac_changes": null,

@@ -11,6 +11,7 @@ Object {
   "sourceNetworks": Array [
     Object {
       "allow_promiscuous": null,
+      "clusterId": "1",
       "computed_allow_promiscuous": null,
       "computed_forged_transmits": null,
       "computed_mac_changes": null,
@@ -69,6 +70,7 @@ Object {
   "targetNetworks": Array [
     Object {
       "allow_promiscuous": null,
+      "clusterId": "1",
       "computed_allow_promiscuous": null,
       "computed_forged_transmits": null,
       "computed_mac_changes": null,

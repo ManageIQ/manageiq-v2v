@@ -1,10 +1,11 @@
-import { groupByUidEms } from '../../MappingWizardNetworksStepSelectors';
+import { uniqueNetworks } from '../../MappingWizardNetworksStepSelectors';
+import { networkKey } from '../../../../../../../common/networkKey';
 
 export const getRepresentatives = (groupedNetworks = {}) => {
   const representatives = [];
-  for (const uid_ems in groupedNetworks) {
-    if ({}.hasOwnProperty.call(groupedNetworks, uid_ems)) {
-      representatives.push(groupedNetworks[uid_ems][0]);
+  for (const key in groupedNetworks) {
+    if ({}.hasOwnProperty.call(groupedNetworks, key)) {
+      representatives.push(groupedNetworks[key][0]);
     }
   }
   return representatives;
@@ -20,7 +21,7 @@ export const sourceNetworksFilter = (groupedSourceNetworks, networksStepMappings
   }, []);
 
   return getRepresentatives(groupedSourceNetworks).filter(
-    network => !mappedNetworks.some(mappedNetwork => mappedNetwork.uid_ems === network.uid_ems)
+    network => !mappedNetworks.some(mappedNetwork => networkKey(mappedNetwork) === networkKey(network))
   );
 };
 
@@ -32,7 +33,7 @@ export const clustersMappingWithTreeViewAttrs = clusterMapping => ({
 
 export const targetNetworkWithTreeViewAttrs = targetNetwork => ({
   ...targetNetwork,
-  text: targetNetwork.name,
+  text: `${targetNetwork.providerName} \\ ${targetNetwork.name}`,
   selectable: true,
   selected: false,
   state: {
@@ -42,7 +43,7 @@ export const targetNetworkWithTreeViewAttrs = targetNetwork => ({
 
 export const sourceNetworkWithTreeViewAttrs = (sourceNetwork, selectedCluster) => ({
   ...sourceNetwork,
-  text: sourceNetwork.name,
+  text: `${sourceNetwork.providerName} \\ ${sourceNetwork.name}`,
   icon: 'fa fa-file-o',
   sourceClusterId: selectedCluster.id,
   selectable: true,
@@ -50,13 +51,13 @@ export const sourceNetworkWithTreeViewAttrs = (sourceNetwork, selectedCluster) =
 });
 
 export const networkGroupingForRep = (sourceNetworkRep, groupedSourceNetworks, selectedCluster) => {
-  const sourceNetworks = groupedSourceNetworks[sourceNetworkRep.uid_ems];
+  const sourceNetworks = groupedSourceNetworks[networkKey(sourceNetworkRep)];
   return sourceNetworks.map(sourceNetwork => sourceNetworkWithTreeViewAttrs(sourceNetwork, selectedCluster));
 };
 
 export const dedupeMappedSourceNetworks = networksMapping => {
   const { nodes: sourceNetworks, ...targetNetwork } = networksMapping;
-  const groupedNetworks = groupByUidEms(sourceNetworks);
+  const groupedNetworks = uniqueNetworks(sourceNetworks);
   return {
     ...targetNetwork,
     nodes: getRepresentatives(groupedNetworks)
@@ -65,7 +66,7 @@ export const dedupeMappedSourceNetworks = networksMapping => {
 
 export const dedupeMappedTargetNetworks = networksStepMapping => {
   const { nodes: networksMappings, ...targetCluster } = networksStepMapping;
-  const groupedMappings = groupByUidEms(networksMappings);
+  const groupedMappings = uniqueNetworks(networksMappings);
   return {
     ...targetCluster,
     nodes: getRepresentatives(groupedMappings)
@@ -102,7 +103,7 @@ export const mappingWithTargetNetworkRemoved = (networksStepMapping, targetNetwo
 export const mappingWithSourceNetworkRemoved = (networksMapping, sourceNetworkToRemove) => {
   const { nodes: sourceNetworks, ...targetNetwork } = networksMapping;
   const updatedSourceNetworks = sourceNetworks.filter(
-    sourceNetwork => sourceNetwork.uid_ems !== sourceNetworkToRemove.uid_ems
+    sourceNetwork => networkKey(sourceNetwork) !== networkKey(sourceNetworkToRemove)
   );
   return updatedSourceNetworks.length === 0
     ? null

@@ -11,7 +11,7 @@ import {
   mappingWithTargetNetworkRemoved,
   mappingWithSourceNetworkRemoved
 } from '../helpers';
-import { groupByUidEms } from '../../../MappingWizardNetworksStepSelectors';
+import { uniqueNetworks } from '../../../MappingWizardNetworksStepSelectors';
 import {
   sourceNetworks,
   targetNetworks,
@@ -22,7 +22,7 @@ import {
 } from '../networksStepForm.fixtures';
 
 test('getRepresentatives should return an array with a representative from each source network grouping', () => {
-  expect(getRepresentatives(groupByUidEms(sourceNetworks))).toMatchSnapshot();
+  expect(getRepresentatives(uniqueNetworks(sourceNetworks))).toMatchSnapshot();
 });
 
 test('sourceNetworksFilter should return a representative for each source network grouping that have not been mapped', () => {
@@ -39,7 +39,7 @@ test('sourceNetworksFilter should return a representative for each source networ
       }
     ]
   };
-  expect(sourceNetworksFilter(groupByUidEms(sourceNetworks), [networksStepMapping])).toMatchSnapshot();
+  expect(sourceNetworksFilter(uniqueNetworks(sourceNetworks), [networksStepMapping])).toMatchSnapshot();
 });
 
 test('clustersMappingWithTreeViewAttrs adds extra attributes for display in TreeView', () => {
@@ -59,7 +59,7 @@ test('sourceNetworkWithTreeViewAttrs adds extra attributes for display in TreeVi
 
 test('networkGroupingForRep returns the network grouping, with TreeView attrs, for a representative', () => {
   const [sourceNetworkRep] = networkGrouping;
-  const groupedSourceNetworks = groupByUidEms(networkGrouping);
+  const groupedSourceNetworks = uniqueNetworks(networkGrouping);
   const selectedCluster = sourceCluster;
 
   expect(networkGroupingForRep(sourceNetworkRep, groupedSourceNetworks, selectedCluster)).toMatchSnapshot();
@@ -134,7 +134,7 @@ describe('mappingWithSourceNetworkRemoved', () => {
   const [sourceNetworkToRemove] = networkGrouping;
   const [targetNetwork] = targetNetworks;
 
-  test('removes all networks whose uid_ems matches that of the specified source network', () => {
+  test('removes all networks whose network key matches that of the specified source network', () => {
     const networksMapping = {
       ...targetNetwork,
       nodes: [...networkGrouping, sourceNetworkShouldRemain]

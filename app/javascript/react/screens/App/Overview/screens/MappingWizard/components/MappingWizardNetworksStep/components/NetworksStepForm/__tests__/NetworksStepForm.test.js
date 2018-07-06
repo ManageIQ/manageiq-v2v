@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import NetworksStepForm from '../NetworksStepForm';
-import { groupByUidEms } from '../../../MappingWizardNetworksStepSelectors';
+import { uniqueNetworks } from '../../../MappingWizardNetworksStepSelectors';
 
 import { clustersMappingWithTreeViewAttrs, targetNetworkWithTreeViewAttrs, networkGroupingForRep } from '../helpers';
 
@@ -36,8 +36,8 @@ describe('#addNetworkMapping', () => {
           <NetworksStepForm
             {...props}
             input={input}
-            groupedSourceNetworks={groupByUidEms(networkGrouping)}
-            groupedTargetNetworks={groupByUidEms([targetNetworkToMap])}
+            groupedSourceNetworks={uniqueNetworks(networkGrouping)}
+            groupedTargetNetworks={uniqueNetworks([targetNetworkToMap])}
           />
         );
         const [networkGroupRep] = networkGrouping;
@@ -58,7 +58,7 @@ describe('#addNetworkMapping', () => {
             nodes: [
               {
                 ...targetNetworkWithTreeViewAttrs(targetNetworkToMap),
-                nodes: networkGroupingForRep(networkGroupRep, groupByUidEms(networkGrouping), props.selectedCluster)
+                nodes: networkGroupingForRep(networkGroupRep, uniqueNetworks(networkGrouping), props.selectedCluster)
               }
             ]
           }
@@ -69,7 +69,7 @@ describe('#addNetworkMapping', () => {
         const [mappedTargetNetwork, , targetNetworkToMap] = targetNetworks;
         const [, , mappedSourceNetwork] = sourceNetworks;
         const srcNetworks = [...networkGrouping, mappedSourceNetwork];
-        const groupedNetworks = groupByUidEms(srcNetworks);
+        const groupedNetworks = uniqueNetworks(srcNetworks);
         const networksStepMapping = {
           ...clustersMappingWithTreeViewAttrs(clustersMapping),
           nodes: [
@@ -87,8 +87,8 @@ describe('#addNetworkMapping', () => {
           <NetworksStepForm
             {...props}
             input={input}
-            groupedSourceNetworks={groupByUidEms(srcNetworks)}
-            groupedTargetNetworks={groupByUidEms(targetNetworks)}
+            groupedSourceNetworks={uniqueNetworks(srcNetworks)}
+            groupedTargetNetworks={uniqueNetworks(targetNetworks)}
           />
         );
         const [networkGroupRep] = networkGrouping;
@@ -122,7 +122,7 @@ describe('#addNetworkMapping', () => {
       const [mappedTargetNetwork] = targetNetworks;
       const [, , mappedSourceNetwork] = sourceNetworks;
       const srcNetworks = [...networkGrouping, mappedSourceNetwork];
-      const groupedNetworks = groupByUidEms(srcNetworks);
+      const groupedNetworks = uniqueNetworks(srcNetworks);
       const networksStepMapping = {
         ...clustersMappingWithTreeViewAttrs(clustersMapping),
         nodes: [
@@ -141,8 +141,8 @@ describe('#addNetworkMapping', () => {
         <NetworksStepForm
           {...props}
           input={input}
-          groupedSourceNetworks={groupByUidEms(srcNetworks)}
-          groupedTargetNetworks={groupByUidEms([mappedTargetNetwork])}
+          groupedSourceNetworks={uniqueNetworks(srcNetworks)}
+          groupedTargetNetworks={uniqueNetworks([mappedTargetNetwork])}
         />
       );
       const [networkGroupRep] = networkGrouping;
@@ -179,8 +179,8 @@ describe('#removeNode', () => {
   const [targetNetworkOne, targetNetworkTwo] = targetNetworks;
   const sourceNetworkGroupOne = sourceNetworks.slice(0, 2);
   const sourceNetworkGroupTwo = sourceNetworks.slice(2, 3);
-  const groupedSourceNetworks = groupByUidEms([...sourceNetworkGroupOne, ...sourceNetworkGroupTwo]);
-  const groupedTargetNetworks = groupByUidEms([targetNetworkOne, targetNetworkTwo]);
+  const groupedSourceNetworks = uniqueNetworks([...sourceNetworkGroupOne, ...sourceNetworkGroupTwo]);
+  const groupedTargetNetworks = uniqueNetworks([targetNetworkOne, targetNetworkTwo]);
   props = {
     ...props,
     groupedSourceNetworks,

@@ -7,7 +7,8 @@ const _filterSourceNetworks = response => {
   if (data.lans) {
     const sourceNetworks = data.lans.map(lan => ({
       ...lan,
-      providerName: data.ext_management_system.name
+      providerName: data.ext_management_system.name,
+      clusterId: data.id
     }));
     return {
       sourceNetworks
@@ -45,7 +46,8 @@ const _filterTargetNetworks = response => {
   if (data.lans) {
     const targetNetworks = data.lans.map(lan => ({
       ...lan,
-      providerName: data.ext_management_system.name
+      providerName: data.ext_management_system.name,
+      clusterId: data.id
     }));
     return {
       targetNetworks
