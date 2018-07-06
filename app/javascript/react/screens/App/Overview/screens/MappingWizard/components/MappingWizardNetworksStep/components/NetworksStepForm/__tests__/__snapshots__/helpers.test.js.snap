@@ -58,6 +58,7 @@ Object {
 exports[`dedupeMappedSourceNetworks reduces a network mapping's source networks to representatives 1`] = `
 Object {
   "allow_promiscuous": null,
+  "clusterId": "1",
   "computed_allow_promiscuous": null,
   "computed_forged_transmits": null,
   "computed_mac_changes": null,
@@ -70,6 +71,7 @@ Object {
   "nodes": Array [
     Object {
       "allow_promiscuous": null,
+      "clusterId": "1",
       "computed_allow_promiscuous": null,
       "computed_forged_transmits": null,
       "computed_mac_changes": null,
@@ -98,6 +100,7 @@ exports[`getRepresentatives should return an array with a representative from ea
 Array [
   Object {
     "allow_promiscuous": null,
+    "clusterId": "1",
     "computed_allow_promiscuous": null,
     "computed_forged_transmits": null,
     "computed_mac_changes": null,
@@ -115,6 +118,7 @@ Array [
   },
   Object {
     "allow_promiscuous": null,
+    "clusterId": "1",
     "computed_allow_promiscuous": null,
     "computed_forged_transmits": null,
     "computed_mac_changes": null,
@@ -132,6 +136,7 @@ Array [
   },
   Object {
     "allow_promiscuous": null,
+    "clusterId": "1",
     "computed_allow_promiscuous": null,
     "computed_forged_transmits": null,
     "computed_mac_changes": null,
@@ -150,9 +155,10 @@ Array [
 ]
 `;
 
-exports[`mappingWithSourceNetworkRemoved removes all networks whose uid_ems matches that of the specified source network 1`] = `
+exports[`mappingWithSourceNetworkRemoved removes all networks whose network key matches that of the specified source network 1`] = `
 Object {
   "allow_promiscuous": null,
+  "clusterId": "1",
   "computed_allow_promiscuous": null,
   "computed_forged_transmits": null,
   "computed_mac_changes": null,
@@ -165,6 +171,7 @@ Object {
   "nodes": Array [
     Object {
       "allow_promiscuous": null,
+      "clusterId": "1",
       "computed_allow_promiscuous": null,
       "computed_forged_transmits": null,
       "computed_mac_changes": null,
@@ -212,6 +219,7 @@ Object {
   "nodes": Array [
     Object {
       "allow_promiscuous": null,
+      "clusterId": "1",
       "computed_allow_promiscuous": null,
       "computed_forged_transmits": null,
       "computed_mac_changes": null,
@@ -224,6 +232,7 @@ Object {
       "nodes": Array [
         Object {
           "allow_promiscuous": null,
+          "clusterId": "1",
           "computed_allow_promiscuous": null,
           "computed_forged_transmits": null,
           "computed_mac_changes": null,
@@ -277,6 +286,7 @@ Array [
     "nodes": Array [
       Object {
         "allow_promiscuous": null,
+        "clusterId": "1",
         "computed_allow_promiscuous": null,
         "computed_forged_transmits": null,
         "computed_mac_changes": null,
@@ -289,6 +299,7 @@ Array [
         "nodes": Array [
           Object {
             "allow_promiscuous": null,
+            "clusterId": "1",
             "computed_allow_promiscuous": null,
             "computed_forged_transmits": null,
             "computed_mac_changes": null,
@@ -323,6 +334,7 @@ exports[`networkGroupingForRep returns the network grouping, with TreeView attrs
 Array [
   Object {
     "allow_promiscuous": null,
+    "clusterId": "1",
     "computed_allow_promiscuous": null,
     "computed_forged_transmits": null,
     "computed_mac_changes": null,
@@ -339,12 +351,13 @@ Array [
     "sourceClusterId": "1",
     "switch_id": "1",
     "tag": "23",
-    "text": "VMWareCluster1-vm_network1",
+    "text": "undefined \\\\ VMWareCluster1-vm_network1",
     "uid_ems": "VMWareCluster1-vm_network1",
     "updated_on": "2017-06-01T04:24:18Z",
   },
   Object {
     "allow_promiscuous": null,
+    "clusterId": "1",
     "computed_allow_promiscuous": null,
     "computed_forged_transmits": null,
     "computed_mac_changes": null,
@@ -361,7 +374,7 @@ Array [
     "sourceClusterId": "1",
     "switch_id": "2",
     "tag": "24",
-    "text": "VMWareCluster1-vm_network1",
+    "text": "undefined \\\\ VMWareCluster1-vm_network1",
     "uid_ems": "VMWareCluster1-vm_network1",
     "updated_on": "2017-06-01T04:24:18Z",
   },
@@ -371,6 +384,7 @@ Array [
 exports[`sourceNetworkWithTreeViewAttrs adds extra attributes for display in TreeView 1`] = `
 Object {
   "allow_promiscuous": null,
+  "clusterId": "1",
   "computed_allow_promiscuous": null,
   "computed_forged_transmits": null,
   "computed_mac_changes": null,
@@ -387,7 +401,7 @@ Object {
   "sourceClusterId": "1",
   "switch_id": "1",
   "tag": "23",
-  "text": "VMWareCluster1-vm_network1",
+  "text": "undefined \\\\ VMWareCluster1-vm_network1",
   "uid_ems": "VMWareCluster1-vm_network1",
   "updated_on": "2017-06-01T04:24:18Z",
 }
@@ -397,6 +411,7 @@ exports[`sourceNetworksFilter should return a representative for each source net
 Array [
   Object {
     "allow_promiscuous": null,
+    "clusterId": "1",
     "computed_allow_promiscuous": null,
     "computed_forged_transmits": null,
     "computed_mac_changes": null,
@@ -414,6 +429,7 @@ Array [
   },
   Object {
     "allow_promiscuous": null,
+    "clusterId": "1",
     "computed_allow_promiscuous": null,
     "computed_forged_transmits": null,
     "computed_mac_changes": null,
@@ -435,6 +451,7 @@ Array [
 exports[`targetNetworkWithTreeViewAttrs adds extra attributes for display in TreeView 1`] = `
 Object {
   "allow_promiscuous": null,
+  "clusterId": "1",
   "computed_allow_promiscuous": null,
   "computed_forged_transmits": null,
   "computed_mac_changes": null,
@@ -452,7 +469,7 @@ Object {
   },
   "switch_id": "10000000000000",
   "tag": null,
-  "text": "RHV Cluster 1 - ovirtmgmt1",
+  "text": "undefined \\\\ RHV Cluster 1 - ovirtmgmt1",
   "uid_ems": "00000000-0000-0000-0000-000000000000",
   "updated_on": "2017-06-01T04:24:18Z",
 }

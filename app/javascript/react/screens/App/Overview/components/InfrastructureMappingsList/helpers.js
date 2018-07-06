@@ -1,3 +1,6 @@
+import Immutable from 'seamless-immutable';
+import { networkKey } from '../../../common/networkKey';
+
 export const mapInfrastructureMappings = (transformation_mapping_items, clusters, datastores, networks) => {
   /**
    * map the target source -> destination clusters/networks/datastores for
@@ -54,12 +57,6 @@ export const mapInfrastructureMappings = (transformation_mapping_items, clusters
     item => item.destination_type.toLowerCase() === 'lan'
   );
 
-  // transform cluster mappings to key/value
-  const clustersByMappingId = {};
-  clusterMappingItems.forEach(cluster => {
-    clustersByMappingId[cluster.transformation_mapping_id] = cluster;
-  });
-
   // create unique cluster mappings by unique target cluster
   const targetClusters = {};
   clusterMappingItems.forEach(clusterMapping => {
@@ -76,16 +73,31 @@ export const mapInfrastructureMappings = (transformation_mapping_items, clusters
     }
   });
 
+  // transform cluster lans and datastores to key/value lookups for use in datastore/lan mappings
+  const clusterDatastores = {};
+  const clusterLans = {};
+  clusters.forEach(cluster => {
+    if (cluster.storages && cluster.storages.length) {
+      cluster.storages.forEach(datastore => {
+        clusterDatastores[datastore.id] = cluster.id;
+      });
+    }
+    if (cluster.lans && cluster.lans.length) {
+      cluster.lans.forEach(lan => {
+        clusterLans[lan.id] = cluster.id;
+      });
+    }
+  });
+
   // create unique datastore mappings by unique target datastore
   const targetDatastores = {};
   datastoreMappingItems.forEach(datastoreMapping => {
-    const clusterMapping = clustersByMappingId[datastoreMapping.transformation_mapping_id];
-    const sourceCluster = clusters.find(c => c.id === clusterMapping.source_id);
-    const targetCluster = clusters.find(c => c.id === clusterMapping.destination_id);
+    const sourceCluster = clusters.find(c => c.id === clusterDatastores[datastoreMapping.source_id]);
+    const targetCluster = clusters.find(c => c.id === clusterDatastores[datastoreMapping.destination_id]);
     const sourceDatastore = datastores.find(d => d.id === datastoreMapping.source_id);
     const targetDatastore = datastores.find(d => d.id === datastoreMapping.destination_id);
 
-    if (clusterMapping && sourceCluster && targetCluster && sourceDatastore && targetDatastore) {
+    if (sourceCluster && targetCluster && sourceDatastore && targetDatastore) {
       const source = {
         sourceDatastore,
         sourceCluster
@@ -105,16 +117,19 @@ export const mapInfrastructureMappings = (transformation_mapping_items, clusters
     }
   });
 
-  // create unique networks mappings by unique target network (using ems_uid)
+  // create unique networks mappings by unique target network
   const targetNetworks = {};
   networkMappingItems.forEach(networkMapping => {
-    const clusterMapping = clustersByMappingId[networkMapping.transformation_mapping_id];
-    const sourceCluster = clusters.find(c => c.id === clusterMapping.source_id);
-    const targetCluster = clusters.find(c => c.id === clusterMapping.destination_id);
-    const sourceNetwork = networks.find(d => d.id === networkMapping.source_id);
-    const targetNetwork = networks.find(d => d.id === networkMapping.destination_id);
+    const sourceCluster = clusters.find(c => c.id === clusterLans[networkMapping.source_id]);
+    const targetCluster = clusters.find(c => c.id === clusterLans[networkMapping.destination_id]);
 
-    if (clusterMapping && sourceCluster && targetCluster && sourceNetwork && targetNetwork) {
+    const sn = networks.find(d => d.id === networkMapping.source_id);
+    const sourceNetwork = Immutable.set(sn, 'clusterId', sourceCluster.id);
+
+    const tn = networks.find(d => d.id === networkMapping.destination_id);
+    const targetNetwork = Immutable.set(tn, 'clusterId', targetCluster.id);
+
+    if (sourceCluster && targetCluster && sourceNetwork && targetNetwork) {
       const source = {
         sourceNetwork,
         sourceCluster
@@ -124,19 +139,19 @@ export const mapInfrastructureMappings = (transformation_mapping_items, clusters
         targetNetwork,
         targetCluster
       };
-      // LANs are currently duplicated in the backend database model, so
-      // we dedupe them using uid_ems attribute for now.
-      if (targetNetworks[targetNetwork.uid_ems]) {
-        const duplicatedLanIndex = targetNetworks[targetNetwork.uid_ems].sources.findIndex(
-          s => s.sourceNetwork.uid_ems === sourceNetwork.uid_ems
+
+      const targetNetworkKey = networkKey(targetNetwork);
+      if (targetNetworks[targetNetworkKey]) {
+        const duplicatedLanIndex = targetNetworks[targetNetworkKey].sources.findIndex(
+          s => networkKey(s.sourceNetwork) === networkKey(sourceNetwork)
         );
         if (duplicatedLanIndex === -1) {
-          targetNetworks[targetNetwork.uid_ems].sources.push(source);
+          targetNetworks[targetNetworkKey].sources.push(source);
         }
       } else {
-        targetNetworks[targetNetwork.uid_ems] = {};
-        targetNetworks[targetNetwork.uid_ems].target = target;
-        targetNetworks[targetNetwork.uid_ems].sources = [source];
+        targetNetworks[targetNetworkKey] = {};
+        targetNetworks[targetNetworkKey].target = target;
+        targetNetworks[targetNetworkKey].sources = [source];
       }
     }
   });

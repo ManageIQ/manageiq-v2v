@@ -1,8 +1,8 @@
 import { sourceClusterNetworks } from '../mappingWizardNetworksStep.fixtures';
-import { groupByUidEms } from '../MappingWizardNetworksStepSelectors';
+import { uniqueNetworks } from '../MappingWizardNetworksStepSelectors';
 
-test('groupByUidEms creates a mapping of networks organized by uid_ems', () => {
+test('uniqueNetworks creates a mapping of grouped networks', () => {
   const sourceNetworks = sourceClusterNetworks[0].lans;
 
-  expect(groupByUidEms(sourceNetworks)).toMatchSnapshot();
+  expect(uniqueNetworks(sourceNetworks)).toMatchSnapshot();
 });

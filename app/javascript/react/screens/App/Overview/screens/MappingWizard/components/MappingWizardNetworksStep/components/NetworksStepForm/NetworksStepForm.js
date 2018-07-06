@@ -7,6 +7,7 @@ import DualPaneMapperList from '../../../DualPaneMapper/DualPaneMapperList';
 import DualPaneMapperCount from '../../../DualPaneMapper/DualPaneMapperCount';
 import DualPaneMapperListItem from '../../../DualPaneMapper/DualPaneMapperListItem';
 import MappingWizardTreeView from '../../../MappingWizardTreeView/MappingWizardTreeView';
+import { networkKey } from '../../../../../../../common/networkKey';
 
 import {
   sourceNetworksFilter,
@@ -38,12 +39,12 @@ class NetworksStepForm extends React.Component {
   selectSourceNetwork = sourceNetwork => {
     this.setState(prevState => {
       const isAlreadySelected = prevState.selectedSourceNetworks.some(
-        selectedSourceNetwork => selectedSourceNetwork.uid_ems === sourceNetwork.uid_ems
+        selectedSourceNetwork => networkKey(selectedSourceNetwork) === networkKey(sourceNetwork)
       );
       if (isAlreadySelected) {
         return {
           selectedSourceNetworks: prevState.selectedSourceNetworks.filter(
-            selectedSourceNetwork => selectedSourceNetwork.uid_ems !== sourceNetwork.uid_ems
+            selectedSourceNetwork => networkKey(selectedSourceNetwork) !== networkKey(sourceNetwork)
           )
         };
       }
@@ -201,7 +202,7 @@ class NetworksStepForm extends React.Component {
               ...targetNetwork,
               selected: false,
               nodes: sourceNetworks.map(sourceNetwork => {
-                if (sourceNetwork.uid_ems === selectedNode.uid_ems) {
+                if (networkKey(sourceNetwork) === networkKey(selectedNode)) {
                   return {
                     ...sourceNetwork,
                     selected: !sourceNetwork.selected
@@ -309,7 +310,7 @@ class NetworksStepForm extends React.Component {
                   selected={
                     selectedSourceNetworks &&
                     selectedSourceNetworks.some(
-                      selectedSourceNetwork => selectedSourceNetwork.uid_ems === sourceNetwork.uid_ems
+                      selectedSourceNetwork => networkKey(selectedSourceNetwork) === networkKey(sourceNetwork)
                     )
                   }
                   handleClick={this.selectSourceNetwork}
@@ -324,7 +325,7 @@ class NetworksStepForm extends React.Component {
                   item={targetNetwork}
                   text={`${targetNetwork.providerName} \\ ${targetNetwork.name}`}
                   key={targetNetwork.id}
-                  selected={selectedTargetNetwork && selectedTargetNetwork.uid_ems === targetNetwork.uid_ems}
+                  selected={selectedTargetNetwork && networkKey(selectedTargetNetwork) === networkKey(targetNetwork)}
                   handleClick={this.selectTargetNetwork}
                   handleKeyPress={this.selectTargetNetwork}
                 />
