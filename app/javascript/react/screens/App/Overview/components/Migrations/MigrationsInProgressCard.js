@@ -19,35 +19,67 @@ const MigrationsInProgressCard = ({ plan, allRequestsWithTasks, reloadCard, hand
   const requestsOfAssociatedPlan = allRequestsWithTasks.filter(request => request.source_id === plan.id);
   const mostRecentRequest = requestsOfAssociatedPlan.length > 0 && getMostRecentRequest(requestsOfAssociatedPlan);
 
-  // if most recent request is still pending, show loading card
-  if (reloadCard || !mostRecentRequest || mostRecentRequest.request_state === 'pending') {
-    return (
-      <Grid.Col sm={12} md={6} lg={4}>
-        <Card matchHeight>
-          <Card.Heading>
-            <h3 className="card-pf-title">{plan.name}</h3>
-          </Card.Heading>
-          <Card.Body>
-            <EmptyState>
-              <Spinner loading size="lg" style={{ marginBottom: '15px' }} />
-              <EmptyState.Info>{__('Initiating migration. This might take a few minutes.')}</EmptyState.Info>
-            </EmptyState>
-          </Card.Body>
-        </Card>
-      </Grid.Col>
-    );
-  }
+  // === TODO FIXME-- THE BELOW IS MOCK MUTATION CODE TO BE REMOVED ===
+  // This code:
+  // * sticks a fake active pre-playbook in the first migration on the screen
+  // * sticks a fake active post-playbook in the third migration on the screen
+  const dga = window.dangerousGlobalAccumulator;
+  const mockTasks = mostRecentRequest.miq_request_tasks.map((task, i) => ({
+    ...task,
+    options: {
+      ...task.options,
+      playbooks: {
+        pre: {
+          job_id: 4,
+          status: dga === 0 && i === 0 ? 'Active' : 'Succeeded',
+          last_task: 'Task name'
+        },
+        post: {
+          job_id: 5,
+          status: dga === 2 && i === 0 ? 'Active' : 'Succeeded',
+          last_task: 'Task name'
+        }
+      }
+    }
+  }));
+  window.dangerousGlobalAccumulator += 1;
+  const mostRecentTasks = mockTasks;
+  // ^^^ TODO FIXME-- THE ABOVE IS MOCK MUTATION CODE TO BE REMOVED ^^^
+  // We should remove the above code when the real API data is in place.
+
+  // const mostRecentTasks = mostRecentRequest.miq_request_tasks;
+
+  // TODO -- Much of the below 20 lines of sanity checking is probably redundant with Mike Ro's code.
+  // When we merge the two playbook-related branches together we should consolidate these kinds of things.
+
+  const hasNoPlaybooks = task => !task || !task.options || !task.options.playbooks;
+  const getActivePlaybook = task => {
+    if (hasNoPlaybooks(task)) return {};
+    const { pre, post } = task.options.playbooks;
+    if (pre.status === 'Active') return pre;
+    if (post.status === 'Active') return post;
+    return {};
+  };
+
+  const tasksWithActivePlaybooks = mostRecentTasks.filter(task => {
+    if (hasNoPlaybooks(task)) return false;
+    const { pre, post } = task.options.playbooks;
+    return pre.status === 'Active' || post.status === 'Active';
+  });
+  const isSomePlaybookActive = tasksWithActivePlaybooks.length > 0;
+  const activePlaybook = getActivePlaybook(tasksWithActivePlaybooks[0]);
+
+  const isSomePlaybookFailed = mostRecentTasks.some(task => {
+    if (hasNoPlaybooks(task)) return false;
+    const { pre, post } = task.options.playbooks;
+    return pre.status === 'Failed' || post.status === 'Failed';
+  });
 
   // UX business rule 1: reflect failed immediately if any single task has failed
   // in the most recent request
-  let failed = false;
-  let failedVms = 0;
-  mostRecentRequest.miq_request_tasks.forEach(task => {
-    if (task.status === 'Error') {
-      failed = true;
-      failedVms += 1;
-    }
-  });
+  const failedTasks = mostRecentRequest.miq_request_tasks.filter(task => task.status === 'Error');
+  const failedVms = failedTasks.length;
+  const failed = failedVms > 0 || isSomePlaybookFailed; // Any failed playbook implies a failed plan.
 
   // UX business rule 2: aggregrate the tasks across requests reflecting current status of all tasks,
   // (gather the last status for the vm, gather the last storage for use in UX bussiness rule 3)
@@ -60,11 +92,100 @@ const MigrationsInProgressCard = ({ plan, allRequestsWithTasks, reloadCard, hand
     });
   });
 
-  let completedVMs = 0;
   const totalVMs = Object.keys(tasks).length;
-  Object.keys(tasks).forEach(task => {
-    if (tasks[task].completed) completedVMs += 1;
-  });
+  const completedVMs = Object.keys(tasks).filter(id => tasks[id].completed).length;
+
+  // //////////////////////////////////////////////////////////////////////////////////////////////////
+  // TODO / FIXME MJT: Hmm. Maybe we want to look at ALL tasks on all requests, for playbooks?
+  //                   (and not just on the mostRecentRequest)
+  // //////////////////////////////////////////////////////////////////////////////////////////////////
+
+  const popoverIfFailed = failed && (
+    <OverlayTrigger
+      overlay={
+        <Popover id={`description_${plan.id}`} title={sprintf('%s', plan.name)}>
+          <Icon
+            type="pf"
+            name="error-circle-o"
+            size="sm"
+            style={{
+              width: 'inherit',
+              backgroundColor: 'transparent',
+              paddingRight: 5
+            }}
+          />
+          {sprintf(__('%s of %s VM migrations failed.'), failedVms, totalVMs)}
+        </Popover>
+      }
+      placement="top"
+      trigger={['hover']}
+      delay={500}
+      rootClose={false}
+    >
+      <Icon
+        type="pf"
+        name="error-circle-o"
+        size="md"
+        style={{
+          width: 'inherit',
+          backgroundColor: 'transparent',
+          paddingRight: 10
+        }}
+      />
+    </OverlayTrigger>
+  );
+
+  const PlanCardHeading = ({ withPopoverIfFailed }) => (
+    <Card.Heading>
+      <h3 className="card-pf-title">
+        {withPopoverIfFailed && popoverIfFailed}
+        {plan.name}
+      </h3>
+    </Card.Heading>
+  );
+  PlanCardHeading.propTypes = { withPopoverIfFailed: PropTypes.bool };
+
+  // if most recent request is still pending, show loading card
+  if (reloadCard || !mostRecentRequest || mostRecentRequest.request_state === 'pending') {
+    return (
+      <Grid.Col sm={12} md={6} lg={4}>
+        <Card matchHeight>
+          <PlanCardHeading />
+          <Card.Body>
+            <EmptyState>
+              <Spinner loading size="lg" style={{ marginBottom: '15px' }} />
+              <EmptyState.Info>{__('Initiating migration. This might take a few minutes.')}</EmptyState.Info>
+            </EmptyState>
+          </Card.Body>
+        </Card>
+      </Grid.Col>
+    );
+  }
+
+  // If we have active Ansible Playbooks, display their status instead of the overall status.
+  if (isSomePlaybookActive) {
+    return (
+      <Grid.Col sm={12} md={6} lg={4}>
+        <Card matchHeight>
+          <PlanCardHeading withPopoverIfFailed />
+          <Card.Body>
+            <EmptyState>
+              <Spinner loading size="lg" style={{ marginBottom: '15px' }} />
+              <EmptyState.Info>
+                {__('Running playbook service ')}
+                <strong>{activePlaybook.last_task}</strong>
+                {/* TODO/FIXME MJT:  ^^ I'm not sure if this is the string we want here. */}
+                <br />
+                {__('This might take a few minutes.')}
+              </EmptyState.Info>
+            </EmptyState>
+          </Card.Body>
+        </Card>
+      </Grid.Col>
+    );
+  }
+
+  // No active playbooks? We need to render detailed plan status.
 
   // UX business rule 3: reflect the total disk space migrated, aggregated across requests
   let totalDiskSpace = 0;
@@ -132,45 +253,7 @@ const MigrationsInProgressCard = ({ plan, allRequestsWithTasks, reloadCard, hand
         matchHeight
         className="in-progress"
       >
-        <Card.Heading>
-          <h3 className="card-pf-title">
-            {failed && (
-              <OverlayTrigger
-                overlay={
-                  <Popover id={`description_${plan.id}`} title={sprintf('%s', plan.name)}>
-                    <Icon
-                      type="pf"
-                      name="error-circle-o"
-                      size="sm"
-                      style={{
-                        width: 'inherit',
-                        backgroundColor: 'transparent',
-                        paddingRight: 5
-                      }}
-                    />
-                    {sprintf(__('%s of %s VM migrations failed.'), failedVms, totalVMs)}
-                  </Popover>
-                }
-                placement="top"
-                trigger={['hover']}
-                delay={500}
-                rootClose={false}
-              >
-                <Icon
-                  type="pf"
-                  name="error-circle-o"
-                  size="md"
-                  style={{
-                    width: 'inherit',
-                    backgroundColor: 'transparent',
-                    paddingRight: 10
-                  }}
-                />
-              </OverlayTrigger>
-            )}
-            {plan.name}
-          </h3>
-        </Card.Heading>
+        <PlanCardHeading withPopoverIfFailed />
         <Card.Body>
           <UtilizationBar
             now={totalMigratedDiskSpace}
