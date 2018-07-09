@@ -19,12 +19,11 @@ const MigrationsInProgressCard = ({ plan, allRequestsWithTasks, reloadCard, hand
   const requestsOfAssociatedPlan = allRequestsWithTasks.filter(request => request.source_id === plan.id);
   const mostRecentRequest = requestsOfAssociatedPlan.length > 0 && getMostRecentRequest(requestsOfAssociatedPlan);
 
-
   // === TODO FIXME-- THE BELOW IS MOCK MUTATION CODE TO BE REMOVED ===
   // This code:
   // * sticks a fake active pre-playbook in the first migration on the screen
   // * sticks a fake active post-playbook in the third migration on the screen
-  const a = window.dangerousGlobalAccumulator;
+  const dga = window.dangerousGlobalAccumulator;
   const mockTasks = mostRecentRequest.miq_request_tasks.map((task, i) => ({
     ...task,
     options: {
@@ -32,28 +31,33 @@ const MigrationsInProgressCard = ({ plan, allRequestsWithTasks, reloadCard, hand
       playbooks: {
         pre: {
           job_id: 4,
-          status: (a === 0 && i === 0 ? "Active" : "Succeeded"),
-          last_task: "Task name"
+          status: dga === 0 && i === 0 ? 'Active' : 'Succeeded',
+          last_task: 'Task name'
         },
         post: {
           job_id: 5,
-          status: (a === 2 && i === 0 ? "Active" : "Succeeded"),
-          last_task: "Task name"
+          status: dga === 2 && i === 0 ? 'Active' : 'Succeeded',
+          last_task: 'Task name'
         }
       }
     }
   }));
-  window.dangerousGlobalAccumulator++;
+  window.dangerousGlobalAccumulator += 1;
   const mostRecentTasks = mockTasks;
   // ^^^ TODO FIXME-- THE ABOVE IS MOCK MUTATION CODE TO BE REMOVED ^^^
   // We should remove the above code when the real API data is in place.
-  
+
   // const mostRecentTasks = mostRecentRequest.miq_request_tasks;
+
+  // TODO -- Much of the below 20 lines of sanity checking is probably redundant with Mike Ro's code.
+  // When we merge the two playbook-related branches together we should consolidate these kinds of things.
 
   const hasNoPlaybooks = task => !task || !task.options || !task.options.playbooks;
   const getActivePlaybook = task => {
     if (hasNoPlaybooks(task)) return {};
-    const { options: { playbooks } } = task;
+    const {
+      options: { playbooks }
+    } = task;
     if (playbooks.pre.status === 'Active') return playbooks.pre;
     if (playbooks.post.status === 'Active') return playbooks.post;
     return {};
@@ -61,15 +65,19 @@ const MigrationsInProgressCard = ({ plan, allRequestsWithTasks, reloadCard, hand
 
   const tasksWithActivePlaybooks = mostRecentTasks.filter(task => {
     if (hasNoPlaybooks(task)) return false;
-    const { options: { playbooks } } = task;
+    const {
+      options: { playbooks }
+    } = task;
     return playbooks.pre.status === 'Active' || playbooks.post.status === 'Active';
   });
   const isSomePlaybookActive = tasksWithActivePlaybooks.length > 0;
   const activePlaybook = getActivePlaybook(tasksWithActivePlaybooks[0]);
-  
+
   const isSomePlaybookFailed = mostRecentTasks.some(task => {
     if (hasNoPlaybooks(task)) return false;
-    const { options: { playbooks } } = task;
+    const {
+      options: { playbooks }
+    } = task;
     return playbooks.pre.status === 'Failed' || playbooks.post.status === 'Failed';
   });
 
@@ -93,10 +101,10 @@ const MigrationsInProgressCard = ({ plan, allRequestsWithTasks, reloadCard, hand
   const totalVMs = Object.keys(tasks).length;
   const completedVMs = Object.keys(tasks).filter(id => tasks[id].completed).length;
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////////
+  // //////////////////////////////////////////////////////////////////////////////////////////////////
   // TODO / FIXME MJT: Hmm. Maybe we want to look at ALL tasks on all requests, for playbooks?
   //                   (and not just on the mostRecentRequest)
-  ////////////////////////////////////////////////////////////////////////////////////////////////////
+  // //////////////////////////////////////////////////////////////////////////////////////////////////
 
   const popoverIfFailed = failed && (
     <OverlayTrigger
@@ -141,6 +149,7 @@ const MigrationsInProgressCard = ({ plan, allRequestsWithTasks, reloadCard, hand
       </h3>
     </Card.Heading>
   );
+  PlanCardHeading.propTypes = { withPopoverIfFailed: PropTypes.bool };
 
   // if most recent request is still pending, show loading card
   if (reloadCard || !mostRecentRequest || mostRecentRequest.request_state === 'pending') {
