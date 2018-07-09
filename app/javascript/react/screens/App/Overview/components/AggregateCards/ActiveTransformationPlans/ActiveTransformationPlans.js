@@ -24,10 +24,8 @@ const ActiveTransformationPlans = ({ activePlans, allRequestsWithTasks, reloadCa
         mostRecentRequest &&
         mostRecentRequest.miq_request_tasks.some(task => {
           if (task.options && task.options.playbooks) {
-            const {
-              options: { playbooks }
-            } = task;
-            if (playbooks.pre.status === 'Failed' || playbooks.post.status === 'Failed') return true;
+            const { pre, post } = task.options.playbooks;
+            if (pre.status === 'Failed' || post.status === 'Failed') return true;
           }
           return task.state === 'finished' && task.status === 'Error';
         })

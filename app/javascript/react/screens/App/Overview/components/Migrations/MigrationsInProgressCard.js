@@ -55,30 +55,24 @@ const MigrationsInProgressCard = ({ plan, allRequestsWithTasks, reloadCard, hand
   const hasNoPlaybooks = task => !task || !task.options || !task.options.playbooks;
   const getActivePlaybook = task => {
     if (hasNoPlaybooks(task)) return {};
-    const {
-      options: { playbooks }
-    } = task;
-    if (playbooks.pre.status === 'Active') return playbooks.pre;
-    if (playbooks.post.status === 'Active') return playbooks.post;
+    const { pre, post } = task.options.playbooks;
+    if (pre.status === 'Active') return pre;
+    if (post.status === 'Active') return post;
     return {};
   };
 
   const tasksWithActivePlaybooks = mostRecentTasks.filter(task => {
     if (hasNoPlaybooks(task)) return false;
-    const {
-      options: { playbooks }
-    } = task;
-    return playbooks.pre.status === 'Active' || playbooks.post.status === 'Active';
+    const { pre, post } = task.options.playbooks;
+    return pre.status === 'Active' || post.status === 'Active';
   });
   const isSomePlaybookActive = tasksWithActivePlaybooks.length > 0;
   const activePlaybook = getActivePlaybook(tasksWithActivePlaybooks[0]);
 
   const isSomePlaybookFailed = mostRecentTasks.some(task => {
     if (hasNoPlaybooks(task)) return false;
-    const {
-      options: { playbooks }
-    } = task;
-    return playbooks.pre.status === 'Failed' || playbooks.post.status === 'Failed';
+    const { pre, post } = task.options.playbooks;
+    return pre.status === 'Failed' || post.status === 'Failed';
   });
 
   // UX business rule 1: reflect failed immediately if any single task has failed
