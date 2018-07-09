@@ -5,7 +5,8 @@ import { Form } from 'patternfly-react';
 import PropTypes from 'prop-types';
 import { FormField } from '../../../../../common/forms/FormField';
 import { BootstrapSelect } from '../../../../../common/forms/BootstrapSelect';
-import { validation } from '../../../../../../../../common/constants'; // Oh my
+import { validation } from '../../../../../../../../common/constants';
+import { asyncValidate, onChange } from './helpers';
 
 const PlanWizardGeneralStep = ({ transformationMappings }) => (
   <Form className="form-horizontal">
@@ -70,5 +71,8 @@ PlanWizardGeneralStep.propTypes = {
 
 export default reduxForm({
   form: 'planWizardGeneralStep',
-  destroyOnUnmount: false
+  destroyOnUnmount: false,
+  asyncValidate,
+  asyncBlurFields: ['name'],
+  onChange
 })(PlanWizardGeneralStep);

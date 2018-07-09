@@ -32,6 +32,7 @@ class Overview extends React.Component {
       fetchTransformationMappingsAction,
       fetchTransformationPlansUrl,
       fetchTransformationPlansAction,
+      fetchArchivedTransformationPlansUrl,
       fetchNetworksUrl,
       fetchNetworksAction,
       fetchDatastoresUrl,
@@ -53,6 +54,11 @@ class Overview extends React.Component {
       if (!this.pollingInterval) {
         this.startPolling();
       }
+    });
+    // fetch archived plans initially so we have them for plan name validation in plan wizard
+    fetchTransformationPlansAction({
+      url: fetchArchivedTransformationPlansUrl,
+      archived: true
     });
   }
   componentWillReceiveProps(nextProps) {
