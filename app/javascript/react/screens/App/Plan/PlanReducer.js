@@ -10,7 +10,8 @@ import {
   RESET_PLAN_STATE,
   FETCH_V2V_MIGRATION_TASK_LOG,
   DOWNLOAD_LOG_CLICKED,
-  DOWNLOAD_LOG_COMPLETED
+  DOWNLOAD_LOG_COMPLETED,
+  V2V_MIGRATION_STATUS_MESSAGES
 } from './PlanConstants';
 
 export const initialState = Immutable({
@@ -42,11 +43,13 @@ const processVMTasks = vmTasks => {
   vmTasks.forEach(task => {
     const taskDetails = {
       id: task.id,
-      message: task.message,
+      message: V2V_MIGRATION_STATUS_MESSAGES[task.message],
       transformation_host_name: task.options && task.options.transformation_host_name,
       delivered_on: new Date(task.options.delivered_on),
       updated_on: new Date(task.updated_on),
-      completed: task.message === 'VM Transformations completed' || task.message === 'VM Transformations failed',
+      completed:
+        task.message === V2V_MIGRATION_STATUS_MESSAGES['VM Transformations completed'] ||
+        task.message === V2V_MIGRATION_STATUS_MESSAGES['VM Transformations failed'],
       state: task.state,
       status: task.status,
       options: {}
