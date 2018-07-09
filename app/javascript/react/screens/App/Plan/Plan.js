@@ -52,9 +52,14 @@ class Plan extends React.Component {
       const {
         miq_requests,
         options: {
-          config_info: { vm_ids }
+          config_info: { actions }
         }
       } = plan;
+
+      let vm_ids = [];
+      if (actions && actions.length) {
+        vm_ids = actions.map(a => a.vm_id);
+      }
 
       if (miq_requests.length > 0) {
         const mostRecentRequest = getMostRecentRequest(miq_requests);

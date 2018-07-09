@@ -38,7 +38,7 @@ const MigrationsNotStartedList = ({ migrateClick, notStartedPlans, loading, redi
               additionalInfo={[
                 <ListView.InfoItem key={plan.id}>
                   <Icon type="pf" name="virtual-machine" />
-                  <strong>{plan.options.config_info.vm_ids.length}</strong> {__('VMs')}
+                  <strong>{plan.options.config_info.actions.length}</strong> {__('VMs')}
                 </ListView.InfoItem>
               ]}
               key={plan.id}

@@ -13,7 +13,7 @@ export const migrationPlansResult = Immutable({
       options: {
         config_info: {
           transformation_mapping_id: '10000000000001',
-          vm_ids: ['1', '9', '23']
+          actions: [{ vm_id: '1' }, { vm_id: '9' }, { vm_id: '23' }]
         }
       },
       created_at: '2018-02-07T16:02:39Z',

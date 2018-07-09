@@ -11,9 +11,9 @@ export const plansSchema = array()
         .shape({
           config_info: object().shape({
             transformation_mapping_id: string().required(),
-            vm_ids: array()
-              .of(string())
-              .required()
+            actions: array()
+              .of(object().shape({ vm_id: string().required() }))
+              .nullable()
           })
         })
         .required(),
