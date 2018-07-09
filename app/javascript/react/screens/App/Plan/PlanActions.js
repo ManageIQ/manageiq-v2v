@@ -4,8 +4,8 @@ import API from '../../../../common/API';
 import http from '../../../../common/http';
 
 import {
-  FETCH_V2V_PLAN_REQUEST,
   FETCH_V2V_PLAN,
+  FETCH_V2V_ALL_REQUESTS_WITH_TASKS_FOR_PLAN,
   QUERY_V2V_PLAN_VMS,
   RESET_PLAN_STATE,
   FETCH_V2V_MIGRATION_TASK_LOG,
@@ -16,19 +16,26 @@ import {
 import { V2V_NOTIFICATION_ADD } from '../common/NotificationList/NotificationConstants';
 
 // *****************************************************************************
-// * FETCH_V2V_PLAN_REQUEST
+// * FETCH_V2V_ALL_REQUESTS_WITH_TASKS_FOR_PLAN
 // *****************************************************************************
-const _getPlanRequestActionCreator = url => dispatch =>
+const _getTasksForAllRequestsForPlanActionCreator = (url, allRequests) => dispatch => {
   dispatch({
-    type: FETCH_V2V_PLAN_REQUEST,
-    payload: API.get(url)
+    type: FETCH_V2V_ALL_REQUESTS_WITH_TASKS_FOR_PLAN,
+    payload: new Promise((resolve, reject) => {
+      API.post(url, {
+        action: 'query',
+        resources: allRequests
+      })
+        .then(response => {
+          resolve(response);
+        })
+        .catch(e => reject(e));
+    })
   });
-
-export const fetchPlanRequestAction = (url, id) => {
-  const uri = new URI(`${url}/${id}`);
-  uri.addSearch({ attributes: 'miq_request_tasks' });
-  return _getPlanRequestActionCreator(uri.toString());
 };
+
+export const fetchTasksForAllRequestsForPlanAction = (url, allRequests) =>
+  _getTasksForAllRequestsForPlanActionCreator(url, allRequests);
 
 // *****************************************************************************
 // * QUERY_V2V_PLAN_VMS
