@@ -99,8 +99,8 @@ const processVMTasks = vmTasks => {
   return tasks;
 };
 
-const allVMTasksForRequestOfPlan = (requestWithTasks, vm_ids) => {
-  const tasksOfPlan = getMostRecentVMTasksFromRequests(requestWithTasks, vm_ids);
+const allVMTasksForRequestOfPlan = (requestWithTasks, actions) => {
+  const tasksOfPlan = getMostRecentVMTasksFromRequests(requestWithTasks, actions);
   return processVMTasks(tasksOfPlan);
 };
 
@@ -129,7 +129,7 @@ export default (state = initialState, action) => {
         return state
           .set(
             'planRequestTasks',
-            allVMTasksForRequestOfPlan(action.payload.data.results, state.plan.options.config_info.vm_ids)
+            allVMTasksForRequestOfPlan(action.payload.data.results, state.plan.options.config_info.actions)
           )
           .set('allRequestsWithTasksForPlan', action.payload.data.results)
           .set('planRequestPreviouslyFetched', true)

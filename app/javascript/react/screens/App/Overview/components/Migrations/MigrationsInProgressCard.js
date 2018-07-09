@@ -55,7 +55,7 @@ const MigrationsInProgressCard = ({ plan, allRequestsWithTasks, reloadCard, hand
   const tasks = {};
   let tasksOfPlan = {};
   if (requestsOfAssociatedPlan.length > 0) {
-    tasksOfPlan = getMostRecentVMTasksFromRequests(requestsOfAssociatedPlan, plan.options.config_info.vm_ids);
+    tasksOfPlan = getMostRecentVMTasksFromRequests(requestsOfAssociatedPlan, plan.options.config_info.actions);
   } else if (mostRecentRequest) {
     tasksOfPlan = mostRecentRequest.miq_request_tasks;
   }

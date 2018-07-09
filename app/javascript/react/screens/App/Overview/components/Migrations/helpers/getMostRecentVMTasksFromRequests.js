@@ -1,6 +1,8 @@
 import commonUtilitiesHelper from '../../../../common/commonUtilitiesHelper';
 
-const getMostRecentVMTasksFromRequests = (requests, vm_ids) => {
+const getMostRecentVMTasksFromRequests = (requests, actions) => {
+  const vm_ids = actions.map(a => a.vm_id);
+
   const allTasks = requests.map(request => request.miq_request_tasks);
 
   const flattenAllTasks = [];
