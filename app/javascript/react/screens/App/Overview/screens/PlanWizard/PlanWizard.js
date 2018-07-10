@@ -86,7 +86,7 @@ class PlanWizard extends React.Component {
     const currentStepForm = !onFinalStep && this.props[currentStepProp];
 
     const disableNextStep =
-      (!onFinalStep && !!currentStepForm.syncErrors) ||
+      (!onFinalStep && (!!currentStepForm.syncErrors || !!currentStepForm.asyncErrors)) ||
       (activeStepIndex === 1 &&
         (!this.props.planWizardVMStep.values ||
           !this.props.planWizardVMStep.values.selectedVms ||
