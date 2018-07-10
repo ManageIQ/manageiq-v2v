@@ -352,14 +352,16 @@ class PlanRequestDetailList extends React.Component {
                       <b>{__('Conversion Host')}: </b>
                       {task.transformation_host_name}
                     </div>
-                    {task.taskCompleted && (
-                      <div>
-                        <br />
-                        <strong>Log:</strong>
-                        <br />
-                        {task.options.virtv2v_wrapper && task.options.virtv2v_wrapper.v2v_log}
-                      </div>
-                    )}
+                    {task.completed &&
+                      task.options.virtv2v_wrapper &&
+                      task.options.virtv2v_wrapper.v2v_log.length > 0 && (
+                        <div>
+                          <br />
+                          <strong>{__('Log:')}</strong>
+                          <br />
+                          {task.options.virtv2v_wrapper.v2v_log}
+                        </div>
+                      )}
                   </div>
                 </Popover>
               );
