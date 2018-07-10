@@ -40,12 +40,14 @@ const MigrationsCompletedList = ({
                 requestsOfAssociatedPlan,
                 plan.options.config_info.actions
               );
+              tasksOfPlan.forEach(task => {
+                tasks[task.source_id] = task.status === 'Ok';
+              });
             } else if (mostRecentRequest) {
-              tasksOfPlan = mostRecentRequest.miq_request_tasks;
+              mostRecentRequest.miq_request_tasks.forEach(task => {
+                tasks[task.source_id] = task.status === 'Ok';
+              });
             }
-            tasksOfPlan.forEach(task => {
-              tasks[task.source_id] = task.status === 'Ok';
-            });
             let succeedCount = 0;
             Object.keys(tasks).forEach(key => {
               if (tasks[key]) succeedCount += 1;
