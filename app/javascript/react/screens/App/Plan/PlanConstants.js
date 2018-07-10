@@ -21,10 +21,10 @@ export const V2V_MIGRATION_STATUS_MESSAGES = {
   'Pre-migration': __('Pre-migration'),
   'Refresh inventory': __('Refresh inventory'),
   'Restore VM Attributes': __('Restore VM Attributes'),
-  'Transform VM': __('Transform VM'),
+  'Transform VM': __('Migrate VM'),
   'Update description of VM': __('Update description of VM'),
   Validating: __('Validating'),
-  'VM Transformations completed': __('VM Transformations completed'),
+  'VM Transformations completed': __('VM Migrations completed'),
   'Virtual machine migrated': __('Virtual machine migrated'),
-  'VM Transformations failed': __('VM Transformations failed')
+  'VM Transformations failed': __('VM Migrations failed')
 };
