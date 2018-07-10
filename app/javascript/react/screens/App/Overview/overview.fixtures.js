@@ -11,6 +11,7 @@ export const initialState = Immutable({
   fetchTransformationMappingsUrl: '/api/dummyMappings',
   transformationPlans: [],
   fetchTransformationPlansUrl: '/api/dummyTransformationPlans',
+  fetchArchivedTransformationPlansUrl: '/api/dummyArchivedTransformationPlans',
   clusters: [],
   isRejectedClusters: false,
   isFetchingClusters: false,

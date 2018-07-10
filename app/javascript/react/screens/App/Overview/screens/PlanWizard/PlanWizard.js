@@ -29,8 +29,18 @@ class PlanWizard extends React.Component {
       planWizardOptionsStep,
       setPlansBodyAction,
       setPlanScheduleAction,
-      setMigrationsFilterAction
+      setMigrationsFilterAction,
+      showAlertAction,
+      hideAlertAction
     } = this.props;
+
+    if (activeStepIndex === 0) {
+      if (planWizardGeneralStep.asyncErrors) {
+        showAlertAction(sprintf(__('Name %s already exists'), planWizardGeneralStep.values.name));
+        return;
+      }
+      hideAlertAction();
+    }
 
     if (activeStepIndex === 2) {
       const plansBody = createMigrationPlans(planWizardGeneralStep, planWizardVMStep);
@@ -61,7 +71,10 @@ class PlanWizard extends React.Component {
       planWizardExitedAction,
       planWizardGeneralStep,
       planWizardVMStep,
-      planWizardOptionsStep
+      planWizardOptionsStep,
+      alertText,
+      alertType,
+      hideAlertAction
     } = this.props;
 
     const { activeStepIndex, plansBody } = this.state;
@@ -73,7 +86,7 @@ class PlanWizard extends React.Component {
     const currentStepForm = !onFinalStep && this.props[currentStepProp];
 
     const disableNextStep =
-      (!onFinalStep && !!currentStepForm.syncErrors) ||
+      (!onFinalStep && (!!currentStepForm.syncErrors || !!currentStepForm.asyncErrors)) ||
       (activeStepIndex === 1 &&
         (!this.props.planWizardVMStep.values ||
           !this.props.planWizardVMStep.values.selectedVms ||
@@ -94,6 +107,9 @@ class PlanWizard extends React.Component {
             planWizardGeneralStep={planWizardGeneralStep}
             planWizardVMStep={planWizardVMStep}
             planWizardOptionsStep={planWizardOptionsStep}
+            alertText={alertText}
+            alertType={alertType}
+            hideAlertAction={hideAlertAction}
           />
         </Wizard.Body>
 
@@ -128,7 +144,11 @@ PlanWizard.propTypes = {
   setPlansBodyAction: PropTypes.func,
   setPlanScheduleAction: PropTypes.func,
   resetVmStepAction: PropTypes.func,
-  setMigrationsFilterAction: PropTypes.func
+  setMigrationsFilterAction: PropTypes.func,
+  showAlertAction: PropTypes.func,
+  hideAlertAction: PropTypes.func,
+  alertText: PropTypes.string,
+  alertType: PropTypes.string
 };
 PlanWizard.defaultProps = {
   hidePlanWizard: true,
@@ -139,6 +159,10 @@ PlanWizard.defaultProps = {
   planWizardOptionsStep: {},
   setPlansBodyAction: noop,
   setPlanScheduleAction: noop,
-  resetVmStepAction: noop
+  resetVmStepAction: noop,
+  showAlertAction: noop,
+  hideAlertAction: noop,
+  alertText: undefined,
+  alertType: undefined
 };
 export default PlanWizard;

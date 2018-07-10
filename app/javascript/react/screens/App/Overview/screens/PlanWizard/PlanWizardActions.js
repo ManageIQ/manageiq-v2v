@@ -1,6 +1,11 @@
 import { reset } from 'redux-form';
 import { HIDE_PLAN_WIZARD, PLAN_WIZARD_EXITED } from '../../OverviewConstants';
-import { V2V_SET_PLANS_BODY, V2V_SET_PLAN_SCHEDULE } from './PlanWizardConstants';
+import {
+  V2V_SET_PLANS_BODY,
+  V2V_SET_PLAN_SCHEDULE,
+  V2V_PLAN_WIZARD_SHOW_ALERT,
+  V2V_PLAN_WIZARD_HIDE_ALERT
+} from './PlanWizardConstants';
 
 import { V2V_VM_STEP_RESET } from './components/PlanWizardVMStep/PlanWizardVMStepConstants';
 
@@ -42,4 +47,17 @@ export const resetVmStepAction = () => dispatch => {
     type: V2V_VM_STEP_RESET
   });
   dispatch(reset('planWizardVMStep'));
+};
+
+export const showAlertAction = (alertText, alertType = 'error') => dispatch => {
+  dispatch({
+    type: V2V_PLAN_WIZARD_SHOW_ALERT,
+    payload: { alertText, alertType }
+  });
+};
+
+export const hideAlertAction = () => dispatch => {
+  dispatch({
+    type: V2V_PLAN_WIZARD_HIDE_ALERT
+  });
 };

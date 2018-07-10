@@ -99,12 +99,12 @@ describe('Overview component', () => {
       );
     });
     test('starts when the component is mounted', () => {
-      expect(fetchTransformationPlansAction).toHaveBeenCalledTimes(1);
+      expect(fetchTransformationPlansAction).toHaveBeenCalled();
     });
 
     test('fetches transformation plan requests every 15 seconds', () => {
       jest.advanceTimersByTime(15000);
-      expect(fetchTransformationPlansAction).toHaveBeenCalledTimes(2);
+      expect(fetchTransformationPlansAction).toHaveBeenCalledTimes(3);
     });
 
     // TODO: Come back to these once the UI is closer to final form

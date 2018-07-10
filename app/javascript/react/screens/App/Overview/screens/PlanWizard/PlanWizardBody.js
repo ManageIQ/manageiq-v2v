@@ -16,6 +16,10 @@ class PlanWizardBody extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
     return JSON.stringify(this.props) !== JSON.stringify(nextProps);
   }
+  componentWillUnmount() {
+    const { hideAlertAction } = this.props;
+    hideAlertAction();
+  }
   render() {
     return (
       <ModalWizard.Body
@@ -58,7 +62,8 @@ PlanWizardBody.propTypes = {
   disableNextStep: PropTypes.bool,
   plansBody: PropTypes.object,
   planWizardGeneralStep: PropTypes.object,
-  planWizardVMStep: PropTypes.object
+  planWizardVMStep: PropTypes.object,
+  hideAlertAction: PropTypes.func
 };
 
 PlanWizardBody.defaultProps = {
@@ -69,7 +74,8 @@ PlanWizardBody.defaultProps = {
   disableNextStep: true,
   plansBody: {},
   planWizardGeneralStep: {},
-  planWizardVMStep: {}
+  planWizardVMStep: {},
+  hideAlertAction: noop
 };
 
 export default PlanWizardBody;
