@@ -2,6 +2,9 @@
 
 exports[`Plan Wizard integration test should mount the PlanWizard with mapStateToProps reduced 1`] = `
 Object {
+  "alertText": undefined,
+  "alertType": undefined,
+  "hideAlertAction": [Function],
   "hidePlanWizard": false,
   "hidePlanWizardAction": [Function],
   "planWizardExitedAction": [Function],
@@ -12,5 +15,6 @@ Object {
   "setMigrationsFilterAction": [Function],
   "setPlanScheduleAction": [Function],
   "setPlansBodyAction": [Function],
+  "showAlertAction": [Function],
 }
 `;

@@ -12,6 +12,7 @@ const mapStateToProps = ({ overview, planWizard, form }, ownProps) => {
   const selectedOverview = planWizardOverviewFilter(overview);
   const selectedForms = planWizardFormFilter(form);
   return {
+    ...planWizard,
     ...selectedOverview,
     ...selectedForms,
     ...ownProps.data

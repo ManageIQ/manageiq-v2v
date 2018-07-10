@@ -135,7 +135,7 @@ class MappingWizard extends React.Component {
 
     const currentStepProp = !onFinalStep && mappingWizardSteps[activeStepIndex];
     const currentStepForm = !onFinalStep && this.props[currentStepProp];
-    const disableNextStep = !onFinalStep && !!currentStepForm.syncErrors;
+    const disableNextStep = !onFinalStep && (!!currentStepForm.syncErrors || !!currentStepForm.asyncErrors);
 
     return (
       <Wizard
