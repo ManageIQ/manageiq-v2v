@@ -387,7 +387,7 @@ class PlanRequestDetailList extends React.Component {
                       }}
                     >
                       <div>
-                        <span style={{ textTransform: 'capitalize' }}>{task.message}</span>
+                        <span>{task.message}</span>
                         &nbsp;
                         {/* Todo: revisit FieldLevelHelp props in patternfly-react to support this */}
                         <OverlayTrigger rootClose trigger="click" placement="left" overlay={popoverContent}>

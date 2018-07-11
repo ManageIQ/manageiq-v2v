@@ -7,29 +7,47 @@ export const FETCH_V2V_MIGRATION_TASK_LOG = 'FETCH_V2V_MIGRATION_TASK_LOG';
 export const DOWNLOAD_LOG_CLICKED = 'DOWNLOAD_LOG_CLICKED';
 export const DOWNLOAD_LOG_COMPLETED = 'DOWNLOAD_LOG_COMPLETED';
 
-export const V2V_MIGRATION_STATUS_MESSAGES = {
-  'Acquire Transformation Host': __('Acquire Transformation Host'),
-  'Assess Migration': __('Assess Migration'),
-  'Automation Starting': __('Automation Starting'),
-  'Collapse Snapshots': __('Collapse Snapshots'),
-  'Convert disks': __('Convert disks'),
-  'Mark source as migrated': __('Mark source as migrated'),
-  Migrating: __('Migrating'),
-  'Migration complete': __('Migration complete'),
-  'Power off': __('Power off'),
-  'Power-on VM': __('Power-on VM'),
-  'Pre-migration': __('Pre-migration'),
-  'Refresh inventory': __('Refresh inventory'),
-  'Restore VM Attributes': __('Restore VM Attributes'),
-  'Transform VM': __('Migrate VM'),
-  'Update description of VM': __('Update description of VM'),
-  Validating: __('Validating'),
-  'VM Transformations completed': __('VM Migrations completed'),
-  'Virtual machine migrated': __('Virtual machine migrated'),
-  'VM Transformations failed': __('VM Migrations failed')
+export const STATUS_MESSAGE_KEYS = {
+  ACQUIRE_TRANSFORMATION_HOST: 'Acquire Transformation Host',
+  ASSESS_MIGRATION: 'Assess Migration',
+  AUTOMATION_STARTING: 'Automation Starting',
+  COLLAPSE_SNAPSHOTS: 'Collapse Snapshots',
+  CONVERT_DISKS: 'Convert disks',
+  SOURCE_MIGRATED: 'Mark source as migrated',
+  MIGRATING: 'Migrating',
+  MIGRATION_COMPLETE: 'Migration complete',
+  POWER_OFF: 'Power off',
+  POWER_ON: 'Power-on VM',
+  PRE_MIGRATION: 'Pre-migration',
+  REFRESH_INVENTORY: 'Refresh inventory',
+  RESTORE_VM_ATTRIBUTES: 'Restore VM Attributes',
+  MIGRATE_VM: 'Transform VM',
+  UPDATE_DESCRIPTION: 'Update description of VM',
+  VALIDATING: 'Validating',
+  VM_MIGRATIONS_COMPLETED: 'VM Transformations completed',
+  VM_MIGRATED: 'Virtual machine migrated',
+  VM_MIGRATIONS_FAILED: 'VM Transformations failed'
 };
 
-export const ORIGINAL_V2V_MIGRATION_STATUS_MESSAGES = {
-  VM_Transformations_Completed: 'VM Transformations completed',
-  VM_Transformations_Failed: 'VM Transformations failed'
-};
+const STATUS_MESSAGES = {};
+STATUS_MESSAGES[STATUS_MESSAGE_KEYS.ACQUIRE_TRANSFORMATION_HOST] = __('Acquire Transformation Host');
+STATUS_MESSAGES[STATUS_MESSAGE_KEYS.ASSESS_MIGRATION] = __('Assess Migration');
+STATUS_MESSAGES[STATUS_MESSAGE_KEYS.AUTOMATION_STARTING] = __('Automation Starting');
+STATUS_MESSAGES[STATUS_MESSAGE_KEYS.COLLAPSE_SNAPSHOTS] = __('Collapse Snapshots');
+STATUS_MESSAGES[STATUS_MESSAGE_KEYS.CONVERT_DISKS] = __('Convert disks');
+STATUS_MESSAGES[STATUS_MESSAGE_KEYS.SOURCE_MIGRATED] = __('Mark source as migrated');
+STATUS_MESSAGES[STATUS_MESSAGE_KEYS.MIGRATING] = __('Migrating');
+STATUS_MESSAGES[STATUS_MESSAGE_KEYS.MIGRATION_COMPLETE] = __('Migration complete');
+STATUS_MESSAGES[STATUS_MESSAGE_KEYS.POWER_OFF] = __('Power off');
+STATUS_MESSAGES[STATUS_MESSAGE_KEYS.POWER_ON] = __('Power-on VM');
+STATUS_MESSAGES[STATUS_MESSAGE_KEYS.PRE_MIGRATION] = __('Pre-migration');
+STATUS_MESSAGES[STATUS_MESSAGE_KEYS.REFRESH_INVENTORY] = __('Refresh inventory');
+STATUS_MESSAGES[STATUS_MESSAGE_KEYS.RESTORE_VM_ATTRIBUTES] = __('Restore VM Attributes');
+STATUS_MESSAGES[STATUS_MESSAGE_KEYS.MIGRATE_VM] = __('Migrate VM');
+STATUS_MESSAGES[STATUS_MESSAGE_KEYS.UPDATE_DESCRIPTION] = __('Update description of VM');
+STATUS_MESSAGES[STATUS_MESSAGE_KEYS.VALIDATING] = __('Validating');
+STATUS_MESSAGES[STATUS_MESSAGE_KEYS.VM_MIGRATIONS_COMPLETED] = __('VM migrations completed');
+STATUS_MESSAGES[STATUS_MESSAGE_KEYS.VM_MIGRATED] = __('Virtual machine migrated');
+STATUS_MESSAGES[STATUS_MESSAGE_KEYS.VM_MIGRATIONS_FAILED] = __('VM migrations failed');
+
+export { STATUS_MESSAGES as V2V_MIGRATION_STATUS_MESSAGES };

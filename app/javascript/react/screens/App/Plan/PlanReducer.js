@@ -13,7 +13,7 @@ import {
   DOWNLOAD_LOG_CLICKED,
   DOWNLOAD_LOG_COMPLETED,
   V2V_MIGRATION_STATUS_MESSAGES,
-  ORIGINAL_V2V_MIGRATION_STATUS_MESSAGES
+  STATUS_MESSAGE_KEYS
 } from './PlanConstants';
 
 export const initialState = Immutable({
@@ -50,8 +50,8 @@ const processVMTasks = vmTasks => {
       delivered_on: new Date(task.options.delivered_on),
       updated_on: new Date(task.updated_on),
       completed:
-        task.message === ORIGINAL_V2V_MIGRATION_STATUS_MESSAGES.VM_Transformations_Completed ||
-        task.message === ORIGINAL_V2V_MIGRATION_STATUS_MESSAGES.VM_Transformations_Failed,
+        task.message === STATUS_MESSAGE_KEYS.VM_MIGRATIONS_COMPLETED ||
+        task.message === STATUS_MESSAGE_KEYS.VM_MIGRATIONS_FAILED,
       state: task.state,
       status: task.status,
       options: {}

@@ -1,3 +1,5 @@
+import { V2V_MIGRATION_STATUS_MESSAGES, STATUS_MESSAGE_KEYS } from '../../PlanConstants';
+
 export const FINISHED_PLAN_FILTER_TYPES = [
   {
     id: 'vmName',
@@ -27,17 +29,19 @@ export const ACTIVE_PLAN_FILTER_TYPES = [
     placeholder: __('Filter by Status'),
     filterType: 'select',
     filterValues: [
-      { title: __('Pending'), id: 'Pending' },
-      { title: __('Validating'), id: 'Validating' },
-      { title: __('Pre-migration'), id: 'Pre-migration' },
-      { title: __('Migrating'), id: 'Migrating' },
+      { title: V2V_MIGRATION_STATUS_MESSAGES[STATUS_MESSAGE_KEYS.VALIDATING], id: STATUS_MESSAGE_KEYS.VALIDATING },
       {
-        title: __('VM Transformations completed'),
-        id: 'VM Transformations completed'
+        title: V2V_MIGRATION_STATUS_MESSAGES[STATUS_MESSAGE_KEYS.PRE_MIGRATION],
+        id: STATUS_MESSAGE_KEYS.PRE_MIGRATION
+      },
+      { title: V2V_MIGRATION_STATUS_MESSAGES[STATUS_MESSAGE_KEYS.MIGRATING], id: STATUS_MESSAGE_KEYS.MIGRATING },
+      {
+        title: V2V_MIGRATION_STATUS_MESSAGES[STATUS_MESSAGE_KEYS.VM_MIGRATIONS_COMPLETED],
+        id: STATUS_MESSAGE_KEYS.VM_MIGRATIONS_COMPLETED
       },
       {
-        title: __('VM Transformations failed'),
-        id: 'VM Transformations failed'
+        title: V2V_MIGRATION_STATUS_MESSAGES[STATUS_MESSAGE_KEYS.VM_MIGRATIONS_FAILED],
+        id: STATUS_MESSAGE_KEYS.VM_MIGRATIONS_FAILED
       }
     ]
   }
