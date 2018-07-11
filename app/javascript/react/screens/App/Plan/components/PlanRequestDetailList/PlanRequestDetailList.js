@@ -346,7 +346,7 @@ class PlanRequestDetailList extends React.Component {
                 >
                   <div>
                     <div>
-                      <b>{__('Started')}: </b>
+                      <b>{__('Elapsed Time')}: </b>
                       {formatDateTime(task.startDateTime)}
                     </div>
                     <div>

@@ -2,6 +2,7 @@ import Immutable from 'seamless-immutable';
 import numeral from 'numeral';
 import commonUtilitiesHelper from '../common/commonUtilitiesHelper';
 import getMostRecentVMTasksFromRequests from '../Overview/components/Migrations/helpers/getMostRecentVMTasksFromRequests';
+import { IsoElapsedTime } from '../../../../components/dates/IsoElapsedTime';
 
 import {
   FETCH_V2V_PLAN,
@@ -81,6 +82,8 @@ const processVMTasks = vmTasks => {
     const lastUpdateDateTime = taskDetails.updated_on;
     taskDetails.startDateTime = startDateTime;
     taskDetails.lastUpdateDateTime = lastUpdateDateTime;
+
+    taskDetails.elapsedTime = IsoElapsedTime(new Date(startDateTime), new Date(lastUpdateDateTime));
 
     if (taskDetails.completed) {
       taskDetails.completedSuccessfully =

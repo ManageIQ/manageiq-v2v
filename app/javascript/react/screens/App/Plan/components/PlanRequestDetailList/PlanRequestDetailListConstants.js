@@ -44,7 +44,7 @@ export const ACTIVE_PLAN_FILTER_TYPES = [
 ];
 
 export const FINISHED_PLAN_SORT_FIELDS = [
-  { id: 'elapsedTime', title: __('Started'), isNumeric: false },
+  { id: 'elapsedTime', title: __('Elapsed Time'), isNumeric: false },
   {
     id: 'vmName',
     title: __('VM Name'),
@@ -54,7 +54,7 @@ export const FINISHED_PLAN_SORT_FIELDS = [
 ];
 
 export const ACTIVE_PLAN_SORT_FIELDS = [
-  { id: 'elapsedTime', title: __('Started'), isNumeric: false },
+  { id: 'elapsedTime', title: __('Elapsed Time'), isNumeric: false },
   {
     id: 'vmName',
     title: __('VM Name'),
