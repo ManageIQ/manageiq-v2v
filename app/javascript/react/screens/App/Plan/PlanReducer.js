@@ -2,6 +2,7 @@ import Immutable from 'seamless-immutable';
 import numeral from 'numeral';
 import commonUtilitiesHelper from '../common/commonUtilitiesHelper';
 import getMostRecentVMTasksFromRequests from '../Overview/components/Migrations/helpers/getMostRecentVMTasksFromRequests';
+import { IsoElapsedTime } from '../../../../components/dates/IsoElapsedTime';
 
 import {
   FETCH_V2V_PLAN,
@@ -10,7 +11,9 @@ import {
   RESET_PLAN_STATE,
   FETCH_V2V_MIGRATION_TASK_LOG,
   DOWNLOAD_LOG_CLICKED,
-  DOWNLOAD_LOG_COMPLETED
+  DOWNLOAD_LOG_COMPLETED,
+  V2V_MIGRATION_STATUS_MESSAGES,
+  STATUS_MESSAGE_KEYS
 } from './PlanConstants';
 
 export const initialState = Immutable({
@@ -42,11 +45,13 @@ const processVMTasks = vmTasks => {
   vmTasks.forEach(task => {
     const taskDetails = {
       id: task.id,
-      message: task.message,
+      message: V2V_MIGRATION_STATUS_MESSAGES[task.message],
       transformation_host_name: task.options && task.options.transformation_host_name,
       delivered_on: new Date(task.options.delivered_on),
       updated_on: new Date(task.updated_on),
-      completed: task.message === 'VM Transformations completed' || task.message === 'VM Transformations failed',
+      completed:
+        task.message === STATUS_MESSAGE_KEYS.VM_MIGRATIONS_COMPLETED ||
+        task.message === STATUS_MESSAGE_KEYS.VM_MIGRATIONS_FAILED,
       state: task.state,
       status: task.status,
       options: {}
@@ -77,6 +82,8 @@ const processVMTasks = vmTasks => {
     const lastUpdateDateTime = taskDetails.updated_on;
     taskDetails.startDateTime = startDateTime;
     taskDetails.lastUpdateDateTime = lastUpdateDateTime;
+
+    taskDetails.elapsedTime = IsoElapsedTime(new Date(startDateTime), new Date(lastUpdateDateTime));
 
     if (taskDetails.completed) {
       taskDetails.completedSuccessfully =
