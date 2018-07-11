@@ -11,7 +11,8 @@ import {
   FETCH_V2V_MIGRATION_TASK_LOG,
   DOWNLOAD_LOG_CLICKED,
   DOWNLOAD_LOG_COMPLETED,
-  V2V_MIGRATION_STATUS_MESSAGES
+  V2V_MIGRATION_STATUS_MESSAGES,
+  ORIGINAL_V2V_MIGRATION_STATUS_MESSAGES
 } from './PlanConstants';
 
 export const initialState = Immutable({
@@ -48,8 +49,8 @@ const processVMTasks = vmTasks => {
       delivered_on: new Date(task.options.delivered_on),
       updated_on: new Date(task.updated_on),
       completed:
-        task.message === V2V_MIGRATION_STATUS_MESSAGES['VM Transformations completed'] ||
-        task.message === V2V_MIGRATION_STATUS_MESSAGES['VM Transformations failed'],
+        task.message === ORIGINAL_V2V_MIGRATION_STATUS_MESSAGES.VM_Transformations_Completed ||
+        task.message === ORIGINAL_V2V_MIGRATION_STATUS_MESSAGES.VM_Transformations_Failed,
       state: task.state,
       status: task.status,
       options: {}
