@@ -27,6 +27,7 @@ import {
   ACTIVE_PLAN_SORT_FIELDS,
   FINISHED_PLAN_SORT_FIELDS
 } from './PlanRequestDetailListConstants';
+import { V2V_MIGRATION_STATUS_MESSAGES } from '../../PlanConstants';
 import TickingIsoElapsedTime from '../../../../../../components/dates/TickingIsoElapsedTime';
 
 class PlanRequestDetailList extends React.Component {
@@ -338,15 +339,20 @@ class PlanRequestDetailList extends React.Component {
               const label = sprintf(__('%s of %s Migrated'), task.diskSpaceCompletedGb, task.totalDiskSpaceGb);
 
               const popoverContent = (
-                <Popover id={`popover${task.id}${n}`} title={task.message} className="task-info-popover">
+                <Popover
+                  id={`popover${task.id}${n}`}
+                  title={V2V_MIGRATION_STATUS_MESSAGES[task.message]}
+                  className="task-info-popover"
+                >
                   <div>
                     <div>
-                      <b>{__('Started')}: </b>
+                      <b>{__('Elapsed Time')}: </b>
                       {formatDateTime(task.startDateTime)}
                     </div>
                     <div>
                       <b>{__('Description')}: </b>
-                      {task.options.progress && task.options.progress.current_description}
+                      {task.options.progress &&
+                        V2V_MIGRATION_STATUS_MESSAGES[task.options.progress.current_description]}
                     </div>
                     <div>
                       <b>{__('Conversion Host')}: </b>
@@ -381,7 +387,7 @@ class PlanRequestDetailList extends React.Component {
                       }}
                     >
                       <div>
-                        <span style={{ textTransform: 'capitalize' }}>{task.message}</span>
+                        <span>{task.message}</span>
                         &nbsp;
                         {/* Todo: revisit FieldLevelHelp props in patternfly-react to support this */}
                         <OverlayTrigger rootClose trigger="click" placement="left" overlay={popoverContent}>
