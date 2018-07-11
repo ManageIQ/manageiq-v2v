@@ -28,3 +28,8 @@ export const V2V_MIGRATION_STATUS_MESSAGES = {
   'Virtual machine migrated': __('Virtual machine migrated'),
   'VM Transformations failed': __('VM Migrations failed')
 };
+
+export const ORIGINAL_V2V_MIGRATION_STATUS_MESSAGES = {
+  VM_Transformations_Completed: 'VM Transformations completed',
+  VM_Transformations_Failed: 'VM Transformations failed'
+};
