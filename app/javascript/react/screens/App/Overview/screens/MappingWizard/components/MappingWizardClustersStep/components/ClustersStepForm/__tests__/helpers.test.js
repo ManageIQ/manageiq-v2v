@@ -28,11 +28,7 @@ describe('updateMapping', () => {
       nodes: [mappedSourceCluster]
     };
 
-    expect(
-      updateMapping(clustersStepMapping, mappedTargetCluster, [
-        sourceClusterToAdd
-      ])
-    ).toMatchSnapshot();
+    expect(updateMapping(clustersStepMapping, mappedTargetCluster, [sourceClusterToAdd])).toMatchSnapshot();
   });
 
   test('does not add source clusters if target cluster id does not match', () => {
@@ -43,11 +39,7 @@ describe('updateMapping', () => {
       nodes: [mappedSourceCluster]
     };
 
-    expect(
-      updateMapping(clustersStepMapping, targetClusterToAddTo, [
-        sourceClusterShouldNotBeAdded
-      ])
-    ).toMatchSnapshot();
+    expect(updateMapping(clustersStepMapping, targetClusterToAddTo, [sourceClusterShouldNotBeAdded])).toMatchSnapshot();
   });
 });
 

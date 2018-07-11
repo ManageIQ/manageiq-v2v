@@ -16,8 +16,7 @@ const MigrationsInProgressCards = ({
       <Grid.Col xs={12}>
         <Card.HeightMatching selector={['.card-pf-match-height']}>
           <Spinner loading={loading}>
-            {activeTransformationPlans.length > 0 &&
-            allRequestsWithTasks.length > 0 ? (
+            {activeTransformationPlans.length > 0 && allRequestsWithTasks.length > 0 ? (
               activeTransformationPlans.map(plan => (
                 <MigrationInProgressCard
                   plan={plan}
@@ -34,13 +33,8 @@ const MigrationsInProgressCards = ({
                 iconName="info"
                 description={
                   <span>
-                    {__(
-                      'There are no existing migration plans in an In Progress state.'
-                    )}
-                    <br />{' '}
-                    {__(
-                      'Make a selection in the dropdown to view plans in other states.'
-                    )}
+                    {__('There are no existing migration plans in an In Progress state.')}
+                    <br /> {__('Make a selection in the dropdown to view plans in other states.')}
                   </span>
                 }
               />

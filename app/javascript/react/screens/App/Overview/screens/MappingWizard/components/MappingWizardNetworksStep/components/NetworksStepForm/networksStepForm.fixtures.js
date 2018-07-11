@@ -1,7 +1,4 @@
-import {
-  sourceClusterNetworks,
-  targetClusterNetworks
-} from '../../mappingWizardNetworksStep.fixtures';
+import { sourceClusterNetworks, targetClusterNetworks } from '../../mappingWizardNetworksStep.fixtures';
 
 import {
   targetClusterWithExtendedData,

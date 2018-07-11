@@ -35,8 +35,7 @@ export const migrationPlansResult = Immutable({
 export const migrationRequestsResult = Immutable({
   href: 'http://localhost:3000/api/requests/10000000000001',
   id: '10000000000001',
-  description:
-    'Request for Migration Plan [My-ServiceTemplateTransformationPlan-Example]',
+  description: 'Request for Migration Plan [My-ServiceTemplateTransformationPlan-Example]',
   approval_state: 'approved',
   type: 'ServiceTemplateTransformationPlanRequest',
   created_on: '2017-10-24T22:39:17Z',
@@ -46,8 +45,7 @@ export const migrationRequestsResult = Immutable({
   requester_name: 'Administrator',
   request_type: 'transformation_plan',
   request_state: 'finished',
-  message:
-    'Migration Plan [My-ServiceTemplateTransformationPlan-Example] requested Successfully',
+  message: 'Migration Plan [My-ServiceTemplateTransformationPlan-Example] requested Successfully',
   status: 'Ok',
   userid: 'admin',
   source_id: '10000000000001',

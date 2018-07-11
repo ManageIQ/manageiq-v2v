@@ -5,12 +5,7 @@ import { createMigrationPlans } from './helpers';
 import PlanWizardBody from './PlanWizardBody';
 import { MIGRATIONS_FILTERS } from '../../OverviewConstants';
 
-const planWizardSteps = [
-  'planWizardGeneralStep',
-  'planWizardVMStep',
-  'planWizardOptionsStep',
-  'planWizardResultsStep'
-];
+const planWizardSteps = ['planWizardGeneralStep', 'planWizardVMStep', 'planWizardOptionsStep', 'planWizardResultsStep'];
 
 class PlanWizard extends React.Component {
   state = { activeStepIndex: 0 };
@@ -38,25 +33,14 @@ class PlanWizard extends React.Component {
     } = this.props;
 
     if (activeStepIndex === 2) {
-      const plansBody = createMigrationPlans(
-        planWizardGeneralStep,
-        planWizardVMStep
-      );
+      const plansBody = createMigrationPlans(planWizardGeneralStep, planWizardVMStep);
 
-      setPlanScheduleAction(
-        planWizardOptionsStep.values.migration_plan_choice_radio
-      );
+      setPlanScheduleAction(planWizardOptionsStep.values.migration_plan_choice_radio);
       setPlansBodyAction(plansBody);
 
-      if (
-        planWizardOptionsStep.values.migration_plan_choice_radio ===
-        'migration_plan_now'
-      ) {
+      if (planWizardOptionsStep.values.migration_plan_choice_radio === 'migration_plan_now') {
         setMigrationsFilterAction(MIGRATIONS_FILTERS.inProgress);
-      } else if (
-        planWizardOptionsStep.values.migration_plan_choice_radio ===
-        'migration_plan_later'
-      ) {
+      } else if (planWizardOptionsStep.values.migration_plan_choice_radio === 'migration_plan_later') {
         setMigrationsFilterAction(MIGRATIONS_FILTERS.notStarted);
       }
     }
@@ -96,15 +80,8 @@ class PlanWizard extends React.Component {
           this.props.planWizardVMStep.values.selectedVms.length === 0));
 
     return (
-      <Wizard
-        show={!hidePlanWizard}
-        onClose={hidePlanWizardAction}
-        onExited={planWizardExitedAction}
-      >
-        <Wizard.Header
-          onClose={hidePlanWizardAction}
-          title={__('Migration Plan Wizard')}
-        />
+      <Wizard show={!hidePlanWizard} onClose={hidePlanWizardAction} onExited={planWizardExitedAction}>
+        <Wizard.Header onClose={hidePlanWizardAction} title={__('Migration Plan Wizard')} />
 
         <Wizard.Body>
           <PlanWizardBody
@@ -121,18 +98,10 @@ class PlanWizard extends React.Component {
         </Wizard.Body>
 
         <Wizard.Footer className="wizard-pf-footer">
-          <Button
-            bsStyle="default"
-            className="btn-cancel"
-            onClick={hidePlanWizardAction}
-          >
+          <Button bsStyle="default" className="btn-cancel" onClick={hidePlanWizardAction}>
             {__('Cancel')}
           </Button>
-          <Button
-            bsStyle="default"
-            onClick={this.prevStep}
-            disabled={onFirstStep || onFinalStep}
-          >
+          <Button bsStyle="default" onClick={this.prevStep} disabled={onFirstStep || onFinalStep}>
             <Icon type="fa" name="angle-left" />
             {__('Back')}
           </Button>
@@ -141,11 +110,7 @@ class PlanWizard extends React.Component {
             onClick={onFinalStep ? hidePlanWizardAction : this.nextStep}
             disabled={disableNextStep}
           >
-            {onFinalStep
-              ? __('Close')
-              : activeStepIndex === 2
-                ? __('Create')
-                : __('Next')}
+            {onFinalStep ? __('Close') : activeStepIndex === 2 ? __('Create') : __('Next')}
             <Icon type="fa" name="angle-right" />
           </Button>
         </Wizard.Footer>

@@ -10,12 +10,8 @@ class PlanWizardBody extends React.Component {
   constructor(props) {
     super(props);
 
-    this.planWizardVMStepContainer = componentRegistry.markup(
-      'PlanWizardVMStepContainer'
-    );
-    this.planWizardResultsStepContainer = componentRegistry.markup(
-      'PlanWizardResultsStepContainer'
-    );
+    this.planWizardVMStepContainer = componentRegistry.markup('PlanWizardVMStepContainer');
+    this.planWizardResultsStepContainer = componentRegistry.markup('PlanWizardResultsStepContainer');
   }
   shouldComponentUpdate(nextProps, nextState) {
     return JSON.stringify(this.props) !== JSON.stringify(nextProps);

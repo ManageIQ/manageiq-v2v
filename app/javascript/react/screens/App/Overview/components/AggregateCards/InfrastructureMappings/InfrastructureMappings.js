@@ -12,10 +12,7 @@ import {
 } from 'patternfly-react';
 
 const InfrastructureMappings = ({ mappings, loading }) => {
-  const countDescription =
-    mappings.length === 1
-      ? __('Infrastructure Mapping')
-      : __('Infrastructure Mappings');
+  const countDescription = mappings.length === 1 ? __('Infrastructure Mapping') : __('Infrastructure Mappings');
 
   const classes = cx('overview-aggregate-card', { 'is-loading': loading });
 
@@ -23,8 +20,7 @@ const InfrastructureMappings = ({ mappings, loading }) => {
     <Card className={classes} accented aggregated matchHeight>
       <Spinner loading={loading}>
         <Card.Title>
-          <AggregateStatusCount>{mappings.length}</AggregateStatusCount>{' '}
-          {countDescription}
+          <AggregateStatusCount>{mappings.length}</AggregateStatusCount> {countDescription}
         </Card.Title>
         {mappings.length > 0 && (
           <Card.Body className="overview-aggregate-card--body">

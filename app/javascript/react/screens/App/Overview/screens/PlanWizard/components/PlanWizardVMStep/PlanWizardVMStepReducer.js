@@ -1,11 +1,7 @@
 import Immutable from 'seamless-immutable';
 import numeral from 'numeral';
 
-import {
-  V2V_VALIDATE_VMS,
-  V2V_VM_STEP_RESET,
-  V2V_VM_POST_VALIDATION_REASONS
-} from './PlanWizardVMStepConstants';
+import { V2V_VALIDATE_VMS, V2V_VM_STEP_RESET, V2V_VM_POST_VALIDATION_REASONS } from './PlanWizardVMStepConstants';
 
 const initialState = Immutable({
   isValidatingVms: false,
@@ -77,11 +73,9 @@ const _formatInvalidVms = vms => {
 };
 
 const _formatConflictVms = vms => {
-  const inactiveVMCount =
-    (vms && vms.filter(vm => vm.cluster === '' || vm.path === '').length) || 0;
+  const inactiveVMCount = (vms && vms.filter(vm => vm.cluster === '' || vm.path === '').length) || 0;
   const allVMCount = (vms && vms.length) || 0;
-  const vmCount =
-    inactiveVMCount > 0 ? allVMCount - inactiveVMCount : allVMCount;
+  const vmCount = inactiveVMCount > 0 ? allVMCount - inactiveVMCount : allVMCount;
   const uniqueIds = vms && [...new Set(vms.map(value => value.id))];
   return (
     vms &&
@@ -108,9 +102,7 @@ const _formatConflictVms = vms => {
 export default (state = initialState, action) => {
   switch (action.type) {
     case `${V2V_VALIDATE_VMS}_PENDING`:
-      return state
-        .set('isValidatingVms', true)
-        .set('isRejectedValidatingVms', false);
+      return state.set('isValidatingVms', true).set('isRejectedValidatingVms', false);
     case `${V2V_VALIDATE_VMS}_FULFILLED`: {
       const { payload } = action;
       if (payload && payload.data) {

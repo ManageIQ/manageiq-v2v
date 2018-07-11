@@ -46,10 +46,7 @@ class TickingIsoElapsedTime extends React.Component {
 }
 
 TickingIsoElapsedTime.propTypes = {
-  startTime: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.instanceOf(Date)
-  ]),
+  startTime: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)]),
   endTime: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)])
 };
 

@@ -39,9 +39,7 @@ class MappingWizardClustersStep extends React.Component {
           <div className="wizard-pf-success-icon">
             <span className="pficon pficon-error-circle-o" />
           </div>
-          <h3 className="blank-slate-pf-main-action">
-            {__('Error Retrieving Clusters')}
-          </h3>
+          <h3 className="blank-slate-pf-main-action">{__('Error Retrieving Clusters')}</h3>
           <p className="blank-slate-pf-secondary-action">
             {__("We're sorry, something went wrong. Please try again.")}
           </p>

@@ -1,8 +1,5 @@
 import API from '../../../../../../../../common/API';
-import {
-  POST_V2V_MIGRATION_PLANS,
-  POST_V2V_MIGRATION_REQUESTS
-} from './PlanWizardResultsStepConstants';
+import { POST_V2V_MIGRATION_PLANS, POST_V2V_MIGRATION_REQUESTS } from './PlanWizardResultsStepConstants';
 
 const postMigrationRequestsAction = (response, dispatch) => {
   dispatch({
@@ -19,11 +16,7 @@ const postMigrationRequestsAction = (response, dispatch) => {
   });
 };
 
-const _postMigrationPlansActionCreator = (
-  url,
-  migrationPlans,
-  planSchedule
-) => dispatch =>
+const _postMigrationPlansActionCreator = (url, migrationPlans, planSchedule) => dispatch =>
   dispatch({
     type: POST_V2V_MIGRATION_PLANS,
     payload: new Promise((resolve, reject) => {

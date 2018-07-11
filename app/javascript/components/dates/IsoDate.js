@@ -11,13 +11,7 @@ const IsoDate = ({ data }, context) => {
 
     return (
       <span title={title}>
-        <FormattedDate
-          value={date}
-          day="2-digit"
-          month="2-digit"
-          year="numeric"
-          timeZone={i18n.timezone}
-        />
+        <FormattedDate value={date} day="2-digit" month="2-digit" year="numeric" timeZone={i18n.timezone} />
       </span>
     );
   }

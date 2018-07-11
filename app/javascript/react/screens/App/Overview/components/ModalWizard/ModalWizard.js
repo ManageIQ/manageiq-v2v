@@ -5,10 +5,7 @@ import { connect } from 'react-redux';
 
 // TODO we should lift this application-specific stuff out of this generalized component file.
 const reduxFormMap = {
-  [__('Infrastructure Mapping Wizard')]: [
-    'mappingWizardGeneralStep',
-    'mappingWizardClustersStep'
-  ],
+  [__('Infrastructure Mapping Wizard')]: ['mappingWizardGeneralStep', 'mappingWizardClustersStep'],
   [__('Migration Plan Wizard')]: ['planWizardGeneralStep', 'planWizardVMStep']
 };
 
@@ -41,12 +38,7 @@ const ModalWizard = props => {
     !!formContainer[currentReduxForm].syncErrors;
 
   return (
-    <Wizard
-      show={showWizard}
-      onHide={onHide}
-      onExited={onExited}
-      dialogClassName="modal-lg wizard-pf"
-    >
+    <Wizard show={showWizard} onHide={onHide} onExited={onExited} dialogClassName="modal-lg wizard-pf">
       <Wizard.Header onClose={onHide} title={title} />
       <Wizard.Body>
         {React.Children.map(children, child =>
@@ -67,11 +59,7 @@ const ModalWizard = props => {
           <Icon type="fa" name="angle-left" />
           {__('Back')}
         </Button>
-        <Button
-          bsStyle="primary"
-          onClick={onFinalStep ? onHide : onNext}
-          disabled={disableNextStep}
-        >
+        <Button bsStyle="primary" onClick={onFinalStep ? onHide : onNext} disabled={disableNextStep}>
           {onFinalStep ? __('Close') : __('Next')}
           <Icon type="fa" name="angle-right" />
         </Button>

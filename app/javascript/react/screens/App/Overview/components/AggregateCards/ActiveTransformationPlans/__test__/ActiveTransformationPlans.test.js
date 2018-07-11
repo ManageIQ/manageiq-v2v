@@ -11,12 +11,7 @@ const { results: requests } = allRequestsWithTasks;
 const activePlans = activeTransformationPlansFilter(plans);
 
 test('displays the number of active transformation plans with an error', () => {
-  const wrapper = shallow(
-    <ActiveTransformationPlans
-      activePlans={activePlans}
-      allRequestsWithTasks={requests}
-    />
-  );
+  const wrapper = shallow(<ActiveTransformationPlans activePlans={activePlans} allRequestsWithTasks={requests} />);
 
   expect(wrapper.find('Icon').prop('name')).toBe('error-circle-o');
   expect(

@@ -16,19 +16,12 @@ class PlanWizardVMStep extends React.Component {
   }
   componentDidUpdate(prevProps) {
     const { vm_choice_radio } = this.props;
-    if (
-      vm_choice_radio !== prevProps.vm_choice_radio &&
-      vm_choice_radio === 'vms_via_discovery'
-    ) {
+    if (vm_choice_radio !== prevProps.vm_choice_radio && vm_choice_radio === 'vms_via_discovery') {
       this.validateVms();
     }
   }
   onCSVParseSuccess = parsedRows => {
-    const {
-      infrastructure_mapping_id,
-      validateVmsUrl,
-      validateVmsAction
-    } = this.props;
+    const { infrastructure_mapping_id, validateVmsUrl, validateVmsAction } = this.props;
     // skip the header row
     parsedRows.shift();
     validateVmsAction(validateVmsUrl, infrastructure_mapping_id, parsedRows);
@@ -38,11 +31,7 @@ class PlanWizardVMStep extends React.Component {
     csvParseErrorAction(errMsg);
   };
   validateVms = () => {
-    const {
-      infrastructure_mapping_id,
-      validateVmsUrl,
-      validateVmsAction
-    } = this.props;
+    const { infrastructure_mapping_id, validateVmsUrl, validateVmsAction } = this.props;
     validateVmsAction(validateVmsUrl, infrastructure_mapping_id, []);
   };
   render() {
@@ -66,9 +55,7 @@ class PlanWizardVMStep extends React.Component {
           <div className="wizard-pf-success-icon">
             <span className="pficon pficon-error-circle-o" />
           </div>
-          <h3 className="blank-slate-pf-main-action">
-            {__('Error Validating VMs')}
-          </h3>
+          <h3 className="blank-slate-pf-main-action">{__('Error Validating VMs')}</h3>
           <p className="blank-slate-pf-secondary-action">
             {__('Sorry, there was an error validating VMs. Please try again.')}
           </p>
@@ -80,14 +67,10 @@ class PlanWizardVMStep extends React.Component {
           <div className="wizard-pf-success-icon">
             <span className="pficon pficon-error-circle-o" />
           </div>
-          <h3 className="blank-slate-pf-main-action">
-            {__('The selected file does not have the expected format.')}
-          </h3>
+          <h3 className="blank-slate-pf-main-action">{__('The selected file does not have the expected format.')}</h3>
           <h3 className="blank-slate-pf-main-action">{errorParsingCSV}</h3>
           <p className="blank-slate-pf-secondary-action">
-            {__(
-              'See product documentation for the correct format of the .csv file'
-            )}
+            {__('See product documentation for the correct format of the .csv file')}
           </p>
           <div className="form-group">
             <Button bsStyle="primary" onClick={csvImportAction}>
@@ -100,13 +83,9 @@ class PlanWizardVMStep extends React.Component {
       return (
         <div className="blank-slate-pf">
           <div className="spinner spinner-lg blank-slate-pf-icon" />
-          <h3 className="blank-slate-pf-main-action">
-            {__('Discovering VMs')}
-          </h3>
+          <h3 className="blank-slate-pf-main-action">{__('Discovering VMs')}</h3>
           <p className="blank-slate-pf-secondary-action">
-            {__(
-              'Discovering VMs associated with the Infrastructure Mapping selected.'
-            )}
+            {__('Discovering VMs associated with the Infrastructure Mapping selected.')}
           </p>
         </div>
       );
@@ -114,28 +93,14 @@ class PlanWizardVMStep extends React.Component {
       return (
         <div className="blank-slate-pf">
           <div className="spinner spinner-lg blank-slate-pf-icon" />
-          <h3 className="blank-slate-pf-main-action">
-            {__('Validating CSV Import')}
-          </h3>
+          <h3 className="blank-slate-pf-main-action">{__('Validating CSV Import')}</h3>
           <p className="blank-slate-pf-secondary-action">
-            {__(
-              'Validating CSV VMs are associated with the Infrastructure Mapping selected.'
-            )}
+            {__('Validating CSV VMs are associated with the Infrastructure Mapping selected.')}
           </p>
         </div>
       );
-    } else if (
-      !discoveryMode &&
-      (valid_vms.length === 0 &&
-        invalid_vms.length === 0 &&
-        conflict_vms.length === 0)
-    ) {
-      return (
-        <CSVDropzoneField
-          onCSVParseSuccess={this.onCSVParseSuccess}
-          onCSVParseFailure={this.onCSVParseFailure}
-        />
-      );
+    } else if (!discoveryMode && (valid_vms.length === 0 && invalid_vms.length === 0 && conflict_vms.length === 0)) {
+      return <CSVDropzoneField onCSVParseSuccess={this.onCSVParseSuccess} onCSVParseFailure={this.onCSVParseFailure} />;
     } else if (!isValidatingVms && validationServiceCalled) {
       // set make rows editable so they can be selected
       const validVms = Immutable.asMutable(valid_vms, { deep: true });
@@ -155,9 +120,7 @@ class PlanWizardVMStep extends React.Component {
               validate={[
                 length({
                   min: 1,
-                  msg: __(
-                    'At least one VM needs to be selected to create the Migration Plan.'
-                  )
+                  msg: __('At least one VM needs to be selected to create the Migration Plan.')
                 })
               ]}
             />
@@ -170,13 +133,9 @@ class PlanWizardVMStep extends React.Component {
           <div className="wizard-pf-success-icon">
             <span className="pficon pficon-warning-triangle-o" />
           </div>
-          <h3 className="blank-slate-pf-main-action">
-            {__('No VMs were found.')}
-          </h3>
+          <h3 className="blank-slate-pf-main-action">{__('No VMs were found.')}</h3>
           <p className="blank-slate-pf-secondary-action">
-            {__(
-              'Sorry, no VMs were associated with this Infrastructure Mapping. Please try again.'
-            )}
+            {__('Sorry, no VMs were associated with this Infrastructure Mapping. Please try again.')}
           </p>
         </div>
       );

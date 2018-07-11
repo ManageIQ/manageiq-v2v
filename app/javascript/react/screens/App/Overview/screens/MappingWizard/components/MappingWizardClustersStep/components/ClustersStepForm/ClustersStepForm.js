@@ -19,21 +19,14 @@ class ClustersStepForm extends React.Component {
 
   selectSourceCluster = sourceCluster => {
     this.setState(prevState => {
-      const isAlreadySelected = prevState.selectedSourceClusters.some(
-        cluster => cluster.id === sourceCluster.id
-      );
+      const isAlreadySelected = prevState.selectedSourceClusters.some(cluster => cluster.id === sourceCluster.id);
       if (isAlreadySelected) {
         return {
-          selectedSourceClusters: prevState.selectedSourceClusters.filter(
-            cluster => cluster.id !== sourceCluster.id
-          )
+          selectedSourceClusters: prevState.selectedSourceClusters.filter(cluster => cluster.id !== sourceCluster.id)
         };
       }
       return {
-        selectedSourceClusters: [
-          ...prevState.selectedSourceClusters,
-          sourceCluster
-        ]
+        selectedSourceClusters: [...prevState.selectedSourceClusters, sourceCluster]
       };
     });
   };
@@ -54,19 +47,12 @@ class ClustersStepForm extends React.Component {
 
     if (mappingExistsForSelectedTargetCluster) {
       const updatedMappings = clustersStepMappings.map(clustersStepMapping =>
-        updateMapping(
-          clustersStepMapping,
-          selectedTargetCluster,
-          selectedSourceClusters
-        )
+        updateMapping(clustersStepMapping, selectedTargetCluster, selectedSourceClusters)
       );
 
       onChange(updatedMappings);
     } else {
-      onChange([
-        ...clustersStepMappings,
-        createNewMapping(selectedTargetCluster, selectedSourceClusters)
-      ]);
+      onChange([...clustersStepMappings, createNewMapping(selectedTargetCluster, selectedSourceClusters)]);
     }
 
     this.setState(() => ({
@@ -96,11 +82,7 @@ class ClustersStepForm extends React.Component {
       const clustersStepMappings = input.value;
       input.onChange(
         clustersStepMappings.filter(
-          targetClusterWithSourceClusters =>
-            !(
-              targetClusterWithSourceClusters.id ===
-              prevState.selectedMapping.id
-            )
+          targetClusterWithSourceClusters => !(targetClusterWithSourceClusters.id === prevState.selectedMapping.id)
         )
       );
       return {
@@ -115,19 +97,9 @@ class ClustersStepForm extends React.Component {
   };
 
   render() {
-    const {
-      sourceClusters,
-      targetClusters,
-      isFetchingSourceClusters,
-      isFetchingTargetClusters,
-      input
-    } = this.props;
+    const { sourceClusters, targetClusters, isFetchingSourceClusters, isFetchingTargetClusters, input } = this.props;
 
-    const {
-      selectedTargetCluster,
-      selectedSourceClusters,
-      selectedMapping
-    } = this.state;
+    const { selectedTargetCluster, selectedSourceClusters, selectedMapping } = this.state;
 
     const counter = (
       <DualPaneMapperCount
@@ -140,12 +112,7 @@ class ClustersStepForm extends React.Component {
       <div className="dual-pane-mapper-form">
         <DualPaneMapper
           handleButtonClick={this.addMapping}
-          validMapping={
-            !(
-              selectedTargetCluster &&
-              (selectedSourceClusters && selectedSourceClusters.length > 0)
-            )
-          }
+          validMapping={!(selectedTargetCluster && (selectedSourceClusters && selectedSourceClusters.length > 0))}
         >
           {sourceClusters && (
             <DualPaneMapperList
@@ -159,17 +126,12 @@ class ClustersStepForm extends React.Component {
                   item={item}
                   text={
                     item.v_parent_datacenter
-                      ? `${item.ext_management_system.name} \\ ${
-                          item.v_parent_datacenter
-                        } \\ ${item.name}`
+                      ? `${item.ext_management_system.name} \\ ${item.v_parent_datacenter} \\ ${item.name}`
                       : `${item.name}`
                   }
                   key={item.id}
                   selected={
-                    selectedSourceClusters &&
-                    selectedSourceClusters.some(
-                      sourceCluster => sourceCluster.id === item.id
-                    )
+                    selectedSourceClusters && selectedSourceClusters.some(sourceCluster => sourceCluster.id === item.id)
                   }
                   handleClick={this.selectSourceCluster}
                   handleKeyPress={this.selectSourceCluster}
@@ -188,16 +150,11 @@ class ClustersStepForm extends React.Component {
                   item={item}
                   text={
                     item.v_parent_datacenter
-                      ? `${item.ext_management_system.name} \\ ${
-                          item.v_parent_datacenter
-                        } \\ ${item.name}`
+                      ? `${item.ext_management_system.name} \\ ${item.v_parent_datacenter} \\ ${item.name}`
                       : `${item.name}`
                   }
                   key={item.id}
-                  selected={
-                    selectedTargetCluster &&
-                    selectedTargetCluster.id === item.id
-                  }
+                  selected={selectedTargetCluster && selectedTargetCluster.id === item.id}
                   handleClick={this.selectTargetCluster}
                   handleKeyPress={this.selectTargetCluster}
                 />

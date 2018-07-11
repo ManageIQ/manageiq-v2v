@@ -1,9 +1,6 @@
 import URI from 'urijs';
 import API from '../../../../../../../../common/API';
-import {
-  FETCH_V2V_SOURCE_NETWORKS,
-  FETCH_V2V_TARGET_NETWORKS
-} from './MappingWizardNetworksStepConstants';
+import { FETCH_V2V_SOURCE_NETWORKS, FETCH_V2V_TARGET_NETWORKS } from './MappingWizardNetworksStepConstants';
 
 const _filterSourceNetworks = response => {
   const { data } = response;

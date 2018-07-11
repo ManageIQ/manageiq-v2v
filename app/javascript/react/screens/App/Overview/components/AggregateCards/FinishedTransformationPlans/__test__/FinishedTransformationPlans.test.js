@@ -10,9 +10,7 @@ const finishedPlans = finishedTransformationPlansFilter(plans);
 
 test('displays the number of finished transformation plans with an error', () => {
   const [failedPlan, completePlan] = finishedPlans;
-  const wrapper = shallow(
-    <FinishedTransformationPlans finishedPlans={[failedPlan, completePlan]} />
-  );
+  const wrapper = shallow(<FinishedTransformationPlans finishedPlans={[failedPlan, completePlan]} />);
 
   expect(wrapper.find('Icon').prop('name')).toBe('error-circle-o');
   expect(

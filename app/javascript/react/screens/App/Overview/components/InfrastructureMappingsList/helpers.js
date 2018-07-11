@@ -1,9 +1,4 @@
-export const mapInfrastructureMappings = (
-  transformation_mapping_items,
-  clusters,
-  datastores,
-  networks
-) => {
+export const mapInfrastructureMappings = (transformation_mapping_items, clusters, datastores, networks) => {
   /**
    * map the target source -> destination clusters/networks/datastores for
    * display on the infrastructure mappings list view
@@ -69,9 +64,7 @@ export const mapInfrastructureMappings = (
   const targetClusters = {};
   clusterMappingItems.forEach(clusterMapping => {
     const sourceCluster = clusters.find(c => c.id === clusterMapping.source_id);
-    const targetCluster = clusters.find(
-      c => c.id === clusterMapping.destination_id
-    );
+    const targetCluster = clusters.find(c => c.id === clusterMapping.destination_id);
     if (sourceCluster && targetCluster) {
       if (targetClusters[targetCluster.id]) {
         targetClusters[targetCluster.id].sourceClusters.push(sourceCluster);
@@ -86,26 +79,13 @@ export const mapInfrastructureMappings = (
   // create unique datastore mappings by unique target datastore
   const targetDatastores = {};
   datastoreMappingItems.forEach(datastoreMapping => {
-    const clusterMapping =
-      clustersByMappingId[datastoreMapping.transformation_mapping_id];
+    const clusterMapping = clustersByMappingId[datastoreMapping.transformation_mapping_id];
     const sourceCluster = clusters.find(c => c.id === clusterMapping.source_id);
-    const targetCluster = clusters.find(
-      c => c.id === clusterMapping.destination_id
-    );
-    const sourceDatastore = datastores.find(
-      d => d.id === datastoreMapping.source_id
-    );
-    const targetDatastore = datastores.find(
-      d => d.id === datastoreMapping.destination_id
-    );
+    const targetCluster = clusters.find(c => c.id === clusterMapping.destination_id);
+    const sourceDatastore = datastores.find(d => d.id === datastoreMapping.source_id);
+    const targetDatastore = datastores.find(d => d.id === datastoreMapping.destination_id);
 
-    if (
-      clusterMapping &&
-      sourceCluster &&
-      targetCluster &&
-      sourceDatastore &&
-      targetDatastore
-    ) {
+    if (clusterMapping && sourceCluster && targetCluster && sourceDatastore && targetDatastore) {
       const source = {
         sourceDatastore,
         sourceCluster
@@ -128,24 +108,13 @@ export const mapInfrastructureMappings = (
   // create unique networks mappings by unique target network (using ems_uid)
   const targetNetworks = {};
   networkMappingItems.forEach(networkMapping => {
-    const clusterMapping =
-      clustersByMappingId[networkMapping.transformation_mapping_id];
+    const clusterMapping = clustersByMappingId[networkMapping.transformation_mapping_id];
     const sourceCluster = clusters.find(c => c.id === clusterMapping.source_id);
-    const targetCluster = clusters.find(
-      c => c.id === clusterMapping.destination_id
-    );
+    const targetCluster = clusters.find(c => c.id === clusterMapping.destination_id);
     const sourceNetwork = networks.find(d => d.id === networkMapping.source_id);
-    const targetNetwork = networks.find(
-      d => d.id === networkMapping.destination_id
-    );
+    const targetNetwork = networks.find(d => d.id === networkMapping.destination_id);
 
-    if (
-      clusterMapping &&
-      sourceCluster &&
-      targetCluster &&
-      sourceNetwork &&
-      targetNetwork
-    ) {
+    if (clusterMapping && sourceCluster && targetCluster && sourceNetwork && targetNetwork) {
       const source = {
         sourceNetwork,
         sourceCluster
@@ -158,9 +127,7 @@ export const mapInfrastructureMappings = (
       // LANs are currently duplicated in the backend database model, so
       // we dedupe them using uid_ems attribute for now.
       if (targetNetworks[targetNetwork.uid_ems]) {
-        const duplicatedLanIndex = targetNetworks[
-          targetNetwork.uid_ems
-        ].sources.findIndex(
+        const duplicatedLanIndex = targetNetworks[targetNetwork.uid_ems].sources.findIndex(
           s => s.sourceNetwork.uid_ems === sourceNetwork.uid_ems
         );
         if (duplicatedLanIndex === -1) {

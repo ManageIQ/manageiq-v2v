@@ -1,13 +1,6 @@
 import { transformationPlans } from '../Overview/overview.transformationPlans.fixtures';
 
-const [
-  planQueued,
-  ,
-  planInProgressOne,
-  planFailed,
-  planComplete,
-  planInProgressTwo
-] = transformationPlans.resources;
+const [planQueued, , planInProgressOne, planFailed, planComplete, planInProgressTwo] = transformationPlans.resources;
 
 const planStore = {
   [planQueued.id]: planQueued,

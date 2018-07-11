@@ -34,9 +34,7 @@ const componentRegistry = {
     const currentComponent = componentRegistry.getComponent(name);
 
     if (!currentComponent) {
-      throw new Error(
-        `Component not found:  ${name} among ${this.registeredComponents()}`
-      );
+      throw new Error(`Component not found:  ${name} among ${this.registeredComponents()}`);
     }
     const WrappedComponent = i18nProviderWrapperFactory(
       new Date('2017-10-13 00:54:55 -1100') // mock time to ensure snapshots are same

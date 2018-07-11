@@ -1,11 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { noop, Button, Icon, Wizard } from 'patternfly-react';
-import {
-  createTransformationMappings,
-  getMappedSourceClusters,
-  getSourceClustersWithMappings
-} from './helpers';
+import { createTransformationMappings, getMappedSourceClusters, getSourceClustersWithMappings } from './helpers';
 import MappingWizardBody from './MappingWizardBody';
 import WarningModal from './components/WarningModal/WarningModal';
 
@@ -42,55 +38,34 @@ class MappingWizard extends React.Component {
 
     if (activeStepIndex === 0) {
       if (mappingWizardGeneralStep.asyncErrors) {
-        showAlertAction(
-          sprintf(
-            __('Infrastructure mapping %s already exists'),
-            mappingWizardGeneralStep.values.name
-          )
-        );
+        showAlertAction(sprintf(__('Infrastructure mapping %s already exists'), mappingWizardGeneralStep.values.name));
       } else {
         hideAlertAction();
         this.setState({
-          activeStepIndex: Math.min(
-            activeStepIndex + 1,
-            mappingWizardSteps.length - 1
-          )
+          activeStepIndex: Math.min(activeStepIndex + 1, mappingWizardSteps.length - 1)
         });
       }
     } else if (activeStepIndex === 2 && !warningModalVisible) {
       const { clusterMappings } = mappingWizardClustersStep.values;
       const { datastoresMappings } = mappingWizardDatastoresStep.values;
 
-      const sourceClustersWithoutDatastoresMappings = getMappedSourceClusters(
-        clusterMappings
-      ).filter(
-        sourceCluster =>
-          !getSourceClustersWithMappings(datastoresMappings).includes(
-            sourceCluster.id
-          )
+      const sourceClustersWithoutDatastoresMappings = getMappedSourceClusters(clusterMappings).filter(
+        sourceCluster => !getSourceClustersWithMappings(datastoresMappings).includes(sourceCluster.id)
       );
 
       if (sourceClustersWithoutDatastoresMappings.length > 0) {
         showWarningModalAction(sourceClustersWithoutDatastoresMappings);
       } else {
         this.setState({
-          activeStepIndex: Math.min(
-            activeStepIndex + 1,
-            mappingWizardSteps.length - 1
-          )
+          activeStepIndex: Math.min(activeStepIndex + 1, mappingWizardSteps.length - 1)
         });
       }
     } else if (activeStepIndex === 3 && !warningModalVisible) {
       const { clusterMappings } = mappingWizardClustersStep.values;
       const { networksMappings } = mappingWizardNetworksStep.values;
 
-      const sourceClustersWithoutNetworksMappings = getMappedSourceClusters(
-        clusterMappings
-      ).filter(
-        sourceCluster =>
-          !getSourceClustersWithMappings(networksMappings).includes(
-            sourceCluster.id
-          )
+      const sourceClustersWithoutNetworksMappings = getMappedSourceClusters(clusterMappings).filter(
+        sourceCluster => !getSourceClustersWithMappings(networksMappings).includes(sourceCluster.id)
       );
 
       if (sourceClustersWithoutNetworksMappings.length > 0) {
@@ -104,10 +79,7 @@ class MappingWizard extends React.Component {
         );
         setTransformationsBodyAction(transformationsBody);
         this.setState({
-          activeStepIndex: Math.min(
-            activeStepIndex + 1,
-            mappingWizardSteps.length - 1
-          )
+          activeStepIndex: Math.min(activeStepIndex + 1, mappingWizardSteps.length - 1)
         });
       }
     } else {
@@ -124,10 +96,7 @@ class MappingWizard extends React.Component {
         setTransformationsBodyAction(transformationsBody);
       }
       this.setState({
-        activeStepIndex: Math.min(
-          activeStepIndex + 1,
-          mappingWizardSteps.length - 1
-        )
+        activeStepIndex: Math.min(activeStepIndex + 1, mappingWizardSteps.length - 1)
       });
     }
   };
@@ -212,28 +181,16 @@ class MappingWizard extends React.Component {
             {__('Cancel')}
           </Button>
 
-          <Button
-            bsStyle="default"
-            onClick={this.prevStep}
-            disabled={onFirstStep || onFinalStep}
-          >
+          <Button bsStyle="default" onClick={this.prevStep} disabled={onFirstStep || onFinalStep}>
             <Icon type="fa" name="angle-left" />
             {__('Back')}
           </Button>
           <Button
             bsStyle="primary"
-            onClick={
-              onFinalStep
-                ? () => hideMappingWizardAction(onFinalStep)
-                : this.nextStep
-            }
+            onClick={onFinalStep ? () => hideMappingWizardAction(onFinalStep) : this.nextStep}
             disabled={disableNextStep}
           >
-            {onFinalStep
-              ? __('Close')
-              : activeStepIndex === 3
-                ? __('Create')
-                : __('Next')}
+            {onFinalStep ? __('Close') : activeStepIndex === 3 ? __('Create') : __('Next')}
             <Icon type="fa" name="angle-right" />
           </Button>
         </Wizard.Footer>

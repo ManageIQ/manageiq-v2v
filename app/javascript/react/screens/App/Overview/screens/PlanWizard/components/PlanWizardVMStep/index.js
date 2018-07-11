@@ -10,10 +10,7 @@ const mapStateToProps = ({ planWizardVMStep, form }, ownProps) => ({
   ...planWizardVMStep,
   ...ownProps.data,
   vm_choice_radio: form.planWizardGeneralStep.values.vm_choice_radio,
-  infrastructure_mapping_id:
-    form.planWizardGeneralStep.values.infrastructure_mapping
+  infrastructure_mapping_id: form.planWizardGeneralStep.values.infrastructure_mapping
 });
 
-export default connect(mapStateToProps, PlanWizardVMStepActions)(
-  PlanWizardVMStep
-);
+export default connect(mapStateToProps, PlanWizardVMStepActions)(PlanWizardVMStep);

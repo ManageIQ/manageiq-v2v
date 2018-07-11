@@ -1,15 +1,9 @@
 import Immutable from 'seamless-immutable';
 
 import clustersReducer from '../MappingWizardClustersStepReducer';
-import {
-  FETCH_V2V_SOURCE_CLUSTERS,
-  FETCH_V2V_TARGET_CLUSTERS
-} from '../MappingWizardClustersStepConstants';
+import { FETCH_V2V_SOURCE_CLUSTERS, FETCH_V2V_TARGET_CLUSTERS } from '../MappingWizardClustersStepConstants';
 
-import {
-  sourceClusters,
-  targetClusters
-} from '../mappingWizardClustersStep.fixtures';
+import { sourceClusters, targetClusters } from '../mappingWizardClustersStep.fixtures';
 
 const initialState = Immutable({
   sourceClusters: [],
@@ -54,9 +48,7 @@ describe('fetching source clusters', () => {
   describe('is successful,', () => {
     let prevState;
     beforeEach(() => {
-      prevState = initialState
-        .set('isRejectedSourceClusters', true)
-        .set('isFetchingSourceClusters', true);
+      prevState = initialState.set('isRejectedSourceClusters', true).set('isFetchingSourceClusters', true);
     });
 
     test('and there is data', () => {
@@ -123,9 +115,7 @@ describe('fetching target clusters', () => {
   describe('is successful,', () => {
     let prevState;
     beforeEach(() => {
-      prevState = initialState
-        .set('isRejectedTargetClusters', true)
-        .set('isFetchingTargetClusters', true);
+      prevState = initialState.set('isRejectedTargetClusters', true).set('isFetchingTargetClusters', true);
     });
     test('and there is data', () => {
       const { resources } = targetClusters;
