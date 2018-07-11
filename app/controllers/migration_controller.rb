@@ -20,11 +20,6 @@ class MigrationController < ApplicationController
         "$(v2v.mount('#{name}', '#{selector}', #{data.to_json}));".html_safe
       end
     end
-
-    def migration_sha
-      version = vmdb_build_info(:version)
-      "#{version}.#{`git ls-remote https://github.com/ManageIQ/miq_v2v_ui_plugin.git #{version}`.split('refs')[0].try(:strip!) || 'undefined'}"
-    end
   end
 
   menu_section :migration
