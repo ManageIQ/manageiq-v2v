@@ -30,7 +30,11 @@ const Migrations = ({
   allArchivedPlanRequestsWithTasks,
   archiveTransformationPlanAction,
   archiveTransformationPlanUrl,
-  addNotificationAction
+  addNotificationAction,
+  toggleScheduleMigrationModal,
+  scheduleMigrationModal,
+  scheduleMigrationPlanId,
+  scheduleMigration
 }) => {
   const filterOptions = [
     MIGRATIONS_FILTERS.notStarted,
@@ -104,6 +108,14 @@ const Migrations = ({
               migrateClick={createTransformationPlanRequestClick}
               loading={isCreatingTransformationPlanRequest}
               redirectTo={redirectTo}
+              showConfirmModalAction={showConfirmModalAction}
+              hideConfirmModalAction={hideConfirmModalAction}
+              toggleScheduleMigrationModal={toggleScheduleMigrationModal}
+              scheduleMigrationModal={scheduleMigrationModal}
+              scheduleMigrationPlanId={scheduleMigrationPlanId}
+              scheduleMigration={scheduleMigration}
+              fetchTransformationPlansAction={fetchTransformationPlansAction}
+              fetchTransformationPlansUrl={fetchTransformationPlansUrl}
             />
           )}
           {activeFilter === MIGRATIONS_FILTERS.inProgress && (
@@ -169,7 +181,11 @@ Migrations.propTypes = {
   isFetchingArchivedTransformationPlans: PropTypes.string,
   archiveTransformationPlanAction: PropTypes.func,
   archiveTransformationPlanUrl: PropTypes.string,
-  addNotificationAction: PropTypes.func
+  addNotificationAction: PropTypes.func,
+  toggleScheduleMigrationModal: PropTypes.func,
+  scheduleMigrationModal: PropTypes.bool,
+  scheduleMigrationPlanId: PropTypes.string,
+  scheduleMigration: PropTypes.func
 };
 Migrations.defaultProps = {
   transformationPlans: [],

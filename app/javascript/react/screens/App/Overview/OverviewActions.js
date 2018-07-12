@@ -1,31 +1,35 @@
 import URI from 'urijs';
 import API from '../../../../common/API';
+import { V2V_NOTIFICATION_ADD } from '../common/NotificationList/NotificationConstants';
+import { formatDateTime } from '../../../../components/dates/MomentDate';
 
 import {
-  SHOW_MAPPING_WIZARD,
-  SHOW_PLAN_WIZARD,
-  HIDE_MAPPING_WIZARD,
-  FETCH_PROVIDERS,
-  FETCH_PROVIDERS_URL,
+  ARCHIVE_TRANSFORMATION_PLAN,
+  CREATE_V2V_TRANSFORMATION_PLAN_REQUEST,
+  DELETE_INFRASTRUCTURE_MAPPING,
   FETCH_DATASTORES,
   FETCH_NETWORKS,
+  FETCH_PROVIDERS,
+  FETCH_PROVIDERS_URL,
+  FETCH_V2V_ALL_ARCHIVED_PLAN_REQUESTS_WITH_TASKS,
+  FETCH_V2V_ALL_REQUESTS_WITH_TASKS,
+  FETCH_V2V_ARCHIVED_TRANSFORMATION_PLANS,
   FETCH_V2V_TRANSFORMATION_MAPPINGS,
   FETCH_V2V_TRANSFORMATION_PLANS,
-  FETCH_V2V_ARCHIVED_TRANSFORMATION_PLANS,
-  FETCH_V2V_ALL_REQUESTS_WITH_TASKS,
-  FETCH_V2V_ALL_ARCHIVED_PLAN_REQUESTS_WITH_TASKS,
-  CREATE_V2V_TRANSFORMATION_PLAN_REQUEST,
-  V2V_FETCH_CLUSTERS,
-  V2V_SET_MIGRATIONS_FILTER,
-  V2V_RETRY_MIGRATION,
-  SHOW_DELETE_CONFIRMATION_MODAL,
-  HIDE_DELETE_CONFIRMATION_MODAL,
-  SET_MAPPING_TO_DELETE,
-  YES_TO_DELETE_AND_HIDE_DELETE_CONFIRMATION_MODAL,
-  DELETE_INFRASTRUCTURE_MAPPING,
-  SHOW_CONFIRM_MODAL,
   HIDE_CONFIRM_MODAL,
-  ARCHIVE_TRANSFORMATION_PLAN
+  HIDE_DELETE_CONFIRMATION_MODAL,
+  HIDE_MAPPING_WIZARD,
+  SET_MAPPING_TO_DELETE,
+  SHOW_CONFIRM_MODAL,
+  SHOW_DELETE_CONFIRMATION_MODAL,
+  SHOW_MAPPING_WIZARD,
+  SHOW_PLAN_WIZARD,
+  V2V_FETCH_CLUSTERS,
+  V2V_RETRY_MIGRATION,
+  V2V_SCHEDULE_MIGRATION,
+  V2V_SET_MIGRATIONS_FILTER,
+  V2V_TOGGLE_SCHEDULE_MIGRATION_MODAL,
+  YES_TO_DELETE_AND_HIDE_DELETE_CONFIRMATION_MODAL
 } from './OverviewConstants';
 
 export const showConfirmModalAction = modalOptions => ({
@@ -228,3 +232,45 @@ export const archiveTransformationPlanAction = (url, id) => {
   const uri = new URI(`${url}/${id}`);
   return _archiveTransformationPlanActionCreator(uri.toString());
 };
+
+export const toggleScheduleMigrationModal = planId => ({
+  type: V2V_TOGGLE_SCHEDULE_MIGRATION_MODAL,
+  payload: planId
+});
+
+export const scheduleMigration = payload => dispatch =>
+  dispatch({
+    type: V2V_SCHEDULE_MIGRATION,
+    payload: new Promise((resolve, reject) => {
+      let url = `/api/service_templates/${payload.planId}`;
+      let body = {
+        action: 'order',
+        resource: {
+          schedule_time: payload.scheduleTime
+        }
+      };
+      if (payload.scheduleId) {
+        url = `${url}/schedules/${payload.scheduleId}`;
+        body = { action: 'delete' };
+      }
+      return API.post(url, body)
+        .then(response => {
+          resolve(response);
+          let msg = __('Migration successfully unscheduled');
+          if (payload.scheduleTime) {
+            msg = sprintf(
+              __('Migration successfully scheduled for %s'),
+              formatDateTime(response.data.run_at.start_time)
+            );
+          }
+          dispatch({
+            type: V2V_NOTIFICATION_ADD,
+            message: msg,
+            notificationType: 'success',
+            persistent: false,
+            actionEnabled: false
+          });
+        })
+        .catch(e => reject(e));
+    })
+  });
