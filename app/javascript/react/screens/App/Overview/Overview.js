@@ -44,21 +44,24 @@ class Overview extends React.Component {
     fetchProvidersAction();
     fetchClustersAction(fetchClustersUrl);
     fetchTransformationMappingsAction(fetchTransformationMappingsUrl);
-    fetchTransformationPlansAction({
+
+    const p1 = fetchTransformationPlansAction({
       url: fetchTransformationPlansUrl,
       archived: false
-    }).then(() => {
+    });
+    // fetch archived plans initially so we have them for plan name validation in plan wizard
+    const p2 = fetchTransformationPlansAction({
+      url: fetchArchivedTransformationPlansUrl,
+      archived: true
+    });
+
+    Promise.all([p1, p2]).then(() => {
       this.setState(() => ({
         hasMadeInitialPlansFetch: true
       }));
       if (!this.pollingInterval) {
         this.startPolling();
       }
-    });
-    // fetch archived plans initially so we have them for plan name validation in plan wizard
-    fetchTransformationPlansAction({
-      url: fetchArchivedTransformationPlansUrl,
-      archived: true
     });
   }
   componentWillReceiveProps(nextProps) {
