@@ -16,6 +16,7 @@ test('shows the empty state when there are no transformation plans', () => {
     <Migrations
       transformationMappingsExist
       transformationPlans={[]}
+      archivedTransformationPlans={[]}
       createMigrationPlanClick={createMigrationPlanClick}
     />
   );
