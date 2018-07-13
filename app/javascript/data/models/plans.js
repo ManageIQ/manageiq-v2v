@@ -1,4 +1,5 @@
 import { array, string, object } from 'yup';
+import { schedulesSchema } from './schedules';
 
 export const plansSchema = array()
   .of(
@@ -37,6 +38,9 @@ export const plansSchema = array()
               .required()
           })
         )
+        .nullable(),
+      schedules: array()
+        .of(schedulesSchema)
         .nullable()
     })
   )
