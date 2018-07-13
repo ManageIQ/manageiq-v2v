@@ -43,6 +43,8 @@ const Migrations = ({
     MIGRATIONS_FILTERS.archived
   ];
 
+  const plansExist = transformationPlans.length > 0 || archivedTransformationPlans.length > 0;
+
   const onSelect = eventKey => {
     if (eventKey === MIGRATIONS_FILTERS.archived) {
       fetchTransformationPlansAction({
@@ -75,7 +77,7 @@ const Migrations = ({
           </div>
         </div>
         <hr style={{ borderTopColor: '#d1d1d1' }} />
-        {transformationPlans.length > 0 ? (
+        {plansExist ? (
           <div style={{ marginBottom: 15 }}>
             <DropdownButton
               bsStyle="default"
@@ -98,7 +100,7 @@ const Migrations = ({
           />
         )}
       </Grid.Col>
-      {transformationPlans.length > 0 && (
+      {plansExist && (
         <React.Fragment>
           {activeFilter === MIGRATIONS_FILTERS.notStarted && (
             <MigrationsNotStartedList
