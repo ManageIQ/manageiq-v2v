@@ -7,6 +7,7 @@ import {
   FETCH_V2V_PLAN,
   FETCH_V2V_ALL_REQUESTS_WITH_TASKS_FOR_PLAN,
   QUERY_V2V_PLAN_VMS,
+  CANCEL_V2V_PLAN, // TODO MARKER MJT
   RESET_PLAN_STATE,
   FETCH_V2V_MIGRATION_TASK_LOG,
   DOWNLOAD_LOG_CLICKED,
@@ -78,6 +79,13 @@ export const fetchPlanAction = (url, id) => {
   uri.addSearch({ attributes: 'miq_requests,archived,active' });
   return _getPlanActionCreator(uri.toString());
 };
+
+// *****************************************************************************
+// * CANCEL_V2V_PLAN
+// *****************************************************************************
+export const cancelPlanAction = () => ({
+  type: CANCEL_V2V_PLAN
+});
 
 // *****************************************************************************
 // * RESET_PLAN_STATE
