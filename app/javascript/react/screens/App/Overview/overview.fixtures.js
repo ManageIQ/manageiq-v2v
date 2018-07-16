@@ -12,6 +12,7 @@ export const initialState = Immutable({
   transformationPlans: [],
   fetchTransformationPlansUrl: '/api/dummyTransformationPlans',
   fetchArchivedTransformationPlansUrl: '/api/dummyArchivedTransformationPlans',
+  fetchServiceTemplateAnsiblePlaybooksUrl: '/api/dummyServiceTemplatePlaybooks',
   clusters: [],
   isRejectedClusters: false,
   isFetchingClusters: false,
