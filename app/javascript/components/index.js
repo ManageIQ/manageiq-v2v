@@ -102,6 +102,11 @@ export const coreComponents = [
         '&attributes=name,description,miq_requests,options,created_at' +
         '&sort_by=updated_at' +
         '&sort_order=desc',
+      fetchServiceTemplateAnsiblePlaybooksUrl:
+        '/api/service_templates/?' +
+        "filter[]=type='ServiceTemplateAnsiblePlaybook'" +
+        '&expand=resources' +
+        '&attributes=name,description,created_at',
       fetchArchivedTransformationPlansUrl:
         '/api/service_templates/?' +
         "filter[]=type='ServiceTemplateTransformationPlan'" +

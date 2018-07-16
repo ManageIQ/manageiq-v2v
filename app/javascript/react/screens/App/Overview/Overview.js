@@ -36,7 +36,9 @@ class Overview extends React.Component {
       fetchNetworksUrl,
       fetchNetworksAction,
       fetchDatastoresUrl,
-      fetchDatastoresAction
+      fetchDatastoresAction,
+      fetchServiceTemplateAnsiblePlaybooksAction,
+      fetchServiceTemplateAnsiblePlaybooksUrl
     } = this.props;
 
     fetchNetworksAction(fetchNetworksUrl);
@@ -55,7 +57,9 @@ class Overview extends React.Component {
       archived: true
     });
 
-    Promise.all([p1, p2]).then(() => {
+    const p3 = fetchServiceTemplateAnsiblePlaybooksAction(fetchServiceTemplateAnsiblePlaybooksUrl);
+
+    Promise.all([p1, p2, p3]).then(() => {
       this.setState(() => ({
         hasMadeInitialPlansFetch: true
       }));
@@ -201,6 +205,7 @@ class Overview extends React.Component {
       requestsWithTasksPreviouslyFetched,
       notStartedTransformationPlans,
       activeTransformationPlans,
+      serviceTemplatePlaybooks,
       finishedTransformationPlans,
       finishedWithErrorTransformationPlans,
       isCreatingTransformationPlanRequest,
@@ -308,6 +313,7 @@ class Overview extends React.Component {
               reloadCard={reloadCard}
               notStartedPlans={notStartedTransformationPlans}
               activeTransformationPlans={activeTransformationPlans}
+              serviceTemplatePlaybooks={serviceTemplatePlaybooks}
               finishedTransformationPlans={finishedTransformationPlans}
               createMigrationPlanClick={showPlanWizardAction}
               createTransformationPlanRequestClick={this.createTransformationPlanRequest}
@@ -453,6 +459,9 @@ Overview.propTypes = {
   toggleScheduleMigrationModal: PropTypes.func,
   scheduleMigrationModal: PropTypes.bool,
   scheduleMigrationPlanId: PropTypes.string,
-  scheduleMigration: PropTypes.func
+  scheduleMigration: PropTypes.func,
+  fetchServiceTemplateAnsiblePlaybooksAction: PropTypes.func,
+  fetchServiceTemplateAnsiblePlaybooksUrl: PropTypes.string,
+  serviceTemplatePlaybooks: PropTypes.array
 };
 export default Overview;
