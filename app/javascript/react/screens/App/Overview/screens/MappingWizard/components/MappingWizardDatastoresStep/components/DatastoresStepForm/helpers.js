@@ -27,9 +27,7 @@ export const targetDatastoreInfo = (targetDatastore, datastoresStepMappings) =>
 
 export const targetDatastoreTreeViewInfo = targetDatastore => targetDatastore.name;
 
-export const errorMessage = __(
-  'The size of the selected source datastores exceeds the available space in the target datastore'
-);
+export const errorMessage = __('The size of the selected source datastores exceeds the available space in the target datastore'); // prettier-ignore
 
 export const removeSourceDatastore = (datastoresMapping, nodeToRemove) => {
   const { nodes: sourceDatastores, ...targetDatastore } = datastoresMapping;
