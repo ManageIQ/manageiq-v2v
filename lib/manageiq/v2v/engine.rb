@@ -12,7 +12,7 @@ module ManageIQ::V2V
 
     initializer 'plugin' do
       Menu::CustomLoader.register(
-        ::Settings.product.transformation == true ? Menu::Item.new('migration', N_('Migration'), 'migration', {:feature => 'migration', :any => true}, '/migration', :default, :compute) : nil
+        Menu::Item.new('migration', N_('Migration'), 'migration', {:feature => 'migration', :any => true}, '/migration', :default, :compute)
       )
     end
   end
