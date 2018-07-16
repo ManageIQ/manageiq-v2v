@@ -145,7 +145,7 @@ const Migrations = ({
           )}
           {activeFilter === MIGRATIONS_FILTERS.archived && (
             <MigrationsCompletedList
-              finishedTransformationPlans={Immutable.asMutable(finishedTransformationPlans, { deep: true })}
+              finishedTransformationPlans={Immutable.asMutable(archivedTransformationPlans, { deep: true })}
               allRequestsWithTasks={allArchivedPlanRequestsWithTasks}
               redirectTo={redirectTo}
               loading={isFetchingArchivedTransformationPlans}
