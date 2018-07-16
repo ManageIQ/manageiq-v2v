@@ -6,6 +6,7 @@ import MigrationInProgressCard from './MigrationsInProgressCard';
 
 const MigrationsInProgressCards = ({
   activeTransformationPlans,
+  serviceTemplatePlaybooks,
   allRequestsWithTasks,
   reloadCard,
   loading,
@@ -20,6 +21,7 @@ const MigrationsInProgressCards = ({
               activeTransformationPlans.map(plan => (
                 <MigrationInProgressCard
                   plan={plan}
+                  serviceTemplatePlaybooks={serviceTemplatePlaybooks}
                   allRequestsWithTasks={allRequestsWithTasks}
                   reloadCard={reloadCard}
                   key={plan.id}
@@ -48,6 +50,7 @@ const MigrationsInProgressCards = ({
 
 MigrationsInProgressCards.propTypes = {
   activeTransformationPlans: PropTypes.array,
+  serviceTemplatePlaybooks: PropTypes.array,
   allRequestsWithTasks: PropTypes.array,
   reloadCard: PropTypes.bool,
   loading: PropTypes.bool,
@@ -56,6 +59,7 @@ MigrationsInProgressCards.propTypes = {
 
 MigrationsInProgressCards.defaultProps = {
   activeTransformationPlans: [],
+  serviceTemplatePlaybooks: [],
   loading: false
 };
 
