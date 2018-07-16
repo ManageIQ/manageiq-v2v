@@ -1,4 +1,5 @@
 import React from 'react';
+import Immutable from 'seamless-immutable';
 import { shallow, mount } from 'enzyme';
 
 import { transformationPlans } from '../../../overview.transformationPlans.fixtures';
@@ -14,7 +15,7 @@ describe('when displaying archived migration plans', () => {
     const redirectTo = jest.fn();
     const wrapper = shallow(
       <MigrationsCompletedList
-        finishedTransformationPlans={finishedTransformationPlans}
+        finishedTransformationPlans={Immutable.asMutable(finishedTransformationPlans, { deep: true })}
         allRequestsWithTasks={requestsWithTasks}
         redirectTo={redirectTo}
         archived
@@ -40,7 +41,7 @@ describe('when displaying active (not archived) migration plans', () => {
     hideConfirmModalAction = jest.fn();
     wrapper = mount(
       <MigrationsCompletedList
-        finishedTransformationPlans={finishedTransformationPlans}
+        finishedTransformationPlans={Immutable.asMutable(finishedTransformationPlans, { deep: true })}
         allRequestsWithTasks={requestsWithTasks}
         retryClick={retryClick}
         redirectTo={redirectTo}
