@@ -22,7 +22,13 @@ const ActiveTransformationPlans = ({ activePlans, allRequestsWithTasks, reloadCa
       const mostRecentRequest = requestsOfAssociatedPlan.length > 0 && getMostRecentRequest(requestsOfAssociatedPlan);
       return (
         mostRecentRequest &&
-        mostRecentRequest.miq_request_tasks.some(task => task.state === 'finished' && task.status === 'Error')
+        mostRecentRequest.miq_request_tasks.some(task => {
+          if (task.options && task.options.playbooks) {
+            const { pre, post } = task.options.playbooks;
+            if (pre.status === 'Failed' || post.status === 'Failed') return true;
+          }
+          return task.state === 'finished' && task.status === 'Error';
+        })
       );
     }
     return [];

@@ -12,6 +12,7 @@ import {
   FETCH_PROVIDERS,
   FETCH_PROVIDERS_URL,
   FETCH_V2V_ALL_ARCHIVED_PLAN_REQUESTS_WITH_TASKS,
+  FETCH_V2V_SERVICE_TEMPLATE_ANSIBLE_PLAYBOOKS,
   FETCH_V2V_ALL_REQUESTS_WITH_TASKS,
   FETCH_V2V_ARCHIVED_TRANSFORMATION_PLANS,
   FETCH_V2V_TRANSFORMATION_MAPPINGS,
@@ -129,6 +130,17 @@ const _getTransformationPlansActionCreator = (url, archived) => dispatch =>
 export const fetchTransformationPlansAction = ({ url, archived }) => {
   const uri = new URI(url);
   return _getTransformationPlansActionCreator(uri.toString(), archived);
+};
+
+const _getServiceTemplateAnsiblePlaybooksActionCreator = url => dispatch =>
+  dispatch({
+    type: FETCH_V2V_SERVICE_TEMPLATE_ANSIBLE_PLAYBOOKS,
+    payload: API.get(url)
+  });
+
+export const fetchServiceTemplateAnsiblePlaybooksAction = url => {
+  const uri = new URI(url);
+  return _getServiceTemplateAnsiblePlaybooksActionCreator(uri.toString());
 };
 
 export const continueToPlanAction = id => dispatch => {
