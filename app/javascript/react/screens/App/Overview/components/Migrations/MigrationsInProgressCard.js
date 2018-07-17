@@ -130,10 +130,7 @@ const MigrationsInProgressCard = ({
 
   // UX business rule: if there are any pre migration playbooks running, show this content instead
   if (taskRunningPreMigrationPlaybook) {
-    const playbookName = getPlaybookName(
-      serviceTemplatePlaybooks,
-      taskRunningPreMigrationPlaybook.playbooks.pre.job_id
-    );
+    const playbookName = getPlaybookName(serviceTemplatePlaybooks, plan.options.config_info.pre_service_id);
     return (
       <InProgressWithDetailCard plan={plan} failedOverlay={failedOverlay} handleClick={handleClick}>
         {emptyStateSpinner(sprintf(__('Running playbook service %s. This might take a few minutes.'), playbookName))}
@@ -161,10 +158,7 @@ const MigrationsInProgressCard = ({
 
   // UX business rule: if all disks have been migrated and we have a post migration playbook running, show this instead
   if (totalMigratedDiskSpaceGb >= totalDiskSpaceGb && taskRunningPostMigrationPlaybook) {
-    const playbookName = getPlaybookName(
-      serviceTemplatePlaybooks,
-      taskRunningPostMigrationPlaybook.playbooks.pre.job_id
-    );
+    const playbookName = getPlaybookName(serviceTemplatePlaybooks, plan.options.config_info.post_service_id);
     return (
       <InProgressWithDetailCard plan={plan} failedOverlay={failedOverlay} handleClick={handleClick}>
         {emptyStateSpinner(sprintf(__('Running playbook service %s. This might take a few minutes.'), playbookName))}

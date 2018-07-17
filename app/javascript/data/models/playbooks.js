@@ -5,3 +5,8 @@ export const PLAYBOOK_JOB_STATES = {
   ACTIVE: 'active',
   FINISHED: 'finished'
 };
+
+export const PLAYBOOK_JOB_STATUS = {
+  OK: 'Ok',
+  ERROR: 'Error'
+};
