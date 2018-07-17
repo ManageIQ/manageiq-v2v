@@ -9,14 +9,3 @@ export const serviceTemplatePlaybookSchema = array()
     })
   )
   .nullable();
-
-export const PLAYBOOK_JOB_STATES = {
-  PENDING: 'pending',
-  ACTIVE: 'active',
-  FINISHED: 'finished'
-};
-
-export const PLAYBOOK_JOB_STATUS = {
-  OK: 'Ok',
-  ERROR: 'Error'
-};
