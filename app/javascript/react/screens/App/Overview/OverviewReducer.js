@@ -7,7 +7,8 @@ import {
   validateOverviewPlans,
   validateOverviewProviders,
   validateOverviewRequests,
-  validateOverviewMappings
+  validateOverviewMappings,
+  validateServiceTemplatePlaybooks
 } from './OverviewValidators';
 
 import {
@@ -216,7 +217,7 @@ export default (state = initialState, action) => {
     case `${FETCH_V2V_SERVICE_TEMPLATE_ANSIBLE_PLAYBOOKS}_PENDING`:
       return state.set('isFetchingServiceTemplatePlaybooks', true);
     case `${FETCH_V2V_SERVICE_TEMPLATE_ANSIBLE_PLAYBOOKS}_FULFILLED`:
-      // todo: validateOverviewPlaybooks(action.payload.data.resources);
+      validateServiceTemplatePlaybooks(action.payload.data.resources);
       return state
         .set('serviceTemplatePlaybooks', action.payload.data.resources)
         .set('isFetchingServiceTemplatePlaybooks', false)
