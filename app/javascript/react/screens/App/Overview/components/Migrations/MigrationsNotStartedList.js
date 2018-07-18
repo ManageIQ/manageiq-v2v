@@ -140,6 +140,7 @@ class MigrationsNotStartedList extends React.Component {
                           <div>
                             {!migrationScheduled && (
                               <Button
+                                id={`schedule_${plan.id}`}
                                 onClick={e => {
                                   e.stopPropagation();
                                   toggleScheduleMigrationModal({ planId: plan.id });
@@ -151,6 +152,7 @@ class MigrationsNotStartedList extends React.Component {
                             )}
                             {migrationScheduled && (
                               <Button
+                                id={`unschedule_${plan.id}`}
                                 onClick={e => {
                                   e.stopPropagation();
                                   showConfirmModalAction(confirmModalOptions);
@@ -161,6 +163,7 @@ class MigrationsNotStartedList extends React.Component {
                               </Button>
                             )}
                             <Button
+                              id={`migrate_${plan.id}`}
                               onClick={e => {
                                 e.stopPropagation();
                                 migrateClick(plan.href);
