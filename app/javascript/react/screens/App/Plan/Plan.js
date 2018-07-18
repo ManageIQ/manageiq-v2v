@@ -97,7 +97,17 @@ class Plan extends React.Component {
     }
   };
 
+  cancelPlan = () => {
+    const { dispatch, cancelPlanAction } = this.props;
+    dispatch(cancelPlanAction());
+  };
+
   render() {
+
+    ////////////////////////////////////////////////////////////////////////////////
+    // TODO render a cancel button that dispatches this.props.cancelPlanAction(); //
+    ////////////////////////////////////////////////////////////////////////////////
+
     const {
       planName,
       planArchived,
@@ -215,6 +225,7 @@ Plan.propTypes = {
   queryPlanVmsAction: PropTypes.func,
   isQueryingVms: PropTypes.bool,
   isRejectedVms: PropTypes.bool,
+  cancelPlanAction: PropTypes.func,
   resetPlanStateAction: PropTypes.func,
   downloadLogAction: PropTypes.func,
   downloadLogInProgressTaskIds: PropTypes.array
