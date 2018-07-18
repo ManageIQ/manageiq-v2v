@@ -20,16 +20,7 @@ class MigrationsNotStartedList extends React.Component {
     const { currentSortType, isSortNumeric, isSortAscending } = this.state;
     const { notStartedPlans } = this.props;
 
-    return sortFilter(
-      currentSortType,
-      isSortNumeric,
-      isSortAscending,
-      notStartedPlans.map(plan => ({
-        ...plan,
-        configVmLength: plan.options.config_info.actions.length,
-        scheduleTime: plan.schedules ? new Date(plan.schedules[0].run_at.start_time).getTime() : 0
-      }))
-    );
+    return sortFilter(currentSortType, isSortNumeric, isSortAscending, notStartedPlans);
   };
 
   toggleCurrentSortDirection = () => {
@@ -132,6 +123,7 @@ class MigrationsNotStartedList extends React.Component {
 
                     return (
                       <ListView.Item
+                        stacked
                         className="plans-not-started-list__list-item"
                         onClick={() => {
                           redirectTo(`/migration/plan/${plan.id}`);
@@ -182,6 +174,9 @@ class MigrationsNotStartedList extends React.Component {
                           <ListView.InfoItem key={plan.id}>
                             <Icon type="pf" name="virtual-machine" />
                             <strong>{plan.options.config_info.actions.length}</strong> {__('VMs')}
+                          </ListView.InfoItem>,
+                          <ListView.InfoItem key={`${plan.id}-infraMappingName`}>
+                            {plan.infraMappingName}
                           </ListView.InfoItem>,
                           migrationScheduled && (
                             <ListView.InfoItem key={plan.id + 1} style={{ textAlign: 'left' }}>

@@ -58,7 +58,6 @@ class MigrationsCompletedList extends React.Component {
       archived
     } = this.props;
     const sortedMigrations = this.sortedMigrations();
-    finishedTransformationPlans.map(plan => (plan.status = getMostRecentRequest(plan.miq_requests).status));
 
     return (
       <Grid.Col xs={12}>
@@ -174,6 +173,7 @@ class MigrationsCompletedList extends React.Component {
 
                   return (
                     <ListView.Item
+                      stacked
                       className="plans-complete-list__list-item"
                       onClick={() => {
                         redirectTo(`/migration/plan/${plan.id}`);
@@ -210,6 +210,9 @@ class MigrationsCompletedList extends React.Component {
                           <ListView.Icon type="pf" size="lg" name="screen" />&nbsp;<strong>{succeedCount}</strong>{' '}
                           {__('of')} &nbsp;<strong>{Object.keys(tasks).length} </strong>
                           {__('VMs successfully migrated.')}
+                        </ListView.InfoItem>,
+                        <ListView.InfoItem key={`${plan.id}-infraMappingName`}>
+                          {plan.infraMappingName}
                         </ListView.InfoItem>,
                         <ListView.InfoItem key={`${plan.id}-elapsed`}>
                           <ListView.Icon type="fa" size="lg" name="clock-o" />
