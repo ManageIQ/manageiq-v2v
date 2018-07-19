@@ -3,9 +3,9 @@ import thunk from 'redux-thunk';
 import promiseMiddleware from 'redux-promise-middleware';
 import { mockRequest, mockReset } from '../../../../../common/mockRequests';
 
-import { _getPlanActionCreator, fetchPlanAction, resetPlanStateAction } from '../PlanActions';
+import { _getPlanActionCreator, fetchPlanAction, resetPlanStateAction, cancelPlanAction } from '../PlanActions';
 import { requestPlanData } from '../plan.fixtures';
-import { FETCH_V2V_PLAN, RESET_PLAN_STATE } from '../PlanConstants';
+import { FETCH_V2V_PLAN, RESET_PLAN_STATE, CANCEL_V2V_PLAN } from '../PlanConstants';
 
 const middlewares = [thunk, promiseMiddleware()];
 const mockStore = configureMockStore(middlewares);
@@ -57,6 +57,17 @@ describe('FETCH_V2V_PLAN', () => {
     });
   });
 });
+
+describe('cancelPlanAction', () => {
+  test('sets up the CANCEL_V2V_PLAN action object', () => {
+    const action = cancelPlanAction();
+
+    expect(action).toEqual({
+      type: CANCEL_V2V_PLAN
+    });
+  });
+});
+
 
 describe('resetPlanStateAction', () => {
   test('sets up the RESET_PLAN_STATE action object', () => {
