@@ -1,8 +1,13 @@
 export const MIGRATIONS_NOT_STARTED_SORT_FIELDS = [
   { id: 'name', title: __('Name'), isNumeric: false },
   {
-    id: 'configVmLength',
+    id: 'infraMappingName',
     title: __('Infrastructure Mapping'),
+    isNumeric: false
+  },
+  {
+    id: 'configVmLength',
+    title: __('Number of VMs'),
     isNumeric: true
   },
   { id: 'scheduleTime', title: __('Scheduled Time'), isNumeric: true }
