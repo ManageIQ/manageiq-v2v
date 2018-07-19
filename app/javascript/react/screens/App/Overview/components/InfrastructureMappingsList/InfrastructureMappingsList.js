@@ -130,24 +130,31 @@ class InfrastructureMappingsList extends React.Component {
 
                     let sourceClusterCount = 0;
                     let targetClusterCount = 0;
-                    Object.keys(targetClusters).forEach(key => {
-                      targetClusterCount += 1;
-                      sourceClusterCount += targetClusters[key].sourceClusters.length;
-                    });
+
+                    if (targetClusters) {
+                      Object.keys(targetClusters).forEach(key => {
+                        targetClusterCount += 1;
+                        sourceClusterCount += targetClusters[key].sourceClusters.length;
+                      });
+                    }
 
                     let sourceDatastoreCount = 0;
                     let targetDatastoreCount = 0;
-                    Object.keys(targetDatastores).forEach(key => {
-                      targetDatastoreCount += 1;
-                      sourceDatastoreCount += targetDatastores[key].sources.length;
-                    });
+                    if (targetDatastores) {
+                      Object.keys(targetDatastores).forEach(key => {
+                        targetDatastoreCount += 1;
+                        sourceDatastoreCount += targetDatastores[key].sources.length;
+                      });
+                    }
 
                     let sourceLanCount = 0;
                     let targetLanCount = 0;
-                    Object.keys(targetNetworks).forEach(key => {
-                      targetLanCount += 1;
-                      sourceLanCount += targetNetworks[key].sources.length;
-                    });
+                    if (targetNetworks) {
+                      Object.keys(targetNetworks).forEach(key => {
+                        targetLanCount += 1;
+                        sourceLanCount += targetNetworks[key].sources.length;
+                      });
+                    }
 
                     return (
                       <ListView.Item
@@ -164,76 +171,97 @@ class InfrastructureMappingsList extends React.Component {
                         onCloseCompoundExpand={() => this.closeExpand(mapping)}
                         additionalInfo={[
                           <ListView.InfoItem key={0} id="networks">
-                            <ListView.Expand
-                              expanded={mapping.expanded && mapping.expandType === 0}
-                              toggleExpanded={() => {
-                                this.toggleExpand(mapping, 0);
-                              }}
-                            >
-                              <Icon type="pf" name="network" />
-                              <div className="mappings-expand-label-group">
-                                <div className="mappings-expand-label">
-                                  {sprintf(
-                                    n__('%d Source Network', '%d Source Networks', sourceLanCount),
-                                    sourceLanCount
-                                  )}
-                                </div>
-                                <div className="mappings-expand-label">
-                                  {sprintf(
-                                    n__('%d Target Network', '%d Target Networks', targetLanCount),
-                                    targetLanCount
-                                  )}
-                                </div>
+                            {targetNetworks === null ? (
+                              <div className="list-view-pf-expand">
+                                <Icon type="pf" name="error-circle-o" />
+                                {__('Networks missing')}
                               </div>
-                            </ListView.Expand>
+                            ) : (
+                              <ListView.Expand
+                                expanded={mapping.expanded && mapping.expandType === 0}
+                                toggleExpanded={() => {
+                                  this.toggleExpand(mapping, 0);
+                                }}
+                              >
+                                <Icon type="pf" name="network" />
+                                <div className="mappings-expand-label-group">
+                                  <div className="mappings-expand-label">
+                                    {sprintf(
+                                      n__('%d Source Network', '%d Source Networks', sourceLanCount),
+                                      sourceLanCount
+                                    )}
+                                  </div>
+                                  <div className="mappings-expand-label">
+                                    {sprintf(
+                                      n__('%d Target Network', '%d Target Networks', targetLanCount),
+                                      targetLanCount
+                                    )}
+                                  </div>
+                                </div>
+                              </ListView.Expand>
+                            )}
                           </ListView.InfoItem>,
                           <ListView.InfoItem key={1} id="datastores">
-                            <ListView.Expand
-                              expanded={mapping.expanded && mapping.expandType === 1}
-                              toggleExpanded={() => {
-                                this.toggleExpand(mapping, 1);
-                              }}
-                            >
-                              <Icon type="fa" name="database" />
-                              <div className="mappings-expand-label-group">
-                                <div className="mappings-expand-label">
-                                  {sprintf(
-                                    n__('%d Source Datastore', '%d Source Datastores', sourceDatastoreCount),
-                                    sourceDatastoreCount
-                                  )}
-                                </div>
-                                <div className="mappings-expand-label">
-                                  {sprintf(
-                                    n__('%d Target Datastore', '%d Target Datastores', targetDatastoreCount),
-                                    targetDatastoreCount
-                                  )}
-                                </div>
+                            {targetDatastores === null ? (
+                              <div className="list-view-pf-expand">
+                                <Icon type="pf" name="error-circle-o" />
+                                {__('Datastores missing')}
                               </div>
-                            </ListView.Expand>
+                            ) : (
+                              <ListView.Expand
+                                expanded={mapping.expanded && mapping.expandType === 1}
+                                toggleExpanded={() => {
+                                  this.toggleExpand(mapping, 1);
+                                }}
+                              >
+                                <Icon type="fa" name="database" />
+                                <div className="mappings-expand-label-group">
+                                  <div className="mappings-expand-label">
+                                    {sprintf(
+                                      n__('%d Source Datastore', '%d Source Datastores', sourceDatastoreCount),
+                                      sourceDatastoreCount
+                                    )}
+                                  </div>
+                                  <div className="mappings-expand-label">
+                                    {sprintf(
+                                      n__('%d Target Datastore', '%d Target Datastores', targetDatastoreCount),
+                                      targetDatastoreCount
+                                    )}
+                                  </div>
+                                </div>
+                              </ListView.Expand>
+                            )}
                           </ListView.InfoItem>,
                           <ListView.InfoItem key={2} id="clusters">
-                            <ListView.Expand
-                              expanded={mapping.expanded && mapping.expandType === 2}
-                              toggleExpanded={() => {
-                                this.toggleExpand(mapping, 2);
-                              }}
-                            >
-                              <Icon type="pf" name="cluster" />
-                              <div className="mappings-expand-label-group">
-                                <div className="mappings-expand-label">
-                                  {sprintf(
-                                    n__('%d Source Cluster', '%d Source Clusters', sourceClusterCount),
-                                    sourceClusterCount
-                                  )}
-                                </div>
-                                <div className="mappings-expand-label">
-                                  {sprintf(
-                                    n__('%d Target Cluster', '%d Target Clusters', targetClusterCount),
-                                    targetClusterCount
-                                  )}
-                                </div>
+                            {targetClusters === null ? (
+                              <div className="list-view-pf-expand">
+                                <Icon type="pf" name="error-circle-o" />
+                                {__('Clusters missing')}
                               </div>
-                            </ListView.Expand>
+                            ) : (
+                              <ListView.Expand
+                                expanded={mapping.expanded && mapping.expandType === 2}
+                                toggleExpanded={() => {
+                                  this.toggleExpand(mapping, 2);
+                                }}
+                              >
+                                <Icon type="pf" name="cluster" />
+                                <div className="mappings-expand-label-group">
+                                  <div className="mappings-expand-label">
+                                    {sprintf(
+                                      n__('%d Source Cluster', '%d Source Clusters', sourceClusterCount),
+                                      sourceClusterCount
+                                    )}
+                                  </div>
+                                  <div className="mappings-expand-label">
+                                    {sprintf(
+                                      n__('%d Target Cluster', '%d Target Clusters', targetClusterCount),
+                                      targetClusterCount
+                                    )}
+                                  </div>
+                                </div>
+                              </ListView.Expand>
+                            )}
                           </ListView.InfoItem>,
                           associatedPlansCount ? (
                             <ListView.InfoItem key={3} id="associated-plans">
