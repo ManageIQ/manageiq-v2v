@@ -33,6 +33,8 @@ import {
   V2V_SCHEDULE_MIGRATION
 } from './OverviewConstants';
 
+import getMostRecentRequest from '../common/getMostRecentRequest';
+
 export const initialState = Immutable({
   mappingWizardVisible: false,
   hideMappingWizard: true,
@@ -168,12 +170,28 @@ export default (state = initialState, action) => {
         .set('isFetchingTransformationMappings', false);
     case `${FETCH_V2V_TRANSFORMATION_PLANS}_PENDING`:
       return state.set('isFetchingTransformationPlans', true);
-    case `${FETCH_V2V_TRANSFORMATION_PLANS}_FULFILLED`:
+    case `${FETCH_V2V_TRANSFORMATION_PLANS}_FULFILLED`: {
+      const planTransmutation = (plans = [], mappings = []) =>
+        plans.map(plan => {
+          const infraMappingName = mappings.find(
+            mapping => mapping.id === plan.options.config_info.transformation_mapping_id
+          );
+          const status = getMostRecentRequest(plan.miq_requests);
+          return {
+            ...plan,
+            infraMappingName: infraMappingName ? infraMappingName.name : null,
+            status: status ? status.status : null,
+            configVmLength: plan.options.config_info.actions.length,
+            scheduleTime: plan.schedules ? new Date(plan.schedules[0].run_at.start_time).getTime() : null
+          };
+        });
+
       return state
-        .set('transformationPlans', action.payload.data.resources)
+        .set('transformationPlans', planTransmutation(action.payload.data.resources, state.transformationMappings))
         .set('isFetchingTransformationPlans', false)
         .set('isRejectedTransformationPlans', false)
         .set('errorTransformationPlans', null);
+    }
     case `${FETCH_V2V_TRANSFORMATION_PLANS}_REJECTED`:
       return state
         .set('errorTransformationPlans', action.payload)

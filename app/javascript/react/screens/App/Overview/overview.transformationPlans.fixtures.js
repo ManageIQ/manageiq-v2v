@@ -19,7 +19,11 @@ export const transformationPlans = Immutable({
       },
       created_on: '2018-05-01T12:15:00Z',
       id: '10',
-      miq_requests: []
+      miq_requests: [],
+      configVmLength: 2,
+      infraMappingName: null,
+      scheduleTime: null,
+      status: null
     },
     // PLAN B-0 APPROVED
     // |-- Request 1: pending
@@ -67,7 +71,11 @@ export const transformationPlans = Immutable({
           service_order_id: '92',
           process: true
         }
-      ]
+      ],
+      configVmLength: 2,
+      infraMappingName: null,
+      scheduleTime: null,
+      status: 'Ok'
     },
     // PLAN C-0 APPROVED
     // |-- Request 1: failed
@@ -153,7 +161,11 @@ export const transformationPlans = Immutable({
           service_order_id: '91',
           process: true
         }
-      ]
+      ],
+      configVmLength: 2,
+      infraMappingName: null,
+      scheduleTime: null,
+      status: 'Ok'
     },
     // PLAN D-0 FAILED
     // |-- Request 1: failed
@@ -204,7 +216,11 @@ export const transformationPlans = Immutable({
           service_order_id: '91',
           process: true
         }
-      ]
+      ],
+      configVmLength: 2,
+      infraMappingName: null,
+      scheduleTime: null,
+      status: 'Error'
     },
     // PLAN E-0 COMPLETE
     // |-- Request 1: complete
@@ -255,7 +271,11 @@ export const transformationPlans = Immutable({
           service_order_id: '91',
           process: true
         }
-      ]
+      ],
+      configVmLength: 2,
+      infraMappingName: null,
+      scheduleTime: null,
+      status: 'Ok'
     },
     // PLAN F-0 APPROVED
     // |-- Request 1: active
@@ -306,7 +326,11 @@ export const transformationPlans = Immutable({
           service_order_id: '91',
           process: true
         }
-      ]
+      ],
+      configVmLength: 2,
+      infraMappingName: null,
+      scheduleTime: null,
+      status: 'Ok'
     }
   ]
 });

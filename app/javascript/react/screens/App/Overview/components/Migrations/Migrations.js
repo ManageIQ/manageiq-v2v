@@ -45,7 +45,6 @@ const Migrations = ({
   ];
 
   const plansExist = transformationPlans.length > 0 || archivedTransformationPlans.length > 0;
-
   const onSelect = eventKey => {
     if (eventKey === MIGRATIONS_FILTERS.archived) {
       fetchTransformationPlansAction({
