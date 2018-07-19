@@ -183,6 +183,7 @@ class MigrationsNotStartedList extends React.Component {
                           </ListView.InfoItem>,
                           migrationScheduled && (
                             <ListView.InfoItem key={plan.id + 1} style={{ textAlign: 'left' }}>
+                              <Icon type="fa" name="clock-o" />
                               {__(`Migration scheduled`)}
                               <br />
                               {formatDateTime(migrationScheduled)}
