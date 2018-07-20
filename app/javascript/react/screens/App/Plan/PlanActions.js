@@ -12,7 +12,8 @@ import {
   DOWNLOAD_LOG_CLICKED,
   DOWNLOAD_LOG_COMPLETED,
   FETCH_V2V_ANSIBLE_PLAYBOOK_TEMPLATE,
-  FETCH_V2V_ORCHESTRATION_STACK
+  FETCH_V2V_ORCHESTRATION_STACK,
+  CANCEL_V2V_PLAN_REQUEST_TASKS
 } from './PlanConstants';
 
 import { V2V_NOTIFICATION_ADD } from '../common/NotificationList/NotificationConstants';
@@ -211,5 +212,16 @@ export const downloadLogAction = task => dispatch => {
           reject(e);
         });
     })
+  });
+};
+
+// *****************************************************************************
+// * CANCEL MIGRATION TASKS
+// *****************************************************************************
+export const cancelPlanRequestTasksAction = (url, tasks) => dispatch => {
+  const resources = tasks.map(t => ({ id: t.id }));
+  dispatch({
+    type: CANCEL_V2V_PLAN_REQUEST_TASKS,
+    payload: API.post(url, { action: 'cancel', resources })
   });
 };

@@ -116,7 +116,9 @@ class Plan extends React.Component {
       ansiblePlaybookTemplate,
       fetchOrchestrationStackUrl,
       fetchOrchestrationStackAction,
-      orchestrationStack
+      orchestrationStack,
+      cancelPlanRequestTasksAction,
+      cancelPlanRequestTasksUrl
     } = this.props;
 
     const {
@@ -173,6 +175,8 @@ class Plan extends React.Component {
                 fetchOrchestrationStackUrl={fetchOrchestrationStackUrl}
                 fetchOrchestrationStackAction={fetchOrchestrationStackAction}
                 orchestrationStack={orchestrationStack}
+                cancelPlanRequestTasksUrl={cancelPlanRequestTasksUrl}
+                cancelPlanRequestTasksAction={cancelPlanRequestTasksAction}
               />
             )}
           {!planNotStarted &&
@@ -237,7 +241,9 @@ Plan.propTypes = {
   ansiblePlaybookTemplate: PropTypes.object,
   fetchOrchestrationStackUrl: PropTypes.string,
   fetchOrchestrationStackAction: PropTypes.func,
-  orchestrationStack: PropTypes.object
+  orchestrationStack: PropTypes.object,
+  cancelPlanRequestTasksAction: PropTypes.func,
+  cancelPlanRequestTasksUrl: PropTypes.string
 };
 Plan.defaultProps = {
   planName: '',
