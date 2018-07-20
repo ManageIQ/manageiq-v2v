@@ -13,6 +13,10 @@ export class BootstrapSelect extends React.Component {
       pre_selected_value
     } = this.props;
 
+    if (pre_selected_value) {
+      input.onChange(pre_selected_value);
+    }
+
     $(`#${input.name}`).selectpicker('val', input.value || pre_selected_value);
 
     $(`.${input.name}_select`).on('click', '.dropdown-toggle', e => {
