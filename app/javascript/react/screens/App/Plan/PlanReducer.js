@@ -50,9 +50,16 @@ const excludeDownloadDoneTaskId = (allDownloadLogInProgressTaskIds, taskId) =>
 const includeDownloadInProgressTaskId = (allDownloadLogInProgressTaskIds, taskId) =>
   allDownloadLogInProgressTaskIds ? allDownloadLogInProgressTaskIds.concat(taskId) : [taskId];
 
-const processVMTasks = vmTasks => {
+const processVMTasks = (vmTasks, cancellationTasks) => {
   const tasks = [];
-  vmTasks.forEach(task => {
+  for (const vmTask of vmTasks) {
+    const cancellationTask = cancellationTasks.find(t => t.source_id === vmTask.source_id);
+
+    // cancellationTask represents the most recent corresponding cancellation task for this task
+    const task = cancellationTask || vmTask;
+
+    // todo: use cancellationTask in Plan Details status. If it exists, and task
+    // is complete, show the "ban" icon instead
     const taskDetails = {
       id: task.id,
       message: V2V_MIGRATION_STATUS_MESSAGES[task.message],
@@ -61,12 +68,15 @@ const processVMTasks = vmTasks => {
       updated_on: new Date(task.updated_on),
       completed:
         task.message === STATUS_MESSAGE_KEYS.VM_MIGRATIONS_COMPLETED ||
-        task.message === STATUS_MESSAGE_KEYS.VM_MIGRATIONS_FAILED,
+        task.message === STATUS_MESSAGE_KEYS.VM_MIGRATIONS_FAILED, // cancellation status?
       state: task.state,
       status: task.status,
-      options: {}
+      options: {},
+      cancellationTask
     };
 
+    // many attributes below will likely not exist on the cancellationTask, we will have
+    // to check
     const hasPlaybookService = task.options.playbooks;
 
     if (hasPlaybookService) {
@@ -126,13 +136,18 @@ const processVMTasks = vmTasks => {
       taskDetails.percentComplete = Math.round(percentComplete * 1000) / 10;
     }
     tasks.push(taskDetails);
-  });
+  }
+
   return tasks;
 };
 
-const allVMTasksForRequestOfPlan = (requestWithTasks, actions) => {
+const allVMTasksForRequestOfPlan = (requestWithTasks, cancellationRequestsWithTasks, actions) => {
   const tasksOfPlan = getMostRecentVMTasksFromRequests(requestWithTasks, actions);
-  return processVMTasks(tasksOfPlan);
+  let cancellationTasksOfPlan = [];
+  if (cancellationRequestsWithTasks) {
+    cancellationTasksOfPlan = getMostRecentVMTasksFromRequests(cancellationRequestsWithTasks, actions);
+  }
+  return processVMTasks(tasksOfPlan, cancellationTasksOfPlan);
 };
 
 export default (state = initialState, action) => {
@@ -156,17 +171,20 @@ export default (state = initialState, action) => {
     case `${FETCH_V2V_ALL_REQUESTS_WITH_TASKS_FOR_PLAN}_PENDING`:
       return state.set('isFetchingPlanRequest', true).set('isRejectedPlanRequest', false);
     case `${FETCH_V2V_ALL_REQUESTS_WITH_TASKS_FOR_PLAN}_FULFILLED`:
-      if (action.payload.data) {
+      if (action.payload.results) {
         return state
           .set(
             'planRequestTasks',
-            allVMTasksForRequestOfPlan(action.payload.data.results, state.plan.options.config_info.actions)
+            allVMTasksForRequestOfPlan(
+              action.payload.results,
+              action.payload.cancellationResults,
+              state.plan.options.config_info.actions
+            )
           )
-          .set('allRequestsWithTasksForPlan', action.payload.data.results)
           .set('planRequestPreviouslyFetched', true)
           .set(
             'planRequestFailed',
-            commonUtilitiesHelper.getMostRecentEntityByCreationDate(action.payload.data.results).status === 'Error'
+            commonUtilitiesHelper.getMostRecentEntityByCreationDate(action.payload.results).status === 'Error'
           )
           .set('isRejectedPlanRequest', false)
           .set('errorPlanRequest', null)

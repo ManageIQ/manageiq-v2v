@@ -14,8 +14,10 @@ class Plan extends React.Component {
     if (!prevState.planNotStarted && nextProps.planRequestTasks === prevState.planRequestTasks) {
       return null;
     }
+    // todo: compare previousPlanRequestTasks vs. planRequestTasks and send toast if newly errored cancellations
     return {
       planRequestTasks: nextProps.planRequestTasks,
+      previousPlanRequestTasks: prevState.planRequestTasks,
       planRequestTasksMutable: Immutable.asMutable(nextProps.planRequestTasks),
       vms: nextProps.vms,
       vmsMutable: Immutable.asMutable(nextProps.vms),

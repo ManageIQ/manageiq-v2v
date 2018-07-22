@@ -16,6 +16,8 @@ import {
   CANCEL_V2V_PLAN_REQUEST_TASKS
 } from './PlanConstants';
 
+import { getCancellationRequestIds } from './helpers';
+
 import { V2V_NOTIFICATION_ADD } from '../common/NotificationList/NotificationConstants';
 
 // *****************************************************************************
@@ -102,7 +104,28 @@ const _getTasksForAllRequestsForPlanActionCreator = (url, allRequests) => dispat
         resources: allRequests
       })
         .then(response => {
-          resolve(response);
+          if (response.data && response.data.results && response.data.results.length) {
+            const { results } = response.data;
+            const cancellationRequests = getCancellationRequestIds(results);
+            if (cancellationRequests.length) {
+              API.post(url, {
+                action: 'query',
+                resources: cancellationRequests
+              })
+                .then(cancellationReponse => {
+                  if (cancellationReponse.data && cancellationReponse.data.results) {
+                    resolve({ results, cancellationResults: cancellationReponse.data.results });
+                  } else {
+                    resolve({ results });
+                  }
+                })
+                .catch(e => reject(e));
+            } else {
+              resolve({ results });
+            }
+          } else {
+            resolve({ results: [] });
+          }
         })
         .catch(e => reject(e));
     })
