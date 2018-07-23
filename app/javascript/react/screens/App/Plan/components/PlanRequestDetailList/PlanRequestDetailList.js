@@ -5,6 +5,7 @@ import {
   Icon,
   Grid,
   FormControl,
+  FormGroup,
   ListView,
   PaginationRow,
   Popover,
@@ -160,12 +161,16 @@ class PlanRequestDetailList extends React.Component {
     this.setState({ currentValue: event.target.value });
   };
 
-  filterSortPaginatePlanRequestTasks = tasks => {
-    const { activeFilters, currentSortType, isSortNumeric, isSortAscending, pagination } = this.state;
+  filterPlanRequestTasks = () => {
+    const { activeFilters } = this.state;
     const { planRequestTasks } = this.props;
+    return listFilter(activeFilters, planRequestTasks);
+  };
 
+  filterSortPaginatePlanRequestTasks = (filteredTasks = this.filterPlanRequestTasks()) => {
+    const { currentSortType, isSortNumeric, isSortAscending, pagination } = this.state;
     return paginate(
-      sortFilter(currentSortType, isSortNumeric, isSortAscending, listFilter(activeFilters, planRequestTasks)),
+      sortFilter(currentSortType, isSortNumeric, isSortAscending, filteredTasks),
       pagination.page,
       pagination.perPage
     );
@@ -272,6 +277,18 @@ class PlanRequestDetailList extends React.Component {
     }
   };
 
+  getCancelSelectionState = () => {
+    const { selectedCancelTasks } = this.state;
+    const filteredTasks = this.filterPlanRequestTasks();
+    const incompleteTasks = filteredTasks.filter(task => !task.completed);
+    return {
+      filteredTasks,
+      incompleteTasks,
+      allSelected: selectedCancelTasks.length === incompleteTasks.length,
+      noneSelected: selectedCancelTasks.length === 0
+    };
+  };
+
   handleCheckboxChange = task => {
     const { selectedCancelTasks } = this.state;
     const selectedTask = selectedCancelTasks.find(t => t.id === task.id);
@@ -284,9 +301,27 @@ class PlanRequestDetailList extends React.Component {
     this.setState({ selectedCancelTasks: updatedSelectedTasks });
   };
 
+  handleSelectAllCheckboxChange = () => {
+    const { allSelected } = this.getCancelSelectionState();
+    if (allSelected) {
+      this.deselectAllTasks();
+    } else {
+      this.selectAllInProgressTasks();
+    }
+  };
+
   taskIsSelected = task => {
     const { selectedCancelTasks } = this.state;
     return selectedCancelTasks.findIndex(t => t.id === task.id) > -1;
+  };
+
+  selectAllInProgressTasks = () => {
+    const { incompleteTasks } = this.getCancelSelectionState();
+    this.setState({ selectedCancelTasks: incompleteTasks });
+  };
+
+  deselectAllTasks = () => {
+    this.setState({ selectedCancelTasks: [] });
   };
 
   onCancelMigrationsCancel = () => {
@@ -320,15 +355,40 @@ class PlanRequestDetailList extends React.Component {
       selectedCancelTasks
     } = this.state;
 
-    const { downloadLogInProgressTaskIds, ansiblePlaybookTemplate } = this.props;
+    const { downloadLogInProgressTaskIds, ansiblePlaybookTemplate, planRequestTasks } = this.props;
 
-    const paginatedSortedFiltersTasks = this.filterSortPaginatePlanRequestTasks();
+    const { filteredTasks, allSelected, noneSelected } = this.getCancelSelectionState();
+
+    const paginatedSortedFiltersTasks = this.filterSortPaginatePlanRequestTasks(filteredTasks);
+    const totalNumTasks = planRequestTasks.length;
+
+    const selectAllCheckbox = (
+      <input
+        type="checkbox"
+        checked={allSelected}
+        onClick={event => {
+          // Don't open the dropdown when clicking directly on the checkbox.
+          event.stopPropagation();
+        }}
+        onChange={this.handleSelectAllCheckboxChange}
+      />
+    );
 
     return (
       <React.Fragment>
         <Grid.Row>
           <Toolbar>
-            <Filter>
+            <FormGroup style={{ paddingLeft: 0 }}>
+              <DropdownButton title={selectAllCheckbox} id="bulk-selector">
+                <MenuItem eventKey="1" disabled={allSelected} onClick={this.selectAllInProgressTasks}>
+                  {__('Select All')}
+                </MenuItem>
+                <MenuItem eventKey="2" disabled={noneSelected} onClick={this.deselectAllTasks}>
+                  {__('Select None')}
+                </MenuItem>
+              </DropdownButton>
+            </FormGroup>
+            <Filter style={{ paddingLeft: 20 }}>
               <Filter.TypeSelector
                 filterTypes={filterTypes}
                 currentFilterType={currentFilterType}
@@ -380,6 +440,13 @@ class PlanRequestDetailList extends React.Component {
                 </Toolbar.Results>
               )}
           </Toolbar>
+          {selectedCancelTasks.length > 0 && (
+            <Toolbar>
+              <Toolbar.RightContent>
+                {sprintf(__('%s of %s selected'), selectedCancelTasks.length, totalNumTasks)}
+              </Toolbar.RightContent>
+            </Toolbar>
+          )}
         </Grid.Row>
         <div style={{ overflow: 'auto', paddingBottom: 300, height: '100%' }}>
           <ListView className="plan-request-details-list">
@@ -463,6 +530,7 @@ class PlanRequestDetailList extends React.Component {
                   checkboxInput={
                     <input
                       type="checkbox"
+                      disabled={!!task.completed}
                       checked={this.taskIsSelected(task)}
                       onChange={() => {
                         this.handleCheckboxChange(task);
