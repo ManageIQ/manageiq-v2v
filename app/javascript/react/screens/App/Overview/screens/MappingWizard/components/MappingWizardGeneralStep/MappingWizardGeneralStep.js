@@ -1,5 +1,5 @@
 import React from 'react';
-import { Field } from 'redux-form';
+import { reduxForm, Field } from 'redux-form';
 import { required } from 'redux-form-validators';
 import { Form } from 'patternfly-react';
 
@@ -7,6 +7,7 @@ import { FormField } from '../../../../../common/forms/FormField';
 import { BootstrapSelect } from '../../../../../common/forms/BootstrapSelect';
 import { validation } from '../../../../../../../../common/constants';
 import { V2V_TARGET_PROVIDERS } from '../../MappingWizardConstants';
+import { asyncValidate, onChange } from '../helpers';
 
 const MappingWizardGeneralStep = props => (
   <Form className="form-horizontal">
@@ -49,4 +50,12 @@ const MappingWizardGeneralStep = props => (
   </Form>
 );
 
-export default MappingWizardGeneralStep;
+// Decorate with reduxForm(). It will read the initialValues prop provided by connect()
+export default reduxForm({
+  form: 'mappingWizardGeneralStep', // a unique identifier for this form
+  destroyOnUnmount: false, // preserve form data
+  asyncValidate,
+  asyncBlurFields: ['name'],
+  onChange
+  // forceUnregisterOnUnmount: true, // unregister fields on unmount
+})(MappingWizardGeneralStep);
