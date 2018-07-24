@@ -16,6 +16,7 @@ const Migrations = ({
   reloadCard,
   notStartedPlans,
   activeTransformationPlans,
+  serviceTemplatePlaybooks,
   createMigrationPlanClick,
   createTransformationPlanRequestClick,
   isCreatingTransformationPlanRequest,
@@ -121,6 +122,7 @@ const Migrations = ({
           {activeFilter === MIGRATIONS_FILTERS.inProgress && (
             <MigrationsInProgressCards
               activeTransformationPlans={activeTransformationPlans}
+              serviceTemplatePlaybooks={serviceTemplatePlaybooks}
               allRequestsWithTasks={allRequestsWithTasks}
               reloadCard={reloadCard}
               loading={isCreatingTransformationPlanRequest !== null}
@@ -166,6 +168,7 @@ Migrations.propTypes = {
   reloadCard: PropTypes.bool,
   notStartedPlans: PropTypes.array,
   activeTransformationPlans: PropTypes.array,
+  serviceTemplatePlaybooks: PropTypes.array,
   createMigrationPlanClick: PropTypes.func,
   createTransformationPlanRequestClick: PropTypes.func,
   isCreatingTransformationPlanRequest: PropTypes.string,
@@ -191,6 +194,7 @@ Migrations.defaultProps = {
   transformationPlans: [],
   notStartedPlans: [],
   activeTransformationPlans: [],
+  serviceTemplatePlaybooks: [],
   createMigrationPlanClick: noop,
   createTransformationPlanRequestClick: noop,
   isCreatingTransformationPlanRequest: '',

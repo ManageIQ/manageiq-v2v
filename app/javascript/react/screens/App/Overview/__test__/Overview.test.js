@@ -20,13 +20,15 @@ describe('Overview component', () => {
     transformationMappings: [],
     transformationPlans: [],
     clusters: [],
-    fetchTransformationPlansUrl: ''
+    fetchTransformationPlansUrl: '',
+    fetchServiceTemplateAnsiblePlaybooksUrl: ''
   };
   let showMappingWizardAction;
   let showPlanWizardAction;
   let fetchProvidersAction;
   let fetchTransformationMappingsAction;
   let fetchTransformationPlansAction;
+  let fetchServiceTemplateAnsiblePlaybooksAction;
   let fetchClustersAction;
   let fetchNetworksAction;
   let fetchDatastoresAction;
@@ -36,10 +38,12 @@ describe('Overview component', () => {
     fetchProvidersAction = jest.fn();
     fetchTransformationMappingsAction = jest.fn();
     fetchTransformationPlansAction = jest.fn();
+    fetchServiceTemplateAnsiblePlaybooksAction = jest.fn();
     fetchClustersAction = jest.fn();
     fetchNetworksAction = jest.fn();
     fetchDatastoresAction = jest.fn();
     fetchTransformationPlansAction.mockReturnValue(Promise.resolve());
+    fetchServiceTemplateAnsiblePlaybooksAction.mockReturnValue(Promise.resolve());
   });
 
   describe('overview sections', () => {
@@ -52,6 +56,7 @@ describe('Overview component', () => {
           fetchProvidersAction={fetchProvidersAction}
           fetchTransformationMappingsAction={fetchTransformationMappingsAction}
           fetchTransformationPlansAction={fetchTransformationPlansAction}
+          fetchServiceTemplateAnsiblePlaybooksAction={fetchServiceTemplateAnsiblePlaybooksAction}
           fetchClustersAction={fetchClustersAction}
           fetchDatastoresAction={fetchDatastoresAction}
           fetchNetworksAction={fetchNetworksAction}
@@ -71,6 +76,7 @@ describe('Overview component', () => {
           fetchProvidersAction={fetchProvidersAction}
           fetchTransformationMappingsAction={fetchTransformationMappingsAction}
           fetchTransformationPlansAction={fetchTransformationPlansAction}
+          fetchServiceTemplateAnsiblePlaybooksAction={fetchServiceTemplateAnsiblePlaybooksAction}
           fetchClustersAction={fetchClustersAction}
           fetchDatastoresAction={fetchDatastoresAction}
           fetchNetworksAction={fetchNetworksAction}
@@ -92,6 +98,7 @@ describe('Overview component', () => {
           fetchProvidersAction={fetchProvidersAction}
           fetchTransformationMappingsAction={fetchTransformationMappingsAction}
           fetchTransformationPlansAction={fetchTransformationPlansAction}
+          fetchServiceTemplateAnsiblePlaybooksAction={fetchServiceTemplateAnsiblePlaybooksAction}
           fetchClustersAction={fetchClustersAction}
           fetchDatastoresAction={fetchDatastoresAction}
           fetchNetworksAction={fetchNetworksAction}

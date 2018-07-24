@@ -6,6 +6,7 @@ import { plansSchema } from '../../../../data/models/plans';
 import { providersSchema } from '../../../../data/models/provider';
 import { requestsSchema } from '../../../../data/models/requests';
 import { mappingsSchema } from '../../../../data/models/transformationMappings';
+import { serviceTemplatePlaybookSchema } from '../../../../data/models/playbooks';
 
 export const validateOverviewClusters = clusters => {
   validateSchema(clustersSchema, clusters);
@@ -33,4 +34,8 @@ export const validateOverviewRequests = requests => {
 
 export const validateOverviewMappings = mappings => {
   validateSchema(mappingsSchema, mappings);
+};
+
+export const validateServiceTemplatePlaybooks = playbooks => {
+  validateSchema(serviceTemplatePlaybookSchema, playbooks);
 };

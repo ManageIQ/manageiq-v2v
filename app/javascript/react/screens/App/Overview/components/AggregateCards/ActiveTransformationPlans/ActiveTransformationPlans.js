@@ -11,6 +11,7 @@ import {
   Spinner
 } from 'patternfly-react';
 import getMostRecentRequest from '../../../../common/getMostRecentRequest';
+import { PLAN_JOB_STATUS } from '../../../../../../../data/models/plans';
 
 const ActiveTransformationPlans = ({ activePlans, allRequestsWithTasks, reloadCard, loading }) => {
   const countDescription =
@@ -22,7 +23,18 @@ const ActiveTransformationPlans = ({ activePlans, allRequestsWithTasks, reloadCa
       const mostRecentRequest = requestsOfAssociatedPlan.length > 0 && getMostRecentRequest(requestsOfAssociatedPlan);
       return (
         mostRecentRequest &&
-        mostRecentRequest.miq_request_tasks.some(task => task.state === 'finished' && task.status === 'Error')
+        mostRecentRequest.miq_request_tasks.some(task => {
+          if (task.options && task.options.playbooks) {
+            const { playbooks } = task.options;
+            if (playbooks.pre && playbooks.pre.job_status === PLAN_JOB_STATUS.ERROR) {
+              return true;
+            }
+            if (playbooks.post && playbooks.post.job_status === PLAN_JOB_STATUS.ERROR) {
+              return true;
+            }
+          }
+          return task.state === 'finished' && task.status === 'Error';
+        })
       );
     }
     return [];

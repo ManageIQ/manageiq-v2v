@@ -7,7 +7,8 @@ import {
   validateOverviewPlans,
   validateOverviewProviders,
   validateOverviewRequests,
-  validateOverviewMappings
+  validateOverviewMappings,
+  validateServiceTemplatePlaybooks
 } from './OverviewValidators';
 
 import {
@@ -20,6 +21,7 @@ import {
   FETCH_PROVIDERS,
   FETCH_V2V_TRANSFORMATION_MAPPINGS,
   FETCH_V2V_TRANSFORMATION_PLANS,
+  FETCH_V2V_SERVICE_TEMPLATE_ANSIBLE_PLAYBOOKS,
   FETCH_V2V_ARCHIVED_TRANSFORMATION_PLANS,
   FETCH_V2V_ALL_REQUESTS_WITH_TASKS,
   FETCH_V2V_ALL_ARCHIVED_PLAN_REQUESTS_WITH_TASKS,
@@ -101,7 +103,11 @@ export const initialState = Immutable({
   scheduleMigrationPlanId: null,
   isSchedulingMigration: false,
   isRejectedSchedulingMigration: false,
-  errorSchedulingMigration: false
+  errorSchedulingMigration: false,
+  serviceTemplatePlaybooks: [],
+  isFetchingServiceTemplatePlaybooks: false,
+  isRejectedServiceTemplatePlaybooks: false,
+  errorServiceTemplatePlaybooks: null
 });
 
 export default (state = initialState, action) => {
@@ -226,6 +232,20 @@ export default (state = initialState, action) => {
         .set('errorArchivedTransformationPlans', action.payload)
         .set('isRejectedArchivedTransformationPlans', true)
         .set('isFetchingArchivedTransformationPlans', '');
+    case `${FETCH_V2V_SERVICE_TEMPLATE_ANSIBLE_PLAYBOOKS}_PENDING`:
+      return state.set('isFetchingServiceTemplatePlaybooks', true);
+    case `${FETCH_V2V_SERVICE_TEMPLATE_ANSIBLE_PLAYBOOKS}_FULFILLED`:
+      validateServiceTemplatePlaybooks(action.payload.data.resources);
+      return state
+        .set('serviceTemplatePlaybooks', action.payload.data.resources)
+        .set('isFetchingServiceTemplatePlaybooks', false)
+        .set('isRejectedServiceTemplatePlaybooks', false)
+        .set('errorServiceTemplatePlaybooks', null);
+    case `${FETCH_V2V_SERVICE_TEMPLATE_ANSIBLE_PLAYBOOKS}_REJECTED`:
+      return state
+        .set('errorServiceTemplatePlaybooks', action.payload)
+        .set('isRejectedServiceTemplatePlaybooks', true)
+        .set('isFetchingServiceTemplatePlaybooks', false);
     case `${FETCH_V2V_ALL_REQUESTS_WITH_TASKS}_PENDING`:
       return state.set('isFetchingAllRequestsWithTasks', true);
     case `${FETCH_V2V_ALL_REQUESTS_WITH_TASKS}_FULFILLED`:
