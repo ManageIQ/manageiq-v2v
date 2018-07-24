@@ -31,7 +31,8 @@ class MappingWizardClustersStep extends React.Component {
       isFetchingTargetClusters,
       targetClusters,
       isRejectedSourceClusters,
-      isRejectedTargetClusters
+      isRejectedTargetClusters,
+      targetProvider
     } = this.props;
 
     if (isRejectedSourceClusters || isRejectedTargetClusters) {
@@ -59,6 +60,7 @@ class MappingWizardClustersStep extends React.Component {
         validate={[length({ min: 1 })]}
         isFetchingSourceClusters={isFetchingSourceClusters}
         isFetchingTargetClusters={isFetchingTargetClusters}
+        targetProvider={targetProvider}
       />
     );
   }

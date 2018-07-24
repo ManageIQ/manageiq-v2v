@@ -7,8 +7,9 @@ import DualPaneMapperCount from '../../../DualPaneMapper/DualPaneMapperCount';
 import DualPaneMapperListItem from '../../../DualPaneMapper/DualPaneMapperListItem';
 import ClustersStepTreeView from '../ClustersStepTreeView';
 
-import { updateMapping, createNewMapping } from './helpers';
+import { createNewMapping, updateMapping } from './helpers';
 import { sourceClustersFilter } from '../../MappingWizardClustersStepSelectors';
+import { multiProviderTargetLabel } from '../../../helpers';
 
 class ClustersStepForm extends React.Component {
   state = {
@@ -97,7 +98,14 @@ class ClustersStepForm extends React.Component {
   };
 
   render() {
-    const { sourceClusters, targetClusters, isFetchingSourceClusters, isFetchingTargetClusters, input } = this.props;
+    const {
+      sourceClusters,
+      targetClusters,
+      isFetchingSourceClusters,
+      isFetchingTargetClusters,
+      input,
+      targetProvider
+    } = this.props;
 
     const { selectedTargetCluster, selectedSourceClusters, selectedMapping } = this.state;
 
@@ -110,6 +118,11 @@ class ClustersStepForm extends React.Component {
 
     return (
       <div className="dual-pane-mapper-form">
+        <p style={{ marginLeft: -40 }}>
+          {__(
+            'Select source cluster(s) and a target cluster and click Add Mapping to add the mapping. Multiple mappings can be added.') // prettier-ignore
+          }
+        </p>
         <DualPaneMapper
           handleButtonClick={this.addMapping}
           validMapping={!(selectedTargetCluster && (selectedSourceClusters && selectedSourceClusters.length > 0))}
@@ -117,7 +130,7 @@ class ClustersStepForm extends React.Component {
           {sourceClusters && (
             <DualPaneMapperList
               id="source_clusters"
-              listTitle={__('Source Clusters')}
+              listTitle={__('Source Provider \\ Datacenter \\ Cluster')}
               loading={isFetchingSourceClusters}
               counter={counter}
             >
@@ -142,7 +155,7 @@ class ClustersStepForm extends React.Component {
           {targetClusters && (
             <DualPaneMapperList
               id="target_clusters"
-              listTitle={__('Target Clusters')}
+              listTitle={multiProviderTargetLabel(targetProvider, 'cluster')}
               loading={isFetchingTargetClusters}
             >
               {targetClusters.map(item => (
@@ -151,7 +164,7 @@ class ClustersStepForm extends React.Component {
                   text={
                     item.v_parent_datacenter
                       ? `${item.ext_management_system.name} \\ ${item.v_parent_datacenter} \\ ${item.name}`
-                      : `${item.name}`
+                      : `${item.ext_management_system.name} \\ ${item.name}`
                   }
                   key={item.id}
                   selected={selectedTargetCluster && selectedTargetCluster.id === item.id}
@@ -181,7 +194,8 @@ ClustersStepForm.propTypes = {
   sourceClusters: PropTypes.arrayOf(PropTypes.object),
   targetClusters: PropTypes.arrayOf(PropTypes.object),
   isFetchingSourceClusters: PropTypes.bool,
-  isFetchingTargetClusters: PropTypes.bool
+  isFetchingTargetClusters: PropTypes.bool,
+  targetProvider: PropTypes.string
 };
 
 export default ClustersStepForm;
