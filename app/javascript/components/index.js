@@ -7,6 +7,7 @@ import MappingWizardResultsStepContainer from '../react/screens/App/Overview/scr
 import PlanWizardVMStepContainer from '../react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep';
 import PlanWizardResultsStepContainer from '../react/screens/App/Overview/screens/PlanWizard/components/PlanWizardResultsStep';
 import PlanWizardContainer from '../react/screens/App/Overview/screens/PlanWizard';
+import PlanWizardAdvancedOptionsStepContainer from '../react/screens/App/Overview/screens/PlanWizard/components/PlanWizardAdvancedOptionsStep';
 
 import OverviewContainer from '../react/screens/App/Overview';
 import PlanContainer from '../react/screens/App/Plan';
@@ -81,6 +82,14 @@ export const coreComponents = [
     type: PlanWizardContainer,
     data: {
       url: '/api/migrationPlans'
+    },
+    store: true
+  },
+  {
+    name: 'PlanWizardAdvancedOptionsStepContainer',
+    type: PlanWizardAdvancedOptionsStepContainer,
+    data: {
+      fetchPlaybooksUrl: "/api/service_templates/?filter[]=type='ServiceTemplateAnsiblePlaybook'&expand=resources"
     },
     store: true
   },

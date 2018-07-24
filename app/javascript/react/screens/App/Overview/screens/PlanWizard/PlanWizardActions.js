@@ -6,7 +6,7 @@ import {
   V2V_PLAN_WIZARD_SHOW_ALERT,
   V2V_PLAN_WIZARD_HIDE_ALERT
 } from './PlanWizardConstants';
-
+import { RESET_V2V_ADVANCED_OPTIONS_STEP_VMS } from './components/PlanWizardAdvancedOptionsStep/PlanWizardAdvancedOptionsStepConstants';
 import { V2V_VM_STEP_RESET } from './components/PlanWizardVMStep/PlanWizardVMStepConstants';
 
 export const hidePlanWizardAction = () => dispatch => {
@@ -25,7 +25,11 @@ export const planWizardExitedAction = () => dispatch => {
   dispatch({
     type: V2V_VM_STEP_RESET
   });
-  dispatch(reset('planWizardOptionsStep'));
+  dispatch(reset('planWizardScheduleStep'));
+  dispatch(reset('planWizardAdvancedOptionsStep'));
+  dispatch({
+    type: RESET_V2V_ADVANCED_OPTIONS_STEP_VMS
+  });
 };
 
 export const setPlansBodyAction = body => dispatch => {
@@ -60,4 +64,11 @@ export const hideAlertAction = () => dispatch => {
   dispatch({
     type: V2V_PLAN_WIZARD_HIDE_ALERT
   });
+};
+
+export const resetAdvancedOptionsStepAction = () => dispatch => {
+  dispatch({
+    type: RESET_V2V_ADVANCED_OPTIONS_STEP_VMS
+  });
+  dispatch(reset('planWizardAdvancedOptionsStep'));
 };

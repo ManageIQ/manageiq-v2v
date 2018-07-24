@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import PlanWizardOptionsStep from './PlanWizardOptionsStep';
+import PlanWizardScheduleStep from './PlanWizardScheduleStep';
 
 const mapStateToProps = () => ({
   initialValues: {
@@ -7,4 +7,4 @@ const mapStateToProps = () => ({
   }
 });
 
-export default connect(mapStateToProps)(PlanWizardOptionsStep);
+export default connect(mapStateToProps)(PlanWizardScheduleStep);

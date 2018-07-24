@@ -111,6 +111,9 @@ class MappingWizardDatastoresStep extends React.Component {
           choose_text={`<${__('Select a source cluster')}>`}
           render_within_form="true"
           form_name={form}
+          inline_label
+          labelWidth={6}
+          controlWidth={4}
         />
         <Field
           name="datastoresMappings"

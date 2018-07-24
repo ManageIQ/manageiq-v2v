@@ -11,6 +11,7 @@ import { reducers as mappingWizardResultsStepReducers } from '../../react/screen
 import { reducers as planWizardReducers } from '../../react/screens/App/Overview/screens/PlanWizard';
 import { reducers as planWizardVMStepReducers } from '../../react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep';
 import { reducers as planWizardResultsStepReducers } from '../../react/screens/App/Overview/screens/PlanWizard/components/PlanWizardResultsStep';
+import { reducers as planWizardAdvancedOptionsStepReducers } from '../../react/screens/App/Overview/screens/PlanWizard/components/PlanWizardAdvancedOptionsStep';
 
 export function combineReducersAsync(asyncReducers) {
   return combineReducers({
@@ -25,6 +26,7 @@ export function combineReducersAsync(asyncReducers) {
     ...planWizardReducers,
     ...planWizardVMStepReducers,
     ...planWizardResultsStepReducers,
+    ...planWizardAdvancedOptionsStepReducers,
     form: formReducer,
     ...asyncReducers
   });

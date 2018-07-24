@@ -5,5 +5,6 @@ export const planWizardOverviewFilter = overview => ({
 export const planWizardFormFilter = form => ({
   planWizardGeneralStep: form.planWizardGeneralStep,
   planWizardVMStep: form.planWizardVMStep,
-  planWizardOptionsStep: form.planWizardOptionsStep
+  planWizardAdvancedOptionsStep: form.planWizardAdvancedOptionsStep,
+  planWizardScheduleStep: form.planWizardScheduleStep
 });
