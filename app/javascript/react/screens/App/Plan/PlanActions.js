@@ -215,6 +215,28 @@ export const cancelPlanRequestTasksAction = (url, tasks) => dispatch => {
   const resources = tasks.map(t => ({ id: t.id }));
   dispatch({
     type: CANCEL_V2V_PLAN_REQUEST_TASKS,
-    payload: API.post(url, { action: 'cancel', resources })
+    payload: new Promise((resolve, reject) => {
+      API.post(url, {
+        action: 'cancel',
+        resources
+      })
+        .then(response => {
+          resolve(response);
+
+          const cancelSuccessMsg = __('Migration canceled successfully for VMs: ');
+          const vmNames = [];
+          tasks.map(task => vmNames.push(task.vmName));
+          const cancelSuccessMsgWithVMNames = `${cancelSuccessMsg} ${vmNames}`;
+
+          dispatch({
+            type: V2V_NOTIFICATION_ADD,
+            message: cancelSuccessMsgWithVMNames,
+            notificationType: 'success',
+            persistent: true,
+            actionEnabled: false
+          });
+        })
+        .catch(e => reject(e));
+    })
   });
 };
