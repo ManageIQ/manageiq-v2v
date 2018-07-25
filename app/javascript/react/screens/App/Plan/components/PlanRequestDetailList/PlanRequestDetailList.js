@@ -462,6 +462,15 @@ class PlanRequestDetailList extends React.Component {
                     style={{ width: 'inherit', backgroundColor: 'transparent' }}
                   />
                 );
+              } else if (task.cancel_requested) {
+                leftContent = (
+                  <ListView.Icon
+                    type="fa"
+                    name="ban"
+                    size="md"
+                    style={{ width: 'inherit', backgroundColor: 'transparent' }}
+                  />
+                );
               } else if (task.completed && !task.completedSuccessfully) {
                 leftContent = (
                   <ListView.Icon
@@ -480,7 +489,7 @@ class PlanRequestDetailList extends React.Component {
                     style={{ width: 'inherit', backgroundColor: 'transparent' }}
                   />
                 );
-              } else {
+              } else if (!task.cancel_requested) {
                 leftContent = <Spinner loading />;
               }
               const label = sprintf(__('%s of %s Migrated'), task.diskSpaceCompletedGb, task.totalDiskSpaceGb);
