@@ -12,7 +12,7 @@ class ScheduleMigrationModal extends React.Component {
     const {
       toggleScheduleMigrationModal,
       scheduleMigrationModal,
-      scheduleMigrationPlanId,
+      scheduleMigrationPlan,
       scheduleMigration,
       fetchTransformationPlansAction,
       fetchTransformationPlansUrl
@@ -45,7 +45,7 @@ class ScheduleMigrationModal extends React.Component {
             disabled={!this.state.dateTimeInput}
             onClick={() => {
               scheduleMigration({
-                planId: scheduleMigrationPlanId,
+                plan: scheduleMigrationPlan,
                 scheduleTime: moment(this.state.dateTimeInput).format('YYYYMMDDTHHmm')
               }).then(() => {
                 fetchTransformationPlansAction({
@@ -66,7 +66,7 @@ class ScheduleMigrationModal extends React.Component {
 ScheduleMigrationModal.propTypes = {
   scheduleMigrationModal: PropTypes.bool,
   toggleScheduleMigrationModal: PropTypes.func,
-  scheduleMigrationPlanId: PropTypes.string,
+  scheduleMigrationPlan: PropTypes.object,
   scheduleMigration: PropTypes.func,
   fetchTransformationPlansAction: PropTypes.func,
   fetchTransformationPlansUrl: PropTypes.string

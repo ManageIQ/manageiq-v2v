@@ -100,7 +100,7 @@ export const initialState = Immutable({
   isFetchingNetworks: false,
   isRejectedNetworks: false,
   scheduleMigrationModal: false,
-  scheduleMigrationPlanId: null,
+  scheduleMigrationPlan: {},
   isSchedulingMigration: false,
   isRejectedSchedulingMigration: false,
   errorSchedulingMigration: false,
@@ -382,10 +382,10 @@ export default (state = initialState, action) => {
     case V2V_TOGGLE_SCHEDULE_MIGRATION_MODAL:
       if (action.payload !== undefined) {
         return state
-          .set('scheduleMigrationPlanId', action.payload.planId)
+          .set('scheduleMigrationPlan', action.payload.plan)
           .set('scheduleMigrationModal', !state.scheduleMigrationModal);
       }
-      return state.set('scheduleMigrationPlanId', null).set('scheduleMigrationModal', !state.scheduleMigrationModal);
+      return state.set('scheduleMigrationPlan', null).set('scheduleMigrationModal', !state.scheduleMigrationModal);
     case `${V2V_SCHEDULE_MIGRATION}_PENDING`:
       return state.set('isSchedulingMigration', true).set('isRejectedSchedulingMigration', false);
     case `${V2V_SCHEDULE_MIGRATION}_FULFILLED`:

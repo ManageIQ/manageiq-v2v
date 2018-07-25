@@ -7,6 +7,7 @@ import ScheduleMigrationModal from '../ScheduleMigrationModal/ScheduleMigrationM
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
 import { MIGRATIONS_NOT_STARTED_SORT_FIELDS } from './MigrationsConstants';
 import sortFilter from '../../../Plan/components/sortFilter';
+import ScheduleMigrationButton from './ScheduleMigrationButton';
 
 class MigrationsNotStartedList extends React.Component {
   state = {
@@ -51,7 +52,7 @@ class MigrationsNotStartedList extends React.Component {
       hideConfirmModalAction,
       toggleScheduleMigrationModal,
       scheduleMigrationModal,
-      scheduleMigrationPlanId,
+      scheduleMigrationPlan,
       scheduleMigration,
       fetchTransformationPlansAction,
       fetchTransformationPlansUrl
@@ -84,43 +85,6 @@ class MigrationsNotStartedList extends React.Component {
                   {sortedMigrations.map(plan => {
                     const migrationScheduled = plan.schedules && plan.schedules[0].run_at.start_time;
 
-                    const confirmationWarningText = (
-                      <React.Fragment>
-                        <p>
-                          {sprintf(
-                            __('Are you sure you want to unschedule plan %s  targted to run on %s ?'),
-                            plan.name,
-                            formatDateTime(migrationScheduled)
-                          )}
-                        </p>
-                      </React.Fragment>
-                    );
-
-                    const confirmModalProps = {
-                      title: __('Unschedule Migration Plan'),
-                      body: confirmationWarningText,
-                      icon: <Icon className="confirm-warning-icon" type="pf" name="warning-triangle-o" />,
-                      confirmButtonLabel: __('Unschedule')
-                    };
-
-                    const onConfirm = () => {
-                      scheduleMigration({
-                        planId: plan.id,
-                        scheduleId: plan.schedules[0].id
-                      }).then(() => {
-                        fetchTransformationPlansAction({
-                          url: fetchTransformationPlansUrl,
-                          archived: false
-                        });
-                      });
-                      hideConfirmModalAction();
-                    };
-
-                    const confirmModalOptions = {
-                      ...confirmModalProps,
-                      onConfirm
-                    };
-
                     return (
                       <ListView.Item
                         stacked
@@ -130,30 +94,16 @@ class MigrationsNotStartedList extends React.Component {
                         }}
                         actions={
                           <div>
-                            {!migrationScheduled && (
-                              <Button
-                                id={`schedule_${plan.id}`}
-                                onClick={e => {
-                                  e.stopPropagation();
-                                  toggleScheduleMigrationModal({ planId: plan.id });
-                                }}
-                                disabled={loading === plan.href || plan.schedule_type}
-                              >
-                                {__('Schedule')}
-                              </Button>
-                            )}
-                            {migrationScheduled && (
-                              <Button
-                                id={`unschedule_${plan.id}`}
-                                onClick={e => {
-                                  e.stopPropagation();
-                                  showConfirmModalAction(confirmModalOptions);
-                                }}
-                                disabled={loading === plan.href}
-                              >
-                                {__('Unschedule')}
-                              </Button>
-                            )}
+                            <ScheduleMigrationButton
+                              showConfirmModalAction={showConfirmModalAction}
+                              hideConfirmModalAction={hideConfirmModalAction}
+                              loading={loading}
+                              toggleScheduleMigrationModal={toggleScheduleMigrationModal}
+                              scheduleMigration={scheduleMigration}
+                              fetchTransformationPlansAction={fetchTransformationPlansAction}
+                              fetchTransformationPlansUrl={fetchTransformationPlansUrl}
+                              plan={plan}
+                            />
                             <Button
                               id={`migrate_${plan.id}`}
                               onClick={e => {
@@ -214,7 +164,7 @@ class MigrationsNotStartedList extends React.Component {
         <ScheduleMigrationModal
           toggleScheduleMigrationModal={toggleScheduleMigrationModal}
           scheduleMigrationModal={scheduleMigrationModal}
-          scheduleMigrationPlanId={scheduleMigrationPlanId}
+          scheduleMigrationPlan={scheduleMigrationPlan}
           scheduleMigration={scheduleMigration}
           fetchTransformationPlansAction={fetchTransformationPlansAction}
           fetchTransformationPlansUrl={fetchTransformationPlansUrl}
@@ -233,7 +183,7 @@ MigrationsNotStartedList.propTypes = {
   redirectTo: PropTypes.func,
   toggleScheduleMigrationModal: PropTypes.func,
   scheduleMigrationModal: PropTypes.bool,
-  scheduleMigrationPlanId: PropTypes.string,
+  scheduleMigrationPlan: PropTypes.object,
   scheduleMigration: PropTypes.func,
   fetchTransformationPlansAction: PropTypes.func,
   fetchTransformationPlansUrl: PropTypes.string
