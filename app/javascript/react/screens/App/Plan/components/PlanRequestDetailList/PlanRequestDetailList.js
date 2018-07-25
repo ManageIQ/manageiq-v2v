@@ -338,6 +338,7 @@ class PlanRequestDetailList extends React.Component {
     const { selectedCancelTasks } = this.state;
     const { cancelPlanRequestTasksAction, cancelPlanRequestTasksUrl } = this.props;
     cancelPlanRequestTasksAction(cancelPlanRequestTasksUrl, selectedCancelTasks);
+    this.setState({ showConfirmCancel: false });
   };
 
   render() {
