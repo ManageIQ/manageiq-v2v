@@ -103,10 +103,11 @@ class PlanWizardVMStep extends React.Component {
       return <CSVDropzoneField onCSVParseSuccess={this.onCSVParseSuccess} onCSVParseFailure={this.onCSVParseFailure} />;
     } else if (!isValidatingVms && validationServiceCalled) {
       // set make rows editable so they can be selected
-      const validVms = Immutable.asMutable(valid_vms, { deep: true }).map(vm => ({ ...vm, selected: true }));
+      const validVms = Immutable.asMutable(valid_vms, { deep: true });
       const inValidsVms = Immutable.asMutable(invalid_vms, { deep: true });
       const conflictVms = Immutable.asMutable(conflict_vms, { deep: true });
-      const combined = [...inValidsVms, ...conflictVms, ...validVms];
+      const validVmsWithSelections = discoveryMode ? validVms : validVms.map(vm => ({ ...vm, selected: true }));
+      const combined = [...inValidsVms, ...conflictVms, ...validVmsWithSelections];
 
       if (combined.length) {
         return (
