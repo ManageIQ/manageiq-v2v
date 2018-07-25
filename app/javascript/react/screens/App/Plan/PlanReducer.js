@@ -55,7 +55,9 @@ const processVMTasks = vmTasks => {
   vmTasks.forEach(task => {
     const taskDetails = {
       id: task.id,
-      message: V2V_MIGRATION_STATUS_MESSAGES[task.message],
+      message: task.options.cancel_requested
+        ? `${__('Migration Canceled')}: ${V2V_MIGRATION_STATUS_MESSAGES[task.message]}`
+        : V2V_MIGRATION_STATUS_MESSAGES[task.message],
       transformation_host_name: task.options && task.options.transformation_host_name,
       delivered_on: new Date(task.options.delivered_on),
       updated_on: new Date(task.updated_on),
@@ -77,6 +79,10 @@ const processVMTasks = vmTasks => {
       taskDetails.options.postPlaybookComplete =
         task.options.playbooks.post && task.options.playbooks.post.job_state === 'finished';
       taskDetails.options.playbooks = task.options.playbooks;
+    }
+
+    if (task.options.cancel_requested) {
+      taskDetails.cancel_requested = true;
     }
 
     taskDetails.options.progress = task.options.progress;
