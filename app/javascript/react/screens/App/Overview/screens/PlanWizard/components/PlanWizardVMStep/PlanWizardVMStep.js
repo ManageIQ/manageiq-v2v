@@ -106,7 +106,8 @@ class PlanWizardVMStep extends React.Component {
       const validVms = Immutable.asMutable(valid_vms, { deep: true });
       const inValidsVms = Immutable.asMutable(invalid_vms, { deep: true });
       const conflictVms = Immutable.asMutable(conflict_vms, { deep: true });
-      const combined = [...inValidsVms, ...conflictVms, ...validVms];
+      const validVmsWithSelections = discoveryMode ? validVms : validVms.map(vm => ({ ...vm, selected: true }));
+      const combined = [...inValidsVms, ...conflictVms, ...validVmsWithSelections];
 
       if (combined.length) {
         return (
