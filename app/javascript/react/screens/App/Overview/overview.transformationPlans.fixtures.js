@@ -14,7 +14,7 @@ export const transformationPlans = Immutable({
       options: {
         config_info: {
           transformation_mapping_id: '1',
-          vm_ids: ['1', '3']
+          actions: [{ vm_id: '1' }, { vm_id: '3' }]
         }
       },
       created_on: '2018-05-01T12:15:00Z',
@@ -29,7 +29,7 @@ export const transformationPlans = Immutable({
       options: {
         config_info: {
           transformation_mapping_id: '1',
-          vm_ids: ['1', '3']
+          actions: [{ vm_id: '1' }, { vm_id: '3' }]
         }
       },
       miq_requests: [
@@ -78,7 +78,7 @@ export const transformationPlans = Immutable({
       options: {
         config_info: {
           transformation_mapping_id: '1',
-          vm_ids: ['1', '3']
+          actions: [{ vm_id: '1' }, { vm_id: '3' }]
         }
       },
       created_on: '2018-05-01T12:13:50Z',
@@ -163,7 +163,7 @@ export const transformationPlans = Immutable({
       options: {
         config_info: {
           transformation_mapping_id: '1',
-          vm_ids: ['1', '3']
+          actions: [{ vm_id: '1' }, { vm_id: '3' }]
         }
       },
       created_on: '2018-05-01T12:13:50',
@@ -214,7 +214,7 @@ export const transformationPlans = Immutable({
       options: {
         config_info: {
           transformation_mapping_id: '1',
-          vm_ids: ['1', '3']
+          actions: [{ vm_id: '1' }, { vm_id: '3' }]
         }
       },
       created_on: '2018-05-01T12:13:50Z',
@@ -265,7 +265,7 @@ export const transformationPlans = Immutable({
       options: {
         config_info: {
           transformation_mapping_id: '1',
-          vm_ids: ['1', '3']
+          actions: [{ vm_id: '1' }, { vm_id: '3' }]
         }
       },
       created_on: '2018-05-01T12:13:50Z',
