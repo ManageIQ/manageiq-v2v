@@ -5,6 +5,7 @@ import {
   Icon,
   Grid,
   FormControl,
+  FormGroup,
   ListView,
   PaginationRow,
   Popover,
@@ -31,6 +32,7 @@ import {
 } from './PlanRequestDetailListConstants';
 import { V2V_MIGRATION_STATUS_MESSAGES } from '../../PlanConstants';
 import TickingIsoElapsedTime from '../../../../../../components/dates/TickingIsoElapsedTime';
+import ConfirmModal from '../../../common/ConfirmModal';
 
 class PlanRequestDetailList extends React.Component {
   static getDerivedStateFromProps(nextProps) {
@@ -48,6 +50,7 @@ class PlanRequestDetailList extends React.Component {
     currentFilterType: ACTIVE_PLAN_FILTER_TYPES[0],
     currentValue: '',
     activeFilters: [],
+    selectedCancelTasks: [],
 
     // sort states
     sortFields: ACTIVE_PLAN_SORT_FIELDS,
@@ -158,12 +161,16 @@ class PlanRequestDetailList extends React.Component {
     this.setState({ currentValue: event.target.value });
   };
 
-  filterSortPaginatePlanRequestTasks = tasks => {
-    const { activeFilters, currentSortType, isSortNumeric, isSortAscending, pagination } = this.state;
+  filterPlanRequestTasks = () => {
+    const { activeFilters } = this.state;
     const { planRequestTasks } = this.props;
+    return listFilter(activeFilters, planRequestTasks);
+  };
 
+  filterSortPaginatePlanRequestTasks = (filteredTasks = this.filterPlanRequestTasks()) => {
+    const { currentSortType, isSortNumeric, isSortAscending, pagination } = this.state;
     return paginate(
-      sortFilter(currentSortType, isSortNumeric, isSortAscending, listFilter(activeFilters, planRequestTasks)),
+      sortFilter(currentSortType, isSortNumeric, isSortAscending, filteredTasks),
       pagination.page,
       pagination.perPage
     );
@@ -247,7 +254,7 @@ class PlanRequestDetailList extends React.Component {
   overlayTriggerClick = task => {
     if (task.options.playbooks) {
       const playbookStatuses = task.options.playbooks;
-      let runningPlaybook = null;
+      let runningPlaybook;
 
       for (const scheduleType in playbookStatuses) {
         if (playbookStatuses[scheduleType].job_state === 'active') {
@@ -270,6 +277,69 @@ class PlanRequestDetailList extends React.Component {
     }
   };
 
+  getCancelSelectionState = () => {
+    const { selectedCancelTasks } = this.state;
+    const filteredTasks = this.filterPlanRequestTasks();
+    const incompleteTasks = filteredTasks.filter(task => !task.completed);
+    return {
+      filteredTasks,
+      incompleteTasks,
+      allSelected: selectedCancelTasks.length === incompleteTasks.length,
+      noneSelected: selectedCancelTasks.length === 0
+    };
+  };
+
+  handleCheckboxChange = task => {
+    const { selectedCancelTasks } = this.state;
+    const selectedTask = selectedCancelTasks.find(t => t.id === task.id);
+    let updatedSelectedTasks;
+    if (selectedTask) {
+      updatedSelectedTasks = selectedCancelTasks.filter(r => !(r.id === task.id));
+    } else {
+      updatedSelectedTasks = [...selectedCancelTasks, task];
+    }
+    this.setState({ selectedCancelTasks: updatedSelectedTasks });
+  };
+
+  handleSelectAllCheckboxChange = () => {
+    const { allSelected } = this.getCancelSelectionState();
+    if (allSelected) {
+      this.deselectAllTasks();
+    } else {
+      this.selectAllInProgressTasks();
+    }
+  };
+
+  taskIsSelected = task => {
+    const { selectedCancelTasks } = this.state;
+    return selectedCancelTasks.findIndex(t => t.id === task.id) > -1;
+  };
+
+  selectAllInProgressTasks = () => {
+    const { incompleteTasks } = this.getCancelSelectionState();
+    this.setState({ selectedCancelTasks: incompleteTasks });
+  };
+
+  deselectAllTasks = () => {
+    this.setState({ selectedCancelTasks: [] });
+  };
+
+  onCancelMigrationsCancel = () => {
+    this.setState({ showConfirmCancel: false });
+  };
+
+  onCancelMigrationsClick = () => {
+    this.setState({ showConfirmCancel: true });
+  };
+
+  onCancelMigrationsConfirm = () => {
+    // todo: call this from the Confirmation Modal instead
+    // gather the selected tasks in state and feed them through
+    const { selectedCancelTasks } = this.state;
+    const { cancelPlanRequestTasksAction, cancelPlanRequestTasksUrl } = this.props;
+    cancelPlanRequestTasksAction(cancelPlanRequestTasksUrl, selectedCancelTasks);
+  };
+
   render() {
     const {
       activeFilters,
@@ -280,18 +350,45 @@ class PlanRequestDetailList extends React.Component {
       isSortNumeric,
       isSortAscending,
       pagination,
-      pageChangeValue
+      pageChangeValue,
+      showConfirmCancel,
+      selectedCancelTasks
     } = this.state;
 
-    const { downloadLogInProgressTaskIds, ansiblePlaybookTemplate } = this.props;
+    const { downloadLogInProgressTaskIds, ansiblePlaybookTemplate, planRequestTasks } = this.props;
 
-    const paginatedSortedFiltersTasks = this.filterSortPaginatePlanRequestTasks();
+    const { filteredTasks, allSelected, noneSelected } = this.getCancelSelectionState();
+
+    const paginatedSortedFiltersTasks = this.filterSortPaginatePlanRequestTasks(filteredTasks);
+    const totalNumTasks = planRequestTasks.length;
+
+    const selectAllCheckbox = (
+      <input
+        type="checkbox"
+        checked={allSelected}
+        onClick={event => {
+          // Don't open the dropdown when clicking directly on the checkbox.
+          event.stopPropagation();
+        }}
+        onChange={this.handleSelectAllCheckboxChange}
+      />
+    );
 
     return (
       <React.Fragment>
         <Grid.Row>
           <Toolbar>
-            <Filter>
+            <FormGroup style={{ paddingLeft: 0 }}>
+              <DropdownButton title={selectAllCheckbox} id="bulk-selector">
+                <MenuItem eventKey="1" disabled={allSelected} onClick={this.selectAllInProgressTasks}>
+                  {__('Select All')}
+                </MenuItem>
+                <MenuItem eventKey="2" disabled={noneSelected} onClick={this.deselectAllTasks}>
+                  {__('Select None')}
+                </MenuItem>
+              </DropdownButton>
+            </FormGroup>
+            <Filter style={{ paddingLeft: 20 }}>
               <Filter.TypeSelector
                 filterTypes={filterTypes}
                 currentFilterType={currentFilterType}
@@ -311,6 +408,11 @@ class PlanRequestDetailList extends React.Component {
                 onClick={this.toggleCurrentSortDirection}
               />
             </Sort>
+            <Toolbar.RightContent>
+              <Button disabled={selectedCancelTasks.length === 0} onClick={this.onCancelMigrationsClick}>
+                Cancel Migration
+              </Button>
+            </Toolbar.RightContent>
             {activeFilters &&
               activeFilters.length > 0 && (
                 <Toolbar.Results>
@@ -338,6 +440,13 @@ class PlanRequestDetailList extends React.Component {
                 </Toolbar.Results>
               )}
           </Toolbar>
+          {selectedCancelTasks.length > 0 && (
+            <Toolbar>
+              <Toolbar.RightContent>
+                {sprintf(__('%s of %s selected'), selectedCancelTasks.length, totalNumTasks)}
+              </Toolbar.RightContent>
+            </Toolbar>
+          )}
         </Grid.Row>
         <div style={{ overflow: 'auto', paddingBottom: 300, height: '100%' }}>
           <ListView className="plan-request-details-list">
@@ -418,6 +527,16 @@ class PlanRequestDetailList extends React.Component {
               return (
                 <ListView.Item
                   key={task.id}
+                  checkboxInput={
+                    <input
+                      type="checkbox"
+                      disabled={!!task.completed}
+                      checked={this.taskIsSelected(task)}
+                      onChange={() => {
+                        this.handleCheckboxChange(task);
+                      }}
+                    />
+                  }
                   leftContent={leftContent}
                   heading={task.vmName}
                   additionalInfo={[
@@ -520,6 +639,23 @@ class PlanRequestDetailList extends React.Component {
             onSubmit={this.onSubmit}
           />
         </div>
+        <ConfirmModal
+          show={showConfirmCancel}
+          title={__('Cancel Migrations')}
+          body={
+            <React.Fragment>
+              <p>
+                {__('If you cancel, these VMs will not be migrated and will be fully restored in the source provider.')}
+              </p>
+              <ul>{selectedCancelTasks.map(task => <li key={task.id}>{task.vmName}</li>)}</ul>
+              <p>{__('Do you want to cancel?')}</p>
+            </React.Fragment>
+          }
+          cancelButtonLabel={__('No')}
+          confirmButtonLabel={__('Cancel Migrations')}
+          onConfirm={this.onCancelMigrationsConfirm}
+          onCancel={this.onCancelMigrationsCancel}
+        />
       </React.Fragment>
     );
   }
@@ -534,7 +670,9 @@ PlanRequestDetailList.propTypes = {
   fetchAnsiblePlaybookTemplateAction: PropTypes.func,
   ansiblePlaybookTemplate: PropTypes.object,
   fetchOrchestrationStackUrl: PropTypes.string,
-  fetchOrchestrationStackAction: PropTypes.func
+  fetchOrchestrationStackAction: PropTypes.func,
+  cancelPlanRequestTasksAction: PropTypes.func,
+  cancelPlanRequestTasksUrl: PropTypes.string
 };
 
 export default PlanRequestDetailList;

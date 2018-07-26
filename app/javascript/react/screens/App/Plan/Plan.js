@@ -14,8 +14,10 @@ class Plan extends React.Component {
     if (!prevState.planNotStarted && nextProps.planRequestTasks === prevState.planRequestTasks) {
       return null;
     }
+    // todo: compare previousPlanRequestTasks vs. planRequestTasks and send toast if newly errored cancellations
     return {
       planRequestTasks: nextProps.planRequestTasks,
+      previousPlanRequestTasks: prevState.planRequestTasks,
       planRequestTasksMutable: Immutable.asMutable(nextProps.planRequestTasks),
       vms: nextProps.vms,
       vmsMutable: Immutable.asMutable(nextProps.vms),
@@ -116,7 +118,9 @@ class Plan extends React.Component {
       ansiblePlaybookTemplate,
       fetchOrchestrationStackUrl,
       fetchOrchestrationStackAction,
-      orchestrationStack
+      orchestrationStack,
+      cancelPlanRequestTasksAction,
+      cancelPlanRequestTasksUrl
     } = this.props;
 
     const {
@@ -173,6 +177,8 @@ class Plan extends React.Component {
                 fetchOrchestrationStackUrl={fetchOrchestrationStackUrl}
                 fetchOrchestrationStackAction={fetchOrchestrationStackAction}
                 orchestrationStack={orchestrationStack}
+                cancelPlanRequestTasksUrl={cancelPlanRequestTasksUrl}
+                cancelPlanRequestTasksAction={cancelPlanRequestTasksAction}
               />
             )}
           {!planNotStarted &&
@@ -237,7 +243,9 @@ Plan.propTypes = {
   ansiblePlaybookTemplate: PropTypes.object,
   fetchOrchestrationStackUrl: PropTypes.string,
   fetchOrchestrationStackAction: PropTypes.func,
-  orchestrationStack: PropTypes.object
+  orchestrationStack: PropTypes.object,
+  cancelPlanRequestTasksAction: PropTypes.func,
+  cancelPlanRequestTasksUrl: PropTypes.string
 };
 Plan.defaultProps = {
   planName: '',

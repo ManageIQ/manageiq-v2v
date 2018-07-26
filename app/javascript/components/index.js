@@ -139,7 +139,8 @@ export const coreComponents = [
     data: {
       fetchPlanUrl: '/api/service_templates',
       fetchTasksForAllRequestsForPlanUrl: '/api/requests?expand=resource&attributes=miq_request_tasks',
-      fetchOrchestrationStackUrl: '/api/orchestration_stacks'
+      fetchOrchestrationStackUrl: '/api/orchestration_stacks',
+      cancelPlanRequestTasksUrl: '/api/request_tasks'
     },
     store: true
   },

@@ -12,8 +12,11 @@ import {
   DOWNLOAD_LOG_CLICKED,
   DOWNLOAD_LOG_COMPLETED,
   FETCH_V2V_ANSIBLE_PLAYBOOK_TEMPLATE,
-  FETCH_V2V_ORCHESTRATION_STACK
+  FETCH_V2V_ORCHESTRATION_STACK,
+  CANCEL_V2V_PLAN_REQUEST_TASKS
 } from './PlanConstants';
+
+import { getCancellationRequestIds } from './helpers';
 
 import { V2V_NOTIFICATION_ADD } from '../common/NotificationList/NotificationConstants';
 
@@ -52,6 +55,13 @@ const _getOrchestrationStackActionCreator = (url, playbookScheduleType, task) =>
           dispatch({
             type: DOWNLOAD_LOG_COMPLETED,
             payload: task.id
+          });
+          dispatch({
+            type: V2V_NOTIFICATION_ADD,
+            message: e.error.message,
+            notificationType: 'error',
+            persistent: true,
+            actionEnabled: false
           });
           reject(e);
         })
@@ -94,7 +104,28 @@ const _getTasksForAllRequestsForPlanActionCreator = (url, allRequests) => dispat
         resources: allRequests
       })
         .then(response => {
-          resolve(response);
+          if (response.data && response.data.results && response.data.results.length) {
+            const { results } = response.data;
+            const cancellationRequests = getCancellationRequestIds(results);
+            if (cancellationRequests.length) {
+              API.post(url, {
+                action: 'query',
+                resources: cancellationRequests
+              })
+                .then(cancellationReponse => {
+                  if (cancellationReponse.data && cancellationReponse.data.results) {
+                    resolve({ results, cancellationResults: cancellationReponse.data.results });
+                  } else {
+                    resolve({ results });
+                  }
+                })
+                .catch(e => reject(e));
+            } else {
+              resolve({ results });
+            }
+          } else {
+            resolve({ results: [] });
+          }
         })
         .catch(e => reject(e));
     })
@@ -204,5 +235,16 @@ export const downloadLogAction = task => dispatch => {
           reject(e);
         });
     })
+  });
+};
+
+// *****************************************************************************
+// * CANCEL MIGRATION TASKS
+// *****************************************************************************
+export const cancelPlanRequestTasksAction = (url, tasks) => dispatch => {
+  const resources = tasks.map(t => ({ id: t.id }));
+  dispatch({
+    type: CANCEL_V2V_PLAN_REQUEST_TASKS,
+    payload: API.post(url, { action: 'cancel', resources })
   });
 };
