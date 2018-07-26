@@ -14,7 +14,4 @@ const mapStateToProps = ({ overview }) => ({
 
 const actions = { showAlertAction, hideAlertAction };
 
-export default connect(
-  mapStateToProps,
-  actions
-)(PlanWizardGeneralStep);
+export default connect(mapStateToProps, actions)(PlanWizardGeneralStep);
