@@ -410,7 +410,15 @@ class PlanRequestDetailList extends React.Component {
               />
             </Sort>
             <Toolbar.RightContent>
-              <Button disabled={selectedCancelTasks.length === 0} onClick={this.onCancelMigrationsClick}>
+              <Button
+                disabled={
+                  selectedCancelTasks.length === 0 ||
+                  selectedCancelTasks.filter(task =>
+                    paginatedSortedFiltersTasks.tasks.find(t => t.id === task.id && (t.completed || t.cancel_requested))
+                  ).length === selectedCancelTasks.length
+                }
+                onClick={this.onCancelMigrationsClick}
+              >
                 Cancel Migration
               </Button>
             </Toolbar.RightContent>
