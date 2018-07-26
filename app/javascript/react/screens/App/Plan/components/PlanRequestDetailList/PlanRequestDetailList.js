@@ -280,7 +280,7 @@ class PlanRequestDetailList extends React.Component {
   getCancelSelectionState = () => {
     const { selectedCancelTasks } = this.state;
     const filteredTasks = this.filterPlanRequestTasks();
-    const incompleteTasks = filteredTasks.filter(task => !task.completed);
+    const incompleteTasks = filteredTasks.filter(task => !task.completed && !task.cancel_requested);
     return {
       filteredTasks,
       incompleteTasks,
@@ -540,7 +540,7 @@ class PlanRequestDetailList extends React.Component {
                   checkboxInput={
                     <input
                       type="checkbox"
-                      disabled={!!task.completed}
+                      disabled={!!task.completed || !!task.cancel_requested}
                       checked={this.taskIsSelected(task)}
                       onChange={() => {
                         this.handleCheckboxChange(task);
