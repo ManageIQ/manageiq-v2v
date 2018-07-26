@@ -5,18 +5,26 @@ import { createMigrationPlans } from './helpers';
 import PlanWizardBody from './PlanWizardBody';
 import { MIGRATIONS_FILTERS } from '../../OverviewConstants';
 
-const planWizardSteps = ['planWizardGeneralStep', 'planWizardVMStep', 'planWizardOptionsStep', 'planWizardResultsStep'];
+const planWizardSteps = [
+  'planWizardGeneralStep',
+  'planWizardVMStep',
+  'planWizardAdvancedOptionsStep',
+  'planWizardScheduleStep',
+  'planWizardResultsStep'
+];
 
 class PlanWizard extends React.Component {
   state = { activeStepIndex: 0 };
 
   prevStep = () => {
-    const { resetVmStepAction } = this.props;
+    const { resetVmStepAction, resetAdvancedOptionsStepAction } = this.props;
     const { activeStepIndex } = this.state;
 
     if (activeStepIndex === 1) {
       // reset all vm step values if going back from that step
       resetVmStepAction();
+    } else if (activeStepIndex === 2) {
+      resetAdvancedOptionsStepAction();
     }
     this.setState({ activeStepIndex: Math.max(activeStepIndex - 1, 0) });
   };
@@ -26,10 +34,13 @@ class PlanWizard extends React.Component {
     const {
       planWizardGeneralStep,
       planWizardVMStep,
-      planWizardOptionsStep,
+      planWizardAdvancedOptionsStep,
+      planWizardScheduleStep,
       setPlansBodyAction,
       setPlanScheduleAction,
       setMigrationsFilterAction,
+      showConfirmModalAction,
+      hideConfirmModalAction,
       showAlertAction,
       hideAlertAction
     } = this.props;
@@ -42,22 +53,46 @@ class PlanWizard extends React.Component {
       hideAlertAction();
     }
 
-    if (activeStepIndex === 2) {
-      const plansBody = createMigrationPlans(planWizardGeneralStep, planWizardVMStep);
+    if (
+      activeStepIndex === 2 &&
+      ((planWizardAdvancedOptionsStep.values.preMigrationPlaybook &&
+        planWizardAdvancedOptionsStep.values.playbookVms.preMigration.length === 0) ||
+        (planWizardAdvancedOptionsStep.values.postMigrationPlaybook &&
+          planWizardAdvancedOptionsStep.values.playbookVms.postMigration.length === 0))
+    ) {
+      const onConfirm = () => {
+        this.setState({ activeStepIndex: 3 });
+        hideConfirmModalAction();
+      };
 
-      setPlanScheduleAction(planWizardOptionsStep.values.migration_plan_choice_radio);
+      showConfirmModalAction({
+        title: __('No VMs Selected'),
+        body: __("You've selected a pre-migration or post-migration playbook service but no VMs on which to run the playbook service. Are you sure you want to continue?"), // prettier-ignore
+        icon: <Icon className="confirm-warning-icon" type="pf" name="warning-triangle-o" />,
+        confirmButtonLabel: __('Continue'),
+        dialogClassName: 'plan-wizard-confirm-modal',
+        backdropClassName: 'plan-wizard-confirm-backdrop',
+        onConfirm
+      });
+    } else if (activeStepIndex === 3) {
+      const plansBody = createMigrationPlans(planWizardGeneralStep, planWizardVMStep, planWizardAdvancedOptionsStep);
+
+      setPlanScheduleAction(planWizardScheduleStep.values.migration_plan_choice_radio);
       setPlansBodyAction(plansBody);
 
-      if (planWizardOptionsStep.values.migration_plan_choice_radio === 'migration_plan_now') {
+      if (planWizardScheduleStep.values.migration_plan_choice_radio === 'migration_plan_now') {
         setMigrationsFilterAction(MIGRATIONS_FILTERS.inProgress);
-      } else if (planWizardOptionsStep.values.migration_plan_choice_radio === 'migration_plan_later') {
+      } else if (planWizardScheduleStep.values.migration_plan_choice_radio === 'migration_plan_later') {
         setMigrationsFilterAction(MIGRATIONS_FILTERS.notStarted);
       }
+      this.setState({
+        activeStepIndex: Math.min(activeStepIndex + 1, planWizardSteps.length - 1)
+      });
+    } else {
+      this.setState({
+        activeStepIndex: Math.min(activeStepIndex + 1, planWizardSteps.length - 1)
+      });
     }
-
-    this.setState({
-      activeStepIndex: Math.min(activeStepIndex + 1, planWizardSteps.length - 1)
-    });
   };
 
   goToStep = activeStepIndex => {
@@ -71,7 +106,7 @@ class PlanWizard extends React.Component {
       planWizardExitedAction,
       planWizardGeneralStep,
       planWizardVMStep,
-      planWizardOptionsStep,
+      planWizardScheduleStep,
       alertText,
       alertType,
       hideAlertAction
@@ -106,7 +141,7 @@ class PlanWizard extends React.Component {
             plansBody={plansBody}
             planWizardGeneralStep={planWizardGeneralStep}
             planWizardVMStep={planWizardVMStep}
-            planWizardOptionsStep={planWizardOptionsStep}
+            planWizardScheduleStep={planWizardScheduleStep}
             alertText={alertText}
             alertType={alertType}
             hideAlertAction={hideAlertAction}
@@ -126,7 +161,7 @@ class PlanWizard extends React.Component {
             onClick={onFinalStep ? hidePlanWizardAction : this.nextStep}
             disabled={disableNextStep}
           >
-            {onFinalStep ? __('Close') : activeStepIndex === 2 ? __('Create') : __('Next')}
+            {onFinalStep ? __('Close') : activeStepIndex === 3 ? __('Create') : __('Next')}
             <Icon type="fa" name="angle-right" />
           </Button>
         </Wizard.Footer>
@@ -140,11 +175,15 @@ PlanWizard.propTypes = {
   planWizardExitedAction: PropTypes.func,
   planWizardGeneralStep: PropTypes.object,
   planWizardVMStep: PropTypes.object,
-  planWizardOptionsStep: PropTypes.object,
+  planWizardAdvancedOptionsStep: PropTypes.object, // eslint-disable-line react/no-unused-prop-types
+  planWizardScheduleStep: PropTypes.object,
   setPlansBodyAction: PropTypes.func,
   setPlanScheduleAction: PropTypes.func,
   resetVmStepAction: PropTypes.func,
   setMigrationsFilterAction: PropTypes.func,
+  showConfirmModalAction: PropTypes.func,
+  hideConfirmModalAction: PropTypes.func,
+  resetAdvancedOptionsStepAction: PropTypes.func,
   showAlertAction: PropTypes.func,
   hideAlertAction: PropTypes.func,
   alertText: PropTypes.string,
@@ -156,7 +195,8 @@ PlanWizard.defaultProps = {
   planWizardExitedAction: noop,
   planWizardGeneralStep: {},
   planWizardVMStep: {},
-  planWizardOptionsStep: {},
+  planWizardAdvancedOptionsStep: {},
+  planWizardScheduleStep: {},
   setPlansBodyAction: noop,
   setPlanScheduleAction: noop,
   resetVmStepAction: noop,

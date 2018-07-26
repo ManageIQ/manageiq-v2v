@@ -21,6 +21,9 @@ const PlanWizardGeneralStep = ({ transformationMappings }) => (
       option_key="id"
       option_value="name"
       form_name="planWizardGeneralStep"
+      inline_label
+      labelWidth={2}
+      controlWidth={9}
     />
     <Field
       name="name"

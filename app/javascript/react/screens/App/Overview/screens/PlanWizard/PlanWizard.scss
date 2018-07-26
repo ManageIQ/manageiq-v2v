@@ -1,0 +1,9 @@
+@import './components/PlanWizardAdvancedOptionsStep/PlanWizardAdvancedOptionsStep.scss';
+
+.plan-wizard-confirm-backdrop {
+  z-index: 1050;
+}
+
+.plan-wizard-confirm-modal {
+  margin-top: 140px;
+}

@@ -24,7 +24,7 @@ export class BootstrapSelect extends React.Component {
       });
   }
 
-  renderFormGroup = (labelWidth, controlWidth) => {
+  renderFormGroup = () => {
     const {
       input,
       label,
@@ -36,24 +36,30 @@ export class BootstrapSelect extends React.Component {
       choose_text,
       meta: { visited, error, active }
     } = this.props;
-    const formGroupProps = { key: { label }, ...this.props };
+
+    const { inline_label, stacked_label, labelWidth, controlWidth, allowClear, ...otherProps } = this.props;
+
+    const formGroupProps = { key: { label }, ...otherProps };
 
     if (visited && !active && error) formGroupProps.validationState = 'error';
 
     return (
       <FormGroup {...formGroupProps}>
-        <Grid.Col componentClass={ControlLabel} sm={labelWidth}>
-          {label}
-          {required && ' *'}
-        </Grid.Col>
+        {inline_label && (
+          <Grid.Col componentClass={ControlLabel} sm={labelWidth}>
+            {label}
+            {required && ' *'}
+          </Grid.Col>
+        )}
         <Grid.Col sm={controlWidth}>
+          {stacked_label && <h4>{label}</h4>}
           <select
             id={input.name}
             data-live-search={data_live_search}
             className={`form-control ${input.name}_select`}
             {...input}
           >
-            <option disabled value="">
+            <option disabled={!allowClear} value="">
               {choose_text || `<${__('Choose')}>`}
             </option>
             {options.map(val => (
@@ -74,11 +80,11 @@ export class BootstrapSelect extends React.Component {
     if (render_within_form) {
       return (
         <div>
-          <Form horizontal>{this.renderFormGroup(6, 4)}</Form>
+          <Form horizontal>{this.renderFormGroup()}</Form>
         </div>
       );
     }
-    return this.renderFormGroup(2, 9);
+    return this.renderFormGroup();
   };
 }
 
@@ -96,5 +102,10 @@ BootstrapSelect.propTypes = {
   onSelect: PropTypes.func,
   pre_selected_value: PropTypes.string,
   choose_text: PropTypes.string,
-  render_within_form: PropTypes.string
+  render_within_form: PropTypes.string,
+  inline_label: PropTypes.bool,
+  stacked_label: PropTypes.bool,
+  labelWidth: PropTypes.number,
+  controlWidth: PropTypes.number,
+  allowClear: PropTypes.bool
 };
