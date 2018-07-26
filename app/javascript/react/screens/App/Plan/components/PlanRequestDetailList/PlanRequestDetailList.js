@@ -419,7 +419,7 @@ class PlanRequestDetailList extends React.Component {
                 }
                 onClick={this.onCancelMigrationsClick}
               >
-                Cancel Migration
+                {__('Cancel Migration')}
               </Button>
             </Toolbar.RightContent>
             {activeFilters &&
