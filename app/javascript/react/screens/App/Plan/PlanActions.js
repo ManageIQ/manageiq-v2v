@@ -216,7 +216,24 @@ export const downloadLogAction = task => dispatch => {
 // * CANCEL MIGRATION TASKS
 // *****************************************************************************
 export const cancelPlanRequestTasksAction = (url, tasks) => dispatch => {
-  const resources = tasks.map(t => ({ id: t.id }));
+  const completedTasks = [];
+  const incompleteTasks = [];
+  tasks.map(t => (t.completed ? completedTasks.push(t) : incompleteTasks.push(t)));
+  dispatch({
+    type: REMOVE_TASKS_SELECTED_FOR_CANCELLATION,
+    payload: completedTasks
+  });
+  if (incompleteTasks.length === 0) {
+    dispatch({
+      type: V2V_NOTIFICATION_ADD,
+      message: __('Cannot cancel completed VM Migrations'),
+      notificationType: 'error',
+      persistent: true,
+      actionEnabled: false
+    });
+    return;
+  }
+  const resources = incompleteTasks.map(t => ({ id: t.id }));
   dispatch({
     type: CANCEL_V2V_PLAN_REQUEST_TASKS,
     payload: new Promise((resolve, reject) => {
