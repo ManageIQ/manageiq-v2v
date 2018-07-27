@@ -56,13 +56,10 @@ const excludeDownloadDoneTaskId = (allDownloadLogInProgressTaskIds, taskId) =>
 const includeDownloadInProgressTaskId = (allDownloadLogInProgressTaskIds, taskId) =>
   allDownloadLogInProgressTaskIds ? allDownloadLogInProgressTaskIds.concat(taskId) : [taskId];
 
-const removeCancelledTasksFromSelection = (allSelectedTasksForCancel, alreadyCancelledTasks) => {
-  alreadyCancelledTasks.map(
-    cancelledTask =>
-      (allSelectedTasksForCancel = allSelectedTasksForCancel.filter(element => element.id !== cancelledTask.id))
+const removeCancelledTasksFromSelection = (allSelectedTasksForCancel, alreadyCancelledTasks) =>
+  allSelectedTasksForCancel.filter(selectedTask =>
+    alreadyCancelledTasks.every(cancelledTask => selectedTask.id !== cancelledTask.id)
   );
-  return allSelectedTasksForCancel;
-};
 
 const processVMTasks = vmTasks => {
   const tasks = [];

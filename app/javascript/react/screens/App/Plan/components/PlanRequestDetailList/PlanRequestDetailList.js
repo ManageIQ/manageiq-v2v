@@ -285,7 +285,7 @@ class PlanRequestDetailList extends React.Component {
     return {
       filteredTasks,
       incompleteTasks,
-      allSelected: selectedTasksForCancel.length === incompleteTasks.length,
+      allSelected: selectedTasksForCancel.length === incompleteTasks.length && selectedTasksForCancel.length > 0,
       noneSelected: selectedTasksForCancel.length === 0
     };
   };

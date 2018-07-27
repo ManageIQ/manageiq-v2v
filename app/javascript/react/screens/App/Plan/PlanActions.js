@@ -218,7 +218,15 @@ export const downloadLogAction = task => dispatch => {
 export const cancelPlanRequestTasksAction = (url, tasks) => dispatch => {
   const completedTasks = [];
   const incompleteTasks = [];
-  tasks.map(t => (t.completed ? completedTasks.push(t) : incompleteTasks.push(t)));
+
+  tasks.forEach(t => {
+    if (t.completed) {
+      completedTasks.push(t);
+    } else {
+      incompleteTasks.push(t);
+    }
+  });
+
   dispatch({
     type: REMOVE_TASKS_SELECTED_FOR_CANCELLATION,
     payload: completedTasks
