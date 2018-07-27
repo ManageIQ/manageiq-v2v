@@ -50,7 +50,6 @@ class PlanRequestDetailList extends React.Component {
     currentFilterType: ACTIVE_PLAN_FILTER_TYPES[0],
     currentValue: '',
     activeFilters: [],
-    selectedCancelTasks: [],
 
     // sort states
     sortFields: ACTIVE_PLAN_SORT_FIELDS,
@@ -278,27 +277,29 @@ class PlanRequestDetailList extends React.Component {
   };
 
   getCancelSelectionState = () => {
-    const { selectedCancelTasks } = this.state;
+    const { selectedTasksForCancel, markedForCancellation } = this.props;
     const filteredTasks = this.filterPlanRequestTasks();
-    const incompleteTasks = filteredTasks.filter(task => !task.completed && !task.cancel_requested);
+    const incompleteTasks = filteredTasks.filter(
+      task => !task.completed && !task.cancel_requested && !markedForCancellation.find(t => t.id === task.id)
+    );
     return {
       filteredTasks,
       incompleteTasks,
-      allSelected: selectedCancelTasks.length === incompleteTasks.length,
-      noneSelected: selectedCancelTasks.length === 0
+      allSelected: selectedTasksForCancel.length === incompleteTasks.length,
+      noneSelected: selectedTasksForCancel.length === 0
     };
   };
 
   handleCheckboxChange = task => {
-    const { selectedCancelTasks } = this.state;
-    const selectedTask = selectedCancelTasks.find(t => t.id === task.id);
+    const { selectedTasksForCancel, updateSelectedTasksForCancelAction } = this.props;
+    const selectedTask = selectedTasksForCancel.find(t => t.id === task.id);
     let updatedSelectedTasks;
     if (selectedTask) {
-      updatedSelectedTasks = selectedCancelTasks.filter(r => !(r.id === task.id));
+      updatedSelectedTasks = selectedTasksForCancel.filter(r => !(r.id === task.id));
     } else {
-      updatedSelectedTasks = [...selectedCancelTasks, task];
+      updatedSelectedTasks = [...selectedTasksForCancel, task];
     }
-    this.setState({ selectedCancelTasks: updatedSelectedTasks });
+    updateSelectedTasksForCancelAction(updatedSelectedTasks);
   };
 
   handleSelectAllCheckboxChange = () => {
@@ -311,17 +312,19 @@ class PlanRequestDetailList extends React.Component {
   };
 
   taskIsSelected = task => {
-    const { selectedCancelTasks } = this.state;
-    return selectedCancelTasks.findIndex(t => t.id === task.id) > -1;
+    const { selectedTasksForCancel } = this.props;
+    return selectedTasksForCancel.findIndex(t => t.id === task.id) > -1;
   };
 
   selectAllInProgressTasks = () => {
     const { incompleteTasks } = this.getCancelSelectionState();
-    this.setState({ selectedCancelTasks: incompleteTasks });
+    const { updateSelectedTasksForCancelAction } = this.props;
+    updateSelectedTasksForCancelAction(incompleteTasks);
   };
 
   deselectAllTasks = () => {
-    this.setState({ selectedCancelTasks: [] });
+    const { deleteAllSelectedTasksForCancelAction } = this.props;
+    deleteAllSelectedTasksForCancelAction();
   };
 
   onCancelMigrationsCancel = () => {
@@ -335,9 +338,9 @@ class PlanRequestDetailList extends React.Component {
   onCancelMigrationsConfirm = () => {
     // todo: call this from the Confirmation Modal instead
     // gather the selected tasks in state and feed them through
-    const { selectedCancelTasks } = this.state;
+    const { selectedTasksForCancel } = this.props;
     const { cancelPlanRequestTasksAction, cancelPlanRequestTasksUrl } = this.props;
-    cancelPlanRequestTasksAction(cancelPlanRequestTasksUrl, selectedCancelTasks);
+    cancelPlanRequestTasksAction(cancelPlanRequestTasksUrl, selectedTasksForCancel);
     this.setState({ showConfirmCancel: false });
   };
 
@@ -352,11 +355,16 @@ class PlanRequestDetailList extends React.Component {
       isSortAscending,
       pagination,
       pageChangeValue,
-      showConfirmCancel,
-      selectedCancelTasks
+      showConfirmCancel
     } = this.state;
 
-    const { downloadLogInProgressTaskIds, ansiblePlaybookTemplate, planRequestTasks } = this.props;
+    const {
+      downloadLogInProgressTaskIds,
+      ansiblePlaybookTemplate,
+      planRequestTasks,
+      selectedTasksForCancel,
+      markedForCancellation
+    } = this.props;
 
     const { filteredTasks, allSelected, noneSelected } = this.getCancelSelectionState();
 
@@ -410,15 +418,7 @@ class PlanRequestDetailList extends React.Component {
               />
             </Sort>
             <Toolbar.RightContent>
-              <Button
-                disabled={
-                  selectedCancelTasks.length === 0 ||
-                  selectedCancelTasks.filter(task =>
-                    paginatedSortedFiltersTasks.tasks.find(t => t.id === task.id && (t.completed || t.cancel_requested))
-                  ).length === selectedCancelTasks.length
-                }
-                onClick={this.onCancelMigrationsClick}
-              >
+              <Button disabled={selectedTasksForCancel.length === 0} onClick={this.onCancelMigrationsClick}>
                 {__('Cancel Migration')}
               </Button>
             </Toolbar.RightContent>
@@ -449,10 +449,10 @@ class PlanRequestDetailList extends React.Component {
                 </Toolbar.Results>
               )}
           </Toolbar>
-          {selectedCancelTasks.length > 0 && (
+          {selectedTasksForCancel.length > 0 && (
             <Toolbar>
               <Toolbar.RightContent>
-                {sprintf(__('%s of %s selected'), selectedCancelTasks.length, totalNumTasks)}
+                {sprintf(__('%s of %s selected'), selectedTasksForCancel.length, totalNumTasks)}
               </Toolbar.RightContent>
             </Toolbar>
           )}
@@ -460,6 +460,17 @@ class PlanRequestDetailList extends React.Component {
         <div style={{ overflow: 'auto', paddingBottom: 300, height: '100%' }}>
           <ListView className="plan-request-details-list">
             {paginatedSortedFiltersTasks.tasks.map((task, n) => {
+              let taskCancelled = false;
+              let taskCancelling = false;
+              let taskMessage = task.message;
+              if (task.cancel_requested) {
+                taskCancelled = true;
+              } else if (markedForCancellation.find(t => t.id === task.id)) {
+                taskCancelling = true;
+              }
+              if (taskCancelled || taskCancelling) {
+                taskMessage = `${__('Canceled Migration')}: ${taskMessage}`;
+              }
               let leftContent;
               if (task.message === 'Pending') {
                 leftContent = (
@@ -470,7 +481,7 @@ class PlanRequestDetailList extends React.Component {
                     style={{ width: 'inherit', backgroundColor: 'transparent' }}
                   />
                 );
-              } else if (task.cancel_requested) {
+              } else if (taskCancelling || taskCancelled) {
                 leftContent = (
                   <ListView.Icon
                     type="fa"
@@ -497,7 +508,7 @@ class PlanRequestDetailList extends React.Component {
                     style={{ width: 'inherit', backgroundColor: 'transparent' }}
                   />
                 );
-              } else if (!task.cancel_requested) {
+              } else if (!taskCancelling && !taskCancelled) {
                 leftContent = <Spinner loading />;
               }
               const label = sprintf(__('%s of %s Migrated'), task.diskSpaceCompletedGb, task.totalDiskSpaceGb);
@@ -548,7 +559,7 @@ class PlanRequestDetailList extends React.Component {
                   checkboxInput={
                     <input
                       type="checkbox"
-                      disabled={!!task.completed || !!task.cancel_requested}
+                      disabled={taskCancelling || !!task.completed || !!taskCancelled}
                       checked={this.taskIsSelected(task)}
                       onChange={() => {
                         this.handleCheckboxChange(task);
@@ -568,7 +579,7 @@ class PlanRequestDetailList extends React.Component {
                       }}
                     >
                       <div>
-                        <span>{task.message}</span>
+                        <span>{taskMessage}</span>
                         &nbsp;
                         {/* Todo: revisit FieldLevelHelp props in patternfly-react to support this */}
                         <OverlayTrigger
@@ -665,7 +676,7 @@ class PlanRequestDetailList extends React.Component {
               <p>
                 {__('If you cancel, these VMs will not be migrated and will be fully restored in the source provider.')}
               </p>
-              <ul>{selectedCancelTasks.map(task => <li key={task.id}>{task.vmName}</li>)}</ul>
+              <ul>{selectedTasksForCancel.map(task => <li key={task.id}>{task.vmName}</li>)}</ul>
               <p>{__('Do you want to cancel?')}</p>
             </React.Fragment>
           }
@@ -690,7 +701,11 @@ PlanRequestDetailList.propTypes = {
   fetchOrchestrationStackUrl: PropTypes.string,
   fetchOrchestrationStackAction: PropTypes.func,
   cancelPlanRequestTasksAction: PropTypes.func,
-  cancelPlanRequestTasksUrl: PropTypes.string
+  cancelPlanRequestTasksUrl: PropTypes.string,
+  selectedTasksForCancel: PropTypes.array,
+  updateSelectedTasksForCancelAction: PropTypes.func,
+  deleteAllSelectedTasksForCancelAction: PropTypes.func,
+  markedForCancellation: PropTypes.array
 };
 
 export default PlanRequestDetailList;

@@ -15,7 +15,11 @@ import {
   FETCH_V2V_ANSIBLE_PLAYBOOK_TEMPLATE,
   V2V_MIGRATION_STATUS_MESSAGES,
   STATUS_MESSAGE_KEYS,
-  FETCH_V2V_ORCHESTRATION_STACK
+  FETCH_V2V_ORCHESTRATION_STACK,
+  REMOVE_TASKS_SELECTED_FOR_CANCELLATION,
+  UPDATE_TASKS_SELECTED_FOR_CANCELLATION,
+  DELETE_ALL_TASKS_SELECTED_FOR_CANCELLATION,
+  ADD_TASKS_TO_MARKED_FOR_CANCELLATION
 } from './PlanConstants';
 
 export const initialState = Immutable({
@@ -41,7 +45,9 @@ export const initialState = Immutable({
   isFetchingOrchestrationStack: false,
   isRejectedOrchestrationStack: false,
   errorOrchestrationStack: null,
-  orchestrationStack: {}
+  orchestrationStack: {},
+  selectedTasksForCancel: [],
+  markedForCancellation: []
 });
 
 const excludeDownloadDoneTaskId = (allDownloadLogInProgressTaskIds, taskId) =>
@@ -50,20 +56,28 @@ const excludeDownloadDoneTaskId = (allDownloadLogInProgressTaskIds, taskId) =>
 const includeDownloadInProgressTaskId = (allDownloadLogInProgressTaskIds, taskId) =>
   allDownloadLogInProgressTaskIds ? allDownloadLogInProgressTaskIds.concat(taskId) : [taskId];
 
+const removeCancelledTasksFromSelection = (allSelectedTasksForCancel, alreadyCancelledTasks) => {
+  alreadyCancelledTasks.map(
+    cancelledTask =>
+      (allSelectedTasksForCancel = allSelectedTasksForCancel.filter(element => element.id !== cancelledTask.id))
+  );
+  return allSelectedTasksForCancel;
+};
+
 const processVMTasks = vmTasks => {
   const tasks = [];
   vmTasks.forEach(task => {
     const taskDetails = {
       id: task.id,
-      message: task.options.cancel_requested
-        ? `${__('Migration Canceled')}: ${V2V_MIGRATION_STATUS_MESSAGES[task.message]}`
-        : V2V_MIGRATION_STATUS_MESSAGES[task.message],
+      message: V2V_MIGRATION_STATUS_MESSAGES[task.message],
       transformation_host_name: task.options && task.options.transformation_host_name,
       delivered_on: new Date(task.options.delivered_on),
       updated_on: new Date(task.updated_on),
       completed:
         task.message === STATUS_MESSAGE_KEYS.VM_MIGRATIONS_COMPLETED ||
-        task.message === STATUS_MESSAGE_KEYS.VM_MIGRATIONS_FAILED,
+        task.message === STATUS_MESSAGE_KEYS.VM_MIGRATIONS_FAILED ||
+        task.message === STATUS_MESSAGE_KEYS.FAILED ||
+        (!V2V_MIGRATION_STATUS_MESSAGES[task.message] && task.state === 'finished'),
       state: task.state,
       status: task.status,
       options: {}
@@ -115,8 +129,8 @@ const processVMTasks = vmTasks => {
 
     if (taskDetails.completed) {
       taskDetails.completedSuccessfully =
-        task.options.progress.current_description === 'Virtual machine migrated' ||
-        task.options.progress.current_description === 'Mark source as migrated';
+        (task.options.progress && task.options.progress.current_description === 'Virtual machine migrated') ||
+        (task.options.progress && task.options.progress.current_description === 'Mark source as migrated');
     }
     if (task.options && task.options.virtv2v_disks && task.options.virtv2v_disks.length) {
       taskDetails.totalDiskSpace = task.options.virtv2v_disks.reduce((a, b) => a + b.size, 0);
@@ -137,6 +151,12 @@ const processVMTasks = vmTasks => {
 const allVMTasksForRequestOfPlan = (requestWithTasks, actions) => {
   const tasksOfPlan = getMostRecentVMTasksFromRequests(requestWithTasks, actions);
   return processVMTasks(tasksOfPlan);
+};
+
+const incompleteCancellationTasks = (requestWithTasks, actions, tasksForCancel) => {
+  const tasksOfPlan = getMostRecentVMTasksFromRequests(requestWithTasks, actions);
+  const completedTasksOfPlan = tasksOfPlan.filter(task => task.state === 'finished');
+  return removeCancelledTasksFromSelection(tasksForCancel, completedTasksOfPlan);
 };
 
 export default (state = initialState, action) => {
@@ -165,6 +185,14 @@ export default (state = initialState, action) => {
           .set(
             'planRequestTasks',
             allVMTasksForRequestOfPlan(action.payload.data.results, state.plan.options.config_info.actions)
+          )
+          .set(
+            'selectedTasksForCancel',
+            incompleteCancellationTasks(
+              action.payload.data.results,
+              state.plan.options.config_info.actions,
+              state.selectedTasksForCancel
+            )
           )
           .set('allRequestsWithTasksForPlan', action.payload.data.results)
           .set('planRequestPreviouslyFetched', true)
@@ -205,7 +233,9 @@ export default (state = initialState, action) => {
       return state
         .set('planRequestTasks', [])
         .set('vms', [])
-        .set('planRequestPreviouslyFetched', false);
+        .set('planRequestPreviouslyFetched', false)
+        .set('markedForCancellation', [])
+        .set('selectedTasksForCancel', []);
 
     case `${FETCH_V2V_MIGRATION_TASK_LOG}_PENDING`:
       return state.set('isFetchingMigrationTaskLog', true).set('isRejectedMigrationTaskLog', false);
@@ -258,6 +288,21 @@ export default (state = initialState, action) => {
         'downloadLogInProgressTaskIds',
         excludeDownloadDoneTaskId(state.downloadLogInProgressTaskIds, action.payload)
       );
+
+    case REMOVE_TASKS_SELECTED_FOR_CANCELLATION:
+      return state.set(
+        'selectedTasksForCancel',
+        removeCancelledTasksFromSelection(state.selectedTasksForCancel, action.payload)
+      );
+
+    case ADD_TASKS_TO_MARKED_FOR_CANCELLATION:
+      return state.set('markedForCancellation', state.markedForCancellation.concat(action.payload));
+
+    case UPDATE_TASKS_SELECTED_FOR_CANCELLATION:
+      return state.set('selectedTasksForCancel', action.payload);
+
+    case DELETE_ALL_TASKS_SELECTED_FOR_CANCELLATION:
+      return state.set('selectedTasksForCancel', []);
 
     default:
       return state;

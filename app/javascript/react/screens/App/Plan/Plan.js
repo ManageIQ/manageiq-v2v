@@ -118,7 +118,11 @@ class Plan extends React.Component {
       fetchOrchestrationStackAction,
       orchestrationStack,
       cancelPlanRequestTasksAction,
-      cancelPlanRequestTasksUrl
+      cancelPlanRequestTasksUrl,
+      selectedTasksForCancel,
+      updateSelectedTasksForCancelAction,
+      deleteAllSelectedTasksForCancelAction,
+      markedForCancellation
     } = this.props;
 
     const {
@@ -177,6 +181,10 @@ class Plan extends React.Component {
                 orchestrationStack={orchestrationStack}
                 cancelPlanRequestTasksUrl={cancelPlanRequestTasksUrl}
                 cancelPlanRequestTasksAction={cancelPlanRequestTasksAction}
+                selectedTasksForCancel={selectedTasksForCancel}
+                updateSelectedTasksForCancelAction={updateSelectedTasksForCancelAction}
+                deleteAllSelectedTasksForCancelAction={deleteAllSelectedTasksForCancelAction}
+                markedForCancellation={markedForCancellation}
               />
             )}
           {!planNotStarted &&
@@ -243,7 +251,11 @@ Plan.propTypes = {
   fetchOrchestrationStackAction: PropTypes.func,
   orchestrationStack: PropTypes.object,
   cancelPlanRequestTasksAction: PropTypes.func,
-  cancelPlanRequestTasksUrl: PropTypes.string
+  cancelPlanRequestTasksUrl: PropTypes.string,
+  selectedTasksForCancel: PropTypes.array,
+  updateSelectedTasksForCancelAction: PropTypes.func,
+  deleteAllSelectedTasksForCancelAction: PropTypes.func,
+  markedForCancellation: PropTypes.array
 };
 Plan.defaultProps = {
   planName: '',
