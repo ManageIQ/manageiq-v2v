@@ -35,8 +35,7 @@ export const STATUS_MESSAGE_KEYS = {
   VALIDATING: 'Validating',
   VM_MIGRATIONS_COMPLETED: 'VM Transformations completed',
   VM_MIGRATED: 'Virtual machine migrated',
-  VM_MIGRATIONS_FAILED: 'VM Transformations failed',
-  CANCELLED: 'VM cancelled'
+  VM_MIGRATIONS_FAILED: 'VM Transformations failed'
 };
 
 const STATUS_MESSAGES = {};

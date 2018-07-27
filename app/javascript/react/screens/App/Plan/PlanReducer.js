@@ -80,7 +80,8 @@ const processVMTasks = vmTasks => {
         (!V2V_MIGRATION_STATUS_MESSAGES[task.message] && task.state === 'finished'),
       state: task.state,
       status: task.status,
-      options: {}
+      options: {},
+      cancel_requested: task.options.cancel_requested
     };
 
     if (task.options.playbooks) {
@@ -93,10 +94,6 @@ const processVMTasks = vmTasks => {
       taskDetails.options.postPlaybookComplete =
         task.options.playbooks.post && task.options.playbooks.post.job_state === 'finished';
       taskDetails.options.playbooks = task.options.playbooks;
-    }
-
-    if (task.options.cancel_requested) {
-      taskDetails.cancel_requested = true;
     }
 
     taskDetails.options.progress = task.options.progress;
