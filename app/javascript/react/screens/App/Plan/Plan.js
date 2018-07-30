@@ -116,7 +116,13 @@ class Plan extends React.Component {
       ansiblePlaybookTemplate,
       fetchOrchestrationStackUrl,
       fetchOrchestrationStackAction,
-      orchestrationStack
+      orchestrationStack,
+      cancelPlanRequestTasksAction,
+      cancelPlanRequestTasksUrl,
+      selectedTasksForCancel,
+      updateSelectedTasksForCancelAction,
+      deleteAllSelectedTasksForCancelAction,
+      markedForCancellation
     } = this.props;
 
     const {
@@ -173,6 +179,12 @@ class Plan extends React.Component {
                 fetchOrchestrationStackUrl={fetchOrchestrationStackUrl}
                 fetchOrchestrationStackAction={fetchOrchestrationStackAction}
                 orchestrationStack={orchestrationStack}
+                cancelPlanRequestTasksUrl={cancelPlanRequestTasksUrl}
+                cancelPlanRequestTasksAction={cancelPlanRequestTasksAction}
+                selectedTasksForCancel={selectedTasksForCancel}
+                updateSelectedTasksForCancelAction={updateSelectedTasksForCancelAction}
+                deleteAllSelectedTasksForCancelAction={deleteAllSelectedTasksForCancelAction}
+                markedForCancellation={markedForCancellation}
               />
             )}
           {!planNotStarted &&
@@ -237,7 +249,13 @@ Plan.propTypes = {
   ansiblePlaybookTemplate: PropTypes.object,
   fetchOrchestrationStackUrl: PropTypes.string,
   fetchOrchestrationStackAction: PropTypes.func,
-  orchestrationStack: PropTypes.object
+  orchestrationStack: PropTypes.object,
+  cancelPlanRequestTasksAction: PropTypes.func,
+  cancelPlanRequestTasksUrl: PropTypes.string,
+  selectedTasksForCancel: PropTypes.array,
+  updateSelectedTasksForCancelAction: PropTypes.func,
+  deleteAllSelectedTasksForCancelAction: PropTypes.func,
+  markedForCancellation: PropTypes.array
 };
 Plan.defaultProps = {
   planName: '',
