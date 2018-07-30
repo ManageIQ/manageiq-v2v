@@ -4,6 +4,7 @@ import { noop, Button, ListView, Grid, Spinner, Icon } from 'patternfly-react';
 import { IsoElapsedTime } from '../../../../../../components/dates/IsoElapsedTime';
 import OverviewEmptyState from '../OverviewEmptyState/OverviewEmptyState';
 import getMostRecentRequest from '../../../common/getMostRecentRequest';
+import getMostRecentVMTasksFromRequests from './helpers/getMostRecentVMTasksFromRequests';
 
 const MigrationsCompletedList = ({
   finishedTransformationPlans,
@@ -33,10 +34,20 @@ const MigrationsCompletedList = ({
             const failed = mostRecentRequest && mostRecentRequest.status === 'Error';
 
             const tasks = {};
-            mostRecentRequest.miq_request_tasks.forEach(task => {
-              tasks[task.source_id] = task.status === 'Ok';
-            });
-
+            let tasksOfPlan = {};
+            if (requestsOfAssociatedPlan.length > 0) {
+              tasksOfPlan = getMostRecentVMTasksFromRequests(
+                requestsOfAssociatedPlan,
+                plan.options.config_info.actions
+              );
+              tasksOfPlan.forEach(task => {
+                tasks[task.source_id] = task.status === 'Ok';
+              });
+            } else if (mostRecentRequest) {
+              mostRecentRequest.miq_request_tasks.forEach(task => {
+                tasks[task.source_id] = task.status === 'Ok';
+              });
+            }
             let succeedCount = 0;
             Object.keys(tasks).forEach(key => {
               if (tasks[key]) succeedCount += 1;

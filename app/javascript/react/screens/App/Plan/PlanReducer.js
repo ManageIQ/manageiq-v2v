@@ -1,9 +1,11 @@
 import Immutable from 'seamless-immutable';
 import numeral from 'numeral';
+import commonUtilitiesHelper from '../common/commonUtilitiesHelper';
+import getMostRecentVMTasksFromRequests from '../Overview/components/Migrations/helpers/getMostRecentVMTasksFromRequests';
 
 import {
-  FETCH_V2V_PLAN_REQUEST,
   FETCH_V2V_PLAN,
+  FETCH_V2V_ALL_REQUESTS_WITH_TASKS_FOR_PLAN,
   QUERY_V2V_PLAN_VMS,
   RESET_PLAN_STATE,
   FETCH_V2V_MIGRATION_TASK_LOG,
@@ -35,102 +37,75 @@ const excludeDownloadDoneTaskId = (allDownloadLogInProgressTaskIds, taskId) =>
 const includeDownloadInProgressTaskId = (allDownloadLogInProgressTaskIds, taskId) =>
   allDownloadLogInProgressTaskIds ? allDownloadLogInProgressTaskIds.concat(taskId) : [taskId];
 
-const _formatPlanRequestDetails = data => {
+const processVMTasks = vmTasks => {
   const tasks = [];
-  if (data.miq_request_tasks && data.miq_request_tasks.length) {
-    data.miq_request_tasks.forEach(task => {
-      const taskDetails = {
-        id: task.id,
-        message: task.message,
-        transformation_host_name: task.options && task.options.transformation_host_name,
-        delivered_on: new Date(task.options.delivered_on),
-        updated_on: new Date(task.updated_on),
-        completed: task.message === 'VM Transformations completed' || task.message === 'VM Transformations failed',
-        state: task.state,
-        status: task.status,
-        options: {}
-      };
+  vmTasks.forEach(task => {
+    const taskDetails = {
+      id: task.id,
+      message: task.message,
+      transformation_host_name: task.options && task.options.transformation_host_name,
+      delivered_on: new Date(task.options.delivered_on),
+      updated_on: new Date(task.updated_on),
+      completed: task.message === 'VM Transformations completed' || task.message === 'VM Transformations failed',
+      state: task.state,
+      status: task.status,
+      options: {}
+    };
 
-      taskDetails.options.progress = task.options.progress;
-      taskDetails.options.virtv2v_wrapper = task.options.virtv2v_wrapper;
+    taskDetails.options.progress = task.options.progress;
+    taskDetails.options.virtv2v_wrapper = task.options.virtv2v_wrapper;
 
-      if (!task.diskSpaceCompletedGb) {
-        taskDetails.diskSpaceCompletedGb = '0';
-      }
+    if (!task.diskSpaceCompletedGb) {
+      taskDetails.diskSpaceCompletedGb = '0';
+    }
 
-      if (!task.percentComplete) {
-        taskDetails.percentComplete = 0;
-      }
+    if (!task.percentComplete) {
+      taskDetails.percentComplete = 0;
+    }
 
-      if (!task.totalDiskSpaceGb) {
-        taskDetails.totalDiskSpaceGb = '100%';
-      }
+    if (!task.totalDiskSpaceGb) {
+      taskDetails.totalDiskSpaceGb = '100%';
+    }
 
-      const grepVMName = task.description.match(/\[(.*?)\]/);
+    const grepVMName = task.description.match(/\[(.*?)\]/);
 
-      if (grepVMName) {
-        [taskDetails.descriptionPrefix, taskDetails.vmName] = grepVMName;
-      }
+    if (grepVMName) {
+      [taskDetails.descriptionPrefix, taskDetails.vmName] = grepVMName;
+    }
 
-      const startDateTime = taskDetails.delivered_on;
-      const lastUpdateDateTime = taskDetails.updated_on;
-      taskDetails.startDateTime = startDateTime;
-      taskDetails.lastUpdateDateTime = lastUpdateDateTime;
+    const startDateTime = taskDetails.delivered_on;
+    const lastUpdateDateTime = taskDetails.updated_on;
+    taskDetails.startDateTime = startDateTime;
+    taskDetails.lastUpdateDateTime = lastUpdateDateTime;
 
-      if (taskDetails.completed) {
-        taskDetails.completedSuccessfully =
-          task.options.progress.current_description === 'Virtual machine migrated' ||
-          task.options.progress.current_description === 'Mark source as migrated';
-      }
-      if (task.options && task.options.virtv2v_disks && task.options.virtv2v_disks.length) {
-        taskDetails.totalDiskSpace = task.options.virtv2v_disks.reduce((a, b) => a + b.size, 0);
-        taskDetails.totalDiskSpaceGb = numeral(taskDetails.totalDiskSpace).format('0.00b');
+    if (taskDetails.completed) {
+      taskDetails.completedSuccessfully =
+        task.options.progress.current_description === 'Virtual machine migrated' ||
+        task.options.progress.current_description === 'Mark source as migrated';
+    }
+    if (task.options && task.options.virtv2v_disks && task.options.virtv2v_disks.length) {
+      taskDetails.totalDiskSpace = task.options.virtv2v_disks.reduce((a, b) => a + b.size, 0);
+      taskDetails.totalDiskSpaceGb = numeral(taskDetails.totalDiskSpace).format('0.00b');
 
-        const percentComplete =
-          task.options.virtv2v_disks.reduce((a, b) => a + b.percent, 0) / (100 * task.options.virtv2v_disks.length);
+      const percentComplete =
+        task.options.virtv2v_disks.reduce((a, b) => a + b.percent, 0) / (100 * task.options.virtv2v_disks.length);
 
-        taskDetails.diskSpaceCompleted = percentComplete * taskDetails.totalDiskSpace;
-        taskDetails.diskSpaceCompletedGb = numeral(taskDetails.diskSpaceCompleted).format('0.00b');
-        taskDetails.percentComplete = Math.round(percentComplete * 1000) / 10;
-      }
-      tasks.push(taskDetails);
-    });
-  }
+      taskDetails.diskSpaceCompleted = percentComplete * taskDetails.totalDiskSpace;
+      taskDetails.diskSpaceCompletedGb = numeral(taskDetails.diskSpaceCompleted).format('0.00b');
+      taskDetails.percentComplete = Math.round(percentComplete * 1000) / 10;
+    }
+    tasks.push(taskDetails);
+  });
   return tasks;
 };
 
-const _deepCompare = (prevTasks, newTasks) => JSON.stringify(prevTasks) === JSON.stringify(newTasks);
+const allVMTasksForRequestOfPlan = (requestWithTasks, actions) => {
+  const tasksOfPlan = getMostRecentVMTasksFromRequests(requestWithTasks, actions);
+  return processVMTasks(tasksOfPlan);
+};
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case `${FETCH_V2V_PLAN_REQUEST}_PENDING`:
-      return state.set('isFetchingPlanRequest', true).set('isRejectedPlanRequest', false);
-    case `${FETCH_V2V_PLAN_REQUEST}_FULFILLED`: {
-      const { payload } = action;
-      if (payload.data) {
-        const newTasks = _formatPlanRequestDetails(payload.data);
-        if (!_deepCompare(state.planRequestTasks, newTasks)) {
-          return state
-            .set('planRequestPreviouslyFetched', true)
-            .set('planRequestTasks', newTasks)
-            .set('planRequestFailed', payload.data.status === 'Error')
-            .set('isRejectedPlanRequest', false)
-            .set('errorPlanRequest', null)
-            .set('isFetchingPlanRequest', false);
-        }
-      }
-      return state
-        .set('planRequestPreviouslyFetched', true)
-        .set('isRejectedPlanRequest', false)
-        .set('errorPlanRequest', null)
-        .set('isFetchingPlanRequest', false);
-    }
-    case `${FETCH_V2V_PLAN_REQUEST}_REJECTED`:
-      return state
-        .set('errorPlanRequest', action.payload)
-        .set('isRejectedPlanRequest', true)
-        .set('isFetchingPlanRequest', false);
-
     case `${FETCH_V2V_PLAN}_PENDING`:
       return state.set('isFetchingPlan', true).set('isRejectedPlan', false);
     case `${FETCH_V2V_PLAN}_FULFILLED`:
@@ -146,6 +121,36 @@ export default (state = initialState, action) => {
         .set('isFetchingPlan', false)
         .set('isRejectedPlan', true)
         .set('errorPlan', action.payload);
+
+    case `${FETCH_V2V_ALL_REQUESTS_WITH_TASKS_FOR_PLAN}_PENDING`:
+      return state.set('isFetchingPlanRequest', true).set('isRejectedPlanRequest', false);
+    case `${FETCH_V2V_ALL_REQUESTS_WITH_TASKS_FOR_PLAN}_FULFILLED`:
+      if (action.payload.data) {
+        return state
+          .set(
+            'planRequestTasks',
+            allVMTasksForRequestOfPlan(action.payload.data.results, state.plan.options.config_info.actions)
+          )
+          .set('allRequestsWithTasksForPlan', action.payload.data.results)
+          .set('planRequestPreviouslyFetched', true)
+          .set(
+            'planRequestFailed',
+            commonUtilitiesHelper.getMostRecentEntityByCreationDate(action.payload.data.results).status === 'Error'
+          )
+          .set('isRejectedPlanRequest', false)
+          .set('errorPlanRequest', null)
+          .set('isFetchingPlanRequest', false);
+      }
+      return state
+        .set('planRequestPreviouslyFetched', true)
+        .set('isRejectedPlanRequest', false)
+        .set('errorPlanRequest', null)
+        .set('isFetchingPlanRequest', false);
+    case `${FETCH_V2V_ALL_REQUESTS_WITH_TASKS_FOR_PLAN}_REJECTED`:
+      return state
+        .set('errorPlanRequest', action.payload)
+        .set('isRejectedPlanRequest', true)
+        .set('isFetchingPlanRequest', false);
 
     case `${QUERY_V2V_PLAN_VMS}_PENDING`:
       return state.set('isQueryingVms', true).set('isRejectedVms', false);
