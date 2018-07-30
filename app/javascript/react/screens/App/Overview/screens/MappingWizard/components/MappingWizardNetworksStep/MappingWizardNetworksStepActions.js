@@ -1,6 +1,10 @@
 import URI from 'urijs';
 import API from '../../../../../../../../common/API';
-import { FETCH_V2V_SOURCE_NETWORKS, FETCH_V2V_TARGET_NETWORKS } from './MappingWizardNetworksStepConstants';
+import {
+  FETCH_V2V_SOURCE_NETWORKS,
+  FETCH_V2V_TARGET_NETWORKS,
+  QUERY_ATTRIBUTES
+} from './MappingWizardNetworksStepConstants';
 
 const _filterSourceNetworks = response => {
   const { data } = response;
@@ -36,7 +40,7 @@ const _getSourceNetworksActionCreator = url => dispatch =>
 export const fetchSourceNetworksAction = (url, id) => {
   const uri = new URI(`${url}/${id}`);
   // creates url like: http://localhost:3000/api/clusters/1?attributes=lans
-  uri.addSearch({ attributes: 'lans,ext_management_system.name' });
+  uri.addSearch({ attributes: QUERY_ATTRIBUTES.source });
 
   return _getSourceNetworksActionCreator(uri.toString());
 };
@@ -72,10 +76,10 @@ const _getTargetNetworksActionCreator = url => dispatch =>
     })
   });
 
-export const fetchTargetNetworksAction = (url, id) => {
+export const fetchTargetNetworksAction = (url, id, targetProvider) => {
   const uri = new URI(`${url}/${id}`);
   // creates url like: http://localhost:3000/api/clusters/1?attributes=lans
-  uri.addSearch({ attributes: 'lans,ext_management_system.name' });
+  uri.addSearch({ attributes: QUERY_ATTRIBUTES[targetProvider] });
 
   return _getTargetNetworksActionCreator(uri.toString());
 };

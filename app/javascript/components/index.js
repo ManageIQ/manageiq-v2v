@@ -59,7 +59,11 @@ export const coreComponents = [
     name: 'MappingWizardNetworksStepContainer',
     type: MappingWizardNetworksStepContainer,
     data: {
-      fetchNetworksUrl: 'api/clusters'
+      fetchNetworksUrls: {
+        source: 'api/clusters',
+        rhevm: 'api/clusters',
+        openstack: 'api/cloud_tenants'
+      }
     },
     store: true
   },

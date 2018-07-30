@@ -13,7 +13,8 @@ const mapStateToProps = ({ mappingWizardNetworksStep, form }, ownProps) => ({
   ...ownProps.data,
   clusterMappings: form.mappingWizardClustersStep.values.clusterMappings,
   groupedSourceNetworks: uniqueNetworks(mappingWizardNetworksStep.sourceNetworks),
-  groupedTargetNetworks: uniqueNetworks(mappingWizardNetworksStep.targetNetworks)
+  groupedTargetNetworks: uniqueNetworks(mappingWizardNetworksStep.targetNetworks),
+  targetProvider: form.mappingWizardGeneralStep.values.targetProvider
 });
 
 const actions = {

@@ -57,7 +57,13 @@ class MappingWizardNetworksStep extends React.Component {
   selectSourceCluster = sourceClusterId => {
     // when dropdown selection occurs for source cluster, we go retrieve the
     // newworks for that cluster
-    const { fetchNetworksUrl, fetchSourceNetworksAction, fetchTargetNetworksAction, clusterMappings } = this.props;
+    const {
+      fetchNetworksUrls,
+      fetchSourceNetworksAction,
+      fetchTargetNetworksAction,
+      clusterMappings,
+      targetProvider
+    } = this.props;
 
     const selectedClusterMapping = clusterMappings.find(clusterMapping =>
       clusterMapping.nodes.some(sourceCluster => sourceCluster.id === sourceClusterId)
@@ -70,8 +76,8 @@ class MappingWizardNetworksStep extends React.Component {
       selectedClusterMapping
     }));
 
-    fetchSourceNetworksAction(fetchNetworksUrl, sourceClusterId);
-    fetchTargetNetworksAction(fetchNetworksUrl, targetCluster.id);
+    fetchSourceNetworksAction(fetchNetworksUrls.source, sourceClusterId);
+    fetchTargetNetworksAction(fetchNetworksUrls[targetProvider], targetCluster.id, targetProvider);
   };
 
   render() {
@@ -125,7 +131,7 @@ class MappingWizardNetworksStep extends React.Component {
 
 MappingWizardNetworksStep.propTypes = {
   clusterMappings: PropTypes.array,
-  fetchNetworksUrl: PropTypes.string,
+  fetchNetworksUrls: PropTypes.object,
   fetchSourceNetworksAction: PropTypes.func,
   fetchTargetNetworksAction: PropTypes.func,
   isFetchingSourceNetworks: PropTypes.bool,
@@ -136,11 +142,12 @@ MappingWizardNetworksStep.propTypes = {
   pristine: PropTypes.bool,
   showAlertAction: PropTypes.func,
   groupedSourceNetworks: PropTypes.object,
-  groupedTargetNetworks: PropTypes.object
+  groupedTargetNetworks: PropTypes.object,
+  targetProvider: PropTypes.string
 };
 MappingWizardNetworksStep.defaultProps = {
   clusterMappings: [],
-  fetchNetworksUrl: '',
+  fetchNetworksUrls: {},
   fetchSourceNetworksAction: noop,
   fetchTargetNetworksAction: noop,
   isFetchingSourceNetworks: false,
@@ -149,7 +156,8 @@ MappingWizardNetworksStep.defaultProps = {
   isRejectedTargetNetworks: false,
   form: '',
   pristine: true,
-  showAlertAction: noop
+  showAlertAction: noop,
+  targetProvider: ''
 };
 
 export default reduxForm({
