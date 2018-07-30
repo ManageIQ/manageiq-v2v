@@ -12,7 +12,12 @@ import {
   DOWNLOAD_LOG_CLICKED,
   DOWNLOAD_LOG_COMPLETED,
   FETCH_V2V_ANSIBLE_PLAYBOOK_TEMPLATE,
-  FETCH_V2V_ORCHESTRATION_STACK
+  FETCH_V2V_ORCHESTRATION_STACK,
+  CANCEL_V2V_PLAN_REQUEST_TASKS,
+  REMOVE_TASKS_SELECTED_FOR_CANCELLATION,
+  UPDATE_TASKS_SELECTED_FOR_CANCELLATION,
+  DELETE_ALL_TASKS_SELECTED_FOR_CANCELLATION,
+  ADD_TASKS_TO_MARKED_FOR_CANCELLATION
 } from './PlanConstants';
 
 import { V2V_NOTIFICATION_ADD } from '../common/NotificationList/NotificationConstants';
@@ -204,5 +209,91 @@ export const downloadLogAction = task => dispatch => {
           reject(e);
         });
     })
+  });
+};
+
+// *****************************************************************************
+// * CANCEL MIGRATION TASKS
+// *****************************************************************************
+export const cancelPlanRequestTasksAction = (url, tasks) => dispatch => {
+  const completedTasks = [];
+  const incompleteTasks = [];
+
+  tasks.forEach(t => {
+    if (t.completed) {
+      completedTasks.push(t);
+    } else {
+      incompleteTasks.push(t);
+    }
+  });
+
+  dispatch({
+    type: REMOVE_TASKS_SELECTED_FOR_CANCELLATION,
+    payload: completedTasks
+  });
+  if (incompleteTasks.length === 0) {
+    dispatch({
+      type: V2V_NOTIFICATION_ADD,
+      message: __('Cannot cancel completed VM Migrations'),
+      notificationType: 'error',
+      persistent: true,
+      actionEnabled: false
+    });
+    return;
+  }
+  const resources = incompleteTasks.map(t => ({ id: t.id }));
+  dispatch({
+    type: CANCEL_V2V_PLAN_REQUEST_TASKS,
+    payload: new Promise((resolve, reject) => {
+      API.post(url, {
+        action: 'cancel',
+        resources
+      })
+        .then(response => {
+          resolve(response);
+
+          const cancelSuccessMsg = __('Migration canceled successfully for VMs: ');
+          const vmNames = tasks.map(task => task.vmName).join(', ');
+          const cancelSuccessMsgWithVMNames = `${cancelSuccessMsg} ${vmNames}`;
+
+          dispatch({
+            type: V2V_NOTIFICATION_ADD,
+            message: cancelSuccessMsgWithVMNames,
+            notificationType: 'success',
+            persistent: true,
+            actionEnabled: false
+          });
+
+          dispatch({
+            type: ADD_TASKS_TO_MARKED_FOR_CANCELLATION,
+            payload: tasks
+          });
+
+          dispatch({
+            type: REMOVE_TASKS_SELECTED_FOR_CANCELLATION,
+            payload: tasks
+          });
+        })
+        .catch(e => reject(e));
+    })
+  });
+};
+
+// *****************************************************************************
+// * UPDATE SELECTED CANCELLATION TASKS
+// *****************************************************************************
+export const updateSelectedTasksForCancelAction = updatedSelectedCancellationTasks => dispatch => {
+  dispatch({
+    type: UPDATE_TASKS_SELECTED_FOR_CANCELLATION,
+    payload: updatedSelectedCancellationTasks
+  });
+};
+
+// *****************************************************************************
+// * DELETE ALL SELECTED CANCELLATION TASKS
+// *****************************************************************************
+export const deleteAllSelectedTasksForCancelAction = updatedSelectedCancellationTasks => dispatch => {
+  dispatch({
+    type: DELETE_ALL_TASKS_SELECTED_FOR_CANCELLATION
   });
 };
