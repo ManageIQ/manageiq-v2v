@@ -59,7 +59,7 @@ describe('when displaying active (not archived) migration plans', () => {
 
   test('clicking the archive button launches the confirmation modal', () => {
     wrapper.find('ListViewItem').forEach(item => {
-      const archiveButton = item.find('Button').filterWhere(button => button.text() === 'Archive');
+      const archiveButton = item.find('a').filterWhere(link => link.text() === 'Archive');
 
       archiveButton.simulate('click');
 

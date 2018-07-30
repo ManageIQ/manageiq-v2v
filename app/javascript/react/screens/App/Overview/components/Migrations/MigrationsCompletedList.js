@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { noop, Button, ListView, Grid, Spinner, Icon, Toolbar, Sort } from 'patternfly-react';
+import { noop, Button, ListView, Grid, Spinner, Icon, Toolbar, Sort, DropdownKebab, MenuItem } from 'patternfly-react';
 import { IsoElapsedTime } from '../../../../../../components/dates/IsoElapsedTime';
 import OverviewEmptyState from '../OverviewEmptyState/OverviewEmptyState';
 import getMostRecentRequest from '../../../common/getMostRecentRequest';
@@ -243,7 +243,8 @@ class MigrationsCompletedList extends React.Component {
                         ]}
                         actions={
                           !archived && (
-                            <React.Fragment>
+                            <div onClick={e => e.stopPropagation()} // eslint-disable-line
+                            >
                               {failed && (
                                 <React.Fragment>
                                   <ScheduleMigrationButton
@@ -267,15 +268,17 @@ class MigrationsCompletedList extends React.Component {
                                   </Button>
                                 </React.Fragment>
                               )}
-                              <Button
-                                onClick={e => {
-                                  e.stopPropagation();
-                                  showConfirmModalAction(confirmModalOptions);
-                                }}
-                              >
-                                {__('Archive')}
-                              </Button>
-                            </React.Fragment>
+                              <DropdownKebab id={`${plan.id}-kebab`} pullRight>
+                                <MenuItem
+                                  onClick={e => {
+                                    e.stopPropagation();
+                                    showConfirmModalAction(confirmModalOptions);
+                                  }}
+                                >
+                                  {__('Archive')}
+                                </MenuItem>
+                              </DropdownKebab>
+                            </div>
                           )
                         }
                       />
