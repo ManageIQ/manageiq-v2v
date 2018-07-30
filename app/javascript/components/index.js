@@ -47,7 +47,11 @@ export const coreComponents = [
     name: 'MappingWizardDatastoresStepContainer',
     type: MappingWizardDatastoresStepContainer,
     data: {
-      fetchDatastoresUrl: 'api/clusters'
+      fetchStoragesUrls: {
+        source: 'api/clusters',
+        rhevm: 'api/clusters',
+        openstack: 'api/cloud_tenants'
+      }
     },
     store: true
   },

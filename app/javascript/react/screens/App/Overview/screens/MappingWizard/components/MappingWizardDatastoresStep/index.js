@@ -10,7 +10,8 @@ export const reducers = { mappingWizardDatastoresStep: reducer };
 const mapStateToProps = ({ mappingWizardDatastoresStep, form }, ownProps) => ({
   ...mappingWizardDatastoresStep,
   ...ownProps.data,
-  clusterMappings: form.mappingWizardClustersStep.values.clusterMappings
+  clusterMappings: form.mappingWizardClustersStep.values.clusterMappings,
+  targetProvider: form.mappingWizardGeneralStep.values.targetProvider
 });
 
 const actions = {
