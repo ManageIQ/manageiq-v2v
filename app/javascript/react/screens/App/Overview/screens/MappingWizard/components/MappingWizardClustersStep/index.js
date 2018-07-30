@@ -6,9 +6,10 @@ import reducer from './MappingWizardClustersStepReducer';
 
 export const reducers = { mappingWizardClustersStep: reducer };
 
-const mapStateToProps = ({ mappingWizardClustersStep }, ownProps) => ({
+const mapStateToProps = ({ mappingWizardClustersStep, form }, ownProps) => ({
   ...mappingWizardClustersStep,
-  ...ownProps.data
+  ...ownProps.data,
+  targetProvider: form.mappingWizardGeneralStep.values.targetProvider
 });
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => Object.assign(stateProps, ownProps.data, dispatchProps);
