@@ -4,7 +4,7 @@ import { noop } from 'patternfly-react';
 import ModalWizard from '../../components/ModalWizard';
 import componentRegistry from '../../../../../../components/componentRegistry';
 import PlanWizardGeneralStep from '../PlanWizard/components/PlanWizardGeneralStep';
-import PlanWizardOptionsStep from '../PlanWizard/components/PlanWizardOptionsStep';
+import PlanWizardScheduleStep from '../PlanWizard/components/PlanWizardScheduleStep';
 
 class PlanWizardBody extends React.Component {
   constructor(props) {
@@ -12,6 +12,7 @@ class PlanWizardBody extends React.Component {
 
     this.planWizardVMStepContainer = componentRegistry.markup('PlanWizardVMStepContainer');
     this.planWizardResultsStepContainer = componentRegistry.markup('PlanWizardResultsStepContainer');
+    this.planWizardAdvancedOptionsStepContainer = componentRegistry.markup('PlanWizardAdvancedOptionsStepContainer');
   }
   shouldComponentUpdate(nextProps, nextState) {
     return JSON.stringify(this.props) !== JSON.stringify(nextProps);
@@ -39,8 +40,13 @@ class PlanWizardBody extends React.Component {
             disableGoto: !this.props.planWizardVMStep.values
           },
           {
-            title: __('Options'),
-            render: () => <PlanWizardOptionsStep />,
+            title: __('Advanced Options'),
+            render: () => this.planWizardAdvancedOptionsStepContainer,
+            disableGoto: true
+          },
+          {
+            title: __('Schedule'),
+            render: () => <PlanWizardScheduleStep />,
             disableGoto: true
           },
           {
