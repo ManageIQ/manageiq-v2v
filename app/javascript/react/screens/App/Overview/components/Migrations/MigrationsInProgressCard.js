@@ -8,7 +8,7 @@ import TickingIsoElapsedTime from '../../../../../../components/dates/TickingIso
 import getMostRecentRequest from '../../../common/getMostRecentRequest';
 import getMostRecentVMTasksFromRequests from './helpers/getMostRecentVMTasksFromRequests';
 import getPlaybookName from './helpers/getPlaybookName';
-import { PLAYBOOK_JOB_STATES } from '../../../../../../data/models/playbooks';
+import { PLAN_JOB_STATES } from '../../../Plan/PlanConstants';
 
 const MigrationsInProgressCard = ({
   plan,
@@ -75,15 +75,13 @@ const MigrationsInProgressCard = ({
     if (playbooks) {
       if (
         playbooks.pre &&
-        (playbooks.pre.job_state === PLAYBOOK_JOB_STATES.PENDING ||
-          playbooks.pre.job_state === PLAYBOOK_JOB_STATES.ACTIVE)
+        (playbooks.pre.job_state === PLAN_JOB_STATES.PENDING || playbooks.pre.job_state === PLAN_JOB_STATES.ACTIVE)
       ) {
         taskRunningPreMigrationPlaybook = tasks[task];
       }
       if (
         playbooks.post &&
-        (playbooks.post.job_state === PLAYBOOK_JOB_STATES.PENDING ||
-          playbooks.post.job_state === PLAYBOOK_JOB_STATES.ACTIVE)
+        (playbooks.post.job_state === PLAN_JOB_STATES.PENDING || playbooks.post.job_state === PLAN_JOB_STATES.ACTIVE)
       ) {
         taskRunningPostMigrationPlaybook = tasks[task];
       }
@@ -185,13 +183,13 @@ const MigrationsInProgressCard = ({
 
   const availableTooltip = (id, max, now) => {
     if (max > 0) {
-      return <Tooltip id={id}>{sprintf(__('%s%% Remaining'), Math.round((max - now) / max * 100))}</Tooltip>;
+      return <Tooltip id={id}>{sprintf(__('%s%% Remaining'), Math.round(((max - now) / max) * 100))}</Tooltip>;
     }
     return <Tooltip id={id}>{__('No Data')}</Tooltip>;
   };
   const usedTooltip = (id, max, now) => {
     if (max > 0) {
-      return <Tooltip id={id}>{sprintf(__('%s%% Complete'), Math.round(now / max * 100))}</Tooltip>;
+      return <Tooltip id={id}>{sprintf(__('%s%% Complete'), Math.round((now / max) * 100))}</Tooltip>;
     }
     return <Tooltip id={id}>{__('No Data')}</Tooltip>;
   };
