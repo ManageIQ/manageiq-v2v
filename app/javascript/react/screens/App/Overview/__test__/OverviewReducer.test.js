@@ -4,15 +4,20 @@ import { FETCH_V2V_TRANSFORMATION_PLANS, V2V_SET_MIGRATIONS_FILTER } from '../Ov
 import overviewReducer, { initialState } from '../OverviewReducer';
 import { transformationPlans } from '../overview.transformationPlans.fixtures';
 
+const initialStateWithInfraMapping = Immutable({
+  ...initialState,
+  transformationMappings: [{ id: '1' }]
+});
+
 describe('fetching transformation plans', () => {
   test('is pending', () => {
     const action = {
       type: `${FETCH_V2V_TRANSFORMATION_PLANS}_PENDING`
     };
-    const state = overviewReducer(initialState, action);
+    const state = overviewReducer(initialStateWithInfraMapping, action);
 
     expect(state).toEqual({
-      ...initialState,
+      ...initialStateWithInfraMapping,
       isFetchingTransformationPlans: true
     });
   });
@@ -26,7 +31,7 @@ describe('fetching transformation plans', () => {
       payload
     };
     const prevState = Immutable({
-      ...initialState,
+      ...initialStateWithInfraMapping,
       isFetchingTransformationPlans: true,
       isRejectedTransformationPlans: true,
       errorTransformationPlans: 'error'
@@ -34,7 +39,7 @@ describe('fetching transformation plans', () => {
     const state = overviewReducer(prevState, action);
 
     expect(state).toEqual({
-      ...initialState,
+      ...initialStateWithInfraMapping,
       transformationPlans: payload.data.resources
     });
   });
@@ -45,13 +50,13 @@ describe('fetching transformation plans', () => {
       payload: 'error'
     };
     const prevState = Immutable({
-      ...initialState,
+      ...initialStateWithInfraMapping,
       isFetchingTransformationPlans: true
     });
     const state = overviewReducer(prevState, action);
 
     expect(state).toEqual({
-      ...initialState,
+      ...initialStateWithInfraMapping,
       isRejectedTransformationPlans: true,
       errorTransformationPlans: 'error'
     });
@@ -64,7 +69,7 @@ test('sets the active migration filter', () => {
     type: V2V_SET_MIGRATIONS_FILTER,
     payload: activeFilter
   };
-  const state = overviewReducer(initialState, action);
+  const state = overviewReducer(initialStateWithInfraMapping, action);
 
   expect(state.migrationsFilter).toBe(activeFilter);
 });

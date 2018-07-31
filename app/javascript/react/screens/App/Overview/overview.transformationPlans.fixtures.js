@@ -21,7 +21,6 @@ export const transformationPlans = Immutable({
       id: '10',
       miq_requests: [],
       configVmLength: 2,
-      infraMappingName: null,
       scheduleTime: null,
       status: null
     },
@@ -73,7 +72,6 @@ export const transformationPlans = Immutable({
         }
       ],
       configVmLength: 2,
-      infraMappingName: null,
       scheduleTime: null,
       status: 'Ok'
     },
@@ -163,7 +161,6 @@ export const transformationPlans = Immutable({
         }
       ],
       configVmLength: 2,
-      infraMappingName: null,
       scheduleTime: null,
       status: 'Ok'
     },
@@ -218,7 +215,6 @@ export const transformationPlans = Immutable({
         }
       ],
       configVmLength: 2,
-      infraMappingName: null,
       scheduleTime: null,
       status: 'Error'
     },
@@ -273,7 +269,6 @@ export const transformationPlans = Immutable({
         }
       ],
       configVmLength: 2,
-      infraMappingName: null,
       scheduleTime: null,
       status: 'Ok'
     },
@@ -328,7 +323,6 @@ export const transformationPlans = Immutable({
         }
       ],
       configVmLength: 2,
-      infraMappingName: null,
       scheduleTime: null,
       status: 'Ok'
     }

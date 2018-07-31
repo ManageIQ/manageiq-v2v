@@ -302,7 +302,7 @@ class Overview extends React.Component {
           }
           style={{ marginTop: 200 }}
         >
-          {transformationMappings.length > 0 && (
+          {(transformationMappings.length > 0 || transformationPlans.length > 0) && (
             <Migrations
               activeFilter={migrationsFilter}
               setActiveFilter={setMigrationsFilterAction}
@@ -354,6 +354,7 @@ class Overview extends React.Component {
               notStartedTransformationPlans={notStartedTransformationPlans}
               finishedWithErrorTransformationPlans={finishedWithErrorTransformationPlans}
               deleteInfrastructureMappingAction={deleteInfrastructureMappingAction}
+              migrationPlansExist={transformationPlans.length > 0 || archivedTransformationPlans.length > 0}
             />
           ) : (
             <OverviewEmptyState

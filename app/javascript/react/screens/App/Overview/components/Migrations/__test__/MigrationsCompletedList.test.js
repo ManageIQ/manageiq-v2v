@@ -7,7 +7,10 @@ import { allRequestsWithTasks } from '../../../overview.requestWithTasks.fixture
 import MigrationsCompletedList from '../MigrationsCompletedList';
 
 const [, , , finishedPlanOne, finishedPlanTwo] = transformationPlans.resources;
-const finishedTransformationPlans = [finishedPlanOne, finishedPlanTwo];
+const finishedTransformationPlans = [
+  Immutable({ ...finishedPlanOne, infraMappingName: 'Infrastructure Mapping' }),
+  Immutable({ ...finishedPlanTwo, infraMappingName: 'Infrastructure Mapping' })
+];
 const { results: requestsWithTasks } = allRequestsWithTasks;
 
 describe('when displaying archived migration plans', () => {
