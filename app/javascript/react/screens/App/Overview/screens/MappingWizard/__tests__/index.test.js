@@ -16,6 +16,8 @@ import componentRegistry from '../../../../../../../components/componentRegistry
 jest.mock('../../../../../../../components/componentRegistry');
 componentRegistry.registerMultiple(coreComponents);
 
+jest.mock('../components/MappingWizardGeneralStep/MappingWizardGeneralStep');
+
 describe('Mapping Wizard integration test', () => {
   const middlewares = [thunk, promiseMiddleware()];
   const generateStore = () =>

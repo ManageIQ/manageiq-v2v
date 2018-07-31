@@ -9,23 +9,7 @@ Object {
   "mappingWizardClustersStep": Object {},
   "mappingWizardDatastoresStep": Object {},
   "mappingWizardExitedAction": [Function],
-  "mappingWizardGeneralStep": Object {
-    "registeredFields": Object {
-      "description": Object {
-        "count": 1,
-        "name": "description",
-        "type": "Field",
-      },
-      "name": Object {
-        "count": 1,
-        "name": "name",
-        "type": "Field",
-      },
-    },
-    "syncErrors": Object {
-      "name": "Required. Maximum length is %s characters.",
-    },
-  },
+  "mappingWizardGeneralStep": Object {},
   "mappingWizardNetworksStep": Object {},
   "setTransformationsBodyAction": [Function],
   "showAlertAction": [Function],

@@ -5,12 +5,16 @@ Object {
   "fetchSourceClustersAction": [Function],
   "fetchSourceClustersUrl": "/api/dummyProviders",
   "fetchTargetClustersAction": [Function],
-  "fetchTargetClustersUrl": "/api/dummyProviders",
+  "fetchTargetComputeUrls": Object {
+    "openstack": "/api/dummy",
+    "rhevm": "/api/dummy",
+  },
   "isFetchingSourceClusters": true,
   "isFetchingTargetClusters": true,
   "isRejectedSourceClusters": false,
   "isRejectedTargetClusters": false,
   "sourceClusters": Array [],
   "targetClusters": Array [],
+  "targetProvider": "rhevm",
 }
 `;

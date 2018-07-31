@@ -33,10 +33,13 @@ export const coreComponents = [
         '/api/clusters?expand=resources' +
         '&attributes=ext_management_system.emstype,v_parent_datacenter,ext_management_system.name' +
         '&filter[]=ext_management_system.emstype=vmwarews',
-      fetchTargetClustersUrl:
-        '/api/clusters?expand=resources' +
-        '&attributes=ext_management_system.emstype,v_parent_datacenter,ext_management_system.name' +
-        '&filter[]=ext_management_system.emstype=rhevm'
+      fetchTargetComputeUrls: {
+        rhevm:
+          '/api/clusters?expand=resources' +
+          '&attributes=ext_management_system.emstype,v_parent_datacenter,ext_management_system.name' +
+          '&filter[]=ext_management_system.emstype=rhevm',
+        openstack: '/api/cloud_tenants?expand=resources&attributes=ext_management_system.name'
+      }
     },
     store: true
   },
@@ -44,7 +47,11 @@ export const coreComponents = [
     name: 'MappingWizardDatastoresStepContainer',
     type: MappingWizardDatastoresStepContainer,
     data: {
-      fetchDatastoresUrl: 'api/clusters'
+      fetchStoragesUrls: {
+        source: 'api/clusters',
+        rhevm: 'api/clusters',
+        openstack: 'api/cloud_tenants'
+      }
     },
     store: true
   },
@@ -52,7 +59,11 @@ export const coreComponents = [
     name: 'MappingWizardNetworksStepContainer',
     type: MappingWizardNetworksStepContainer,
     data: {
-      fetchNetworksUrl: 'api/clusters'
+      fetchNetworksUrls: {
+        source: 'api/clusters',
+        rhevm: 'api/clusters',
+        openstack: 'api/cloud_tenants'
+      }
     },
     store: true
   },

@@ -57,10 +57,11 @@ class MappingWizardDatastoresStep extends React.Component {
     // when dropdown selection occurs for source cluster, we go retrieve the datastores for that
     // cluster
     const {
-      fetchDatastoresUrl,
+      fetchStoragesUrls,
       fetchSourceDatastoresAction,
       fetchTargetDatastoresAction,
-      clusterMappings
+      clusterMappings,
+      targetProvider
     } = this.props;
 
     const selectedClusterMapping = clusterMappings.find(clusterMapping =>
@@ -74,8 +75,8 @@ class MappingWizardDatastoresStep extends React.Component {
       selectedClusterMapping
     }));
 
-    fetchSourceDatastoresAction(fetchDatastoresUrl, sourceClusterId);
-    fetchTargetDatastoresAction(fetchDatastoresUrl, targetCluster.id);
+    fetchSourceDatastoresAction(fetchStoragesUrls.source, sourceClusterId);
+    fetchTargetDatastoresAction(fetchStoragesUrls[targetProvider], targetCluster.id, targetProvider);
   };
 
   render() {
@@ -134,7 +135,7 @@ class MappingWizardDatastoresStep extends React.Component {
 
 MappingWizardDatastoresStep.propTypes = {
   clusterMappings: PropTypes.array,
-  fetchDatastoresUrl: PropTypes.string,
+  fetchStoragesUrls: PropTypes.object,
   fetchSourceDatastoresAction: PropTypes.func,
   fetchTargetDatastoresAction: PropTypes.func,
   sourceDatastores: PropTypes.arrayOf(PropTypes.object),
@@ -145,11 +146,12 @@ MappingWizardDatastoresStep.propTypes = {
   isRejectedTargetDatastores: PropTypes.bool,
   form: PropTypes.string,
   pristine: PropTypes.bool,
-  showAlertAction: PropTypes.func
+  showAlertAction: PropTypes.func,
+  targetProvider: PropTypes.string
 };
 MappingWizardDatastoresStep.defaultProps = {
   clusterMappings: [],
-  fetchDatastoresUrl: '',
+  fetchStoragesUrls: {},
   fetchSourceDatastoresAction: noop,
   fetchTargetDatastoresAction: noop,
   sourceDatastores: [],
@@ -160,7 +162,8 @@ MappingWizardDatastoresStep.defaultProps = {
   isRejectedTargetDatastores: false,
   form: '',
   pristine: true,
-  showAlertAction: noop
+  showAlertAction: noop,
+  targetProvider: ''
 };
 
 export default reduxForm({

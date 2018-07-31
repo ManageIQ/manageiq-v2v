@@ -15,7 +15,8 @@ describe('Mapping Wizard integration test', () => {
     createStore(
       combineReducers({ ...reducers, form: formReducer }),
       {
-        mappingWizardClustersStep: initialState
+        mappingWizardClustersStep: initialState,
+        form: { mappingWizardGeneralStep: { values: { targetProvider: 'rhevm' } } }
       },
       applyMiddleware(...middlewares)
     );

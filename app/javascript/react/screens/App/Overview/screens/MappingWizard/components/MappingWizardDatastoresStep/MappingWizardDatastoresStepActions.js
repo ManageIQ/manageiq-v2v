@@ -1,6 +1,10 @@
 import URI from 'urijs';
 import API from '../../../../../../../../common/API';
-import { FETCH_V2V_SOURCE_DATASTORES, FETCH_V2V_TARGET_DATASTORES } from './MappingWizardDatastoresStepConstants';
+import {
+  FETCH_V2V_SOURCE_DATASTORES,
+  FETCH_V2V_TARGET_DATASTORES,
+  QUERY_ATTRIBUTES
+} from './MappingWizardDatastoresStepConstants';
 
 const _filterSourceDatastores = response => {
   const { data } = response;
@@ -35,7 +39,7 @@ const _getSourceDatastoresActionCreator = url => dispatch =>
 export const fetchSourceDatastoresAction = (url, id) => {
   const uri = new URI(`${url}/${id}`);
   // creates url like: http://localhost:3000/api/clusters/1?attributes=storages
-  uri.addSearch({ attributes: 'storages,ext_management_system.name' });
+  uri.addSearch({ attributes: QUERY_ATTRIBUTES.source });
 
   return _getSourceDatastoresActionCreator(uri.toString());
 };
@@ -68,10 +72,10 @@ const _getTargetDatastoresActionCreator = url => dispatch =>
     })
   });
 
-export const fetchTargetDatastoresAction = (url, id) => {
+export const fetchTargetDatastoresAction = (url, id, targetProvider) => {
   const uri = new URI(`${url}/${id}`);
   // creates url like: http://localhost:3000/api/clusters/1?attributes=storages
-  uri.addSearch({ attributes: 'storages,ext_management_system.name' });
+  uri.addSearch({ attributes: QUERY_ATTRIBUTES[targetProvider] });
 
   return _getTargetDatastoresActionCreator(uri.toString());
 };

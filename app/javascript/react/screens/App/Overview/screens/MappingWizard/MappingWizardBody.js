@@ -35,17 +35,17 @@ class MappingWizardBody extends React.Component {
             disableGoto: !this.props.mappingWizardGeneralStep.values
           },
           {
-            title: __('Clusters'),
+            title: __('Map Compute'),
             render: () => this.mappingWizardClustersStepContainer,
             disableGoto: !this.props.mappingWizardClustersStep.values
           },
           {
-            title: __('Datastores'),
+            title: __('Map Storage'),
             render: () => this.mappingWizardDatastoresStepContainer,
             disableGoto: !this.props.mappingWizardDatastoresStep.values
           },
           {
-            title: __('Networks'),
+            title: __('Map Networks'),
             render: () => this.mappingWizardNetworksStepContainer,
             disableGoto: !this.props.mappingWizardNetworksStep.values
           },

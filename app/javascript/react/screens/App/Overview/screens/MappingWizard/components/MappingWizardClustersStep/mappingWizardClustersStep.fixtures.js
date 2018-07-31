@@ -151,5 +151,8 @@ export const initialState = Immutable({
   sourceClusters: [],
   targetClusters: [],
   fetchSourceClustersUrl: requestSourceClustersData.fetchSourceClustersUrl,
-  fetchTargetClustersUrl: requestTargetClustersData.fetchTargetClustersUrl
+  fetchTargetComputeUrls: {
+    rhevm: '/api/dummy',
+    openstack: '/api/dummy'
+  }
 });
