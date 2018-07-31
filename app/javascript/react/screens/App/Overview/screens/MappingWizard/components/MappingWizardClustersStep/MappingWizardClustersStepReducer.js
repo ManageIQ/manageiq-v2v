@@ -1,6 +1,10 @@
 import Immutable from 'seamless-immutable';
 
-import { FETCH_V2V_SOURCE_CLUSTERS, FETCH_V2V_TARGET_CLUSTERS } from './MappingWizardClustersStepConstants';
+import {
+  FETCH_V2V_SOURCE_CLUSTERS,
+  FETCH_V2V_TARGET_CLUSTERS,
+  QUERY_V2V_HOSTS
+} from './MappingWizardClustersStepConstants';
 
 const initialState = Immutable({
   sourceClusters: [],
@@ -10,8 +14,34 @@ const initialState = Immutable({
   targetClusters: [],
   isFetchingTargetClusters: false,
   isRejectedTargetClusters: false,
-  errorTargetClusters: null
+  errorTargetClusters: null,
+  hostsByClusterID: {},
+  isFetchingHostsQuery: false,
+  isRejectedHostsQuery: false,
+  errorHostsQuery: null
 });
+
+const getHostsByClusterID = hostsQueryFulfilledAction => {
+  const {
+    meta: { hostIDsByClusterID },
+    payload: { data }
+  } = hostsQueryFulfilledAction;
+  const hostsByID = data.results.reduce(
+    (newObject, host) => ({
+      ...newObject,
+      [host.id]: host
+    }),
+    {}
+  );
+  const hostsByClusterID = Object.keys(hostIDsByClusterID).reduce(
+    (newObject, clusterID) => ({
+      ...newObject,
+      [clusterID]: hostIDsByClusterID[clusterID].map(hostID => hostsByID[hostID])
+    }),
+    {}
+  );
+  return hostsByClusterID;
+};
 
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -51,6 +81,18 @@ export default (state = initialState, action) => {
         .set('errorTargetClusters', action.payload)
         .set('isRejectedTargetClusters', true)
         .set('isFetchingTargetClusters', false);
+    case `${QUERY_V2V_HOSTS}_PENDING`:
+      return state.set('isFetchingHostsQuery', true).set('isRejectedHostsQuery', false);
+    case `${QUERY_V2V_HOSTS}_FULFILLED`:
+      return state
+        .set('hostsByClusterID', getHostsByClusterID(action))
+        .set('isFetchingHostsQuery', false)
+        .set('isRejectedHostsQuery', false);
+    case `${QUERY_V2V_HOSTS}_REJECTED`:
+      return state
+        .set('errorHostsQuery', action.payload)
+        .set('isFetchingHostsQuery', false)
+        .set('isRejectedHostsQuery', true);
     default:
       return state;
   }

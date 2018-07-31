@@ -79,6 +79,14 @@
   white-space: nowrap;
   width: calc(100% - 26px);
 }
+.dual-pane-mapper-list .dual-pane-mapper-item .clickable-icon {
+  padding-left: 7px;
+  padding-right: 7px;
+  opacity: 0.5;
+}
+.dual-pane-mapper-list .dual-pane-mapper-item .clickable-icon:hover {
+  opacity: 1;
+}
 
 .dual-pane-mapper-button-container {
   display: inline-block;
