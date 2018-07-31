@@ -117,6 +117,15 @@ class PlanRequestDetailList extends React.Component {
     this.setPage(this.state.pageChangeValue);
   };
 
+  onSelect = (eventKey, task) => {
+    const { downloadLogAction, fetchOrchestrationStackUrl, fetchOrchestrationStackAction } = this.props;
+    if (eventKey === 'migration') {
+      downloadLogAction(task);
+    } else {
+      fetchOrchestrationStackAction(fetchOrchestrationStackUrl, eventKey, task);
+    }
+  };
+
   setPage = value => {
     const page = Number(value);
     if (!Number.isNaN(value) && value !== '' && page > 0 && page <= this.totalPages()) {
@@ -209,41 +218,6 @@ class PlanRequestDetailList extends React.Component {
     return Math.ceil(allFilteredTasks.length / pagination.perPage);
   };
 
-  renderInput = () => {
-    const { currentFilterType, currentValue } = this.state;
-    if (!currentFilterType) {
-      return null;
-    }
-    if (currentFilterType.filterType === 'select') {
-      return (
-        <Filter.ValueSelector
-          filterValues={currentFilterType.filterValues}
-          placeholder={currentFilterType.placeholder}
-          currentValue={currentValue}
-          onFilterValueSelected={this.filterValueSelected}
-        />
-      );
-    }
-    return (
-      <FormControl
-        type={currentFilterType.filterType}
-        value={currentValue}
-        placeholder={currentFilterType.placeholder}
-        onChange={e => this.updateCurrentValue(e)}
-        onKeyPress={e => this.onValueKeyPress(e)}
-      />
-    );
-  };
-
-  onSelect = (eventKey, task) => {
-    const { downloadLogAction, fetchOrchestrationStackUrl, fetchOrchestrationStackAction } = this.props;
-    if (eventKey === 'migration') {
-      downloadLogAction(task);
-    } else {
-      fetchOrchestrationStackAction(fetchOrchestrationStackUrl, eventKey, task);
-    }
-  };
-
   overlayTriggerClick = task => {
     if (task.options.playbooks) {
       const playbookStatuses = task.options.playbooks;
@@ -268,6 +242,32 @@ class PlanRequestDetailList extends React.Component {
         fetchAnsiblePlaybookTemplateAction(fetchAnsiblePlaybookTemplateUrl, config_info[configInfoKey]);
       }
     }
+  };
+
+  renderInput = () => {
+    const { currentFilterType, currentValue } = this.state;
+    if (!currentFilterType) {
+      return null;
+    }
+    if (currentFilterType.filterType === 'select') {
+      return (
+        <Filter.ValueSelector
+          filterValues={currentFilterType.filterValues}
+          placeholder={currentFilterType.placeholder}
+          currentValue={currentValue}
+          onFilterValueSelected={this.filterValueSelected}
+        />
+      );
+    }
+    return (
+      <FormControl
+        type={currentFilterType.filterType}
+        value={currentValue}
+        placeholder={currentFilterType.placeholder}
+        onChange={e => this.updateCurrentValue(e)}
+        onKeyPress={e => this.onValueKeyPress(e)}
+      />
+    );
   };
 
   render() {
