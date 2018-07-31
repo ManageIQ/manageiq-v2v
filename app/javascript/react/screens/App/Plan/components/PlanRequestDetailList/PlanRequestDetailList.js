@@ -128,6 +128,37 @@ class PlanRequestDetailList extends React.Component {
     }
   };
 
+  onCancelMigrationsCancel = () => {
+    this.setState({ showConfirmCancel: false });
+  };
+
+  onCancelMigrationsClick = () => {
+    this.setState({ showConfirmCancel: true });
+  };
+
+  onCancelMigrationsConfirm = () => {
+    // todo: call this from the Confirmation Modal instead
+    // gather the selected tasks in state and feed them through
+    const { selectedTasksForCancel } = this.props;
+    const { cancelPlanRequestTasksAction, cancelPlanRequestTasksUrl } = this.props;
+    cancelPlanRequestTasksAction(cancelPlanRequestTasksUrl, selectedTasksForCancel);
+    this.setState({ showConfirmCancel: false });
+  };
+
+  getCancelSelectionState = () => {
+    const { selectedTasksForCancel, markedForCancellation } = this.props;
+    const filteredTasks = this.filterPlanRequestTasks();
+    const incompleteTasks = filteredTasks.filter(
+      task => !task.completed && !task.cancel_requested && !markedForCancellation.find(t => t.id === task.id)
+    );
+    return {
+      filteredTasks,
+      incompleteTasks,
+      allSelected: selectedTasksForCancel.length === incompleteTasks.length && selectedTasksForCancel.length > 0,
+      noneSelected: selectedTasksForCancel.length === 0
+    };
+  };
+
   setPage = value => {
     const page = Number(value);
     if (!Number.isNaN(value) && value !== '' && page > 0 && page <= this.totalPages()) {
@@ -137,85 +168,43 @@ class PlanRequestDetailList extends React.Component {
     }
   };
 
-  filterValueSelected = filterValue => {
-    const { currentFilterType, currentValue } = this.state;
+  selectAllInProgressTasks = () => {
+    const { incompleteTasks } = this.getCancelSelectionState();
+    const { updateSelectedTasksForCancelAction } = this.props;
+    updateSelectedTasksForCancelAction(incompleteTasks);
+  };
 
-    if (filterValue !== currentValue) {
-      this.setState({ currentValue: filterValue });
-      if (filterValue) {
-        this.filterAdded(currentFilterType, filterValue);
-      }
+  deselectAllTasks = () => {
+    const { deleteAllSelectedTasksForCancelAction } = this.props;
+    deleteAllSelectedTasksForCancelAction();
+  };
+
+  taskIsSelected = task => {
+    const { selectedTasksForCancel } = this.props;
+    return selectedTasksForCancel.findIndex(t => t.id === task.id) > -1;
+  };
+
+  handleCheckboxChange = task => {
+    const { selectedTasksForCancel, updateSelectedTasksForCancelAction } = this.props;
+    const selectedTask = selectedTasksForCancel.find(t => t.id === task.id);
+    let updatedSelectedTasks;
+    if (selectedTask) {
+      updatedSelectedTasks = selectedTasksForCancel.filter(r => !(r.id === task.id));
+    } else {
+      updatedSelectedTasks = [...selectedTasksForCancel, task];
+    }
+    updateSelectedTasksForCancelAction(updatedSelectedTasks);
+  };
+
+  handleSelectAllCheckboxChange = () => {
+    const { allSelected } = this.getCancelSelectionState();
+    if (allSelected) {
+      this.deselectAllTasks();
+    } else {
+      this.selectAllInProgressTasks();
     }
   };
 
-  clearFilters = () => {
-    this.setState({ activeFilters: [], currentValue: '' });
-  };
-  removeFilter = filter => {
-    const { activeFilters } = this.state;
-    const index = activeFilters.indexOf(filter);
-    if (index > -1) {
-      const updated = [...activeFilters.slice(0, index), ...activeFilters.slice(index + 1)];
-      this.setState({ activeFilters: updated });
-    }
-  };
-  selectFilterType = filterType => {
-    const { currentFilterType } = this.state;
-    if (currentFilterType !== filterType) {
-      this.setState({ currentValue: '', currentFilterType: filterType });
-    }
-  };
-  updateCurrentValue = event => {
-    this.setState({ currentValue: event.target.value });
-  };
-
-  filterPlanRequestTasks = () => {
-    const { activeFilters } = this.state;
-    const { planRequestTasks } = this.props;
-    return listFilter(activeFilters, planRequestTasks);
-  };
-
-  filterSortPaginatePlanRequestTasks = (filteredTasks = this.filterPlanRequestTasks()) => {
-    const { currentSortType, isSortNumeric, isSortAscending, pagination } = this.state;
-    return paginate(
-      sortFilter(currentSortType, isSortNumeric, isSortAscending, filteredTasks),
-      pagination.page,
-      pagination.perPage
-    );
-  };
-
-  toggleCurrentSortDirection = () => {
-    this.setState(prevState => ({
-      isSortAscending: !prevState.isSortAscending
-    }));
-  };
-
-  updateCurrentSortType = sortType => {
-    const { currentSortType } = this.state;
-    if (currentSortType !== sortType) {
-      this.setState({
-        currentSortType: sortType,
-        isSortNumeric: sortType.isNumeric,
-        isSortAscending: true
-      });
-    }
-  };
-
-  filterAdded = (field, value) => {
-    let filterText = field.title || field;
-
-    filterText += ': ';
-    filterText += value.title || value;
-
-    this.setState(prevState => ({
-      activeFilters: [...prevState.activeFilters, { label: filterText, field, value: value.title || value }],
-      pagination: {
-        ...prevState.pagination,
-        page: 1
-      },
-      pageChangeValue: 1
-    }));
-  };
   totalPages = () => {
     const { activeFilters, pagination } = this.state;
     const { planRequestTasks } = this.props;
@@ -250,6 +239,89 @@ class PlanRequestDetailList extends React.Component {
     }
   };
 
+  filterAdded = (field, value) => {
+    let filterText = field.title || field;
+
+    filterText += ': ';
+    filterText += value.title || value;
+
+    this.setState(prevState => ({
+      activeFilters: [...prevState.activeFilters, { label: filterText, field, value: value.title || value }],
+      pagination: {
+        ...prevState.pagination,
+        page: 1
+      },
+      pageChangeValue: 1
+    }));
+  };
+
+  filterPlanRequestTasks = () => {
+    const { activeFilters } = this.state;
+    const { planRequestTasks } = this.props;
+    return listFilter(activeFilters, planRequestTasks);
+  };
+
+  filterSortPaginatePlanRequestTasks = (filteredTasks = this.filterPlanRequestTasks()) => {
+    const { currentSortType, isSortNumeric, isSortAscending, pagination } = this.state;
+    return paginate(
+      sortFilter(currentSortType, isSortNumeric, isSortAscending, filteredTasks),
+      pagination.page,
+      pagination.perPage
+    );
+  };
+
+  toggleCurrentSortDirection = () => {
+    this.setState(prevState => ({
+      isSortAscending: !prevState.isSortAscending
+    }));
+  };
+
+  updateCurrentSortType = sortType => {
+    const { currentSortType } = this.state;
+    if (currentSortType !== sortType) {
+      this.setState({
+        currentSortType: sortType,
+        isSortNumeric: sortType.isNumeric,
+        isSortAscending: true
+      });
+    }
+  };
+
+  updateCurrentValue = event => {
+    this.setState({ currentValue: event.target.value });
+  };
+
+  filterValueSelected = filterValue => {
+    const { currentFilterType, currentValue } = this.state;
+
+    if (filterValue !== currentValue) {
+      this.setState({ currentValue: filterValue });
+      if (filterValue) {
+        this.filterAdded(currentFilterType, filterValue);
+      }
+    }
+  };
+
+  clearFilters = () => {
+    this.setState({ activeFilters: [], currentValue: '' });
+  };
+
+  removeFilter = filter => {
+    const { activeFilters } = this.state;
+    const index = activeFilters.indexOf(filter);
+    if (index > -1) {
+      const updated = [...activeFilters.slice(0, index), ...activeFilters.slice(index + 1)];
+      this.setState({ activeFilters: updated });
+    }
+  };
+
+  selectFilterType = filterType => {
+    const { currentFilterType } = this.state;
+    if (currentFilterType !== filterType) {
+      this.setState({ currentValue: '', currentFilterType: filterType });
+    }
+  };
+
   renderInput = () => {
     const { currentFilterType, currentValue } = this.state;
     if (!currentFilterType) {
@@ -274,74 +346,6 @@ class PlanRequestDetailList extends React.Component {
         onKeyPress={e => this.onValueKeyPress(e)}
       />
     );
-  };
-
-  getCancelSelectionState = () => {
-    const { selectedTasksForCancel, markedForCancellation } = this.props;
-    const filteredTasks = this.filterPlanRequestTasks();
-    const incompleteTasks = filteredTasks.filter(
-      task => !task.completed && !task.cancel_requested && !markedForCancellation.find(t => t.id === task.id)
-    );
-    return {
-      filteredTasks,
-      incompleteTasks,
-      allSelected: selectedTasksForCancel.length === incompleteTasks.length && selectedTasksForCancel.length > 0,
-      noneSelected: selectedTasksForCancel.length === 0
-    };
-  };
-
-  handleCheckboxChange = task => {
-    const { selectedTasksForCancel, updateSelectedTasksForCancelAction } = this.props;
-    const selectedTask = selectedTasksForCancel.find(t => t.id === task.id);
-    let updatedSelectedTasks;
-    if (selectedTask) {
-      updatedSelectedTasks = selectedTasksForCancel.filter(r => !(r.id === task.id));
-    } else {
-      updatedSelectedTasks = [...selectedTasksForCancel, task];
-    }
-    updateSelectedTasksForCancelAction(updatedSelectedTasks);
-  };
-
-  handleSelectAllCheckboxChange = () => {
-    const { allSelected } = this.getCancelSelectionState();
-    if (allSelected) {
-      this.deselectAllTasks();
-    } else {
-      this.selectAllInProgressTasks();
-    }
-  };
-
-  taskIsSelected = task => {
-    const { selectedTasksForCancel } = this.props;
-    return selectedTasksForCancel.findIndex(t => t.id === task.id) > -1;
-  };
-
-  selectAllInProgressTasks = () => {
-    const { incompleteTasks } = this.getCancelSelectionState();
-    const { updateSelectedTasksForCancelAction } = this.props;
-    updateSelectedTasksForCancelAction(incompleteTasks);
-  };
-
-  deselectAllTasks = () => {
-    const { deleteAllSelectedTasksForCancelAction } = this.props;
-    deleteAllSelectedTasksForCancelAction();
-  };
-
-  onCancelMigrationsCancel = () => {
-    this.setState({ showConfirmCancel: false });
-  };
-
-  onCancelMigrationsClick = () => {
-    this.setState({ showConfirmCancel: true });
-  };
-
-  onCancelMigrationsConfirm = () => {
-    // todo: call this from the Confirmation Modal instead
-    // gather the selected tasks in state and feed them through
-    const { selectedTasksForCancel } = this.props;
-    const { cancelPlanRequestTasksAction, cancelPlanRequestTasksUrl } = this.props;
-    cancelPlanRequestTasksAction(cancelPlanRequestTasksUrl, selectedTasksForCancel);
-    this.setState({ showConfirmCancel: false });
   };
 
   render = () => {
