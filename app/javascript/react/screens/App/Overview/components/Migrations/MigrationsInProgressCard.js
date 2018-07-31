@@ -183,13 +183,13 @@ const MigrationsInProgressCard = ({
 
   const availableTooltip = (id, max, now) => {
     if (max > 0) {
-      return <Tooltip id={id}>{sprintf(__('%s%% Remaining'), Math.round(((max - now) / max) * 100))}</Tooltip>;
+      return <Tooltip id={id}>{sprintf(__('%s%% Remaining'), Math.round((max - now) / max * 100))}</Tooltip>;
     }
     return <Tooltip id={id}>{__('No Data')}</Tooltip>;
   };
   const usedTooltip = (id, max, now) => {
     if (max > 0) {
-      return <Tooltip id={id}>{sprintf(__('%s%% Complete'), Math.round((now / max) * 100))}</Tooltip>;
+      return <Tooltip id={id}>{sprintf(__('%s%% Complete'), Math.round(now / max * 100))}</Tooltip>;
     }
     return <Tooltip id={id}>{__('No Data')}</Tooltip>;
   };
