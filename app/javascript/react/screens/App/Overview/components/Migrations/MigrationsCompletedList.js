@@ -251,9 +251,8 @@ class MigrationsCompletedList extends React.Component {
                         ]}
                         actions={
                           !archived && (
-                            <div
-                              onClick={e => e.stopPropagation()} // eslint-disable-line
-                            >
+                            // eslint-disable-next-line
+                            <div onClick={e => e.stopPropagation()}>
                               {failed && (
                                 <React.Fragment>
                                   <ScheduleMigrationButton
