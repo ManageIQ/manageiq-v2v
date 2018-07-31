@@ -13,6 +13,7 @@ Object {
   "isFetchingTargetClusters": true,
   "isRejectedSourceClusters": false,
   "isRejectedTargetClusters": false,
+  "queryHostsAction": [Function],
   "sourceClusters": Array [],
   "targetClusters": Array [],
   "targetProvider": "rhevm",

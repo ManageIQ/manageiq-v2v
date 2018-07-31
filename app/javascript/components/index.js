@@ -36,10 +36,11 @@ export const coreComponents = [
       fetchTargetComputeUrls: {
         rhevm:
           '/api/clusters?expand=resources' +
-          '&attributes=ext_management_system.emstype,v_parent_datacenter,ext_management_system.name' +
+          '&attributes=ext_management_system.emstype,v_parent_datacenter,ext_management_system.name,hosts' +
           '&filter[]=ext_management_system.emstype=rhevm',
         openstack: '/api/cloud_tenants?expand=resources&attributes=ext_management_system.name'
-      }
+      },
+      queryHostsUrl: '/api/hosts?attributes=tags'
     },
     store: true
   },
