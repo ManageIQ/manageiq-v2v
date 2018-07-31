@@ -35,7 +35,7 @@ const Migrations = ({
   addNotificationAction,
   toggleScheduleMigrationModal,
   scheduleMigrationModal,
-  scheduleMigrationPlanId,
+  scheduleMigrationPlan,
   scheduleMigration
 }) => {
   const filterOptions = [
@@ -113,7 +113,7 @@ const Migrations = ({
               hideConfirmModalAction={hideConfirmModalAction}
               toggleScheduleMigrationModal={toggleScheduleMigrationModal}
               scheduleMigrationModal={scheduleMigrationModal}
-              scheduleMigrationPlanId={scheduleMigrationPlanId}
+              scheduleMigrationPlan={scheduleMigrationPlan}
               scheduleMigration={scheduleMigration}
               fetchTransformationPlansAction={fetchTransformationPlansAction}
               fetchTransformationPlansUrl={fetchTransformationPlansUrl}
@@ -143,6 +143,10 @@ const Migrations = ({
               fetchTransformationPlansAction={fetchTransformationPlansAction}
               fetchTransformationPlansUrl={fetchTransformationPlansUrl}
               addNotificationAction={addNotificationAction}
+              toggleScheduleMigrationModal={toggleScheduleMigrationModal}
+              scheduleMigrationModal={scheduleMigrationModal}
+              scheduleMigrationPlan={scheduleMigrationPlan}
+              scheduleMigration={scheduleMigration}
             />
           )}
           {activeFilter === MIGRATIONS_FILTERS.archived && (
@@ -187,7 +191,7 @@ Migrations.propTypes = {
   addNotificationAction: PropTypes.func,
   toggleScheduleMigrationModal: PropTypes.func,
   scheduleMigrationModal: PropTypes.bool,
-  scheduleMigrationPlanId: PropTypes.string,
+  scheduleMigrationPlan: PropTypes.object,
   scheduleMigration: PropTypes.func
 };
 Migrations.defaultProps = {
