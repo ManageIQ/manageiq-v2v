@@ -233,31 +233,41 @@ export const archiveTransformationPlanAction = (url, id) => {
   return _archiveTransformationPlanActionCreator(uri.toString());
 };
 
-export const toggleScheduleMigrationModal = planId => ({
+export const toggleScheduleMigrationModal = plan => ({
   type: V2V_TOGGLE_SCHEDULE_MIGRATION_MODAL,
-  payload: planId
+  payload: plan
 });
 
 export const scheduleMigration = payload => dispatch =>
   dispatch({
     type: V2V_SCHEDULE_MIGRATION,
     payload: new Promise((resolve, reject) => {
-      let url = `/api/service_templates/${payload.planId}`;
+      const {
+        scheduleTime,
+        plan: { id: planId }
+      } = payload;
+      const scheduleId = (payload.plan.schedules && payload.plan.schedules[0].id) || null;
+      let url = `/api/service_templates/${planId}`;
       let body = {
         action: 'order',
         resource: {
-          schedule_time: payload.scheduleTime
+          schedule_time: scheduleTime
         }
       };
-      if (payload.scheduleId) {
-        url = `${url}/schedules/${payload.scheduleId}`;
-        body = { action: 'delete' };
+      if (scheduleId) {
+        url = `${url}/schedules/${scheduleId}`;
+        body = scheduleTime
+          ? {
+              action: 'edit',
+              resource: { run_at: { ...payload.plan.schedules[0].run_at, start_time: scheduleTime } }
+            }
+          : { action: 'delete' };
       }
       return API.post(url, body)
         .then(response => {
           resolve(response);
           let msg = __('Migration successfully unscheduled');
-          if (payload.scheduleTime) {
+          if (scheduleTime) {
             msg = sprintf(
               __('Migration successfully scheduled for %s'),
               formatDateTime(response.data.run_at.start_time)

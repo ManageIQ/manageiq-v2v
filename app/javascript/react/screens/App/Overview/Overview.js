@@ -237,7 +237,7 @@ class Overview extends React.Component {
       isRejectedDatastores,
       toggleScheduleMigrationModal,
       scheduleMigrationModal,
-      scheduleMigrationPlanId,
+      scheduleMigrationPlan,
       scheduleMigration
     } = this.props;
 
@@ -324,7 +324,7 @@ class Overview extends React.Component {
               addNotificationAction={addNotificationAction}
               toggleScheduleMigrationModal={toggleScheduleMigrationModal}
               scheduleMigrationModal={scheduleMigrationModal}
-              scheduleMigrationPlanId={scheduleMigrationPlanId}
+              scheduleMigrationPlan={scheduleMigrationPlan}
               scheduleMigration={scheduleMigration}
             />
           )}
@@ -452,7 +452,7 @@ Overview.propTypes = {
   fetchDatastoresAction: PropTypes.func,
   toggleScheduleMigrationModal: PropTypes.func,
   scheduleMigrationModal: PropTypes.bool,
-  scheduleMigrationPlanId: PropTypes.string,
+  scheduleMigrationPlan: PropTypes.object,
   scheduleMigration: PropTypes.func
 };
 export default Overview;
