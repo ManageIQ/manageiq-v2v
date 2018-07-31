@@ -170,13 +170,18 @@ const MigrationsInProgressCard = ({
   // Tooltips
   const vmBarLabel = (
     <span>
-      <strong className="label-strong">{sprintf(__('%s of %s VMs'), completedVMs, totalVMs)}</strong> {__('migrated')}
+      <strong id="vms-migrated" className="label-strong">
+        {sprintf(__('%s of %s VMs'), completedVMs, totalVMs)}
+      </strong>{' '}
+      {__('migrated')}
     </span>
   );
 
   const diskSpaceBarLabel = (
     <span>
-      <strong className="label-strong">{sprintf(__('%s of %s'), totalMigratedDiskSpaceGb, totalDiskSpaceGb)}</strong>{' '}
+      <strong id="size-migrated" className="label-strong">
+        {sprintf(__('%s of %s'), totalMigratedDiskSpaceGb, totalDiskSpaceGb)}
+      </strong>{' '}
       {__('migrated')}
     </span>
   );
