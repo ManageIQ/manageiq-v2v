@@ -52,7 +52,7 @@ const MappingWizardGeneralStep = props => {
         options={V2V_TARGET_PROVIDERS}
         option_key="id"
         option_value="name"
-        pre_selected_value={V2V_TARGET_PROVIDERS[0].id}
+        pre_selected_value={props.targetProvider || V2V_TARGET_PROVIDERS[0].id}
         labelWidth={2}
         controlWidth={9}
         inline_label
@@ -69,7 +69,7 @@ MappingWizardGeneralStep.propTypes = {
 };
 
 MappingWizardGeneralStep.defaultProps = {
-  targetProvider: 'rhevm',
+  targetProvider: '',
   dispatch: noop
 };
 
