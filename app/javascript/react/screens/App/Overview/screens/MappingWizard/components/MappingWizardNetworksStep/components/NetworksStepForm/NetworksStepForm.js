@@ -8,6 +8,7 @@ import DualPaneMapperCount from '../../../DualPaneMapper/DualPaneMapperCount';
 import DualPaneMapperListItem from '../../../DualPaneMapper/DualPaneMapperListItem';
 import MappingWizardTreeView from '../../../MappingWizardTreeView/MappingWizardTreeView';
 import { networkKey } from '../../../../../../../common/networkKey';
+import { multiProviderTargetLabel } from '../../../helpers';
 
 import {
   sourceNetworksFilter,
@@ -274,7 +275,8 @@ class NetworksStepForm extends React.Component {
       isFetchingSourceNetworks,
       isFetchingTargetNetworks,
       input,
-      selectedCluster
+      selectedCluster,
+      targetProvider
     } = this.props;
     const { selectedSourceNetworks, selectedTargetNetwork, selectedNode } = this.state;
 
@@ -291,13 +293,18 @@ class NetworksStepForm extends React.Component {
 
     return (
       <div className={classes}>
+        <p style={{ marginLeft: -48 }}>
+          {__(
+            'Select one or more source networks to map to a single target. Select Add Mapping. Multiple mappings can be added.') // prettier-ignore
+          }
+        </p>
         <DualPaneMapper
           handleButtonClick={this.addNetworkMapping}
           validMapping={!(selectedTargetNetwork && (selectedSourceNetworks && selectedSourceNetworks.length > 0))}
         >
           <DualPaneMapperList
             id="source_networks"
-            listTitle={__('Source Networks')}
+            listTitle={__('Source Provider \\ Datacenter \\ Network')}
             loading={isFetchingSourceNetworks}
             counter={counter}
           >
@@ -305,7 +312,9 @@ class NetworksStepForm extends React.Component {
               sourceNetworksFilter(groupedSourceNetworks, input.value).map(sourceNetwork => (
                 <DualPaneMapperListItem
                   item={sourceNetwork}
-                  text={`${sourceNetwork.providerName} \\ ${sourceNetwork.name}`}
+                  text={`${sourceNetwork.providerName} \\ ${selectedCluster.v_parent_datacenter} \\ ${
+                    sourceNetwork.name
+                  }`}
                   key={sourceNetwork.id}
                   selected={
                     selectedSourceNetworks &&
@@ -318,7 +327,11 @@ class NetworksStepForm extends React.Component {
                 />
               ))}
           </DualPaneMapperList>
-          <DualPaneMapperList id="target_networks" listTitle={__('Target Networks')} loading={isFetchingTargetNetworks}>
+          <DualPaneMapperList
+            id="target_networks"
+            listTitle={multiProviderTargetLabel(targetProvider, 'network')}
+            loading={isFetchingTargetNetworks}
+          >
             {groupedTargetNetworks &&
               getRepresentatives(groupedTargetNetworks).map(targetNetwork => (
                 <DualPaneMapperListItem
@@ -351,7 +364,8 @@ NetworksStepForm.propTypes = {
   isFetchingSourceNetworks: PropTypes.bool,
   isFetchingTargetNetworks: PropTypes.bool,
   selectedCluster: PropTypes.object,
-  selectedClusterMapping: PropTypes.object
+  selectedClusterMapping: PropTypes.object,
+  targetProvider: PropTypes.string
 };
 
 export default NetworksStepForm;
