@@ -11,8 +11,6 @@ const MappingWizardTreeView = ({ mappings, selectNode, removeNode, removeAll, se
       ) : (
         <div className="treeview__is-empty">
           <h3>{__('No mappings have been added yet')}</h3>
-          <p>{__('Select source cluster(s) and a target cluster and click Add Mapping to add the mapping.')}</p>
-          <p>{__('Multiple mappings can be added')}</p>
         </div>
       )}
     </div>
