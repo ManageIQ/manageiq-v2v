@@ -63,3 +63,14 @@ STATUS_MESSAGES[STATUS_MESSAGE_KEYS.VM_MIGRATIONS_FAILED] = __('VM migrations fa
 STATUS_MESSAGES[STATUS_MESSAGE_KEYS.CANCELLED] = __('VM cancelled');
 
 export { STATUS_MESSAGES as V2V_MIGRATION_STATUS_MESSAGES };
+
+export const PLAN_JOB_STATES = {
+  PENDING: 'pending',
+  ACTIVE: 'active',
+  FINISHED: 'finished'
+};
+
+export const PLAN_JOB_STATUS = {
+  OK: 'Ok',
+  ERROR: 'Error'
+};
