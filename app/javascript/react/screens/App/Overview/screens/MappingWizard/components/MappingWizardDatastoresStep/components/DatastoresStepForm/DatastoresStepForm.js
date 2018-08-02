@@ -10,6 +10,7 @@ import MappingWizardTreeView from '../../../MappingWizardTreeView/MappingWizardT
 
 import { sourceDatastoreFilter } from '../../MappingWizardDatastoresStepSelectors';
 import { targetDatastoreTreeViewInfo, sourceDatastoreInfo, targetDatastoreInfo, updateMappings } from './helpers';
+import { multiProviderTargetLabel } from '../../../helpers';
 
 class DatastoresStepForm extends React.Component {
   state = {
@@ -248,7 +249,8 @@ class DatastoresStepForm extends React.Component {
       isFetchingSourceDatastores,
       isFetchingTargetDatastores,
       input,
-      selectedCluster
+      selectedCluster,
+      targetProvider
     } = this.props;
     const { selectedSourceDatastores, selectedTargetDatastore, selectedNode } = this.state;
 
@@ -297,7 +299,7 @@ class DatastoresStepForm extends React.Component {
           </DualPaneMapperList>
           <DualPaneMapperList
             id="target_datastores"
-            listTitle={__('Target Datastores')}
+            listTitle={multiProviderTargetLabel(targetProvider, 'storage')}
             loading={isFetchingTargetDatastores}
           >
             {targetDatastores &&
@@ -334,5 +336,6 @@ DatastoresStepForm.propTypes = {
   sourceDatastores: PropTypes.array,
   targetDatastores: PropTypes.array,
   isFetchingSourceDatastores: PropTypes.bool,
-  isFetchingTargetDatastores: PropTypes.bool
+  isFetchingTargetDatastores: PropTypes.bool,
+  targetProvider: PropTypes.string
 };

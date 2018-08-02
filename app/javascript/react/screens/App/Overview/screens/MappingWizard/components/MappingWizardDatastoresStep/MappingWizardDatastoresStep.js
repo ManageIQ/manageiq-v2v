@@ -88,7 +88,8 @@ class MappingWizardDatastoresStep extends React.Component {
       sourceDatastores,
       targetDatastores,
       form,
-      showAlertAction
+      showAlertAction,
+      targetProvider
     } = this.props;
 
     const { selectedCluster, selectedClusterMapping } = this.state;
@@ -127,6 +128,7 @@ class MappingWizardDatastoresStep extends React.Component {
           isFetchingTargetDatastores={isFetchingTargetDatastores}
           validate={length({ min: 1 })}
           showAlertAction={showAlertAction}
+          targetProvider={targetProvider}
         />
       </div>
     );
