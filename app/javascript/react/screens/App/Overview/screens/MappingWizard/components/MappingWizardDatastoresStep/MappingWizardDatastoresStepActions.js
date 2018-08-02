@@ -5,6 +5,7 @@ import {
   FETCH_V2V_TARGET_DATASTORES,
   QUERY_ATTRIBUTES
 } from './MappingWizardDatastoresStepConstants';
+import { V2V_TARGET_PROVIDER_STORAGE_KEYS } from '../../MappingWizardConstants';
 
 const _filterSourceDatastores = response => {
   const { data } = response;
@@ -44,10 +45,11 @@ export const fetchSourceDatastoresAction = (url, id) => {
   return _getSourceDatastoresActionCreator(uri.toString());
 };
 
-const _filterTargetDatastores = response => {
+const _filterTargetDatastores = (response, targetProvider) => {
   const { data } = response;
-  if (data.storages) {
-    const targetDatastores = data.storages.map(storage => ({
+
+  if (data[V2V_TARGET_PROVIDER_STORAGE_KEYS[targetProvider]]) {
+    const targetDatastores = data[V2V_TARGET_PROVIDER_STORAGE_KEYS[targetProvider]].map(storage => ({
       ...storage,
       providerName: data.ext_management_system.name
     }));
@@ -60,13 +62,13 @@ const _filterTargetDatastores = response => {
   };
 };
 
-const _getTargetDatastoresActionCreator = url => dispatch =>
+const _getTargetDatastoresActionCreator = (url, targetProvider) => dispatch =>
   dispatch({
     type: FETCH_V2V_TARGET_DATASTORES,
     payload: new Promise((resolve, reject) => {
       API.get(url)
         .then(response => {
-          resolve(_filterTargetDatastores(response));
+          resolve(_filterTargetDatastores(response, targetProvider));
         })
         .catch(e => reject(e));
     })
@@ -77,5 +79,5 @@ export const fetchTargetDatastoresAction = (url, id, targetProvider) => {
   // creates url like: http://localhost:3000/api/clusters/1?attributes=storages
   uri.addSearch({ attributes: QUERY_ATTRIBUTES[targetProvider] });
 
-  return _getTargetDatastoresActionCreator(uri.toString());
+  return _getTargetDatastoresActionCreator(uri.toString(), targetProvider);
 };
