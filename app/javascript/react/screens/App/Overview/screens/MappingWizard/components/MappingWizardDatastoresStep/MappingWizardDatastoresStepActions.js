@@ -12,7 +12,8 @@ const _filterSourceDatastores = response => {
   if (data.storages) {
     const sourceDatastores = data.storages.map(storage => ({
       ...storage,
-      providerName: data.ext_management_system.name
+      providerName: data.ext_management_system.name,
+      datacenterName: data.v_parent_datacenter
     }));
     return {
       sourceDatastores
@@ -40,7 +41,7 @@ const _getSourceDatastoresActionCreator = url => dispatch =>
 export const fetchSourceDatastoresAction = (url, id) => {
   const uri = new URI(`${url}/${id}`);
   // creates url like: http://localhost:3000/api/clusters/1?attributes=storages
-  uri.addSearch({ attributes: QUERY_ATTRIBUTES.source });
+  uri.addSearch({ attributes: `${QUERY_ATTRIBUTES.source},v_parent_datacenter` });
 
   return _getSourceDatastoresActionCreator(uri.toString());
 };
