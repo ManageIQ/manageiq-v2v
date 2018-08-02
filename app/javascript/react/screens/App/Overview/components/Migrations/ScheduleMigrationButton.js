@@ -11,7 +11,8 @@ const ScheduleMigrationButton = ({
   scheduleMigration,
   fetchTransformationPlansAction,
   fetchTransformationPlansUrl,
-  plan
+  plan,
+  isMissingMapping
 }) => {
   const migrationScheduled = plan.schedules && plan.schedules[0].run_at.start_time;
   const staleMigrationSchedule = (new Date(migrationScheduled).getTime() || 0) < Date.now();
@@ -55,7 +56,7 @@ const ScheduleMigrationButton = ({
             e.stopPropagation();
             toggleScheduleMigrationModal({ plan });
           }}
-          disabled={loading === plan.href || plan.schedule_type}
+          disabled={isMissingMapping || loading === plan.href || plan.schedule_type}
         >
           {__('Schedule')}
         </Button>
@@ -71,7 +72,7 @@ const ScheduleMigrationButton = ({
               onConfirm
             });
           }}
-          disabled={loading === plan.href}
+          disabled={isMissingMapping || loading === plan.href}
         >
           {__('Unschedule')}
         </Button>
@@ -88,7 +89,8 @@ ScheduleMigrationButton.propTypes = {
   scheduleMigration: PropTypes.func,
   fetchTransformationPlansAction: PropTypes.func,
   fetchTransformationPlansUrl: PropTypes.string,
-  plan: PropTypes.object
+  plan: PropTypes.object,
+  isMissingMapping: PropTypes.bool
 };
 
 export default ScheduleMigrationButton;

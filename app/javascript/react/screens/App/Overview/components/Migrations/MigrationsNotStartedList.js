@@ -84,6 +84,7 @@ class MigrationsNotStartedList extends React.Component {
                 <ListView className="plans-not-started-list" style={{ marginTop: 0 }}>
                   {sortedMigrations.map(plan => {
                     const migrationScheduled = plan.schedules && plan.schedules[0].run_at.start_time;
+                    const isMissingMapping = !plan.infraMappingName;
 
                     return (
                       <ListView.Item
@@ -103,13 +104,14 @@ class MigrationsNotStartedList extends React.Component {
                               fetchTransformationPlansAction={fetchTransformationPlansAction}
                               fetchTransformationPlansUrl={fetchTransformationPlansUrl}
                               plan={plan}
+                              isMissingMapping={isMissingMapping}
                             />
                             <Button
                               onClick={e => {
                                 e.stopPropagation();
                                 migrateClick(plan.href);
                               }}
-                              disabled={loading === plan.href || plan.schedule_type}
+                              disabled={isMissingMapping || loading === plan.href || plan.schedule_type}
                             >
                               {__('Migrate')}
                             </Button>
@@ -127,9 +129,15 @@ class MigrationsNotStartedList extends React.Component {
                             <Icon type="pf" name="virtual-machine" />
                             <strong>{plan.options.config_info.actions.length}</strong> {__('VMs')}
                           </ListView.InfoItem>,
-                          <ListView.InfoItem key={`${plan.id}-infraMappingName`}>
-                            {plan.infraMappingName}
-                          </ListView.InfoItem>,
+                          isMissingMapping ? (
+                            <ListView.InfoItem key={`${plan.id}-infraMappingWarning`}>
+                              <Icon type="pf" name="warning-triangle-o" /> {__('Infrastucture mapping does not exist.')}
+                            </ListView.InfoItem>
+                          ) : (
+                            <ListView.InfoItem key={`${plan.id}-infraMappingName`}>
+                              {plan.infraMappingName}
+                            </ListView.InfoItem>
+                          ),
                           migrationScheduled && (
                             <ListView.InfoItem key={plan.id + 1} style={{ textAlign: 'left' }}>
                               <Icon type="fa" name="clock-o" />
