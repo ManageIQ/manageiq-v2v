@@ -45,6 +45,7 @@ class InfrastructureMappingsList extends React.Component {
       transformationMappingsMutable: this.state.transformationMappingsMutable
     });
   };
+
   closeExpand = mapping => {
     mapping.expanded = false;
     this.setState({
@@ -52,13 +53,45 @@ class InfrastructureMappingsList extends React.Component {
     });
   };
 
+  renderEmptyState = ({ divider }) => (
+    <React.Fragment>
+      {divider && <hr className="infra-mapping-empty-state-divider" />}
+      <OverviewEmptyState
+        showWizardAction={this.props.createInfraMappingClick}
+        description={__('Create an infrastructure mapping to later be used by a migration plan')}
+        buttonText={__('Create Infrastructure Mapping')}
+      />
+    </React.Fragment>
+  );
+
+  renderHeadingWithLink = () => (
+    <div className="heading-with-link-container">
+      <div className="pull-left">
+        <h3>{__('Infrastructure Mappings')}</h3>
+      </div>
+      <div className="pull-right">
+        {/** todo: create IconLink in patternfly-react * */}
+        <a
+          href="#"
+          onClick={e => {
+            e.preventDefault();
+            this.props.createInfraMappingClick();
+          }}
+        >
+          <Icon type="pf" name="add-circle-o" />
+          {` `}
+          {__('Create Infrastructure Mapping')}
+        </a>
+      </div>
+    </div>
+  );
+
   render() {
     const {
       clusters,
       networks,
       datastores,
       error,
-      createInfraMappingClick,
       inProgressRequestsTransformationMappings,
       showDeleteConfirmationModalAction,
       setMappingToDeleteAction,
@@ -67,7 +100,8 @@ class InfrastructureMappingsList extends React.Component {
       mappingToDelete,
       yesToDeleteInfrastructureMappingAction,
       notStartedTransformationPlans,
-      finishedWithErrorTransformationPlans
+      finishedWithErrorTransformationPlans,
+      migrationPlansExist
     } = this.props;
 
     const { transformationMappingsMutable } = this.state;
@@ -83,26 +117,7 @@ class InfrastructureMappingsList extends React.Component {
         >
           {transformationMappingsMutable.length > 0 ? (
             <React.Fragment>
-              <div className="heading-with-link-container">
-                <div className="pull-left">
-                  <h3>{__('Infrastructure Mappings')}</h3>
-                </div>
-                <div className="pull-right">
-                  {/** todo: create IconLink in patternfly-react * */}
-                  <a
-                    href="#"
-                    onClick={e => {
-                      e.preventDefault();
-                      createInfraMappingClick();
-                    }}
-                  >
-                    <Icon type="pf" name="add-circle-o" />
-                    {` `}
-                    {__('Create Infrastructure Mapping')}
-                  </a>
-                </div>
-              </div>
-
+              {this.renderHeadingWithLink()}
               {error ? (
                 <OverviewEmptyState
                   title={__('Error loading mappings.')}
@@ -446,11 +461,10 @@ class InfrastructureMappingsList extends React.Component {
               )}
             </React.Fragment>
           ) : (
-            <OverviewEmptyState
-              showWizardAction={createInfraMappingClick}
-              description={__('Create an infrastructure mapping to later be used by a migration plan.')}
-              buttonText={__('Create Infrastructure Mapping')}
-            />
+            <React.Fragment>
+              {migrationPlansExist && this.renderHeadingWithLink()}
+              {this.renderEmptyState({ divider: migrationPlansExist })}
+            </React.Fragment>
           )}
         </Grid.Col>
         <DeleteInfrastructureMappingConfirmationModal
@@ -481,7 +495,8 @@ InfrastructureMappingsList.propTypes = {
   mappingToDelete: PropTypes.object,
   yesToDeleteInfrastructureMappingAction: PropTypes.func,
   notStartedTransformationPlans: PropTypes.array,
-  finishedWithErrorTransformationPlans: PropTypes.array
+  finishedWithErrorTransformationPlans: PropTypes.array,
+  migrationPlansExist: PropTypes.bool
 };
 
 export default InfrastructureMappingsList;

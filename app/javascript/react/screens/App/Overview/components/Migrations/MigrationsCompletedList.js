@@ -182,6 +182,8 @@ class MigrationsCompletedList extends React.Component {
                       onConfirm
                     };
 
+                    const isMissingMapping = !plan.infraMappingName;
+
                     return (
                       <ListView.Item
                         stacked
@@ -224,9 +226,15 @@ class MigrationsCompletedList extends React.Component {
                             {__('of')} &nbsp;<strong>{Object.keys(tasks).length} </strong>
                             {__('VMs successfully migrated.')}
                           </ListView.InfoItem>,
-                          <ListView.InfoItem key={`${plan.id}-infraMappingName`}>
-                            {plan.infraMappingName}
-                          </ListView.InfoItem>,
+                          plan.infraMappingName ? (
+                            <ListView.InfoItem key={`${plan.id}-infraMappingName`}>
+                              {plan.infraMappingName}
+                            </ListView.InfoItem>
+                          ) : (
+                            <ListView.InfoItem key={`${plan.id}-infraMappingWarning`}>
+                              <Icon type="pf" name="warning-triangle-o" /> {__('Infrastructure mapping does not exist')}
+                            </ListView.InfoItem>
+                          ),
                           <ListView.InfoItem key={`${plan.id}-elapsed`}>
                             <ListView.Icon type="fa" size="lg" name="clock-o" />
                             {elapsedTime}
@@ -243,8 +251,8 @@ class MigrationsCompletedList extends React.Component {
                         ]}
                         actions={
                           !archived && (
-                            <div onClick={e => e.stopPropagation()} // eslint-disable-line
-                            >
+                            // eslint-disable-next-line
+                            <div onClick={e => e.stopPropagation()}>
                               {failed && (
                                 <React.Fragment>
                                   <ScheduleMigrationButton
@@ -256,13 +264,14 @@ class MigrationsCompletedList extends React.Component {
                                     fetchTransformationPlansAction={fetchTransformationPlansAction}
                                     fetchTransformationPlansUrl={fetchTransformationPlansUrl}
                                     plan={plan}
+                                    isMissingMapping={isMissingMapping}
                                   />
                                   <Button
                                     onClick={e => {
                                       e.stopPropagation();
                                       retryClick(plan.href, plan.id);
                                     }}
-                                    disabled={loading === plan.href}
+                                    disabled={isMissingMapping || loading === plan.href}
                                   >
                                     {__('Retry')}
                                   </Button>
