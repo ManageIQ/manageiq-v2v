@@ -101,7 +101,7 @@ class MappingWizardDatastoresStep extends React.Component {
       <div>
         <Field
           name="cluster_select"
-          label={__('Map source datastores to target datastores for cluster')}
+          label={__('Select a source cluster whose datastores you want to map')}
           data_live_search="true"
           component={BootstrapSelect}
           options={clusterOptions}

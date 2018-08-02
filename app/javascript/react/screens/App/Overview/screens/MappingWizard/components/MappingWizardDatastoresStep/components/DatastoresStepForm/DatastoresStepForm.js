@@ -265,13 +265,18 @@ class DatastoresStepForm extends React.Component {
 
     return (
       <div className={classes}>
+        <p style={{ marginLeft: -40 }}>
+          {__(
+            'Select source cluster(s) and a target cluster and click Add Mapping to add the mapping. Multiple mappings can be added.') // prettier-ignore
+          }
+        </p>
         <DualPaneMapper
           handleButtonClick={this.addDatastoreMapping}
           validMapping={!(selectedTargetDatastore && (selectedSourceDatastores && selectedSourceDatastores.length > 0))}
         >
           <DualPaneMapperList
             id="source_datastores"
-            listTitle={__('Source Datastores')}
+            listTitle={__('Source Provider \\ Datacenter \\ Datastore')}
             loading={isFetchingSourceDatastores}
             counter={counter}
           >
