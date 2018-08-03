@@ -7,7 +7,8 @@ module.exports = {
     $: true,
     __: true,
     n__: true,
-    sprintf: true
+    sprintf: true,
+    ManageIQ: true,
   },
   extends: [
     'standard',

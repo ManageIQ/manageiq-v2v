@@ -16,7 +16,6 @@ import IsoDate from './dates/IsoDate';
 import LongDateTime from './dates/LongDateTime';
 import RelativeDateTime from './dates/RelativeDateTime';
 import ShortDateTime from './dates/ShortDateTime';
-import ManageIQV2V from '../react';
 
 /**
  * NOTE: This should not exist, predefining (default) props should be in components not in some registry
@@ -190,8 +189,7 @@ export const coreComponents = [
     type: IsoDate,
     data: true,
     store: false
-  },
-  { name: 'manageiq-v2v', type: ManageIQV2V }
+  }
 ];
 
 export const componentSettings = component => coreComponents.find(n => n.type === component);

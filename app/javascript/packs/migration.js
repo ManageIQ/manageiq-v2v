@@ -2,6 +2,9 @@ import './polyfills';
 import componentRegistry from '../components/componentRegistry';
 import { mount } from '../components/mounter';
 import App from '../react/';
+import { coreComponents } from '../components';
+
+componentRegistry.registerMultiple(coreComponents);
 
 window.v2v = {
   mount,
