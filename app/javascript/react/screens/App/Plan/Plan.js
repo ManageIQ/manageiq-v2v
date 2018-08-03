@@ -151,7 +151,7 @@ class Plan extends React.Component {
         <Toolbar>
           <Breadcrumb.Item href="/dashboard/maintab?tab=compute">{__('Compute')}</Breadcrumb.Item>
           <li>
-            <Link to="/migration">{__('Migration')}</Link>
+            <Link to="/">{__('Migration')}</Link>
           </li>
           {!isRejectedPlan &&
             planName && (

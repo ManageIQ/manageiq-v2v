@@ -191,7 +191,7 @@ class MigrationsCompletedList extends React.Component {
                         onClick={e => {
                           e.stopPropagation();
 
-                          redirectTo(`/migration/plan/${plan.id}`);
+                          redirectTo(`/plan/${plan.id}`);
                         }}
                         key={plan.id}
                         leftContent={

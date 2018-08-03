@@ -91,7 +91,7 @@ class MigrationsNotStartedList extends React.Component {
                         stacked
                         className="plans-not-started-list__list-item"
                         onClick={() => {
-                          redirectTo(`/migration/plan/${plan.id}`);
+                          redirectTo(`/plan/${plan.id}`);
                         }}
                         actions={
                           <div>
