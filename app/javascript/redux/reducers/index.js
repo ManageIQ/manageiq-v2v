@@ -13,8 +13,8 @@ import { reducers as planWizardVMStepReducers } from '../../react/screens/App/Ov
 import { reducers as planWizardResultsStepReducers } from '../../react/screens/App/Overview/screens/PlanWizard/components/PlanWizardResultsStep';
 import { reducers as planWizardAdvancedOptionsStepReducers } from '../../react/screens/App/Overview/screens/PlanWizard/components/PlanWizardAdvancedOptionsStep';
 
-export function combineReducersAsync(asyncReducers) {
-  return combineReducers({
+export default () =>
+  combineReducers({
     ...notificationListReducers,
     ...planReducers,
     ...overviewReducers,
@@ -27,9 +27,5 @@ export function combineReducersAsync(asyncReducers) {
     ...planWizardVMStepReducers,
     ...planWizardResultsStepReducers,
     ...planWizardAdvancedOptionsStepReducers,
-    form: formReducer,
-    ...asyncReducers
+    form: formReducer
   });
-}
-
-export default combineReducersAsync();
