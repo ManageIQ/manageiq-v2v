@@ -17,11 +17,22 @@ class MappingWizardClustersStep extends React.Component {
       fetchSourceClustersAction,
       fetchTargetComputeUrls,
       fetchTargetClustersAction,
-      targetProvider
+      targetProvider,
+      queryHostsUrl,
+      queryHostsAction
     } = this.props;
 
     fetchSourceClustersAction(fetchSourceClustersUrl);
-    fetchTargetClustersAction(fetchTargetComputeUrls[targetProvider]);
+    fetchTargetClustersAction(fetchTargetComputeUrls[targetProvider]).then(result => {
+      const hostIDsByClusterID = result.value.data.resources.reduce(
+        (newObject, cluster) => ({
+          ...newObject,
+          [cluster.id]: cluster.hosts.map(host => host.id)
+        }),
+        {}
+      );
+      queryHostsAction(queryHostsUrl, hostIDsByClusterID);
+    });
   };
 
   render() {
@@ -32,7 +43,10 @@ class MappingWizardClustersStep extends React.Component {
       targetClusters,
       isRejectedSourceClusters,
       isRejectedTargetClusters,
-      targetProvider
+      targetProvider,
+      isFetchingHostsQuery,
+      isRejectedHostsQuery,
+      hostsByClusterID
     } = this.props;
 
     if (isRejectedSourceClusters || isRejectedTargetClusters) {
@@ -61,6 +75,9 @@ class MappingWizardClustersStep extends React.Component {
         isFetchingSourceClusters={isFetchingSourceClusters}
         isFetchingTargetClusters={isFetchingTargetClusters}
         targetProvider={targetProvider}
+        isFetchingHostsQuery={isFetchingHostsQuery}
+        isRejectedHostsQuery={isRejectedHostsQuery}
+        hostsByClusterID={hostsByClusterID}
       />
     );
   }
@@ -71,24 +88,34 @@ MappingWizardClustersStep.propTypes = {
   fetchSourceClustersAction: PropTypes.func,
   fetchTargetComputeUrls: PropTypes.object,
   fetchTargetClustersAction: PropTypes.func,
+  queryHostsUrl: PropTypes.string,
+  queryHostsAction: PropTypes.func,
   sourceClusters: PropTypes.arrayOf(PropTypes.object),
   targetClusters: PropTypes.arrayOf(PropTypes.object),
   isFetchingSourceClusters: PropTypes.bool,
   isFetchingTargetClusters: PropTypes.bool,
   isRejectedSourceClusters: PropTypes.bool,
   isRejectedTargetClusters: PropTypes.bool,
-  targetProvider: PropTypes.string
+  targetProvider: PropTypes.string,
+  isFetchingHostsQuery: PropTypes.bool,
+  isRejectedHostsQuery: PropTypes.bool,
+  hostsByClusterID: PropTypes.object
 };
 MappingWizardClustersStep.defaultProps = {
   fetchSourceClustersUrl: '',
   fetchSourceClustersAction: noop,
   fetchTargetComputeUrls: {},
   fetchTargetClustersAction: noop,
+  queryHostsUrl: '',
+  queryHostsAction: noop,
   isFetchingSourceClusters: true,
   isFetchingTargetClusters: true,
   isRejectedSourceClusters: false,
   isRejectedTargetClusters: false,
-  targetProvider: ''
+  targetProvider: '',
+  isFetchingHostsQuery: false,
+  isRejectedHostsQuery: false,
+  hostsByClusterID: {}
 };
 
 export default reduxForm({

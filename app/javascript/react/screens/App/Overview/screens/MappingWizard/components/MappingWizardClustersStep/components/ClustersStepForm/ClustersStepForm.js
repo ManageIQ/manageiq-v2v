@@ -104,7 +104,9 @@ class ClustersStepForm extends React.Component {
       isFetchingSourceClusters,
       isFetchingTargetClusters,
       input,
-      targetProvider
+      targetProvider,
+      isFetchingHostsQuery,
+      hostsByClusterID
     } = this.props;
 
     const { selectedTargetCluster, selectedSourceClusters, selectedMapping } = this.state;
@@ -115,6 +117,9 @@ class ClustersStepForm extends React.Component {
         totalItems={sourceClustersFilter(sourceClusters, input.value).length}
       />
     );
+
+    const targetConversionHostWarning =
+      __('At least one host in the target cluster must be enabled as a conversion host. You can continue to create an infrastructure mapping that includes the target cluster, but conversion host enablement must be completed prior to migration execution.'); // prettier-ignore
 
     return (
       <div className="dual-pane-mapper-form">
@@ -158,20 +163,28 @@ class ClustersStepForm extends React.Component {
               listTitle={multiProviderTargetLabel(targetProvider, 'cluster')}
               loading={isFetchingTargetClusters}
             >
-              {targetClusters.map(item => (
-                <DualPaneMapperListItem
-                  item={item}
-                  text={
-                    item.v_parent_datacenter
-                      ? `${item.ext_management_system.name} \\ ${item.v_parent_datacenter} \\ ${item.name}`
-                      : `${item.ext_management_system.name} \\ ${item.name}`
-                  }
-                  key={item.id}
-                  selected={selectedTargetCluster && selectedTargetCluster.id === item.id}
-                  handleClick={this.selectTargetCluster}
-                  handleKeyPress={this.selectTargetCluster}
-                />
-              ))}
+              {targetClusters.map(item => {
+                const hosts = hostsByClusterID && hostsByClusterID[item.id];
+                const someConversionHostEnabled =
+                  hosts &&
+                  hosts.some(host => host.tags.some(tag => tag.name === '/managed/v2v_transformation_host/true'));
+                const showWarning = hosts && !isFetchingHostsQuery && !someConversionHostEnabled;
+                return (
+                  <DualPaneMapperListItem
+                    item={item}
+                    text={
+                      item.v_parent_datacenter
+                        ? `${item.ext_management_system.name} \\ ${item.v_parent_datacenter} \\ ${item.name}`
+                        : `${item.ext_management_system.name} \\ ${item.name}`
+                    }
+                    key={item.id}
+                    selected={selectedTargetCluster && selectedTargetCluster.id === item.id}
+                    handleClick={this.selectTargetCluster}
+                    handleKeyPress={this.selectTargetCluster}
+                    warningMessage={showWarning && targetConversionHostWarning}
+                  />
+                );
+              })}
             </DualPaneMapperList>
           )}
         </DualPaneMapper>
@@ -195,7 +208,9 @@ ClustersStepForm.propTypes = {
   targetClusters: PropTypes.arrayOf(PropTypes.object),
   isFetchingSourceClusters: PropTypes.bool,
   isFetchingTargetClusters: PropTypes.bool,
-  targetProvider: PropTypes.string
+  targetProvider: PropTypes.string,
+  isFetchingHostsQuery: PropTypes.bool,
+  hostsByClusterID: PropTypes.object
 };
 
 export default ClustersStepForm;
