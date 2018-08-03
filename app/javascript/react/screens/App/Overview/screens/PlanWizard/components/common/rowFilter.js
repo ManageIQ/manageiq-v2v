@@ -18,7 +18,12 @@ export default function rowFilter(activeFilters, rows) {
   if (activeFilters && activeFilters.length && rows && rows.length) {
     const filteredRows = [];
     rows.forEach(row => {
-      const match = activeFilters.every(filter => `${row[filter.field.id] || ''}`.indexOf(filter.value) > -1);
+      const match = activeFilters.every(
+        filter =>
+          row[filter.field.id] && filter.value
+            ? `${row[filter.field.id].toLowerCase()}`.indexOf(filter.value.toLowerCase()) > -1
+            : null
+      );
       if (match) {
         filteredRows.push(row);
       }
