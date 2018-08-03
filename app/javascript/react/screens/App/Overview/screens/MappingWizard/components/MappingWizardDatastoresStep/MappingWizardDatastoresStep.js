@@ -147,11 +147,15 @@ MappingWizardDatastoresStep.propTypes = {
   form: PropTypes.string,
   pristine: PropTypes.bool,
   showAlertAction: PropTypes.func,
-  targetProvider: PropTypes.string
+  targetProvider: PropTypes.string,
 };
 MappingWizardDatastoresStep.defaultProps = {
   clusterMappings: [],
-  fetchStoragesUrls: {},
+  fetchStoragesUrls: {
+    source: 'api/clusters',
+    rhevm: 'api/clusters',
+    openstack: 'api/cloud_tenants'
+  },
   fetchSourceDatastoresAction: noop,
   fetchTargetDatastoresAction: noop,
   sourceDatastores: [],

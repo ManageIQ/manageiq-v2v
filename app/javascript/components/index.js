@@ -18,6 +18,11 @@ import RelativeDateTime from './dates/RelativeDateTime';
 import ShortDateTime from './dates/ShortDateTime';
 import ManageIQV2V from '../react';
 
+/**
+ * NOTE: This should not exist, predefining (default) props should be in components not in some registry
+ * This should be deleted and all the data should be moved to popper location.
+ * If you want to achieve adaptability, the simplest way is to move it into some redux store and connect components that need this
+ */
 export const coreComponents = [
   {
     name: 'MappingWizardContainer',
