@@ -122,7 +122,11 @@ class Plan extends React.Component {
       selectedTasksForCancel,
       updateSelectedTasksForCancelAction,
       deleteAllSelectedTasksForCancelAction,
-      markedForCancellation
+      markedForCancellation,
+      failedMigrations,
+      successfulMigrations,
+      notificationsSentList,
+      dispatchVMTasksCompletionNotificationAction
     } = this.props;
 
     const {
@@ -185,6 +189,10 @@ class Plan extends React.Component {
                 updateSelectedTasksForCancelAction={updateSelectedTasksForCancelAction}
                 deleteAllSelectedTasksForCancelAction={deleteAllSelectedTasksForCancelAction}
                 markedForCancellation={markedForCancellation}
+                failedMigrations={failedMigrations}
+                successfulMigrations={successfulMigrations}
+                notificationsSentList={notificationsSentList}
+                dispatchVMTasksCompletionNotificationAction={dispatchVMTasksCompletionNotificationAction}
               />
             )}
           {!planNotStarted &&
@@ -255,7 +263,11 @@ Plan.propTypes = {
   selectedTasksForCancel: PropTypes.array,
   updateSelectedTasksForCancelAction: PropTypes.func,
   deleteAllSelectedTasksForCancelAction: PropTypes.func,
-  markedForCancellation: PropTypes.array
+  markedForCancellation: PropTypes.array,
+  failedMigrations: PropTypes.array,
+  successfulMigrations: PropTypes.array,
+  notificationsSentList: PropTypes.array,
+  dispatchVMTasksCompletionNotificationAction: PropTypes.func
 };
 Plan.defaultProps = {
   planName: '',
