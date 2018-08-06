@@ -1,6 +1,8 @@
 import API from '../../../../../../../../common/API';
 import { POST_V2V_MIGRATION_PLANS, POST_V2V_MIGRATION_REQUESTS } from './PlanWizardResultsStepConstants';
 
+export { hidePlanWizardAction } from '../../PlanWizardActions';
+
 const postMigrationRequestsAction = (response, dispatch) => {
   dispatch({
     type: POST_V2V_MIGRATION_REQUESTS,
