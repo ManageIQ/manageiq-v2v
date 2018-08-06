@@ -19,7 +19,8 @@ import {
   REMOVE_TASKS_SELECTED_FOR_CANCELLATION,
   UPDATE_TASKS_SELECTED_FOR_CANCELLATION,
   DELETE_ALL_TASKS_SELECTED_FOR_CANCELLATION,
-  ADD_TASKS_TO_MARKED_FOR_CANCELLATION
+  ADD_TASKS_TO_MARKED_FOR_CANCELLATION,
+  ADD_TASK_TO_NOTIFICATION_SENT_LIST
 } from './PlanConstants';
 
 export const initialState = Immutable({
@@ -47,7 +48,10 @@ export const initialState = Immutable({
   errorOrchestrationStack: null,
   orchestrationStack: {},
   selectedTasksForCancel: [],
-  markedForCancellation: []
+  markedForCancellation: [],
+  failedMigrations: [],
+  successfulMigrations: [],
+  notificationsSentList: []
 });
 
 const excludeDownloadDoneTaskId = (allDownloadLogInProgressTaskIds, taskId) =>
@@ -60,6 +64,14 @@ const removeCancelledTasksFromSelection = (allSelectedTasksForCancel, alreadyCan
   allSelectedTasksForCancel.filter(selectedTask =>
     alreadyCancelledTasks.every(cancelledTask => selectedTask.id !== cancelledTask.id)
   );
+
+const taskCompletedSuccessfully = task => task.state === 'finished' && task.status === 'Ok';
+
+const taskCompletedUnsuccessfully = task => task.state === 'finished' && task.status !== 'Ok';
+
+const getFailedMigrations = vmTasks => vmTasks.filter(task => taskCompletedUnsuccessfully(task));
+
+const getSuccessfulMigrations = vmTasks => vmTasks.filter(task => taskCompletedSuccessfully(task));
 
 const processVMTasks = vmTasks => {
   const tasks = [];
@@ -175,6 +187,10 @@ export default (state = initialState, action) => {
       return state.set('isFetchingPlanRequest', true).set('isRejectedPlanRequest', false);
     case `${FETCH_V2V_ALL_REQUESTS_WITH_TASKS_FOR_PLAN}_FULFILLED`:
       if (action.payload.data) {
+        const vmTasksForRequestOfPlan = allVMTasksForRequestOfPlan(
+          action.payload.data.results,
+          state.plan.options.config_info.actions
+        );
         return state
           .set(
             'planRequestTasks',
@@ -194,6 +210,8 @@ export default (state = initialState, action) => {
             'planRequestFailed',
             commonUtilitiesHelper.getMostRecentEntityByCreationDate(action.payload.data.results).status === 'Error'
           )
+          .set('failedMigrations', getFailedMigrations(vmTasksForRequestOfPlan))
+          .set('successfulMigrations', getSuccessfulMigrations(vmTasksForRequestOfPlan))
           .set('isRejectedPlanRequest', false)
           .set('errorPlanRequest', null)
           .set('isFetchingPlanRequest', false);
@@ -297,6 +315,9 @@ export default (state = initialState, action) => {
 
     case DELETE_ALL_TASKS_SELECTED_FOR_CANCELLATION:
       return state.set('selectedTasksForCancel', []);
+
+    case ADD_TASK_TO_NOTIFICATION_SENT_LIST:
+      return state.set('notificationsSentList', state.notificationsSentList.concat(action.payload));
 
     default:
       return state;
