@@ -26,9 +26,10 @@ class PlanWizardResultsStep extends React.Component {
       isRejectedPostingPlans,
       migrationPlansResult,
       migrationRequestsResult,
-      errorPostingPlans, // eslint-disable-line no-unused-vars
+      errorPostingPlans,
       plansBody,
-      planSchedule
+      planSchedule,
+      hidePlanWizardAction
     } = this.props;
 
     if (isPostingPlans) {
@@ -42,17 +43,17 @@ class PlanWizardResultsStep extends React.Component {
         </div>
       );
     } else if (isRejectedPostingPlans) {
+      const errorData = errorPostingPlans && errorPostingPlans.data;
+      const errorMessage = errorData && errorData.error && errorData.error.message;
       return (
         <div className="wizard-pf-complete blank-slate-pf">
           <div className="wizard-pf-success-icon">
             <span className="pficon pficon-error-circle-o" />
           </div>
           <h3 className="blank-slate-pf-main-action">{__('Error Creating Migration Plans')}</h3>
-          <p className="blank-slate-pf-secondary-action">
-            {__("We're sorry, something went wrong. Please try again.")}
-          </p>
-          <button type="button" className="btn btn-lg btn-primary">
-            {__('Retry')}
+          <p className="blank-slate-pf-secondary-action">{errorMessage}</p>
+          <button type="button" className="btn btn-lg btn-primary" onClick={hidePlanWizardAction}>
+            {__('Close')}
           </button>
         </div>
       );
@@ -77,7 +78,8 @@ PlanWizardResultsStep.propTypes = {
   isRejectedPostingPlans: PropTypes.bool,
   errorPostingPlans: PropTypes.object,
   migrationPlansResult: PropTypes.object,
-  migrationRequestsResult: PropTypes.object
+  migrationRequestsResult: PropTypes.object,
+  hidePlanWizardAction: PropTypes.func
 };
 PlanWizardResultsStep.defaultProps = {
   postPlansUrl: '',
@@ -88,6 +90,7 @@ PlanWizardResultsStep.defaultProps = {
   isRejectedPostingPlans: false,
   errorPostingPlans: null,
   migrationPlansResult: null,
-  migrationRequestsResult: null
+  migrationRequestsResult: null,
+  hidePlanWizardAction: noop
 };
 export default PlanWizardResultsStep;
