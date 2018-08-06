@@ -3,27 +3,111 @@ import PropTypes from 'prop-types';
 import { noop, Button, Icon, Wizard } from 'patternfly-react';
 import { createMigrationPlans } from './helpers';
 import PlanWizardBody from './PlanWizardBody';
-import { MIGRATIONS_FILTERS } from '../../OverviewConstants';
+import { MIGRATIONS_FILTERS, OSP_TENANT, OSP_VOLUME, OSP_NETWORK } from '../../OverviewConstants';
 
-const planWizardSteps = [
-  'planWizardGeneralStep',
-  'planWizardVMStep',
-  'planWizardAdvancedOptionsStep',
-  'planWizardScheduleStep',
-  'planWizardResultsStep'
-];
+import componentRegistry from '../../../../../../components/componentRegistry';
+import PlanWizardGeneralStep from '../PlanWizard/components/PlanWizardGeneralStep';
+import PlanWizardScheduleStep from '../PlanWizard/components/PlanWizardScheduleStep';
+
+const stepIDs = {
+  generalStep: 'planWizardGeneralStep',
+  vmStep: 'planWizardVMStep',
+  instancePropertiesStep: 'planWizardInstancePropertiesStep',
+  advancedOptionsStep: 'planWizardAdvancedOptionsStep',
+  scheduleStep: 'planWizardScheduleStep',
+  resultsStep: 'planWizardResultsStep'
+};
 
 class PlanWizard extends React.Component {
+  planWizardVMStepContainer = componentRegistry.markup('PlanWizardVMStepContainer');
+  planWizardResultsStepContainer = componentRegistry.markup('PlanWizardResultsStepContainer');
+  planWizardAdvancedOptionsStepContainer = componentRegistry.markup('PlanWizardAdvancedOptionsStepContainer');
+  planWizardInstancePropertiesStepContainer = componentRegistry.markup('PlanWizardInstancePropertiesStepContainer');
+
   state = { activeStepIndex: 0 };
+
+  getWizardSteps = () => {
+    const { planWizardGeneralStep, transformationMappings } = this.props;
+
+    const generalStep = {
+      id: stepIDs.generalStep,
+      title: __('General'),
+      render: () => <PlanWizardGeneralStep />,
+      disableGoto: !this.props.planWizardGeneralStep.values
+    };
+    const vmStep = {
+      id: stepIDs.vmStep,
+      title: __('VMs'),
+      render: () => this.planWizardVMStepContainer,
+      disableGoto: !this.props.planWizardVMStep.values
+    };
+    // eslint-disable-next-line no-unused-vars
+    const instancePropertiesStep = {
+      id: stepIDs.instancePropertiesStep,
+      title: __('Instance Properties'),
+      render: () => this.planWizardInstancePropertiesStepContainer,
+      disableGoto: true
+    };
+    const advancedOptionsStep = {
+      id: stepIDs.advancedOptionsStep,
+      title: __('Advanced Options'),
+      render: () => this.planWizardAdvancedOptionsStepContainer,
+      disableGoto: true
+    };
+    const scheduleStep = {
+      id: stepIDs.scheduleStep,
+      title: __('Schedule'),
+      render: () => <PlanWizardScheduleStep />,
+      disableGoto: true
+    };
+    const resultsStep = {
+      id: stepIDs.resultsStep,
+      title: __('Results'),
+      render: () => this.planWizardResultsStepContainer,
+      disableGoto: true
+    };
+
+    const selectedMappingId =
+      planWizardGeneralStep && planWizardGeneralStep.values && planWizardGeneralStep.values.infrastructure_mapping;
+    const selectedMapping = transformationMappings.find(mapping => mapping.id === selectedMappingId);
+
+    // eslint-disable-next-line no-unused-vars
+    const openstackTargetSelected =
+      selectedMapping &&
+      selectedMapping.transformation_mapping_items &&
+      selectedMapping.transformation_mapping_items.some(
+        item =>
+          item.destination_type === OSP_TENANT ||
+          item.destination_type === OSP_VOLUME ||
+          item.destination_type === OSP_NETWORK
+      );
+
+    // [mturley] the new instancePropertiesStep is incomplete, and disabled for now.
+    // [mturley] TODO: un-comment this block in the next PR.
+    /*
+    if (openstackTargetSelected) {
+      return [generalStep, vmStep, instancePropertiesStep, advancedOptionsStep, scheduleStep, resultsStep];
+    }
+    */
+
+    return [generalStep, vmStep, advancedOptionsStep, scheduleStep, resultsStep];
+  };
+
+  getActiveWizardStep = () => {
+    const { activeStepIndex } = this.state;
+    return this.getWizardSteps()[activeStepIndex];
+  };
 
   prevStep = () => {
     const { resetVmStepAction, resetAdvancedOptionsStepAction } = this.props;
     const { activeStepIndex } = this.state;
 
-    if (activeStepIndex === 1) {
+    const activeStep = this.getActiveWizardStep();
+
+    if (activeStep.id === stepIDs.vmStep) {
       // reset all vm step values if going back from that step
       resetVmStepAction();
-    } else if (activeStepIndex === 2) {
+    } else if (activeStep.id === stepIDs.advancedOptionsStep) {
       resetAdvancedOptionsStepAction();
     }
     this.setState({ activeStepIndex: Math.max(activeStepIndex - 1, 0) });
@@ -45,7 +129,10 @@ class PlanWizard extends React.Component {
       hideAlertAction
     } = this.props;
 
-    if (activeStepIndex === 0) {
+    const wizardSteps = this.getWizardSteps();
+    const activeStep = wizardSteps[activeStepIndex];
+
+    if (activeStep.id === stepIDs.generalStep) {
       if (planWizardGeneralStep.asyncErrors) {
         showAlertAction(sprintf(__('Name %s already exists'), planWizardGeneralStep.values.name));
         return;
@@ -54,14 +141,14 @@ class PlanWizard extends React.Component {
     }
 
     if (
-      activeStepIndex === 2 &&
+      activeStep.id === stepIDs.advancedOptionsStep &&
       ((planWizardAdvancedOptionsStep.values.preMigrationPlaybook &&
         planWizardAdvancedOptionsStep.values.playbookVms.preMigration.length === 0) ||
         (planWizardAdvancedOptionsStep.values.postMigrationPlaybook &&
           planWizardAdvancedOptionsStep.values.playbookVms.postMigration.length === 0))
     ) {
       const onConfirm = () => {
-        this.setState({ activeStepIndex: 3 });
+        this.goToStepId(stepIDs.scheduleStep);
         hideConfirmModalAction();
       };
 
@@ -74,7 +161,7 @@ class PlanWizard extends React.Component {
         backdropClassName: 'plan-wizard-confirm-backdrop',
         onConfirm
       });
-    } else if (activeStepIndex === 3) {
+    } else if (activeStep.id === stepIDs.scheduleStep) {
       const plansBody = createMigrationPlans(planWizardGeneralStep, planWizardVMStep, planWizardAdvancedOptionsStep);
 
       setPlanScheduleAction(planWizardScheduleStep.values.migration_plan_choice_radio);
@@ -85,13 +172,11 @@ class PlanWizard extends React.Component {
       } else if (planWizardScheduleStep.values.migration_plan_choice_radio === 'migration_plan_later') {
         setMigrationsFilterAction(MIGRATIONS_FILTERS.notStarted);
       }
-      this.setState({
-        activeStepIndex: Math.min(activeStepIndex + 1, planWizardSteps.length - 1)
-      });
+      this.goToStepId(stepIDs.resultsStep);
     } else {
-      this.setState({
-        activeStepIndex: Math.min(activeStepIndex + 1, planWizardSteps.length - 1)
-      });
+      // This is for steps that do not need any special logic on step change.
+      // In case the above logic doesn't explicitly take us to another step, we advance one step by index.
+      this.goToStep(Math.min(activeStepIndex + 1, wizardSteps.length - 1));
     }
   };
 
@@ -99,30 +184,38 @@ class PlanWizard extends React.Component {
     this.setState({ activeStepIndex });
   };
 
+  goToStepId = id => {
+    const targetStepIndex = this.getWizardSteps().findIndex(step => step.id === id);
+    if (targetStepIndex) {
+      this.goToStep(targetStepIndex);
+    }
+  };
+
   render() {
     const {
       hidePlanWizard,
       hidePlanWizardAction,
       planWizardExitedAction,
-      planWizardGeneralStep,
-      planWizardVMStep,
-      planWizardScheduleStep,
       alertText,
       alertType,
       hideAlertAction
     } = this.props;
 
+    const wizardSteps = this.getWizardSteps();
+
     const { activeStepIndex, plansBody } = this.state;
     const activeStep = (activeStepIndex + 1).toString();
     const onFirstStep = activeStepIndex === 0;
-    const onFinalStep = activeStepIndex === planWizardSteps.length - 1;
+    const onFinalStep = activeStepIndex === wizardSteps.length - 1;
 
-    const currentStepProp = !onFinalStep && planWizardSteps[activeStepIndex];
+    const currentStepProp = !onFinalStep && wizardSteps[activeStepIndex].id;
     const currentStepForm = !onFinalStep && this.props[currentStepProp];
 
+    const currentStepHasErrors = currentStepForm && (!!currentStepForm.syncErrors || !!currentStepForm.asyncErrors);
+
     const disableNextStep =
-      (!onFinalStep && (!!currentStepForm.syncErrors || !!currentStepForm.asyncErrors)) ||
-      (activeStepIndex === 1 &&
+      (!onFinalStep && currentStepHasErrors) ||
+      (activeStep.id === stepIDs.vmStep &&
         (!this.props.planWizardVMStep.values ||
           !this.props.planWizardVMStep.values.selectedVms ||
           this.props.planWizardVMStep.values.selectedVms.length === 0));
@@ -133,15 +226,13 @@ class PlanWizard extends React.Component {
 
         <Wizard.Body>
           <PlanWizardBody
+            wizardSteps={wizardSteps}
             loaded
             activeStepIndex={activeStepIndex}
             activeStep={activeStep}
             goToStep={this.goToStep}
             disableNextStep={disableNextStep}
             plansBody={plansBody}
-            planWizardGeneralStep={planWizardGeneralStep}
-            planWizardVMStep={planWizardVMStep}
-            planWizardScheduleStep={planWizardScheduleStep}
             alertText={alertText}
             alertType={alertType}
             hideAlertAction={hideAlertAction}
@@ -161,7 +252,7 @@ class PlanWizard extends React.Component {
             onClick={onFinalStep ? hidePlanWizardAction : this.nextStep}
             disabled={disableNextStep}
           >
-            {onFinalStep ? __('Close') : activeStepIndex === 3 ? __('Create') : __('Next')}
+            {onFinalStep ? __('Close') : activeStep.id === stepIDs.scheduleStep ? __('Create') : __('Next')}
             <Icon type="fa" name="angle-right" />
           </Button>
         </Wizard.Footer>
@@ -177,6 +268,7 @@ PlanWizard.propTypes = {
   planWizardVMStep: PropTypes.object,
   planWizardAdvancedOptionsStep: PropTypes.object, // eslint-disable-line react/no-unused-prop-types
   planWizardScheduleStep: PropTypes.object,
+  transformationMappings: PropTypes.array,
   setPlansBodyAction: PropTypes.func,
   setPlanScheduleAction: PropTypes.func,
   resetVmStepAction: PropTypes.func,
@@ -197,6 +289,7 @@ PlanWizard.defaultProps = {
   planWizardVMStep: {},
   planWizardAdvancedOptionsStep: {},
   planWizardScheduleStep: {},
+  transformationMappings: [],
   setPlansBodyAction: noop,
   setPlanScheduleAction: noop,
   resetVmStepAction: noop,

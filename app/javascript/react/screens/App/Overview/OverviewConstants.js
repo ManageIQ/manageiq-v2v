@@ -44,3 +44,7 @@ export const MIGRATIONS_FILTERS = {
   completed: __('Completed Plans'),
   archived: __('Archived Plans')
 };
+
+export const OSP_TENANT = 'CloudTenant';
+export const OSP_VOLUME = 'CloudVolume';
+export const OSP_NETWORK = 'CloudNetwork';

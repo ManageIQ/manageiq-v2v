@@ -8,6 +8,7 @@ import PlanWizardVMStepContainer from '../react/screens/App/Overview/screens/Pla
 import PlanWizardResultsStepContainer from '../react/screens/App/Overview/screens/PlanWizard/components/PlanWizardResultsStep';
 import PlanWizardContainer from '../react/screens/App/Overview/screens/PlanWizard';
 import PlanWizardAdvancedOptionsStepContainer from '../react/screens/App/Overview/screens/PlanWizard/components/PlanWizardAdvancedOptionsStep';
+import PlanWizardInstancePropertiesStepContainer from '../react/screens/App/Overview/screens/PlanWizard/components/PlanWizardInstancePropertiesStep';
 
 import OverviewContainer from '../react/screens/App/Overview';
 import PlanContainer from '../react/screens/App/Plan';
@@ -95,6 +96,12 @@ export const coreComponents = [
     data: {
       url: '/api/migrationPlans'
     },
+    store: true
+  },
+  {
+    name: 'PlanWizardInstancePropertiesStepContainer',
+    type: PlanWizardInstancePropertiesStepContainer,
+    data: {},
     store: true
   },
   {
