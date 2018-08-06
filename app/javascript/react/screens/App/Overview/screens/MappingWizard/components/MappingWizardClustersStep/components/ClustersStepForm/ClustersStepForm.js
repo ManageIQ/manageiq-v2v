@@ -181,7 +181,7 @@ class ClustersStepForm extends React.Component {
                     selected={selectedTargetCluster && selectedTargetCluster.id === item.id}
                     handleClick={this.selectTargetCluster}
                     handleKeyPress={this.selectTargetCluster}
-                    warningMessage={showWarning && targetConversionHostWarning}
+                    warningMessage={showWarning ? targetConversionHostWarning : ''}
                   />
                 );
               })}
