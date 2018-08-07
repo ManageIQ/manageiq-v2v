@@ -47,6 +47,7 @@ Object {
   "networks": Array [],
   "notStartedTransformationPlans": Array [],
   "planWizardVisible": false,
+  "redirectTo": [Function],
   "removeNotificationAction": [Function],
   "retryMigrationAction": [Function],
   "scheduleMigration": [Function],

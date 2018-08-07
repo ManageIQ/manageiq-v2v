@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import Overview from './Overview';
 import * as OverviewActions from './OverviewActions';
 import * as NotificationActions from '../common/NotificationList/NotificationListActions';
+import * as RouterActions from '../../../../redux/actions/routerActions';
 
 import reducer from './OverviewReducer';
 import {
@@ -26,6 +27,6 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => Object.assign(stateP
 
 export default connect(
   mapStateToProps,
-  Object.assign(OverviewActions, NotificationActions),
+  Object.assign(OverviewActions, NotificationActions, RouterActions),
   mergeProps
 )(Overview);

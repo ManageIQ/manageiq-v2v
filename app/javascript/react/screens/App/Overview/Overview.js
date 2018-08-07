@@ -182,10 +182,7 @@ class Overview extends React.Component {
     });
   };
 
-  redirectTo = path => {
-    const { history } = this.props;
-    history.push(path);
-  };
+  redirectTo = path => this.props.redirectTo(path);
 
   render() {
     const {
@@ -463,6 +460,7 @@ Overview.propTypes = {
   scheduleMigration: PropTypes.func,
   fetchServiceTemplateAnsiblePlaybooksAction: PropTypes.func,
   fetchServiceTemplateAnsiblePlaybooksUrl: PropTypes.string,
-  serviceTemplatePlaybooks: PropTypes.array
+  serviceTemplatePlaybooks: PropTypes.array,
+  redirectTo: PropTypes.func.isRequired
 };
 export default Overview;
