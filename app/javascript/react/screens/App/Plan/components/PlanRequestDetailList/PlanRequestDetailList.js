@@ -469,7 +469,7 @@ class PlanRequestDetailList extends React.Component {
                 taskCancelling = true;
               }
               if (taskCancelled || taskCancelling) {
-                taskMessage = `${__('Canceled Migration')}: ${taskMessage}`;
+                taskMessage = `${task.message}: ${__('Cancelling migration')}`;
               }
               let leftContent;
               if (task.message === 'Pending') {
@@ -481,7 +481,8 @@ class PlanRequestDetailList extends React.Component {
                     style={{ width: 'inherit', backgroundColor: 'transparent' }}
                   />
                 );
-              } else if (taskCancelling || taskCancelled) {
+              } else if (taskCancelled && task.completed) {
+                taskMessage = `${task.message}: ${__('Migration cancelled')}`;
                 leftContent = (
                   <ListView.Icon
                     type="fa"
@@ -508,7 +509,7 @@ class PlanRequestDetailList extends React.Component {
                     style={{ width: 'inherit', backgroundColor: 'transparent' }}
                   />
                 );
-              } else if (!taskCancelling && !taskCancelled) {
+              } else {
                 leftContent = <Spinner loading />;
               }
               const label = sprintf(__('%s of %s Migrated'), task.diskSpaceCompletedGb, task.totalDiskSpaceGb);

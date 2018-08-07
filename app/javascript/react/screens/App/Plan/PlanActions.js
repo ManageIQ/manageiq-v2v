@@ -252,7 +252,7 @@ export const cancelPlanRequestTasksAction = (url, tasks) => dispatch => {
         .then(response => {
           resolve(response);
 
-          const cancelSuccessMsg = __('Migration canceled successfully for VMs: ');
+          const cancelSuccessMsg = __('Migration cancel request submitted for VMs: ');
           const vmNames = tasks.map(task => task.vmName).join(', ');
           const cancelSuccessMsgWithVMNames = `${cancelSuccessMsg} ${vmNames}`;
 
