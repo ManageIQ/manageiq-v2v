@@ -9,7 +9,7 @@ import createReducers from '../redux/reducers';
 
 // todo: convert this to use ManageIQ.redux.addReducer, ManageIQ.redux.store
 // <Provider store={store}>{componentRegistry.markup(component, data, store)}</Provider>,
-class OwerView extends React.Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
     ManageIQ.redux.addReducer(createReducers());
@@ -34,10 +34,10 @@ class OwerView extends React.Component {
   }
 }
 
-OwerView.propTypes = {
+App.propTypes = {
   isLoaded: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = ({ overview }) => ({ isLoaded: !!overview });
 
-export default connect(mapStateToProps)(OwerView);
+export default connect(mapStateToProps)(App);
