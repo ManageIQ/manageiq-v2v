@@ -5,6 +5,7 @@ Object {
   "activeTransformationPlans": Array [],
   "addNotificationAction": [Function],
   "archiveTransformationPlanAction": [Function],
+  "archiveTransformationPlanUrl": "/api/service_templates",
   "clusters": Array [],
   "continueToPlanAction": [Function],
   "createTransformationPlanRequestAction": [Function],

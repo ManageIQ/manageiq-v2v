@@ -463,4 +463,41 @@ Overview.propTypes = {
   serviceTemplatePlaybooks: PropTypes.array,
   redirectTo: PropTypes.func.isRequired
 };
+
+Overview.defaultProps = {
+  archiveTransformationPlanUrl: '/api/service_templates',
+  fetchTransformationMappingsUrl:
+    'api/transformation_mappings?expand=resources' +
+    '&attributes=transformation_mapping_items,service_templates' +
+    '&sort_by=updated_at' +
+    '&sort_order=desc',
+  fetchTransformationPlansUrl:
+    '/api/service_templates/?' +
+    "filter[]=type='ServiceTemplateTransformationPlan'" +
+    '&filter[]=active=true' +
+    '&expand=resources,schedules' +
+    '&attributes=name,description,miq_requests,options,created_at' +
+    '&sort_by=updated_at' +
+    '&sort_order=desc',
+  fetchServiceTemplateAnsiblePlaybooksUrl:
+    '/api/service_templates/?' +
+    "filter[]=type='ServiceTemplateAnsiblePlaybook'" +
+    '&expand=resources' +
+    '&attributes=name,description,created_at',
+  fetchArchivedTransformationPlansUrl:
+    '/api/service_templates/?' +
+    "filter[]=type='ServiceTemplateTransformationPlan'" +
+    '&filter[]=archived=true' +
+    '&expand=resources' +
+    '&attributes=name,description,miq_requests,options,created_at' +
+    '&sort_by=updated_at' +
+    '&sort_order=desc',
+  fetchClustersUrl:
+    'api/clusters/' +
+    '?attributes=ext_management_system.emstype,v_parent_datacenter,ext_management_system.name,lans,storages' +
+    '&expand=resources',
+  fetchNetworksUrl: 'api/lans/?expand=resources',
+  fetchDatastoresUrl: 'api/data_stores?expand=resources'
+};
+
 export default Overview;

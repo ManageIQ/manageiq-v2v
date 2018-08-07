@@ -93,6 +93,10 @@ PlanWizardAdvancedOptionsStep.propTypes = {
   change: PropTypes.func
 };
 
+PlanWizardAdvancedOptionsStep.defaultProps = {
+  fetchPlaybooksUrl: "/api/service_templates/?filter[]=type='ServiceTemplateAnsiblePlaybook'&expand=resources"
+};
+
 export default reduxForm({
   form: 'planWizardAdvancedOptionsStep',
   initialValues: {

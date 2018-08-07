@@ -147,7 +147,11 @@ MappingWizardNetworksStep.propTypes = {
 };
 MappingWizardNetworksStep.defaultProps = {
   clusterMappings: [],
-  fetchNetworksUrls: {},
+  fetchNetworksUrls: {
+    source: 'api/clusters',
+    rhevm: 'api/clusters',
+    openstack: 'api/cloud_tenants'
+  },
   fetchSourceNetworksAction: noop,
   fetchTargetNetworksAction: noop,
   isFetchingSourceNetworks: false,

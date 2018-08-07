@@ -102,11 +102,9 @@ MappingWizardClustersStep.propTypes = {
   hostsByClusterID: PropTypes.object
 };
 MappingWizardClustersStep.defaultProps = {
-  fetchSourceClustersUrl: '',
   fetchSourceClustersAction: noop,
-  fetchTargetComputeUrls: {},
   fetchTargetClustersAction: noop,
-  queryHostsUrl: '',
+  queryHostsUrl: '/api/hosts?attributes=tags',
   queryHostsAction: noop,
   isFetchingSourceClusters: true,
   isFetchingTargetClusters: true,
@@ -115,7 +113,18 @@ MappingWizardClustersStep.defaultProps = {
   targetProvider: '',
   isFetchingHostsQuery: false,
   isRejectedHostsQuery: false,
-  hostsByClusterID: {}
+  hostsByClusterID: {},
+  fetchSourceClustersUrl:
+    '/api/clusters?expand=resources' +
+    '&attributes=ext_management_system.emstype,v_parent_datacenter,ext_management_system.name' +
+    '&filter[]=ext_management_system.emstype=vmwarews',
+  fetchTargetComputeUrls: {
+    rhevm:
+      '/api/clusters?expand=resources' +
+      '&attributes=ext_management_system.emstype,v_parent_datacenter,ext_management_system.name' +
+      '&filter[]=ext_management_system.emstype=rhevm',
+    openstack: '/api/cloud_tenants?expand=resources&attributes=ext_management_system.name'
+  }
 };
 
 export default reduxForm({
