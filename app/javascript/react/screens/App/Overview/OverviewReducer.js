@@ -34,7 +34,7 @@ import {
   V2V_SCHEDULE_MIGRATION
 } from './OverviewConstants';
 
-import getMostRecentRequest from '../common/getMostRecentRequest';
+import { planTransmutation } from './helpers';
 
 export const initialState = Immutable({
   mappingWizardVisible: false,
@@ -176,21 +176,6 @@ export default (state = initialState, action) => {
     case `${FETCH_V2V_TRANSFORMATION_PLANS}_PENDING`:
       return state.set('isFetchingTransformationPlans', true);
     case `${FETCH_V2V_TRANSFORMATION_PLANS}_FULFILLED`: {
-      const planTransmutation = (plans = [], mappings = []) =>
-        plans.map(plan => {
-          const infraMappingName = mappings.find(
-            mapping => mapping.id === plan.options.config_info.transformation_mapping_id
-          );
-          const status = getMostRecentRequest(plan.miq_requests);
-          return {
-            ...plan,
-            infraMappingName: infraMappingName ? infraMappingName.name : null,
-            status: status ? status.status : null,
-            configVmLength: plan.options.config_info.actions.length,
-            scheduleTime: plan.schedules ? new Date(plan.schedules[0].run_at.start_time).getTime() : null
-          };
-        });
-
       return state
         .set('transformationPlans', planTransmutation(action.payload.data.resources, state.transformationMappings))
         .set('isFetchingTransformationPlans', false)
@@ -207,8 +192,12 @@ export default (state = initialState, action) => {
         .set('isFetchingArchivedTransformationPlans', 'true')
         .set('isRejectedArchivedTransformationPlans', false);
     case `${FETCH_V2V_ARCHIVED_TRANSFORMATION_PLANS}_FULFILLED`:
+
       return state
-        .set('archivedTransformationPlans', action.payload.data.resources)
+        .set(
+          'archivedTransformationPlans',
+          planTransmutation(action.payload.data.resources, state.transformationMappings)
+        )
         .set('isFetchingArchivedTransformationPlans', '')
         .set('isRejectedArchivedTransformationPlans', false)
         .set('errorArchivedTransformationPlans', null);
