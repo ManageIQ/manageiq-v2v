@@ -637,11 +637,11 @@ class PlanRequestDetailList extends React.Component {
                         pullRight
                         onSelect={eventKey => this.onSelect(eventKey, task)}
                       >
-                        {(task.options.prePlaybookRunning || task.options.prePlaybookComplete) && (
+                        {task.options.prePlaybookComplete && (
                           <MenuItem eventKey="preMigration">{__('Pre-migration log')}</MenuItem>
                         )}
                         <MenuItem eventKey="migration">{__('Migration log')}</MenuItem>
-                        {(task.options.postPlaybookRunning || task.options.postPlaybookComplete) && (
+                        {task.options.postPlaybookComplete && (
                           <MenuItem eventKey="postMigration">{__('Post-migration log')}</MenuItem>
                         )}
                       </DropdownButton>
