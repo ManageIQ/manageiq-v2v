@@ -269,7 +269,7 @@ class DatastoresStepForm extends React.Component {
       <div className={classes}>
         <p style={{ marginLeft: -40 }}>
           {__(
-            'Select source cluster(s) and a target cluster and click Add Mapping to add the mapping. Multiple mappings can be added.') // prettier-ignore
+            'Select source datastore(s) and a target datastore and click Add Mapping to add the mapping. Multiple mappings can be added.') // prettier-ignore
           }
         </p>
         <DualPaneMapper
