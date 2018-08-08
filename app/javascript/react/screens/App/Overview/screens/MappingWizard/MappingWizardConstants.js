@@ -10,3 +10,5 @@ export const V2V_TARGET_PROVIDERS = [
 ];
 
 export const V2V_TARGET_PROVIDER_STORAGE_KEYS = { rhevm: 'storages', openstack: 'cloud_volumes' };
+
+export const V2V_TARGET_PROVIDER_NETWORK_KEYS = { rhevm: 'lans', openstack: 'cloud_networks' };

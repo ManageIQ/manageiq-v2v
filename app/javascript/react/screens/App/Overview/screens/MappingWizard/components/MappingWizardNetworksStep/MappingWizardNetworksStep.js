@@ -87,7 +87,8 @@ class MappingWizardNetworksStep extends React.Component {
       isFetchingTargetNetworks,
       groupedSourceNetworks,
       groupedTargetNetworks,
-      form
+      form,
+      targetProvider
     } = this.props;
 
     const { selectedCluster, selectedClusterMapping } = this.state;
@@ -98,7 +99,7 @@ class MappingWizardNetworksStep extends React.Component {
       <div>
         <Field
           name="cluster_select"
-          label={__('Map source networks to target networks for cluster')}
+          label={__('Select a source cluster whose networks you want to map')}
           data_live_search="true"
           component={BootstrapSelect}
           options={clusterOptions}
@@ -123,6 +124,7 @@ class MappingWizardNetworksStep extends React.Component {
           isFetchingSourceNetworks={isFetchingSourceNetworks}
           isFetchingTargetNetworks={isFetchingTargetNetworks}
           validate={length({ min: 1 })}
+          targetProvider={targetProvider}
         />
       </div>
     );

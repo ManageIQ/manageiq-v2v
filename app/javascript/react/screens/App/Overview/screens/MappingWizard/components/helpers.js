@@ -42,7 +42,7 @@ export const multiProviderTargetLabel = (providerType, wizardStep) => {
         case 'storage':
           return __('Target Datastores');
         case 'network':
-          return __('Target Networks');
+          return __('Target Network');
         default:
           return null;
       }
