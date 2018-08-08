@@ -20,7 +20,7 @@ export const targetDatastoreAvailableSpace = (targetDatastore, datastoresStepMap
 };
 
 export const sourceDatastoreInfo = sourceDatastore =>
-  sprintf(__('%s \\ %s'), sourceDatastore.providerName, sourceDatastore.name);
+  sprintf(__('%s \\ %s \\ %s'), sourceDatastore.providerName, sourceDatastore.datacenterName, sourceDatastore.name);
 
 export const targetDatastoreInfo = (targetDatastore, datastoresStepMappings) =>
   sprintf(__('%s \\ %s'), targetDatastore.providerName, targetDatastore.name);

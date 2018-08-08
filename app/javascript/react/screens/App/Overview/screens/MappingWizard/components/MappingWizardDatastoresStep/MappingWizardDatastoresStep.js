@@ -88,7 +88,8 @@ class MappingWizardDatastoresStep extends React.Component {
       sourceDatastores,
       targetDatastores,
       form,
-      showAlertAction
+      showAlertAction,
+      targetProvider
     } = this.props;
 
     const { selectedCluster, selectedClusterMapping } = this.state;
@@ -101,7 +102,7 @@ class MappingWizardDatastoresStep extends React.Component {
       <div>
         <Field
           name="cluster_select"
-          label={__('Map source datastores to target datastores for cluster')}
+          label={__('Select a source cluster whose datastores you want to map')}
           data_live_search="true"
           component={BootstrapSelect}
           options={clusterOptions}
@@ -127,6 +128,7 @@ class MappingWizardDatastoresStep extends React.Component {
           isFetchingTargetDatastores={isFetchingTargetDatastores}
           validate={length({ min: 1 })}
           showAlertAction={showAlertAction}
+          targetProvider={targetProvider}
         />
       </div>
     );

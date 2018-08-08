@@ -8,3 +8,5 @@ export const V2V_TARGET_PROVIDERS = [
   { name: __('Red Hat Virtualization'), id: 'rhevm' },
   { name: __('Red Hat OpenStack Platform'), id: 'openstack' }
 ];
+
+export const V2V_TARGET_PROVIDER_STORAGE_KEYS = { rhevm: 'storages', openstack: 'cloud_volumes' };
