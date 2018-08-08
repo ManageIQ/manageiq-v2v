@@ -1,0 +1,4 @@
+export const FETCH_V2V_OSP_GROUPS_AND_FLAVORS = 'FETCH_V2V_OSP_GROUPS_AND_FLAVORS';
+
+export const OSP_DEFAULT_SECURITY_GROUP = 'default';
+export const OSP_DEFAULT_FLAVOR = 'medium';
