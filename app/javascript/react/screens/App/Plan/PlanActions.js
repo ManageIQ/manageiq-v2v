@@ -17,7 +17,8 @@ import {
   REMOVE_TASKS_SELECTED_FOR_CANCELLATION,
   UPDATE_TASKS_SELECTED_FOR_CANCELLATION,
   DELETE_ALL_TASKS_SELECTED_FOR_CANCELLATION,
-  ADD_TASKS_TO_MARKED_FOR_CANCELLATION
+  ADD_TASKS_TO_MARKED_FOR_CANCELLATION,
+  ADD_TASK_TO_NOTIFICATION_SENT_LIST
 } from './PlanConstants';
 
 import { V2V_NOTIFICATION_ADD } from '../common/NotificationList/NotificationConstants';
@@ -295,5 +296,48 @@ export const updateSelectedTasksForCancelAction = updatedSelectedCancellationTas
 export const deleteAllSelectedTasksForCancelAction = updatedSelectedCancellationTasks => dispatch => {
   dispatch({
     type: DELETE_ALL_TASKS_SELECTED_FOR_CANCELLATION
+  });
+};
+
+// *****************************************************************************
+// * DISPATCH SUCCESSFUL AND FAILED MIGRATION NOTIFICATIONS
+// *****************************************************************************
+export const dispatchVMTasksCompletionNotificationAction = (
+  failedMigrations,
+  successfulMigrations,
+  notificationsSentList
+) => dispatch => {
+  failedMigrations.forEach(migration => {
+    if (!notificationsSentList.find(taskId => taskId === migration.id)) {
+      const errorMessage = sprintf(__('%s failed to migrate'), migration.vmName);
+      dispatch({
+        type: V2V_NOTIFICATION_ADD,
+        message: errorMessage,
+        notificationType: 'error',
+        persistent: true,
+        actionEnabled: false
+      });
+      dispatch({
+        type: ADD_TASK_TO_NOTIFICATION_SENT_LIST,
+        payload: migration.id
+      });
+    }
+  });
+
+  successfulMigrations.forEach(migration => {
+    if (!notificationsSentList.find(taskId => taskId === migration.id)) {
+      const successMessage = sprintf(__('%s migrated successfully'), migration.vmName);
+      dispatch({
+        type: V2V_NOTIFICATION_ADD,
+        message: successMessage,
+        notificationType: 'success',
+        persistent: true,
+        actionEnabled: false
+      });
+      dispatch({
+        type: ADD_TASK_TO_NOTIFICATION_SENT_LIST,
+        payload: migration.id
+      });
+    }
   });
 };

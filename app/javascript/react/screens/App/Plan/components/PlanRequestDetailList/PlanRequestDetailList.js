@@ -68,6 +68,16 @@ class PlanRequestDetailList extends React.Component {
     pageChangeValue: 1
   };
 
+  componentDidUpdate() {
+    const {
+      failedMigrations,
+      successfulMigrations,
+      notificationsSentList,
+      dispatchVMTasksCompletionNotificationAction
+    } = this.props;
+    dispatchVMTasksCompletionNotificationAction(failedMigrations, successfulMigrations, notificationsSentList);
+  }
+
   onValueKeyPress = keyEvent => {
     const { currentValue, currentFilterType } = this.state;
 
@@ -706,7 +716,11 @@ PlanRequestDetailList.propTypes = {
   selectedTasksForCancel: PropTypes.array,
   updateSelectedTasksForCancelAction: PropTypes.func,
   deleteAllSelectedTasksForCancelAction: PropTypes.func,
-  markedForCancellation: PropTypes.array
+  markedForCancellation: PropTypes.array,
+  failedMigrations: PropTypes.array,
+  successfulMigrations: PropTypes.array,
+  notificationsSentList: PropTypes.array,
+  dispatchVMTasksCompletionNotificationAction: PropTypes.func
 };
 
 export default PlanRequestDetailList;
