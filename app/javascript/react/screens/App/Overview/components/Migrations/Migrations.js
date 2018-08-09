@@ -73,7 +73,8 @@ const Migrations = ({
               }}
             >
               <Icon type="pf" name="add-circle-o" />
-              &nbsp;{__('Create Migration Plan')}
+              &nbsp;
+              {__('Create Migration Plan')}
             </a>
           </div>
         </div>

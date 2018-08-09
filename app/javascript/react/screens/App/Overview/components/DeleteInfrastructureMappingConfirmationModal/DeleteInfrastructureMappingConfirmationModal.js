@@ -27,7 +27,11 @@ const unUsedMappingInPlans = (mappingToDelete, notStartedTransformationPlans, fi
 
     const deleteMessageAboutPlansUsingMapping = (
       <div className="warning-modal-body-enable-scrollbar">
-        <strong>{planNames.map(plan => <ul key={plan.id}>{plan.name}</ul>)}</strong>
+        <strong>
+          {planNames.map(plan => (
+            <ul key={plan.id}>{plan.name}</ul>
+          ))}
+        </strong>
       </div>
     );
     return (

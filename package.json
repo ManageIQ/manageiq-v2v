@@ -99,7 +99,8 @@
     },
     "globals": {
       "API": {}
-    }
+    },
+    "testURL": "http://localhost"
   },
   "prettier": {
     "singleQuote": true,

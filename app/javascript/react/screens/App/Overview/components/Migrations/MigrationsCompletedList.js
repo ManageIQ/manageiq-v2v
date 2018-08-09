@@ -222,8 +222,10 @@ class MigrationsCompletedList extends React.Component {
                         description={plan.description}
                         additionalInfo={[
                           <ListView.InfoItem key={`${plan.id}-migrated`} style={{ paddingRight: 40 }}>
-                            <ListView.Icon type="pf" size="lg" name="screen" />&nbsp;<strong>{succeedCount}</strong>{' '}
-                            {__('of')} &nbsp;<strong>{Object.keys(tasks).length} </strong>
+                            <ListView.Icon type="pf" size="lg" name="screen" />
+                            &nbsp;
+                            <strong>{succeedCount}</strong> {__('of')} &nbsp;
+                            <strong>{Object.keys(tasks).length} </strong>
                             {__('VMs successfully migrated.')}
                           </ListView.InfoItem>,
                           plan.infraMappingName ? (
