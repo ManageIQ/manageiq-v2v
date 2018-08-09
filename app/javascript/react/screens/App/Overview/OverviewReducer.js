@@ -192,7 +192,6 @@ export default (state = initialState, action) => {
         .set('isFetchingArchivedTransformationPlans', 'true')
         .set('isRejectedArchivedTransformationPlans', false);
     case `${FETCH_V2V_ARCHIVED_TRANSFORMATION_PLANS}_FULFILLED`:
-
       return state
         .set(
           'archivedTransformationPlans',
