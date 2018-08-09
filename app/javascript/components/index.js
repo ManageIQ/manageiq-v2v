@@ -35,8 +35,9 @@ export const coreComponents = [
         '&filter[]=ext_management_system.emstype=vmwarews',
       fetchTargetClustersUrl:
         '/api/clusters?expand=resources' +
-        '&attributes=ext_management_system.emstype,v_parent_datacenter,ext_management_system.name' +
-        '&filter[]=ext_management_system.emstype=rhevm'
+        '&attributes=ext_management_system.emstype,v_parent_datacenter,ext_management_system.name,hosts' +
+        '&filter[]=ext_management_system.emstype=rhevm',
+      queryHostsUrl: '/api/hosts?attributes=tags'
     },
     store: true
   },
