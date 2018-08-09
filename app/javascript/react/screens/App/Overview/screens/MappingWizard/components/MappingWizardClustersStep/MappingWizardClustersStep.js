@@ -23,14 +23,16 @@ class MappingWizardClustersStep extends React.Component {
 
     fetchSourceClustersAction(fetchSourceClustersUrl);
     fetchTargetClustersAction(fetchTargetClustersUrl).then(result => {
-      const hostIDsByClusterID = result.value.data.resources.reduce(
-        (newObject, cluster) => ({
-          ...newObject,
-          [cluster.id]: cluster.hosts.map(host => host.id)
-        }),
-        {}
-      );
-      queryHostsAction(queryHostsUrl, hostIDsByClusterID);
+      if (result.length > 0) {
+        const hostIDsByClusterID = result.value.data.resources.reduce(
+          (newObject, cluster) => ({
+            ...newObject,
+            [cluster.id]: cluster.hosts.map(host => host.id)
+          }),
+          {}
+        );
+        queryHostsAction(queryHostsUrl, hostIDsByClusterID);
+      }
     });
   };
 
