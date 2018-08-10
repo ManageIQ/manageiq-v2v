@@ -37,7 +37,11 @@ class PlanWizardVMStepTable extends React.Component {
   constructor(props) {
     super(props);
 
-    const { rows } = this.props;
+    const { input, rows, initialSelectedRows } = this.props;
+
+    if (initialSelectedRows.length) {
+      input.onChange(initialSelectedRows);
+    }
 
     const getSortingColumns = () => this.state.sortingColumns || {};
 
@@ -253,7 +257,7 @@ class PlanWizardVMStepTable extends React.Component {
 
       // rows and row selection state
       rows,
-      selectedRows: [],
+      selectedRows: initialSelectedRows,
 
       // pagination default states
       pagination: {
@@ -591,6 +595,7 @@ PlanWizardVMStepTable.propTypes = {
   rows: PropTypes.array,
   onCsvImportAction: PropTypes.func,
   discoveryMode: PropTypes.bool,
+  initialSelectedRows: PropTypes.array,
   input: PropTypes.shape({
     value: PropTypes.arrayOf(PropTypes.string),
     onChange: PropTypes.func
@@ -603,6 +608,7 @@ PlanWizardVMStepTable.propTypes = {
 PlanWizardVMStepTable.defaultProps = {
   rows: [],
   onCsvImportAction: noop,
-  discoveryMode: false
+  discoveryMode: false,
+  initialSelectedRows: []
 };
 export default PlanWizardVMStepTable;
