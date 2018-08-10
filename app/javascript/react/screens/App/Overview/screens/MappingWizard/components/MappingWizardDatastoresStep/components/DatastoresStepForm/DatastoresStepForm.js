@@ -310,7 +310,7 @@ class DatastoresStepForm extends React.Component {
               targetDatastores.map(item => (
                 <DualPaneMapperListItem
                   item={item}
-                  text={targetDatastoreInfo(item, input.value)}
+                  text={targetDatastoreInfo(item)}
                   key={item.id}
                   selected={selectedTargetDatastore && selectedTargetDatastore.id === item.id}
                   handleClick={this.selectTargetDatastore}
