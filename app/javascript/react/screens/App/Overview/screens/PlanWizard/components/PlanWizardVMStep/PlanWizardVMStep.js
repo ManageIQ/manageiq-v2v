@@ -116,6 +116,7 @@ class PlanWizardVMStep extends React.Component {
               name="selectedVms"
               component={PlanWizardVMStepTable}
               rows={combined}
+              initialSelectedRows={discoveryMode ? [] : validVmsWithSelections.map(r => r.id)}
               onCsvImportAction={csvImportAction}
               discoveryMode={discoveryMode}
               validate={[
