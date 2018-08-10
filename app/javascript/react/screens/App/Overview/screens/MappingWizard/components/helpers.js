@@ -29,7 +29,7 @@ export const multiProviderTargetLabel = (providerType, wizardStep) => {
         case 'cluster':
           return __('Target Provider \\ Project');
         case 'storage':
-          return __('Target Provider \\ Cloud Volume');
+          return __('Target Provider \\ Volume Type');
         case 'network':
           return __('Target Project \\ Network');
         default:

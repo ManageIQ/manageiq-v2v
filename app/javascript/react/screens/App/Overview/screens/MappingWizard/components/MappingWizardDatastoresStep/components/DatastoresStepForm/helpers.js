@@ -22,7 +22,7 @@ export const targetDatastoreAvailableSpace = (targetDatastore, datastoresStepMap
 export const sourceDatastoreInfo = sourceDatastore =>
   sprintf(__('%s \\ %s \\ %s'), sourceDatastore.providerName, sourceDatastore.datacenterName, sourceDatastore.name);
 
-export const targetDatastoreInfo = (targetDatastore, datastoresStepMappings) =>
+export const targetDatastoreInfo = targetDatastore =>
   sprintf(__('%s \\ %s'), targetDatastore.providerName, targetDatastore.name);
 
 export const targetDatastoreTreeViewInfo = targetDatastore => targetDatastore.name;
