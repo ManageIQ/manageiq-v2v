@@ -1,5 +1,6 @@
 export const planWizardOverviewFilter = overview => ({
-  hidePlanWizard: overview.hidePlanWizard
+  hidePlanWizard: overview.hidePlanWizard,
+  transformationMappings: overview.transformationMappings
 });
 
 export const planWizardFormFilter = form => ({

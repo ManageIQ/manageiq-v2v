@@ -20,5 +20,6 @@ Object {
   "setPlansBodyAction": [Function],
   "showAlertAction": [Function],
   "showConfirmModalAction": [Function],
+  "transformationMappings": Array [],
 }
 `;
