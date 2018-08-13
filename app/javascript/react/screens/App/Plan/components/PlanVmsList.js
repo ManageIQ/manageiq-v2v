@@ -283,7 +283,7 @@ class PlanVmsList extends React.Component {
                     )}
                     availableTooltipFunction={(max, now) => (
                       <Tooltip id={Date.now()}>
-                        {max - now} % {__('Remaining')}
+                        {Math.round(max - now)} % {__('Remaining')}
                       </Tooltip>
                     )}
                     descriptionPlacementTop

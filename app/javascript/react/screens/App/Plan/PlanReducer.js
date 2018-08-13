@@ -147,7 +147,7 @@ const processVMTasks = vmTasks => {
 
       taskDetails.diskSpaceCompleted = percentComplete * taskDetails.totalDiskSpace;
       taskDetails.diskSpaceCompletedGb = numeral(taskDetails.diskSpaceCompleted).format('0.00b');
-      taskDetails.percentComplete = Math.round(percentComplete * 1000) / 10;
+      taskDetails.percentComplete = Math.round(percentComplete * 100);
     }
     tasks.push(taskDetails);
   });
