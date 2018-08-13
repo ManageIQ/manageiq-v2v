@@ -137,8 +137,19 @@ class Overview extends React.Component {
     }
 
     if (yesToDeleteInfrastructureMapping) {
-      const { deleteInfrastructureMappingAction, mappingToDelete } = this.props;
-      deleteInfrastructureMappingAction(mappingToDelete);
+      const {
+        deleteInfrastructureMappingAction,
+        mappingToDelete,
+        fetchTransformationPlansAction,
+        fetchTransformationPlansUrl
+      } = this.props;
+
+      deleteInfrastructureMappingAction(mappingToDelete).then(() => {
+        fetchTransformationPlansAction({
+          url: fetchTransformationPlansUrl,
+          archived: false
+        });
+      });
     }
   }
 
