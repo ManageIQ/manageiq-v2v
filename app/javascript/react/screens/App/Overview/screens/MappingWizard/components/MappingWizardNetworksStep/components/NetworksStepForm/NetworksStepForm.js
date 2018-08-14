@@ -254,7 +254,7 @@ class NetworksStepForm extends React.Component {
             const updatedMapping = mappingWithSourceNetworkRemoved(networksMapping, selectedNode);
             return updatedMapping ? [...updatedNetworksMappings, updatedMapping] : [...updatedNetworksMappings];
           }, []);
-          return updatedNodes
+          return updatedNodes.length > 0
             ? [...updatedNetworksStepMappings, { ...targetCluster, nodes: updatedNodes }]
             : [...updatedNetworksStepMappings];
         }, []);
