@@ -219,7 +219,7 @@ export const yesToDeleteInfrastructureMappingAction = () => dispatch => {
   });
 };
 
-export const deleteInfrastructureMappingAction = mapping => dispatch => {
+export const deleteInfrastructureMappingAction = mapping => dispatch =>
   dispatch({
     type: DELETE_INFRASTRUCTURE_MAPPING,
     payload: new Promise((resolve, reject) => {
@@ -232,7 +232,6 @@ export const deleteInfrastructureMappingAction = mapping => dispatch => {
         .catch(e => reject(e));
     })
   });
-};
 
 const _archiveTransformationPlanActionCreator = url => dispatch =>
   dispatch({
