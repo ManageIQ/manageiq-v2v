@@ -36,7 +36,11 @@ const mapStateToProps = (
     ...planWizardInstancePropertiesStep,
     ...ownProps.data,
     instancePropertiesStepForm,
-    vmStepSelectedVms: getVMStepSelectedVms(allVms, selectedVms),
+    vmStepSelectedVms: getVMStepSelectedVms(allVms, selectedVms).map(vm => ({
+      ...vm,
+      osp_security_group: { name: 'Default' },
+      osp_flavor: { name: 'medium' }
+    })),
     selectedMapping
   };
 };

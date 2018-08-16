@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import orderBy from 'lodash.orderby';
-import cloneDeep from 'lodash.clonedeep';
 import findIndex from 'lodash.findindex';
 import * as sort from 'sortabular';
 import * as resolve from 'table-resolver';
@@ -22,14 +21,8 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
       }
     },
 
-    // rows state
-    rows: this.props.rows.map(row => ({
-      ...row,
-      osp_security_group: OSP_DEFAULT_SECURITY_GROUP,
-      osp_flavor: OSP_DEFAULT_FLAVOR
-    })),
-
     editing: false,
+    backup: {},
 
     // pagination default states
     pagination: {
@@ -46,41 +39,26 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
   customHeaderFormatters = Table.customHeaderFormattersDefinition;
 
   inlineEditController = () => {
+    const { rows } = this.props;
     return {
-      isEditing: ({ rowData }) => rowData.backup !== undefined,
+      isEditing: ({ rowData }) => rowData.id === this.state.backup.id,
       onActivate: ({ rowData }) => {
-        const rows = cloneDeep(this.state.rows);
         const index = findIndex(rows, { id: rowData.id });
+        const backup = rows[index];
 
-        rows[index].backup = cloneDeep(rows[index]);
-
-        this.setState({ rows, editing: true });
+        this.setState({ backup, editing: true });
       },
       onConfirm: ({ rowData }) => {
-        const rows = cloneDeep(this.state.rows);
         const index = findIndex(rows, { id: rowData.id });
 
-        delete rows[index].backup;
-
-        this.setState({ rows, editing: false });
+        this.setState({ backup: {}, editing: false });
       },
       onCancel: ({ rowData }) => {
-        const rows = cloneDeep(this.state.rows);
         const index = findIndex(rows, { id: rowData.id });
 
-        rows[index] = cloneDeep(rows[index].backup);
-        delete rows[index].backup;
-
-        this.setState({ rows, editing: false });
+        this.setState({ backup: {}, editing: false });
       },
-      onChange: (value, { rowData, property }) => {
-        const rows = cloneDeep(this.state.rows);
-        const index = findIndex(rows, { id: rowData.id });
-
-        rows[index][property] = value;
-
-        this.setState({ rows });
-      }
+      onChange: (value, { rowData, property }) => {}
     };
   };
 
@@ -88,7 +66,7 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
     isEditing: additionalData => this.inlineEditController().isEditing(additionalData),
     renderValue: (value, additionalData) => (
       <td className="editable">
-        <span className="static">{value}</span>
+        <span className="static">{value.name}</span>
       </td>
     ),
     renderEdit: (value, additionalData) => {
@@ -97,7 +75,7 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
         <td className="editable editing">
           <FormControl
             componentClass="select"
-            defaultValue={value || defaultValue}
+            defaultValue={value.name || defaultValue}
             onBlur={e => this.inlineEditController().onChange(e.target.value, additionalData)}
           >
             {options.map(opt => (
@@ -328,7 +306,8 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
   };
 
   currentRows = () => {
-    const { sortingColumns, pagination, rows } = this.state;
+    const { sortingColumns, pagination } = this.state;
+    const { rows } = this.props;
 
     return compose(
       paginate(pagination),
@@ -342,7 +321,7 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
   };
 
   totalPages = () => {
-    const { rows } = this.state;
+    const { rows } = this.props;
     const { perPage } = this.state.pagination;
     return Math.ceil(rows.length / perPage);
   };
