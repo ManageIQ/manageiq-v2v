@@ -100,3 +100,12 @@ table.pf-table-inline-edit tbody {
     }
   }
 }
+
+/**
+  Long wizard step names need smaller margins
+*/
+
+.wizard-pf-steps-indicator .wizard-pf-step a {
+  margin-left: 0.1em;
+  margin-right: 0.1em;
+}
