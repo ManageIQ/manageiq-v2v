@@ -82,7 +82,7 @@ PlanWizardResultsStep.propTypes = {
   hidePlanWizardAction: PropTypes.func
 };
 PlanWizardResultsStep.defaultProps = {
-  postPlansUrl: '',
+  postPlansUrl: '/api/service_templates',
   postMigrationPlansAction: noop,
   plansBody: {},
   planSchedule: '',

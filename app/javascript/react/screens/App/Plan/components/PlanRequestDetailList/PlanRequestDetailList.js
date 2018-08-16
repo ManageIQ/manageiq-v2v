@@ -687,7 +687,11 @@ class PlanRequestDetailList extends React.Component {
               <p>
                 {__('If you cancel, these VMs will not be migrated and will be fully restored in the source provider.')}
               </p>
-              <ul>{selectedTasksForCancel.map(task => <li key={task.id}>{task.vmName}</li>)}</ul>
+              <ul>
+                {selectedTasksForCancel.map(task => (
+                  <li key={task.id}>{task.vmName}</li>
+                ))}
+              </ul>
               <p>{__('Do you want to cancel?')}</p>
             </React.Fragment>
           }

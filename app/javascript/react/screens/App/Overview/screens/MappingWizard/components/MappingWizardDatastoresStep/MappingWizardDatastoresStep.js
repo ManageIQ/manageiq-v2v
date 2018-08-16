@@ -153,7 +153,11 @@ MappingWizardDatastoresStep.propTypes = {
 };
 MappingWizardDatastoresStep.defaultProps = {
   clusterMappings: [],
-  fetchStoragesUrls: {},
+  fetchStoragesUrls: {
+    source: 'api/clusters',
+    rhevm: 'api/clusters',
+    openstack: 'api/cloud_tenants'
+  },
   fetchSourceDatastoresAction: noop,
   fetchTargetDatastoresAction: noop,
   sourceDatastores: [],

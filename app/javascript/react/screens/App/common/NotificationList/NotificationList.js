@@ -25,7 +25,7 @@ class NotificationList extends React.Component {
               </span>
               {notification.actionEnabled && (
                 <div className="pull-right toast-pf-action">
-                  <Link to={`/migration/plan/${notification.data.id}`}>{__('View Details')}</Link>
+                  <Link to={`/plan/${notification.data.id}`}>{__('View Details')}</Link>
                 </div>
               )}
             </TimedToastNotification>

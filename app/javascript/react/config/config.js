@@ -3,11 +3,11 @@ import PlanContainer from '../screens/App/Plan';
 
 export const links = [
   {
-    path: 'migration/',
+    path: '',
     component: OverviewContainer
   },
   {
-    path: 'migration/plan/:id',
+    path: 'plan/:id',
     component: PlanContainer
   }
 ];

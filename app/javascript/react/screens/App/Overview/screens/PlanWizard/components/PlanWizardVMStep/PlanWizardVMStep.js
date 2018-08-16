@@ -149,7 +149,7 @@ class PlanWizardVMStep extends React.Component {
 PlanWizardVMStep.propTypes = {
   vm_choice_radio: PropTypes.oneOf(['vms_via_csv', 'vms_via_discovery']),
   infrastructure_mapping_id: PropTypes.string.isRequired,
-  validateVmsUrl: PropTypes.string.isRequired,
+  validateVmsUrl: PropTypes.string,
   validateVmsAction: PropTypes.func.isRequired,
   csvImportAction: PropTypes.func.isRequired,
   csvParseErrorAction: PropTypes.func.isRequired,
@@ -166,6 +166,7 @@ PlanWizardVMStep.propTypes = {
 
 PlanWizardVMStep.defaultProps = {
   vm_choice_radio: null,
+  validateVmsUrl: '/api/transformation_mappings',
   isValidatingVms: false,
   isRejectedValidatingVms: false,
   isCSVParseError: false,

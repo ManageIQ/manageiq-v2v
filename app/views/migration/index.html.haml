@@ -1,2 +1,3 @@
-%div#reactRoot{:style => 'height: 100%;'}
-  = mount_react_component('manageiq-v2v', '#reactRoot', { user: @current_user })
+= react('manageiq-v2v', { :user => @current_user }, :class => 'react-wrapper')
+
+-# %NOTE: this params are acting as a deafult props, it should not be passed as a prop.

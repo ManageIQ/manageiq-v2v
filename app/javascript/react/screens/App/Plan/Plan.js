@@ -155,7 +155,7 @@ class Plan extends React.Component {
         <Toolbar>
           <Breadcrumb.Item href="/dashboard/maintab?tab=compute">{__('Compute')}</Breadcrumb.Item>
           <li>
-            <Link to="/migration">{__('Migration')}</Link>
+            <Link to="/">{__('Migration')}</Link>
           </li>
           {!isRejectedPlan &&
             planName && (
@@ -231,7 +231,7 @@ class Plan extends React.Component {
   }
 }
 Plan.propTypes = {
-  fetchTasksForAllRequestsForPlanUrl: PropTypes.string.isRequired,
+  fetchTasksForAllRequestsForPlanUrl: PropTypes.string,
   fetchTasksForAllRequestsForPlanAction: PropTypes.func.isRequired,
   planName: PropTypes.string,
   planRequestFailed: PropTypes.bool,
@@ -275,6 +275,10 @@ Plan.defaultProps = {
   isRejectedPlanRequest: false,
   isFetchingPlanRequest: false,
   planRequestPreviouslyFetched: false,
-  errorPlanRequest: null
+  errorPlanRequest: null,
+  fetchPlanUrl: '/api/service_templates',
+  fetchTasksForAllRequestsForPlanUrl: '/api/requests?expand=resource&attributes=miq_request_tasks',
+  fetchOrchestrationStackUrl: '/api/orchestration_stacks',
+  cancelPlanRequestTasksUrl: '/api/request_tasks'
 };
 export default Plan;

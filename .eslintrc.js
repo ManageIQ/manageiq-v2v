@@ -7,7 +7,8 @@ module.exports = {
     $: true,
     __: true,
     n__: true,
-    sprintf: true
+    sprintf: true,
+    ManageIQ: true
   },
   extends: [
     'standard',
@@ -23,6 +24,12 @@ module.exports = {
     'prettier/prettier': 'error',
     camelcase: 'off',
     'jsx-a11y/anchor-is-valid': 'off',
+    'jsx-a11y/label-has-for': [ 2, {
+      'required': {
+          'some': [ 'nesting', 'id' ]
+      },
+      'allowChildren': true,
+    }],
     'import/prefer-default-export': 'off',
     'no-underscore-dangle': 'off',
     'no-param-reassign': 'off',
