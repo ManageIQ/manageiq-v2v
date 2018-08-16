@@ -13,36 +13,40 @@ import { OSP_DEFAULT_SECURITY_GROUP, OSP_DEFAULT_FLAVOR } from '../PlanWizardIns
 import TableInlineEditRow from './TableInlineEditRow/TableInlineEditRow';
 
 class PlanWizardInstancePropertiesStepTable extends React.Component {
-  constructor(props) {
-    super(props);
+  state = {
+    // Sort the first column in an ascending way by default.
+    sortingColumns: {
+      name: {
+        direction: Table.TABLE_SORT_DIRECTION.ASC,
+        position: 0
+      }
+    },
 
-    const getSortingColumns = () => this.state.sortingColumns || {};
+    // rows state
+    rows: this.props.rows.map(row => ({
+      ...row,
+      osp_security_group: OSP_DEFAULT_SECURITY_GROUP,
+      osp_flavor: OSP_DEFAULT_FLAVOR
+    })),
 
-    const sortableTransform = sort.sort({
-      getSortingColumns,
-      onSort: selectedColumn => {
-        this.setState({
-          sortingColumns: sort.byColumn({
-            sortingColumns: this.state.sortingColumns,
-            sortingOrder: Table.defaultSortingOrder,
-            selectedColumn
-          })
-        });
-      },
-      // Use property or index dependening on the sortingColumns structure specified
-      strategy: sort.strategies.byProperty
-    });
+    editing: false,
 
-    const sortingFormatter = sort.header({
-      sortableTransform,
-      getSortingColumns,
-      strategy: sort.strategies.byProperty
-    });
+    // pagination default states
+    pagination: {
+      page: 1,
+      perPage: 5,
+      perPageOptions: [5, 10, 15]
+    },
 
-    // enables our custom header formatters extensions to reactabular
-    this.customHeaderFormatters = Table.customHeaderFormattersDefinition;
+    // page input value
+    pageChangeValue: 1
+  };
 
-    const inlineEditController = {
+  // enables our custom header formatters extensions to reactabular
+  customHeaderFormatters = Table.customHeaderFormattersDefinition;
+
+  inlineEditController = () => {
+    return {
       isEditing: ({ rowData }) => rowData.backup !== undefined,
       onActivate: ({ rowData }) => {
         const rows = cloneDeep(this.state.rows);
@@ -78,212 +82,207 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
         this.setState({ rows });
       }
     };
-    this.inlineEditController = inlineEditController;
+  };
 
-    const inlineEditFormatter = Table.inlineEditFormatterFactory({
-      isEditing: additionalData => inlineEditController.isEditing(additionalData),
-      renderValue: (value, additionalData) => (
-        <td className="editable">
-          <span className="static">{value}</span>
+  inlineEditFormatter = Table.inlineEditFormatterFactory({
+    isEditing: additionalData => this.inlineEditController().isEditing(additionalData),
+    renderValue: (value, additionalData) => (
+      <td className="editable">
+        <span className="static">{value}</span>
+      </td>
+    ),
+    renderEdit: (value, additionalData) => {
+      const { options, defaultValue } = additionalData.column.cell.inlineEditSelect;
+      return (
+        <td className="editable editing">
+          <FormControl
+            componentClass="select"
+            defaultValue={value || defaultValue}
+            onBlur={e => this.inlineEditController().onChange(e.target.value, additionalData)}
+          >
+            {options.map(opt => (
+              <option value={opt.name} key={opt.id}>
+                {opt.name}
+              </option>
+            ))}
+          </FormControl>
         </td>
-      ),
-      renderEdit: (value, additionalData) => {
-        const { options, defaultValue } = additionalData.column.cell.inlineEditSelect;
-        return (
-          <td className="editable editing">
-            <FormControl
-              componentClass="select"
-              defaultValue={value || defaultValue}
-              onBlur={e => inlineEditController.onChange(e.target.value, additionalData)}
-            >
-              {options.map(opt => (
-                <option value={opt.name} key={opt.id}>
-                  {opt.name}
-                </option>
-              ))}
-            </FormControl>
-          </td>
-        );
+      );
+    }
+  });
+
+  inlineEditButtonsFormatter = Table.inlineEditFormatterFactory({
+    isEditing: additionalData => this.state.editing,
+    renderValue: (value, additionalData) => (
+      <td style={{ padding: '2px' }}>
+        <Button bsStyle="default" onClick={() => this.inlineEditController().onActivate(additionalData)}>
+          <Icon type="pf" name="edit" />
+        </Button>
+      </td>
+    ),
+    renderEdit: (value, additionalData) => (
+      <td style={{ padding: '2px' }}>
+        <Button bsStyle="default" disabled>
+          <Icon type="pf" name="edit" />
+        </Button>
+      </td>
+    )
+  });
+
+  getColumns = () => {
+    const getSortingColumns = () => this.state.sortingColumns || {};
+
+    const sortableTransform = sort.sort({
+      getSortingColumns,
+      onSort: selectedColumn => {
+        this.setState({
+          sortingColumns: sort.byColumn({
+            sortingColumns: this.state.sortingColumns,
+            sortingOrder: Table.defaultSortingOrder,
+            selectedColumn
+          })
+        });
+      },
+      // Use property or index dependening on the sortingColumns structure specified
+      strategy: sort.strategies.byProperty
+    });
+
+    const sortingFormatter = sort.header({
+      sortableTransform,
+      getSortingColumns,
+      strategy: sort.strategies.byProperty
+    });
+
+    return [
+      {
+        property: 'name',
+        header: {
+          label: __('VM Name'),
+          props: {
+            index: 0,
+            rowSpan: 1,
+            colSpan: 1
+          },
+          transforms: [sortableTransform],
+          formatters: [sortingFormatter],
+          customFormatters: [Table.sortableHeaderCellFormatter]
+        },
+        cell: {
+          props: {
+            index: 0
+          },
+          formatters: [Table.tableCellFormatter]
+        }
+      },
+      {
+        property: 'cluster',
+        header: {
+          label: __('Source Cluster'),
+          props: {
+            index: 1,
+            rowSpan: 1,
+            colSpan: 1
+          },
+          transforms: [sortableTransform],
+          formatters: [sortingFormatter],
+          customFormatters: [Table.sortableHeaderCellFormatter]
+        },
+        cell: {
+          props: {
+            index: 1
+          },
+          formatters: [Table.tableCellFormatter]
+        }
+      },
+      {
+        property: 'allocated_size',
+        header: {
+          label: __('Allocated Size'),
+          props: {
+            index: 2,
+            rowSpan: 1,
+            colSpan: 1
+          },
+          transforms: [sortableTransform],
+          formatters: [sortingFormatter],
+          customFormatters: [Table.sortableHeaderCellFormatter]
+        },
+        cell: {
+          props: {
+            index: 2
+          },
+          formatters: [Table.tableCellFormatter]
+        }
+      },
+      {
+        property: 'osp_security_group',
+        header: {
+          label: __('OpenStack Security Group'),
+          props: {
+            index: 3,
+            rowSpan: 1,
+            colSpan: 1
+          },
+          transforms: [sortableTransform],
+          formatters: [sortingFormatter],
+          customFormatters: [Table.sortableHeaderCellFormatter]
+        },
+        cell: {
+          props: {
+            index: 3
+          },
+          formatters: [this.inlineEditFormatter],
+          inlineEditSelect: {
+            // Custom property for inlineEditFormatter
+            options: this.props.securityGroups,
+            defaultValue: OSP_DEFAULT_SECURITY_GROUP
+          }
+        }
+      },
+      {
+        property: 'osp_flavor',
+        header: {
+          label: __('OpenStack Flavor'),
+          props: {
+            index: 4,
+            rowSpan: 1,
+            colSpan: 1
+          },
+          transforms: [sortableTransform],
+          formatters: [sortingFormatter],
+          customFormatters: [Table.sortableHeaderCellFormatter]
+        },
+        cell: {
+          props: {
+            index: 4
+          },
+          formatters: [this.inlineEditFormatter],
+          inlineEditSelect: {
+            // Custom property for inlineEditFormatter
+            options: this.props.flavors,
+            defaultValue: OSP_DEFAULT_FLAVOR
+          }
+        }
+      },
+      {
+        property: 'actions',
+        header: {
+          label: '',
+          props: {
+            index: 5
+          },
+          formatters: [Table.actionHeaderCellFormatter]
+        },
+        cell: {
+          props: {
+            index: 5
+          },
+          formatters: [this.inlineEditButtonsFormatter]
+        }
       }
-    });
+    ];
+  };
 
-    const inlineEditButtonsFormatter = Table.inlineEditFormatterFactory({
-      isEditing: additionalData => this.state.editing,
-      renderValue: (value, additionalData) => (
-        <td style={{ padding: '2px' }}>
-          <Button bsStyle="default" onClick={() => inlineEditController.onActivate(additionalData)}>
-            <Icon type="pf" name="edit" />
-          </Button>
-        </td>
-      ),
-      renderEdit: (value, additionalData) => (
-        <td style={{ padding: '2px' }}>
-          <Button bsStyle="default" disabled>
-            <Icon type="pf" name="edit" />
-          </Button>
-        </td>
-      )
-    });
-
-    this.state = {
-      // Sort the first column in an ascending way by default.
-      sortingColumns: {
-        name: {
-          direction: Table.TABLE_SORT_DIRECTION.ASC,
-          position: 0
-        }
-      },
-
-      // column definitions
-      columns: [
-        {
-          property: 'name',
-          header: {
-            label: __('VM Name'),
-            props: {
-              index: 0,
-              rowSpan: 1,
-              colSpan: 1
-            },
-            transforms: [sortableTransform],
-            formatters: [sortingFormatter],
-            customFormatters: [Table.sortableHeaderCellFormatter]
-          },
-          cell: {
-            props: {
-              index: 0
-            },
-            formatters: [Table.tableCellFormatter]
-          }
-        },
-        {
-          property: 'cluster',
-          header: {
-            label: __('Source Cluster'),
-            props: {
-              index: 1,
-              rowSpan: 1,
-              colSpan: 1
-            },
-            transforms: [sortableTransform],
-            formatters: [sortingFormatter],
-            customFormatters: [Table.sortableHeaderCellFormatter]
-          },
-          cell: {
-            props: {
-              index: 1
-            },
-            formatters: [Table.tableCellFormatter]
-          }
-        },
-        {
-          property: 'allocated_size',
-          header: {
-            label: __('Allocated Size'),
-            props: {
-              index: 2,
-              rowSpan: 1,
-              colSpan: 1
-            },
-            transforms: [sortableTransform],
-            formatters: [sortingFormatter],
-            customFormatters: [Table.sortableHeaderCellFormatter]
-          },
-          cell: {
-            props: {
-              index: 2
-            },
-            formatters: [Table.tableCellFormatter]
-          }
-        },
-        {
-          property: 'osp_security_group',
-          header: {
-            label: __('OpenStack Security Group'),
-            props: {
-              index: 3,
-              rowSpan: 1,
-              colSpan: 1
-            },
-            transforms: [sortableTransform],
-            formatters: [sortingFormatter],
-            customFormatters: [Table.sortableHeaderCellFormatter]
-          },
-          cell: {
-            props: {
-              index: 3
-            },
-            formatters: [inlineEditFormatter],
-            inlineEditSelect: {
-              // Custom property for inlineEditFormatter
-              options: props.securityGroups,
-              defaultValue: OSP_DEFAULT_SECURITY_GROUP
-            }
-          }
-        },
-        {
-          property: 'osp_flavor',
-          header: {
-            label: __('OpenStack Flavor'),
-            props: {
-              index: 4,
-              rowSpan: 1,
-              colSpan: 1
-            },
-            transforms: [sortableTransform],
-            formatters: [sortingFormatter],
-            customFormatters: [Table.sortableHeaderCellFormatter]
-          },
-          cell: {
-            props: {
-              index: 4
-            },
-            formatters: [inlineEditFormatter],
-            inlineEditSelect: {
-              // Custom property for inlineEditFormatter
-              options: props.flavors,
-              defaultValue: OSP_DEFAULT_FLAVOR
-            }
-          }
-        },
-        {
-          property: 'actions',
-          header: {
-            label: '',
-            props: {
-              index: 5
-            },
-            formatters: [Table.actionHeaderCellFormatter]
-          },
-          cell: {
-            props: {
-              index: 5
-            },
-            formatters: [inlineEditButtonsFormatter]
-          }
-        }
-      ],
-
-      // rows state
-      rows: this.props.rows.map(row => ({
-        ...row,
-        osp_security_group: OSP_DEFAULT_SECURITY_GROUP,
-        osp_flavor: OSP_DEFAULT_FLAVOR
-      })),
-
-      editing: false,
-
-      // pagination default states
-      pagination: {
-        page: 1,
-        perPage: 5,
-        perPageOptions: [5, 10, 15]
-      },
-
-      // page input value
-      pageChangeValue: 1
-    };
-  }
   onFirstPage = () => {
     this.setPage(1);
   };
@@ -329,12 +328,12 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
   };
 
   currentRows = () => {
-    const { sortingColumns, columns, pagination, rows } = this.state;
+    const { sortingColumns, pagination, rows } = this.state;
 
     return compose(
       paginate(pagination),
       sort.sorter({
-        columns,
+        columns: this.getColumns(),
         sortingColumns,
         sort: orderBy,
         strategy: sort.strategies.byProperty
@@ -349,7 +348,7 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
   };
 
   render() {
-    const { columns, pagination, sortingColumns, pageChangeValue } = this.state;
+    const { pagination, sortingColumns, pageChangeValue } = this.state;
 
     const sortedPaginatedRows = this.currentRows();
 
@@ -363,13 +362,13 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
           hover
           dataTable
           inlineEdit
-          columns={columns}
+          columns={this.getColumns()}
           components={{
             header: {
               cell: cellProps =>
                 this.customHeaderFormatters({
                   cellProps,
-                  columns,
+                  columns: this.getColumns(),
                   sortingColumns,
                   rows: sortedPaginatedRows.rows,
                   onSelectAllRows: this.onSelectAllRows
@@ -381,7 +380,7 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
             }
           }}
         >
-          <Table.Header headerRows={resolve.headerRows({ columns })} />
+          <Table.Header headerRows={resolve.headerRows({ columns: this.getColumns() })} />
           <Table.Body
             rows={sortedPaginatedRows.rows || []}
             rowKey="id"
