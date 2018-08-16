@@ -33,6 +33,7 @@ class TableConfirmButtonsRow extends React.Component {
     if (element) {
       this.element = element;
     }
+
     if (this.element) {
       this.setState({
         rowDimensions: this.element.getBoundingClientRect()
@@ -50,17 +51,23 @@ class TableConfirmButtonsRow extends React.Component {
   };
 
   fetchClientDimensions() {
+    const window = this.props.tableRendersInModal
+      ? {
+          width: this.element.closest('.modal-dialog').getBoundingClientRect().width,
+          height: this.element.closest('.modal-dialog').getBoundingClientRect().height
+        }
+      : {
+          width: document.documentElement.clientWidth,
+          height: document.documentElement.clientHeight
+        };
     this.setState({
-      window: {
-        width: document.documentElement.clientWidth,
-        height: document.documentElement.clientHeight
-      }
+      window
     });
   }
 
   renderConfirmButtons() {
     const divStyle = this.state.rowDimensions
-      ? this.props.buttonsPosition(this.state.window, this.element.getBoundingClientRect())
+      ? this.props.buttonsPosition(this.state.window, this.state.rowDimensions)
       : {};
 
     const buttonsClass = `inline-edit-buttons ${this.props.buttonsClassName}`;

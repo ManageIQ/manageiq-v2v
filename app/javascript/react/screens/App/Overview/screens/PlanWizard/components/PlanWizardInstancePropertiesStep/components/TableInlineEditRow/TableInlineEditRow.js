@@ -14,7 +14,13 @@ const TableInlineEditRow = props => {
     } else {
       position.top = rowDimensions.bottom - 1;
     }
-    position.right = window.width - rowDimensions.right + 10;
+
+    if (props.tableRendersInModal) {
+      position.right = (window.width - rowDimensions.width) / 2 + 10;
+    } else {
+      position.right = window.width - rowDimensions.right + 10;
+    }
+
     return position;
   };
 
