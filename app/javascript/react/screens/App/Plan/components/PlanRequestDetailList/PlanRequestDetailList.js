@@ -528,7 +528,7 @@ class PlanRequestDetailList extends React.Component {
                 <Popover
                   id={`popover${task.id}${n}`}
                   title={V2V_MIGRATION_STATUS_MESSAGES[task.message]}
-                  className="task-info-popover"
+                  className="task-info-popover no-max-width"
                 >
                   <div>
                     <div>
