@@ -1,4 +1,1 @@
 export const QUERY_V2V_OSP_TENANT_ATTRIBUTES = 'QUERY_V2V_OSP_TENANT_ATTRIBUTES';
-
-export const OSP_DEFAULT_SECURITY_GROUP = 'default';
-export const OSP_DEFAULT_FLAVOR = 'medium';
