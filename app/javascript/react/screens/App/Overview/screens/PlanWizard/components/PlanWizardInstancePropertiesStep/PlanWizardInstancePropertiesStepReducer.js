@@ -1,30 +1,28 @@
 import Immutable from 'seamless-immutable';
-import { FETCH_V2V_OSP_GROUPS_AND_FLAVORS } from './PlanWizardInstancePropertiesStepConstants';
+import { QUERY_V2V_OSP_TENANT_ATTRIBUTES } from './PlanWizardInstancePropertiesStepConstants';
 
 const initialState = Immutable({
-  securityGroups: [],
-  flavors: [],
-  isFetchingGroupsAndFlavors: false,
-  isRejectedGroupsAndFlavors: false,
-  errorGroupsAndFlavors: null
+  tenantsWithAttributes: [],
+  isFetchingTenantsWithAttributes: false,
+  isRejectedTenantsWithAttributes: false,
+  errorTenantsWithAttributes: null
 });
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case `${FETCH_V2V_OSP_GROUPS_AND_FLAVORS}_PENDING`:
-      return state.set('isFetchingGroupsAndFlavors', true).set('isRejectedGroupsAndFlavors', false);
-    case `${FETCH_V2V_OSP_GROUPS_AND_FLAVORS}_FULFILLED`:
+    case `${QUERY_V2V_OSP_TENANT_ATTRIBUTES}_PENDING`:
+      return state.set('isFetchingTenantsWithAttributes', true).set('isRejectedTenantsWithAttributes', false);
+    case `${QUERY_V2V_OSP_TENANT_ATTRIBUTES}_FULFILLED`:
       return state
-        .set('securityGroups', action.payload.data.security_groups)
-        .set('flavors', action.payload.data.flavors)
-        .set('isFetchingGroupsAndFlavors', false)
-        .set('isRejectedGroupsAndFlavors', false)
-        .set('errorGroupsAndFlavors', null);
-    case `${FETCH_V2V_OSP_GROUPS_AND_FLAVORS}_REJECTED`:
+        .set('tenantsWithAttributes', action.payload.data.results)
+        .set('isFetchingTenantsWithAttributes', false)
+        .set('isRejectedTenantsWithAttributes', false)
+        .set('errorTenantsWithAttributes', null);
+    case `${QUERY_V2V_OSP_TENANT_ATTRIBUTES}_REJECTED`:
       return state
-        .set('errorGroupsAndFlavors', action.payload)
-        .set('isFetchingGroupsAndFlavors', false)
-        .set('isRejectedGroupsAndFlavors', true);
+        .set('errorTenantsWithAttributes', action.payload)
+        .set('isFetchingTenantsWithAttributes', false)
+        .set('isRejectedTenantsWithAttributes', true);
     default:
       return state;
   }

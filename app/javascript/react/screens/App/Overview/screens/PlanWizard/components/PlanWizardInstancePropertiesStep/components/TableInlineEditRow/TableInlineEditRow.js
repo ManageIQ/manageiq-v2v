@@ -51,7 +51,8 @@ TableInlineEditRow.propTypes = {
   messages: PropTypes.shape({
     confirmButtonLabel: PropTypes.string,
     cancelButtonLabel: PropTypes.string
-  })
+  }),
+  tableRendersInModal: PropTypes.bool
 };
 
 export default TableInlineEditRow;

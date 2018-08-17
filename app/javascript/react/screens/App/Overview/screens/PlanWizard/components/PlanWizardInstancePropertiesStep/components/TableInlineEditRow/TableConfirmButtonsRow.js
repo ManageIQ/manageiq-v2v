@@ -4,10 +4,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { createPortal } from 'react-dom';
-import ConfirmButton from '../InlineEdit/ConfirmButton';
-import CancelButton from '../InlineEdit/CancelButton';
 import { noop, debounce } from 'patternfly-react';
 import './closestPolyfill';
+import ConfirmButton from '../InlineEdit/ConfirmButton';
+import CancelButton from '../InlineEdit/CancelButton';
 
 class TableConfirmButtonsRow extends React.Component {
   constructor(props) {
@@ -147,7 +147,8 @@ TableConfirmButtonsRow.propTypes = {
     confirmButtonLabel: PropTypes.string,
     cancelButtonLabel: PropTypes.string
   }),
-  buttonsMountpoint: PropTypes.any
+  buttonsMountpoint: PropTypes.any,
+  tableRendersInModal: PropTypes.bool
 };
 
 export default TableConfirmButtonsRow;

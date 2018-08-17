@@ -49,13 +49,9 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
         this.setState({ backup, editing: true });
       },
       onConfirm: ({ rowData }) => {
-        const index = findIndex(rows, { id: rowData.id });
-
         this.setState({ backup: {}, editing: false });
       },
       onCancel: ({ rowData }) => {
-        const index = findIndex(rows, { id: rowData.id });
-
         this.setState({ backup: {}, editing: false });
       },
       onChange: (value, { rowData, property }) => {}
@@ -70,7 +66,12 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
       </td>
     ),
     renderEdit: (value, additionalData) => {
-      const { options, defaultValue } = additionalData.column.cell.inlineEditSelect;
+      const { tenantsWithAttributesById, destinationTenantIdsBySourceClusterId } = this.props;
+      const { optionsAttribute, defaultValue } = additionalData.column.cell.inlineEditSelect;
+      const clusterId = additionalData.rowData.ems_cluster_id;
+      const tenantId = destinationTenantIdsBySourceClusterId[clusterId];
+      const tenant = tenantId && tenantsWithAttributesById[tenantId];
+      const options = tenant ? tenant[optionsAttribute] : [];
       return (
         <td className="editable editing">
           <FormControl
@@ -212,7 +213,7 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
           formatters: [this.inlineEditFormatter],
           inlineEditSelect: {
             // Custom property for inlineEditFormatter
-            options: this.props.securityGroups,
+            optionsAttribute: 'security_groups',
             defaultValue: OSP_DEFAULT_SECURITY_GROUP
           }
         }
@@ -237,7 +238,7 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
           formatters: [this.inlineEditFormatter],
           inlineEditSelect: {
             // Custom property for inlineEditFormatter
-            options: this.props.flavors,
+            optionsAttribute: 'flavors',
             defaultValue: OSP_DEFAULT_FLAVOR
           }
         }
@@ -349,8 +350,7 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
                   cellProps,
                   columns: this.getColumns(),
                   sortingColumns,
-                  rows: sortedPaginatedRows.rows,
-                  onSelectAllRows: this.onSelectAllRows
+                  rows: sortedPaginatedRows.rows
                 })
             },
             body: {
@@ -395,12 +395,12 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
 }
 PlanWizardInstancePropertiesStepTable.propTypes = {
   rows: PropTypes.array,
-  securityGroups: PropTypes.arrayOf(PropTypes.object),
-  flavors: PropTypes.arrayOf(PropTypes.object)
+  tenantsWithAttributesById: PropTypes.object,
+  destinationTenantIdsBySourceClusterId: PropTypes.object
 };
 PlanWizardInstancePropertiesStepTable.defaultProps = {
   rows: [],
-  securityGroups: [],
-  flavors: []
+  tenantsWithAttributesById: {},
+  destinationTenantIdsBySourceClusterId: {}
 };
 export default PlanWizardInstancePropertiesStepTable;
