@@ -179,7 +179,7 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
       {
         property: 'target_cluster_name',
         header: {
-          label: __('Target Cluster'),
+          label: __('Target Provider'),
           props: {
             index: 2,
             rowSpan: 1,
