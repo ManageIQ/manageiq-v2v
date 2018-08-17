@@ -1,10 +1,22 @@
 # ManageIQ V2V plugin
 
-[![Build Status](https://travis-ci.org/ManageIQ/manageiq-v2v.svg?branch=master)](https://travis-ci.org/ManageIQ/manageiq-v2v)
+[![Gem Version](https://badge.fury.io/rb/manageiq-v2v.svg)](http://badge.fury.io/rb/manageiq-v2v)
+[![Build Status](https://travis-ci.org/ManageIQ/manageiq-v2v.svg)](https://travis-ci.org/ManageIQ/manageiq-v2v)
+[![Code Climate](https://codeclimate.com/github/ManageIQ/manageiq-v2v.svg)](https://codeclimate.com/github/ManageIQ/manageiq-v2v)
+[![Test Coverage](https://codeclimate.com/github/ManageIQ/manageiq-v2v/badges/coverage.svg)](https://codeclimate.com/github/ManageIQ/manageiq-v2v/coverage)
+[![Security](https://hakiri.io/github/ManageIQ/manageiq-v2v/master.svg)](https://hakiri.io/github/ManageIQ/manageiq-v2v/master)
+
+[![Chat](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ManageIQ/v2v?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Translate](https://img.shields.io/badge/translate-zanata-blue.svg)](https://translate.zanata.org/zanata/project/view/manageiq-v2v)
+
 
 ## Purpose
 
 The purpose of this repository is to provide UI infrastrucutre to ManageIQ for the V2V effort. V2V is an acronym for virtual to virtual, referring to the process of importing virtual machines from one virtualization platform to another.
+
+## License
+
+The gem is available as open source under the terms of the [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0).
 
 ### Current features
 
