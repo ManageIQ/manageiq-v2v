@@ -21,3 +21,13 @@ export const getDestinationTenantIdsBySourceClusterId = transformation_mapping_i
     {}
   );
 };
+
+export const getVmsWithTargetClusterName = (vms, destinationTenantIdsBySourceClusterId, tenantsWithAttributesById) =>
+  vms.map(vm => {
+    const destinationTenantId = destinationTenantIdsBySourceClusterId[vm.ems_cluster_id];
+    const tenant = destinationTenantId && tenantsWithAttributesById[destinationTenantId];
+    return {
+      ...vm,
+      target_cluster_name: tenant ? tenant.name : ''
+    };
+  });

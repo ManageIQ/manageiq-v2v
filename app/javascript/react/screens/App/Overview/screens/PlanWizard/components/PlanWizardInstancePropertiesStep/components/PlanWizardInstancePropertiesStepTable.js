@@ -67,7 +67,7 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
     ),
     renderEdit: (value, additionalData) => {
       const { tenantsWithAttributesById, destinationTenantIdsBySourceClusterId } = this.props;
-      const { optionsAttribute, defaultValue } = additionalData.column.cell.inlineEditSelect;
+      const { optionsAttribute } = additionalData.column.cell.inlineEditSelect;
       const clusterId = additionalData.rowData.ems_cluster_id;
       const tenantId = destinationTenantIdsBySourceClusterId[clusterId];
       const tenant = tenantId && tenantsWithAttributesById[tenantId];
@@ -76,7 +76,7 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
         <td className="editable editing">
           <FormControl
             componentClass="select"
-            defaultValue={value.name || defaultValue}
+            defaultValue={value.name}
             onBlur={e => this.inlineEditController().onChange(e.target.value, additionalData)}
           >
             {options.map(opt => (
@@ -174,9 +174,9 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
         }
       },
       {
-        property: 'allocated_size',
+        property: 'target_cluster_name',
         header: {
-          label: __('Allocated Size'),
+          label: __('Target Cluster'),
           props: {
             index: 2,
             rowSpan: 1,
@@ -194,9 +194,9 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
         }
       },
       {
-        property: 'osp_security_group',
+        property: 'allocated_size',
         header: {
-          label: __('OpenStack Security Group'),
+          label: __('Allocated Size'),
           props: {
             index: 3,
             rowSpan: 1,
@@ -210,18 +210,13 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
           props: {
             index: 3
           },
-          formatters: [this.inlineEditFormatter],
-          inlineEditSelect: {
-            // Custom property for inlineEditFormatter
-            optionsAttribute: 'security_groups',
-            defaultValue: OSP_DEFAULT_SECURITY_GROUP
-          }
+          formatters: [Table.tableCellFormatter]
         }
       },
       {
-        property: 'osp_flavor',
+        property: 'osp_security_group',
         header: {
-          label: __('OpenStack Flavor'),
+          label: __('OpenStack Security Group'),
           props: {
             index: 4,
             rowSpan: 1,
@@ -238,8 +233,31 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
           formatters: [this.inlineEditFormatter],
           inlineEditSelect: {
             // Custom property for inlineEditFormatter
-            optionsAttribute: 'flavors',
-            defaultValue: OSP_DEFAULT_FLAVOR
+            optionsAttribute: 'security_groups'
+          }
+        }
+      },
+      {
+        property: 'osp_flavor',
+        header: {
+          label: __('OpenStack Flavor'),
+          props: {
+            index: 5,
+            rowSpan: 1,
+            colSpan: 1
+          },
+          transforms: [sortableTransform],
+          formatters: [sortingFormatter],
+          customFormatters: [Table.sortableHeaderCellFormatter]
+        },
+        cell: {
+          props: {
+            index: 5
+          },
+          formatters: [this.inlineEditFormatter],
+          inlineEditSelect: {
+            // Custom property for inlineEditFormatter
+            optionsAttribute: 'flavors'
           }
         }
       },
@@ -248,13 +266,13 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
         header: {
           label: '',
           props: {
-            index: 5
+            index: 6
           },
           formatters: [Table.actionHeaderCellFormatter]
         },
         cell: {
           props: {
-            index: 5
+            index: 6
           },
           formatters: [this.inlineEditButtonsFormatter]
         }

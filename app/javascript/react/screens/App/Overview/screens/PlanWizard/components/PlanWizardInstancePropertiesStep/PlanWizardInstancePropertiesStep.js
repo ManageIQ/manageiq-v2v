@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import PlanWizardInstancePropertiesStepTable from './components/PlanWizardInstancePropertiesStepTable';
 import { OSP_TENANT } from '../../../../OverviewConstants';
-import { getTenantsById, getDestinationTenantIdsBySourceClusterId } from './PlanWizardInstancePropertiesStepSelectors';
+import {
+  getTenantsById,
+  getDestinationTenantIdsBySourceClusterId,
+  getVmsWithTargetClusterName
+} from './PlanWizardInstancePropertiesStepSelectors';
 
 class PlanWizardInstancePropertiesStep extends Component {
   componentDidMount() {
@@ -41,12 +45,17 @@ class PlanWizardInstancePropertiesStep extends Component {
     const destinationTenantIdsBySourceClusterId = getDestinationTenantIdsBySourceClusterId(
       selectedMapping.transformation_mapping_items
     );
+    const rows = getVmsWithTargetClusterName(
+      vmStepSelectedVms,
+      destinationTenantIdsBySourceClusterId,
+      tenantsWithAttributesById
+    );
 
     return (
       <Field
         name="ospInstanceProperties"
         component={PlanWizardInstancePropertiesStepTable}
-        rows={vmStepSelectedVms}
+        rows={rows}
         tenantsWithAttributesById={tenantsWithAttributesById}
         destinationTenantIdsBySourceClusterId={destinationTenantIdsBySourceClusterId}
       />
