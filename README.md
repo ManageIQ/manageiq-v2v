@@ -12,7 +12,7 @@
 
 ## Purpose
 
-The purpose of this repository is to provide UI infrastrucutre to ManageIQ for the V2V effort. V2V is an acronym for virtual to virtual, referring to the process of importing virtual machines from one virtualization platform to another.
+The purpose of this repository is to provide UI infrastructure to ManageIQ for the V2V effort. V2V is an acronym for virtual to virtual, referring to the process of importing virtual machines from one virtualization platform to another.
 
 ## License
 
