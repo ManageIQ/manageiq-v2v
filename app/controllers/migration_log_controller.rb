@@ -3,7 +3,7 @@ class MigrationLogController < ApplicationController
   after_action :cleanup_action
 
   def download_migration_log
-    render :json => migration_log_json(params[:id])
+    #render :json => migration_log_json(params[:id])
   end
 
   private
