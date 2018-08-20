@@ -15,5 +15,9 @@ module ManageIQ::V2V
         Menu::Item.new('migration', N_('Migration'), 'migration', {:feature => 'migration', :any => true}, '/migration', :default, :compute)
       )
     end
+
+    def self.plugin_name
+      _('V2V')
+    end
   end
 end
