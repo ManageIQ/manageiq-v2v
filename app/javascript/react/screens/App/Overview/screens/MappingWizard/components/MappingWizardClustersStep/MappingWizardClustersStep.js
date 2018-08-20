@@ -23,7 +23,7 @@ class MappingWizardClustersStep extends React.Component {
 
     fetchSourceClustersAction(fetchSourceClustersUrl);
     fetchTargetClustersAction(fetchTargetClustersUrl).then(result => {
-      if (result.length > 0) {
+      if (result.value && result.value.data && result.value.data.resources.length > 0) {
         const hostIDsByClusterID = result.value.data.resources.reduce(
           (newObject, cluster) => ({
             ...newObject,
