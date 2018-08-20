@@ -532,7 +532,7 @@ class PlanRequestDetailList extends React.Component {
                 >
                   <div>
                     <div>
-                      <b>{__('Elapsed Time')}: </b>
+                      <b>{__('Start Time')}: </b>
                       {formatDateTime(task.startDateTime)}
                     </div>
                     {task.options.prePlaybookRunning || task.options.postPlaybookRunning ? (
