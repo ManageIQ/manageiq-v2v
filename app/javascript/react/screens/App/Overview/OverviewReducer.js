@@ -45,7 +45,7 @@ import {
   V2V_SCHEDULE_MIGRATION
 } from './OverviewConstants';
 
-import { planTransmutation } from './helpers';
+import { planTransmutation, sufficientProviders } from './helpers';
 
 export const initialState = Immutable({
   mappingWizardVisible: false,
@@ -152,13 +152,9 @@ export default (state = initialState, action) => {
         if (!action.payload.data || !action.payload.data.resources) {
           return insufficient;
         }
-        const providers = action.payload.data.resources;
-        validateOverviewProviders(providers);
-        // Providers are sufficient if Vmware and Redhat providers are both present.
-        const sufficient =
-          providers.some(p => p.type === 'ManageIQ::Providers::Vmware::InfraManager') &&
-          providers.some(p => p.type === 'ManageIQ::Providers::Redhat::InfraManager');
-        return insufficient.set('hasSufficientProviders', sufficient);
+        validateOverviewProviders(action.payload.data.resources);
+
+        return insufficient.set('hasSufficientProviders', sufficientProviders(action.payload.data.resources));
       })();
     case `${FETCH_PROVIDERS}_REJECTED`:
       return state
