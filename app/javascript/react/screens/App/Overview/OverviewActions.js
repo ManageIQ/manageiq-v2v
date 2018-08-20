@@ -271,7 +271,9 @@ export const scheduleMigration = payload => dispatch =>
         body = scheduleTime
           ? {
               action: 'edit',
-              resource: { run_at: { ...payload.plan.schedules[0].run_at, start_time: scheduleTime } }
+              resource: {
+                run_at: { ...payload.plan.schedules[0].run_at, start_time: new Date(scheduleTime).toUTCString() }
+              }
             }
           : { action: 'delete' };
       }

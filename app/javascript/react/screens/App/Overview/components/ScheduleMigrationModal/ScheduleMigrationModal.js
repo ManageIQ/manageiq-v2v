@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Modal } from 'patternfly-react';
-import moment from 'moment';
-
 import ScheduleMigrationModalBody from './ScheduleMigrationModalBody';
 
 class ScheduleMigrationModal extends React.Component {
@@ -46,7 +44,7 @@ class ScheduleMigrationModal extends React.Component {
             onClick={() => {
               scheduleMigration({
                 plan: scheduleMigrationPlan,
-                scheduleTime: moment(this.state.dateTimeInput).format('YYYYMMDDTHHmm')
+                scheduleTime: this.state.dateTimeInput
               }).then(() => {
                 fetchTransformationPlansAction({
                   url: fetchTransformationPlansUrl,
