@@ -9,13 +9,9 @@ Gem::Specification.new do |s|
   s.version     = ManageIQ::V2V::VERSION
   s.authors     = ['ManageIQ Authors']
   s.homepage    = 'http://www.manageiq.org'
-  s.summary     = 'ManageIQ plugin for v2v trasformations'
-  s.description = 'ManageIQ plugin for v2v trasformations'
+  s.summary     = 'ManageIQ plugin for v2v transformations'
+  s.description = 'ManageIQ plugin for v2v transformations'
   s.license     = 'MIT'
 
   s.files = Dir['{app,config,db,lib}/**/*', 'Rakefile', 'README.md']
-
-  s.add_dependency 'rails', '~> 5.0.0', '>= 5.0.0.1'
-
-  s.add_development_dependency 'sqlite3'
 end
