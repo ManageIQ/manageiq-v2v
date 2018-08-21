@@ -247,7 +247,8 @@ export default (state = initialState, action) => {
         .set('vms', [])
         .set('planRequestPreviouslyFetched', false)
         .set('markedForCancellation', [])
-        .set('selectedTasksForCancel', []);
+        .set('selectedTasksForCancel', [])
+        .set('planRequestFailed', false);
 
     case `${FETCH_V2V_MIGRATION_TASK_LOG}_PENDING`:
       return state.set('isFetchingMigrationTaskLog', true).set('isRejectedMigrationTaskLog', false);
