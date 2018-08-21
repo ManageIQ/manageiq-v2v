@@ -310,7 +310,7 @@ class Overview extends React.Component {
           }
           style={{ marginTop: 200 }}
         >
-          {(transformationMappings.length > 0 || transformationPlans.length > 0) && (
+          {(transformationMappings.length > 0 || transformationPlans.length > 0 || archivedTransformationPlans) && (
             <Migrations
               activeFilter={migrationsFilter}
               setActiveFilter={setMigrationsFilterAction}
