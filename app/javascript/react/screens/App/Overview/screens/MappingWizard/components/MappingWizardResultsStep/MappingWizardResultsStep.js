@@ -39,9 +39,6 @@ class MappingWizardResultsStep extends React.Component {
           <p className="blank-slate-pf-secondary-action">
             {__("We're sorry, something went wrong. Please try again.")}
           </p>
-          <button type="button" className="btn btn-lg btn-primary">
-            Retry
-          </button>
         </div>
       );
     } else if (transformationMappingsResult) {
