@@ -14,3 +14,7 @@ export const planTransmutation = (plans = [], mappings = []) =>
       scheduleTime: plan.schedules ? new Date(plan.schedules[0].run_at.start_time).getTime() : null
     };
   });
+
+export const sufficientProviders = (providers = []) =>
+  providers.some(p => p.type === 'ManageIQ::Providers::Vmware::InfraManager') &&
+  providers.some(p => p.type === 'ManageIQ::Providers::Redhat::InfraManager');

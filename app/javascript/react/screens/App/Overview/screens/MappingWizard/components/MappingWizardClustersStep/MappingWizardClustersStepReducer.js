@@ -5,6 +5,7 @@ import {
   FETCH_V2V_TARGET_CLUSTERS,
   QUERY_V2V_HOSTS
 } from './MappingWizardClustersStepConstants';
+import { getHostsByClusterID } from './helpers';
 
 const initialState = Immutable({
   sourceClusters: [],
@@ -20,28 +21,6 @@ const initialState = Immutable({
   isRejectedHostsQuery: false,
   errorHostsQuery: null
 });
-
-const getHostsByClusterID = hostsQueryFulfilledAction => {
-  const {
-    meta: { hostIDsByClusterID },
-    payload: { data }
-  } = hostsQueryFulfilledAction;
-  const hostsByID = data.results.reduce(
-    (newObject, host) => ({
-      ...newObject,
-      [host.id]: host
-    }),
-    {}
-  );
-  const hostsByClusterID = Object.keys(hostIDsByClusterID).reduce(
-    (newObject, clusterID) => ({
-      ...newObject,
-      [clusterID]: hostIDsByClusterID[clusterID].map(hostID => hostsByID[hostID])
-    }),
-    {}
-  );
-  return hostsByClusterID;
-};
 
 export default (state = initialState, action) => {
   switch (action.type) {
