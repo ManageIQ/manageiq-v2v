@@ -51,6 +51,7 @@ class ScheduleMigrationModal extends React.Component {
                   archived: false
                 });
               });
+              handleChange();
             }}
           >
             {__('Schedule')}

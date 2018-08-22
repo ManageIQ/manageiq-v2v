@@ -10,7 +10,7 @@ class ScheduleMigrationModalBody extends React.Component {
     datetimeSelector.datetimepicker({
       allowInputToggle: true,
       showTodayButton: true,
-      minDate: new Date(),
+      minDate: new Date(Date.now() + 120000),
       toolbarPlacement: 'bottom',
       sideBySide: true,
       icons: {
