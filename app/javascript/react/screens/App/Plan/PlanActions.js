@@ -50,7 +50,6 @@ const _getOrchestrationStackActionCreator = (url, playbookScheduleType, task) =>
             type: V2V_NOTIFICATION_ADD,
             message: successMsg,
             notificationType: 'success',
-            persistent: true,
             actionEnabled: false
           });
         })
@@ -184,7 +183,6 @@ export const downloadLogAction = task => dispatch => {
               type: V2V_NOTIFICATION_ADD,
               message: successMsg,
               notificationType: 'success',
-              persistent: true,
               actionEnabled: false
             });
           } else {
@@ -261,7 +259,6 @@ export const cancelPlanRequestTasksAction = (url, tasks) => dispatch => {
             type: V2V_NOTIFICATION_ADD,
             message: cancelSuccessMsgWithVMNames,
             notificationType: 'success',
-            persistent: true,
             actionEnabled: false
           });
 
@@ -331,7 +328,6 @@ export const dispatchVMTasksCompletionNotificationAction = (
         type: V2V_NOTIFICATION_ADD,
         message: successMessage,
         notificationType: 'success',
-        persistent: true,
         actionEnabled: false
       });
       dispatch({
