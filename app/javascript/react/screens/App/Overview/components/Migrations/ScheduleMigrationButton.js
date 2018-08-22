@@ -14,8 +14,8 @@ const ScheduleMigrationButton = ({
   plan,
   isMissingMapping
 }) => {
-  const migrationScheduled = plan.schedules && plan.schedules[0].run_at.start_time;
-  const staleMigrationSchedule = (new Date(migrationScheduled).getTime() || 0) < Date.now();
+  const migrationScheduled = (plan.schedules && plan.schedules[0].run_at.start_time) || 0;
+  const staleMigrationSchedule = new Date(migrationScheduled).getTime() < Date.now();
   const confirmationWarningText = (
     <React.Fragment>
       <p>
