@@ -24,12 +24,15 @@ module.exports = {
     'prettier/prettier': 'error',
     camelcase: 'off',
     'jsx-a11y/anchor-is-valid': 'off',
-    'jsx-a11y/label-has-for': [ 2, {
-      'required': {
-          'some': [ 'nesting', 'id' ]
-      },
-      'allowChildren': true,
-    }],
+    'jsx-a11y/label-has-for': [
+      2,
+      {
+        required: {
+          some: ['nesting', 'id']
+        },
+        allowChildren: true
+      }
+    ],
     'import/prefer-default-export': 'off',
     'no-underscore-dangle': 'off',
     'no-param-reassign': 'off',

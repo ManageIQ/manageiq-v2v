@@ -163,8 +163,7 @@ class MigrationsCompletedList extends React.Component {
                         .then(() => {
                           addNotificationAction({
                             message: sprintf(__('%s successfully archived'), plan.name),
-                            notificationType: 'success',
-                            persistent: false
+                            notificationType: 'success'
                           });
 
                           return fetchTransformationPlansAction({

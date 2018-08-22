@@ -290,7 +290,6 @@ export const scheduleMigration = payload => dispatch =>
             type: V2V_NOTIFICATION_ADD,
             message: msg,
             notificationType: 'success',
-            persistent: false,
             actionEnabled: false
           });
         })
