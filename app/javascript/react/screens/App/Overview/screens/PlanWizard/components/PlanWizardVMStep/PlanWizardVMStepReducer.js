@@ -21,9 +21,9 @@ export default (state = initialState, action) => {
       const { payload } = action;
       if (payload && payload.data) {
         return state
-          .set('valid_vms', _formatValidVms(payload.data.valid_vms))
-          .set('invalid_vms', _formatInvalidVms(payload.data.invalid_vms))
-          .set('conflict_vms', _formatConflictVms(payload.data.conflict_vms))
+          .set('valid_vms', _formatValidVms(payload.data.valid))
+          .set('invalid_vms', _formatInvalidVms(payload.data.invalid))
+          .set('conflict_vms', _formatConflictVms(payload.data.conflicted))
           .set('validationServiceCalled', true)
           .set('isRejectedValidatingVms', false)
           .set('isValidatingVms', false);
