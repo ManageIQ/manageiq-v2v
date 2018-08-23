@@ -1,0 +1,14 @@
+---
+exclude_patterns:
+- ".git/"
+- "**.gif"
+- "**.html"
+- "**.json"
+- "**.png"
+- "**.svg"
+- "**.xml"
+- "**.yaml"
+- "**.yml"
+- "locale/"
+- "docs/"
+- "**/*.fixtures.js"
