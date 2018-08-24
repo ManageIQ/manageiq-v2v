@@ -68,14 +68,16 @@ class PlanRequestDetailList extends React.Component {
     pageChangeValue: 1
   };
 
-  componentDidUpdate() {
-    const {
-      failedMigrations,
-      successfulMigrations,
-      notificationsSentList,
-      dispatchVMTasksCompletionNotificationAction
-    } = this.props;
-    dispatchVMTasksCompletionNotificationAction(failedMigrations, successfulMigrations, notificationsSentList);
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.planRequestTasks !== this.props.planRequestTasks) {
+      const {
+        failedMigrations,
+        successfulMigrations,
+        notificationsSentList,
+        dispatchVMTasksCompletionNotificationAction
+      } = this.props;
+      dispatchVMTasksCompletionNotificationAction(failedMigrations, successfulMigrations, notificationsSentList);
+    }
   }
 
   onValueKeyPress = keyEvent => {
