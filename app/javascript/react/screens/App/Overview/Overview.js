@@ -251,7 +251,8 @@ class Overview extends React.Component {
       toggleScheduleMigrationModal,
       scheduleMigrationModal,
       scheduleMigrationPlan,
-      scheduleMigration
+      scheduleMigration,
+      plansMutatedWithMappingInfo
     } = this.props;
 
     const inProgressRequestsTransformationMappings = () => {
@@ -340,6 +341,7 @@ class Overview extends React.Component {
               scheduleMigrationModal={scheduleMigrationModal}
               scheduleMigrationPlan={scheduleMigrationPlan}
               scheduleMigration={scheduleMigration}
+              plansMutatedWithMappingInfo={plansMutatedWithMappingInfo}
             />
           )}
           {hasSufficientProviders ? (
@@ -472,7 +474,8 @@ Overview.propTypes = {
   fetchServiceTemplateAnsiblePlaybooksAction: PropTypes.func,
   fetchServiceTemplateAnsiblePlaybooksUrl: PropTypes.string,
   serviceTemplatePlaybooks: PropTypes.array,
-  redirectTo: PropTypes.func.isRequired
+  redirectTo: PropTypes.func.isRequired,
+  plansMutatedWithMappingInfo: PropTypes.bool
 };
 
 Overview.defaultProps = {

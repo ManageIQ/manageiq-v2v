@@ -55,7 +55,8 @@ class MigrationsNotStartedList extends React.Component {
       scheduleMigrationPlan,
       scheduleMigration,
       fetchTransformationPlansAction,
-      fetchTransformationPlansUrl
+      fetchTransformationPlansUrl,
+      plansMutatedWithMappingInfo
     } = this.props;
     const sortedMigrations = this.sortedMigrations();
 
@@ -130,13 +131,22 @@ class MigrationsNotStartedList extends React.Component {
                             <Icon type="pf" name="virtual-machine" />
                             <strong>{plan.options.config_info.actions.length}</strong> {__('VMs')}
                           </ListView.InfoItem>,
-                          isMissingMapping ? (
-                            <ListView.InfoItem key={`${plan.id}-infraMappingWarning`}>
-                              <Icon type="pf" name="warning-triangle-o" /> {__('Infrastucture mapping does not exist.')}
-                            </ListView.InfoItem>
-                          ) : (
+                          plansMutatedWithMappingInfo &&
+                            isMissingMapping && (
+                              <ListView.InfoItem key={`${plan.id}-infraMappingWarning`}>
+                                <Icon type="pf" name="warning-triangle-o" />{' '}
+                                {__('Infrastucture mapping does not exist.')}
+                              </ListView.InfoItem>
+                            ),
+                          plansMutatedWithMappingInfo &&
+                            !isMissingMapping && (
+                              <ListView.InfoItem key={`${plan.id}-infraMappingName`}>
+                                {plan.infraMappingName}
+                              </ListView.InfoItem>
+                            ),
+                          !plansMutatedWithMappingInfo && (
                             <ListView.InfoItem key={`${plan.id}-infraMappingName`}>
-                              {plan.infraMappingName}
+                              {__('Loading Infrastructure Mapping info...')}
                             </ListView.InfoItem>
                           ),
                           migrationScheduled && (
@@ -194,7 +204,8 @@ MigrationsNotStartedList.propTypes = {
   scheduleMigrationPlan: PropTypes.object,
   scheduleMigration: PropTypes.func,
   fetchTransformationPlansAction: PropTypes.func,
-  fetchTransformationPlansUrl: PropTypes.string
+  fetchTransformationPlansUrl: PropTypes.string,
+  plansMutatedWithMappingInfo: PropTypes.bool
 };
 MigrationsNotStartedList.defaultProps = {
   migrateClick: noop,
