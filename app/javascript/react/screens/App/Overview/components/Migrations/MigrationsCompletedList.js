@@ -62,7 +62,8 @@ class MigrationsCompletedList extends React.Component {
       toggleScheduleMigrationModal,
       scheduleMigrationModal,
       scheduleMigrationPlan,
-      scheduleMigration
+      scheduleMigration,
+      plansMutatedWithMappingInfo
     } = this.props;
     const sortedMigrations = this.sortedMigrations();
 
@@ -227,13 +228,22 @@ class MigrationsCompletedList extends React.Component {
                             <strong>{Object.keys(tasks).length} </strong>
                             {__('VMs successfully migrated.')}
                           </ListView.InfoItem>,
-                          plan.infraMappingName ? (
+                          plansMutatedWithMappingInfo &&
+                            isMissingMapping && (
+                              <ListView.InfoItem key={`${plan.id}-infraMappingWarning`}>
+                                <Icon type="pf" name="warning-triangle-o" />{' '}
+                                {__('Infrastucture mapping does not exist.')}
+                              </ListView.InfoItem>
+                            ),
+                          plansMutatedWithMappingInfo &&
+                            !isMissingMapping && (
+                              <ListView.InfoItem key={`${plan.id}-infraMappingName`}>
+                                {plan.infraMappingName}
+                              </ListView.InfoItem>
+                            ),
+                          !plansMutatedWithMappingInfo && (
                             <ListView.InfoItem key={`${plan.id}-infraMappingName`}>
-                              {plan.infraMappingName}
-                            </ListView.InfoItem>
-                          ) : (
-                            <ListView.InfoItem key={`${plan.id}-infraMappingWarning`}>
-                              <Icon type="pf" name="warning-triangle-o" /> {__('Infrastructure mapping does not exist')}
+                              {__('Loading Infrastructure Mapping info...')}
                             </ListView.InfoItem>
                           ),
                           <ListView.InfoItem key={`${plan.id}-elapsed`}>
@@ -343,7 +353,8 @@ MigrationsCompletedList.propTypes = {
   toggleScheduleMigrationModal: PropTypes.func,
   scheduleMigrationModal: PropTypes.bool,
   scheduleMigrationPlan: PropTypes.object,
-  scheduleMigration: PropTypes.func
+  scheduleMigration: PropTypes.func,
+  plansMutatedWithMappingInfo: PropTypes.bool
 };
 MigrationsCompletedList.defaultProps = {
   finishedTransformationPlans: [],
