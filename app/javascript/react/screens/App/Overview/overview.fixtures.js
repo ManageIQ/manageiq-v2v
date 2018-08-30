@@ -24,7 +24,8 @@ export const initialState = Immutable({
   networks: [],
   isRejectedNetworks: false,
   isFetchingNetworks: false,
-  fetchNetworksUrl: '/api/dummyNetworks'
+  fetchNetworksUrl: '/api/dummyNetworks',
+  archivedTransformationPlans: []
 });
 
 export const transformationMappings = [

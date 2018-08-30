@@ -21,7 +21,8 @@ describe('Overview component', () => {
     transformationPlans: [],
     clusters: [],
     fetchTransformationPlansUrl: '',
-    fetchServiceTemplateAnsiblePlaybooksUrl: ''
+    fetchServiceTemplateAnsiblePlaybooksUrl: '',
+    archivedTransformationPlans: []
   };
   let showMappingWizardAction;
   let showPlanWizardAction;
