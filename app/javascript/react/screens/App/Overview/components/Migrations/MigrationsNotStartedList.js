@@ -61,7 +61,8 @@ class MigrationsNotStartedList extends React.Component {
       fetchTransformationPlansUrl,
       plansMutatedWithMappingInfo,
       deleteTransformationPlanAction,
-      deleteTransformationPlanUrl
+      deleteTransformationPlanUrl,
+      showPlanWizardEditModeAction
     } = this.props;
     const sortedMigrations = this.sortedMigrations();
 
@@ -138,7 +139,7 @@ class MigrationsNotStartedList extends React.Component {
                                 <MenuItem
                                   onClick={e => {
                                     e.stopPropagation();
-                                    alert('TODO: open plan wizard in edit mode');
+                                    showPlanWizardEditModeAction(plan.id);
                                   }}
                                 >
                                   {__('Edit')}
@@ -236,7 +237,8 @@ MigrationsNotStartedList.propTypes = {
   fetchTransformationPlansUrl: PropTypes.string,
   plansMutatedWithMappingInfo: PropTypes.bool,
   deleteTransformationPlanAction: PropTypes.func,
-  deleteTransformationPlanUrl: PropTypes.string
+  deleteTransformationPlanUrl: PropTypes.string,
+  showPlanWizardEditModeAction: PropTypes.func
 };
 MigrationsNotStartedList.defaultProps = {
   migrateClick: noop,

@@ -31,7 +31,8 @@ import {
   V2V_SCHEDULE_MIGRATION,
   V2V_SET_MIGRATIONS_FILTER,
   V2V_TOGGLE_SCHEDULE_MIGRATION_MODAL,
-  YES_TO_DELETE_AND_HIDE_DELETE_CONFIRMATION_MODAL
+  YES_TO_DELETE_AND_HIDE_DELETE_CONFIRMATION_MODAL,
+  SHOW_PLAN_WIZARD_EDIT_MODE
 } from './OverviewConstants';
 
 export const showConfirmModalAction = modalOptions => ({
@@ -53,6 +54,13 @@ export const showPlanWizardAction = id => dispatch => {
   dispatch({
     type: SHOW_PLAN_WIZARD,
     payload: id
+  });
+};
+
+export const showPlanWizardEditModeAction = id => dispatch => {
+  dispatch({
+    type: SHOW_PLAN_WIZARD_EDIT_MODE,
+    editingPlanId: id
   });
 };
 

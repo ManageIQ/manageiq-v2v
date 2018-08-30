@@ -254,7 +254,8 @@ class Overview extends React.Component {
       scheduleMigrationModal,
       scheduleMigrationPlan,
       scheduleMigration,
-      plansMutatedWithMappingInfo
+      plansMutatedWithMappingInfo,
+      showPlanWizardEditModeAction
     } = this.props;
 
     const inProgressRequestsTransformationMappings = () => {
@@ -348,6 +349,7 @@ class Overview extends React.Component {
               scheduleMigrationPlan={scheduleMigrationPlan}
               scheduleMigration={scheduleMigration}
               plansMutatedWithMappingInfo={plansMutatedWithMappingInfo}
+              showPlanWizardEditModeAction={showPlanWizardEditModeAction}
             />
           )}
           {hasSufficientProviders ? (
@@ -432,6 +434,7 @@ Overview.propTypes = {
   isContinuingToPlan: PropTypes.bool,
   planWizardId: PropTypes.string,
   continueToPlanAction: PropTypes.func,
+  showPlanWizardEditModeAction: PropTypes.func,
   shouldReloadMappings: PropTypes.bool,
   fetchClustersAction: PropTypes.func,
   fetchClustersUrl: PropTypes.string,

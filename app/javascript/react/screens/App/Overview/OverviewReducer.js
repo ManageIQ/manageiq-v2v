@@ -42,7 +42,8 @@ import {
   FETCH_NETWORKS,
   FETCH_DATASTORES,
   V2V_TOGGLE_SCHEDULE_MIGRATION_MODAL,
-  V2V_SCHEDULE_MIGRATION
+  V2V_SCHEDULE_MIGRATION,
+  SHOW_PLAN_WIZARD_EDIT_MODE
 } from './OverviewConstants';
 
 import { planTransmutation, sufficientProviders } from './helpers';
@@ -52,7 +53,8 @@ export const initialState = Immutable({
   hideMappingWizard: true,
   planWizardVisible: false,
   hidePlanWizard: true,
-  planWizardId: null,
+  planWizardId: null, // id of infrastructure mapping to use for new plan
+  editingPlanId: null, // id of migration plan to edit
   hasSufficientProviders: false,
   isRejectedProviders: false,
   isFetchingProviders: false,
@@ -138,8 +140,20 @@ export default (state = initialState, action) => {
         planWizardId: (payload && payload.id) || null
       });
     }
+    case SHOW_PLAN_WIZARD_EDIT_MODE: {
+      const { editingPlanId } = action;
+      return Immutable.merge(state, {
+        planWizardVisible: true,
+        hidePlanWizard: false,
+        planWizardId: null,
+        editingPlanId
+      });
+    }
     case HIDE_PLAN_WIZARD:
-      return state.set('hidePlanWizard', true).set('planWizardId', null);
+      return state
+        .set('hidePlanWizard', true)
+        .set('planWizardId', null)
+        .set('editingPlanId', null);
     case PLAN_WIZARD_EXITED:
       return state.set('planWizardVisible', false);
     case `${FETCH_PROVIDERS}_PENDING`:

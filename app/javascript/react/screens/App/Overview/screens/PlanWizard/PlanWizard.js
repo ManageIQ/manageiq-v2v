@@ -185,8 +185,13 @@ class PlanWizard extends React.Component {
       planWizardExitedAction,
       alertText,
       alertType,
-      hideAlertAction
+      hideAlertAction,
+      editingPlan
     } = this.props;
+
+    // TODO [mturley] remove me:
+    if (editingPlan) console.log('TODO: edit this plan: ', editingPlan);
+    if (!editingPlan) console.log('Not editing a plan');
 
     const wizardSteps = this.getWizardSteps();
 
@@ -268,7 +273,8 @@ PlanWizard.propTypes = {
   alertText: PropTypes.string,
   alertType: PropTypes.string,
   setMetadataWithBackButtonClickedAction: PropTypes.func,
-  setMetadataWithNextButtonClickedAction: PropTypes.func
+  setMetadataWithNextButtonClickedAction: PropTypes.func,
+  editingPlan: PropTypes.object
 };
 PlanWizard.defaultProps = {
   hidePlanWizard: true,
