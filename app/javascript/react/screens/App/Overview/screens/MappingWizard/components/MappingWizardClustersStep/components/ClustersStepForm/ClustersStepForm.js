@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Icon } from 'patternfly-react';
 
 import DualPaneMapper from '../../../DualPaneMapper/DualPaneMapper';
 import DualPaneMapperList from '../../../DualPaneMapper/DualPaneMapperList';
@@ -97,6 +98,14 @@ class ClustersStepForm extends React.Component {
     input.onChange([]);
   };
 
+  noClustersFound = (clusters, loading) =>
+    !clusters.length &&
+    !loading && (
+      <div className="dual-pane-mapper-item">
+        <Icon type="pf" name="error-circle-o" /> {__('No clusters found.')}
+      </div>
+    );
+
   render() {
     const {
       sourceClusters,
@@ -155,6 +164,7 @@ class ClustersStepForm extends React.Component {
                   handleKeyPress={this.selectSourceCluster}
                 />
               ))}
+              {this.noClustersFound(sourceClusters, isFetchingSourceClusters)}
             </DualPaneMapperList>
           )}
           {targetClusters && (
@@ -185,6 +195,7 @@ class ClustersStepForm extends React.Component {
                   />
                 );
               })}
+              {this.noClustersFound(targetClusters, isFetchingTargetClusters)}
             </DualPaneMapperList>
           )}
         </DualPaneMapper>
