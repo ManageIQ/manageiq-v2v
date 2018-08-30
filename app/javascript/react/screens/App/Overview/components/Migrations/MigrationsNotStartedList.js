@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { noop, Button, ListView, Grid, Icon, Spinner, Toolbar, Sort, DropdownKebab } from 'patternfly-react';
+import { noop, Button, ListView, Grid, Icon, Spinner, Toolbar, Sort, DropdownKebab, MenuItem } from 'patternfly-react';
 import EllipsisWithTooltip from 'react-ellipsis-with-tooltip';
 import OverviewEmptyState from '../OverviewEmptyState/OverviewEmptyState';
 import ScheduleMigrationModal from '../ScheduleMigrationModal/ScheduleMigrationModal';
@@ -135,6 +135,14 @@ class MigrationsNotStartedList extends React.Component {
                                   planId={plan.id}
                                   planName={plan.name}
                                 />
+                                <MenuItem
+                                  onClick={e => {
+                                    e.stopPropagation();
+                                    alert('TODO: open plan wizard in edit mode');
+                                  }}
+                                >
+                                  {__('Edit')}
+                                </MenuItem>
                               </DropdownKebab>
                             </StopPropagationOnClick>
                           </div>
