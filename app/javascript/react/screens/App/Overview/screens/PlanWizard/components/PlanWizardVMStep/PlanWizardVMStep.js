@@ -65,7 +65,8 @@ class PlanWizardVMStep extends React.Component {
       invalid_vms,
       conflict_vms,
       validationServiceCalled,
-      csvImportAction
+      csvImportAction,
+      editingPlan
     } = this.props;
     const discoveryMode = vm_choice_radio === 'vms_via_discovery';
 
@@ -187,7 +188,8 @@ PlanWizardVMStep.propTypes = {
   errorValidatingVms: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
   valid_vms: PropTypes.array,
   invalid_vms: PropTypes.array,
-  conflict_vms: PropTypes.array
+  conflict_vms: PropTypes.array,
+  editingPlan: PropTypes.object
 };
 
 PlanWizardVMStep.defaultProps = {

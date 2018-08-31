@@ -1,7 +1,10 @@
+export const findEditingPlan = (transformationPlans, editingPlanId) =>
+  editingPlanId && transformationPlans.find(plan => plan.id === editingPlanId);
+
 export const planWizardOverviewFilter = overview => ({
   hidePlanWizard: overview.hidePlanWizard,
   transformationMappings: overview.transformationMappings,
-  editingPlan: overview.transformationPlans.find(plan => plan.id === overview.editingPlanId)
+  editingPlan: findEditingPlan(overview.transformationPlans, overview.editingPlanId)
 });
 
 export const planWizardFormFilter = form => ({

@@ -4,6 +4,7 @@ exports[`Plan Wizard integration test should mount the PlanWizard with mapStateT
 Object {
   "alertText": undefined,
   "alertType": undefined,
+  "editingPlan": undefined,
   "hideAlertAction": [Function],
   "hideConfirmModalAction": [Function],
   "hidePlanWizard": false,
