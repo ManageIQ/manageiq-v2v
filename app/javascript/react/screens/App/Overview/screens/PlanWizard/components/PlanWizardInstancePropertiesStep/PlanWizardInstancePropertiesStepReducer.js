@@ -1,5 +1,8 @@
 import Immutable from 'seamless-immutable';
-import { QUERY_V2V_OSP_TENANT_ATTRIBUTES } from './PlanWizardInstancePropertiesStepConstants';
+import {
+  QUERY_V2V_OSP_TENANT_ATTRIBUTES,
+  SET_V2V_INSTANCE_PROPERTIES_ROWS
+} from './PlanWizardInstancePropertiesStepConstants';
 
 const initialState = Immutable({
   tenantsWithAttributes: [],
@@ -23,6 +26,8 @@ export default (state = initialState, action) => {
         .set('errorTenantsWithAttributes', action.payload)
         .set('isFetchingTenantsWithAttributes', false)
         .set('isRejectedTenantsWithAttributes', true);
+    case SET_V2V_INSTANCE_PROPERTIES_ROWS:
+      return state.set('instancePropertiesRows', action.payload);
     default:
       return state;
   }

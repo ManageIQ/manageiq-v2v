@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Field, reduxForm } from 'redux-form';
 import PlanWizardInstancePropertiesStepTable from './components/PlanWizardInstancePropertiesStepTable';
 import { OSP_TENANT } from '../../../../OverviewConstants';
 import { getTenantsById, getDestinationTenantIdsBySourceClusterId, getVmsWithTargetClusterName } from './helpers';
@@ -11,7 +10,10 @@ class PlanWizardInstancePropertiesStep extends Component {
       selectedMapping,
       fetchOpenstackTenantUrl,
       queryOpenstackTenantAttributes,
-      queryTenantsWithAttributesAction
+      queryTenantsWithAttributesAction,
+      vmStepSelectedVms,
+      tenantsWithAttributes,
+      instancePropertiesRowsAction
     } = this.props;
 
     const targetTenants =
@@ -23,10 +25,27 @@ class PlanWizardInstancePropertiesStep extends Component {
       const targetTenantIds = targetTenants.map(tenant => tenant.destination_id);
       queryTenantsWithAttributesAction(fetchOpenstackTenantUrl, targetTenantIds, queryOpenstackTenantAttributes);
     }
+
+    const tenantsWithAttributesById = getTenantsById(tenantsWithAttributes);
+    const destinationTenantIdsBySourceClusterId = getDestinationTenantIdsBySourceClusterId(
+      selectedMapping.transformation_mapping_items
+    );
+    const rows = getVmsWithTargetClusterName(
+      vmStepSelectedVms,
+      destinationTenantIdsBySourceClusterId,
+      tenantsWithAttributesById
+    );
+
+    instancePropertiesRowsAction(rows);
   }
 
   render() {
-    const { vmStepSelectedVms, tenantsWithAttributes, isFetchingTenantsWithAttributes, selectedMapping } = this.props;
+    const {
+      isFetchingTenantsWithAttributes,
+      tenantsWithAttributes,
+      selectedMapping,
+      instancePropertiesRows
+    } = this.props;
 
     if (isFetchingTenantsWithAttributes) {
       return (
@@ -41,17 +60,10 @@ class PlanWizardInstancePropertiesStep extends Component {
     const destinationTenantIdsBySourceClusterId = getDestinationTenantIdsBySourceClusterId(
       selectedMapping.transformation_mapping_items
     );
-    const rows = getVmsWithTargetClusterName(
-      vmStepSelectedVms,
-      destinationTenantIdsBySourceClusterId,
-      tenantsWithAttributesById
-    );
 
     return (
-      <Field
-        name="ospInstanceProperties"
-        component={PlanWizardInstancePropertiesStepTable}
-        rows={rows}
+      <PlanWizardInstancePropertiesStepTable
+        rows={instancePropertiesRows}
         tenantsWithAttributesById={tenantsWithAttributesById}
         destinationTenantIdsBySourceClusterId={destinationTenantIdsBySourceClusterId}
       />
@@ -66,7 +78,8 @@ PlanWizardInstancePropertiesStep.propTypes = {
   queryOpenstackTenantAttributes: PropTypes.arrayOf(PropTypes.string),
   queryTenantsWithAttributesAction: PropTypes.func,
   tenantsWithAttributes: PropTypes.array,
-  isFetchingTenantsWithAttributes: PropTypes.bool
+  isFetchingTenantsWithAttributes: PropTypes.bool,
+  instancePropertiesRowsAction: PropTypes.func
 };
 
 PlanWizardInstancePropertiesStep.defaultProps = {
@@ -74,8 +87,4 @@ PlanWizardInstancePropertiesStep.defaultProps = {
   queryOpenstackTenantAttributes: ['flavors', 'security_groups']
 };
 
-export default reduxForm({
-  form: 'planWizardInstancePropertiesStep',
-  initialValues: {},
-  destroyOnUnmount: false
-})(PlanWizardInstancePropertiesStep);
+export default PlanWizardInstancePropertiesStep;
