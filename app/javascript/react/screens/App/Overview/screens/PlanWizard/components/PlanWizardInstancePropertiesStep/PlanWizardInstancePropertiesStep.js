@@ -13,7 +13,9 @@ class PlanWizardInstancePropertiesStep extends Component {
       queryTenantsWithAttributesAction,
       vmStepSelectedVms,
       tenantsWithAttributes,
-      instancePropertiesRowsAction
+      instancePropertiesRowsAction,
+      bestFitFlavorAction,
+      bestFitFlavorUrl
     } = this.props;
 
     const targetTenants =
@@ -23,7 +25,21 @@ class PlanWizardInstancePropertiesStep extends Component {
 
     if (targetTenants) {
       const targetTenantIds = targetTenants.map(tenant => tenant.destination_id);
+
       queryTenantsWithAttributesAction(fetchOpenstackTenantUrl, targetTenantIds, queryOpenstackTenantAttributes);
+
+      let sourceAndDestinationHrefSlugsForBestFit = [];
+
+      vmStepSelectedVms.forEach(vm => {
+        const destinationTenantId = targetTenants.filter(tenant => tenant.source_id === vm.ems_cluster_id)[0]
+          .destination_id;
+        sourceAndDestinationHrefSlugsForBestFit.push({
+          source_href_slug: `vms/${vm.id}`,
+          destination_href_slug: `cloud_tenants/${destinationTenantId}`
+        });
+      });
+
+      bestFitFlavorAction(bestFitFlavorUrl, sourceAndDestinationHrefSlugsForBestFit);
     }
 
     const tenantsWithAttributesById = getTenantsById(tenantsWithAttributes);
@@ -44,10 +60,11 @@ class PlanWizardInstancePropertiesStep extends Component {
       isFetchingTenantsWithAttributes,
       tenantsWithAttributes,
       selectedMapping,
-      instancePropertiesRows
+      instancePropertiesRows,
+      isSettingSecurityGroupsAndBestFitFlavors
     } = this.props;
 
-    if (isFetchingTenantsWithAttributes) {
+    if (isFetchingTenantsWithAttributes && isSettingSecurityGroupsAndBestFitFlavors) {
       return (
         <div className="blank-slate-pf">
           <div className="spinner spinner-lg blank-slate-pf-icon" />
@@ -79,11 +96,14 @@ PlanWizardInstancePropertiesStep.propTypes = {
   queryTenantsWithAttributesAction: PropTypes.func,
   tenantsWithAttributes: PropTypes.array,
   isFetchingTenantsWithAttributes: PropTypes.bool,
-  instancePropertiesRowsAction: PropTypes.func
+  instancePropertiesRowsAction: PropTypes.func,
+  bestFitFlavorAction: PropTypes.func,
+  isSettingSecurityGroupsAndBestFitFlavors: PropTypes.bool
 };
 
 PlanWizardInstancePropertiesStep.defaultProps = {
   fetchOpenstackTenantUrl: '/api/cloud_tenants',
+  bestFitFlavorUrl: 'api/transformation_mappings',
   queryOpenstackTenantAttributes: ['flavors', 'security_groups']
 };
 

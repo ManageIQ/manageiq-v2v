@@ -41,8 +41,8 @@ const mapStateToProps = (
     //        integrating with back end
     vmStepSelectedVms: getVMStepSelectedVms(allVms, selectedVms).map(vm => ({
       ...vm,
-      osp_security_group: { name: 'Default' },
-      osp_flavor: { name: 'medium' }
+      osp_security_group: {},
+      osp_flavor: {}
     })),
     selectedMapping
   };
