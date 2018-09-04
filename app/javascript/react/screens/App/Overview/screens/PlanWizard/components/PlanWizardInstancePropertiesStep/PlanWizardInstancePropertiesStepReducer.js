@@ -4,6 +4,7 @@ import {
   SET_V2V_INSTANCE_PROPERTIES_ROWS,
   QUERY_V2V_OSP_BEST_FIT_FLAVOR,
   SET_V2V_BEST_FIT_FLAVORS_AND_DEFAULT_SECURITY_GROUPS,
+  SET_UPDATED_INSTANCE_PROPERTIES_ROW_ON_STANDBY,
   PLAN_WIZARD_EXITED
 } from './PlanWizardInstancePropertiesStepConstants';
 
@@ -76,6 +77,8 @@ export default (state = initialState, action) => {
         .set('instancePropertiesRows', instancePropertiesRowsUpdatedWithBestFlavor);
     case SET_V2V_INSTANCE_PROPERTIES_ROWS:
       return state.set('instancePropertiesRows', action.payload);
+    case SET_UPDATED_INSTANCE_PROPERTIES_ROW_ON_STANDBY:
+      return state.set('updatedInstancePropertiesRowOnStandby', action.payload);
     case PLAN_WIZARD_EXITED:
       return initialState;
     default:

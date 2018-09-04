@@ -5,7 +5,8 @@ import {
   QUERY_V2V_OSP_TENANT_ATTRIBUTES,
   SET_V2V_INSTANCE_PROPERTIES_ROWS,
   QUERY_V2V_OSP_BEST_FIT_FLAVOR,
-  SET_V2V_BEST_FIT_FLAVORS_AND_DEFAULT_SECURITY_GROUPS
+  SET_V2V_BEST_FIT_FLAVORS_AND_DEFAULT_SECURITY_GROUPS,
+  SET_UPDATED_INSTANCE_PROPERTIES_ROW_ON_STANDBY
 } from './PlanWizardInstancePropertiesStepConstants';
 
 export const _getTenantWithAttributesActionCreator = (url, tenantIds) => dispatch =>
@@ -74,4 +75,10 @@ export const instancePropertiesRowsAction = rows => dispatch =>
   dispatch({
     type: SET_V2V_INSTANCE_PROPERTIES_ROWS,
     payload: rows
+  });
+
+export const setUpdatedRowOnStandbyAction = row => dispatch =>
+  dispatch({
+    type: SET_UPDATED_INSTANCE_PROPERTIES_ROW_ON_STANDBY,
+    payload: row
   });
