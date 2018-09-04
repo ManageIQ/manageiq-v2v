@@ -55,6 +55,10 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
       },
       onConfirm: ({ rowData }) => {
         this.setState({ backup: {}, editing: false });
+
+        const { rows, updatedInstancePropertiesRowOnStandby, instancePropertiesRowsAction } = this.props;
+        const updatedRows = rows.map(row => (row.id === rowData.id ? updatedInstancePropertiesRowOnStandby : row));
+        instancePropertiesRowsAction(updatedRows);
       },
       onCancel: ({ rowData }) => {
         this.setState({ backup: {}, editing: false });
@@ -450,7 +454,8 @@ PlanWizardInstancePropertiesStepTable.propTypes = {
   rows: PropTypes.array,
   tenantsWithAttributesById: PropTypes.object,
   destinationTenantIdsBySourceClusterId: PropTypes.object,
-  updatedInstancePropertiesRowOnStandby: PropTypes.object
+  updatedInstancePropertiesRowOnStandby: PropTypes.object,
+  instancePropertiesRowsAction: PropTypes.func
 };
 PlanWizardInstancePropertiesStepTable.defaultProps = {
   rows: [],
