@@ -113,6 +113,7 @@ const Migrations = ({
               redirectTo={redirectTo}
               showConfirmModalAction={showConfirmModalAction}
               hideConfirmModalAction={hideConfirmModalAction}
+              addNotificationAction={addNotificationAction}
               toggleScheduleMigrationModal={toggleScheduleMigrationModal}
               scheduleMigrationModal={scheduleMigrationModal}
               scheduleMigrationPlan={scheduleMigrationPlan}

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { noop, Button, ListView, Grid, Icon, Spinner, Toolbar, Sort } from 'patternfly-react';
+import { noop, Button, ListView, Grid, Icon, Spinner, Toolbar, Sort, DropdownKebab } from 'patternfly-react';
 import EllipsisWithTooltip from 'react-ellipsis-with-tooltip';
 import OverviewEmptyState from '../OverviewEmptyState/OverviewEmptyState';
 import ScheduleMigrationModal from '../ScheduleMigrationModal/ScheduleMigrationModal';
@@ -8,6 +8,8 @@ import { formatDateTime } from '../../../../../../components/dates/MomentDate';
 import { MIGRATIONS_NOT_STARTED_SORT_FIELDS } from './MigrationsConstants';
 import sortFilter from '../../../Plan/components/sortFilter';
 import ScheduleMigrationButton from './ScheduleMigrationButton';
+import StopPropagationOnClick from '../../../common/StopPropagationOnClick';
+import DeleteMigrationMenuItem from './DeleteMigrationMenuItem';
 
 class MigrationsNotStartedList extends React.Component {
   state = {
@@ -50,6 +52,7 @@ class MigrationsNotStartedList extends React.Component {
       redirectTo,
       showConfirmModalAction,
       hideConfirmModalAction,
+      addNotificationAction,
       toggleScheduleMigrationModal,
       scheduleMigrationModal,
       scheduleMigrationPlan,
@@ -117,6 +120,24 @@ class MigrationsNotStartedList extends React.Component {
                             >
                               {__('Migrate')}
                             </Button>
+                            <StopPropagationOnClick>
+                              <DropdownKebab id={`${plan.id}-kebab`} pullRight>
+                                <DeleteMigrationMenuItem
+                                  showConfirmModalAction={showConfirmModalAction}
+                                  hideConfirmModalAction={hideConfirmModalAction}
+                                  deletePlanAction={() => {
+                                    window.alert('TODO: Actually delete plan!'); // TODO
+                                    return Promise.resolve();
+                                  }}
+                                  deletePlanUrl={''} // TODO
+                                  addNotificationAction={addNotificationAction}
+                                  fetchTransformationPlansAction={fetchTransformationPlansAction}
+                                  fetchTransformationPlansUrl={fetchTransformationPlansUrl}
+                                  planId={plan.id}
+                                  planName={plan.name}
+                                />
+                              </DropdownKebab>
+                            </StopPropagationOnClick>
                           </div>
                         }
                         leftContent={<div />}
@@ -196,6 +217,7 @@ MigrationsNotStartedList.propTypes = {
   migrateClick: PropTypes.func,
   showConfirmModalAction: PropTypes.func,
   hideConfirmModalAction: PropTypes.func,
+  addNotificationAction: PropTypes.func,
   notStartedPlans: PropTypes.array,
   loading: PropTypes.string,
   redirectTo: PropTypes.func,
