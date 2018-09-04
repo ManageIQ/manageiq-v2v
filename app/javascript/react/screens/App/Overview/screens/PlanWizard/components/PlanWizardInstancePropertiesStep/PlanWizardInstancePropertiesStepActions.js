@@ -14,7 +14,6 @@ export const _getTenantWithAttributesActionCreator = (url, tenantIds) => dispatc
 
 export const queryTenantsWithAttributesAction = (url, tenantIds, attributes) => {
   const uri = new URI(url);
-  // Creates url like /api/cloud_tenants?expand=resources&attributes=flavors,security_groups
   uri.addSearch({ expand: 'resources', attributes: attributes.join(',') });
   return _getTenantWithAttributesActionCreator(uri.toString(), tenantIds);
 };

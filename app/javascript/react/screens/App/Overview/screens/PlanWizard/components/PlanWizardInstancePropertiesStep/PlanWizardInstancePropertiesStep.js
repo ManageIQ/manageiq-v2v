@@ -7,13 +7,13 @@ import {
   getTenantsById,
   getDestinationTenantIdsBySourceClusterId,
   getVmsWithTargetClusterName
-} from './PlanWizardInstancePropertiesStepSelectors';
+} from './helpers';
 
 class PlanWizardInstancePropertiesStep extends Component {
   componentDidMount() {
     const {
       selectedMapping,
-      queryOpenstackTenantUrl,
+      fetchOpenstackTenantUrl,
       queryOpenstackTenantAttributes,
       queryTenantsWithAttributesAction
     } = this.props;
@@ -25,7 +25,7 @@ class PlanWizardInstancePropertiesStep extends Component {
 
     if (targetTenants) {
       const targetTenantIds = targetTenants.map(tenant => tenant.destination_id);
-      queryTenantsWithAttributesAction(queryOpenstackTenantUrl, targetTenantIds, queryOpenstackTenantAttributes);
+      queryTenantsWithAttributesAction(fetchOpenstackTenantUrl, targetTenantIds, queryOpenstackTenantAttributes);
     }
   }
 
@@ -36,7 +36,7 @@ class PlanWizardInstancePropertiesStep extends Component {
       return (
         <div className="blank-slate-pf">
           <div className="spinner spinner-lg blank-slate-pf-icon" />
-          <h3 className="blank-slate-pf-main-action">{__('Loading...')}</h3>
+          <h3 className="blank-slate-pf-main-action">{__('Loading OpenStack Properties...')}</h3>
         </div>
       );
     }
@@ -66,7 +66,7 @@ class PlanWizardInstancePropertiesStep extends Component {
 PlanWizardInstancePropertiesStep.propTypes = {
   vmStepSelectedVms: PropTypes.array,
   selectedMapping: PropTypes.object,
-  queryOpenstackTenantUrl: PropTypes.string,
+  fetchOpenstackTenantUrl: PropTypes.string,
   queryOpenstackTenantAttributes: PropTypes.arrayOf(PropTypes.string),
   queryTenantsWithAttributesAction: PropTypes.func,
   tenantsWithAttributes: PropTypes.array,
@@ -74,7 +74,7 @@ PlanWizardInstancePropertiesStep.propTypes = {
 };
 
 PlanWizardInstancePropertiesStep.defaultProps = {
-  queryOpenstackTenantUrl: '/api/cloud_tenants',
+  fetchOpenstackTenantUrl: '/api/cloud_tenants',
   queryOpenstackTenantAttributes: ['flavors', 'security_groups']
 };
 
