@@ -3,11 +3,7 @@ import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import PlanWizardInstancePropertiesStepTable from './components/PlanWizardInstancePropertiesStepTable';
 import { OSP_TENANT } from '../../../../OverviewConstants';
-import {
-  getTenantsById,
-  getDestinationTenantIdsBySourceClusterId,
-  getVmsWithTargetClusterName
-} from './helpers';
+import { getTenantsById, getDestinationTenantIdsBySourceClusterId, getVmsWithTargetClusterName } from './helpers';
 
 class PlanWizardInstancePropertiesStep extends Component {
   componentDidMount() {
