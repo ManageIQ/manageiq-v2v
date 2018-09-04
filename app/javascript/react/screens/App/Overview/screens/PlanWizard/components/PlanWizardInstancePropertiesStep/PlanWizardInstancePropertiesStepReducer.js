@@ -17,6 +17,7 @@ const initialState = Immutable({
   isFetchingBestFitFlavor: false,
   isRejectedBestFitFlavor: false,
   errorBestFitFlavor: null,
+  instancePropertiesRows: [],
   isSettingSecurityGroupsAndBestFitFlavors: true
 });
 

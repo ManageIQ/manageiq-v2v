@@ -13,6 +13,7 @@ class PlanWizardInstancePropertiesStep extends Component {
       queryTenantsWithAttributesAction,
       vmStepSelectedVms,
       tenantsWithAttributes,
+      instancePropertiesRows,
       instancePropertiesRowsAction,
       bestFitFlavorAction,
       bestFitFlavorUrl
@@ -40,19 +41,19 @@ class PlanWizardInstancePropertiesStep extends Component {
       });
 
       bestFitFlavorAction(bestFitFlavorUrl, sourceAndDestinationHrefSlugsForBestFit);
+
+      const tenantsWithAttributesById = getTenantsById(tenantsWithAttributes);
+      const destinationTenantIdsBySourceClusterId = getDestinationTenantIdsBySourceClusterId(
+        selectedMapping.transformation_mapping_items
+      );
+      const rows = getVmsWithTargetClusterName(
+        vmStepSelectedVms,
+        destinationTenantIdsBySourceClusterId,
+        tenantsWithAttributesById
+      );
+
+      instancePropertiesRowsAction(rows);
     }
-
-    const tenantsWithAttributesById = getTenantsById(tenantsWithAttributes);
-    const destinationTenantIdsBySourceClusterId = getDestinationTenantIdsBySourceClusterId(
-      selectedMapping.transformation_mapping_items
-    );
-    const rows = getVmsWithTargetClusterName(
-      vmStepSelectedVms,
-      destinationTenantIdsBySourceClusterId,
-      tenantsWithAttributesById
-    );
-
-    instancePropertiesRowsAction(rows);
   }
 
   render() {
@@ -63,7 +64,8 @@ class PlanWizardInstancePropertiesStep extends Component {
       instancePropertiesRows,
       isSettingSecurityGroupsAndBestFitFlavors,
       setUpdatedRowOnStandbyAction,
-      updatedInstancePropertiesRowOnStandby
+      updatedInstancePropertiesRowOnStandby,
+      instancePropertiesRowsAction
     } = this.props;
 
     if (isFetchingTenantsWithAttributes && isSettingSecurityGroupsAndBestFitFlavors) {
@@ -87,6 +89,7 @@ class PlanWizardInstancePropertiesStep extends Component {
         destinationTenantIdsBySourceClusterId={destinationTenantIdsBySourceClusterId}
         setUpdatedRowOnStandbyAction={setUpdatedRowOnStandbyAction}
         updatedInstancePropertiesRowOnStandby={updatedInstancePropertiesRowOnStandby}
+        instancePropertiesRowsAction={instancePropertiesRowsAction}
       />
     );
   }
