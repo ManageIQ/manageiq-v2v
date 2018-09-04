@@ -67,7 +67,6 @@ export const coreComponents = [
   {
     name: 'PlanWizardInstancePropertiesStepContainer',
     type: PlanWizardInstancePropertiesStepContainer,
-    data: {},
     store: true
   },
   {

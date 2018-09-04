@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { noop, Button, Icon, Wizard } from 'patternfly-react';
 import { createMigrationPlans } from './helpers';
 import PlanWizardBody from './PlanWizardBody';
-import { MIGRATIONS_FILTERS, OSP_TENANT, OSP_VOLUME, OSP_NETWORK } from '../../OverviewConstants';
+import { MIGRATIONS_FILTERS, OSP_TENANT } from '../../OverviewConstants';
 
 import componentRegistry from '../../../../../../components/componentRegistry';
 import PlanWizardGeneralStep from '../PlanWizard/components/PlanWizardGeneralStep';
@@ -41,7 +41,6 @@ class PlanWizard extends React.Component {
       render: () => this.planWizardVMStepContainer,
       disableGoto: !this.props.planWizardVMStep.values
     };
-    // eslint-disable-next-line no-unused-vars
     const instancePropertiesStep = {
       id: stepIDs.instancePropertiesStep,
       title: __('Instance Properties'),
@@ -71,24 +70,14 @@ class PlanWizard extends React.Component {
       planWizardGeneralStep && planWizardGeneralStep.values && planWizardGeneralStep.values.infrastructure_mapping;
     const selectedMapping = transformationMappings.find(mapping => mapping.id === selectedMappingId);
 
-    // eslint-disable-next-line no-unused-vars
     const openstackTargetSelected =
       selectedMapping &&
       selectedMapping.transformation_mapping_items &&
-      selectedMapping.transformation_mapping_items.some(
-        item =>
-          item.destination_type === OSP_TENANT ||
-          item.destination_type === OSP_VOLUME ||
-          item.destination_type === OSP_NETWORK
-      );
+      selectedMapping.transformation_mapping_items.some(item => item.destination_type === OSP_TENANT);
 
-    // [mturley] the new instancePropertiesStep is incomplete, and disabled for now.
-    // [mturley] TODO: un-comment this block in the next PR.
-    /*
     if (openstackTargetSelected) {
       return [generalStep, vmStep, instancePropertiesStep, advancedOptionsStep, scheduleStep, resultsStep];
     }
-    */
 
     return [generalStep, vmStep, advancedOptionsStep, scheduleStep, resultsStep];
   };

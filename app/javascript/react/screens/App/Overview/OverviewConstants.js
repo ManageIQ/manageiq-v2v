@@ -48,3 +48,4 @@ export const MIGRATIONS_FILTERS = {
 export const OSP_TENANT = 'CloudTenant';
 export const OSP_VOLUME = 'CloudVolume';
 export const OSP_NETWORK = 'CloudNetwork';
+export const EMS_CLUSTER = 'EmsCluster';

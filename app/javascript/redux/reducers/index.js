@@ -12,6 +12,7 @@ import { reducers as planWizardReducers } from '../../react/screens/App/Overview
 import { reducers as planWizardVMStepReducers } from '../../react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep';
 import { reducers as planWizardResultsStepReducers } from '../../react/screens/App/Overview/screens/PlanWizard/components/PlanWizardResultsStep';
 import { reducers as planWizardAdvancedOptionsStepReducers } from '../../react/screens/App/Overview/screens/PlanWizard/components/PlanWizardAdvancedOptionsStep';
+import { reducers as planWizardInstancePropertiesStepReducers } from '../../react/screens/App/Overview/screens/PlanWizard/components/PlanWizardInstancePropertiesStep';
 
 export default () =>
   combineReducers({
@@ -27,5 +28,6 @@ export default () =>
     ...planWizardVMStepReducers,
     ...planWizardResultsStepReducers,
     ...planWizardAdvancedOptionsStepReducers,
+    ...planWizardInstancePropertiesStepReducers,
     form: formReducer
   });
