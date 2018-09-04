@@ -4,14 +4,21 @@ import Immutable from 'seamless-immutable';
 import { Field, reduxForm } from 'redux-form';
 import { length } from 'redux-form-validators';
 import { Button, Icon } from 'patternfly-react';
+import numeral from 'numeral';
 import PlanWizardVMStepTable from './components/PlanWizardVMStepTable';
 import CSVDropzoneField from './components/CSVDropzoneField';
+import { getVmIds } from './helpers';
+import { V2V_VM_POST_VALIDATION_REASONS } from './PlanWizardVMStepConstants';
 
 class PlanWizardVMStep extends React.Component {
   componentDidMount() {
-    const { vm_choice_radio } = this.props;
+    const { vm_choice_radio, editingPlan, queryPrefilledVmsAction } = this.props;
     if (vm_choice_radio === 'vms_via_discovery') {
       this.validateVms();
+    }
+    if (editingPlan) {
+      const vmIds = getVmIds(editingPlan);
+      queryPrefilledVmsAction(vmIds);
     }
   }
   componentDidUpdate(prevProps) {
@@ -54,6 +61,23 @@ class PlanWizardVMStep extends React.Component {
       }
     });
   };
+  getPreselectedVmsForEditing = () => {
+    const { editingPlan, vmsQueryResults } = this.props;
+    const vmIds = getVmIds(editingPlan);
+    return vmIds.map(vmId => {
+      const result = vmsQueryResults.find(res => res.id === vmId);
+      return {
+        id: vmId,
+        name: result ? result.name : '',
+        cluster: result ? result.ems_cluster.name : '',
+        path: '', // TODO [mturley] how can we fetch the path?
+        allocated_size: result ? numeral(result.allocated_disk_storage).format('0.00b') : '',
+        selected: true,
+        valid: true,
+        reason: V2V_VM_POST_VALIDATION_REASONS.ok
+      };
+    });
+  };
   render() {
     const {
       vm_choice_radio,
@@ -66,7 +90,8 @@ class PlanWizardVMStep extends React.Component {
       conflict_vms,
       validationServiceCalled,
       csvImportAction,
-      editingPlan
+      editingPlan,
+      isQueryingVms
     } = this.props;
     const discoveryMode = vm_choice_radio === 'vms_via_discovery';
 
@@ -122,7 +147,7 @@ class PlanWizardVMStep extends React.Component {
       );
     } else if (!discoveryMode && (valid_vms.length === 0 && invalid_vms.length === 0 && conflict_vms.length === 0)) {
       return <CSVDropzoneField onCSVParseSuccess={this.onCSVParseSuccess} onCSVParseFailure={this.onCSVParseFailure} />;
-    } else if (!isValidatingVms && validationServiceCalled) {
+    } else if (!isValidatingVms && validationServiceCalled && !(editingPlan && isQueryingVms)) {
       // set make rows editable so they can be selected
       const validVms = Immutable.asMutable(valid_vms, { deep: true });
       const inValidsVms = Immutable.asMutable(invalid_vms, { deep: true }).concat(
@@ -132,7 +157,8 @@ class PlanWizardVMStep extends React.Component {
       const validVmsWithSelections = discoveryMode
         ? validVms
         : validVms.filter(vm => vm.valid === true).map(vm => ({ ...vm, selected: true }));
-      const combined = [...inValidsVms, ...conflictVms, ...validVmsWithSelections];
+      const preselectedVms = this.getPreselectedVmsForEditing();
+      const combined = [...preselectedVms, ...inValidsVms, ...conflictVms, ...validVmsWithSelections];
 
       if (combined.length) {
         return (
@@ -141,7 +167,9 @@ class PlanWizardVMStep extends React.Component {
               name="selectedVms"
               component={PlanWizardVMStepTable}
               rows={combined}
-              initialSelectedRows={discoveryMode ? [] : validVmsWithSelections.map(r => r.id)}
+              initialSelectedRows={
+                discoveryMode ? preselectedVms.map(r => r.id) : validVmsWithSelections.map(r => r.id)
+              }
               onCsvImportAction={this.showOverwriteCsvConfirmModal}
               discoveryMode={discoveryMode}
               validate={[
@@ -189,7 +217,10 @@ PlanWizardVMStep.propTypes = {
   valid_vms: PropTypes.array,
   invalid_vms: PropTypes.array,
   conflict_vms: PropTypes.array,
-  editingPlan: PropTypes.object
+  editingPlan: PropTypes.object,
+  queryPrefilledVmsAction: PropTypes.func,
+  isQueryingVms: PropTypes.bool,
+  vmsQueryResults: PropTypes.array
 };
 
 PlanWizardVMStep.defaultProps = {

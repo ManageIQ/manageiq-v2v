@@ -1,5 +1,6 @@
 export const V2V_VALIDATE_VMS = 'V2V_VALIDATE_VMS';
 export const V2V_VM_STEP_RESET = 'V2V_VM_STEP_RESET';
+export const QUERY_V2V_PLAN_VMS = 'QUERY_V2V_PLAN_VMS';
 
 export const V2V_VM_POST_VALIDATION_REASONS = {
   conflict: __('VM is in conflict'),

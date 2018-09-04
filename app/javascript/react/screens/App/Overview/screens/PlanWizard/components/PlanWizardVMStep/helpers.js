@@ -93,3 +93,10 @@ export const _formatConflictVms = vms => {
     })
   );
 };
+
+export const getVmIds = editingPlan =>
+  editingPlan &&
+  editingPlan.options &&
+  editingPlan.options.config_info &&
+  editingPlan.options.config_info.actions &&
+  editingPlan.options.config_info.actions.map(action => action.vm_id);
