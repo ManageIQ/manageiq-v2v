@@ -3,7 +3,8 @@ import {
   QUERY_V2V_OSP_TENANT_ATTRIBUTES,
   SET_V2V_INSTANCE_PROPERTIES_ROWS,
   QUERY_V2V_OSP_BEST_FIT_FLAVOR,
-  SET_V2V_BEST_FIT_FLAVORS_AND_DEFAULT_SECURITY_GROUPS
+  SET_V2V_BEST_FIT_FLAVORS_AND_DEFAULT_SECURITY_GROUPS,
+  PLAN_WIZARD_EXITED
 } from './PlanWizardInstancePropertiesStepConstants';
 
 const initialState = Immutable({
@@ -75,6 +76,8 @@ export default (state = initialState, action) => {
         .set('instancePropertiesRows', instancePropertiesRowsUpdatedWithBestFlavor);
     case SET_V2V_INSTANCE_PROPERTIES_ROWS:
       return state.set('instancePropertiesRows', action.payload);
+    case PLAN_WIZARD_EXITED:
+      return initialState;
     default:
       return state;
   }
