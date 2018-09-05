@@ -57,6 +57,7 @@ class MigrationsCompletedList extends React.Component {
       archiveTransformationPlanUrl,
       fetchTransformationPlansAction,
       fetchTransformationPlansUrl,
+      fetchArchivedTransformationPlansUrl,
       addNotificationAction,
       archived,
       toggleScheduleMigrationModal,
@@ -166,11 +167,15 @@ class MigrationsCompletedList extends React.Component {
                             message: sprintf(__('%s successfully archived'), plan.name),
                             notificationType: 'success'
                           });
-
-                          return fetchTransformationPlansAction({
+                          const fetchArchived = fetchTransformationPlansAction({
+                            url: fetchArchivedTransformationPlansUrl,
+                            archived: true
+                          });
+                          const fetchNonArchived = fetchTransformationPlansAction({
                             url: fetchTransformationPlansUrl,
                             archived: false
                           });
+                          return Promise.all([fetchArchived, fetchNonArchived]);
                         })
                         .then(() => {
                           hideConfirmModalAction();
@@ -349,6 +354,7 @@ MigrationsCompletedList.propTypes = {
   archiveTransformationPlanUrl: PropTypes.string,
   fetchTransformationPlansAction: PropTypes.func,
   fetchTransformationPlansUrl: PropTypes.string,
+  fetchArchivedTransformationPlansUrl: PropTypes.string,
   addNotificationAction: PropTypes.func,
   toggleScheduleMigrationModal: PropTypes.func,
   scheduleMigrationModal: PropTypes.bool,
