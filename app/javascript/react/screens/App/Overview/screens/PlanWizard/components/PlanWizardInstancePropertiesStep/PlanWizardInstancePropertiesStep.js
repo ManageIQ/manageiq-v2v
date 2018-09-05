@@ -13,7 +13,6 @@ class PlanWizardInstancePropertiesStep extends Component {
       queryTenantsWithAttributesAction,
       vmStepSelectedVms,
       tenantsWithAttributes,
-      instancePropertiesRows,
       instancePropertiesRowsAction,
       bestFitFlavorAction,
       bestFitFlavorUrl
@@ -27,20 +26,23 @@ class PlanWizardInstancePropertiesStep extends Component {
     if (targetTenants) {
       const targetTenantIds = targetTenants.map(tenant => tenant.destination_id);
 
-      queryTenantsWithAttributesAction(fetchOpenstackTenantUrl, targetTenantIds, queryOpenstackTenantAttributes);
+      queryTenantsWithAttributesAction(fetchOpenstackTenantUrl, targetTenantIds, queryOpenstackTenantAttributes).then(
+        result => {
+          if (result) {
+            const sourceAndDestinationHrefSlugsForBestFit = [];
+            vmStepSelectedVms.forEach(vm => {
+              const destinationTenantId = targetTenants.filter(tenant => tenant.source_id === vm.ems_cluster_id)[0]
+                .destination_id;
+              sourceAndDestinationHrefSlugsForBestFit.push({
+                source_href_slug: `vms/${vm.id}`,
+                destination_href_slug: `cloud_tenants/${destinationTenantId}`
+              });
+            });
 
-      const sourceAndDestinationHrefSlugsForBestFit = [];
-
-      vmStepSelectedVms.forEach(vm => {
-        const destinationTenantId = targetTenants.filter(tenant => tenant.source_id === vm.ems_cluster_id)[0]
-          .destination_id;
-        sourceAndDestinationHrefSlugsForBestFit.push({
-          source_href_slug: `vms/${vm.id}`,
-          destination_href_slug: `cloud_tenants/${destinationTenantId}`
-        });
-      });
-
-      bestFitFlavorAction(bestFitFlavorUrl, sourceAndDestinationHrefSlugsForBestFit);
+            bestFitFlavorAction(bestFitFlavorUrl, sourceAndDestinationHrefSlugsForBestFit);
+          }
+        }
+      );
 
       const tenantsWithAttributesById = getTenantsById(tenantsWithAttributes);
       const destinationTenantIdsBySourceClusterId = getDestinationTenantIdsBySourceClusterId(
