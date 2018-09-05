@@ -314,8 +314,10 @@ class MigrationsCompletedList extends React.Component {
                                 addNotificationAction={addNotificationAction}
                                 fetchTransformationPlansAction={fetchTransformationPlansAction}
                                 fetchTransformationPlansUrl={fetchTransformationPlansUrl}
+                                fetchArchivedTransformationPlansUrl={fetchArchivedTransformationPlansUrl}
                                 planId={plan.id}
                                 planName={plan.name}
+                                archived={archived}
                               />
                             </DropdownKebab>
                           </div>

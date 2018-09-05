@@ -176,6 +176,7 @@ const Migrations = ({
               deleteTransformationPlanUrl={deleteTransformationPlanUrl}
               fetchTransformationPlansAction={fetchTransformationPlansAction}
               fetchTransformationPlansUrl={fetchTransformationPlansUrl}
+              fetchArchivedTransformationPlansUrl={fetchArchivedTransformationPlansUrl}
             />
           )}
         </div>

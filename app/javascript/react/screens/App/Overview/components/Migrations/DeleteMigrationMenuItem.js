@@ -10,8 +10,10 @@ const DeleteMigrationMenuItem = ({
   fetchTransformationPlansAction,
   deleteTransformationPlanUrl,
   fetchTransformationPlansUrl,
+  fetchArchivedTransformationPlansUrl,
   planId,
-  planName
+  planName,
+  archived
 }) => {
   const confirmModalBaseProps = {
     title: __('Delete Migration Plan'),
@@ -37,8 +39,8 @@ const DeleteMigrationMenuItem = ({
           notificationType: 'success'
         });
         return fetchTransformationPlansAction({
-          url: fetchTransformationPlansUrl,
-          archived: false
+          url: !archived ? fetchTransformationPlansUrl : fetchArchivedTransformationPlansUrl,
+          archived
         });
       })
       .then(() => {
@@ -69,8 +71,14 @@ DeleteMigrationMenuItem.propTypes = {
   fetchTransformationPlansAction: PropTypes.func,
   deleteTransformationPlanUrl: PropTypes.string,
   fetchTransformationPlansUrl: PropTypes.string,
+  fetchArchivedTransformationPlansUrl: PropTypes.string,
   planId: PropTypes.string,
-  planName: PropTypes.string
+  planName: PropTypes.string,
+  archived: PropTypes.bool
+};
+
+DeleteMigrationMenuItem.defaultProps = {
+  archived: false
 };
 
 export default DeleteMigrationMenuItem;
