@@ -52,22 +52,24 @@ export default (state = initialState, action) => {
         .set('errorBestFitFlavor', action.payload)
         .set('isFetchingBestFitFlavor', false)
         .set('isRejectedBestFitFlavor', true);
-    case SET_V2V_BEST_FIT_FLAVORS_AND_DEFAULT_SECURITY_GROUPS:
+    case SET_V2V_BEST_FIT_FLAVORS_AND_DEFAULT_SECURITY_GROUPS: {
       const vmBestFitFlavors = action.payload;
       const instancePropertiesRowsUpdatedWithBestFlavor = [];
       vmBestFitFlavors.forEach(vmFlavor => {
-        const existingInstancePropertiesRow = state.instancePropertiesRows.find(row => row.id === vmFlavor.vmId);
-        const tenant = state.tenantsWithAttributes.find(tenant => tenant.id === vmFlavor.tenantId);
+        const existingInstancePropertiesRow = state.instancePropertiesRows.find(row => row.id === vmFlavor.vm_id);
+        const tenant = state.tenantsWithAttributes.find(
+          tenantsWithAttribute => tenantsWithAttribute.id === vmFlavor.tenant_id
+        );
         const tenantFlavors = tenant.flavors;
         const tenantSecurityGroups = tenant.security_groups;
-        const bestFitFlavorName = tenantFlavors.find(flavor => flavor.id === vmFlavor.flavorId).name;
+        const bestFitFlavorName = tenantFlavors.find(flavor => flavor.id === vmFlavor.flavor_id).name;
         const defaultSecurityGroupName = 'default';
         const defaultSecurityGroupId = tenantSecurityGroups.find(
           securityGroup => securityGroup.name === defaultSecurityGroupName
         ).id;
         const rowUpdatedWithBestFlavor = {
           ...existingInstancePropertiesRow,
-          osp_flavor: { name: bestFitFlavorName, id: vmFlavor.flavorId },
+          osp_flavor: { name: bestFitFlavorName, id: vmFlavor.flavor_id },
           osp_security_group: { name: defaultSecurityGroupName, id: defaultSecurityGroupId },
           target_cluster_name: tenant.name
         };
@@ -76,6 +78,7 @@ export default (state = initialState, action) => {
       return state
         .set('isSettingSecurityGroupsAndBestFitFlavors', false)
         .set('instancePropertiesRows', instancePropertiesRowsUpdatedWithBestFlavor);
+    }
     case SET_V2V_INSTANCE_PROPERTIES_ROWS:
       return state.set('instancePropertiesRows', action.payload);
     case SET_UPDATED_INSTANCE_PROPERTIES_ROW_ON_STANDBY:

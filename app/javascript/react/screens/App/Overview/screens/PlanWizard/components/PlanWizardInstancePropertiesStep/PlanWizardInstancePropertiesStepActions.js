@@ -37,7 +37,8 @@ export const setFlavorsAndSecurityGroups = (response, mappings, dispatch) => {
       .find(mapping => mapping.source_href_slug === `${vmsSlugPrefix}${vmId}`)
       .destination_href_slug.slice(cloudTenantsSlugPrefix.length);
 
-    vmBestFitFlavors.push({ vmId: vmId, tenantId: tenantId, flavorId: flavorId });
+    const vmFlavorTenantObj = { vm_id: vmId, tenant_id: tenantId, flavor_id: flavorId };
+    vmBestFitFlavors.push(vmFlavorTenantObj);
   });
 
   dispatch({
@@ -46,10 +47,10 @@ export const setFlavorsAndSecurityGroups = (response, mappings, dispatch) => {
   });
 };
 
-export const _bestFitFlavorActionCreator = (url, mappings) => dispatch => {
+export const _bestFitFlavorActionCreator = (url, flavor_mappings) => dispatch => {
   const postBody = {
     action: 'vm_flavor_fit',
-    mappings: mappings
+    mappings: flavor_mappings
   };
   dispatch({
     type: QUERY_V2V_OSP_BEST_FIT_FLAVOR,
@@ -57,7 +58,7 @@ export const _bestFitFlavorActionCreator = (url, mappings) => dispatch => {
       API.post(url, postBody)
         .then(response => {
           resolve(response);
-          setFlavorsAndSecurityGroups(response, mappings, dispatch);
+          setFlavorsAndSecurityGroups(response, flavor_mappings, dispatch);
         })
         .catch(e => {
           reject(e);

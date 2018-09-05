@@ -29,7 +29,7 @@ class PlanWizardInstancePropertiesStep extends Component {
 
       queryTenantsWithAttributesAction(fetchOpenstackTenantUrl, targetTenantIds, queryOpenstackTenantAttributes);
 
-      let sourceAndDestinationHrefSlugsForBestFit = [];
+      const sourceAndDestinationHrefSlugsForBestFit = [];
 
       vmStepSelectedVms.forEach(vm => {
         const destinationTenantId = targetTenants.filter(tenant => tenant.source_id === vm.ems_cluster_id)[0]
@@ -68,7 +68,7 @@ class PlanWizardInstancePropertiesStep extends Component {
       instancePropertiesRowsAction
     } = this.props;
 
-    if (isFetchingTenantsWithAttributes && isSettingSecurityGroupsAndBestFitFlavors) {
+    if (isFetchingTenantsWithAttributes || isSettingSecurityGroupsAndBestFitFlavors) {
       return (
         <div className="blank-slate-pf">
           <div className="spinner spinner-lg blank-slate-pf-icon" />
@@ -107,7 +107,9 @@ PlanWizardInstancePropertiesStep.propTypes = {
   bestFitFlavorAction: PropTypes.func,
   isSettingSecurityGroupsAndBestFitFlavors: PropTypes.bool,
   setUpdatedRowOnStandbyAction: PropTypes.func,
-  updatedInstancePropertiesRowOnStandby: PropTypes.object
+  updatedInstancePropertiesRowOnStandby: PropTypes.object,
+  instancePropertiesRows: PropTypes.array,
+  bestFitFlavorUrl: PropTypes.string
 };
 
 PlanWizardInstancePropertiesStep.defaultProps = {

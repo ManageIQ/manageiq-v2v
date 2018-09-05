@@ -42,7 +42,7 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
   //        plan.  We will use local state to store the row that is currently
   //        being edited to roll back to in case of cancel.
   inlineEditController = () => {
-    const { rows } = this.props;
+    const { rows, updatedInstancePropertiesRowOnStandby, instancePropertiesRowsAction } = this.props;
     return {
       isEditing: ({ rowData }) => rowData.id === this.state.backup.id,
       onActivate: ({ rowData }) => {
@@ -56,7 +56,6 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
       onConfirm: ({ rowData }) => {
         this.setState({ backup: {}, editing: false });
 
-        const { rows, updatedInstancePropertiesRowOnStandby, instancePropertiesRowsAction } = this.props;
         const updatedRows = rows.map(row => (row.id === rowData.id ? updatedInstancePropertiesRowOnStandby : row));
         instancePropertiesRowsAction(updatedRows);
       },
@@ -455,7 +454,8 @@ PlanWizardInstancePropertiesStepTable.propTypes = {
   tenantsWithAttributesById: PropTypes.object,
   destinationTenantIdsBySourceClusterId: PropTypes.object,
   updatedInstancePropertiesRowOnStandby: PropTypes.object,
-  instancePropertiesRowsAction: PropTypes.func
+  instancePropertiesRowsAction: PropTypes.func,
+  setUpdatedRowOnStandbyAction: PropTypes.func
 };
 PlanWizardInstancePropertiesStepTable.defaultProps = {
   rows: [],
