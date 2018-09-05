@@ -14,7 +14,7 @@ const finishedTransformationPlans = [
 const { results: requestsWithTasks } = allRequestsWithTasks;
 
 describe('when displaying archived migration plans', () => {
-  test('each list item does not render an actions node', () => {
+  test('each list item renders an actions node', () => {
     const redirectTo = jest.fn();
     const wrapper = shallow(
       <MigrationsCompletedList
@@ -26,7 +26,24 @@ describe('when displaying archived migration plans', () => {
     );
 
     wrapper.find('ListViewItem').forEach(item => {
-      expect(item.prop('actions')).toBeFalsy();
+      expect(item.prop('actions')).toBeTruthy();
+    });
+  });
+
+  test('each list item does not render an Archive menu item', () => {
+    const redirectTo = jest.fn();
+    const wrapper = shallow(
+      <MigrationsCompletedList
+        finishedTransformationPlans={Immutable.asMutable(finishedTransformationPlans, { deep: true })}
+        allRequestsWithTasks={requestsWithTasks}
+        redirectTo={redirectTo}
+        archived
+      />
+    );
+
+    wrapper.find('ListViewItem').forEach(item => {
+      const archiveButton = item.find('a').filterWhere(link => link.text() === 'Archive');
+      expect(archiveButton.length).toBe(0);
     });
   });
 });

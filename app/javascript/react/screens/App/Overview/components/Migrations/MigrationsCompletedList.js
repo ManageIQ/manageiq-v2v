@@ -268,33 +268,34 @@ class MigrationsCompletedList extends React.Component {
                               </ListView.InfoItem>
                             )
                         ]}
-                        actions={(
+                        actions={
                           // eslint-disable-next-line
                           <div onClick={e => e.stopPropagation()}>
-                            {(!archived && failed) && (
-                              <React.Fragment>
-                                <ScheduleMigrationButton
-                                  showConfirmModalAction={showConfirmModalAction}
-                                  hideConfirmModalAction={hideConfirmModalAction}
-                                  loading={loading}
-                                  toggleScheduleMigrationModal={toggleScheduleMigrationModal}
-                                  scheduleMigration={scheduleMigration}
-                                  fetchTransformationPlansAction={fetchTransformationPlansAction}
-                                  fetchTransformationPlansUrl={fetchTransformationPlansUrl}
-                                  plan={plan}
-                                  isMissingMapping={isMissingMapping}
-                                />
-                                <Button
-                                  onClick={e => {
-                                    e.stopPropagation();
-                                    retryClick(plan.href, plan.id);
-                                  }}
-                                  disabled={isMissingMapping || loading === plan.href}
-                                >
-                                  {__('Retry')}
-                                </Button>
-                              </React.Fragment>
-                            )}
+                            {!archived &&
+                              failed && (
+                                <React.Fragment>
+                                  <ScheduleMigrationButton
+                                    showConfirmModalAction={showConfirmModalAction}
+                                    hideConfirmModalAction={hideConfirmModalAction}
+                                    loading={loading}
+                                    toggleScheduleMigrationModal={toggleScheduleMigrationModal}
+                                    scheduleMigration={scheduleMigration}
+                                    fetchTransformationPlansAction={fetchTransformationPlansAction}
+                                    fetchTransformationPlansUrl={fetchTransformationPlansUrl}
+                                    plan={plan}
+                                    isMissingMapping={isMissingMapping}
+                                  />
+                                  <Button
+                                    onClick={e => {
+                                      e.stopPropagation();
+                                      retryClick(plan.href, plan.id);
+                                    }}
+                                    disabled={isMissingMapping || loading === plan.href}
+                                  >
+                                    {__('Retry')}
+                                  </Button>
+                                </React.Fragment>
+                              )}
                             <DropdownKebab id={`${plan.id}-kebab`} pullRight>
                               {!archived && (
                                 <MenuItem
@@ -321,7 +322,7 @@ class MigrationsCompletedList extends React.Component {
                               />
                             </DropdownKebab>
                           </div>
-                        )}
+                        }
                       />
                     );
                   })}
@@ -368,6 +369,8 @@ MigrationsCompletedList.propTypes = {
   archived: PropTypes.bool,
   archiveTransformationPlanAction: PropTypes.func,
   archiveTransformationPlanUrl: PropTypes.string,
+  deleteTransformationPlanAction: PropTypes.func,
+  deleteTransformationPlanUrl: PropTypes.string,
   fetchTransformationPlansAction: PropTypes.func,
   fetchTransformationPlansUrl: PropTypes.string,
   fetchArchivedTransformationPlansUrl: PropTypes.string,
