@@ -192,7 +192,7 @@ export default (state = initialState, action) => {
         .set('transformationPlans', planTransmutation(action.payload.data.resources, state.transformationMappings))
         .set('isFetchingTransformationPlans', false)
         .set('isRejectedTransformationPlans', false)
-        .set('plansMutatedWithMappingInfo', state.transformationMappings.length > 0)
+        .set('plansMutatedWithMappingInfo', !state.isFetchingTransformationMappings)
         .set('errorTransformationPlans', null);
     }
     case `${FETCH_V2V_TRANSFORMATION_PLANS}_REJECTED`:
