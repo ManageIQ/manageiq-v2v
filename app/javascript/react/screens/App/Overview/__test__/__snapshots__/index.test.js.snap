@@ -12,6 +12,8 @@ Object {
   "createTransformationPlanRequestAction": [Function],
   "datastores": Array [],
   "deleteInfrastructureMappingAction": [Function],
+  "deleteTransformationPlanAction": [Function],
+  "deleteTransformationPlanUrl": "/api/service_templates",
   "fetchArchivedTransformationPlansUrl": "/api/dummyArchivedTransformationPlans",
   "fetchClustersAction": [Function],
   "fetchClustersUrl": "/api/dummyClusters",

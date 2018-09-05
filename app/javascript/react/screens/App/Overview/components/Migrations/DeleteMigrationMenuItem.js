@@ -5,10 +5,10 @@ import { MenuItem } from 'patternfly-react';
 const DeleteMigrationMenuItem = ({
   showConfirmModalAction,
   hideConfirmModalAction,
-  deletePlanAction,
+  deleteTransformationPlanAction,
   addNotificationAction,
   fetchTransformationPlansAction,
-  deletePlanUrl,
+  deleteTransformationPlanUrl,
   fetchTransformationPlansUrl,
   planId,
   planName
@@ -30,7 +30,7 @@ const DeleteMigrationMenuItem = ({
       disableCancelButton: true,
       disableConfirmButton: true
     });
-    deletePlanAction(deletePlanUrl, planId)
+    deleteTransformationPlanAction(deleteTransformationPlanUrl, planId)
       .then(() => {
         addNotificationAction({
           message: sprintf(__('%s successfully deleted'), planName),
@@ -59,15 +59,15 @@ const DeleteMigrationMenuItem = ({
       {__('Delete')}
     </MenuItem>
   );
-}
+};
 
 DeleteMigrationMenuItem.propTypes = {
   showConfirmModalAction: PropTypes.func,
   hideConfirmModalAction: PropTypes.func,
-  deletePlanAction: PropTypes.func,
+  deleteTransformationPlanAction: PropTypes.func,
   addNotificationAction: PropTypes.func,
   fetchTransformationPlansAction: PropTypes.func,
-  deletePlanUrl: PropTypes.string,
+  deleteTransformationPlanUrl: PropTypes.string,
   fetchTransformationPlansUrl: PropTypes.string,
   planId: PropTypes.string,
   planName: PropTypes.string

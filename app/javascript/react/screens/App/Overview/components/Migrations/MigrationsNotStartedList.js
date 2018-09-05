@@ -59,7 +59,9 @@ class MigrationsNotStartedList extends React.Component {
       scheduleMigration,
       fetchTransformationPlansAction,
       fetchTransformationPlansUrl,
-      plansMutatedWithMappingInfo
+      plansMutatedWithMappingInfo,
+      deleteTransformationPlanAction,
+      deleteTransformationPlanUrl
     } = this.props;
     const sortedMigrations = this.sortedMigrations();
 
@@ -125,11 +127,8 @@ class MigrationsNotStartedList extends React.Component {
                                 <DeleteMigrationMenuItem
                                   showConfirmModalAction={showConfirmModalAction}
                                   hideConfirmModalAction={hideConfirmModalAction}
-                                  deletePlanAction={() => {
-                                    window.alert('TODO: Actually delete plan!'); // TODO
-                                    return Promise.resolve();
-                                  }}
-                                  deletePlanUrl={''} // TODO
+                                  deleteTransformationPlanAction={deleteTransformationPlanAction}
+                                  deleteTransformationPlanUrl={deleteTransformationPlanUrl}
                                   addNotificationAction={addNotificationAction}
                                   fetchTransformationPlansAction={fetchTransformationPlansAction}
                                   fetchTransformationPlansUrl={fetchTransformationPlansUrl}
@@ -227,7 +226,9 @@ MigrationsNotStartedList.propTypes = {
   scheduleMigration: PropTypes.func,
   fetchTransformationPlansAction: PropTypes.func,
   fetchTransformationPlansUrl: PropTypes.string,
-  plansMutatedWithMappingInfo: PropTypes.bool
+  plansMutatedWithMappingInfo: PropTypes.bool,
+  deleteTransformationPlanAction: PropTypes.func,
+  deleteTransformationPlanUrl: PropTypes.string
 };
 MigrationsNotStartedList.defaultProps = {
   migrateClick: noop,
