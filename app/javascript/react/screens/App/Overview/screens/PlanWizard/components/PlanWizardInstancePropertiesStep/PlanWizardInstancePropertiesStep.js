@@ -14,7 +14,8 @@ class PlanWizardInstancePropertiesStep extends Component {
       vmStepSelectedVms,
       instancePropertiesRowsAction,
       bestFitFlavorAction,
-      bestFitFlavorUrl
+      bestFitFlavorUrl,
+      recalculateBestFitFlavorAndSecurityGroup
     } = this.props;
 
     const targetTenants =
@@ -22,7 +23,7 @@ class PlanWizardInstancePropertiesStep extends Component {
       selectedMapping.transformation_mapping_items &&
       selectedMapping.transformation_mapping_items.filter(item => item.destination_type === OSP_TENANT);
 
-    if (targetTenants) {
+    if (targetTenants && recalculateBestFitFlavorAndSecurityGroup) {
       const targetTenantIds = targetTenants.map(tenant => tenant.destination_id);
 
       queryTenantsWithAttributesAction(fetchOpenstackTenantUrl, targetTenantIds, queryOpenstackTenantAttributes).then(
@@ -98,7 +99,8 @@ PlanWizardInstancePropertiesStep.propTypes = {
   setUpdatedRowOnStandbyAction: PropTypes.func,
   updatedInstancePropertiesRowOnStandby: PropTypes.object,
   instancePropertiesRows: PropTypes.array,
-  bestFitFlavorUrl: PropTypes.string
+  bestFitFlavorUrl: PropTypes.string,
+  recalculateBestFitFlavorAndSecurityGroup: PropTypes.bool
 };
 
 PlanWizardInstancePropertiesStep.defaultProps = {

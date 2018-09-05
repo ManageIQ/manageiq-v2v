@@ -5,8 +5,11 @@ import {
   QUERY_V2V_OSP_BEST_FIT_FLAVOR,
   SET_V2V_BEST_FIT_FLAVORS_AND_DEFAULT_SECURITY_GROUPS,
   SET_UPDATED_INSTANCE_PROPERTIES_ROW_ON_STANDBY,
-  PLAN_WIZARD_EXITED
+  PLAN_WIZARD_EXITED,
+  PLAN_WIZARD_NEXT
 } from './PlanWizardInstancePropertiesStepConstants';
+
+import { stepIDs } from '../../PlanWizardConstants';
 
 const initialState = Immutable({
   tenantsWithAttributes: [],
@@ -18,7 +21,8 @@ const initialState = Immutable({
   isRejectedBestFitFlavor: false,
   errorBestFitFlavor: null,
   instancePropertiesRows: [],
-  isSettingSecurityGroupsAndBestFitFlavors: true
+  isSettingSecurityGroupsAndBestFitFlavors: true,
+  recalculateBestFitFlavorAndSecurityGroup: true
 });
 
 export default (state = initialState, action) => {
@@ -85,6 +89,8 @@ export default (state = initialState, action) => {
       return state.set('updatedInstancePropertiesRowOnStandby', action.payload);
     case PLAN_WIZARD_EXITED:
       return initialState;
+    case PLAN_WIZARD_NEXT:
+      return state.set('recalculateBestFitFlavorAndSecurityGroup', action.payload === stepIDs.vmStep);
     default:
       return state;
   }

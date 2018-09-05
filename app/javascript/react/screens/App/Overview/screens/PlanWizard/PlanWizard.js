@@ -9,14 +9,7 @@ import componentRegistry from '../../../../../../components/componentRegistry';
 import PlanWizardGeneralStep from '../PlanWizard/components/PlanWizardGeneralStep';
 import PlanWizardScheduleStep from '../PlanWizard/components/PlanWizardScheduleStep';
 
-const stepIDs = {
-  generalStep: 'planWizardGeneralStep',
-  vmStep: 'planWizardVMStep',
-  instancePropertiesStep: 'planWizardInstancePropertiesStep',
-  advancedOptionsStep: 'planWizardAdvancedOptionsStep',
-  scheduleStep: 'planWizardScheduleStep',
-  resultsStep: 'planWizardResultsStep'
-};
+import { stepIDs } from './PlanWizardConstants';
 
 class PlanWizard extends React.Component {
   planWizardVMStepContainer = componentRegistry.markup('PlanWizardVMStepContainer');
@@ -88,10 +81,12 @@ class PlanWizard extends React.Component {
   };
 
   prevStep = () => {
-    const { resetVmStepAction, resetAdvancedOptionsStepAction } = this.props;
+    const { resetVmStepAction, resetAdvancedOptionsStepAction, planWizardBackAction } = this.props;
     const { activeStepIndex } = this.state;
 
     const activeStep = this.getActiveWizardStep();
+
+    planWizardBackAction(activeStep.id);
 
     if (activeStep.id === stepIDs.vmStep) {
       // reset all vm step values if going back from that step
@@ -115,11 +110,14 @@ class PlanWizard extends React.Component {
       showConfirmModalAction,
       hideConfirmModalAction,
       showAlertAction,
-      hideAlertAction
+      hideAlertAction,
+      planWizardNextAction
     } = this.props;
 
     const wizardSteps = this.getWizardSteps();
     const activeStep = wizardSteps[activeStepIndex];
+
+    planWizardNextAction(activeStep.id);
 
     if (activeStep.id === stepIDs.generalStep) {
       if (planWizardGeneralStep.asyncErrors) {
@@ -268,7 +266,9 @@ PlanWizard.propTypes = {
   showAlertAction: PropTypes.func,
   hideAlertAction: PropTypes.func,
   alertText: PropTypes.string,
-  alertType: PropTypes.string
+  alertType: PropTypes.string,
+  planWizardBackAction: PropTypes.func,
+  planWizardNextAction: PropTypes.func
 };
 PlanWizard.defaultProps = {
   hidePlanWizard: true,
