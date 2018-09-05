@@ -169,8 +169,13 @@ const Migrations = ({
               loading={isFetchingArchivedTransformationPlans}
               archived
               plansMutatedWithMappingInfo={plansMutatedWithMappingInfo}
+              showConfirmModalAction={showConfirmModalAction}
+              hideConfirmModalAction={hideConfirmModalAction}
+              addNotificationAction={addNotificationAction}
               deleteTransformationPlanAction={deleteTransformationPlanAction}
               deleteTransformationPlanUrl={deleteTransformationPlanUrl}
+              fetchTransformationPlansAction={fetchTransformationPlansAction}
+              fetchTransformationPlansUrl={fetchTransformationPlansUrl}
             />
           )}
         </div>

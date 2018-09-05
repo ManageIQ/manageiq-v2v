@@ -10,6 +10,7 @@ import { MIGRATIONS_COMPLETED_SORT_FIELDS } from './MigrationsConstants';
 import ScheduleMigrationButton from './ScheduleMigrationButton';
 import ScheduleMigrationModal from '../ScheduleMigrationModal/ScheduleMigrationModal';
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
+import DeleteMigrationMenuItem from './DeleteMigrationMenuItem';
 
 class MigrationsCompletedList extends React.Component {
   state = {
@@ -55,6 +56,8 @@ class MigrationsCompletedList extends React.Component {
       hideConfirmModalAction,
       archiveTransformationPlanAction,
       archiveTransformationPlanUrl,
+      deleteTransformationPlanAction,
+      deleteTransformationPlanUrl,
       fetchTransformationPlansAction,
       fetchTransformationPlansUrl,
       fetchArchivedTransformationPlansUrl,
@@ -265,35 +268,35 @@ class MigrationsCompletedList extends React.Component {
                               </ListView.InfoItem>
                             )
                         ]}
-                        actions={
-                          !archived && (
-                            // eslint-disable-next-line
-                            <div onClick={e => e.stopPropagation()}>
-                              {failed && (
-                                <React.Fragment>
-                                  <ScheduleMigrationButton
-                                    showConfirmModalAction={showConfirmModalAction}
-                                    hideConfirmModalAction={hideConfirmModalAction}
-                                    loading={loading}
-                                    toggleScheduleMigrationModal={toggleScheduleMigrationModal}
-                                    scheduleMigration={scheduleMigration}
-                                    fetchTransformationPlansAction={fetchTransformationPlansAction}
-                                    fetchTransformationPlansUrl={fetchTransformationPlansUrl}
-                                    plan={plan}
-                                    isMissingMapping={isMissingMapping}
-                                  />
-                                  <Button
-                                    onClick={e => {
-                                      e.stopPropagation();
-                                      retryClick(plan.href, plan.id);
-                                    }}
-                                    disabled={isMissingMapping || loading === plan.href}
-                                  >
-                                    {__('Retry')}
-                                  </Button>
-                                </React.Fragment>
-                              )}
-                              <DropdownKebab id={`${plan.id}-kebab`} pullRight>
+                        actions={(
+                          // eslint-disable-next-line
+                          <div onClick={e => e.stopPropagation()}>
+                            {(!archived && failed) && (
+                              <React.Fragment>
+                                <ScheduleMigrationButton
+                                  showConfirmModalAction={showConfirmModalAction}
+                                  hideConfirmModalAction={hideConfirmModalAction}
+                                  loading={loading}
+                                  toggleScheduleMigrationModal={toggleScheduleMigrationModal}
+                                  scheduleMigration={scheduleMigration}
+                                  fetchTransformationPlansAction={fetchTransformationPlansAction}
+                                  fetchTransformationPlansUrl={fetchTransformationPlansUrl}
+                                  plan={plan}
+                                  isMissingMapping={isMissingMapping}
+                                />
+                                <Button
+                                  onClick={e => {
+                                    e.stopPropagation();
+                                    retryClick(plan.href, plan.id);
+                                  }}
+                                  disabled={isMissingMapping || loading === plan.href}
+                                >
+                                  {__('Retry')}
+                                </Button>
+                              </React.Fragment>
+                            )}
+                            <DropdownKebab id={`${plan.id}-kebab`} pullRight>
+                              {!archived && (
                                 <MenuItem
                                   onClick={e => {
                                     e.stopPropagation();
@@ -302,10 +305,21 @@ class MigrationsCompletedList extends React.Component {
                                 >
                                   {__('Archive')}
                                 </MenuItem>
-                              </DropdownKebab>
-                            </div>
-                          )
-                        }
+                              )}
+                              <DeleteMigrationMenuItem
+                                showConfirmModalAction={showConfirmModalAction}
+                                hideConfirmModalAction={hideConfirmModalAction}
+                                deleteTransformationPlanAction={deleteTransformationPlanAction}
+                                deleteTransformationPlanUrl={deleteTransformationPlanUrl}
+                                addNotificationAction={addNotificationAction}
+                                fetchTransformationPlansAction={fetchTransformationPlansAction}
+                                fetchTransformationPlansUrl={fetchTransformationPlansUrl}
+                                planId={plan.id}
+                                planName={plan.name}
+                              />
+                            </DropdownKebab>
+                          </div>
+                        )}
                       />
                     );
                   })}
