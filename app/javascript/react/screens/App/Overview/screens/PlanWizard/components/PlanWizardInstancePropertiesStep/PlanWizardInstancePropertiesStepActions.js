@@ -37,8 +37,7 @@ export const setFlavorsAndSecurityGroups = (response, mappings, dispatch) => {
       .find(mapping => mapping.source_href_slug === `${vmsSlugPrefix}${vmId}`)
       .destination_href_slug.slice(cloudTenantsSlugPrefix.length);
 
-    const vmFlavorTenantObj = { vm_id: vmId, tenant_id: tenantId, flavor_id: flavorId };
-    vmBestFitFlavors.push(vmFlavorTenantObj);
+    vmBestFitFlavors.push({ vm_id: vmId, tenant_id: tenantId, flavor_id: flavorId });
   });
 
   dispatch({

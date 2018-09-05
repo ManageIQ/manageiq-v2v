@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import PlanWizardInstancePropertiesStepTable from './components/PlanWizardInstancePropertiesStepTable';
 import { OSP_TENANT } from '../../../../OverviewConstants';
-import { getTenantsById, getDestinationTenantIdsBySourceClusterId, getVmsWithTargetClusterName } from './helpers';
+import { getTenantsById, getDestinationTenantIdsBySourceClusterId } from './helpers';
 
 class PlanWizardInstancePropertiesStep extends Component {
   componentDidMount() {
@@ -12,7 +12,6 @@ class PlanWizardInstancePropertiesStep extends Component {
       queryOpenstackTenantAttributes,
       queryTenantsWithAttributesAction,
       vmStepSelectedVms,
-      tenantsWithAttributes,
       instancePropertiesRowsAction,
       bestFitFlavorAction,
       bestFitFlavorUrl
@@ -27,34 +26,22 @@ class PlanWizardInstancePropertiesStep extends Component {
       const targetTenantIds = targetTenants.map(tenant => tenant.destination_id);
 
       queryTenantsWithAttributesAction(fetchOpenstackTenantUrl, targetTenantIds, queryOpenstackTenantAttributes).then(
-        result => {
-          if (result) {
-            const sourceAndDestinationHrefSlugsForBestFit = [];
-            vmStepSelectedVms.forEach(vm => {
-              const destinationTenantId = targetTenants.filter(tenant => tenant.source_id === vm.ems_cluster_id)[0]
-                .destination_id;
-              sourceAndDestinationHrefSlugsForBestFit.push({
-                source_href_slug: `vms/${vm.id}`,
-                destination_href_slug: `cloud_tenants/${destinationTenantId}`
-              });
+        () => {
+          const sourceAndDestinationHrefSlugsForBestFit = [];
+          vmStepSelectedVms.forEach(vm => {
+            const destinationTenantId = targetTenants.filter(tenant => tenant.source_id === vm.ems_cluster_id)[0]
+              .destination_id;
+            sourceAndDestinationHrefSlugsForBestFit.push({
+              source_href_slug: `vms/${vm.id}`,
+              destination_href_slug: `cloud_tenants/${destinationTenantId}`
             });
+          });
 
-            bestFitFlavorAction(bestFitFlavorUrl, sourceAndDestinationHrefSlugsForBestFit);
-          }
+          bestFitFlavorAction(bestFitFlavorUrl, sourceAndDestinationHrefSlugsForBestFit);
         }
       );
 
-      const tenantsWithAttributesById = getTenantsById(tenantsWithAttributes);
-      const destinationTenantIdsBySourceClusterId = getDestinationTenantIdsBySourceClusterId(
-        selectedMapping.transformation_mapping_items
-      );
-      const rows = getVmsWithTargetClusterName(
-        vmStepSelectedVms,
-        destinationTenantIdsBySourceClusterId,
-        tenantsWithAttributesById
-      );
-
-      instancePropertiesRowsAction(rows);
+      instancePropertiesRowsAction(vmStepSelectedVms);
     }
   }
 
