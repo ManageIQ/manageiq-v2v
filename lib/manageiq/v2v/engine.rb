@@ -12,7 +12,10 @@ module ManageIQ::V2V
 
     initializer 'plugin' do
       Menu::CustomLoader.register(
-        Menu::Item.new('migration', N_('Migration'), 'migration', {:feature => 'migration', :any => true}, '/migration', :default, :compute)
+        Menu::Section.new(:migration, N_("Migration"), 'fa fa-plus', [
+          Menu::Item.new('overview', N_("Overview"), 'miq_report', {:feature => 'miq_report', :any => true}, '/migration'),
+          Menu::Item.new('mappings', N_("Infrastructure Mappings"), 'miq_report', {:feature => 'miq_report', :any => true}, '/migration#/mappings')
+        ], nil, nil, nil, nil, :compute)
       )
     end
 
