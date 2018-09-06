@@ -81,12 +81,12 @@ class PlanWizard extends React.Component {
   };
 
   prevStep = () => {
-    const { resetVmStepAction, resetAdvancedOptionsStepAction, planWizardBackAction } = this.props;
+    const { resetVmStepAction, resetAdvancedOptionsStepAction, setMetadataWithBackButtonClickedAction } = this.props;
     const { activeStepIndex } = this.state;
 
     const activeStep = this.getActiveWizardStep();
 
-    planWizardBackAction(activeStep.id);
+    setMetadataWithBackButtonClickedAction(activeStep.id);
 
     if (activeStep.id === stepIDs.vmStep) {
       // reset all vm step values if going back from that step
@@ -111,13 +111,13 @@ class PlanWizard extends React.Component {
       hideConfirmModalAction,
       showAlertAction,
       hideAlertAction,
-      planWizardNextAction
+      setMetadataWithNextButtonClickedAction
     } = this.props;
 
     const wizardSteps = this.getWizardSteps();
     const activeStep = wizardSteps[activeStepIndex];
 
-    planWizardNextAction(activeStep.id);
+    setMetadataWithNextButtonClickedAction(activeStep.id);
 
     if (activeStep.id === stepIDs.generalStep) {
       if (planWizardGeneralStep.asyncErrors) {
@@ -271,8 +271,8 @@ PlanWizard.propTypes = {
   hideAlertAction: PropTypes.func,
   alertText: PropTypes.string,
   alertType: PropTypes.string,
-  planWizardBackAction: PropTypes.func,
-  planWizardNextAction: PropTypes.func
+  setMetadataWithBackButtonClickedAction: PropTypes.func,
+  setMetadataWithNextButtonClickedAction: PropTypes.func
 };
 PlanWizard.defaultProps = {
   hidePlanWizard: true,

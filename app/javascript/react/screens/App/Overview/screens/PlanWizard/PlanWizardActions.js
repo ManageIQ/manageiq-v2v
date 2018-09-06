@@ -32,14 +32,14 @@ export const planWizardExitedAction = () => dispatch => {
   });
 };
 
-export const planWizardNextAction = body => dispatch => {
+export const setMetadataWithNextButtonClickedAction = body => dispatch => {
   dispatch({
     type: PLAN_WIZARD_NEXT,
     payload: body
   });
 };
 
-export const planWizardBackAction = body => dispatch => {
+export const setMetadataWithBackButtonClickedAction = body => dispatch => {
   dispatch({
     type: PLAN_WIZARD_BACK,
     payload: body

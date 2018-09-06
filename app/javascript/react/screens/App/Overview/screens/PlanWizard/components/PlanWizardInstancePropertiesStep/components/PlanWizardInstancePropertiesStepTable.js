@@ -36,11 +36,6 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
 
   // enables our custom header formatters extensions to reactabular
   customHeaderFormatters = Table.customHeaderFormattersDefinition;
-
-  // TODO:  These methods need to be wired up to redux-form once we know what
-  //        the POST body should look like for creating an OSP transformation
-  //        plan.  We will use local state to store the row that is currently
-  //        being edited to roll back to in case of cancel.
   inlineEditController = () => {
     const { rows, updatedInstancePropertiesRowOnStandby, instancePropertiesRowsAction } = this.props;
     return {
