@@ -43,7 +43,7 @@ describe('when displaying archived migration plans', () => {
 
     wrapper.find('ListViewItem').forEach(item => {
       const archiveButton = item.find('a').filterWhere(link => link.text() === 'Archive');
-      expect(archiveButton.length).toBe(0);
+      expect(archiveButton).toHaveLength(0);
     });
   });
 });

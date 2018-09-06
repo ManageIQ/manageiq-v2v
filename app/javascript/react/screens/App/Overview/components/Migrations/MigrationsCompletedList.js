@@ -11,6 +11,7 @@ import ScheduleMigrationButton from './ScheduleMigrationButton';
 import ScheduleMigrationModal from '../ScheduleMigrationModal/ScheduleMigrationModal';
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
 import DeleteMigrationMenuItem from './DeleteMigrationMenuItem';
+import StopPropagationOnClick from '../../../common/StopPropagationOnClick';
 
 class MigrationsCompletedList extends React.Component {
   state = {
@@ -269,8 +270,7 @@ class MigrationsCompletedList extends React.Component {
                             )
                         ]}
                         actions={
-                          // eslint-disable-next-line
-                          <div onClick={e => e.stopPropagation()}>
+                          <StopPropagationOnClick element="div">
                             {!archived &&
                               failed && (
                                 <React.Fragment>
@@ -321,7 +321,7 @@ class MigrationsCompletedList extends React.Component {
                                 archived={archived}
                               />
                             </DropdownKebab>
-                          </div>
+                          </StopPropagationOnClick>
                         }
                       />
                     );
