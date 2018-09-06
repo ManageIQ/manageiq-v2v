@@ -145,6 +145,7 @@ const Migrations = ({
               archiveTransformationPlanUrl={archiveTransformationPlanUrl}
               fetchTransformationPlansAction={fetchTransformationPlansAction}
               fetchTransformationPlansUrl={fetchTransformationPlansUrl}
+              fetchArchivedTransformationPlansUrl={fetchArchivedTransformationPlansUrl}
               addNotificationAction={addNotificationAction}
               toggleScheduleMigrationModal={toggleScheduleMigrationModal}
               scheduleMigrationModal={scheduleMigrationModal}
