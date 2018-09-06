@@ -12,6 +12,7 @@ Object {
   "planWizardBackAction": [Function],
   "planWizardExitedAction": [Function],
   "planWizardGeneralStep": Object {},
+  "planWizardInstancePropertiesStep": Object {},
   "planWizardNextAction": [Function],
   "planWizardScheduleStep": Object {},
   "planWizardVMStep": Object {},

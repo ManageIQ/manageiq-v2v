@@ -205,7 +205,10 @@ class PlanWizard extends React.Component {
       (activeStep.id === stepIDs.vmStep &&
         (!this.props.planWizardVMStep.values ||
           !this.props.planWizardVMStep.values.selectedVms ||
-          this.props.planWizardVMStep.values.selectedVms.length === 0));
+          this.props.planWizardVMStep.values.selectedVms.length === 0)) ||
+      (currentStepProp === stepIDs.instancePropertiesStep &&
+        this.props.planWizardInstancePropertiesStep.values &&
+        this.props.planWizardInstancePropertiesStep.values.isRowEditable);
 
     return (
       <Wizard show={!hidePlanWizard} onClose={hidePlanWizardAction} onExited={planWizardExitedAction}>
@@ -253,6 +256,7 @@ PlanWizard.propTypes = {
   planWizardExitedAction: PropTypes.func,
   planWizardGeneralStep: PropTypes.object,
   planWizardVMStep: PropTypes.object,
+  planWizardInstancePropertiesStep: PropTypes.object,
   planWizardAdvancedOptionsStep: PropTypes.object, // eslint-disable-line react/no-unused-prop-types
   planWizardScheduleStep: PropTypes.object,
   transformationMappings: PropTypes.array,
@@ -276,6 +280,7 @@ PlanWizard.defaultProps = {
   planWizardExitedAction: noop,
   planWizardGeneralStep: {},
   planWizardVMStep: {},
+  planWizardInstancePropertiesStep: {},
   planWizardAdvancedOptionsStep: {},
   planWizardScheduleStep: {},
   transformationMappings: [],

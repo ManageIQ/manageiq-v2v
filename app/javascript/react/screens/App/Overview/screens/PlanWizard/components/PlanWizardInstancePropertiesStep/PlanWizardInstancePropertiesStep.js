@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { reduxForm } from 'redux-form';
 import PlanWizardInstancePropertiesStepTable from './components/PlanWizardInstancePropertiesStepTable';
 import { OSP_TENANT } from '../../../../OverviewConstants';
 import { getTenantsById, getDestinationTenantIdsBySourceClusterId } from './helpers';
@@ -109,4 +110,8 @@ PlanWizardInstancePropertiesStep.defaultProps = {
   queryOpenstackTenantAttributes: ['flavors', 'security_groups']
 };
 
-export default PlanWizardInstancePropertiesStep;
+export default reduxForm({
+  form: 'planWizardInstancePropertiesStep',
+  initialValues: {},
+  destroyOnUnmount: false
+})(PlanWizardInstancePropertiesStep);
