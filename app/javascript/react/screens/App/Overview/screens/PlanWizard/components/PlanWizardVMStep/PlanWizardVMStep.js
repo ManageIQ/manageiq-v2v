@@ -61,6 +61,8 @@ class PlanWizardVMStep extends React.Component {
 
     const overwriteCsvConfirmModal = (
       <ConfirmModal
+        dialogClassName="plan-wizard-confirm-modal"
+        backdropClassName="plan-wizard-confirm-backdrop"
         show={this.state.overwriteCsvModalVisible}
         title={__('Overwrite Import File')}
         icon={<Icon className="confirm-warning-icon" type="pf" name="warning-triangle-o" />}
