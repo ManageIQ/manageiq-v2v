@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import orderBy from 'lodash.orderby';
-import findIndex from 'lodash.findindex';
 import * as sort from 'sortabular';
 import * as resolve from 'table-resolver';
 import { compose } from 'recompose';
@@ -33,6 +32,22 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
     pageChangeValue: 1
   };
 
+  componentWillUnmount() {
+    const { input, rows } = this.props;
+    const minimalInstancePropertiesRows = [];
+
+    rows.forEach(row => {
+      const { id, osp_security_group, osp_flavor } = row;
+      minimalInstancePropertiesRows.push({
+        vm_id: id,
+        osp_security_group_id: osp_security_group.id,
+        osp_flavor_id: osp_flavor.id
+      });
+    });
+
+    input.onChange({ rows: minimalInstancePropertiesRows, updatedInstancePropertiesRowOnStandby: {} });
+  }
+
   // enables our custom header formatters extensions to reactabular
   customHeaderFormatters = Table.customHeaderFormattersDefinition;
   inlineEditController = () => {
@@ -57,21 +72,16 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
         input.onChange({ updatedInstancePropertiesRowOnStandby: {} });
       },
       onChange: (e, { rowData, property }) => {
-        let updatedRowdata = '';
         const updatedInstanceProp = {
           ...rowData[property],
           name: e.target.options[e.target.selectedIndex].text,
           id: e.target.value
         };
 
-        if (property === 'osp_security_group') {
-          updatedRowdata = {
-            ...input.value.updatedInstancePropertiesRowOnStandby,
-            osp_security_group: updatedInstanceProp
-          };
-        } else if (property === 'osp_flavor') {
-          updatedRowdata = { ...input.value.updatedInstancePropertiesRowOnStandby, osp_flavor: updatedInstanceProp };
-        }
+        const updatedRowdata = {
+          ...input.value.updatedInstancePropertiesRowOnStandby,
+          [property]: updatedInstanceProp
+        };
 
         input.onChange({ updatedInstancePropertiesRowOnStandby: updatedRowdata });
       }
@@ -105,7 +115,6 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
                 ? input.value.updatedInstancePropertiesRowOnStandby.osp_security_group.id
                 : input.value.updatedInstancePropertiesRowOnStandby.osp_flavor.id
             }
-            onBlur={e => this.inlineEditController().onChange(e.target.value, additionalData)}
             onChange={e => this.inlineEditController().onChange(e, additionalData)}
           >
             {options.map(opt => (
@@ -444,8 +453,8 @@ PlanWizardInstancePropertiesStepTable.propTypes = {
   rows: PropTypes.array,
   tenantsWithAttributesById: PropTypes.object,
   destinationTenantIdsBySourceClusterId: PropTypes.object,
-  updatedInstancePropertiesRowOnStandby: PropTypes.object,
-  instancePropertiesRowsAction: PropTypes.func
+  instancePropertiesRowsAction: PropTypes.func,
+  input: PropTypes.object
 };
 PlanWizardInstancePropertiesStepTable.defaultProps = {
   rows: [],

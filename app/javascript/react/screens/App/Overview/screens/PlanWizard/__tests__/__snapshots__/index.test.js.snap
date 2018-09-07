@@ -11,7 +11,7 @@ Object {
   "planWizardAdvancedOptionsStep": Object {},
   "planWizardExitedAction": [Function],
   "planWizardGeneralStep": Object {},
-  "planWizardInstancePropertiesStep": Object {},
+  "planWizardInstancePropertiesStep": undefined,
   "planWizardScheduleStep": Object {},
   "planWizardVMStep": Object {},
   "resetAdvancedOptionsStepAction": [Function],
