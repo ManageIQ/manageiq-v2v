@@ -5,11 +5,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { createPortal } from 'react-dom';
 import { noop, debounce } from 'patternfly-react';
-import { Field } from 'redux-form';
 import './closestPolyfill';
 import ConfirmButton from '../InlineEdit/ConfirmButton';
 import CancelButton from '../InlineEdit/CancelButton';
-import CheckRowEditable from '../InlineEdit/CheckRowEditable';
 
 class TableConfirmButtonsRow extends React.Component {
   constructor(props) {
@@ -75,7 +73,6 @@ class TableConfirmButtonsRow extends React.Component {
     const buttonsClass = `inline-edit-buttons ${this.props.buttonsClassName}`;
     return (
       <div style={divStyle} className={buttonsClass} key="confirmButtons">
-        <Field name="isRowEditable" component={CheckRowEditable} />
         <ConfirmButton
           bsStyle="primary"
           key="confirm"

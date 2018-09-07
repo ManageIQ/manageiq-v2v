@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { reduxForm } from 'redux-form';
+import { reduxForm, Field } from 'redux-form';
 import PlanWizardInstancePropertiesStepTable from './components/PlanWizardInstancePropertiesStepTable';
 import { OSP_TENANT } from '../../../../OverviewConstants';
 import { getTenantsById, getDestinationTenantIdsBySourceClusterId } from './helpers';
@@ -54,7 +54,6 @@ class PlanWizardInstancePropertiesStep extends Component {
       selectedMapping,
       instancePropertiesRows,
       isSettingSecurityGroupsAndBestFitFlavors,
-      setUpdatedRowOnStandbyAction,
       updatedInstancePropertiesRowOnStandby,
       instancePropertiesRowsAction
     } = this.props;
@@ -74,13 +73,17 @@ class PlanWizardInstancePropertiesStep extends Component {
     );
 
     return (
-      <PlanWizardInstancePropertiesStepTable
+      <Field
+        name="instancePropertiesVms"
+        component={PlanWizardInstancePropertiesStepTable}
         rows={instancePropertiesRows}
         tenantsWithAttributesById={tenantsWithAttributesById}
         destinationTenantIdsBySourceClusterId={destinationTenantIdsBySourceClusterId}
-        setUpdatedRowOnStandbyAction={setUpdatedRowOnStandbyAction}
         updatedInstancePropertiesRowOnStandby={updatedInstancePropertiesRowOnStandby}
         instancePropertiesRowsAction={instancePropertiesRowsAction}
+        validate={value =>
+          value.updatedInstancePropertiesRowOnStandby && value.updatedInstancePropertiesRowOnStandby.id
+        }
       />
     );
   }
@@ -97,7 +100,6 @@ PlanWizardInstancePropertiesStep.propTypes = {
   instancePropertiesRowsAction: PropTypes.func,
   bestFitFlavorAction: PropTypes.func,
   isSettingSecurityGroupsAndBestFitFlavors: PropTypes.bool,
-  setUpdatedRowOnStandbyAction: PropTypes.func,
   updatedInstancePropertiesRowOnStandby: PropTypes.object,
   instancePropertiesRows: PropTypes.array,
   bestFitFlavorUrl: PropTypes.string,
@@ -112,6 +114,10 @@ PlanWizardInstancePropertiesStep.defaultProps = {
 
 export default reduxForm({
   form: 'planWizardInstancePropertiesStep',
-  initialValues: {},
+  initialValues: {
+    instancePropertiesVms: {
+      updatedInstancePropertiesRowOnStandby: {}
+    }
+  },
   destroyOnUnmount: false
 })(PlanWizardInstancePropertiesStep);

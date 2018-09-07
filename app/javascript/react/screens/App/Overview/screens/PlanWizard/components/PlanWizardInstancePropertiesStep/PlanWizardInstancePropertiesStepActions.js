@@ -76,9 +76,3 @@ export const instancePropertiesRowsAction = rows => dispatch =>
     type: SET_V2V_INSTANCE_PROPERTIES_ROWS,
     payload: rows
   });
-
-export const setUpdatedRowOnStandbyAction = row => dispatch =>
-  dispatch({
-    type: SET_UPDATED_INSTANCE_PROPERTIES_ROW_ON_STANDBY,
-    payload: row
-  });

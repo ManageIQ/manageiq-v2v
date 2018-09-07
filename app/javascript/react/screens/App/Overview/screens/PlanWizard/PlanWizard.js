@@ -205,10 +205,7 @@ class PlanWizard extends React.Component {
       (activeStep.id === stepIDs.vmStep &&
         (!this.props.planWizardVMStep.values ||
           !this.props.planWizardVMStep.values.selectedVms ||
-          this.props.planWizardVMStep.values.selectedVms.length === 0)) ||
-      (currentStepProp === stepIDs.instancePropertiesStep &&
-        this.props.planWizardInstancePropertiesStep.values &&
-        this.props.planWizardInstancePropertiesStep.values.isRowEditable);
+          this.props.planWizardVMStep.values.selectedVms.length === 0));
 
     return (
       <Wizard show={!hidePlanWizard} onClose={hidePlanWizardAction} onExited={planWizardExitedAction}>

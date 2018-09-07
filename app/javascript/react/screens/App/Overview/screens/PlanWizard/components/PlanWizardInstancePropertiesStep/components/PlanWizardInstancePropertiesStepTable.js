@@ -21,7 +21,6 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
     },
 
     editing: false,
-    backup: {},
 
     // pagination default states
     pagination: {
@@ -37,45 +36,46 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
   // enables our custom header formatters extensions to reactabular
   customHeaderFormatters = Table.customHeaderFormattersDefinition;
   inlineEditController = () => {
-    const { rows, updatedInstancePropertiesRowOnStandby, instancePropertiesRowsAction } = this.props;
+    const { rows, instancePropertiesRowsAction, input } = this.props;
     return {
-      isEditing: ({ rowData }) => rowData.id === this.state.backup.id,
+      isEditing: ({ rowData }) => rowData.id === input.value.updatedInstancePropertiesRowOnStandby.id,
       onActivate: ({ rowData }) => {
-        const index = findIndex(rows, { id: rowData.id });
-        const backup = rows[index];
-
-        this.setState({ backup, editing: true });
-        const { setUpdatedRowOnStandbyAction } = this.props;
-        setUpdatedRowOnStandbyAction(rowData);
+        this.setState({ editing: true });
+        input.onChange({ updatedInstancePropertiesRowOnStandby: rowData });
       },
       onConfirm: ({ rowData }) => {
-        this.setState({ backup: {}, editing: false });
+        this.setState({ editing: false });
 
-        const updatedRows = rows.map(row => (row.id === rowData.id ? updatedInstancePropertiesRowOnStandby : row));
+        const updatedRows = rows.map(
+          row => (row.id === rowData.id ? input.value.updatedInstancePropertiesRowOnStandby : row)
+        );
         instancePropertiesRowsAction(updatedRows);
+        input.onChange({ updatedInstancePropertiesRowOnStandby: {} });
       },
       onCancel: ({ rowData }) => {
-        this.setState({ backup: {}, editing: false });
+        this.setState({ editing: false });
+        input.onChange({ updatedInstancePropertiesRowOnStandby: {} });
       },
-      onChange: (value, { rowData, property }) => {}
-    };
-  };
+      onChange: (e, { rowData, property }) => {
+        let updatedRowdata = '';
+        const updatedInstanceProp = {
+          ...rowData[property],
+          name: e.target.options[e.target.selectedIndex].text,
+          id: e.target.value
+        };
 
-  handleSelectChange = (e, additionalData) => {
-    let updatedRowdata = '';
-    const { setUpdatedRowOnStandbyAction, updatedInstancePropertiesRowOnStandby } = this.props;
-    const updatedInstanceProp = {
-      ...additionalData.rowData[additionalData.property],
-      name: e.target.options[e.target.selectedIndex].text,
-      id: e.target.value
-    };
-    if (additionalData.property === 'osp_security_group') {
-      updatedRowdata = { ...updatedInstancePropertiesRowOnStandby, osp_security_group: updatedInstanceProp };
-    } else if (additionalData.property === 'osp_flavor') {
-      updatedRowdata = { ...updatedInstancePropertiesRowOnStandby, osp_flavor: updatedInstanceProp };
-    }
+        if (property === 'osp_security_group') {
+          updatedRowdata = {
+            ...input.value.updatedInstancePropertiesRowOnStandby,
+            osp_security_group: updatedInstanceProp
+          };
+        } else if (property === 'osp_flavor') {
+          updatedRowdata = { ...input.value.updatedInstancePropertiesRowOnStandby, osp_flavor: updatedInstanceProp };
+        }
 
-    setUpdatedRowOnStandbyAction(updatedRowdata);
+        input.onChange({ updatedInstancePropertiesRowOnStandby: updatedRowdata });
+      }
+    };
   };
 
   inlineEditFormatter = Table.inlineEditFormatterFactory({
@@ -90,11 +90,7 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
       </td>
     ),
     renderEdit: (value, additionalData) => {
-      const {
-        tenantsWithAttributesById,
-        destinationTenantIdsBySourceClusterId,
-        updatedInstancePropertiesRowOnStandby
-      } = this.props;
+      const { tenantsWithAttributesById, destinationTenantIdsBySourceClusterId, input } = this.props;
       const { optionsAttribute } = additionalData.column.cell.inlineEditSelect;
       const clusterId = additionalData.rowData.ems_cluster_id;
       const tenantId = destinationTenantIdsBySourceClusterId[clusterId];
@@ -106,11 +102,11 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
             componentClass="select"
             defaultValue={
               additionalData.property === 'osp_security_group'
-                ? updatedInstancePropertiesRowOnStandby.osp_security_group.id
-                : updatedInstancePropertiesRowOnStandby.osp_flavor.id
+                ? input.value.updatedInstancePropertiesRowOnStandby.osp_security_group.id
+                : input.value.updatedInstancePropertiesRowOnStandby.osp_flavor.id
             }
-            onChange={e => this.handleSelectChange(e, additionalData)}
             onBlur={e => this.inlineEditController().onChange(e.target.value, additionalData)}
+            onChange={e => this.inlineEditController().onChange(e, additionalData)}
           >
             {options.map(opt => (
               <option value={opt.id} name={opt.name} key={opt.id}>
@@ -449,8 +445,7 @@ PlanWizardInstancePropertiesStepTable.propTypes = {
   tenantsWithAttributesById: PropTypes.object,
   destinationTenantIdsBySourceClusterId: PropTypes.object,
   updatedInstancePropertiesRowOnStandby: PropTypes.object,
-  instancePropertiesRowsAction: PropTypes.func,
-  setUpdatedRowOnStandbyAction: PropTypes.func
+  instancePropertiesRowsAction: PropTypes.func
 };
 PlanWizardInstancePropertiesStepTable.defaultProps = {
   rows: [],
