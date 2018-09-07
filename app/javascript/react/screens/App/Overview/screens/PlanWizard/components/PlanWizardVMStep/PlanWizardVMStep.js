@@ -63,6 +63,7 @@ class PlanWizardVMStep extends React.Component {
   };
   getPreselectedVmsForEditing = () => {
     const { editingPlan, vmsQueryResults } = this.props;
+    if (!editingPlan) return [];
     const vmIds = getVmIds(editingPlan);
     return vmIds.map(vmId => {
       const result = vmsQueryResults.find(res => res.id === vmId);
