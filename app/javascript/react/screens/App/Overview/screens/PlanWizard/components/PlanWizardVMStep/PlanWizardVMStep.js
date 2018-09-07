@@ -4,21 +4,19 @@ import Immutable from 'seamless-immutable';
 import { Field, reduxForm } from 'redux-form';
 import { length } from 'redux-form-validators';
 import { Button, Icon } from 'patternfly-react';
-import numeral from 'numeral';
 import PlanWizardVMStepTable from './components/PlanWizardVMStepTable';
 import CSVDropzoneField from './components/CSVDropzoneField';
 import { getVmIds } from './helpers';
-import { V2V_VM_POST_VALIDATION_REASONS } from './PlanWizardVMStepConstants';
 
 class PlanWizardVMStep extends React.Component {
   componentDidMount() {
-    const { vm_choice_radio, editingPlan, queryPrefilledVmsAction } = this.props;
+    const { vm_choice_radio, editingPlan, queryPreselectedVmsAction } = this.props;
     if (vm_choice_radio === 'vms_via_discovery') {
       this.validateVms();
     }
     if (editingPlan) {
       const vmIds = getVmIds(editingPlan);
-      queryPrefilledVmsAction(vmIds);
+      queryPreselectedVmsAction(vmIds);
     }
   }
   componentDidUpdate(prevProps) {
@@ -61,24 +59,6 @@ class PlanWizardVMStep extends React.Component {
       }
     });
   };
-  getPreselectedVmsForEditing = () => {
-    const { editingPlan, vmsQueryResults } = this.props;
-    if (!editingPlan) return [];
-    const vmIds = getVmIds(editingPlan);
-    return vmIds.map(vmId => {
-      const result = vmsQueryResults.find(res => res.id === vmId);
-      return {
-        id: vmId,
-        name: result ? result.name : '',
-        cluster: result ? result.ems_cluster.name : '',
-        path: '', // TODO [mturley] how can we fetch the path?
-        allocated_size: result ? numeral(result.allocated_disk_storage).format('0.00b') : '',
-        selected: true,
-        valid: true,
-        reason: V2V_VM_POST_VALIDATION_REASONS.ok
-      };
-    });
-  };
   render() {
     const {
       vm_choice_radio,
@@ -89,6 +69,7 @@ class PlanWizardVMStep extends React.Component {
       valid_vms,
       invalid_vms,
       conflict_vms,
+      preselected_vms,
       validationServiceCalled,
       csvImportAction,
       editingPlan,
@@ -158,8 +139,7 @@ class PlanWizardVMStep extends React.Component {
       const validVmsWithSelections = discoveryMode
         ? validVms
         : validVms.filter(vm => vm.valid === true).map(vm => ({ ...vm, selected: true }));
-      const preselectedVms = this.getPreselectedVmsForEditing();
-      const combined = [...preselectedVms, ...inValidsVms, ...conflictVms, ...validVmsWithSelections];
+      const combined = [...preselected_vms, ...inValidsVms, ...conflictVms, ...validVmsWithSelections];
 
       if (combined.length) {
         return (
@@ -169,7 +149,7 @@ class PlanWizardVMStep extends React.Component {
               component={PlanWizardVMStepTable}
               rows={combined}
               initialSelectedRows={
-                discoveryMode ? preselectedVms.map(r => r.id) : validVmsWithSelections.map(r => r.id)
+                discoveryMode ? preselected_vms.map(r => r.id) : validVmsWithSelections.map(r => r.id)
               }
               onCsvImportAction={this.showOverwriteCsvConfirmModal}
               discoveryMode={discoveryMode}
@@ -218,10 +198,10 @@ PlanWizardVMStep.propTypes = {
   valid_vms: PropTypes.array,
   invalid_vms: PropTypes.array,
   conflict_vms: PropTypes.array,
+  preselected_vms: PropTypes.array,
   editingPlan: PropTypes.object,
-  queryPrefilledVmsAction: PropTypes.func,
-  isQueryingVms: PropTypes.bool,
-  vmsQueryResults: PropTypes.array
+  queryPreselectedVmsAction: PropTypes.func,
+  isQueryingVms: PropTypes.bool
 };
 
 PlanWizardVMStep.defaultProps = {
@@ -235,7 +215,8 @@ PlanWizardVMStep.defaultProps = {
   errorValidatingVms: null,
   valid_vms: [],
   invalid_vms: [],
-  conflict_vms: []
+  conflict_vms: [],
+  preselected_vms: []
 };
 
 export default reduxForm({

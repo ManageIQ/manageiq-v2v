@@ -100,3 +100,15 @@ export const getVmIds = editingPlan =>
   editingPlan.options.config_info &&
   editingPlan.options.config_info.actions &&
   editingPlan.options.config_info.actions.map(action => action.vm_id);
+
+export const _formatPreselectedVms = vmsQueryResults =>
+  vmsQueryResults.map(result => ({
+    id: result.id,
+    name: result.name,
+    cluster: result.ems_cluster.name,
+    path: '', // TODO [mturley] how can we fetch the path?
+    allocated_size: numeral(result.allocated_disk_storage).format('0.00b'),
+    selected: true,
+    valid: true,
+    reason: V2V_VM_POST_VALIDATION_REASONS.ok
+  }));

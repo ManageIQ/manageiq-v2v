@@ -44,7 +44,7 @@ export const csvParseErrorAction = errMsg => dispatch => {
   });
 };
 
-const _queryPrefilledVmsActionCreator = ids => dispatch => {
+const _queryPreselectedVmsActionCreator = ids => dispatch => {
   const resources = ids.map(id => ({
     id
   }));
@@ -58,7 +58,7 @@ const _queryPrefilledVmsActionCreator = ids => dispatch => {
   });
 };
 
-export const queryPrefilledVmsAction = ids => _queryPrefilledVmsActionCreator(ids);
+export const queryPreselectedVmsAction = ids => _queryPreselectedVmsActionCreator(ids);
 
 // TODO [mturley] format allocated_disk_storage with numeral.js,
 // TODO [mturley] figure out details of getting the path of a VM
