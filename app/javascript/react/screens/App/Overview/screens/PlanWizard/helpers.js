@@ -1,4 +1,4 @@
-export const createMigrationPlans = (planWizardGeneralStep, planWizardVMStep, planWizardAdvancedOptionsStep) => {
+export const createMigrationPlans = (planWizardGeneralStep, planWizardVMStep, planWizardAdvancedOptionsStep, isEditing = false) => {
   const planName = planWizardGeneralStep.values.name;
   const planDescription = planWizardGeneralStep.values.description;
   const infrastructureMapping = planWizardGeneralStep.values.infrastructure_mapping;
@@ -19,7 +19,7 @@ export const createMigrationPlans = (planWizardGeneralStep, planWizardVMStep, pl
   return {
     name: planName,
     description: planDescription,
-    prov_type: 'generic_transformation_plan',
+    prov_type: isEditing ? 'transformation_plan' : 'generic_transformation_plan',
     config_info: {
       transformation_mapping_id: infrastructureMapping,
       pre_service_id: preMigrationPlaybook,

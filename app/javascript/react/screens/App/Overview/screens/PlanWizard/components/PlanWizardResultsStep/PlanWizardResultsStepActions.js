@@ -1,5 +1,5 @@
 import API from '../../../../../../../../common/API';
-import { POST_V2V_MIGRATION_PLANS, POST_V2V_MIGRATION_REQUESTS } from './PlanWizardResultsStepConstants';
+import { POST_V2V_MIGRATION_PLANS, POST_V2V_MIGRATION_REQUESTS, PUT_V2V_MIGRATION_PLANS } from './PlanWizardResultsStepConstants';
 
 export { hidePlanWizardAction } from '../../PlanWizardActions';
 
@@ -38,7 +38,7 @@ export const postMigrationPlansAction = (url, migrationPlans, planSchedule) =>
 
 const _putMigrationPlansActionCreator = (url, planId, migrationPlans, planSchedule) => dispatch =>
   dispatch({
-    type: POST_V2V_MIGRATION_PLANS,
+    type: PUT_V2V_MIGRATION_PLANS,
     payload: new Promise((resolve, reject) => {
       API.put(`${url}/${planId}`, migrationPlans)
         .then(response => {

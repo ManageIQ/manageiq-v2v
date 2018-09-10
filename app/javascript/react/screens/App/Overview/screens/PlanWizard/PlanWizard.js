@@ -111,7 +111,8 @@ class PlanWizard extends React.Component {
       hideConfirmModalAction,
       showAlertAction,
       hideAlertAction,
-      setMetadataWithNextButtonClickedAction
+      setMetadataWithNextButtonClickedAction,
+      editingPlan
     } = this.props;
 
     const wizardSteps = this.getWizardSteps();
@@ -149,7 +150,8 @@ class PlanWizard extends React.Component {
         onConfirm
       });
     } else if (activeStep.id === stepIDs.scheduleStep) {
-      const plansBody = createMigrationPlans(planWizardGeneralStep, planWizardVMStep, planWizardAdvancedOptionsStep);
+      const isEditing = !!editingPlan;
+      const plansBody = createMigrationPlans(planWizardGeneralStep, planWizardVMStep, planWizardAdvancedOptionsStep, isEditing);
 
       setPlanScheduleAction(planWizardScheduleStep.values.migration_plan_choice_radio);
       setPlansBodyAction(plansBody);
@@ -189,10 +191,6 @@ class PlanWizard extends React.Component {
       editingPlan
     } = this.props;
 
-    // TODO [mturley] remove me:
-    if (editingPlan) console.log('TODO: edit this plan: ', editingPlan);
-    if (!editingPlan) console.log('Not editing a plan');
-
     const wizardSteps = this.getWizardSteps();
 
     const { activeStepIndex, plansBody } = this.state;
@@ -211,6 +209,8 @@ class PlanWizard extends React.Component {
         (!this.props.planWizardVMStep.values ||
           !this.props.planWizardVMStep.values.selectedVms ||
           this.props.planWizardVMStep.values.selectedVms.length === 0));
+
+    const saveButtonLabel = editingPlan ? __('Save') : __('Create');
 
     return (
       <Wizard show={!hidePlanWizard} onClose={hidePlanWizardAction} onExited={planWizardExitedAction}>
@@ -244,7 +244,7 @@ class PlanWizard extends React.Component {
             onClick={onFinalStep ? hidePlanWizardAction : this.nextStep}
             disabled={disableNextStep}
           >
-            {onFinalStep ? __('Close') : currentStepProp === stepIDs.scheduleStep ? __('Create') : __('Next')}
+            {onFinalStep ? __('Close') : currentStepProp === stepIDs.scheduleStep ? saveButtonLabel : __('Next')}
             <Icon type="fa" name="angle-right" />
           </Button>
         </Wizard.Footer>
