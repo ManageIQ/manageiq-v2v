@@ -270,7 +270,7 @@ class MigrationsCompletedList extends React.Component {
                             )
                         ]}
                         actions={
-                          <StopPropagationOnClick element="div">
+                          <div>
                             {!archived &&
                               failed && (
                                 <React.Fragment>
@@ -296,32 +296,34 @@ class MigrationsCompletedList extends React.Component {
                                   </Button>
                                 </React.Fragment>
                               )}
-                            <DropdownKebab id={`${plan.id}-kebab`} pullRight>
-                              {!archived && (
-                                <MenuItem
-                                  onClick={e => {
-                                    e.stopPropagation();
-                                    showConfirmModalAction(confirmModalOptions);
-                                  }}
-                                >
-                                  {__('Archive')}
-                                </MenuItem>
-                              )}
-                              <DeleteMigrationMenuItem
-                                showConfirmModalAction={showConfirmModalAction}
-                                hideConfirmModalAction={hideConfirmModalAction}
-                                deleteTransformationPlanAction={deleteTransformationPlanAction}
-                                deleteTransformationPlanUrl={deleteTransformationPlanUrl}
-                                addNotificationAction={addNotificationAction}
-                                fetchTransformationPlansAction={fetchTransformationPlansAction}
-                                fetchTransformationPlansUrl={fetchTransformationPlansUrl}
-                                fetchArchivedTransformationPlansUrl={fetchArchivedTransformationPlansUrl}
-                                planId={plan.id}
-                                planName={plan.name}
-                                archived={archived}
-                              />
-                            </DropdownKebab>
-                          </StopPropagationOnClick>
+                            <StopPropagationOnClick>
+                              <DropdownKebab id={`${plan.id}-kebab`} pullRight>
+                                {!archived && (
+                                  <MenuItem
+                                    onClick={e => {
+                                      e.stopPropagation();
+                                      showConfirmModalAction(confirmModalOptions);
+                                    }}
+                                  >
+                                    {__('Archive')}
+                                  </MenuItem>
+                                )}
+                                <DeleteMigrationMenuItem
+                                  showConfirmModalAction={showConfirmModalAction}
+                                  hideConfirmModalAction={hideConfirmModalAction}
+                                  deleteTransformationPlanAction={deleteTransformationPlanAction}
+                                  deleteTransformationPlanUrl={deleteTransformationPlanUrl}
+                                  addNotificationAction={addNotificationAction}
+                                  fetchTransformationPlansAction={fetchTransformationPlansAction}
+                                  fetchTransformationPlansUrl={fetchTransformationPlansUrl}
+                                  fetchArchivedTransformationPlansUrl={fetchArchivedTransformationPlansUrl}
+                                  planId={plan.id}
+                                  planName={plan.name}
+                                  archived={archived}
+                                />
+                              </DropdownKebab>
+                            </StopPropagationOnClick>
+                          </div>
                         }
                       />
                     );
