@@ -5,6 +5,7 @@ import { formatDateTime } from '../../../../components/dates/MomentDate';
 
 import {
   ARCHIVE_TRANSFORMATION_PLAN,
+  DELETE_TRANSFORMATION_PLAN,
   CREATE_V2V_TRANSFORMATION_PLAN_REQUEST,
   DELETE_INFRASTRUCTURE_MAPPING,
   FETCH_DATASTORES,
@@ -242,6 +243,17 @@ const _archiveTransformationPlanActionCreator = url => dispatch =>
 export const archiveTransformationPlanAction = (url, id) => {
   const uri = new URI(`${url}/${id}`);
   return _archiveTransformationPlanActionCreator(uri.toString());
+};
+
+const _deleteTransformationPlanActionCreator = url => dispatch =>
+  dispatch({
+    type: DELETE_TRANSFORMATION_PLAN,
+    payload: API.post(url, { action: 'delete' })
+  });
+
+export const deleteTransformationPlanAction = (url, id) => {
+  const uri = new URI(`${url}/${id}`);
+  return _deleteTransformationPlanActionCreator(uri.toString());
 };
 
 export const toggleScheduleMigrationModal = plan => ({

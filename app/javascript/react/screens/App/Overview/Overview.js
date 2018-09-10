@@ -240,6 +240,8 @@ class Overview extends React.Component {
       allArchivedPlanRequestsWithTasks,
       archiveTransformationPlanAction,
       archiveTransformationPlanUrl,
+      deleteTransformationPlanAction,
+      deleteTransformationPlanUrl,
       isFetchingArchivedTransformationPlans,
       addNotificationAction,
       networks,
@@ -338,6 +340,8 @@ class Overview extends React.Component {
               isFetchingArchivedTransformationPlans={isFetchingArchivedTransformationPlans}
               archiveTransformationPlanAction={archiveTransformationPlanAction}
               archiveTransformationPlanUrl={archiveTransformationPlanUrl}
+              deleteTransformationPlanAction={deleteTransformationPlanAction}
+              deleteTransformationPlanUrl={deleteTransformationPlanUrl}
               addNotificationAction={addNotificationAction}
               toggleScheduleMigrationModal={toggleScheduleMigrationModal}
               scheduleMigrationModal={scheduleMigrationModal}
@@ -465,6 +469,8 @@ Overview.propTypes = {
   isFetchingArchivedTransformationPlans: PropTypes.string,
   archiveTransformationPlanAction: PropTypes.func,
   archiveTransformationPlanUrl: PropTypes.string,
+  deleteTransformationPlanAction: PropTypes.func,
+  deleteTransformationPlanUrl: PropTypes.string,
   fetchNetworksUrl: PropTypes.string,
   fetchNetworksAction: PropTypes.func,
   fetchDatastoresUrl: PropTypes.string,
@@ -482,6 +488,7 @@ Overview.propTypes = {
 
 Overview.defaultProps = {
   archiveTransformationPlanUrl: '/api/service_templates',
+  deleteTransformationPlanUrl: '/api/service_templates',
   fetchTransformationMappingsUrl:
     'api/transformation_mappings?expand=resources' +
     '&attributes=transformation_mapping_items,service_templates' +

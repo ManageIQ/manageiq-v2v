@@ -32,6 +32,8 @@ const Migrations = ({
   allArchivedPlanRequestsWithTasks,
   archiveTransformationPlanAction,
   archiveTransformationPlanUrl,
+  deleteTransformationPlanAction,
+  deleteTransformationPlanUrl,
   addNotificationAction,
   toggleScheduleMigrationModal,
   scheduleMigrationModal,
@@ -113,6 +115,7 @@ const Migrations = ({
               redirectTo={redirectTo}
               showConfirmModalAction={showConfirmModalAction}
               hideConfirmModalAction={hideConfirmModalAction}
+              addNotificationAction={addNotificationAction}
               toggleScheduleMigrationModal={toggleScheduleMigrationModal}
               scheduleMigrationModal={scheduleMigrationModal}
               scheduleMigrationPlan={scheduleMigrationPlan}
@@ -120,6 +123,8 @@ const Migrations = ({
               fetchTransformationPlansAction={fetchTransformationPlansAction}
               fetchTransformationPlansUrl={fetchTransformationPlansUrl}
               plansMutatedWithMappingInfo={plansMutatedWithMappingInfo}
+              deleteTransformationPlanAction={deleteTransformationPlanAction}
+              deleteTransformationPlanUrl={deleteTransformationPlanUrl}
             />
           )}
           {activeFilter === MIGRATIONS_FILTERS.inProgress && (
@@ -143,6 +148,8 @@ const Migrations = ({
               hideConfirmModalAction={hideConfirmModalAction}
               archiveTransformationPlanAction={archiveTransformationPlanAction}
               archiveTransformationPlanUrl={archiveTransformationPlanUrl}
+              deleteTransformationPlanAction={deleteTransformationPlanAction}
+              deleteTransformationPlanUrl={deleteTransformationPlanUrl}
               fetchTransformationPlansAction={fetchTransformationPlansAction}
               fetchTransformationPlansUrl={fetchTransformationPlansUrl}
               fetchArchivedTransformationPlansUrl={fetchArchivedTransformationPlansUrl}
@@ -162,6 +169,14 @@ const Migrations = ({
               loading={isFetchingArchivedTransformationPlans}
               archived
               plansMutatedWithMappingInfo={plansMutatedWithMappingInfo}
+              showConfirmModalAction={showConfirmModalAction}
+              hideConfirmModalAction={hideConfirmModalAction}
+              addNotificationAction={addNotificationAction}
+              deleteTransformationPlanAction={deleteTransformationPlanAction}
+              deleteTransformationPlanUrl={deleteTransformationPlanUrl}
+              fetchTransformationPlansAction={fetchTransformationPlansAction}
+              fetchTransformationPlansUrl={fetchTransformationPlansUrl}
+              fetchArchivedTransformationPlansUrl={fetchArchivedTransformationPlansUrl}
             />
           )}
         </div>
@@ -194,6 +209,8 @@ Migrations.propTypes = {
   isFetchingArchivedTransformationPlans: PropTypes.string,
   archiveTransformationPlanAction: PropTypes.func,
   archiveTransformationPlanUrl: PropTypes.string,
+  deleteTransformationPlanAction: PropTypes.func,
+  deleteTransformationPlanUrl: PropTypes.string,
   addNotificationAction: PropTypes.func,
   toggleScheduleMigrationModal: PropTypes.func,
   scheduleMigrationModal: PropTypes.bool,

@@ -10,6 +10,8 @@ import { MIGRATIONS_COMPLETED_SORT_FIELDS } from './MigrationsConstants';
 import ScheduleMigrationButton from './ScheduleMigrationButton';
 import ScheduleMigrationModal from '../ScheduleMigrationModal/ScheduleMigrationModal';
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
+import DeleteMigrationMenuItem from './DeleteMigrationMenuItem';
+import StopPropagationOnClick from '../../../common/StopPropagationOnClick';
 
 class MigrationsCompletedList extends React.Component {
   state = {
@@ -55,6 +57,8 @@ class MigrationsCompletedList extends React.Component {
       hideConfirmModalAction,
       archiveTransformationPlanAction,
       archiveTransformationPlanUrl,
+      deleteTransformationPlanAction,
+      deleteTransformationPlanUrl,
       fetchTransformationPlansAction,
       fetchTransformationPlansUrl,
       fetchArchivedTransformationPlansUrl,
@@ -266,10 +270,9 @@ class MigrationsCompletedList extends React.Component {
                             )
                         ]}
                         actions={
-                          !archived && (
-                            // eslint-disable-next-line
-                            <div onClick={e => e.stopPropagation()}>
-                              {failed && (
+                          <div>
+                            {!archived &&
+                              failed && (
                                 <React.Fragment>
                                   <ScheduleMigrationButton
                                     showConfirmModalAction={showConfirmModalAction}
@@ -293,18 +296,34 @@ class MigrationsCompletedList extends React.Component {
                                   </Button>
                                 </React.Fragment>
                               )}
+                            <StopPropagationOnClick>
                               <DropdownKebab id={`${plan.id}-kebab`} pullRight>
-                                <MenuItem
-                                  onClick={e => {
-                                    e.stopPropagation();
-                                    showConfirmModalAction(confirmModalOptions);
-                                  }}
-                                >
-                                  {__('Archive')}
-                                </MenuItem>
+                                {!archived && (
+                                  <MenuItem
+                                    onClick={e => {
+                                      e.stopPropagation();
+                                      showConfirmModalAction(confirmModalOptions);
+                                    }}
+                                  >
+                                    {__('Archive')}
+                                  </MenuItem>
+                                )}
+                                <DeleteMigrationMenuItem
+                                  showConfirmModalAction={showConfirmModalAction}
+                                  hideConfirmModalAction={hideConfirmModalAction}
+                                  deleteTransformationPlanAction={deleteTransformationPlanAction}
+                                  deleteTransformationPlanUrl={deleteTransformationPlanUrl}
+                                  addNotificationAction={addNotificationAction}
+                                  fetchTransformationPlansAction={fetchTransformationPlansAction}
+                                  fetchTransformationPlansUrl={fetchTransformationPlansUrl}
+                                  fetchArchivedTransformationPlansUrl={fetchArchivedTransformationPlansUrl}
+                                  planId={plan.id}
+                                  planName={plan.name}
+                                  archived={archived}
+                                />
                               </DropdownKebab>
-                            </div>
-                          )
+                            </StopPropagationOnClick>
+                          </div>
                         }
                       />
                     );
@@ -352,6 +371,8 @@ MigrationsCompletedList.propTypes = {
   archived: PropTypes.bool,
   archiveTransformationPlanAction: PropTypes.func,
   archiveTransformationPlanUrl: PropTypes.string,
+  deleteTransformationPlanAction: PropTypes.func,
+  deleteTransformationPlanUrl: PropTypes.string,
   fetchTransformationPlansAction: PropTypes.func,
   fetchTransformationPlansUrl: PropTypes.string,
   fetchArchivedTransformationPlansUrl: PropTypes.string,
