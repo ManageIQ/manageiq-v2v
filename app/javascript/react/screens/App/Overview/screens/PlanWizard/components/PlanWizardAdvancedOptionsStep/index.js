@@ -26,7 +26,7 @@ const mapStateToProps = (
   const allVms =
     vm_choice_radio === 'vms_via_csv'
       ? [...planWizardVMStep.valid_vms, ...planWizardVMStep.invalid_vms, ...planWizardVMStep.conflict_vms]
-      : planWizardVMStep.valid_vms;
+      : [...planWizardVMStep.preselected_vms, ...planWizardVMStep.valid_vms];
 
   return {
     ...planWizardAdvancedOptionsStep,
