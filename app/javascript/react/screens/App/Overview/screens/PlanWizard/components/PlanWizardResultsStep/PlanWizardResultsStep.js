@@ -4,7 +4,15 @@ import { noop, Spinner } from 'patternfly-react';
 
 class PlanWizardResultsStep extends React.Component {
   componentDidMount() {
-    const { postPlansUrl, postMigrationPlansAction, putPlansUrl, putMigrationPlansAction, plansBody, planSchedule, editingPlan } = this.props;
+    const {
+      postPlansUrl,
+      postMigrationPlansAction,
+      putPlansUrl,
+      putMigrationPlansAction,
+      plansBody,
+      planSchedule,
+      editingPlan
+    } = this.props;
     if (!editingPlan) {
       postMigrationPlansAction(postPlansUrl, plansBody, planSchedule);
     } else {
@@ -15,9 +23,7 @@ class PlanWizardResultsStep extends React.Component {
     <div className="wizard-pf-process blank-slate-pf">
       <Spinner loading size="lg" className="blank-slate-pf-icon" />
       <h3 className="blank-slate-pf-main-action">{title}</h3>
-      <p className="blank-slate-pf-secondary-action">
-        {message}
-      </p>
+      <p className="blank-slate-pf-secondary-action">{message}</p>
     </div>
   );
   renderError = (title, message, closeAction) => (
@@ -27,7 +33,7 @@ class PlanWizardResultsStep extends React.Component {
       </div>
       <h3 className="blank-slate-pf-main-action">{title}</h3>
       <p className="blank-slate-pf-secondary-action">{message}</p>
-      <button type="button" className="btn btn-lg btn-primary" onClick={hidePlanWizardAction}>
+      <button type="button" className="btn btn-lg btn-primary" onClick={closeAction}>
         {__('Close')}
       </button>
     </div>
@@ -60,7 +66,10 @@ class PlanWizardResultsStep extends React.Component {
     } = this.props;
 
     if (isPostingPlans) {
-      return this.renderSpinner(__('Creating Migration Plan...'), __('Please wait while the migration plan is created.'));
+      return this.renderSpinner(
+        __('Creating Migration Plan...'),
+        __('Please wait while the migration plan is created.')
+      );
     } else if (isRejectedPostingPlans) {
       const errorData = errorPostingPlans && errorPostingPlans.data;
       const errorMessage = errorData && errorData.error && errorData.error.message;

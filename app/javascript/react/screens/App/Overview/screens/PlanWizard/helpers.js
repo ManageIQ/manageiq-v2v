@@ -1,4 +1,9 @@
-export const createMigrationPlans = (planWizardGeneralStep, planWizardVMStep, planWizardAdvancedOptionsStep, isEditing = false) => {
+export const createMigrationPlans = (
+  planWizardGeneralStep,
+  planWizardVMStep,
+  planWizardAdvancedOptionsStep,
+  isEditing = false
+) => {
   const planName = planWizardGeneralStep.values.name;
   const planDescription = planWizardGeneralStep.values.description;
   const infrastructureMapping = planWizardGeneralStep.values.infrastructure_mapping;

@@ -151,7 +151,12 @@ class PlanWizard extends React.Component {
       });
     } else if (activeStep.id === stepIDs.scheduleStep) {
       const isEditing = !!editingPlan;
-      const plansBody = createMigrationPlans(planWizardGeneralStep, planWizardVMStep, planWizardAdvancedOptionsStep, isEditing);
+      const plansBody = createMigrationPlans(
+        planWizardGeneralStep,
+        planWizardVMStep,
+        planWizardAdvancedOptionsStep,
+        isEditing
+      );
 
       setPlanScheduleAction(planWizardScheduleStep.values.migration_plan_choice_radio);
       setPlansBodyAction(plansBody);

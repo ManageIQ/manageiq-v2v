@@ -139,8 +139,13 @@ class PlanWizardVMStep extends React.Component {
       const validVmsWithSelections = discoveryMode
         ? validVms
         : validVms.filter(vm => vm.valid === true).map(vm => ({ ...vm, selected: true }));
-      const combined = [...preselected_vms, ...inValidsVms, ...conflictVms, ...validVmsWithSelections];
-
+      // In case the discovery service returns some of the VMs we pre-selected:
+      const validVmsDeduped = !editingPlan
+        ? validVmsWithSelections
+        : validVmsWithSelections.filter(
+            validVm => !preselected_vms.some(preselectedVm => validVm.id === preselectedVm.id)
+          );
+      const combined = [...preselected_vms, ...inValidsVms, ...conflictVms, ...validVmsDeduped];
       if (combined.length) {
         return (
           <React.Fragment>
