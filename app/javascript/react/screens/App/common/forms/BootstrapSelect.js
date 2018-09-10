@@ -38,7 +38,8 @@ export class BootstrapSelect extends React.Component {
       option_key,
       option_value,
       choose_text,
-      meta: { visited, error, active }
+      meta: { visited, error, active },
+      disabled
     } = this.props;
 
     const { inline_label, stacked_label, labelWidth, controlWidth, allowClear, ...otherProps } = this.props;
@@ -62,6 +63,7 @@ export class BootstrapSelect extends React.Component {
             data-live-search={data_live_search}
             className={`form-control ${input.name}_select`}
             {...input}
+            disabled={!!disabled}
           >
             <option disabled={!allowClear} value="">
               {choose_text || `<${__('Choose')}>`}
@@ -111,5 +113,6 @@ BootstrapSelect.propTypes = {
   stacked_label: PropTypes.bool,
   labelWidth: PropTypes.number,
   controlWidth: PropTypes.number,
-  allowClear: PropTypes.bool
+  allowClear: PropTypes.bool,
+  disabled: PropTypes.bool
 };
