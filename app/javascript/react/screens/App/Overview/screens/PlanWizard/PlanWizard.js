@@ -239,7 +239,7 @@ class PlanWizard extends React.Component {
             onClick={onFinalStep ? hidePlanWizardAction : this.nextStep}
             disabled={disableNextStep}
           >
-            {onFinalStep ? __('Close') : activeStep.id === stepIDs.scheduleStep ? __('Create') : __('Next')}
+            {onFinalStep ? __('Close') : currentStepProp === stepIDs.scheduleStep ? __('Create') : __('Next')}
             <Icon type="fa" name="angle-right" />
           </Button>
         </Wizard.Footer>
