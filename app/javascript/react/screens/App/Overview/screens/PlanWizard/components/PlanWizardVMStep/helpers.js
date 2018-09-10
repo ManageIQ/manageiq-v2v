@@ -105,8 +105,8 @@ export const _formatPreselectedVms = vmsQueryResults =>
   vmsQueryResults.map(result => ({
     id: result.id,
     name: result.name,
-    cluster: result.ems_cluster.name,
-    path: '', // TODO [mturley] how can we fetch the path?
+    cluster: result.ems_cluster ? result.ems_cluster.name : '',
+    path: '', // TODO [mturley] we need to fetch the path from a new API attribute on this query
     allocated_size: numeral(result.allocated_disk_storage).format('0.00b'),
     selected: true,
     valid: true,

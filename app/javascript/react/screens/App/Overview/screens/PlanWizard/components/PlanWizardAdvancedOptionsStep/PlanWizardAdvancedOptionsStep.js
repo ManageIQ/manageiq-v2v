@@ -5,13 +5,18 @@ import { Form, Spinner } from 'patternfly-react';
 
 import PlanWizardAdvancedOptionsStepTable from './components/PlanWizardAdvancedOptionsStepTable/PlanWizardAdvancedOptionsStepTable';
 import { BootstrapSelect } from '../../../../../common/forms/BootstrapSelect';
+import { preselectPlaybooksForVms } from './helpers';
 
 class PlanWizardAdvancedOptionsStep extends Component {
   constructor(props) {
     super(props);
 
     if (props.vms.length === 0) {
-      props.setVmsAction(props.vmStepSelectedVms);
+      if (!props.editingPlan) {
+        props.setVmsAction(props.vmStepSelectedVms);
+      } else {
+        props.setVmsAction(preselectPlaybooksForVms(props.editingPlan, props.vmStepSelectedVms));
+      }
     }
   }
 
@@ -90,7 +95,8 @@ PlanWizardAdvancedOptionsStep.propTypes = {
   vms: PropTypes.array,
   setVmsAction: PropTypes.func,
   vmStepSelectedVms: PropTypes.array,
-  change: PropTypes.func
+  change: PropTypes.func,
+  editingPlan: PropTypes.object
 };
 
 PlanWizardAdvancedOptionsStep.defaultProps = {
@@ -99,13 +105,6 @@ PlanWizardAdvancedOptionsStep.defaultProps = {
 
 export default reduxForm({
   form: 'planWizardAdvancedOptionsStep',
-  initialValues: {
-    playbookVms: {
-      preMigration: [],
-      postMigration: []
-    },
-    preMigrationPlaybook: '',
-    postMigrationPlaybook: ''
-  },
   destroyOnUnmount: false
+  // initialValues prop is passed in via ./index
 })(PlanWizardAdvancedOptionsStep);
