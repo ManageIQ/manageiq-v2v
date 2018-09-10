@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import orderBy from 'lodash.orderby';
-import findIndex from 'lodash.findindex';
 import * as sort from 'sortabular';
 import * as resolve from 'table-resolver';
 import { compose } from 'recompose';
@@ -21,7 +20,6 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
     },
 
     editing: false,
-    backup: {},
 
     // pagination default states
     pagination: {
@@ -34,30 +32,59 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
     pageChangeValue: 1
   };
 
+  componentWillUnmount() {
+    const { input, rows } = this.props;
+    const minimalInstancePropertiesRows = [];
+
+    rows.forEach(row => {
+      const { id, osp_security_group, osp_flavor } = row;
+      minimalInstancePropertiesRows.push({
+        vm_id: id,
+        osp_security_group_id: osp_security_group.id,
+        osp_flavor_id: osp_flavor.id
+      });
+    });
+
+    input.onChange({ rows: minimalInstancePropertiesRows, updatedInstancePropertiesRowOnStandby: {} });
+  }
+
   // enables our custom header formatters extensions to reactabular
   customHeaderFormatters = Table.customHeaderFormattersDefinition;
-
-  // TODO:  These methods need to be wired up to redux-form once we know what
-  //        the POST body should look like for creating an OSP transformation
-  //        plan.  We will use local state to store the row that is currently
-  //        being edited to roll back to in case of cancel.
   inlineEditController = () => {
-    const { rows } = this.props;
+    const { rows, instancePropertiesRowsAction, input } = this.props;
     return {
-      isEditing: ({ rowData }) => rowData.id === this.state.backup.id,
+      isEditing: ({ rowData }) => rowData.id === input.value.updatedInstancePropertiesRowOnStandby.id,
       onActivate: ({ rowData }) => {
-        const index = findIndex(rows, { id: rowData.id });
-        const backup = rows[index];
-
-        this.setState({ backup, editing: true });
+        this.setState({ editing: true });
+        input.onChange({ updatedInstancePropertiesRowOnStandby: rowData });
       },
       onConfirm: ({ rowData }) => {
-        this.setState({ backup: {}, editing: false });
+        this.setState({ editing: false });
+
+        const updatedRows = rows.map(
+          row => (row.id === rowData.id ? input.value.updatedInstancePropertiesRowOnStandby : row)
+        );
+        instancePropertiesRowsAction(updatedRows);
+        input.onChange({ updatedInstancePropertiesRowOnStandby: {} });
       },
       onCancel: ({ rowData }) => {
-        this.setState({ backup: {}, editing: false });
+        this.setState({ editing: false });
+        input.onChange({ updatedInstancePropertiesRowOnStandby: {} });
       },
-      onChange: (value, { rowData, property }) => {}
+      onChange: (e, { rowData, property }) => {
+        const updatedInstanceProp = {
+          ...rowData[property],
+          name: e.target.options[e.target.selectedIndex].text,
+          id: e.target.value
+        };
+
+        const updatedRowdata = {
+          ...input.value.updatedInstancePropertiesRowOnStandby,
+          [property]: updatedInstanceProp
+        };
+
+        input.onChange({ updatedInstancePropertiesRowOnStandby: updatedRowdata });
+      }
     };
   };
 
@@ -65,11 +92,15 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
     isEditing: additionalData => this.inlineEditController().isEditing(additionalData),
     renderValue: (value, additionalData) => (
       <td className="editable">
-        <span className="static">{value.name}</span>
+        <span className="static">
+          {additionalData.property === 'osp_security_group'
+            ? additionalData.rowData.osp_security_group.name
+            : additionalData.rowData.osp_flavor.name}
+        </span>
       </td>
     ),
     renderEdit: (value, additionalData) => {
-      const { tenantsWithAttributesById, destinationTenantIdsBySourceClusterId } = this.props;
+      const { tenantsWithAttributesById, destinationTenantIdsBySourceClusterId, input } = this.props;
       const { optionsAttribute } = additionalData.column.cell.inlineEditSelect;
       const clusterId = additionalData.rowData.ems_cluster_id;
       const tenantId = destinationTenantIdsBySourceClusterId[clusterId];
@@ -79,11 +110,15 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
         <td className="editable editing">
           <FormControl
             componentClass="select"
-            defaultValue={value.name}
-            onBlur={e => this.inlineEditController().onChange(e.target.value, additionalData)}
+            defaultValue={
+              additionalData.property === 'osp_security_group'
+                ? input.value.updatedInstancePropertiesRowOnStandby.osp_security_group.id
+                : input.value.updatedInstancePropertiesRowOnStandby.osp_flavor.id
+            }
+            onChange={e => this.inlineEditController().onChange(e, additionalData)}
           >
             {options.map(opt => (
-              <option value={opt.name} key={opt.id}>
+              <option value={opt.id} name={opt.name} key={opt.id}>
                 {opt.name}
               </option>
             ))}
@@ -417,7 +452,9 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
 PlanWizardInstancePropertiesStepTable.propTypes = {
   rows: PropTypes.array,
   tenantsWithAttributesById: PropTypes.object,
-  destinationTenantIdsBySourceClusterId: PropTypes.object
+  destinationTenantIdsBySourceClusterId: PropTypes.object,
+  instancePropertiesRowsAction: PropTypes.func,
+  input: PropTypes.object
 };
 PlanWizardInstancePropertiesStepTable.defaultProps = {
   rows: [],

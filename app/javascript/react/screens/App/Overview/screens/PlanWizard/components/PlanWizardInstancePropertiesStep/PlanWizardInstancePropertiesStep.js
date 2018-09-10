@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Field, reduxForm } from 'redux-form';
+import { reduxForm, Field } from 'redux-form';
 import PlanWizardInstancePropertiesStepTable from './components/PlanWizardInstancePropertiesStepTable';
 import { OSP_TENANT } from '../../../../OverviewConstants';
-import { getTenantsById, getDestinationTenantIdsBySourceClusterId, getVmsWithTargetClusterName } from './helpers';
+import { getTenantsById, getDestinationTenantIdsBySourceClusterId } from './helpers';
 
 class PlanWizardInstancePropertiesStep extends Component {
   componentDidMount() {
@@ -11,7 +11,12 @@ class PlanWizardInstancePropertiesStep extends Component {
       selectedMapping,
       fetchOpenstackTenantUrl,
       queryOpenstackTenantAttributes,
-      queryTenantsWithAttributesAction
+      queryTenantsWithAttributesAction,
+      vmStepSelectedVms,
+      instancePropertiesRowsAction,
+      bestFitFlavorAction,
+      bestFitFlavorUrl,
+      recalculateBestFitFlavorAndSecurityGroup
     } = this.props;
 
     const targetTenants =
@@ -19,16 +24,41 @@ class PlanWizardInstancePropertiesStep extends Component {
       selectedMapping.transformation_mapping_items &&
       selectedMapping.transformation_mapping_items.filter(item => item.destination_type === OSP_TENANT);
 
-    if (targetTenants) {
+    if (targetTenants && recalculateBestFitFlavorAndSecurityGroup) {
       const targetTenantIds = targetTenants.map(tenant => tenant.destination_id);
-      queryTenantsWithAttributesAction(fetchOpenstackTenantUrl, targetTenantIds, queryOpenstackTenantAttributes);
+
+      queryTenantsWithAttributesAction(fetchOpenstackTenantUrl, targetTenantIds, queryOpenstackTenantAttributes).then(
+        () => {
+          const sourceAndDestinationHrefSlugsForBestFit = [];
+          vmStepSelectedVms.forEach(vm => {
+            const destinationTenantId = targetTenants.filter(tenant => tenant.source_id === vm.ems_cluster_id)[0]
+              .destination_id;
+            sourceAndDestinationHrefSlugsForBestFit.push({
+              source_href_slug: `vms/${vm.id}`,
+              destination_href_slug: `cloud_tenants/${destinationTenantId}`
+            });
+          });
+
+          bestFitFlavorAction(bestFitFlavorUrl, sourceAndDestinationHrefSlugsForBestFit);
+        }
+      );
+
+      instancePropertiesRowsAction(vmStepSelectedVms);
     }
   }
 
   render() {
-    const { vmStepSelectedVms, tenantsWithAttributes, isFetchingTenantsWithAttributes, selectedMapping } = this.props;
+    const {
+      isFetchingTenantsWithAttributes,
+      tenantsWithAttributes,
+      selectedMapping,
+      instancePropertiesRows,
+      isSettingSecurityGroupsAndBestFitFlavors,
+      updatedInstancePropertiesRowOnStandby,
+      instancePropertiesRowsAction
+    } = this.props;
 
-    if (isFetchingTenantsWithAttributes) {
+    if (isFetchingTenantsWithAttributes || isSettingSecurityGroupsAndBestFitFlavors) {
       return (
         <div className="blank-slate-pf">
           <div className="spinner spinner-lg blank-slate-pf-icon" />
@@ -41,19 +71,19 @@ class PlanWizardInstancePropertiesStep extends Component {
     const destinationTenantIdsBySourceClusterId = getDestinationTenantIdsBySourceClusterId(
       selectedMapping.transformation_mapping_items
     );
-    const rows = getVmsWithTargetClusterName(
-      vmStepSelectedVms,
-      destinationTenantIdsBySourceClusterId,
-      tenantsWithAttributesById
-    );
 
     return (
       <Field
-        name="ospInstanceProperties"
+        name="instancePropertiesVms"
         component={PlanWizardInstancePropertiesStepTable}
-        rows={rows}
+        rows={instancePropertiesRows}
         tenantsWithAttributesById={tenantsWithAttributesById}
         destinationTenantIdsBySourceClusterId={destinationTenantIdsBySourceClusterId}
+        updatedInstancePropertiesRowOnStandby={updatedInstancePropertiesRowOnStandby}
+        instancePropertiesRowsAction={instancePropertiesRowsAction}
+        validate={value =>
+          value.updatedInstancePropertiesRowOnStandby && value.updatedInstancePropertiesRowOnStandby.id
+        }
       />
     );
   }
@@ -66,16 +96,28 @@ PlanWizardInstancePropertiesStep.propTypes = {
   queryOpenstackTenantAttributes: PropTypes.arrayOf(PropTypes.string),
   queryTenantsWithAttributesAction: PropTypes.func,
   tenantsWithAttributes: PropTypes.array,
-  isFetchingTenantsWithAttributes: PropTypes.bool
+  isFetchingTenantsWithAttributes: PropTypes.bool,
+  instancePropertiesRowsAction: PropTypes.func,
+  bestFitFlavorAction: PropTypes.func,
+  isSettingSecurityGroupsAndBestFitFlavors: PropTypes.bool,
+  updatedInstancePropertiesRowOnStandby: PropTypes.object,
+  instancePropertiesRows: PropTypes.array,
+  bestFitFlavorUrl: PropTypes.string,
+  recalculateBestFitFlavorAndSecurityGroup: PropTypes.bool
 };
 
 PlanWizardInstancePropertiesStep.defaultProps = {
   fetchOpenstackTenantUrl: '/api/cloud_tenants',
+  bestFitFlavorUrl: 'api/transformation_mappings',
   queryOpenstackTenantAttributes: ['flavors', 'security_groups']
 };
 
 export default reduxForm({
   form: 'planWizardInstancePropertiesStep',
-  initialValues: {},
+  initialValues: {
+    instancePropertiesVms: {
+      updatedInstancePropertiesRowOnStandby: {}
+    }
+  },
   destroyOnUnmount: false
 })(PlanWizardInstancePropertiesStep);

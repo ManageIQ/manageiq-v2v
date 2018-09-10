@@ -36,13 +36,10 @@ const mapStateToProps = (
     ...planWizardInstancePropertiesStep,
     ...ownProps.data,
     instancePropertiesStepForm,
-    // TODO:  This simulates the back end providing default values for the
-    //        flavors and security group dropdowns.  Should be removed when
-    //        integrating with back end
     vmStepSelectedVms: getVMStepSelectedVms(allVms, selectedVms).map(vm => ({
       ...vm,
-      osp_security_group: { name: 'Default' },
-      osp_flavor: { name: 'medium' }
+      osp_security_group: {},
+      osp_flavor: {}
     })),
     selectedMapping
   };
