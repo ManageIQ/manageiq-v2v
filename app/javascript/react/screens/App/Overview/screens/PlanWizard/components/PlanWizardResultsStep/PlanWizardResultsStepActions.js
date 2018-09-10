@@ -35,3 +35,21 @@ const _postMigrationPlansActionCreator = (url, migrationPlans, planSchedule) => 
 
 export const postMigrationPlansAction = (url, migrationPlans, planSchedule) =>
   _postMigrationPlansActionCreator(url, migrationPlans, planSchedule);
+
+const _putMigrationPlansActionCreator = (url, planId, migrationPlans, planSchedule) => dispatch =>
+  dispatch({
+    type: POST_V2V_MIGRATION_PLANS,
+    payload: new Promise((resolve, reject) => {
+      API.put(`${url}/${planId}`, migrationPlans)
+        .then(response => {
+          resolve(response);
+          if (planSchedule === 'migration_plan_now') {
+            postMigrationRequestsAction(response, dispatch);
+          }
+        })
+        .catch(e => reject(e));
+    })
+  });
+
+export const putMigrationPlansAction = (url, migrationPlans, planSchedule) =>
+  _putMigrationPlansActionCreator(url, migrationPlans, planSchedule);

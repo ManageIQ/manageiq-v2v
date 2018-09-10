@@ -8,6 +8,7 @@ import { BootstrapSelect } from '../../../../../common/forms/BootstrapSelect';
 import { validation } from '../../../../../../../../common/constants';
 import { asyncValidate, onChange } from './helpers';
 
+// TODO disable the mapping selection when editing
 const PlanWizardGeneralStep = ({ transformationMappings }) => (
   <Form className="form-horizontal">
     <Field

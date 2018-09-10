@@ -4,9 +4,12 @@ import { noop, Spinner } from 'patternfly-react';
 
 class PlanWizardResultsStep extends React.Component {
   componentDidMount() {
-    const { postPlansUrl, postMigrationPlansAction, plansBody, planSchedule } = this.props;
-
-    postMigrationPlansAction(postPlansUrl, plansBody, planSchedule);
+    const { postPlansUrl, postMigrationPlansAction, putPlansUrl, putMigrationPlansAction, plansBody, planSchedule, editingPlan } = this.props;
+    if (!editingPlan) {
+      postMigrationPlansAction(postPlansUrl, plansBody, planSchedule);
+    } else {
+      putMigrationPlansAction(putPlansUrl, editingPlan.id, plansBody, planSchedule);
+    }
   }
   renderResult = (migrationPlanMessage, migrationPlanFollowupMessage, migrationPlanIcon) => (
     <div className="wizard-pf-complete blank-slate-pf">
@@ -71,7 +74,9 @@ class PlanWizardResultsStep extends React.Component {
 }
 PlanWizardResultsStep.propTypes = {
   postPlansUrl: PropTypes.string,
+  putPlansUrl: PropTypes.string,
   postMigrationPlansAction: PropTypes.func,
+  putMigrationPlansAction: PropTypes.func,
   plansBody: PropTypes.object,
   planSchedule: PropTypes.string,
   isPostingPlans: PropTypes.bool,
@@ -79,11 +84,14 @@ PlanWizardResultsStep.propTypes = {
   errorPostingPlans: PropTypes.object,
   migrationPlansResult: PropTypes.object,
   migrationRequestsResult: PropTypes.object,
-  hidePlanWizardAction: PropTypes.func
+  hidePlanWizardAction: PropTypes.func,
+  editingPlan: PropTypes.object
 };
 PlanWizardResultsStep.defaultProps = {
   postPlansUrl: '/api/service_templates',
+  putPlansUrl: '/api/service_templates',
   postMigrationPlansAction: noop,
+  putMigrationPlansAction: noop,
   plansBody: {},
   planSchedule: '',
   isPostingPlans: true,
