@@ -6,12 +6,8 @@ import { length } from 'redux-form-validators';
 import { Button, Icon } from 'patternfly-react';
 import PlanWizardVMStepTable from './components/PlanWizardVMStepTable';
 import CSVDropzoneField from './components/CSVDropzoneField';
-import ConfirmModal from '../../../../../common/ConfirmModal';
 
 class PlanWizardVMStep extends React.Component {
-  state = {
-    overwriteCsvModalVisible: false
-  };
   componentDidMount() {
     const { vm_choice_radio } = this.props;
     if (vm_choice_radio === 'vms_via_discovery') {
@@ -39,10 +35,24 @@ class PlanWizardVMStep extends React.Component {
     validateVmsAction(validateVmsUrl, infrastructure_mapping_id, []);
   };
   showOverwriteCsvConfirmModal = () => {
-    this.setState({ overwriteCsvModalVisible: true });
-  };
-  hideOverwriteCsvConfirmModal = () => {
-    this.setState({ overwriteCsvModalVisible: false });
+    const { csvImportAction, showConfirmModalAction, hideConfirmModalAction } = this.props;
+    showConfirmModalAction({
+      title: __('Overwrite Import File'),
+      body: (
+        <React.Fragment>
+          <p>{__('Importing a new VM list file will overwrite the contents of the existing list.')}</p>
+          <p>{__('Are you sure you want to import a new file?')}</p>
+        </React.Fragment>
+      ),
+      icon: <Icon className="confirm-warning-icon" type="pf" name="warning-triangle-o" />,
+      confirmButtonLabel: __('Import'),
+      dialogClassName: 'plan-wizard-confirm-modal',
+      backdropClassName: 'plan-wizard-confirm-backdrop',
+      onConfirm: () => {
+        hideConfirmModalAction();
+        csvImportAction();
+      }
+    });
   };
   render() {
     const {
@@ -58,28 +68,6 @@ class PlanWizardVMStep extends React.Component {
       csvImportAction
     } = this.props;
     const discoveryMode = vm_choice_radio === 'vms_via_discovery';
-
-    const overwriteCsvConfirmModal = (
-      <ConfirmModal
-        dialogClassName="plan-wizard-confirm-modal"
-        backdropClassName="plan-wizard-confirm-backdrop"
-        show={this.state.overwriteCsvModalVisible}
-        title={__('Overwrite Import File')}
-        icon={<Icon className="confirm-warning-icon" type="pf" name="warning-triangle-o" />}
-        body={
-          <React.Fragment>
-            <p>{__('Importing a new VM list file will overwrite the contents of the existing list.')}</p>
-            <p>{__('Are you sure you want to import a new file?')}</p>
-          </React.Fragment>
-        }
-        confirmButtonLabel={__('Import')}
-        onCancel={this.hideOverwriteCsvConfirmModal}
-        onConfirm={() => {
-          this.hideOverwriteCsvConfirmModal();
-          csvImportAction();
-        }}
-      />
-    );
 
     if (isRejectedValidatingVms && !isCSVParseError) {
       return (
@@ -158,7 +146,6 @@ class PlanWizardVMStep extends React.Component {
                 })
               ]}
             />
-            {overwriteCsvConfirmModal}
           </React.Fragment>
         );
       }
@@ -185,6 +172,8 @@ PlanWizardVMStep.propTypes = {
   validateVmsUrl: PropTypes.string,
   validateVmsAction: PropTypes.func.isRequired,
   csvImportAction: PropTypes.func.isRequired,
+  showConfirmModalAction: PropTypes.func.isRequired,
+  hideConfirmModalAction: PropTypes.func.isRequired,
   csvParseErrorAction: PropTypes.func.isRequired,
   isValidatingVms: PropTypes.bool,
   isRejectedValidatingVms: PropTypes.bool,

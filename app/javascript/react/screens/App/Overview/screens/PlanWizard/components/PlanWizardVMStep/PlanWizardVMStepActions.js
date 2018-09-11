@@ -2,6 +2,8 @@ import URI from 'urijs';
 import API from '../../../../../../../../common/API';
 import { V2V_VM_STEP_RESET, V2V_VALIDATE_VMS } from './PlanWizardVMStepConstants';
 
+export { showConfirmModalAction, hideConfirmModalAction } from '../../../../OverviewActions';
+
 const _validateVmsActionCreator = (url, vms) => dispatch => {
   const postBody = {
     action: 'validate_vms',
