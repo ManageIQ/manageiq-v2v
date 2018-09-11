@@ -9,7 +9,7 @@ import componentRegistry from '../../../../../../components/componentRegistry';
 import PlanWizardGeneralStep from '../PlanWizard/components/PlanWizardGeneralStep';
 import PlanWizardScheduleStep from '../PlanWizard/components/PlanWizardScheduleStep';
 
-import { stepIDs } from './PlanWizardConstants';
+import { stepIDs, overwriteCsvConfirmModalProps } from './PlanWizardConstants';
 
 class PlanWizard extends React.Component {
   planWizardVMStepContainer = componentRegistry.markup('PlanWizardVMStepContainer');
@@ -126,6 +126,18 @@ class PlanWizard extends React.Component {
         return;
       }
       hideAlertAction();
+
+      if (editingPlan && planWizardGeneralStep.values.vm_choice_radio === 'vms_via_csv') {
+        // If the user selected CSV and they are editing a plan, warn before proceeding.
+        showConfirmModalAction({
+          ...overwriteCsvConfirmModalProps,
+          onConfirm: () => {
+            hideConfirmModalAction();
+            this.goToStepId(stepIDs.vmStep);
+          }
+        });
+        return; // Don't proceed until the user confirms the warning.
+      }
     }
 
     if (

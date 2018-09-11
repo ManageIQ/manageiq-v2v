@@ -7,6 +7,7 @@ import { Button, Icon } from 'patternfly-react';
 import PlanWizardVMStepTable from './components/PlanWizardVMStepTable';
 import CSVDropzoneField from './components/CSVDropzoneField';
 import { getVmIds } from './helpers';
+import { overwriteCsvConfirmModalProps } from '../../PlanWizardConstants';
 
 class PlanWizardVMStep extends React.Component {
   componentDidMount() {
@@ -42,17 +43,7 @@ class PlanWizardVMStep extends React.Component {
   showOverwriteCsvConfirmModal = () => {
     const { csvImportAction, showConfirmModalAction, hideConfirmModalAction } = this.props;
     showConfirmModalAction({
-      title: __('Overwrite Import File'),
-      body: (
-        <React.Fragment>
-          <p>{__('Importing a new VM list file will overwrite the contents of the existing list.')}</p>
-          <p>{__('Are you sure you want to import a new file?')}</p>
-        </React.Fragment>
-      ),
-      icon: <Icon className="confirm-warning-icon" type="pf" name="warning-triangle-o" />,
-      confirmButtonLabel: __('Import'),
-      dialogClassName: 'plan-wizard-confirm-modal',
-      backdropClassName: 'plan-wizard-confirm-backdrop',
+      ...overwriteCsvConfirmModalProps,
       onConfirm: () => {
         hideConfirmModalAction();
         csvImportAction();
