@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Immutable from 'seamless-immutable';
 import { Field, reduxForm } from 'redux-form';
 import { length } from 'redux-form-validators';
-import { Button } from 'patternfly-react';
+import { Button, Icon } from 'patternfly-react';
 import PlanWizardVMStepTable from './components/PlanWizardVMStepTable';
 import CSVDropzoneField from './components/CSVDropzoneField';
 
@@ -33,6 +33,26 @@ class PlanWizardVMStep extends React.Component {
   validateVms = () => {
     const { infrastructure_mapping_id, validateVmsUrl, validateVmsAction } = this.props;
     validateVmsAction(validateVmsUrl, infrastructure_mapping_id, []);
+  };
+  showOverwriteCsvConfirmModal = () => {
+    const { csvImportAction, showConfirmModalAction, hideConfirmModalAction } = this.props;
+    showConfirmModalAction({
+      title: __('Overwrite Import File'),
+      body: (
+        <React.Fragment>
+          <p>{__('Importing a new VM list file will overwrite the contents of the existing list.')}</p>
+          <p>{__('Are you sure you want to import a new file?')}</p>
+        </React.Fragment>
+      ),
+      icon: <Icon className="confirm-warning-icon" type="pf" name="warning-triangle-o" />,
+      confirmButtonLabel: __('Import'),
+      dialogClassName: 'plan-wizard-confirm-modal',
+      backdropClassName: 'plan-wizard-confirm-backdrop',
+      onConfirm: () => {
+        hideConfirmModalAction();
+        csvImportAction();
+      }
+    });
   };
   render() {
     const {
@@ -117,7 +137,7 @@ class PlanWizardVMStep extends React.Component {
               component={PlanWizardVMStepTable}
               rows={combined}
               initialSelectedRows={discoveryMode ? [] : validVmsWithSelections.map(r => r.id)}
-              onCsvImportAction={csvImportAction}
+              onCsvImportAction={this.showOverwriteCsvConfirmModal}
               discoveryMode={discoveryMode}
               validate={[
                 length({
@@ -152,6 +172,8 @@ PlanWizardVMStep.propTypes = {
   validateVmsUrl: PropTypes.string,
   validateVmsAction: PropTypes.func.isRequired,
   csvImportAction: PropTypes.func.isRequired,
+  showConfirmModalAction: PropTypes.func.isRequired,
+  hideConfirmModalAction: PropTypes.func.isRequired,
   csvParseErrorAction: PropTypes.func.isRequired,
   isValidatingVms: PropTypes.bool,
   isRejectedValidatingVms: PropTypes.bool,
