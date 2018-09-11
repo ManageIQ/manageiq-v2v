@@ -125,6 +125,14 @@ class MigrationsNotStartedList extends React.Component {
                             </Button>
                             <StopPropagationOnClick>
                               <DropdownKebab id={`${plan.id}-kebab`} pullRight>
+                                <MenuItem
+                                  onClick={e => {
+                                    e.stopPropagation();
+                                    showPlanWizardEditModeAction(plan.id);
+                                  }}
+                                >
+                                  {__('Edit')}
+                                </MenuItem>
                                 <DeleteMigrationMenuItem
                                   showConfirmModalAction={showConfirmModalAction}
                                   hideConfirmModalAction={hideConfirmModalAction}
@@ -136,14 +144,6 @@ class MigrationsNotStartedList extends React.Component {
                                   planId={plan.id}
                                   planName={plan.name}
                                 />
-                                <MenuItem
-                                  onClick={e => {
-                                    e.stopPropagation();
-                                    showPlanWizardEditModeAction(plan.id);
-                                  }}
-                                >
-                                  {__('Edit')}
-                                </MenuItem>
                               </DropdownKebab>
                             </StopPropagationOnClick>
                           </div>
