@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Immutable from 'seamless-immutable';
 import { Field, reduxForm } from 'redux-form';
 import { length } from 'redux-form-validators';
-import { Button, Icon } from 'patternfly-react';
+import { Button } from 'patternfly-react';
 import PlanWizardVMStepTable from './components/PlanWizardVMStepTable';
 import CSVDropzoneField from './components/CSVDropzoneField';
 import { getVmIds } from './helpers';
