@@ -2,6 +2,7 @@ import { reducer as formReducer } from 'redux-form';
 import { reducers as notificationListReducers } from '../../react/screens/App/common/NotificationList';
 import { reducers as planReducers } from '../../react/screens/App/Plan';
 import { reducers as overviewReducers } from '../../react/screens/App/Overview';
+import { reducers as mappingsReducers } from '../../react/screens/App/Mappings';
 import { reducers as mappingWizardReducers } from '../../react/screens/App/Overview/screens/MappingWizard';
 import { reducers as mappingWizardGeneralStepReducers } from '../../react/screens/App/Overview/screens/MappingWizard/components/MappingWizardGeneralStep';
 import { reducers as mappingWizardClustersStepReducers } from '../../react/screens/App/Overview/screens/MappingWizard/components/MappingWizardClustersStep';
@@ -19,6 +20,7 @@ export default () => ({
   ...notificationListReducers,
   ...planReducers,
   ...overviewReducers,
+  ...mappingsReducers,
   ...mappingWizardReducers,
   ...mappingWizardGeneralStepReducers,
   ...mappingWizardClustersStepReducers,
