@@ -5,7 +5,7 @@ import { noop, DropdownButton, Grid, Icon, MenuItem } from 'patternfly-react';
 import MigrationsInProgressCards from './MigrationsInProgressCards';
 import MigrationsNotStartedList from './MigrationsNotStartedList';
 import MigrationsCompletedList from './MigrationsCompletedList';
-import OverviewEmptyState from '../OverviewEmptyState/OverviewEmptyState';
+import ShowWizardEmptyState from '../../../common/ShowWizardEmptyState/ShowWizardEmptyState';
 import { MIGRATIONS_FILTERS } from '../../OverviewConstants';
 
 const Migrations = ({
@@ -101,7 +101,7 @@ const Migrations = ({
             </DropdownButton>
           </div>
         ) : (
-          <OverviewEmptyState
+          <ShowWizardEmptyState
             showWizardAction={createMigrationPlanClick}
             description={__('Create a migration plan to select VMs for migration.')}
             buttonText={__('Create Migration Plan')}

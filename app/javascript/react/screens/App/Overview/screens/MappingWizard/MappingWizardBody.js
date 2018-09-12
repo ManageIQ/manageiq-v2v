@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { noop } from 'patternfly-react';
-import ModalWizard from '../../components/ModalWizard';
+import ModalWizard from '../../../common/ModalWizard';
 import componentRegistry from '../../../../../../components/componentRegistry';
 
 class MappingWizardBody extends React.Component {

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, Grid, Spinner } from 'patternfly-react';
-import OverviewEmptyState from '../OverviewEmptyState/OverviewEmptyState';
+import ShowWizardEmptyState from '../../../common/ShowWizardEmptyState/ShowWizardEmptyState';
 import MigrationInProgressCard from './MigrationsInProgressCard';
 
 const MigrationsInProgressCards = ({
@@ -29,7 +29,7 @@ const MigrationsInProgressCards = ({
                 />
               ))
             ) : (
-              <OverviewEmptyState
+              <ShowWizardEmptyState
                 title={__('No Migration Plans In Progress')}
                 iconType="pf"
                 iconName="info"

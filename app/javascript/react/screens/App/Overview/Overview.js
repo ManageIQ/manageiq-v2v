@@ -5,7 +5,7 @@ import Toolbar from '../../../config/Toolbar';
 import * as AggregateCards from './components/AggregateCards';
 import InfrastructureMappingsList from './components/InfrastructureMappingsList/InfrastructureMappingsList';
 import Migrations from './components/Migrations/Migrations';
-import OverviewEmptyState from './components/OverviewEmptyState/OverviewEmptyState';
+import ShowWizardEmptyState from '../common/ShowWizardEmptyState/ShowWizardEmptyState';
 import componentRegistry from '../../../../components/componentRegistry';
 import getMostRecentRequest from '../common/getMostRecentRequest';
 import ConfirmModal from '../common/ConfirmModal';
@@ -414,7 +414,7 @@ class Overview extends React.Component {
               showMappingWizardEditModeAction={showMappingWizardEditModeAction}
             />
           ) : (
-            <OverviewEmptyState
+            <ShowWizardEmptyState
               description={
                 __('The VMWare and Red Hat Virtualization providers must be configured before attempting a migration.') // prettier-ignore
               }

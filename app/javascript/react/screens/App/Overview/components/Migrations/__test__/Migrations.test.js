@@ -21,7 +21,7 @@ test('shows the empty state when there are no transformation plans', () => {
     />
   );
 
-  expect(wrapper.find('OverviewEmptyState').exists()).toBe(true);
+  expect(wrapper.find('ShowWizardEmptyState').exists()).toBe(true);
 });
 
 test('selecting Archived Plans triggers an API call to fetch all archived plans', () => {

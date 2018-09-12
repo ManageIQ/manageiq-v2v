@@ -4,7 +4,7 @@ import Immutable from 'seamless-immutable';
 import EllipsisWithTooltip from 'react-ellipsis-with-tooltip';
 import { Button, Icon, ListView, Grid } from 'patternfly-react';
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
-import OverviewEmptyState from '../OverviewEmptyState/OverviewEmptyState';
+import ShowWizardEmptyState from '../../../common/ShowWizardEmptyState/ShowWizardEmptyState';
 import DeleteInfrastructureMappingConfirmationModal from '../../components/DeleteInfrastructureMappingConfirmationModal/DeleteInfrastructureMappingConfirmationModal';
 import MappingSource from './components/MappingSource';
 import MappingTarget from './components/MappingTarget';
@@ -59,7 +59,7 @@ class InfrastructureMappingsList extends React.Component {
   renderEmptyState = ({ divider }) => (
     <React.Fragment>
       {divider && <hr className="infra-mapping-empty-state-divider" />}
-      <OverviewEmptyState
+      <ShowWizardEmptyState
         showWizardAction={this.props.createInfraMappingClick}
         description={__('Create an infrastructure mapping to later be used by a migration plan')}
         buttonText={__('Create Infrastructure Mapping')}
@@ -126,7 +126,7 @@ class InfrastructureMappingsList extends React.Component {
             <React.Fragment>
               {this.renderHeadingWithLink()}
               {error ? (
-                <OverviewEmptyState
+                <ShowWizardEmptyState
                   title={__('Error loading mappings.')}
                   iconType="pf"
                   iconName="error-circle-o"

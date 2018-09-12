@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, EmptyState } from 'patternfly-react';
 
-const OverviewEmptyState = ({
+const ShowWizardEmptyState = ({
   showWizardAction,
   buttonHref,
   description,
@@ -26,7 +26,7 @@ const OverviewEmptyState = ({
   </EmptyState>
 );
 
-OverviewEmptyState.propTypes = {
+ShowWizardEmptyState.propTypes = {
   showWizardAction: PropTypes.func,
   buttonHref: PropTypes.string,
   description: PropTypes.node,
@@ -35,7 +35,7 @@ OverviewEmptyState.propTypes = {
   iconType: PropTypes.string,
   iconName: PropTypes.string
 };
-OverviewEmptyState.defaultProps = {
+ShowWizardEmptyState.defaultProps = {
   title: ' ',
   iconType: 'pf',
   iconName: 'add-circle-o',
@@ -43,4 +43,4 @@ OverviewEmptyState.defaultProps = {
   buttonHref: null
 };
 
-export default OverviewEmptyState;
+export default ShowWizardEmptyState;
