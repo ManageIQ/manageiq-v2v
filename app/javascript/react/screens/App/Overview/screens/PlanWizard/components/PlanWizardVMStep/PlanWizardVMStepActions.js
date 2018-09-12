@@ -51,15 +51,14 @@ const _queryPreselectedVmsActionCreator = ids => dispatch => {
 
   return dispatch({
     type: QUERY_V2V_PLAN_VMS,
-    payload: API.post('/api/vms?expand=resources&attributes=name,ems_cluster.name,allocated_disk_storage', {
-      action: 'query',
-      resources
-    })
+    payload: API.post(
+      '/api/vms?expand=resources&attributes=name,ems_cluster.name,allocated_disk_storage,ext_management_system.name,v_parent_blue_folder_display_path',
+      {
+        action: 'query',
+        resources
+      }
+    )
   });
 };
 
 export const queryPreselectedVmsAction = ids => _queryPreselectedVmsActionCreator(ids);
-
-// TODO [mturley] format allocated_disk_storage with numeral.js,
-// TODO [mturley] figure out details of getting the path of a VM
-// TODO [mturley] talk to Aparna about this
