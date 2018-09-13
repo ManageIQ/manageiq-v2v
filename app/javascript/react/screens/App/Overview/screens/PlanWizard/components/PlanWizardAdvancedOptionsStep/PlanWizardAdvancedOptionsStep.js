@@ -106,5 +106,4 @@ PlanWizardAdvancedOptionsStep.defaultProps = {
 export default reduxForm({
   form: 'planWizardAdvancedOptionsStep',
   destroyOnUnmount: false
-  // initialValues prop is passed in via ./index
 })(PlanWizardAdvancedOptionsStep);

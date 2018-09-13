@@ -47,6 +47,7 @@ const mapStateToProps = (
       postMigrationPlaybook: editingPlan ? configInfo.post_service_id : ''
     },
     enableReinitialize: true, // Tells redux-form to use new initialValues when they change
+    keepDirtyOnReinitialize: true,
     editingPlan
   };
 };

@@ -21,6 +21,7 @@ const mapStateToProps = ({ overview }) => {
       description: editingPlan ? editingPlan.description : ''
     },
     enableReinitialize: true, // Tells redux-form to use new initialValues when they change
+    keepDirtyOnReinitialize: true,
     editingPlan
   };
 };

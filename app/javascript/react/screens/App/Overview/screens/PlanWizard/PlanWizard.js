@@ -128,7 +128,6 @@ class PlanWizard extends React.Component {
       hideAlertAction();
 
       if (editingPlan && planWizardGeneralStep.values.vm_choice_radio === 'vms_via_csv') {
-        // If the user selected CSV and they are editing a plan, warn before proceeding.
         showConfirmModalAction({
           ...overwriteCsvConfirmModalProps,
           onConfirm: () => {
@@ -136,7 +135,7 @@ class PlanWizard extends React.Component {
             this.goToStepId(stepIDs.vmStep);
           }
         });
-        return; // Don't proceed until the user confirms the warning.
+        return;
       }
     }
 
