@@ -25,12 +25,17 @@ const mapStateToProps = (
   },
   ownProps
 ) => {
+  const editingPlan = findEditingPlan(transformationPlans, editingPlanId);
+  const validVmsDeduped = !editingPlan
+    ? planWizardVMStep.valid_vms
+    : planWizardVMStep.valid_vms.filter(
+        validVm => !planWizardVMStep.preselected_vms.some(preselectedVm => preselectedVm.id === validVm.id)
+      );
   const allVms =
     vm_choice_radio === 'vms_via_csv'
       ? [...planWizardVMStep.valid_vms, ...planWizardVMStep.invalid_vms, ...planWizardVMStep.conflict_vms]
-      : [...planWizardVMStep.preselected_vms, ...planWizardVMStep.valid_vms];
+      : [...planWizardVMStep.preselected_vms, ...validVmsDeduped];
 
-  const editingPlan = findEditingPlan(transformationPlans, editingPlanId);
   const configInfo = editingPlan && editingPlan.options && editingPlan.options.config_info;
 
   return {
