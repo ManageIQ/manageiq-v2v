@@ -130,6 +130,7 @@ class MigrationsNotStartedList extends React.Component {
                                     e.stopPropagation();
                                     showPlanWizardEditModeAction(plan.id);
                                   }}
+                                  disabled={isMissingMapping || loading === plan.href}
                                 >
                                   {__('Edit')}
                                 </MenuItem>
