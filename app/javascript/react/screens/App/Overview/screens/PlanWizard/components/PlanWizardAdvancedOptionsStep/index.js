@@ -37,16 +37,17 @@ const mapStateToProps = (
       : [...planWizardVMStep.preselected_vms, ...validVmsDeduped];
 
   const configInfo = editingPlan && editingPlan.options && editingPlan.options.config_info;
+  const vmStepSelectedVms = getVMStepSelectedVms(allVms, selectedVms);
 
   return {
     ...planWizardAdvancedOptionsStep,
     ...ownProps.data,
     advancedOptionsStepForm,
-    vmStepSelectedVms: getVMStepSelectedVms(allVms, selectedVms),
+    vmStepSelectedVms,
     initialValues: {
       playbookVms: {
-        preMigration: editingPlan ? getVmIdsWithProperty(editingPlan, 'pre_service') : [],
-        postMigration: editingPlan ? getVmIdsWithProperty(editingPlan, 'post_service') : []
+        preMigration: editingPlan ? getVmIdsWithProperty(editingPlan, 'pre_service', vmStepSelectedVms) : [],
+        postMigration: editingPlan ? getVmIdsWithProperty(editingPlan, 'post_service', vmStepSelectedVms) : []
       },
       preMigrationPlaybook: editingPlan ? configInfo.pre_service_id : '',
       postMigrationPlaybook: editingPlan ? configInfo.post_service_id : ''
