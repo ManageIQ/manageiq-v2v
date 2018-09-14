@@ -202,7 +202,7 @@ class PlanWizard extends React.Component {
 
     const disableNextStep =
       (!onFinalStep && currentStepHasErrors) ||
-      (activeStep.id === stepIDs.vmStep &&
+      (currentStepProp === stepIDs.vmStep &&
         (!this.props.planWizardVMStep.values ||
           !this.props.planWizardVMStep.values.selectedVms ||
           this.props.planWizardVMStep.values.selectedVms.length === 0));

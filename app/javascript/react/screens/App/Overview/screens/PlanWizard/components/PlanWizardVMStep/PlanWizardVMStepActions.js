@@ -1,3 +1,4 @@
+import { reset } from 'redux-form';
 import URI from 'urijs';
 import API from '../../../../../../../../common/API';
 import { V2V_VM_STEP_RESET, V2V_VALIDATE_VMS } from './PlanWizardVMStepConstants';
@@ -33,6 +34,7 @@ export const csvImportAction = () => dispatch => {
   dispatch({
     type: V2V_VM_STEP_RESET
   });
+  dispatch(reset('planWizardVMStep'));
 };
 
 export const csvParseErrorAction = errMsg => dispatch => {
