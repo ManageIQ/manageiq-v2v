@@ -55,5 +55,5 @@ const _putMigrationPlansActionCreator = (url, planId, migrationPlans, planSchedu
     })
   });
 
-export const putMigrationPlansAction = (url, migrationPlans, planSchedule) =>
-  _putMigrationPlansActionCreator(url, migrationPlans, planSchedule);
+export const putMigrationPlansAction = (url, planId, migrationPlans, planSchedule) =>
+  _putMigrationPlansActionCreator(url, planId, migrationPlans, planSchedule);
