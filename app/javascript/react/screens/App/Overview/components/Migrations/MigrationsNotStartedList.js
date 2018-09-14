@@ -93,6 +93,8 @@ class MigrationsNotStartedList extends React.Component {
                     const migrationScheduled = plan.schedules && plan.schedules[0].run_at.start_time;
                     const isMissingMapping = !plan.infraMappingName;
 
+                    const editPlanDisabled = isMissingMapping || loading === plan.href;
+
                     return (
                       <ListView.Item
                         stacked
@@ -128,9 +130,9 @@ class MigrationsNotStartedList extends React.Component {
                                 <MenuItem
                                   onClick={e => {
                                     e.stopPropagation();
-                                    showPlanWizardEditModeAction(plan.id);
+                                    if (!editPlanDisabled) showPlanWizardEditModeAction(plan.id);
                                   }}
-                                  disabled={isMissingMapping || loading === plan.href}
+                                  disabled={editPlanDisabled}
                                 >
                                   {__('Edit')}
                                 </MenuItem>
