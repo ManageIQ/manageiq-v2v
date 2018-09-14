@@ -40,11 +40,15 @@ const _postMigrationPlansActionCreator = (url, migrationPlans, planSchedule) => 
 export const postMigrationPlansAction = (url, migrationPlans, planSchedule) =>
   _postMigrationPlansActionCreator(url, migrationPlans, planSchedule);
 
-const _putMigrationPlansActionCreator = (url, planId, migrationPlans, planSchedule) => dispatch =>
-  dispatch({
+const _editMigrationPlansActionCreator = (url, planId, migrationPlans, planSchedule) => dispatch => {
+  const body = {
+    action: 'edit',
+    resource: { ...migrationPlans }
+  };
+  return dispatch({
     type: PUT_V2V_MIGRATION_PLANS,
     payload: new Promise((resolve, reject) => {
-      API.put(`${url}/${planId}`, migrationPlans)
+      API.post(`${url}/${planId}`, body)
         .then(response => {
           resolve(response);
           if (planSchedule === 'migration_plan_now') {
@@ -54,6 +58,7 @@ const _putMigrationPlansActionCreator = (url, planId, migrationPlans, planSchedu
         .catch(e => reject(e));
     })
   });
+};
 
-export const putMigrationPlansAction = (url, planId, migrationPlans, planSchedule) =>
-  _putMigrationPlansActionCreator(url, planId, migrationPlans, planSchedule);
+export const editMigrationPlansAction = (url, planId, migrationPlans, planSchedule) =>
+  _editMigrationPlansActionCreator(url, planId, migrationPlans, planSchedule);

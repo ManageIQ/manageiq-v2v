@@ -7,8 +7,8 @@ class PlanWizardResultsStep extends React.Component {
     const {
       postPlansUrl,
       postMigrationPlansAction,
-      putPlansUrl,
-      putMigrationPlansAction,
+      editPlansUrl,
+      editMigrationPlansAction,
       plansBody,
       planSchedule,
       editingPlan
@@ -16,7 +16,7 @@ class PlanWizardResultsStep extends React.Component {
     if (!editingPlan) {
       postMigrationPlansAction(postPlansUrl, plansBody, planSchedule);
     } else {
-      putMigrationPlansAction(putPlansUrl, editingPlan.id, plansBody, planSchedule);
+      editMigrationPlansAction(editPlansUrl, editingPlan.id, plansBody, planSchedule);
     }
   }
   renderSpinner = (title, message) => (
@@ -94,9 +94,9 @@ class PlanWizardResultsStep extends React.Component {
 }
 PlanWizardResultsStep.propTypes = {
   postPlansUrl: PropTypes.string,
-  putPlansUrl: PropTypes.string,
+  editPlansUrl: PropTypes.string,
   postMigrationPlansAction: PropTypes.func,
-  putMigrationPlansAction: PropTypes.func,
+  editMigrationPlansAction: PropTypes.func,
   plansBody: PropTypes.object,
   planSchedule: PropTypes.string,
   isPostingPlans: PropTypes.bool,
@@ -112,9 +112,9 @@ PlanWizardResultsStep.propTypes = {
 };
 PlanWizardResultsStep.defaultProps = {
   postPlansUrl: '/api/service_templates',
-  putPlansUrl: '/api/service_templates',
+  editPlansUrl: '/api/service_templates',
   postMigrationPlansAction: noop,
-  putMigrationPlansAction: noop,
+  editMigrationPlansAction: noop,
   plansBody: {},
   planSchedule: '',
   isPostingPlans: true,
