@@ -1,9 +1,6 @@
 import Immutable from 'seamless-immutable';
 
-import {
-  V2V_FETCH_SETTINGS,
-  V2V_POST_SETTINGS
-} from './SettingsConstants';
+import { V2V_FETCH_SETTINGS, V2V_POST_SETTINGS } from './SettingsConstants';
 
 export const initialState = Immutable({
   isFetchingSettings: false,

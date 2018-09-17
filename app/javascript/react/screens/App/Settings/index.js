@@ -6,11 +6,16 @@ import * as NotificationActions from '../common/NotificationList/NotificationLis
 
 import reducer from './SettingsReducer';
 
-export const reducers = { settings: reducer, form: {} };
+export const reducers = { settings: reducer };
 
-const mapStateToProps = ({ settings }, ownProps) => ({
+const mapStateToProps = ({ settings, form }, ownProps) => ({
   ...settings,
-  ...ownProps.data
+  ...ownProps.data,
+  settingsForm: form.settings,
+  initialValues: {
+    maxMigrationsPerHost: 10
+  },
+  enableReinitialize: true
 });
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => Object.assign(stateProps, ownProps.data, dispatchProps);
