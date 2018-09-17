@@ -231,8 +231,12 @@ class PlanWizard extends React.Component {
     const wizardTitle = editingPlan ? __('Edit Migration Plan') : __('Create Migration Plan');
 
     return (
-      <Wizard show={!hidePlanWizard} onClose={hidePlanWizardAction} onExited={planWizardExitedAction}>
-        <Wizard.Header onClose={hidePlanWizardAction} title={wizardTitle} />
+      <Wizard
+        show={!hidePlanWizard}
+        onClose={() => hidePlanWizardAction(onFinalStep)}
+        onExited={planWizardExitedAction}
+      >
+        <Wizard.Header onClose={() => hidePlanWizardAction(onFinalStep)} title={wizardTitle} />
 
         <Wizard.Body>
           <PlanWizardBody
@@ -250,7 +254,7 @@ class PlanWizard extends React.Component {
         </Wizard.Body>
 
         <Wizard.Footer className="wizard-pf-footer">
-          <Button bsStyle="default" className="btn-cancel" onClick={hidePlanWizardAction}>
+          <Button bsStyle="default" className="btn-cancel" onClick={() => hidePlanWizardAction(onFinalStep)}>
             {__('Cancel')}
           </Button>
           <Button bsStyle="default" onClick={this.prevStep} disabled={onFirstStep || onFinalStep}>
@@ -259,7 +263,7 @@ class PlanWizard extends React.Component {
           </Button>
           <Button
             bsStyle="primary"
-            onClick={onFinalStep ? hidePlanWizardAction : this.nextStep}
+            onClick={onFinalStep ? () => hidePlanWizardAction(onFinalStep) : this.nextStep}
             disabled={disableNextStep}
           >
             {onFinalStep ? __('Close') : currentStepProp === stepIDs.scheduleStep ? saveButtonLabel : __('Next')}
