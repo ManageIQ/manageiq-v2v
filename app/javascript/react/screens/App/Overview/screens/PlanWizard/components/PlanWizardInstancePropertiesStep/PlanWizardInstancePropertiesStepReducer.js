@@ -64,14 +64,12 @@ export default (state = initialState, action) => {
           tenantsWithAttribute => tenantsWithAttribute.id === vmFlavor.tenant_id
         );
         const tenantFlavors = tenant && tenant.flavors;
-        const tenantSecurityGroups = tenant && tenant.security_groups;
         const bestFitFlavor = tenantFlavors && tenantFlavors.find(flavor => flavor.id === vmFlavor.flavor_id);
         const bestFitFlavorName = bestFitFlavor && bestFitFlavor.name;
-        const defaultSecurityGroupName = 'default';
-        const defaultSecurityGroup = tenantSecurityGroups.find(
-          securityGroup => securityGroup.name === defaultSecurityGroupName
-        );
+        const defaultSecurityGroup = tenant && tenant.default_security_group;
         const defaultSecurityGroupId = defaultSecurityGroup && defaultSecurityGroup.id;
+        const defaultSecurityGroupName = defaultSecurityGroup && defaultSecurityGroup.name;
+
         const rowUpdatedWithBestFlavor = {
           ...existingInstancePropertiesRow,
           osp_flavor: { name: bestFitFlavorName, id: vmFlavor.flavor_id },
