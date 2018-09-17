@@ -256,7 +256,9 @@ class Overview extends React.Component {
       scheduleMigrationPlan,
       scheduleMigration,
       plansMutatedWithMappingInfo,
-      showPlanWizardEditModeAction
+      showPlanWizardEditModeAction,
+      fetchTransformationMappingsUrl,
+      fetchTransformationMappingsAction
     } = this.props;
 
     const inProgressRequestsTransformationMappings = () => {
@@ -351,6 +353,8 @@ class Overview extends React.Component {
               scheduleMigration={scheduleMigration}
               plansMutatedWithMappingInfo={plansMutatedWithMappingInfo}
               showPlanWizardEditModeAction={showPlanWizardEditModeAction}
+              fetchTransformationMappingsUrl={fetchTransformationMappingsUrl}
+              fetchTransformationMappingsAction={fetchTransformationMappingsAction}
             />
           )}
           {hasSufficientProviders ? (
