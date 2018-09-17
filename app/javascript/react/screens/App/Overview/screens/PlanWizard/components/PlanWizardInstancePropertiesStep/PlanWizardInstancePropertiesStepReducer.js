@@ -64,7 +64,18 @@ export default (state = initialState, action) => {
           tenantsWithAttribute => tenantsWithAttribute.id === vmFlavor.tenant_id
         );
         const tenantFlavors = tenant && tenant.flavors;
-        const bestFitFlavor = tenantFlavors && tenantFlavors.find(flavor => flavor.id === vmFlavor.flavor_id);
+
+        let bestFitFlavor;
+        let bestFitFlavorId = vmFlavor.flavor_id;
+        if (bestFitFlavorId) {
+          bestFitFlavor = tenantFlavors && tenantFlavors.find(flavor => flavor.id === bestFitFlavorId);
+        } else {
+          bestFitFlavor =
+            tenantFlavors &&
+            tenantFlavors.reduce((prev, current) => (prev.root_disk_size > current.root_disk_size ? prev : current));
+          bestFitFlavorId = bestFitFlavor && bestFitFlavor.id;
+        }
+
         const bestFitFlavorName = bestFitFlavor && bestFitFlavor.name;
         const defaultSecurityGroup = tenant && tenant.default_security_group;
         const defaultSecurityGroupId = defaultSecurityGroup && defaultSecurityGroup.id;
@@ -72,7 +83,7 @@ export default (state = initialState, action) => {
 
         const rowUpdatedWithBestFlavor = {
           ...existingInstancePropertiesRow,
-          osp_flavor: { name: bestFitFlavorName, id: vmFlavor.flavor_id },
+          osp_flavor: { name: bestFitFlavorName, id: bestFitFlavorId },
           osp_security_group: { name: defaultSecurityGroupName, id: defaultSecurityGroupId },
           target_cluster_name: tenant.name
         };
