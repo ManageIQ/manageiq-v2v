@@ -60,6 +60,7 @@ Object {
   "showConfirmModalAction": [Function],
   "showDeleteConfirmationModalAction": [Function],
   "showMappingWizardAction": [Function],
+  "showMappingWizardEditModeAction": [Function],
   "showPlanWizardAction": [Function],
   "showPlanWizardEditModeAction": [Function],
   "toggleScheduleMigrationModal": [Function],

@@ -4,6 +4,7 @@ import { reducers as notificationListReducers } from '../../react/screens/App/co
 import { reducers as planReducers } from '../../react/screens/App/Plan';
 import { reducers as overviewReducers } from '../../react/screens/App/Overview';
 import { reducers as mappingWizardReducers } from '../../react/screens/App/Overview/screens/MappingWizard';
+import { reducers as mappingWizardGeneralStepReducers } from '../../react/screens/App/Overview/screens/MappingWizard/components/MappingWizardGeneralStep';
 import { reducers as mappingWizardClustersStepReducers } from '../../react/screens/App/Overview/screens/MappingWizard/components/MappingWizardClustersStep';
 import { reducers as mappingWizardDatastoresStepReducers } from '../../react/screens/App/Overview/screens/MappingWizard/components/MappingWizardDatastoresStep';
 import { reducers as mappingWizardNetworksStepReducers } from '../../react/screens/App/Overview/screens/MappingWizard/components/MappingWizardNetworksStep';
@@ -20,6 +21,7 @@ export default () =>
     ...planReducers,
     ...overviewReducers,
     ...mappingWizardReducers,
+    ...mappingWizardGeneralStepReducers,
     ...mappingWizardClustersStepReducers,
     ...mappingWizardDatastoresStepReducers,
     ...mappingWizardNetworksStepReducers,

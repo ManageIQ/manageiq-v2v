@@ -101,7 +101,8 @@ class InfrastructureMappingsList extends React.Component {
       yesToDeleteInfrastructureMappingAction,
       notStartedTransformationPlans,
       finishedWithErrorTransformationPlans,
-      migrationPlansExist
+      migrationPlansExist,
+      showMappingWizardEditModeAction
     } = this.props;
 
     const { transformationMappingsMutable } = this.state;
@@ -296,25 +297,37 @@ class InfrastructureMappingsList extends React.Component {
                           ) : null
                         ]}
                         actions={
-                          inProgressRequestsTransformationMappings.find(
-                            inProgressRequestsTransformationMapping =>
-                              inProgressRequestsTransformationMapping === mapping.id
-                          ) ? (
-                            <Button bsStyle="link" disabled>
-                              <Icon type="pf" className="delete-infra-mapping-icon-disabled" name="delete" />
-                            </Button>
-                          ) : (
+                          <div>
                             <Button
                               bsStyle="link"
+                              disabled={!!associatedPlansCount}
                               onClick={e => {
                                 e.stopPropagation();
-                                setMappingToDeleteAction(mapping);
-                                showDeleteConfirmationModalAction();
+                                showMappingWizardEditModeAction(mapping);
                               }}
                             >
-                              <Icon type="pf" name="delete" />
+                              <Icon type="pf" name="edit" />
                             </Button>
-                          )
+                            {inProgressRequestsTransformationMappings.find(
+                              inProgressRequestsTransformationMapping =>
+                                inProgressRequestsTransformationMapping === mapping.id
+                            ) ? (
+                              <Button bsStyle="link" disabled>
+                                <Icon type="pf" className="delete-infra-mapping-icon-disabled" name="delete" />
+                              </Button>
+                            ) : (
+                              <Button
+                                bsStyle="link"
+                                onClick={e => {
+                                  e.stopPropagation();
+                                  setMappingToDeleteAction(mapping);
+                                  showDeleteConfirmationModalAction();
+                                }}
+                              >
+                                <Icon type="pf" name="delete" />
+                              </Button>
+                            )}
+                          </div>
                         }
                       >
                         <Grid.Row>
@@ -496,7 +509,8 @@ InfrastructureMappingsList.propTypes = {
   yesToDeleteInfrastructureMappingAction: PropTypes.func,
   notStartedTransformationPlans: PropTypes.array,
   finishedWithErrorTransformationPlans: PropTypes.array,
-  migrationPlansExist: PropTypes.bool
+  migrationPlansExist: PropTypes.bool,
+  showMappingWizardEditModeAction: PropTypes.func
 };
 
 export default InfrastructureMappingsList;
