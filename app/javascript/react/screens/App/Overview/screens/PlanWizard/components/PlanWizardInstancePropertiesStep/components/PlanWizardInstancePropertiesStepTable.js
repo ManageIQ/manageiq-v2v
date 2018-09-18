@@ -105,7 +105,15 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
       const clusterId = additionalData.rowData.ems_cluster_id;
       const tenantId = destinationTenantIdsBySourceClusterId[clusterId];
       const tenant = tenantId && tenantsWithAttributesById[tenantId];
-      const options = tenant ? tenant[optionsAttribute] : [];
+      const allFitForVM = () => {
+        const { bestFitFlavors } = this.props;
+        const flavorsSlugPrefix = 'flavors/';
+        const allFitIds = bestFitFlavors
+          .find(flavor => flavor.source_href_slug === `vms/${additionalData.rowData.id}`)
+          .all_fit.map(flavorSlug => flavorSlug.slice(flavorsSlugPrefix.length));
+        return tenant.flavors.filter(flavor => allFitIds.indexOf(flavor.id) > -1);
+      };
+      const options = tenant ? (optionsAttribute === 'flavors' ? allFitForVM() : tenant[optionsAttribute]) : [];
       return (
         <td className="editable editing">
           <FormControl
@@ -454,7 +462,8 @@ PlanWizardInstancePropertiesStepTable.propTypes = {
   tenantsWithAttributesById: PropTypes.object,
   destinationTenantIdsBySourceClusterId: PropTypes.object,
   instancePropertiesRowsAction: PropTypes.func,
-  input: PropTypes.object
+  input: PropTypes.object,
+  bestFitFlavors: PropTypes.array
 };
 PlanWizardInstancePropertiesStepTable.defaultProps = {
   rows: [],
