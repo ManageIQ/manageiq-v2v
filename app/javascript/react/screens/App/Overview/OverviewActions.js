@@ -26,6 +26,8 @@ import {
   SHOW_DELETE_CONFIRMATION_MODAL,
   SHOW_MAPPING_WIZARD,
   SHOW_PLAN_WIZARD,
+  SHOW_EDIT_PLAN_TITLE_MODAL,
+  HIDE_EDIT_PLAN_TITLE_MODAL,
   V2V_FETCH_CLUSTERS,
   V2V_RETRY_MIGRATION,
   V2V_SCHEDULE_MIGRATION,
@@ -73,6 +75,19 @@ export const showPlanWizardEditModeAction = id => dispatch => {
   dispatch({
     type: SHOW_PLAN_WIZARD_EDIT_MODE,
     editingPlanId: id
+  });
+};
+
+export const showEditPlanNameModalAction = id => dispatch => {
+  dispatch({
+    type: SHOW_EDIT_PLAN_TITLE_MODAL,
+    editingPlanId: id
+  });
+};
+
+export const hideEditPlanNameModalAction = () => dispatch => {
+  dispatch({
+    type: HIDE_EDIT_PLAN_TITLE_MODAL
   });
 };
 
