@@ -8,6 +8,7 @@ import { paginate, Grid, PaginationRow, Table, PAGINATION_VIEW, Icon, Button, Fo
 
 // Temporary import while https://github.com/patternfly/patternfly-react/issues/535 is open:
 import TableInlineEditRow from './TableInlineEditRow/TableInlineEditRow';
+import { allFitForVM } from '../helpers';
 
 class PlanWizardInstancePropertiesStepTable extends React.Component {
   state = {
@@ -100,25 +101,17 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
       </td>
     ),
     renderEdit: (value, additionalData) => {
-      const { tenantsWithAttributesById, destinationTenantIdsBySourceClusterId, input } = this.props;
+      const { tenantsWithAttributesById, destinationTenantIdsBySourceClusterId, input, bestFitFlavors } = this.props;
       const { optionsAttribute } = additionalData.column.cell.inlineEditSelect;
       const clusterId = additionalData.rowData.ems_cluster_id;
       const tenantId = destinationTenantIdsBySourceClusterId[clusterId];
       const tenant = tenantId && tenantsWithAttributesById[tenantId];
-      const allFitForVM = () => {
-        const { bestFitFlavors } = this.props;
-        const flavorsSlugPrefix = 'flavors/';
-        const allFits = bestFitFlavors.find(flavor => flavor.source_href_slug === `vms/${additionalData.rowData.id}`)
-          .all_fit;
-        if (allFits.length === 0) {
-          return [
-            tenant.flavors.reduce((prev, current) => (prev.root_disk_size > current.root_disk_size ? prev : current))
-          ];
-        }
-        const allFitIds = allFits.map(flavorSlug => flavorSlug.slice(flavorsSlugPrefix.length));
-        return tenant.flavors.filter(flavor => allFitIds.indexOf(flavor.id) > -1);
-      };
-      const options = tenant ? (optionsAttribute === 'flavors' ? allFitForVM() : tenant[optionsAttribute]) : [];
+
+      const options = tenant
+        ? optionsAttribute === 'flavors'
+          ? allFitForVM(bestFitFlavors, tenant[optionsAttribute], additionalData.rowData.id)
+          : tenant[optionsAttribute]
+        : [];
       return (
         <td className="editable editing">
           <FormControl
