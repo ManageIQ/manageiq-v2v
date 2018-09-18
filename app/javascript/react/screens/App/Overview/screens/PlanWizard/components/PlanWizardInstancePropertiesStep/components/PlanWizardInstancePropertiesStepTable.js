@@ -108,9 +108,14 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
       const allFitForVM = () => {
         const { bestFitFlavors } = this.props;
         const flavorsSlugPrefix = 'flavors/';
-        const allFitIds = bestFitFlavors
-          .find(flavor => flavor.source_href_slug === `vms/${additionalData.rowData.id}`)
-          .all_fit.map(flavorSlug => flavorSlug.slice(flavorsSlugPrefix.length));
+        const allFits = bestFitFlavors.find(flavor => flavor.source_href_slug === `vms/${additionalData.rowData.id}`)
+          .all_fit;
+        if (allFits.length === 0) {
+          return [
+            tenant.flavors.reduce((prev, current) => (prev.root_disk_size > current.root_disk_size ? prev : current))
+          ];
+        }
+        const allFitIds = allFits.map(flavorSlug => flavorSlug.slice(flavorsSlugPrefix.length));
         return tenant.flavors.filter(flavor => allFitIds.indexOf(flavor.id) > -1);
       };
       const options = tenant ? (optionsAttribute === 'flavors' ? allFitForVM() : tenant[optionsAttribute]) : [];
