@@ -5,11 +5,14 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import { reducer as formReducer } from 'redux-form';
-import { initialState } from '../../../overview.fixtures';
-import MappingWizard from '../MappingWizard';
-import MappingWizardContainer from '../index';
-import { reducers } from '../../../index';
 
+import MappingWizard from '../MappingWizard';
+import MappingWizardContainer, { reducers } from '../index';
+import { initialState } from '../MappingWizardReducer';
+import { initialState as overviewInitialState } from '../../../overview.fixtures';
+import { initialState as generalStepInitialState } from '../components/MappingWizardGeneralStep/MappingWizardGeneralStepReducer';
+import { reducers as generalStepReducers } from '../components/MappingWizardGeneralStep/index';
+import { reducers as overviewReducers } from '../../../index';
 import { coreComponents } from '../../../../../../../components/';
 import componentRegistry from '../../../../../../../components/componentRegistry';
 
@@ -22,9 +25,11 @@ describe('Mapping Wizard integration test', () => {
   const middlewares = [thunk, promiseMiddleware()];
   const generateStore = () =>
     createStore(
-      combineReducers({ ...reducers, form: formReducer }),
+      combineReducers({ ...reducers, ...overviewReducers, ...generalStepReducers, form: formReducer }),
       {
-        overview: initialState
+        mappingWizard: initialState,
+        overview: overviewInitialState,
+        mappingWizardGeneralStep: generalStepInitialState
       },
       applyMiddleware(...middlewares)
     );
