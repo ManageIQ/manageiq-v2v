@@ -1,7 +1,7 @@
 export const asyncValidate = (values, dispatch, props) =>
   new Promise((resolve, reject) => {
     const { name: newTransformationName } = values;
-    const { transformationMappings } = props;
+    const { transformationMappings, editingMapping } = props;
     const existingTransformationNames = transformationMappings.reduce(
       (names, transformationMapping) => [...names, transformationMapping.name.trim()],
       []
@@ -9,7 +9,9 @@ export const asyncValidate = (values, dispatch, props) =>
     const duplicateName = existingTransformationNames.find(
       existingTransformationName => existingTransformationName === newTransformationName.trim()
     );
-    if (duplicateName) {
+    const duplicateIsEditingMappingName = editingMapping && duplicateName === editingMapping.name;
+
+    if (duplicateName && !duplicateIsEditingMappingName) {
       props.showAlertAction(sprintf(__('Infrastructure mapping %s already exists'), newTransformationName));
       const error = { name: __('Please enter a unique name') };
       reject(error);

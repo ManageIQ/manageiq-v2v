@@ -11,6 +11,17 @@ import { V2V_TARGET_PROVIDERS } from '../../MappingWizardConstants';
 import { asyncValidate, onChange } from './helpers';
 
 class MappingWizardGeneralStep extends React.Component {
+  componentDidMount = () => {
+    const { editingMapping, initialize, initialized } = this.props;
+
+    if (editingMapping && !initialized) {
+      initialize({
+        name: editingMapping.name,
+        description: editingMapping.description
+      });
+    }
+  };
+
   onSelect = selection => {
     const { targetProvider, dispatch } = this.props;
     if (targetProvider !== selection) {
@@ -70,7 +81,10 @@ class MappingWizardGeneralStep extends React.Component {
 
 MappingWizardGeneralStep.propTypes = {
   targetProvider: PropTypes.string,
-  dispatch: PropTypes.func
+  dispatch: PropTypes.func,
+  editingMapping: PropTypes.object,
+  initialize: PropTypes.func,
+  initialized: PropTypes.bool
 };
 
 MappingWizardGeneralStep.defaultProps = {
