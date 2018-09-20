@@ -124,9 +124,13 @@ class PlanWizardVMStep extends React.Component {
     } else if (!isValidatingVms && validationServiceCalled) {
       // set make rows editable so they can be selected
       const validVms = Immutable.asMutable(valid_vms, { deep: true });
-      const inValidsVms = Immutable.asMutable(invalid_vms, { deep: true });
+      const inValidsVms = Immutable.asMutable(invalid_vms, { deep: true }).concat(
+        validVms.filter(vm => vm.valid === false)
+      );
       const conflictVms = Immutable.asMutable(conflict_vms, { deep: true });
-      const validVmsWithSelections = discoveryMode ? validVms : validVms.map(vm => ({ ...vm, selected: true }));
+      const validVmsWithSelections = discoveryMode
+        ? validVms
+        : validVms.filter(vm => vm.valid === true).map(vm => ({ ...vm, selected: true }));
       const combined = [...inValidsVms, ...conflictVms, ...validVmsWithSelections];
 
       if (combined.length) {

@@ -20,7 +20,14 @@ const manageBlankReason = vm => {
   }
 };
 
+const manageNoIdVMRows = (vm, vmIndex) => {
+  if (!vm.id) {
+    vm.id = `no-id-${vmIndex}`;
+  }
+};
+
 const manageOddCSVImportErrors = (vm, vmIndex, uniqueIds) => {
+  manageNoIdVMRows(vm, vmIndex);
   manageDuplicateVMRows(vm, vmIndex, uniqueIds);
   manageBlankReason(vm);
 };
@@ -33,7 +40,7 @@ export const _formatValidVms = vms => {
       v.valid = true;
       v.allocated_size = numeral(v.allocated_size).format('0.00b');
       v.reason = V2V_VM_POST_VALIDATION_REASONS[v.reason];
-      manageOddCSVImportErrors(v, vIndex, uniqueIds);
+      manageDuplicateVMRows(v, vIndex, uniqueIds);
       return v;
     })
   );
