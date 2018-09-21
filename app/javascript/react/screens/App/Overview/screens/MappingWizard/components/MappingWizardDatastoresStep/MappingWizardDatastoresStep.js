@@ -3,9 +3,12 @@ import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import { length } from 'redux-form-validators';
 import { noop } from 'patternfly-react';
+
 import DatastoresStepForm from './components/DatastoresStepForm/DatastoresStepForm';
 import { BootstrapSelect } from '../../../../../common/forms/BootstrapSelect';
-import { getClusterOptions } from '../helpers';
+import { getClusterOptions, updateMappings } from '../helpers';
+import { FETCH_STORAGE_URLS } from './MappingWizardDatastoresStepConstants';
+import { createDatastoresMappings } from './components/DatastoresStepForm/helpers';
 
 class MappingWizardDatastoresStep extends React.Component {
   state = {
@@ -26,7 +29,31 @@ class MappingWizardDatastoresStep extends React.Component {
     }
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    const {
+      editingMapping,
+      targetProvider,
+      initialize,
+      initialized,
+      clusterMappings,
+      change,
+      mappingWizardDatastoresStepForm
+    } = this.props;
+
+    if (editingMapping && !initialized) {
+      createDatastoresMappings(editingMapping, targetProvider).then(datastoresMappings => {
+        initialize({ datastoresMappings: updateMappings(datastoresMappings, clusterMappings) });
+      });
+      return;
+    }
+
+    if (mappingWizardDatastoresStepForm && mappingWizardDatastoresStepForm.values) {
+      change(
+        'datastoresMappings',
+        updateMappings(mappingWizardDatastoresStepForm.values.datastoresMappings, clusterMappings)
+      );
+    }
+  }
 
   componentWillReceiveProps(nextProps) {
     const { showAlertAction, isRejectedSourceDatastores, isRejectedTargetDatastores } = this.props;
@@ -137,6 +164,7 @@ class MappingWizardDatastoresStep extends React.Component {
 
 MappingWizardDatastoresStep.propTypes = {
   clusterMappings: PropTypes.array,
+  editingMapping: PropTypes.object,
   fetchStoragesUrls: PropTypes.object,
   fetchSourceDatastoresAction: PropTypes.func,
   fetchTargetDatastoresAction: PropTypes.func,
@@ -145,19 +173,19 @@ MappingWizardDatastoresStep.propTypes = {
   isFetchingSourceDatastores: PropTypes.bool,
   isRejectedSourceDatastores: PropTypes.bool,
   isFetchingTargetDatastores: PropTypes.bool,
+  initialize: PropTypes.func,
+  initialized: PropTypes.bool,
   isRejectedTargetDatastores: PropTypes.bool,
   form: PropTypes.string,
   pristine: PropTypes.bool,
   showAlertAction: PropTypes.func,
-  targetProvider: PropTypes.string
+  targetProvider: PropTypes.string,
+  change: PropTypes.func,
+  mappingWizardDatastoresStepForm: PropTypes.object
 };
 MappingWizardDatastoresStep.defaultProps = {
   clusterMappings: [],
-  fetchStoragesUrls: {
-    source: 'api/clusters',
-    rhevm: 'api/clusters',
-    openstack: 'api/cloud_tenants'
-  },
+  fetchStoragesUrls: FETCH_STORAGE_URLS,
   fetchSourceDatastoresAction: noop,
   fetchTargetDatastoresAction: noop,
   sourceDatastores: [],
@@ -174,6 +202,5 @@ MappingWizardDatastoresStep.defaultProps = {
 
 export default reduxForm({
   form: 'mappingWizardDatastoresStep',
-  initialValues: { datastoresMappings: [] },
   destroyOnUnmount: false
 })(MappingWizardDatastoresStep);

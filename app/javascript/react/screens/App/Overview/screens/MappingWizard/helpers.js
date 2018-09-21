@@ -107,3 +107,6 @@ export const groupClusterTransformationItemsByDestinationId = (transformationIte
 
 export const getTransformationMappingItemsBySourceType = (type, transformation) =>
   transformation.transformation_mapping_items.filter(item => item.source_type === type);
+
+export const getTransformationMappingItemsByDestinationType = (type, transformation) =>
+  transformation.transformation_mapping_items.filter(item => item.destination_type === type);
