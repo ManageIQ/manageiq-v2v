@@ -102,6 +102,7 @@ class PlanWizard extends React.Component {
     const {
       planWizardGeneralStep,
       planWizardVMStep,
+      planWizardInstancePropertiesStep,
       planWizardAdvancedOptionsStep,
       planWizardScheduleStep,
       setPlansBodyAction,
@@ -165,6 +166,7 @@ class PlanWizard extends React.Component {
       const plansBody = createMigrationPlans(
         planWizardGeneralStep,
         planWizardVMStep,
+        planWizardInstancePropertiesStep,
         planWizardAdvancedOptionsStep,
         isEditing
       );
@@ -276,6 +278,7 @@ PlanWizard.propTypes = {
   planWizardExitedAction: PropTypes.func,
   planWizardGeneralStep: PropTypes.object,
   planWizardVMStep: PropTypes.object,
+  planWizardInstancePropertiesStep: PropTypes.object,
   planWizardAdvancedOptionsStep: PropTypes.object, // eslint-disable-line react/no-unused-prop-types
   planWizardScheduleStep: PropTypes.object,
   transformationMappings: PropTypes.array,
@@ -300,6 +303,7 @@ PlanWizard.defaultProps = {
   planWizardExitedAction: noop,
   planWizardGeneralStep: {},
   planWizardVMStep: {},
+  planWizardInstancePropertiesStep: {},
   planWizardAdvancedOptionsStep: {},
   planWizardScheduleStep: {},
   transformationMappings: [],
