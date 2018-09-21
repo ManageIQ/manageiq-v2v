@@ -56,12 +56,12 @@ const PlanWizardGeneralStep = ({ transformationMappings }) => (
       type="radio"
       options={[
         {
-          name: __('Import a CSV file with a list of VMs to be migrated'),
-          id: 'vms_via_csv'
-        },
-        {
           name: __('Choose from a list of VMs discovered in the selected infrastructure mapping'),
           id: 'vms_via_discovery'
+        },
+        {
+          name: __('Import a CSV file with a list of VMs to be migrated'),
+          id: 'vms_via_csv'
         }
       ]}
     />
