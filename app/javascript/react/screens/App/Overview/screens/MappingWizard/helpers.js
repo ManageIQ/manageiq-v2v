@@ -95,3 +95,15 @@ export const getSourceClustersWithMappings = mappings =>
     );
     return idsPerTargetCluster.concat(Array.from(new Set(idsForTargetCluster)));
   }, []);
+
+export const groupClusterTransformationItemsByDestinationId = (transformationItems = []) =>
+  transformationItems.reduce(
+    (map, item) => ({
+      ...map,
+      [item.destination_id]: map[item.destination_id] ? [...map[item.destination_id], item.source_id] : [item.source_id]
+    }),
+    {}
+  );
+
+export const getTransformationMappingItemsBySourceType = (type, transformation) =>
+  transformation.transformation_mapping_items.filter(item => item.source_type === type);

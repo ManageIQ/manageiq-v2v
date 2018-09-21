@@ -131,6 +131,5 @@ MappingWizardClustersStep.defaultProps = {
 
 export default reduxForm({
   form: 'mappingWizardClustersStep',
-  initialValues: { clusterMappings: [] },
   destroyOnUnmount: false
 })(MappingWizardClustersStep);
