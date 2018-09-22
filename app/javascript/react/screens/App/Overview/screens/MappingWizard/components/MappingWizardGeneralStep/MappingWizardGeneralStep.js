@@ -9,6 +9,7 @@ import { BootstrapSelect } from '../../../../../common/forms/BootstrapSelect';
 import { validation } from '../../../../../../../../common/constants';
 import { V2V_TARGET_PROVIDERS } from '../../MappingWizardConstants';
 import { asyncValidate, onChange } from './helpers';
+import { determineTargetProvider } from '../../helpers';
 
 class MappingWizardGeneralStep extends React.Component {
   componentDidMount = () => {
@@ -17,7 +18,8 @@ class MappingWizardGeneralStep extends React.Component {
     if (editingMapping && !initialized) {
       initialize({
         name: editingMapping.name,
-        description: editingMapping.description
+        description: editingMapping.description,
+        targetProvider: determineTargetProvider(editingMapping)
       });
     }
   };
