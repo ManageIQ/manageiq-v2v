@@ -5,6 +5,7 @@ import {
   FETCH_V2V_TARGET_CLUSTERS,
   QUERY_V2V_HOSTS
 } from './MappingWizardClustersStepConstants';
+import { MAPPING_WIZARD_EXITED } from '../../../../OverviewConstants';
 import { getHostsByClusterID } from './helpers';
 
 const initialState = Immutable({
@@ -72,6 +73,8 @@ export default (state = initialState, action) => {
         .set('errorHostsQuery', action.payload)
         .set('isFetchingHostsQuery', false)
         .set('isRejectedHostsQuery', true);
+    case MAPPING_WIZARD_EXITED:
+      return Immutable.merge(state, initialState);
     default:
       return state;
   }

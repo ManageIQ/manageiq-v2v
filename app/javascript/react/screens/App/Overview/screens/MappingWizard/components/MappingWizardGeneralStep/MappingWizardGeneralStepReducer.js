@@ -13,7 +13,7 @@ export default (state = initialState, action) => {
       return state.set('editingMapping', action.payload);
 
     case MAPPING_WIZARD_EXITED:
-      return state.set('editingMapping', null);
+      return Immutable.merge(state, initialState);
 
     default:
       return state;

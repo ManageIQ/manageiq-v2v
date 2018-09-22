@@ -1,4 +1,4 @@
-import { reset } from 'redux-form';
+import { destroy } from 'redux-form';
 import { HIDE_MAPPING_WIZARD, MAPPING_WIZARD_EXITED } from '../../OverviewConstants';
 
 import {
@@ -22,10 +22,14 @@ export const mappingWizardExitedAction = () => dispatch => {
   });
 
   // Dispatch reset for all the wizard step forms here
-  dispatch(reset('mappingWizardGeneralStep'));
-  dispatch(reset('mappingWizardClustersStep'));
-  dispatch(reset('mappingWizardDatastoresStep'));
-  dispatch(reset('mappingWizardNetworksStep'));
+  dispatch(
+    destroy(
+      'mappingWizardGeneralStep',
+      'mappingWizardClustersStep',
+      'mappingWizardDatastoresStep',
+      'mappingWizardNetworksStep'
+    )
+  );
 };
 
 export const setTransformationsBodyAction = body => dispatch => {

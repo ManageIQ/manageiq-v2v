@@ -1,6 +1,7 @@
 import Immutable from 'seamless-immutable';
 
 import { FETCH_V2V_SOURCE_DATASTORES, FETCH_V2V_TARGET_DATASTORES } from './MappingWizardDatastoresStepConstants';
+import { MAPPING_WIZARD_EXITED } from '../../../../OverviewConstants';
 
 const initialState = Immutable({
   isFetchingSourceDatastores: false,
@@ -40,6 +41,10 @@ export default (state = initialState, action) => {
         .set('errorTargetDatastores', action.payload)
         .set('isRejectedTargetDatastores', true)
         .set('isFetchingTargetDatastores', false);
+
+    case MAPPING_WIZARD_EXITED:
+      return Immutable.merge(state, initialState);
+
     default:
       return state;
   }
