@@ -3,9 +3,12 @@ import PropTypes from 'prop-types';
 import { noop } from 'patternfly-react';
 import { Field, reduxForm } from 'redux-form';
 import { length } from 'redux-form-validators';
+
 import NetworksStepForm from './components/NetworksStepForm/NetworksStepForm';
 import { BootstrapSelect } from '../../../../../common/forms/BootstrapSelect';
-import { getClusterOptions } from '../helpers';
+import { getClusterOptions, updateMappings } from '../helpers';
+import { FETCH_NETWORK_URLS } from './MappingWizardNetworksStepConstants';
+import { createNetworksMappings } from './components/NetworksStepForm/helpers';
 
 class MappingWizardNetworksStep extends React.Component {
   state = {
@@ -26,7 +29,31 @@ class MappingWizardNetworksStep extends React.Component {
     }
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    const {
+      editingMapping,
+      targetProvider,
+      initialize,
+      initialized,
+      clusterMappings,
+      change,
+      mappingWizardNetworksStepForm
+    } = this.props;
+
+    if (editingMapping && !initialized) {
+      createNetworksMappings(editingMapping, targetProvider).then(networksMappings => {
+        initialize({ networksMappings: updateMappings(networksMappings, clusterMappings) });
+      });
+      return;
+    }
+
+    if (mappingWizardNetworksStepForm && mappingWizardNetworksStepForm.values) {
+      change(
+        'networksMappings',
+        updateMappings(mappingWizardNetworksStepForm.values.networksMappings, clusterMappings)
+      );
+    }
+  }
 
   componentWillReceiveProps(nextProps) {
     const { showAlertAction, isRejectedSourceNetworks, isRejectedTargetNetworks } = this.props;
@@ -133,9 +160,12 @@ class MappingWizardNetworksStep extends React.Component {
 
 MappingWizardNetworksStep.propTypes = {
   clusterMappings: PropTypes.array,
+  editingMapping: PropTypes.object,
   fetchNetworksUrls: PropTypes.object,
   fetchSourceNetworksAction: PropTypes.func,
   fetchTargetNetworksAction: PropTypes.func,
+  initialize: PropTypes.func,
+  initialized: PropTypes.bool,
   isFetchingSourceNetworks: PropTypes.bool,
   isRejectedSourceNetworks: PropTypes.bool,
   isFetchingTargetNetworks: PropTypes.bool,
@@ -145,15 +175,13 @@ MappingWizardNetworksStep.propTypes = {
   showAlertAction: PropTypes.func,
   groupedSourceNetworks: PropTypes.object,
   groupedTargetNetworks: PropTypes.object,
-  targetProvider: PropTypes.string
+  targetProvider: PropTypes.string,
+  change: PropTypes.func,
+  mappingWizardNetworksStepForm: PropTypes.object
 };
 MappingWizardNetworksStep.defaultProps = {
   clusterMappings: [],
-  fetchNetworksUrls: {
-    source: 'api/clusters',
-    rhevm: 'api/clusters',
-    openstack: 'api/cloud_tenants'
-  },
+  fetchNetworksUrls: FETCH_NETWORK_URLS,
   fetchSourceNetworksAction: noop,
   fetchTargetNetworksAction: noop,
   isFetchingSourceNetworks: false,
@@ -168,6 +196,5 @@ MappingWizardNetworksStep.defaultProps = {
 
 export default reduxForm({
   form: 'mappingWizardNetworksStep',
-  initialValues: { networksMappings: [] },
   destroyOnUnmount: false
 })(MappingWizardNetworksStep);

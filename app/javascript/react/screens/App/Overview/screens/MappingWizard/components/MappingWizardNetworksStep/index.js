@@ -8,13 +8,21 @@ import reducer from './MappingWizardNetworksStepReducer';
 
 export const reducers = { mappingWizardNetworksStep: reducer };
 
-const mapStateToProps = ({ mappingWizardNetworksStep, form }, ownProps) => ({
+const mapStateToProps = (
+  { mappingWizardNetworksStep, form, mappingWizardGeneralStep: { editingMapping } },
+  ownProps
+) => ({
   ...mappingWizardNetworksStep,
   ...ownProps.data,
+  editingMapping,
   clusterMappings: form.mappingWizardClustersStep.values.clusterMappings,
   groupedSourceNetworks: uniqueNetworks(mappingWizardNetworksStep.sourceNetworks),
   groupedTargetNetworks: uniqueNetworks(mappingWizardNetworksStep.targetNetworks),
-  targetProvider: form.mappingWizardGeneralStep.values.targetProvider
+  targetProvider: form.mappingWizardGeneralStep.values.targetProvider,
+  mappingWizardNetworksStepForm: form.mappingWizardNetworksStep,
+  initialValues: {
+    networksMappings: []
+  }
 });
 
 const actions = {
