@@ -25,8 +25,9 @@ class MappingWizardGeneralStep extends React.Component {
   };
 
   onSelect = selection => {
-    const { targetProvider, dispatch } = this.props;
+    const { targetProvider, dispatch, setEditingMappingAction } = this.props;
     if (targetProvider !== selection) {
+      setEditingMappingAction(null);
       dispatch(reset('mappingWizardClustersStep'));
       dispatch(reset('mappingWizardDatastoresStep'));
       dispatch(reset('mappingWizardNetworksStep'));
@@ -86,7 +87,8 @@ MappingWizardGeneralStep.propTypes = {
   dispatch: PropTypes.func,
   editingMapping: PropTypes.object,
   initialize: PropTypes.func,
-  initialized: PropTypes.bool
+  initialized: PropTypes.bool,
+  setEditingMappingAction: PropTypes.func
 };
 
 MappingWizardGeneralStep.defaultProps = {
