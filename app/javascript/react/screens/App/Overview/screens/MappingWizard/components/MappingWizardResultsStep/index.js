@@ -6,7 +6,11 @@ import reducer from './MappingWizardResultsStepReducer';
 
 export const reducers = { mappingWizardResultsStep: reducer };
 
-const mapStateToProps = ({ mappingWizardResultsStep, mappingWizard }, ownProps) => ({
+const mapStateToProps = (
+  { mappingWizardResultsStep, mappingWizard, mappingWizardGeneralStep: { editingMapping } },
+  ownProps
+) => ({
+  editingMapping,
   ...mappingWizardResultsStep,
   ...mappingWizard,
   ...ownProps.data
