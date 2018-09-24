@@ -7,7 +7,6 @@ import * as AggregateCards from './components/AggregateCards';
 import Migrations from './components/Migrations/Migrations';
 import ShowWizardEmptyState from '../common/ShowWizardEmptyState/ShowWizardEmptyState';
 import componentRegistry from '../../../../components/componentRegistry';
-import getMostRecentRequest from '../common/getMostRecentRequest';
 import ConfirmModal from '../common/ConfirmModal';
 import EditPlanNameModal from './components/EditPlanNameModal';
 import {
@@ -88,39 +87,6 @@ class Overview extends React.Component {
         archived: false
       });
       this.startPolling();
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    const { finishedTransformationPlans, addNotificationAction } = this.props;
-    const { hasMadeInitialPlansFetch } = this.state;
-
-    if (hasMadeInitialPlansFetch && finishedTransformationPlans.length > prevProps.finishedTransformationPlans.length) {
-      const oldTransformationPlanIds = prevProps.finishedTransformationPlans.map(plan => plan.id);
-      const freshTransformationPlans = finishedTransformationPlans.filter(
-        plan => !oldTransformationPlanIds.includes(plan.id)
-      );
-
-      freshTransformationPlans.forEach(plan => {
-        const mostRecentRequest = getMostRecentRequest(plan.miq_requests);
-
-        let planStatusMessage = sprintf(__('%s completed with errors'), plan.name);
-        let planStatus = false;
-        if (mostRecentRequest.status === 'Ok') {
-          planStatusMessage = sprintf(__('%s completed successfully'), plan.name);
-          planStatus = true;
-        }
-
-        addNotificationAction({
-          message: planStatusMessage,
-          notificationType: planStatus ? 'success' : 'error',
-          data: {
-            id: plan.id
-          },
-          persistent: !planStatus,
-          actionEnabled: true
-        });
-      });
     }
   }
 
