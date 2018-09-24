@@ -13,7 +13,8 @@ import { createNetworksMappings } from './components/NetworksStepForm/helpers';
 class MappingWizardNetworksStep extends React.Component {
   state = {
     selectedCluster: undefined, // dropdown selected cluster
-    selectedClusterMapping: null // cluster mapping from step-2 associated with selected source cluster
+    selectedClusterMapping: null, // cluster mapping from step-2 associated with selected source cluster
+    preLoadingMappings: false
   };
 
   componentWillMount() {
@@ -41,8 +42,10 @@ class MappingWizardNetworksStep extends React.Component {
     } = this.props;
 
     if (editingMapping && !initialized) {
+      this.setState({ preLoadingMappings: true }); // eslint-disable-line react/no-did-mount-set-state
       createNetworksMappings(editingMapping, targetProvider).then(networksMappings => {
         initialize({ networksMappings: updateMappings(networksMappings, clusterMappings) });
+        this.setState({ preLoadingMappings: false });
       });
       return;
     }
@@ -118,7 +121,7 @@ class MappingWizardNetworksStep extends React.Component {
       targetProvider
     } = this.props;
 
-    const { selectedCluster, selectedClusterMapping } = this.state;
+    const { selectedCluster, selectedClusterMapping, preLoadingMappings } = this.state;
 
     const clusterOptions = getClusterOptions(clusterMappings);
 
@@ -152,6 +155,7 @@ class MappingWizardNetworksStep extends React.Component {
           isFetchingTargetNetworks={isFetchingTargetNetworks}
           validate={length({ min: 1 })}
           targetProvider={targetProvider}
+          preLoadingMappings={preLoadingMappings}
         />
       </div>
     );

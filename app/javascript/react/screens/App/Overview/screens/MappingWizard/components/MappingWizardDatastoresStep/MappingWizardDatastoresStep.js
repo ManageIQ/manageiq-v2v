@@ -13,7 +13,8 @@ import { createDatastoresMappings } from './components/DatastoresStepForm/helper
 class MappingWizardDatastoresStep extends React.Component {
   state = {
     selectedCluster: undefined,
-    selectedClusterMapping: null
+    selectedClusterMapping: null,
+    preLoadingMappings: false
   };
 
   componentWillMount() {
@@ -41,8 +42,10 @@ class MappingWizardDatastoresStep extends React.Component {
     } = this.props;
 
     if (editingMapping && !initialized) {
+      this.setState({ preLoadingMappings: true }); // eslint-disable-line react/no-did-mount-set-state
       createDatastoresMappings(editingMapping, targetProvider).then(datastoresMappings => {
         initialize({ datastoresMappings: updateMappings(datastoresMappings, clusterMappings) });
+        this.setState({ preLoadingMappings: false });
       });
       return;
     }
@@ -119,7 +122,7 @@ class MappingWizardDatastoresStep extends React.Component {
       targetProvider
     } = this.props;
 
-    const { selectedCluster, selectedClusterMapping } = this.state;
+    const { selectedCluster, selectedClusterMapping, preLoadingMappings } = this.state;
 
     const clusterOptions = getClusterOptions(clusterMappings);
 
@@ -156,6 +159,7 @@ class MappingWizardDatastoresStep extends React.Component {
           validate={length({ min: 1 })}
           showAlertAction={showAlertAction}
           targetProvider={targetProvider}
+          preLoadingMappings={preLoadingMappings}
         />
       </div>
     );

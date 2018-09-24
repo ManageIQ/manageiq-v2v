@@ -205,6 +205,7 @@ class ClustersStepForm extends React.Component {
             removeMapping={this.removeMapping}
             removeAll={this.removeAll}
             selectedMapping={selectedMapping}
+            loading={isFetchingTargetClusters || isFetchingSourceClusters}
           />
         )}
       </div>
