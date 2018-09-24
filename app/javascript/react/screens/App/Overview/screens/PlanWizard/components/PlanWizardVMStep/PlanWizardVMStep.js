@@ -3,15 +3,21 @@ import PropTypes from 'prop-types';
 import Immutable from 'seamless-immutable';
 import { Field, reduxForm } from 'redux-form';
 import { length } from 'redux-form-validators';
-import { Button, Icon } from 'patternfly-react';
+import { Button } from 'patternfly-react';
 import PlanWizardVMStepTable from './components/PlanWizardVMStepTable';
 import CSVDropzoneField from './components/CSVDropzoneField';
+import { getVmIds } from './helpers';
+import { overwriteCsvConfirmModalProps } from '../../PlanWizardConstants';
 
 class PlanWizardVMStep extends React.Component {
   componentDidMount() {
-    const { vm_choice_radio } = this.props;
+    const { vm_choice_radio, editingPlan, queryPreselectedVmsAction } = this.props;
     if (vm_choice_radio === 'vms_via_discovery') {
       this.validateVms();
+    }
+    if (editingPlan) {
+      const vmIds = getVmIds(editingPlan);
+      queryPreselectedVmsAction(vmIds);
     }
   }
   componentDidUpdate(prevProps) {
@@ -37,17 +43,7 @@ class PlanWizardVMStep extends React.Component {
   showOverwriteCsvConfirmModal = () => {
     const { csvImportAction, showConfirmModalAction, hideConfirmModalAction } = this.props;
     showConfirmModalAction({
-      title: __('Overwrite Import File'),
-      body: (
-        <React.Fragment>
-          <p>{__('Importing a new VM list file will overwrite the contents of the existing list.')}</p>
-          <p>{__('Are you sure you want to import a new file?')}</p>
-        </React.Fragment>
-      ),
-      icon: <Icon className="confirm-warning-icon" type="pf" name="warning-triangle-o" />,
-      confirmButtonLabel: __('Import'),
-      dialogClassName: 'plan-wizard-confirm-modal',
-      backdropClassName: 'plan-wizard-confirm-backdrop',
+      ...overwriteCsvConfirmModalProps,
       onConfirm: () => {
         hideConfirmModalAction();
         csvImportAction();
@@ -64,8 +60,11 @@ class PlanWizardVMStep extends React.Component {
       valid_vms,
       invalid_vms,
       conflict_vms,
+      preselected_vms,
       validationServiceCalled,
-      csvImportAction
+      csvImportAction,
+      editingPlan,
+      isQueryingVms
     } = this.props;
     const discoveryMode = vm_choice_radio === 'vms_via_discovery';
 
@@ -121,7 +120,7 @@ class PlanWizardVMStep extends React.Component {
       );
     } else if (!discoveryMode && (valid_vms.length === 0 && invalid_vms.length === 0 && conflict_vms.length === 0)) {
       return <CSVDropzoneField onCSVParseSuccess={this.onCSVParseSuccess} onCSVParseFailure={this.onCSVParseFailure} />;
-    } else if (!isValidatingVms && validationServiceCalled) {
+    } else if (!isValidatingVms && validationServiceCalled && !(editingPlan && isQueryingVms)) {
       // set make rows editable so they can be selected
       const validVms = Immutable.asMutable(valid_vms, { deep: true });
       const inValidsVms = Immutable.asMutable(invalid_vms, { deep: true }).concat(
@@ -131,8 +130,15 @@ class PlanWizardVMStep extends React.Component {
       const validVmsWithSelections = discoveryMode
         ? validVms
         : validVms.filter(vm => vm.valid === true).map(vm => ({ ...vm, selected: true }));
-      const combined = [...inValidsVms, ...conflictVms, ...validVmsWithSelections];
-
+      // In case the discovery service returns some of the VMs we pre-selected:
+      const validVmsDeduped = !editingPlan
+        ? validVmsWithSelections
+        : validVmsWithSelections.filter(
+            validVm => !preselected_vms.some(preselectedVm => validVm.id === preselectedVm.id)
+          );
+      const combined = discoveryMode
+        ? [...preselected_vms, ...inValidsVms, ...conflictVms, ...validVmsDeduped]
+        : [...inValidsVms, ...conflictVms, ...validVmsWithSelections];
       if (combined.length) {
         return (
           <React.Fragment>
@@ -140,7 +146,9 @@ class PlanWizardVMStep extends React.Component {
               name="selectedVms"
               component={PlanWizardVMStepTable}
               rows={combined}
-              initialSelectedRows={discoveryMode ? [] : validVmsWithSelections.map(r => r.id)}
+              initialSelectedRows={
+                discoveryMode ? preselected_vms.map(r => r.id) : validVmsWithSelections.map(r => r.id)
+              }
               onCsvImportAction={this.showOverwriteCsvConfirmModal}
               discoveryMode={discoveryMode}
               validate={[
@@ -187,7 +195,11 @@ PlanWizardVMStep.propTypes = {
   errorValidatingVms: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
   valid_vms: PropTypes.array,
   invalid_vms: PropTypes.array,
-  conflict_vms: PropTypes.array
+  conflict_vms: PropTypes.array,
+  preselected_vms: PropTypes.array,
+  editingPlan: PropTypes.object,
+  queryPreselectedVmsAction: PropTypes.func,
+  isQueryingVms: PropTypes.bool
 };
 
 PlanWizardVMStep.defaultProps = {
@@ -201,7 +213,8 @@ PlanWizardVMStep.defaultProps = {
   errorValidatingVms: null,
   valid_vms: [],
   invalid_vms: [],
-  conflict_vms: []
+  conflict_vms: [],
+  preselected_vms: []
 };
 
 export default reduxForm({

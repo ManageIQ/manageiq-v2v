@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PlanWizardInstancePropertiesStep from './PlanWizardInstancePropertiesStep';
 import * as PlanWizardInstancePropertiesStepActions from './PlanWizardInstancePropertiesStepActions';
 import reducer from './PlanWizardInstancePropertiesStepReducer';
-import { getVMStepSelectedVms } from '../PlanWizardAdvancedOptionsStep/PlanWizardAdvancedOptionsStepSelectors';
+import { getVMStepSelectedVms } from '../PlanWizardAdvancedOptionsStep/helpers';
 
 export const reducers = { planWizardInstancePropertiesStep: reducer };
 

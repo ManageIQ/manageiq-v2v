@@ -61,6 +61,7 @@ Object {
   "showDeleteConfirmationModalAction": [Function],
   "showMappingWizardAction": [Function],
   "showPlanWizardAction": [Function],
+  "showPlanWizardEditModeAction": [Function],
   "toggleScheduleMigrationModal": [Function],
   "transformationMappings": Array [],
   "transformationPlans": Array [],

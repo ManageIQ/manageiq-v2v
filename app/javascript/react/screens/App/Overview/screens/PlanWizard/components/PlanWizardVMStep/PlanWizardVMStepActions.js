@@ -1,7 +1,7 @@
 import { reset } from 'redux-form';
 import URI from 'urijs';
 import API from '../../../../../../../../common/API';
-import { V2V_VM_STEP_RESET, V2V_VALIDATE_VMS } from './PlanWizardVMStepConstants';
+import { V2V_VM_STEP_RESET, V2V_VALIDATE_VMS, QUERY_V2V_PLAN_VMS } from './PlanWizardVMStepConstants';
 
 export { showConfirmModalAction, hideConfirmModalAction } from '../../../../OverviewActions';
 
@@ -43,3 +43,22 @@ export const csvParseErrorAction = errMsg => dispatch => {
     payload: errMsg
   });
 };
+
+const _queryPreselectedVmsActionCreator = ids => dispatch => {
+  const resources = ids.map(id => ({
+    id
+  }));
+
+  return dispatch({
+    type: QUERY_V2V_PLAN_VMS,
+    payload: API.post(
+      '/api/vms?expand=resources&attributes=name,ems_cluster.name,allocated_disk_storage,ext_management_system.name,v_parent_blue_folder_display_path',
+      {
+        action: 'query',
+        resources
+      }
+    )
+  });
+};
+
+export const queryPreselectedVmsAction = ids => _queryPreselectedVmsActionCreator(ids);

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { noop, Button, ListView, Grid, Icon, Spinner, Toolbar, Sort, DropdownKebab } from 'patternfly-react';
+import { noop, Button, ListView, Grid, Icon, Spinner, Toolbar, Sort, DropdownKebab, MenuItem } from 'patternfly-react';
 import EllipsisWithTooltip from 'react-ellipsis-with-tooltip';
 import OverviewEmptyState from '../OverviewEmptyState/OverviewEmptyState';
 import ScheduleMigrationModal from '../ScheduleMigrationModal/ScheduleMigrationModal';
@@ -61,7 +61,8 @@ class MigrationsNotStartedList extends React.Component {
       fetchTransformationPlansUrl,
       plansMutatedWithMappingInfo,
       deleteTransformationPlanAction,
-      deleteTransformationPlanUrl
+      deleteTransformationPlanUrl,
+      showPlanWizardEditModeAction
     } = this.props;
     const sortedMigrations = this.sortedMigrations();
 
@@ -91,6 +92,8 @@ class MigrationsNotStartedList extends React.Component {
                   {sortedMigrations.map(plan => {
                     const migrationScheduled = plan.schedules && plan.schedules[0].run_at.start_time;
                     const isMissingMapping = !plan.infraMappingName;
+
+                    const editPlanDisabled = isMissingMapping || loading === plan.href;
 
                     return (
                       <ListView.Item
@@ -124,6 +127,16 @@ class MigrationsNotStartedList extends React.Component {
                             </Button>
                             <StopPropagationOnClick>
                               <DropdownKebab id={`${plan.id}-kebab`} pullRight>
+                                <MenuItem
+                                  onClick={e => {
+                                    e.stopPropagation();
+                                    if (!editPlanDisabled) showPlanWizardEditModeAction(plan.id);
+                                  }}
+                                  disabled={editPlanDisabled}
+                                  style={{ display: 'none' }} // Edit Plan is disabled until https://github.com/ManageIQ/manageiq/pull/17989 is ready
+                                >
+                                  {__('Edit')}
+                                </MenuItem>
                                 <DeleteMigrationMenuItem
                                   showConfirmModalAction={showConfirmModalAction}
                                   hideConfirmModalAction={hideConfirmModalAction}
@@ -228,7 +241,8 @@ MigrationsNotStartedList.propTypes = {
   fetchTransformationPlansUrl: PropTypes.string,
   plansMutatedWithMappingInfo: PropTypes.bool,
   deleteTransformationPlanAction: PropTypes.func,
-  deleteTransformationPlanUrl: PropTypes.string
+  deleteTransformationPlanUrl: PropTypes.string,
+  showPlanWizardEditModeAction: PropTypes.func
 };
 MigrationsNotStartedList.defaultProps = {
   migrateClick: noop,

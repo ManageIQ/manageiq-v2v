@@ -1,7 +1,7 @@
 export const asyncValidate = (values, dispatch, props) =>
   new Promise((resolve, reject) => {
     const { name: newPlanName } = values;
-    const { transformationPlans, archivedTransformationPlans } = props;
+    const { transformationPlans, archivedTransformationPlans, editingPlan } = props;
     const existingTransformationPlanNames = transformationPlans.reduce(
       (names, plan) => [...names, plan.name.trim()],
       []
@@ -13,8 +13,9 @@ export const asyncValidate = (values, dispatch, props) =>
 
     const allPlanNames = [...existingTransformationPlanNames, ...existingArchivedPlanNames];
     const duplicateName = allPlanNames.find(existingPlanName => existingPlanName === newPlanName.trim());
+    const duplicateIsEditingPlanName = editingPlan && duplicateName === editingPlan.name;
 
-    if (duplicateName) {
+    if (duplicateName && !duplicateIsEditingPlanName) {
       props.showAlertAction(sprintf(__('Name %s already exists'), newPlanName));
       const error = { name: 'Please enter a unique name' };
       reject(error);

@@ -4,10 +4,40 @@ import { noop, Spinner } from 'patternfly-react';
 
 class PlanWizardResultsStep extends React.Component {
   componentDidMount() {
-    const { postPlansUrl, postMigrationPlansAction, plansBody, planSchedule } = this.props;
-
-    postMigrationPlansAction(postPlansUrl, plansBody, planSchedule);
+    const {
+      postPlansUrl,
+      postMigrationPlansAction,
+      editPlansUrl,
+      editMigrationPlansAction,
+      plansBody,
+      planSchedule,
+      editingPlan
+    } = this.props;
+    if (!editingPlan) {
+      postMigrationPlansAction(postPlansUrl, plansBody, planSchedule);
+    } else {
+      editMigrationPlansAction(editPlansUrl, editingPlan.id, plansBody, planSchedule);
+    }
   }
+  renderSpinner = (title, message) => (
+    <div className="wizard-pf-process blank-slate-pf">
+      <Spinner loading size="lg" className="blank-slate-pf-icon" />
+      <h3 className="blank-slate-pf-main-action">{title}</h3>
+      <p className="blank-slate-pf-secondary-action">{message}</p>
+    </div>
+  );
+  renderError = (title, message, closeAction) => (
+    <div className="wizard-pf-complete blank-slate-pf">
+      <div className="wizard-pf-success-icon">
+        <span className="pficon pficon-error-circle-o" />
+      </div>
+      <h3 className="blank-slate-pf-main-action">{title}</h3>
+      <p className="blank-slate-pf-secondary-action">{message}</p>
+      <button type="button" className="btn btn-lg btn-primary" onClick={closeAction}>
+        {__('Close')}
+      </button>
+    </div>
+  );
   renderResult = (migrationPlanMessage, migrationPlanFollowupMessage, migrationPlanIcon) => (
     <div className="wizard-pf-complete blank-slate-pf">
       <div className="plan-wizard-results-step-icon">
@@ -24,39 +54,32 @@ class PlanWizardResultsStep extends React.Component {
     const {
       isPostingPlans,
       isRejectedPostingPlans,
+      isPuttingPlans,
+      isRejectedPuttingPlans,
       migrationPlansResult,
       migrationRequestsResult,
       errorPostingPlans,
+      errorPuttingPlans,
       plansBody,
       planSchedule,
       hidePlanWizardAction
     } = this.props;
 
     if (isPostingPlans) {
-      return (
-        <div className="wizard-pf-process blank-slate-pf">
-          <Spinner loading size="lg" className="blank-slate-pf-icon" />
-          <h3 className="blank-slate-pf-main-action">{__('Creating Migration Plans...')}</h3>
-          <p className="blank-slate-pf-secondary-action">
-            {__('Please wait while infrastructure mapping is created.')}
-          </p>
-        </div>
+      return this.renderSpinner(
+        __('Creating Migration Plan...'),
+        __('Please wait while the migration plan is created.')
       );
     } else if (isRejectedPostingPlans) {
       const errorData = errorPostingPlans && errorPostingPlans.data;
       const errorMessage = errorData && errorData.error && errorData.error.message;
-      return (
-        <div className="wizard-pf-complete blank-slate-pf">
-          <div className="wizard-pf-success-icon">
-            <span className="pficon pficon-error-circle-o" />
-          </div>
-          <h3 className="blank-slate-pf-main-action">{__('Error Creating Migration Plans')}</h3>
-          <p className="blank-slate-pf-secondary-action">{errorMessage}</p>
-          <button type="button" className="btn btn-lg btn-primary" onClick={hidePlanWizardAction}>
-            {__('Close')}
-          </button>
-        </div>
-      );
+      return this.renderError(__('Error Creating Migration Plan'), errorMessage, hidePlanWizardAction);
+    } else if (isPuttingPlans) {
+      return this.renderSpinner(__('Saving Migration Plan...'), __('Please wait while the migration plan is saved.'));
+    } else if (isRejectedPuttingPlans) {
+      const errorData = errorPuttingPlans && errorPuttingPlans.data;
+      const errorMessage = errorData && errorData.error && errorData.error.message;
+      return this.renderError(__('Error Saving Migration Plan'), errorMessage, hidePlanWizardAction);
     } else if (planSchedule === 'migration_plan_later' && migrationPlansResult) {
       const migrationPlanSaved = sprintf(__(" Migration Plan: '%s' has been saved"), plansBody.name);
       const migrationPlanFollowupMessage = __('Select Migrate on the Overview page to begin migration');
@@ -71,19 +94,27 @@ class PlanWizardResultsStep extends React.Component {
 }
 PlanWizardResultsStep.propTypes = {
   postPlansUrl: PropTypes.string,
+  editPlansUrl: PropTypes.string,
   postMigrationPlansAction: PropTypes.func,
+  editMigrationPlansAction: PropTypes.func,
   plansBody: PropTypes.object,
   planSchedule: PropTypes.string,
   isPostingPlans: PropTypes.bool,
   isRejectedPostingPlans: PropTypes.bool,
   errorPostingPlans: PropTypes.object,
+  isPuttingPlans: PropTypes.bool,
+  isRejectedPuttingPlans: PropTypes.bool,
+  errorPuttingPlans: PropTypes.object,
   migrationPlansResult: PropTypes.object,
   migrationRequestsResult: PropTypes.object,
-  hidePlanWizardAction: PropTypes.func
+  hidePlanWizardAction: PropTypes.func,
+  editingPlan: PropTypes.object
 };
 PlanWizardResultsStep.defaultProps = {
   postPlansUrl: '/api/service_templates',
+  editPlansUrl: '/api/service_templates',
   postMigrationPlansAction: noop,
+  editMigrationPlansAction: noop,
   plansBody: {},
   planSchedule: '',
   isPostingPlans: true,

@@ -39,7 +39,8 @@ const Migrations = ({
   scheduleMigrationModal,
   scheduleMigrationPlan,
   scheduleMigration,
-  plansMutatedWithMappingInfo
+  plansMutatedWithMappingInfo,
+  showPlanWizardEditModeAction
 }) => {
   const filterOptions = [
     MIGRATIONS_FILTERS.notStarted,
@@ -125,6 +126,7 @@ const Migrations = ({
               plansMutatedWithMappingInfo={plansMutatedWithMappingInfo}
               deleteTransformationPlanAction={deleteTransformationPlanAction}
               deleteTransformationPlanUrl={deleteTransformationPlanUrl}
+              showPlanWizardEditModeAction={showPlanWizardEditModeAction}
             />
           )}
           {activeFilter === MIGRATIONS_FILTERS.inProgress && (
@@ -216,7 +218,8 @@ Migrations.propTypes = {
   scheduleMigrationModal: PropTypes.bool,
   scheduleMigrationPlan: PropTypes.object,
   scheduleMigration: PropTypes.func,
-  plansMutatedWithMappingInfo: PropTypes.bool
+  plansMutatedWithMappingInfo: PropTypes.bool,
+  showPlanWizardEditModeAction: PropTypes.func
 };
 Migrations.defaultProps = {
   transformationPlans: [],

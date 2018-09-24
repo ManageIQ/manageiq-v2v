@@ -9,7 +9,7 @@ import componentRegistry from '../../../../../../components/componentRegistry';
 import PlanWizardGeneralStep from '../PlanWizard/components/PlanWizardGeneralStep';
 import PlanWizardScheduleStep from '../PlanWizard/components/PlanWizardScheduleStep';
 
-import { stepIDs } from './PlanWizardConstants';
+import { stepIDs, overwriteCsvConfirmModalProps } from './PlanWizardConstants';
 
 class PlanWizard extends React.Component {
   planWizardVMStepContainer = componentRegistry.markup('PlanWizardVMStepContainer');
@@ -111,7 +111,8 @@ class PlanWizard extends React.Component {
       hideConfirmModalAction,
       showAlertAction,
       hideAlertAction,
-      setMetadataWithNextButtonClickedAction
+      setMetadataWithNextButtonClickedAction,
+      editingPlan
     } = this.props;
 
     const wizardSteps = this.getWizardSteps();
@@ -125,6 +126,17 @@ class PlanWizard extends React.Component {
         return;
       }
       hideAlertAction();
+
+      if (editingPlan && planWizardGeneralStep.values.vm_choice_radio === 'vms_via_csv') {
+        showConfirmModalAction({
+          ...overwriteCsvConfirmModalProps,
+          onConfirm: () => {
+            hideConfirmModalAction();
+            this.goToStepId(stepIDs.vmStep);
+          }
+        });
+        return;
+      }
     }
 
     if (
@@ -149,7 +161,13 @@ class PlanWizard extends React.Component {
         onConfirm
       });
     } else if (activeStep.id === stepIDs.scheduleStep) {
-      const plansBody = createMigrationPlans(planWizardGeneralStep, planWizardVMStep, planWizardAdvancedOptionsStep);
+      const isEditing = !!editingPlan;
+      const plansBody = createMigrationPlans(
+        planWizardGeneralStep,
+        planWizardVMStep,
+        planWizardAdvancedOptionsStep,
+        isEditing
+      );
 
       setPlanScheduleAction(planWizardScheduleStep.values.migration_plan_choice_radio);
       setPlansBodyAction(plansBody);
@@ -185,7 +203,8 @@ class PlanWizard extends React.Component {
       planWizardExitedAction,
       alertText,
       alertType,
-      hideAlertAction
+      hideAlertAction,
+      editingPlan
     } = this.props;
 
     const wizardSteps = this.getWizardSteps();
@@ -207,9 +226,13 @@ class PlanWizard extends React.Component {
           !this.props.planWizardVMStep.values.selectedVms ||
           this.props.planWizardVMStep.values.selectedVms.length === 0));
 
+    const saveButtonLabel = editingPlan ? __('Save') : __('Create');
+
+    const wizardTitle = editingPlan ? __('Edit Migration Plan') : __('Create Migration Plan');
+
     return (
       <Wizard show={!hidePlanWizard} onClose={hidePlanWizardAction} onExited={planWizardExitedAction}>
-        <Wizard.Header onClose={hidePlanWizardAction} title={__('Migration Plan Wizard')} />
+        <Wizard.Header onClose={hidePlanWizardAction} title={wizardTitle} />
 
         <Wizard.Body>
           <PlanWizardBody
@@ -239,7 +262,7 @@ class PlanWizard extends React.Component {
             onClick={onFinalStep ? hidePlanWizardAction : this.nextStep}
             disabled={disableNextStep}
           >
-            {onFinalStep ? __('Close') : currentStepProp === stepIDs.scheduleStep ? __('Create') : __('Next')}
+            {onFinalStep ? __('Close') : currentStepProp === stepIDs.scheduleStep ? saveButtonLabel : __('Next')}
             <Icon type="fa" name="angle-right" />
           </Button>
         </Wizard.Footer>
@@ -268,7 +291,8 @@ PlanWizard.propTypes = {
   alertText: PropTypes.string,
   alertType: PropTypes.string,
   setMetadataWithBackButtonClickedAction: PropTypes.func,
-  setMetadataWithNextButtonClickedAction: PropTypes.func
+  setMetadataWithNextButtonClickedAction: PropTypes.func,
+  editingPlan: PropTypes.object
 };
 PlanWizard.defaultProps = {
   hidePlanWizard: true,

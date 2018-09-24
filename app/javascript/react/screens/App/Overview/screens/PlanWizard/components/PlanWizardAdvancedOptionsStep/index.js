@@ -2,8 +2,9 @@ import { connect } from 'react-redux';
 
 import PlanWizardAdvancedOptionsStep from './PlanWizardAdvancedOptionsStep';
 import * as PlanWizardAdvancedOptionsStepActions from './PlanWizardAdvancedOptionsStepActions';
-import { getVMStepSelectedVms } from './PlanWizardAdvancedOptionsStepSelectors';
+import { getVMStepSelectedVms, getVmIdsWithProperty } from './helpers';
 import reducer from './PlanWizardAdvancedOptionsStepReducer';
+import { findEditingPlan } from '../../PlanWizardSelectors';
 
 export const reducers = { planWizardAdvancedOptionsStep: reducer };
 
@@ -11,6 +12,7 @@ const mapStateToProps = (
   {
     planWizardAdvancedOptionsStep,
     planWizardVMStep,
+    overview: { transformationPlans, editingPlanId },
     form: {
       planWizardGeneralStep: {
         values: { vm_choice_radio }
@@ -23,16 +25,36 @@ const mapStateToProps = (
   },
   ownProps
 ) => {
+  const editingPlan = findEditingPlan(transformationPlans, editingPlanId);
+  const validVmsDeduped = !editingPlan
+    ? planWizardVMStep.valid_vms
+    : planWizardVMStep.valid_vms.filter(
+        validVm => !planWizardVMStep.preselected_vms.some(preselectedVm => preselectedVm.id === validVm.id)
+      );
   const allVms =
     vm_choice_radio === 'vms_via_csv'
       ? [...planWizardVMStep.valid_vms, ...planWizardVMStep.invalid_vms, ...planWizardVMStep.conflict_vms]
-      : planWizardVMStep.valid_vms;
+      : [...planWizardVMStep.preselected_vms, ...validVmsDeduped];
+
+  const configInfo = editingPlan && editingPlan.options && editingPlan.options.config_info;
+  const vmStepSelectedVms = getVMStepSelectedVms(allVms, selectedVms);
 
   return {
     ...planWizardAdvancedOptionsStep,
     ...ownProps.data,
     advancedOptionsStepForm,
-    vmStepSelectedVms: getVMStepSelectedVms(allVms, selectedVms)
+    vmStepSelectedVms,
+    initialValues: {
+      playbookVms: {
+        preMigration: editingPlan ? getVmIdsWithProperty(editingPlan, 'pre_service', vmStepSelectedVms) : [],
+        postMigration: editingPlan ? getVmIdsWithProperty(editingPlan, 'post_service', vmStepSelectedVms) : []
+      },
+      preMigrationPlaybook: editingPlan ? configInfo.pre_service_id : '',
+      postMigrationPlaybook: editingPlan ? configInfo.post_service_id : ''
+    },
+    enableReinitialize: true, // Tells redux-form to use new initialValues when they change
+    keepDirtyOnReinitialize: true,
+    editingPlan
   };
 };
 

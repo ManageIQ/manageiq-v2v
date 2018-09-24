@@ -1,5 +1,9 @@
 import API from '../../../../../../../../common/API';
-import { POST_V2V_MIGRATION_PLANS, POST_V2V_MIGRATION_REQUESTS } from './PlanWizardResultsStepConstants';
+import {
+  POST_V2V_MIGRATION_PLANS,
+  POST_V2V_MIGRATION_REQUESTS,
+  PUT_V2V_MIGRATION_PLANS
+} from './PlanWizardResultsStepConstants';
 
 export { hidePlanWizardAction } from '../../PlanWizardActions';
 
@@ -35,3 +39,26 @@ const _postMigrationPlansActionCreator = (url, migrationPlans, planSchedule) => 
 
 export const postMigrationPlansAction = (url, migrationPlans, planSchedule) =>
   _postMigrationPlansActionCreator(url, migrationPlans, planSchedule);
+
+const _editMigrationPlansActionCreator = (url, planId, migrationPlans, planSchedule) => dispatch => {
+  const body = {
+    action: 'edit',
+    resource: { ...migrationPlans }
+  };
+  return dispatch({
+    type: PUT_V2V_MIGRATION_PLANS,
+    payload: new Promise((resolve, reject) => {
+      API.post(`${url}/${planId}`, body)
+        .then(response => {
+          resolve(response);
+          if (planSchedule === 'migration_plan_now') {
+            postMigrationRequestsAction(response, dispatch);
+          }
+        })
+        .catch(e => reject(e));
+    })
+  });
+};
+
+export const editMigrationPlansAction = (url, planId, migrationPlans, planSchedule) =>
+  _editMigrationPlansActionCreator(url, planId, migrationPlans, planSchedule);
