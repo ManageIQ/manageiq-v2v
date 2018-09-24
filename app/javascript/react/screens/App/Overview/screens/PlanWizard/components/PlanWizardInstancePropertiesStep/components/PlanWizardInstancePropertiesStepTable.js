@@ -8,6 +8,7 @@ import { paginate, Grid, PaginationRow, Table, PAGINATION_VIEW, Icon, Button, Fo
 
 // Temporary import while https://github.com/patternfly/patternfly-react/issues/535 is open:
 import TableInlineEditRow from './TableInlineEditRow/TableInlineEditRow';
+import { allFitForVM } from '../helpers';
 
 class PlanWizardInstancePropertiesStepTable extends React.Component {
   state = {
@@ -100,12 +101,17 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
       </td>
     ),
     renderEdit: (value, additionalData) => {
-      const { tenantsWithAttributesById, destinationTenantIdsBySourceClusterId, input } = this.props;
+      const { tenantsWithAttributesById, destinationTenantIdsBySourceClusterId, input, bestFitFlavors } = this.props;
       const { optionsAttribute } = additionalData.column.cell.inlineEditSelect;
       const clusterId = additionalData.rowData.ems_cluster_id;
       const tenantId = destinationTenantIdsBySourceClusterId[clusterId];
       const tenant = tenantId && tenantsWithAttributesById[tenantId];
-      const options = tenant ? tenant[optionsAttribute] : [];
+
+      const options = tenant
+        ? optionsAttribute === 'flavors'
+          ? allFitForVM(bestFitFlavors, tenant[optionsAttribute], additionalData.rowData.id)
+          : tenant[optionsAttribute]
+        : [];
       return (
         <td className="editable editing">
           <FormControl
@@ -454,7 +460,8 @@ PlanWizardInstancePropertiesStepTable.propTypes = {
   tenantsWithAttributesById: PropTypes.object,
   destinationTenantIdsBySourceClusterId: PropTypes.object,
   instancePropertiesRowsAction: PropTypes.func,
-  input: PropTypes.object
+  input: PropTypes.object,
+  bestFitFlavors: PropTypes.array
 };
 PlanWizardInstancePropertiesStepTable.defaultProps = {
   rows: [],
