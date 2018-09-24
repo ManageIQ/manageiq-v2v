@@ -535,18 +535,6 @@ class PlanRequestDetailList extends React.Component {
                       <b>{__('Start Time')}: </b>
                       {formatDateTime(task.startDateTime)}
                     </div>
-                    {task.options.prePlaybookRunning || task.options.postPlaybookRunning ? (
-                      <div>
-                        <b>{__('Running playbook service')}: </b>
-                        {ansiblePlaybookTemplate.name}
-                      </div>
-                    ) : (
-                      <div>
-                        <b>{__('Description')}: </b>
-                        {task.options.progress &&
-                          V2V_MIGRATION_STATUS_MESSAGES[task.options.progress.current_description]}
-                      </div>
-                    )}
                     <div>
                       <b>{__('Conversion Host')}: </b>
                       {task.transformation_host_name}
@@ -564,6 +552,19 @@ class PlanRequestDetailList extends React.Component {
                   </div>
                 </Popover>
               );
+
+              const statusMessage =
+                task.options.prePlaybookRunning || task.options.postPlaybookRunning ? (
+                  <div>
+                    <b>{__('Running playbook service')}: </b>
+                    {ansiblePlaybookTemplate.name}
+                  </div>
+                ) : (
+                  <div>
+                    <b>{__('Status')}: </b>
+                    {task.options.progress && V2V_MIGRATION_STATUS_MESSAGES[task.options.progress.current_description]}
+                  </div>
+                );
               return (
                 <ListView.Item
                   key={task.id}
@@ -590,7 +591,10 @@ class PlanRequestDetailList extends React.Component {
                       }}
                     >
                       <div>
-                        <span>{taskMessage}</span>
+                        <div style={{ display: 'inline-block', textAlign: 'left' }}>
+                          <span>{taskMessage}</span>
+                          {statusMessage}
+                        </div>
                         &nbsp;
                         {/* Todo: revisit FieldLevelHelp props in patternfly-react to support this */}
                         <OverlayTrigger
