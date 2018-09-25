@@ -69,7 +69,7 @@ export class BootstrapSelect extends React.Component {
               {choose_text || `<${__('Choose')}>`}
             </option>
             {options.map(val => (
-              <option value={val[option_key]} key={val[option_value]}>
+              <option value={val[option_key]} key={`${val[option_value]}-${val[option_key]}`}>
                 {val[option_value]}
               </option>
             ))}
