@@ -7,12 +7,12 @@ import reducer from './EditPlanNameReducer';
 
 export const reducers = { editPlanName: reducer };
 
-const mapStateToProps = ({ editPlanName, overview, form: { editPlanNameModal } }) => {
+const mapStateToProps = ({ editPlanName, overview, form }) => {
   const plans = [...overview.transformationPlans, ...overview.archivedTransformationPlans];
   const editingPlan = findEditingPlan(plans, overview.editingPlanId);
   return {
     ...editPlanName,
-    editPlanNameModal,
+    editPlanNameModal: form && form.editPlanNameModal,
     initialValues: {
       name: editingPlan ? editingPlan.name : '',
       description: editingPlan ? editingPlan.description : ''
