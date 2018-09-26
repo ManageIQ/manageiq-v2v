@@ -75,7 +75,7 @@ export default (state = initialState, action) => {
             tenantFlavors.reduce((prev, current) => {
               if (prev.memory > current.memory) return prev;
               if (prev.memory < current.memory) return current;
-              return (prev.cpus > current.cpus ? prev : current)
+              return prev.cpus > current.cpus ? prev : current;
             });
           bestFitFlavorId = bestFitFlavor && bestFitFlavor.id;
         }

@@ -55,7 +55,8 @@ class PlanWizardInstancePropertiesStep extends Component {
       instancePropertiesRows,
       isSettingSecurityGroupsAndBestFitFlavors,
       updatedInstancePropertiesRowOnStandby,
-      instancePropertiesRowsAction
+      instancePropertiesRowsAction,
+      bestFitFlavors
     } = this.props;
 
     if (isFetchingTenantsWithAttributes || isSettingSecurityGroupsAndBestFitFlavors) {
@@ -81,6 +82,7 @@ class PlanWizardInstancePropertiesStep extends Component {
         destinationTenantIdsBySourceClusterId={destinationTenantIdsBySourceClusterId}
         updatedInstancePropertiesRowOnStandby={updatedInstancePropertiesRowOnStandby}
         instancePropertiesRowsAction={instancePropertiesRowsAction}
+        bestFitFlavors={bestFitFlavors}
         validate={value =>
           value.updatedInstancePropertiesRowOnStandby && value.updatedInstancePropertiesRowOnStandby.id
         }
@@ -103,7 +105,8 @@ PlanWizardInstancePropertiesStep.propTypes = {
   updatedInstancePropertiesRowOnStandby: PropTypes.object,
   instancePropertiesRows: PropTypes.array,
   bestFitFlavorUrl: PropTypes.string,
-  recalculateBestFitFlavorAndSecurityGroup: PropTypes.bool
+  recalculateBestFitFlavorAndSecurityGroup: PropTypes.bool,
+  bestFitFlavors: PropTypes.array
 };
 
 PlanWizardInstancePropertiesStep.defaultProps = {

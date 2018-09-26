@@ -31,3 +31,14 @@ export const getVmsWithTargetClusterName = (vms, destinationTenantIdsBySourceClu
       target_cluster_name: tenant ? tenant.name : ''
     };
   });
+
+export const allFitForVM = (bestFitFlavors, tenantFlavors, vmId) => {
+  const flavorsSlugPrefix = 'flavors/';
+  const flavorForVM = bestFitFlavors.find(flavor => flavor.source_href_slug === `vms/${vmId}`);
+  const allFitFlavors = flavorForVM && flavorForVM.all_fit;
+  if (!allFitFlavors || allFitFlavors.length === 0) {
+    return [tenantFlavors.reduce((prev, current) => (prev.root_disk_size > current.root_disk_size ? prev : current))];
+  }
+  const allFitFlavorIds = allFitFlavors.map(flavorSlug => flavorSlug.slice(flavorsSlugPrefix.length));
+  return tenantFlavors.filter(flavor => allFitFlavorIds.indexOf(flavor.id) > -1);
+};

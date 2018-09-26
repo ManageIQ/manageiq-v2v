@@ -8,6 +8,7 @@ import { paginate, Grid, PaginationRow, Table, PAGINATION_VIEW, Icon, Button, Fo
 
 // Temporary import while https://github.com/patternfly/patternfly-react/issues/535 is open:
 import TableInlineEditRow from './TableInlineEditRow/TableInlineEditRow';
+import { allFitForVM } from '../helpers';
 
 class PlanWizardInstancePropertiesStepTable extends React.Component {
   state = {
@@ -74,7 +75,7 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
       onChange: (e, { rowData, property }) => {
         const updatedInstanceProp = {
           ...rowData[property],
-          name: e.target.options[e.target.selectedIndex].text,
+          name: e.target.options[e.target.selectedIndex].getAttribute('name'),
           id: e.target.value
         };
 
@@ -88,24 +89,47 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
     };
   };
 
+  getTenantByClusterId = clusterId => {
+    const { tenantsWithAttributesById, destinationTenantIdsBySourceClusterId } = this.props;
+    const tenantId = destinationTenantIdsBySourceClusterId[clusterId];
+    return tenantId && tenantsWithAttributesById[tenantId];
+  };
+
+  renderFlavorName = (flavorId, flavorName, vmId, tenant) => {
+    const { bestFitFlavors } = this.props;
+    const allFit = allFitForVM(bestFitFlavors, tenant.flavors, vmId);
+    const needsAsterisk = !allFit.some(flavor => flavor.id === flavorId);
+    return needsAsterisk ? `${flavorName} *` : flavorName;
+  };
+
   inlineEditFormatter = Table.inlineEditFormatterFactory({
     isEditing: additionalData => this.inlineEditController().isEditing(additionalData),
-    renderValue: (value, additionalData) => (
-      <td className="editable">
-        <span className="static">
-          {additionalData.property === 'osp_security_group'
-            ? additionalData.rowData.osp_security_group.name
-            : additionalData.rowData.osp_flavor.name}
-        </span>
-      </td>
-    ),
+    renderValue: (value, additionalData) => {
+      const renderedValue =
+        additionalData.property === 'osp_security_group'
+          ? additionalData.rowData.osp_security_group.name
+          : this.renderFlavorName(
+              additionalData.rowData.osp_flavor.id,
+              additionalData.rowData.osp_flavor.name,
+              additionalData.rowData.id,
+              this.getTenantByClusterId(additionalData.rowData.ems_cluster_id)
+            );
+      return (
+        <td className="editable">
+          <span className="static">{renderedValue}</span>
+        </td>
+      );
+    },
     renderEdit: (value, additionalData) => {
-      const { tenantsWithAttributesById, destinationTenantIdsBySourceClusterId, input } = this.props;
+      const { input } = this.props;
       const { optionsAttribute } = additionalData.column.cell.inlineEditSelect;
       const clusterId = additionalData.rowData.ems_cluster_id;
-      const tenantId = destinationTenantIdsBySourceClusterId[clusterId];
-      const tenant = tenantId && tenantsWithAttributesById[tenantId];
+      const tenant = this.getTenantByClusterId(clusterId);
       const options = tenant ? tenant[optionsAttribute] : [];
+      const renderName = option => {
+        if (optionsAttribute !== 'flavors') return option.name;
+        return this.renderFlavorName(option.id, option.name, additionalData.rowData.id, tenant);
+      };
       return (
         <td className="editable editing">
           <FormControl
@@ -119,7 +143,7 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
           >
             {options.map(opt => (
               <option value={opt.id} name={opt.name} key={opt.id}>
-                {opt.name}
+                {renderName(opt)}
               </option>
             ))}
           </FormControl>
@@ -454,7 +478,8 @@ PlanWizardInstancePropertiesStepTable.propTypes = {
   tenantsWithAttributesById: PropTypes.object,
   destinationTenantIdsBySourceClusterId: PropTypes.object,
   instancePropertiesRowsAction: PropTypes.func,
-  input: PropTypes.object
+  input: PropTypes.object,
+  bestFitFlavors: PropTypes.array
 };
 PlanWizardInstancePropertiesStepTable.defaultProps = {
   rows: [],
