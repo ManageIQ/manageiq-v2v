@@ -10,7 +10,7 @@ exports[`MappingWizard component renders the mapping wizard 1`] = `
 >
   <WizardHeader
     onClose={[Function]}
-    title="Infrastructure Mapping Wizard"
+    title="Create Infrastructure Mapping"
   />
   <WizardBody
     className=""
