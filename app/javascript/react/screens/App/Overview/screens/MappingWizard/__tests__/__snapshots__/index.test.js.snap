@@ -3,6 +3,7 @@
 exports[`Mapping Wizard integration test should mount the MappingWizard with mapStateToProps reduced 1`] = `
 Object {
   "alert": "",
+  "editingMapping": null,
   "hideAlertAction": [Function],
   "hideMappingWizard": false,
   "hideMappingWizardAction": [Function],
