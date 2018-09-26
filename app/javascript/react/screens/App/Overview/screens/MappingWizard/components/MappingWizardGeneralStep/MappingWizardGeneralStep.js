@@ -35,7 +35,7 @@ class MappingWizardGeneralStep extends React.Component {
   };
 
   render() {
-    const { targetProvider } = this.props;
+    const { targetProvider, editingMapping } = this.props;
 
     return (
       <Form className="form-horizontal">
@@ -75,6 +75,7 @@ class MappingWizardGeneralStep extends React.Component {
           controlWidth={9}
           inline_label
           onSelect={this.onSelect}
+          disabled={!!editingMapping}
           style={{ visibility: 'hidden' }}
         />
       </Form>
