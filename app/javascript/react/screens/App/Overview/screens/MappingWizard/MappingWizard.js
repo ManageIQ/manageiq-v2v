@@ -125,7 +125,8 @@ class MappingWizard extends React.Component {
       mappingWizardNetworksStep,
       alertText,
       alertType,
-      hideAlertAction
+      hideAlertAction,
+      editingMapping
     } = this.props;
 
     const { activeStepIndex, transformationsBody } = this.state;
@@ -149,7 +150,7 @@ class MappingWizard extends React.Component {
           onClose={() => {
             hideMappingWizardAction(onFinalStep);
           }}
-          title={__('Infrastructure Mapping Wizard')}
+          title={!editingMapping ? __('Create Infrastructure Mapping') : __('Edit Infrastructure Mapping')}
         />
 
         <Wizard.Body>
@@ -190,7 +191,13 @@ class MappingWizard extends React.Component {
             onClick={onFinalStep ? () => hideMappingWizardAction(onFinalStep) : this.nextStep}
             disabled={disableNextStep}
           >
-            {onFinalStep ? __('Close') : activeStepIndex === 3 ? __('Create') : __('Next')}
+            {onFinalStep
+              ? __('Close')
+              : activeStepIndex === 3
+                ? editingMapping
+                  ? __('Save')
+                  : __('Create')
+                : __('Next')}
             <Icon type="fa" name="angle-right" />
           </Button>
         </Wizard.Footer>
@@ -222,7 +229,8 @@ MappingWizard.propTypes = {
   alertText: PropTypes.string,
   alertType: PropTypes.string,
   showAlertAction: PropTypes.func,
-  hideAlertAction: PropTypes.func
+  hideAlertAction: PropTypes.func,
+  editingMapping: PropTypes.object
 };
 MappingWizard.defaultProps = {
   hideMappingWizard: true,

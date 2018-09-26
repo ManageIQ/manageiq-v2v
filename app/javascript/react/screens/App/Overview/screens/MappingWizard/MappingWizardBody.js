@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import { noop } from 'patternfly-react';
 import ModalWizard from '../../components/ModalWizard';
 import componentRegistry from '../../../../../../components/componentRegistry';
-import MappingWizardGeneralStep from '../MappingWizard/components/MappingWizardGeneralStep';
 
 class MappingWizardBody extends React.Component {
   constructor(props) {
     super(props);
 
+    this.mappingWizardGeneralStepContainer = componentRegistry.markup('MappingWizardGeneralStepContainer');
     this.mappingWizardClustersStepContainer = componentRegistry.markup('MappingWizardClustersStepContainer');
     this.mappingWizardDatastoresStepContainer = componentRegistry.markup('MappingWizardDatastoresStepContainer');
     this.mappingWizardNetworksStepContainer = componentRegistry.markup('MappingWizardNetworksStepContainer');
@@ -31,7 +31,7 @@ class MappingWizardBody extends React.Component {
         steps={[
           {
             title: __('General'),
-            render: () => <MappingWizardGeneralStep />,
+            render: () => this.mappingWizardGeneralStepContainer,
             disableGoto: !this.props.mappingWizardGeneralStep.values
           },
           {

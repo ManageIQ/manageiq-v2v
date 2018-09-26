@@ -6,6 +6,8 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import { initialState } from '../mappingWizardClustersStep.fixtures';
+import { initialState as generalStepInitialState } from '../../MappingWizardGeneralStep/MappingWizardGeneralStepReducer';
+import { reducers as generalStepReducers } from '../../MappingWizardGeneralStep/index';
 import MappingWizardClustersStep from '../MappingWizardClustersStep';
 import MappingWizardClustersStepContainer, { reducers } from '../index';
 
@@ -13,9 +15,10 @@ describe('Mapping Wizard integration test', () => {
   const middlewares = [thunk, promiseMiddleware()];
   const generateStore = () =>
     createStore(
-      combineReducers({ ...reducers, form: formReducer }),
+      combineReducers({ ...reducers, ...generalStepReducers, form: formReducer }),
       {
         mappingWizardClustersStep: initialState,
+        mappingWizardGeneralStep: generalStepInitialState,
         form: { mappingWizardGeneralStep: { values: { targetProvider: 'rhevm' } } }
       },
       applyMiddleware(...middlewares)

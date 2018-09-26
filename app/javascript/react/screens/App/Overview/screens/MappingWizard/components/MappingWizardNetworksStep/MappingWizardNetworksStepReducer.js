@@ -1,6 +1,7 @@
 import Immutable from 'seamless-immutable';
 
 import { FETCH_V2V_SOURCE_NETWORKS, FETCH_V2V_TARGET_NETWORKS } from './MappingWizardNetworksStepConstants';
+import { MAPPING_WIZARD_EXITED } from '../../../../OverviewConstants';
 
 const initialState = Immutable({
   isFetchingSourceNetworks: false,
@@ -40,6 +41,9 @@ export default (state = initialState, action) => {
         .set('errorTargetNetworks', action.payload)
         .set('isRejectedTargetNetworks', true)
         .set('isFetchingTargetNetworks', false);
+    case MAPPING_WIZARD_EXITED:
+      return initialState;
+
     default:
       return state;
   }

@@ -2,6 +2,8 @@
 
 exports[`Mapping Wizard integration test should mount the MappingWizard with mapStateToProps reduced 1`] = `
 Object {
+  "alert": "",
+  "editingMapping": null,
   "hideAlertAction": [Function],
   "hideMappingWizard": false,
   "hideMappingWizardAction": [Function],
@@ -14,5 +16,7 @@ Object {
   "setTransformationsBodyAction": [Function],
   "showAlertAction": [Function],
   "showWarningModalAction": [Function],
+  "transformationsBody": Object {},
+  "warningModalVisible": false,
 }
 `;

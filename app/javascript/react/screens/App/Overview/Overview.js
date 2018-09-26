@@ -200,6 +200,7 @@ class Overview extends React.Component {
       isFetchingProviders,
       hasSufficientProviders,
       showMappingWizardAction,
+      showMappingWizardEditModeAction,
       showPlanWizardAction,
       mappingWizardVisible,
       planWizardVisible,
@@ -255,7 +256,9 @@ class Overview extends React.Component {
       scheduleMigrationPlan,
       scheduleMigration,
       plansMutatedWithMappingInfo,
-      showPlanWizardEditModeAction
+      showPlanWizardEditModeAction,
+      fetchTransformationMappingsUrl,
+      fetchTransformationMappingsAction
     } = this.props;
 
     const inProgressRequestsTransformationMappings = () => {
@@ -350,6 +353,8 @@ class Overview extends React.Component {
               scheduleMigration={scheduleMigration}
               plansMutatedWithMappingInfo={plansMutatedWithMappingInfo}
               showPlanWizardEditModeAction={showPlanWizardEditModeAction}
+              fetchTransformationMappingsUrl={fetchTransformationMappingsUrl}
+              fetchTransformationMappingsAction={fetchTransformationMappingsAction}
             />
           )}
           {hasSufficientProviders ? (
@@ -373,6 +378,7 @@ class Overview extends React.Component {
               finishedWithErrorTransformationPlans={finishedWithErrorTransformationPlans}
               deleteInfrastructureMappingAction={deleteInfrastructureMappingAction}
               migrationPlansExist={transformationPlans.length > 0 || archivedTransformationPlans.length > 0}
+              showMappingWizardEditModeAction={showMappingWizardEditModeAction}
             />
           ) : (
             <OverviewEmptyState
@@ -486,7 +492,8 @@ Overview.propTypes = {
   fetchServiceTemplateAnsiblePlaybooksUrl: PropTypes.string,
   serviceTemplatePlaybooks: PropTypes.array,
   redirectTo: PropTypes.func.isRequired,
-  plansMutatedWithMappingInfo: PropTypes.bool
+  plansMutatedWithMappingInfo: PropTypes.bool,
+  showMappingWizardEditModeAction: PropTypes.func
 };
 
 Overview.defaultProps = {

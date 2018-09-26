@@ -41,7 +41,7 @@ const _getSourceDatastoresActionCreator = url => dispatch =>
 export const fetchSourceDatastoresAction = (url, id) => {
   const uri = new URI(`${url}/${id}`);
   // creates url like: http://localhost:3000/api/clusters/1?attributes=storages
-  uri.addSearch({ attributes: `${QUERY_ATTRIBUTES.source},v_parent_datacenter` });
+  uri.addSearch({ attributes: QUERY_ATTRIBUTES.source });
 
   return _getSourceDatastoresActionCreator(uri.toString());
 };

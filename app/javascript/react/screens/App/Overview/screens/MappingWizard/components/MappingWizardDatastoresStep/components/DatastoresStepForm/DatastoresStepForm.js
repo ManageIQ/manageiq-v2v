@@ -250,7 +250,8 @@ class DatastoresStepForm extends React.Component {
       isFetchingTargetDatastores,
       input,
       selectedCluster,
-      targetProvider
+      targetProvider,
+      preLoadingMappings
     } = this.props;
     const { selectedSourceDatastores, selectedTargetDatastore, selectedNode } = this.state;
 
@@ -321,6 +322,7 @@ class DatastoresStepForm extends React.Component {
           removeNode={this.removeNode}
           removeAll={this.removeAll}
           selectedNode={selectedNode}
+          loading={isFetchingSourceDatastores || isFetchingTargetDatastores || preLoadingMappings}
         />
       </div>
     );
@@ -337,5 +339,6 @@ DatastoresStepForm.propTypes = {
   targetDatastores: PropTypes.array,
   isFetchingSourceDatastores: PropTypes.bool,
   isFetchingTargetDatastores: PropTypes.bool,
-  targetProvider: PropTypes.string
+  targetProvider: PropTypes.string,
+  preLoadingMappings: PropTypes.bool
 };

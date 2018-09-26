@@ -7,7 +7,6 @@ import DualPaneMapperList from '../../../DualPaneMapper/DualPaneMapperList';
 import DualPaneMapperCount from '../../../DualPaneMapper/DualPaneMapperCount';
 import DualPaneMapperListItem from '../../../DualPaneMapper/DualPaneMapperListItem';
 import ClustersStepTreeView from '../ClustersStepTreeView';
-
 import { createNewMapping, updateMapping } from './helpers';
 import { sourceClustersFilter } from '../../MappingWizardClustersStepSelectors';
 import { multiProviderTargetLabel } from '../../../helpers';
@@ -206,6 +205,7 @@ class ClustersStepForm extends React.Component {
             removeMapping={this.removeMapping}
             removeAll={this.removeAll}
             selectedMapping={selectedMapping}
+            loading={isFetchingTargetClusters || isFetchingSourceClusters}
           />
         )}
       </div>

@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+
 import MappingWizardDatastoresStep from './MappingWizardDatastoresStep';
 import * as MappingWizardDatastoresStepActions from './MappingWizardDatastoresStepActions';
 import { showAlertAction, hideAlertAction } from '../../MappingWizardActions';
@@ -7,11 +8,27 @@ import reducer from './MappingWizardDatastoresStepReducer';
 
 export const reducers = { mappingWizardDatastoresStep: reducer };
 
-const mapStateToProps = ({ mappingWizardDatastoresStep, form }, ownProps) => ({
+const mapStateToProps = (
+  {
+    mappingWizardDatastoresStep,
+    mappingWizardGeneralStep: { editingMapping },
+    form: {
+      mappingWizardClustersStep: { values: clustersStepForm },
+      mappingWizardGeneralStep: { values: generalStepForm },
+      mappingWizardDatastoresStep: mappingWizardDatastoresStepForm
+    }
+  },
+  ownProps
+) => ({
   ...mappingWizardDatastoresStep,
   ...ownProps.data,
-  clusterMappings: form.mappingWizardClustersStep.values.clusterMappings,
-  targetProvider: form.mappingWizardGeneralStep.values.targetProvider
+  editingMapping,
+  mappingWizardDatastoresStepForm,
+  clusterMappings: clustersStepForm.clusterMappings,
+  targetProvider: generalStepForm.targetProvider,
+  initialValues: {
+    datastoresMappings: []
+  }
 });
 
 const actions = {

@@ -13,7 +13,9 @@ const DeleteMigrationMenuItem = ({
   fetchArchivedTransformationPlansUrl,
   planId,
   planName,
-  archived
+  archived,
+  fetchTransformationMappingsAction,
+  fetchTransformationMappingsUrl
 }) => {
   const confirmModalBaseProps = {
     title: __('Delete Migration Plan'),
@@ -43,6 +45,7 @@ const DeleteMigrationMenuItem = ({
           archived
         });
       })
+      .then(() => fetchTransformationMappingsAction(fetchTransformationMappingsUrl))
       .then(() => {
         hideConfirmModalAction();
       });
@@ -74,7 +77,9 @@ DeleteMigrationMenuItem.propTypes = {
   fetchArchivedTransformationPlansUrl: PropTypes.string,
   planId: PropTypes.string,
   planName: PropTypes.string,
-  archived: PropTypes.bool
+  archived: PropTypes.bool,
+  fetchTransformationMappingsAction: PropTypes.func,
+  fetchTransformationMappingsUrl: PropTypes.string
 };
 
 DeleteMigrationMenuItem.defaultProps = {

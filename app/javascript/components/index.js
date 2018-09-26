@@ -1,4 +1,5 @@
 import MappingWizardContainer from '../react/screens/App/Overview/screens/MappingWizard';
+import MappingWizardGeneralStepContainer from '../react/screens/App/Overview/screens/MappingWizard/components/MappingWizardGeneralStep';
 import MappingWizardClustersStepContainer from '../react/screens/App/Overview/screens/MappingWizard/components/MappingWizardClustersStep';
 import MappingWizardDatastoresStepContainer from '../react/screens/App/Overview/screens/MappingWizard/components/MappingWizardDatastoresStep';
 import MappingWizardNetworksStepContainer from '../react/screens/App/Overview/screens/MappingWizard/components/MappingWizardNetworksStep';
@@ -27,6 +28,11 @@ export const coreComponents = [
   {
     name: 'MappingWizardContainer',
     type: MappingWizardContainer,
+    store: true
+  },
+  {
+    name: 'MappingWizardGeneralStepContainer',
+    type: MappingWizardGeneralStepContainer,
     store: true
   },
   {

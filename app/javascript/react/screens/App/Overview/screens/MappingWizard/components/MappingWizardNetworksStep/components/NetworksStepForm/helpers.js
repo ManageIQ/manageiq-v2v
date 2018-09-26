@@ -1,3 +1,15 @@
+import URI from 'urijs';
+
+import {
+  getTransformationMappingItemsBySourceType,
+  getTransformationMappingItemsByDestinationType
+} from '../../../../helpers';
+import API from '../../../../../../../../../../common/API';
+import {
+  TRANSFORMATION_MAPPING_ITEM_SOURCE_TYPES,
+  TRANSFORMATION_MAPPING_ITEM_DESTINATION_TYPES
+} from '../../../../MappingWizardConstants';
+import { QUERY_ATTRIBUTES, FETCH_NETWORK_URLS, NETWORK_ATTRIBUTES } from '../../MappingWizardNetworksStepConstants';
 import { uniqueNetworks } from '../../MappingWizardNetworksStepSelectors';
 import { networkKey } from '../../../../../../../common/networkKey';
 
@@ -112,3 +124,113 @@ export const mappingWithSourceNetworkRemoved = (networksMapping, sourceNetworkTo
         nodes: updatedSourceNetworks
       };
 };
+
+const getMappedTargetNetworks = (networks, mappedNetworkIds) =>
+  networks.filter(network => mappedNetworkIds.some(id => id === network.id));
+
+const getMappedSourceNetworks = (targetNetwork, sourceNetworks, transformation) => {
+  const networkMappingItems = getTransformationMappingItemsBySourceType(
+    TRANSFORMATION_MAPPING_ITEM_SOURCE_TYPES.network,
+    transformation
+  );
+  return sourceNetworks.filter(sourceNetwork =>
+    networkMappingItems.some(item => item.destination_id === targetNetwork.id && item.source_id === sourceNetwork.id)
+  );
+};
+
+const clusterWithNetworksUrl = (id, provider) => {
+  const uri = new URI(`${FETCH_NETWORK_URLS[provider]}/${id}`);
+  uri.addSearch({ attributes: QUERY_ATTRIBUTES[provider] });
+
+  return uri.toString();
+};
+
+const targetNetworkPromises = (targetClusterIds, targetProvider) =>
+  targetClusterIds.map(
+    id =>
+      new Promise((resolve, reject) => {
+        API.get(clusterWithNetworksUrl(id, targetProvider))
+          .then(res => {
+            const updatedTargetNetworks = res.data[NETWORK_ATTRIBUTES[targetProvider]].map(targetNetwork => ({
+              ...targetNetwork,
+              clusterId: id,
+              providerName: res.data.ext_management_system.name
+            }));
+            resolve({ ...res.data, [NETWORK_ATTRIBUTES[targetProvider]]: updatedTargetNetworks });
+          })
+          .catch(e => reject(e));
+      })
+  );
+
+const sourceNetworkPromises = sourceClusterIds =>
+  sourceClusterIds.map(
+    id =>
+      new Promise((resolve, reject) => {
+        API.get(clusterWithNetworksUrl(id, 'source'))
+          .then(res => {
+            resolve(
+              res.data.lans.map(lan => ({
+                ...lan,
+                sourceClusterId: id,
+                clusterId: id,
+                providerName: res.data.ext_management_system.name
+              }))
+            );
+          })
+          .catch(e => reject(e));
+      })
+  );
+
+export const createNetworksMappings = (transformation, targetProvider) =>
+  new Promise((resolve, reject) => {
+    const targetClusterIds = getTransformationMappingItemsByDestinationType(
+      TRANSFORMATION_MAPPING_ITEM_DESTINATION_TYPES[targetProvider].cluster,
+      transformation
+    ).map(item => item.destination_id);
+    const sourceClusterIds = getTransformationMappingItemsBySourceType(
+      TRANSFORMATION_MAPPING_ITEM_SOURCE_TYPES.cluster,
+      transformation
+    ).map(item => item.source_id);
+    const targetNetworkIds = getTransformationMappingItemsByDestinationType(
+      TRANSFORMATION_MAPPING_ITEM_DESTINATION_TYPES[targetProvider].network,
+      transformation
+    ).map(item => item.destination_id);
+
+    Promise.all([
+      ...targetNetworkPromises(targetClusterIds, targetProvider),
+      ...sourceNetworkPromises(sourceClusterIds)
+    ])
+      .then(res => {
+        const networksMappings = [];
+        const targetClustersWithNetworks = res.filter(resolvedPromise => !resolvedPromise.length);
+        const sourceNetworks = res.reduce((networks, resolvedPromise) => {
+          if (resolvedPromise.length) {
+            return [...networks, ...resolvedPromise];
+          }
+          return networks;
+        }, []);
+        targetClustersWithNetworks.forEach(mapping => {
+          const nodes = getMappedTargetNetworks(mapping[NETWORK_ATTRIBUTES[targetProvider]], targetNetworkIds).map(
+            targetNetwork => ({
+              ...targetNetworkWithTreeViewAttrs(targetNetwork),
+              nodes: getMappedSourceNetworks(targetNetwork, sourceNetworks, transformation).map(network =>
+                sourceNetworkWithTreeViewAttrs(network, { id: network.sourceClusterId })
+              )
+            })
+          );
+
+          networksMappings.push({
+            ...mapping,
+            text: mapping.name,
+            selectable: false,
+            state: {
+              expanded: true
+            },
+            nodes
+          });
+        });
+
+        resolve(networksMappings);
+      })
+      .catch(e => reject(e));
+  });

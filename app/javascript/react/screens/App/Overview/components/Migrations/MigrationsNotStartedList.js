@@ -62,7 +62,9 @@ class MigrationsNotStartedList extends React.Component {
       plansMutatedWithMappingInfo,
       deleteTransformationPlanAction,
       deleteTransformationPlanUrl,
-      showPlanWizardEditModeAction
+      showPlanWizardEditModeAction,
+      fetchTransformationMappingsAction,
+      fetchTransformationMappingsUrl
     } = this.props;
     const sortedMigrations = this.sortedMigrations();
 
@@ -147,6 +149,8 @@ class MigrationsNotStartedList extends React.Component {
                                   fetchTransformationPlansUrl={fetchTransformationPlansUrl}
                                   planId={plan.id}
                                   planName={plan.name}
+                                  fetchTransformationMappingsAction={fetchTransformationMappingsAction}
+                                  fetchTransformationMappingsUrl={fetchTransformationMappingsUrl}
                                 />
                               </DropdownKebab>
                             </StopPropagationOnClick>
@@ -242,7 +246,9 @@ MigrationsNotStartedList.propTypes = {
   plansMutatedWithMappingInfo: PropTypes.bool,
   deleteTransformationPlanAction: PropTypes.func,
   deleteTransformationPlanUrl: PropTypes.string,
-  showPlanWizardEditModeAction: PropTypes.func
+  showPlanWizardEditModeAction: PropTypes.func,
+  fetchTransformationMappingsAction: PropTypes.func,
+  fetchTransformationMappingsUrl: PropTypes.string
 };
 MigrationsNotStartedList.defaultProps = {
   migrateClick: noop,

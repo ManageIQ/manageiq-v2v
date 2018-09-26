@@ -35,6 +35,8 @@ import {
   SHOW_PLAN_WIZARD_EDIT_MODE
 } from './OverviewConstants';
 
+import { SET_V2V_EDITING_MAPPING } from './screens/MappingWizard/components/MappingWizardGeneralStep/MappingWizardGeneralStepConstants';
+
 export const showConfirmModalAction = modalOptions => ({
   type: SHOW_CONFIRM_MODAL,
   payload: modalOptions
@@ -47,6 +49,16 @@ export const hideConfirmModalAction = () => ({
 export const showMappingWizardAction = () => dispatch => {
   dispatch({
     type: SHOW_MAPPING_WIZARD
+  });
+};
+
+export const showMappingWizardEditModeAction = mapping => dispatch => {
+  dispatch({
+    type: SHOW_MAPPING_WIZARD
+  });
+  dispatch({
+    type: SET_V2V_EDITING_MAPPING,
+    payload: mapping
   });
 };
 

@@ -1,3 +1,5 @@
+import { groupClusterTransformationItemsByDestinationId } from '../../../../helpers';
+
 export const targetClusterWithExtendedData = targetCluster => ({
   ...targetCluster,
   text: targetCluster.name,
@@ -33,3 +35,17 @@ export const createNewMapping = (targetCluster, sourceClusters) => ({
   ...targetClusterWithExtendedData(targetCluster),
   nodes: sourceClusters.map(sourceCluster => sourceClusterWithExtendedData(sourceCluster))
 });
+
+export const createClusterMappings = (transformationItems, targetClusters, sourceClusters) => {
+  const mappings = groupClusterTransformationItemsByDestinationId(transformationItems);
+
+  if (targetClusters.length && sourceClusters.length) {
+    return Object.keys(mappings).map(key => {
+      const target = targetClusters && targetClusters.find(cluster => cluster.id === key);
+      const sources = sourceClusters && sourceClusters.filter(cluster => mappings[key].some(id => id === cluster.id));
+
+      return createNewMapping(target, sources);
+    });
+  }
+  return [];
+};

@@ -276,7 +276,8 @@ class NetworksStepForm extends React.Component {
       isFetchingTargetNetworks,
       input,
       selectedCluster,
-      targetProvider
+      targetProvider,
+      preLoadingMappings
     } = this.props;
     const { selectedSourceNetworks, selectedTargetNetwork, selectedNode } = this.state;
 
@@ -351,6 +352,7 @@ class NetworksStepForm extends React.Component {
           removeNode={this.removeNode}
           removeAll={this.removeAll}
           selectedNode={selectedNode}
+          loading={isFetchingSourceNetworks || isFetchingTargetNetworks || preLoadingMappings}
         />
       </div>
     );
@@ -365,7 +367,8 @@ NetworksStepForm.propTypes = {
   isFetchingTargetNetworks: PropTypes.bool,
   selectedCluster: PropTypes.object,
   selectedClusterMapping: PropTypes.object,
-  targetProvider: PropTypes.string
+  targetProvider: PropTypes.string,
+  preLoadingMappings: PropTypes.bool
 };
 
 export default NetworksStepForm;
