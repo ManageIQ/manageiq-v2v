@@ -42,7 +42,7 @@ export default (state = initialState, action) => {
         .set('isRejectedTargetNetworks', true)
         .set('isFetchingTargetNetworks', false);
     case MAPPING_WIZARD_EXITED:
-      return Immutable.merge(state, initialState);
+      return initialState;
 
     default:
       return state;

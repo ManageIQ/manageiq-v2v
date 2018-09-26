@@ -74,7 +74,7 @@ export default (state = initialState, action) => {
         .set('isFetchingHostsQuery', false)
         .set('isRejectedHostsQuery', true);
     case MAPPING_WIZARD_EXITED:
-      return Immutable.merge(state, initialState);
+      return initialState;
     default:
       return state;
   }

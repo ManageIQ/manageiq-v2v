@@ -43,7 +43,7 @@ export default (state = initialState, action) => {
         .set('isFetchingTargetDatastores', false);
 
     case MAPPING_WIZARD_EXITED:
-      return Immutable.merge(state, initialState);
+      return initialState;
 
     default:
       return state;
