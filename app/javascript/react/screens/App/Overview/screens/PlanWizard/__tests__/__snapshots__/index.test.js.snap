@@ -12,7 +12,7 @@ Object {
   "planWizardAdvancedOptionsStep": Object {},
   "planWizardExitedAction": [Function],
   "planWizardGeneralStep": Object {},
-  "planWizardInstancePropertiesStep": undefined,
+  "planWizardInstancePropertiesStep": Object {},
   "planWizardScheduleStep": Object {},
   "planWizardVMStep": Object {},
   "resetAdvancedOptionsStepAction": [Function],
