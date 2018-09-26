@@ -1,6 +1,7 @@
 export const createMigrationPlans = (
   planWizardGeneralStep,
   planWizardVMStep,
+  planWizardInstancePropertiesStep,
   planWizardAdvancedOptionsStep,
   isEditing = false
 ) => {
@@ -8,6 +9,8 @@ export const createMigrationPlans = (
   const planDescription = planWizardGeneralStep.values.description;
   const infrastructureMapping = planWizardGeneralStep.values.infrastructure_mapping;
   const vms = planWizardVMStep.values.selectedVms;
+  const ospInstanceProperties =
+    planWizardInstancePropertiesStep.values && planWizardInstancePropertiesStep.values.instancePropertiesVms.rows;
 
   const {
     playbookVms: { preMigration, postMigration },
@@ -18,7 +21,9 @@ export const createMigrationPlans = (
   const actions = vms.map(vmId => ({
     vm_id: vmId,
     pre_service: preMigration.includes(vmId),
-    post_service: postMigration.includes(vmId)
+    post_service: postMigration.includes(vmId),
+    osp_security_group: ospInstanceProperties && ospInstanceProperties[vmId].osp_security_group_id,
+    osp_flavor: ospInstanceProperties && ospInstanceProperties[vmId].osp_flavor_id
   }));
 
   return {

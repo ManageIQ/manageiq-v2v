@@ -34,15 +34,14 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
 
   componentWillUnmount() {
     const { input, rows } = this.props;
-    const minimalInstancePropertiesRows = [];
+    const minimalInstancePropertiesRows = {};
 
     rows.forEach(row => {
       const { id, osp_security_group, osp_flavor } = row;
-      minimalInstancePropertiesRows.push({
-        vm_id: id,
+      minimalInstancePropertiesRows[id] = {
         osp_security_group_id: osp_security_group.id,
         osp_flavor_id: osp_flavor.id
-      });
+      };
     });
 
     input.onChange({ rows: minimalInstancePropertiesRows, updatedInstancePropertiesRowOnStandby: {} });
