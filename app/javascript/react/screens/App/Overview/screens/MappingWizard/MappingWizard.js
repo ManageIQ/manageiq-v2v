@@ -150,7 +150,7 @@ class MappingWizard extends React.Component {
           onClose={() => {
             hideMappingWizardAction(onFinalStep);
           }}
-          title={__('Infrastructure Mapping Wizard')}
+          title={!editingMapping ? __('Create Infrastructure Mapping') : __('Edit Infrastructure Mapping')}
         />
 
         <Wizard.Body>
