@@ -149,11 +149,14 @@ export default (state = initialState, action) => {
         editingPlanId
       });
     }
-    case HIDE_PLAN_WIZARD:
+    case HIDE_PLAN_WIZARD: {
+      const { payload } = action;
       return state
         .set('hidePlanWizard', true)
         .set('planWizardId', null)
-        .set('editingPlanId', null);
+        .set('editingPlanId', null)
+        .set('shouldReloadMappings', (payload && payload.shouldReloadMappings) || false);
+    }
     case PLAN_WIZARD_EXITED:
       return state.set('planWizardVisible', false);
     case `${FETCH_PROVIDERS}_PENDING`:

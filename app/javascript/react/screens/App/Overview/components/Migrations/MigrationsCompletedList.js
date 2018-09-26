@@ -68,7 +68,9 @@ class MigrationsCompletedList extends React.Component {
       scheduleMigrationModal,
       scheduleMigrationPlan,
       scheduleMigration,
-      plansMutatedWithMappingInfo
+      plansMutatedWithMappingInfo,
+      fetchTransformationMappingsAction,
+      fetchTransformationMappingsUrl
     } = this.props;
     const sortedMigrations = this.sortedMigrations();
 
@@ -320,6 +322,8 @@ class MigrationsCompletedList extends React.Component {
                                   planId={plan.id}
                                   planName={plan.name}
                                   archived={archived}
+                                  fetchTransformationMappingsAction={fetchTransformationMappingsAction}
+                                  fetchTransformationMappingsUrl={fetchTransformationMappingsUrl}
                                 />
                               </DropdownKebab>
                             </StopPropagationOnClick>
@@ -381,7 +385,9 @@ MigrationsCompletedList.propTypes = {
   scheduleMigrationModal: PropTypes.bool,
   scheduleMigrationPlan: PropTypes.object,
   scheduleMigration: PropTypes.func,
-  plansMutatedWithMappingInfo: PropTypes.bool
+  plansMutatedWithMappingInfo: PropTypes.bool,
+  fetchTransformationMappingsAction: PropTypes.func,
+  fetchTransformationMappingsUrl: PropTypes.string
 };
 MigrationsCompletedList.defaultProps = {
   finishedTransformationPlans: [],

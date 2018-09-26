@@ -24,7 +24,12 @@ class MappingWizardClustersStep extends React.Component {
 
     fetchSourceClustersAction(fetchSourceClustersUrl);
     fetchTargetClustersAction(fetchTargetComputeUrls[targetProvider]).then(result => {
-      if (result.value && result.value.data && result.value.data.resources.length > 0) {
+      if (
+        targetProvider !== 'openstack' &&
+        result.value &&
+        result.value.data &&
+        result.value.data.resources.length > 0
+      ) {
         const hostIDsByClusterID = result.value.data.resources.reduce(
           (newObject, cluster) => ({
             ...newObject,
@@ -131,6 +136,5 @@ MappingWizardClustersStep.defaultProps = {
 
 export default reduxForm({
   form: 'mappingWizardClustersStep',
-  initialValues: { clusterMappings: [] },
   destroyOnUnmount: false
 })(MappingWizardClustersStep);

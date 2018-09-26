@@ -1,14 +1,25 @@
 import { connect } from 'react-redux';
+
 import MappingWizardGeneralStep from './MappingWizardGeneralStep';
+import * as MappingWizardGeneralStepActions from './MappingWizardGeneralStepActions';
 import { showAlertAction, hideAlertAction } from '../../MappingWizardActions';
 
-const mapStateToProps = ({ overview: { transformationMappings }, form: { mappingWizardGeneralStep } }) => ({
+import reducer from './MappingWizardGeneralStepReducer';
+
+export const reducers = { mappingWizardGeneralStep: reducer };
+
+const mapStateToProps = ({
+  mappingWizardGeneralStep: { editingMapping },
+  overview: { transformationMappings },
+  form: { mappingWizardGeneralStep }
+}) => ({
+  editingMapping,
   transformationMappings,
   targetProvider:
     mappingWizardGeneralStep && mappingWizardGeneralStep.values && mappingWizardGeneralStep.values.targetProvider
 });
 
-const actions = { showAlertAction, hideAlertAction };
+const actions = { showAlertAction, hideAlertAction, ...MappingWizardGeneralStepActions };
 
 export default connect(
   mapStateToProps,

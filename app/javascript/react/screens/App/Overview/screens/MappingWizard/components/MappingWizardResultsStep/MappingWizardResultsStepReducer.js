@@ -1,10 +1,13 @@
 import Immutable from 'seamless-immutable';
 
-import { POST_V2V_TRANSFORM_MAPPINGS } from './MappingWizardResultsStepConstants';
+import { POST_V2V_TRANSFORM_MAPPINGS, UPDATE_V2V_TRANSFORMATION_MAPPING } from './MappingWizardResultsStepConstants';
 
 const initialState = Immutable({
-  isPostingMappings: true,
+  isUpdatingMapping: false,
+  isPostingMappings: false,
+  isRejectedUpdatingMapping: false,
   isRejectedPostingMappings: false,
+  errorUpdatingMapping: null,
   errorPostingMappings: null,
   transformationMappingsResult: {}
 });
@@ -26,6 +29,20 @@ export default (state = initialState, action) => {
         .set('errorPostingMappings', action.payload)
         .set('isRejectedPostingMappings', true)
         .set('isPostingMappings', false);
+
+    case `${UPDATE_V2V_TRANSFORMATION_MAPPING}_PENDING`:
+      return state.set('isUpdatingMapping', true).set('isRejectedUpdatingMapping', false);
+    case `${UPDATE_V2V_TRANSFORMATION_MAPPING}_FULFILLED`:
+      return state
+        .set('transformationMappingsResult', action.payload.data)
+        .set('isUpdatingMapping', false)
+        .set('errorUpdatingMapping', null);
+    case `${UPDATE_V2V_TRANSFORMATION_MAPPING}_REJECTED`:
+      return state
+        .set('errorUpdatingMapping', action.payload)
+        .set('isRejectedUpdatingMapping', true)
+        .set('isUpdatingMapping', false);
+
     default:
       return state;
   }

@@ -48,3 +48,26 @@ export const multiProviderTargetLabel = (providerType, wizardStep) => {
       }
   }
 };
+
+export const updateMappings = (mappings, clusterStepMappings) =>
+  mappings.filter(mapping => {
+    const potentialAssociatedClusterStepMappings = clusterStepMappings.filter(
+      clusterStepMapping => clusterStepMapping.id === mapping.id
+    );
+
+    if (potentialAssociatedClusterStepMappings.length === 0) {
+      return false;
+    }
+
+    const associatedClusterMapping = potentialAssociatedClusterStepMappings.find(clusterStepMapping => {
+      const { nodes: sourceClusters } = clusterStepMapping;
+      const sourceClusterIds = sourceClusters.map(sourceCluster => sourceCluster.id);
+      const { nodes: mappedSourceStoragesOrNetworks } = mapping.nodes[0];
+
+      return mappedSourceStoragesOrNetworks.every(storageOrNetwork =>
+        sourceClusterIds.some(id => id === storageOrNetwork.sourceClusterId)
+      );
+    });
+
+    return associatedClusterMapping;
+  });

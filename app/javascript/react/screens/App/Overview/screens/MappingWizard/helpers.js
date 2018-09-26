@@ -1,3 +1,5 @@
+import { TRANSFORMATION_MAPPING_ITEM_DESTINATION_TYPES } from './MappingWizardConstants';
+
 export const mappingUrlRegex = /\/api\/\w{1,}\/\d{1,}/;
 
 export const createTransformationMappings = (
@@ -95,3 +97,26 @@ export const getSourceClustersWithMappings = mappings =>
     );
     return idsPerTargetCluster.concat(Array.from(new Set(idsForTargetCluster)));
   }, []);
+
+export const groupClusterTransformationItemsByDestinationId = (transformationItems = []) =>
+  transformationItems.reduce(
+    (map, item) => ({
+      ...map,
+      [item.destination_id]: map[item.destination_id] ? [...map[item.destination_id], item.source_id] : [item.source_id]
+    }),
+    {}
+  );
+
+export const getTransformationMappingItemsBySourceType = (type, transformation) =>
+  transformation.transformation_mapping_items.filter(item => item.source_type === type);
+
+export const getTransformationMappingItemsByDestinationType = (type, transformation) =>
+  transformation.transformation_mapping_items.filter(item => item.destination_type === type);
+
+export const determineTargetProvider = transformation =>
+  getTransformationMappingItemsByDestinationType(
+    TRANSFORMATION_MAPPING_ITEM_DESTINATION_TYPES.openstack.cluster,
+    transformation
+  ).length
+    ? 'openstack'
+    : 'rhevm';

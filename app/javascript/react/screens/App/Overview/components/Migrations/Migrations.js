@@ -40,7 +40,9 @@ const Migrations = ({
   scheduleMigrationPlan,
   scheduleMigration,
   plansMutatedWithMappingInfo,
-  showPlanWizardEditModeAction
+  showPlanWizardEditModeAction,
+  fetchTransformationMappingsUrl,
+  fetchTransformationMappingsAction
 }) => {
   const filterOptions = [
     MIGRATIONS_FILTERS.notStarted,
@@ -127,6 +129,8 @@ const Migrations = ({
               deleteTransformationPlanAction={deleteTransformationPlanAction}
               deleteTransformationPlanUrl={deleteTransformationPlanUrl}
               showPlanWizardEditModeAction={showPlanWizardEditModeAction}
+              fetchTransformationMappingsAction={fetchTransformationMappingsAction}
+              fetchTransformationMappingsUrl={fetchTransformationMappingsUrl}
             />
           )}
           {activeFilter === MIGRATIONS_FILTERS.inProgress && (
@@ -161,6 +165,8 @@ const Migrations = ({
               scheduleMigrationPlan={scheduleMigrationPlan}
               scheduleMigration={scheduleMigration}
               plansMutatedWithMappingInfo={plansMutatedWithMappingInfo}
+              fetchTransformationMappingsAction={fetchTransformationMappingsAction}
+              fetchTransformationMappingsUrl={fetchTransformationMappingsUrl}
             />
           )}
           {activeFilter === MIGRATIONS_FILTERS.archived && (
@@ -179,6 +185,8 @@ const Migrations = ({
               fetchTransformationPlansAction={fetchTransformationPlansAction}
               fetchTransformationPlansUrl={fetchTransformationPlansUrl}
               fetchArchivedTransformationPlansUrl={fetchArchivedTransformationPlansUrl}
+              fetchTransformationMappingsAction={fetchTransformationMappingsAction}
+              fetchTransformationMappingsUrl={fetchTransformationMappingsUrl}
             />
           )}
         </div>
@@ -219,7 +227,9 @@ Migrations.propTypes = {
   scheduleMigrationPlan: PropTypes.object,
   scheduleMigration: PropTypes.func,
   plansMutatedWithMappingInfo: PropTypes.bool,
-  showPlanWizardEditModeAction: PropTypes.func
+  showPlanWizardEditModeAction: PropTypes.func,
+  fetchTransformationMappingsAction: PropTypes.func,
+  fetchTransformationMappingsUrl: PropTypes.string
 };
 Migrations.defaultProps = {
   transformationPlans: [],

@@ -7,14 +7,15 @@ import reducer from './MappingWizardReducer';
 
 export const reducers = { mappingWizard: reducer };
 
-const mapStateToProps = ({ overview, mappingWizard, form }, ownProps) => {
+const mapStateToProps = ({ overview, mappingWizard, form, mappingWizardGeneralStep: { editingMapping } }, ownProps) => {
   const selectedOverview = mappingWizardOverviewFilter(overview);
   const selectedForms = mappingWizardFormFilter(form);
   return {
     ...mappingWizard,
     ...selectedOverview,
     ...selectedForms,
-    ...ownProps.data
+    ...ownProps.data,
+    editingMapping
   };
 };
 
