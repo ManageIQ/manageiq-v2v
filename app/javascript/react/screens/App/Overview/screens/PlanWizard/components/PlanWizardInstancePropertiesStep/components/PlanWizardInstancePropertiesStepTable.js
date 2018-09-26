@@ -4,11 +4,14 @@ import orderBy from 'lodash.orderby';
 import * as sort from 'sortabular';
 import * as resolve from 'table-resolver';
 import { compose } from 'recompose';
-import { paginate, Grid, PaginationRow, Table, PAGINATION_VIEW, Icon, Button, FormControl } from 'patternfly-react';
+import { paginate, Grid, PaginationRow, Table, PAGINATION_VIEW, Icon, Button, FormControl, OverlayTrigger, Popover } from 'patternfly-react';
 
 // Temporary import while https://github.com/patternfly/patternfly-react/issues/535 is open:
 import TableInlineEditRow from './TableInlineEditRow/TableInlineEditRow';
+
 import { allFitForVM } from '../helpers';
+import sortableHeaderCellFormatterWithChildren from './sortableHeaderCellFormatterWithChildren';
+import StopPropagationOnClick from '../../../../../../common/StopPropagationOnClick';
 
 class PlanWizardInstancePropertiesStepTable extends React.Component {
   state = {
@@ -194,6 +197,32 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
       strategy: sort.strategies.byProperty
     });
 
+    const flavorColumnPopoverContent = (
+      <Popover id="v2v-osp-flavor-info" className="popover-with-max-width">
+        <p>
+          {__('In OpenStack, flavors define the compute, memory, and storage capacity of nova computing instances.')}
+        </p>
+        <p>
+          {__('A flavor name appended with an * indicates that the flavor has CPU or memory capacity smaller than the source VM. Selecting these flavors might cause problems when the VM is migrated.')}
+        </p>
+      </Popover>
+    );
+
+    const flavorColumnPopover = (
+      <StopPropagationOnClick>
+        <OverlayTrigger
+          rootClose
+          trigger="click"
+          placement="top"
+          overlay={flavorColumnPopoverContent}
+        >
+          <Button bsStyle="link">
+            <Icon type="pf" name="info" />
+          </Button>
+        </OverlayTrigger>
+      </StopPropagationOnClick>
+    )
+
     return [
       {
         property: 'name',
@@ -310,7 +339,8 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
           },
           transforms: [sortableTransform],
           formatters: [sortingFormatter],
-          customFormatters: [Table.sortableHeaderCellFormatter]
+          customFormatters: [sortableHeaderCellFormatterWithChildren],
+          children: flavorColumnPopover
         },
         cell: {
           props: {
