@@ -208,9 +208,7 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
           {__('In OpenStack, flavors define the compute, memory, and storage capacity of nova computing instances.')}
         </p>
         <p>
-          {__(
-            'A flavor name appended with an * indicates that the flavor has CPU or memory capacity smaller than the source VM. Selecting these flavors might cause problems when the VM is migrated.'
-          )}
+          {__('A flavor name appended with an * indicates that the flavor has CPU or memory capacity smaller than the source VM. Selecting these flavors might cause problems when the VM is migrated.') /* prettier-ignore */}
         </p>
       </Popover>
     );
