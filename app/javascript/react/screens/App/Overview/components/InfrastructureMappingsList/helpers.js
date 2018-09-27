@@ -47,15 +47,19 @@ export const mapInfrastructureMappings = (transformation_mapping_items, clusters
    * }
    *
    */
-  const clusterMappingItems = transformation_mapping_items.filter(
-    item => item.destination_type.toLowerCase() === 'emscluster'
-  );
-  const datastoreMappingItems = transformation_mapping_items.filter(
-    item => item.destination_type.toLowerCase() === 'storage'
-  );
-  const networkMappingItems = transformation_mapping_items.filter(
-    item => item.destination_type.toLowerCase() === 'lan'
-  );
+  const clusterMappingItems = transformation_mapping_items.filter(item => {
+    const destination = item.destination_type.toLowerCase();
+    return destination === 'emscluster' || destination === 'cloudtenant';
+  });
+  const datastoreMappingItems = transformation_mapping_items.filter(item => {
+    const destination = item.destination_type.toLowerCase();
+    return destination === 'storage' || destination === 'cloudvolume';
+    // NOTE: we will need to change 'cloudvolume' to 'cloudvolumetype' here
+  });
+  const networkMappingItems = transformation_mapping_items.filter(item => {
+    const destination = item.destination_type.toLowerCase();
+    return destination === 'lan' || destination === 'cloudnetwork';
+  });
 
   // create unique cluster mappings by unique target cluster
   const targetClusters = {};
