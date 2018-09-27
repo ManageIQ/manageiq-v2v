@@ -135,7 +135,6 @@ class MigrationsNotStartedList extends React.Component {
                                     if (!editPlanDisabled) showPlanWizardEditModeAction(plan.id);
                                   }}
                                   disabled={editPlanDisabled}
-                                  style={{ display: 'none' }} // Edit Plan is disabled until https://github.com/ManageIQ/manageiq/pull/17989 is ready
                                 >
                                   {__('Edit')}
                                 </MenuItem>
