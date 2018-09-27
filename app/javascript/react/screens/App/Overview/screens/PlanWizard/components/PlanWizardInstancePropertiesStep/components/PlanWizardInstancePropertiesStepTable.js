@@ -20,7 +20,7 @@ import {
 // Temporary import while https://github.com/patternfly/patternfly-react/issues/535 is open:
 import TableInlineEditRow from './TableInlineEditRow/TableInlineEditRow';
 
-import { allFitForVM } from '../helpers';
+import { allFitFlavorIdsForVM } from '../helpers';
 import sortableHeaderCellFormatterWithChildren from './sortableHeaderCellFormatterWithChildren';
 import StopPropagationOnClick from '../../../../../../common/StopPropagationOnClick';
 
@@ -103,16 +103,10 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
     };
   };
 
-  getTenantByClusterId = clusterId => {
-    const { tenantsWithAttributesById, destinationTenantIdsBySourceClusterId } = this.props;
-    const tenantId = destinationTenantIdsBySourceClusterId[clusterId];
-    return tenantId && tenantsWithAttributesById[tenantId];
-  };
-
-  renderFlavorName = (flavorId, flavorName, vmId, tenant) => {
+  renderFlavorName = (flavorId, flavorName, vmId) => {
     const { bestFitFlavors } = this.props;
-    const allFit = allFitForVM(bestFitFlavors, tenant.flavors, vmId);
-    const needsAsterisk = !allFit.some(flavor => flavor.id === flavorId);
+    const allFit = allFitFlavorIdsForVM(bestFitFlavors, vmId);
+    const needsAsterisk = !allFit.some(id => id === flavorId);
     return needsAsterisk ? `${flavorName} *` : flavorName;
   };
 
@@ -125,8 +119,7 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
           : this.renderFlavorName(
               additionalData.rowData.osp_flavor.id,
               additionalData.rowData.osp_flavor.name,
-              additionalData.rowData.id,
-              this.getTenantByClusterId(additionalData.rowData.ems_cluster_id)
+              additionalData.rowData.id
             );
       return (
         <td className="editable">
@@ -135,10 +128,11 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
       );
     },
     renderEdit: (value, additionalData) => {
-      const { input } = this.props;
+      const { input, tenantsWithAttributesById, destinationTenantIdsBySourceClusterId } = this.props;
       const { optionsAttribute } = additionalData.column.cell.inlineEditSelect;
       const clusterId = additionalData.rowData.ems_cluster_id;
-      const tenant = this.getTenantByClusterId(clusterId);
+      const tenantId = destinationTenantIdsBySourceClusterId[clusterId];
+      const tenant = tenantId && tenantsWithAttributesById[tenantId];
       const options = tenant ? tenant[optionsAttribute] : [];
       const renderName = option => {
         if (optionsAttribute !== 'flavors') return option.name;
