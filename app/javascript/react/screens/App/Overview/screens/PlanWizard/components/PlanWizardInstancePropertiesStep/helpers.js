@@ -31,3 +31,10 @@ export const getVmsWithTargetClusterName = (vms, destinationTenantIdsBySourceClu
       target_cluster_name: tenant ? tenant.name : ''
     };
   });
+
+export const allFitFlavorIdsForVM = (bestFitFlavors, vmId) => {
+  const flavorsSlugPrefix = 'flavors/';
+  const flavorForVM = bestFitFlavors.find(flavor => flavor.source_href_slug === `vms/${vmId}`);
+  const allFitFlavors = flavorForVM ? flavorForVM.all_fit : [];
+  return allFitFlavors.map(flavorSlug => flavorSlug.slice(flavorsSlugPrefix.length));
+};
