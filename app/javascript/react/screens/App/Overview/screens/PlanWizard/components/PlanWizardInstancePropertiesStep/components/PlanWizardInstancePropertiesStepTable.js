@@ -4,10 +4,25 @@ import orderBy from 'lodash.orderby';
 import * as sort from 'sortabular';
 import * as resolve from 'table-resolver';
 import { compose } from 'recompose';
-import { paginate, Grid, PaginationRow, Table, PAGINATION_VIEW, Icon, Button, FormControl } from 'patternfly-react';
+import {
+  paginate,
+  Grid,
+  PaginationRow,
+  Table,
+  PAGINATION_VIEW,
+  Icon,
+  Button,
+  FormControl,
+  OverlayTrigger,
+  Popover
+} from 'patternfly-react';
 
 // Temporary import while https://github.com/patternfly/patternfly-react/issues/535 is open:
 import TableInlineEditRow from './TableInlineEditRow/TableInlineEditRow';
+
+import { allFitFlavorIdsForVM } from '../helpers';
+import sortableHeaderCellFormatterWithChildren from './sortableHeaderCellFormatterWithChildren';
+import StopPropagationOnClick from '../../../../../../common/StopPropagationOnClick';
 
 class PlanWizardInstancePropertiesStepTable extends React.Component {
   state = {
@@ -73,7 +88,7 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
       onChange: (e, { rowData, property }) => {
         const updatedInstanceProp = {
           ...rowData[property],
-          name: e.target.options[e.target.selectedIndex].text,
+          name: e.target.options[e.target.selectedIndex].getAttribute('name'),
           id: e.target.value
         };
 
@@ -87,24 +102,41 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
     };
   };
 
+  renderFlavorName = (flavorId, flavorName, vmId) => {
+    const { bestFitFlavors } = this.props;
+    const allFit = allFitFlavorIdsForVM(bestFitFlavors, vmId);
+    const needsAsterisk = !allFit.some(id => id === flavorId);
+    return needsAsterisk ? `${flavorName} *` : flavorName;
+  };
+
   inlineEditFormatter = Table.inlineEditFormatterFactory({
     isEditing: additionalData => this.inlineEditController().isEditing(additionalData),
-    renderValue: (value, additionalData) => (
-      <td className="editable">
-        <span className="static">
-          {additionalData.property === 'osp_security_group'
-            ? additionalData.rowData.osp_security_group.name
-            : additionalData.rowData.osp_flavor.name}
-        </span>
-      </td>
-    ),
+    renderValue: (value, additionalData) => {
+      const renderedValue =
+        additionalData.property === 'osp_security_group'
+          ? additionalData.rowData.osp_security_group.name
+          : this.renderFlavorName(
+              additionalData.rowData.osp_flavor.id,
+              additionalData.rowData.osp_flavor.name,
+              additionalData.rowData.id
+            );
+      return (
+        <td className="editable">
+          <span className="static">{renderedValue}</span>
+        </td>
+      );
+    },
     renderEdit: (value, additionalData) => {
-      const { tenantsWithAttributesById, destinationTenantIdsBySourceClusterId, input } = this.props;
+      const { input, tenantsWithAttributesById, destinationTenantIdsBySourceClusterId } = this.props;
       const { optionsAttribute } = additionalData.column.cell.inlineEditSelect;
       const clusterId = additionalData.rowData.ems_cluster_id;
       const tenantId = destinationTenantIdsBySourceClusterId[clusterId];
       const tenant = tenantId && tenantsWithAttributesById[tenantId];
       const options = tenant ? tenant[optionsAttribute] : [];
+      const renderName = option => {
+        if (optionsAttribute !== 'flavors') return option.name;
+        return this.renderFlavorName(option.id, option.name, additionalData.rowData.id, tenant);
+      };
       return (
         <td className="editable editing">
           <FormControl
@@ -118,7 +150,7 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
           >
             {options.map(opt => (
               <option value={opt.id} name={opt.name} key={opt.id}>
-                {opt.name}
+                {renderName(opt)}
               </option>
             ))}
           </FormControl>
@@ -168,6 +200,27 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
       getSortingColumns,
       strategy: sort.strategies.byProperty
     });
+
+    const flavorColumnPopoverContent = (
+      <Popover id="v2v-osp-flavor-info" className="popover-with-max-width">
+        <p>
+          {__('In OpenStack, flavors define the compute, memory, and storage capacity of nova computing instances.')}
+        </p>
+        <p>
+          {__('A flavor name appended with an * indicates that the flavor has CPU or memory capacity smaller than the source VM. Selecting these flavors might cause problems when the VM is migrated.') /* prettier-ignore */}
+        </p>
+      </Popover>
+    );
+
+    const flavorColumnPopover = (
+      <StopPropagationOnClick>
+        <OverlayTrigger rootClose trigger="click" placement="top" overlay={flavorColumnPopoverContent}>
+          <Button bsStyle="link">
+            <Icon type="pf" name="info" />
+          </Button>
+        </OverlayTrigger>
+      </StopPropagationOnClick>
+    );
 
     return [
       {
@@ -285,7 +338,8 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
           },
           transforms: [sortableTransform],
           formatters: [sortingFormatter],
-          customFormatters: [Table.sortableHeaderCellFormatter]
+          customFormatters: [sortableHeaderCellFormatterWithChildren],
+          children: flavorColumnPopover
         },
         cell: {
           props: {
@@ -453,7 +507,8 @@ PlanWizardInstancePropertiesStepTable.propTypes = {
   tenantsWithAttributesById: PropTypes.object,
   destinationTenantIdsBySourceClusterId: PropTypes.object,
   instancePropertiesRowsAction: PropTypes.func,
-  input: PropTypes.object
+  input: PropTypes.object,
+  bestFitFlavors: PropTypes.array
 };
 PlanWizardInstancePropertiesStepTable.defaultProps = {
   rows: [],
