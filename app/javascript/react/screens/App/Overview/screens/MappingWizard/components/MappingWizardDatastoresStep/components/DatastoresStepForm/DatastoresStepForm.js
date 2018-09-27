@@ -259,12 +259,14 @@ class DatastoresStepForm extends React.Component {
       'is-hidden': !selectedCluster
     });
 
-    const counter = (
+    const sourceCounter = (
       <DualPaneMapperCount
         selectedItems={selectedSourceDatastores.length}
         totalItems={sourceDatastoreFilter(sourceDatastores, input.value).length}
       />
     );
+
+    const targetCounter = <DualPaneMapperCount selectedItems={selectedTargetDatastore ? 1 : 0} totalItems={1} />;
 
     return (
       <div className={classes}>
@@ -281,7 +283,7 @@ class DatastoresStepForm extends React.Component {
             id="source_datastores"
             listTitle={__('Source Provider \\ Datacenter \\ Datastore')}
             loading={isFetchingSourceDatastores}
-            counter={counter}
+            counter={sourceCounter}
           >
             {sourceDatastores &&
               sourceDatastoreFilter(sourceDatastores, input.value).map(item => (
@@ -302,6 +304,7 @@ class DatastoresStepForm extends React.Component {
             id="target_datastores"
             listTitle={multiProviderTargetLabel(targetProvider, 'storage')}
             loading={isFetchingTargetDatastores}
+            counter={targetCounter}
           >
             {targetDatastores &&
               targetDatastores.map(item => (
