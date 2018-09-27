@@ -53,8 +53,8 @@ class PlanRequestDetailList extends React.Component {
 
     // sort states
     sortFields: ACTIVE_PLAN_SORT_FIELDS,
-    currentSortType: ACTIVE_PLAN_SORT_FIELDS[0],
-    isSortNumeric: ACTIVE_PLAN_SORT_FIELDS[0].isNumeric,
+    currentSortType: ACTIVE_PLAN_SORT_FIELDS[1],
+    isSortNumeric: ACTIVE_PLAN_SORT_FIELDS[1].isNumeric,
     isSortAscending: true,
 
     // pagination default states
