@@ -119,12 +119,14 @@ class ClustersStepForm extends React.Component {
 
     const { selectedTargetCluster, selectedSourceClusters, selectedMapping } = this.state;
 
-    const counter = (
+    const sourceCounter = (
       <DualPaneMapperCount
         selectedItems={selectedSourceClusters.length}
         totalItems={sourceClustersFilter(sourceClusters, input.value).length}
       />
     );
+
+    const targetCounter = <DualPaneMapperCount selectedItems={selectedTargetCluster ? 1 : 0} totalItems={1} />;
 
     const targetConversionHostWarning =
       __('At least one host in the target cluster must be enabled as a conversion host. You can continue to create an infrastructure mapping that includes the target cluster, but conversion host enablement must be completed prior to migration execution.'); // prettier-ignore
@@ -145,7 +147,7 @@ class ClustersStepForm extends React.Component {
               id="source_clusters"
               listTitle={__('Source Provider \\ Datacenter \\ Cluster')}
               loading={isFetchingSourceClusters}
-              counter={counter}
+              counter={sourceCounter}
             >
               {sourceClustersFilter(sourceClusters, input.value).map(item => (
                 <DualPaneMapperListItem
@@ -171,6 +173,7 @@ class ClustersStepForm extends React.Component {
               id="target_clusters"
               listTitle={multiProviderTargetLabel(targetProvider, 'cluster')}
               loading={isFetchingTargetClusters}
+              counter={targetCounter}
             >
               {targetClusters.map(item => {
                 const hosts = hostsByClusterID && hostsByClusterID[item.id];
