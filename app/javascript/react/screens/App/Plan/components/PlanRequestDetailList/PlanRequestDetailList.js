@@ -639,27 +639,41 @@ class PlanRequestDetailList extends React.Component {
                     </ListView.InfoItem>
                   ]}
                   actions={
-                    downloadLogInProgressTaskIds &&
-                    downloadLogInProgressTaskIds.find(element => element === task.id) ? (
-                      <label htmlFor="downloadLog">
-                        <span id="downloadLogInProgress">{__('Download log in progress...')}</span>
-                      </label>
-                    ) : (
-                      <DropdownButton
-                        id={`${task.id}-${task.descriptionPrefix}_download_log_dropdown`}
-                        title={__('Download Log')}
-                        pullRight
-                        onSelect={eventKey => this.onSelect(eventKey, task)}
+                    <DropdownButton
+                      id={`${task.id}-${task.descriptionPrefix}_download_log_dropdown`}
+                      title={__('Download Log')}
+                      pullRight
+                      onSelect={eventKey => this.onSelect(eventKey, task)}
+                      disabled={
+                        downloadLogInProgressTaskIds &&
+                        downloadLogInProgressTaskIds.find(element => element === task.id) &&
+                        !task.options.prePlaybookComplete &&
+                        !task.options.postPlaybookComplete
+                      }
+                    >
+                      {task.options.prePlaybookComplete && (
+                        <MenuItem
+                          eventKey="preMigration"
+                          disabled={downloadLogInProgressTaskIds && downloadLogInProgressTaskIds.indexOf(task.id) > -1}
+                        >
+                          {__('Pre-migration log')}
+                        </MenuItem>
+                      )}
+                      <MenuItem
+                        eventKey="migration"
+                        disabled={downloadLogInProgressTaskIds && downloadLogInProgressTaskIds.indexOf(task.id) > -1}
                       >
-                        {task.options.prePlaybookComplete && (
-                          <MenuItem eventKey="preMigration">{__('Pre-migration log')}</MenuItem>
-                        )}
-                        <MenuItem eventKey="migration">{__('Migration log')}</MenuItem>
-                        {task.options.postPlaybookComplete && (
-                          <MenuItem eventKey="postMigration">{__('Post-migration log')}</MenuItem>
-                        )}
-                      </DropdownButton>
-                    )
+                        {__('Migration log')}
+                      </MenuItem>
+                      {task.options.postPlaybookComplete && (
+                        <MenuItem
+                          eventKey="postMigration"
+                          disabled={downloadLogInProgressTaskIds && downloadLogInProgressTaskIds.indexOf(task.id) > -1}
+                        >
+                          {__('Post-migration log')}
+                        </MenuItem>
+                      )}
+                    </DropdownButton>
                   }
                   stacked
                 />
