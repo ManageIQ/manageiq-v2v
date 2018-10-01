@@ -1,6 +1,6 @@
 import URI from 'urijs';
+
 import API from '../../../../../../../../common/API';
-import objectNavigator from '../../../../../common/objectNavigator';
 import {
   FETCH_V2V_SOURCE_DATASTORES,
   FETCH_V2V_TARGET_DATASTORES,
@@ -50,8 +50,8 @@ export const fetchSourceDatastoresAction = (url, id) => {
 const _filterTargetDatastores = (response, targetProvider) => {
   const { data } = response;
 
-  if (objectNavigator(V2V_TARGET_PROVIDER_STORAGE_KEYS[targetProvider], data)) {
-    const targetDatastores = objectNavigator(V2V_TARGET_PROVIDER_STORAGE_KEYS[targetProvider], data).map(storage => ({
+  if (data[V2V_TARGET_PROVIDER_STORAGE_KEYS[targetProvider]]) {
+    const targetDatastores = data[V2V_TARGET_PROVIDER_STORAGE_KEYS[targetProvider]].map(storage => ({
       ...storage,
       providerName: data.ext_management_system.name
     }));
