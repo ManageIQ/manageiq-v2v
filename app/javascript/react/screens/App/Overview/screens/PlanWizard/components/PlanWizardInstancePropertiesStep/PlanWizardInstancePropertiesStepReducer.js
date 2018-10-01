@@ -56,7 +56,7 @@ export default (state = initialState, action) => {
         .set('isFetchingBestFitFlavor', false)
         .set('isRejectedBestFitFlavor', true);
     case SET_V2V_BEST_FIT_FLAVORS_AND_DEFAULT_SECURITY_GROUPS: {
-      const vmBestFitFlavors = action.payload;
+      const { vmBestFitFlavors, editingPlan } = action.payload;
       const instancePropertiesRowsUpdatedWithBestFlavor = [];
       vmBestFitFlavors.forEach(vmFlavor => {
         const existingInstancePropertiesRow = state.instancePropertiesRows.find(row => row.id === vmFlavor.vm_id);
@@ -64,6 +64,7 @@ export default (state = initialState, action) => {
           tenantsWithAttribute => tenantsWithAttribute.id === vmFlavor.tenant_id
         );
         const tenantFlavors = tenant && tenant.flavors;
+        const tenantSecurityGroups = tenant && tenant.security_groups;
 
         let bestFitFlavor;
         let bestFitFlavorId = vmFlavor.flavor_id;
@@ -85,10 +86,29 @@ export default (state = initialState, action) => {
         const defaultSecurityGroupId = defaultSecurityGroup && defaultSecurityGroup.id;
         const defaultSecurityGroupName = defaultSecurityGroup && defaultSecurityGroup.name;
 
+        const bestFlavor = { name: bestFitFlavorName, id: bestFitFlavorId };
+        const bestGroup = { name: defaultSecurityGroupName, id: defaultSecurityGroupId };
+
+        let preselectedFlavor;
+        let preselectedGroup;
+
+        if (editingPlan) {
+          const existingVm = editingPlan.options.config_info.actions.find(
+            vm => vm.vm_id === existingInstancePropertiesRow.id
+          );
+          if (existingVm) {
+            const existingFlavor = tenantFlavors && tenantFlavors.find(flavor => flavor.id === existingVm.osp_flavor);
+            const existingGroup =
+              tenantSecurityGroups && tenantSecurityGroups.find(group => group.id === existingVm.osp_security_group);
+            preselectedFlavor = existingFlavor && { name: existingFlavor.name, id: existingFlavor.id };
+            preselectedGroup = existingGroup && { name: existingGroup.name, id: existingGroup.id };
+          }
+        }
+
         const rowUpdatedWithBestFlavor = {
           ...existingInstancePropertiesRow,
-          osp_flavor: { name: bestFitFlavorName, id: bestFitFlavorId },
-          osp_security_group: { name: defaultSecurityGroupName, id: defaultSecurityGroupId },
+          osp_flavor: preselectedFlavor || bestFlavor,
+          osp_security_group: preselectedGroup || bestGroup,
           target_cluster_name: tenant.name
         };
         instancePropertiesRowsUpdatedWithBestFlavor.push(rowUpdatedWithBestFlavor);

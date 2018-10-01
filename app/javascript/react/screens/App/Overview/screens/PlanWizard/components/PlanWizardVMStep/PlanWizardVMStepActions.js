@@ -52,7 +52,7 @@ const _queryPreselectedVmsActionCreator = ids => dispatch => {
   return dispatch({
     type: QUERY_V2V_PLAN_VMS,
     payload: API.post(
-      '/api/vms?expand=resources&attributes=name,ems_cluster.name,allocated_disk_storage,ext_management_system.name,v_parent_blue_folder_display_path',
+      '/api/vms?expand=resources&attributes=name,ems_cluster.name,ems_cluster.id,allocated_disk_storage,ext_management_system.name,v_parent_blue_folder_display_path',
       {
         action: 'query',
         resources

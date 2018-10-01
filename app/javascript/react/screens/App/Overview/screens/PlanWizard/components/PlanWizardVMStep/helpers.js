@@ -106,6 +106,7 @@ export const _formatPreselectedVms = vmsQueryResults =>
     id: result.id,
     name: result.name,
     cluster: result.ems_cluster ? result.ems_cluster.name : '',
+    ems_cluster_id: result.ems_cluster ? result.ems_cluster.id : '',
     path: result.ext_management_system
       ? `${result.ext_management_system.name}/${result.v_parent_blue_folder_display_path}`
       : '',

@@ -16,7 +16,8 @@ class PlanWizardInstancePropertiesStep extends Component {
       instancePropertiesRowsAction,
       bestFitFlavorAction,
       bestFitFlavorUrl,
-      recalculateBestFitFlavorAndSecurityGroup
+      recalculateBestFitFlavorAndSecurityGroup,
+      editingPlan
     } = this.props;
 
     const targetTenants =
@@ -39,7 +40,7 @@ class PlanWizardInstancePropertiesStep extends Component {
             });
           });
 
-          bestFitFlavorAction(bestFitFlavorUrl, sourceAndDestinationHrefSlugsForBestFit);
+          bestFitFlavorAction(bestFitFlavorUrl, sourceAndDestinationHrefSlugsForBestFit, editingPlan);
         }
       );
 
@@ -106,7 +107,8 @@ PlanWizardInstancePropertiesStep.propTypes = {
   instancePropertiesRows: PropTypes.array,
   bestFitFlavorUrl: PropTypes.string,
   recalculateBestFitFlavorAndSecurityGroup: PropTypes.bool,
-  bestFitFlavors: PropTypes.array
+  bestFitFlavors: PropTypes.array,
+  editingPlan: PropTypes.object
 };
 
 PlanWizardInstancePropertiesStep.defaultProps = {
