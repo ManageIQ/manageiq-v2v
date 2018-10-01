@@ -14,6 +14,6 @@ export const FETCH_STORAGE_URLS = {
 };
 
 export const STORAGE_ATTRIBUTES = {
-  openstack: 'cloud_volumes',
+  openstack: 'cloud_volume_types',
   rhevm: 'storages'
 };

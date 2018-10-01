@@ -25,7 +25,7 @@ export const TRANSFORMATION_MAPPING_ITEM_SOURCE_TYPES = {
 export const TRANSFORMATION_MAPPING_ITEM_DESTINATION_TYPES = {
   openstack: {
     cluster: 'CloudTenant',
-    datastore: 'CloudVolume',
+    datastore: 'CloudVolumeType',
     network: 'CloudNetwork'
   },
   rhevm: {
