@@ -76,7 +76,6 @@ class MappingWizardGeneralStep extends React.Component {
           inline_label
           onSelect={this.onSelect}
           disabled={!!editingMapping}
-          style={{ visibility: 'hidden' }}
         />
       </Form>
     );

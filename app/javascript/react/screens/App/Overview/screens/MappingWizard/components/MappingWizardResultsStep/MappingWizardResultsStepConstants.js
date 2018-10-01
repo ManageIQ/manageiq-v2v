@@ -10,7 +10,7 @@ export const SOURCE_HREF_SLUGS = {
 export const DESTINATION_HREF_SLUGS = {
   openstack: {
     CloudTenant: '/api/cloud_tenants/',
-    CloudVolume: '/api/cloud_volumes/',
+    CloudVolumeType: '/api/cloud_volume_types/',
     CloudNetwork: '/api/cloud_networks/'
   },
   rhevm: {
