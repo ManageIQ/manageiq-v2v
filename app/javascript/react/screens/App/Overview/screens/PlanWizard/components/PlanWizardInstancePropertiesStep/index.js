@@ -4,12 +4,13 @@ import PlanWizardInstancePropertiesStep from './PlanWizardInstancePropertiesStep
 import * as PlanWizardInstancePropertiesStepActions from './PlanWizardInstancePropertiesStepActions';
 import reducer from './PlanWizardInstancePropertiesStepReducer';
 import { getVMStepSelectedVms } from '../PlanWizardAdvancedOptionsStep/helpers';
+import { findEditingPlan } from '../../PlanWizardSelectors';
 
 export const reducers = { planWizardInstancePropertiesStep: reducer };
 
 const mapStateToProps = (
   {
-    overview: { transformationMappings },
+    overview: { transformationMappings, transformationPlans, editingPlanId },
     planWizardInstancePropertiesStep,
     planWizardVMStep,
     form: {
@@ -24,10 +25,11 @@ const mapStateToProps = (
   },
   ownProps
 ) => {
+  const editingPlan = findEditingPlan(transformationPlans, editingPlanId);
   const allVms =
     vm_choice_radio === 'vms_via_csv'
       ? [...planWizardVMStep.valid_vms, ...planWizardVMStep.invalid_vms, ...planWizardVMStep.conflict_vms]
-      : planWizardVMStep.valid_vms;
+      : [...planWizardVMStep.preselected_vms, ...planWizardVMStep.valid_vms];
   const selectedMapping =
     transformationMappings &&
     infrastructure_mapping &&
@@ -41,7 +43,8 @@ const mapStateToProps = (
       osp_security_group: {},
       osp_flavor: {}
     })),
-    selectedMapping
+    selectedMapping,
+    editingPlan
   };
 };
 

@@ -23,7 +23,7 @@ export const queryTenantsWithAttributesAction = (url, tenantIds, attributes) => 
   return _getTenantWithAttributesActionCreator(uri.toString(), tenantIds);
 };
 
-export const setFlavorsAndSecurityGroups = (response, mappings, dispatch) => {
+export const setFlavorsAndSecurityGroups = (response, mappings, editingPlan, dispatch) => {
   const vmsSlugPrefix = 'vms/';
   const flavorsSlugPrefix = 'flavors/';
   const cloudTenantsSlugPrefix = 'cloud_tenants/';
@@ -41,11 +41,11 @@ export const setFlavorsAndSecurityGroups = (response, mappings, dispatch) => {
 
   dispatch({
     type: SET_V2V_BEST_FIT_FLAVORS_AND_DEFAULT_SECURITY_GROUPS,
-    payload: vmBestFitFlavors
+    payload: { vmBestFitFlavors, editingPlan }
   });
 };
 
-export const _bestFitFlavorActionCreator = (url, flavor_mappings) => dispatch => {
+export const _bestFitFlavorActionCreator = (url, flavor_mappings, editingPlan) => dispatch => {
   const postBody = {
     action: 'vm_flavor_fit',
     mappings: flavor_mappings
@@ -56,7 +56,7 @@ export const _bestFitFlavorActionCreator = (url, flavor_mappings) => dispatch =>
       API.post(url, postBody)
         .then(response => {
           resolve(response);
-          setFlavorsAndSecurityGroups(response, flavor_mappings, dispatch);
+          setFlavorsAndSecurityGroups(response, flavor_mappings, editingPlan, dispatch);
         })
         .catch(e => {
           reject(e);
@@ -65,9 +65,9 @@ export const _bestFitFlavorActionCreator = (url, flavor_mappings) => dispatch =>
   });
 };
 
-export const bestFitFlavorAction = (url, mappings) => {
+export const bestFitFlavorAction = (url, mappings, editingPlan) => {
   const uri = new URI(url);
-  return _bestFitFlavorActionCreator(uri.toString(), mappings);
+  return _bestFitFlavorActionCreator(uri.toString(), mappings, editingPlan);
 };
 
 export const instancePropertiesRowsAction = rows => dispatch =>
