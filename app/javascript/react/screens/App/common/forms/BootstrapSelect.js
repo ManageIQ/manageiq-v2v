@@ -4,6 +4,14 @@ import { Form, FormGroup, Grid, ControlLabel } from 'patternfly-react';
 import { focus } from 'redux-form';
 
 export class BootstrapSelect extends React.Component {
+  componentDidUpdate(prevProps) {
+    const { input } = this.props;
+
+    if (prevProps.pre_selected_value !== this.props.pre_selected_value) {
+      $(`#${input.name}`).selectpicker('val', this.props.pre_selected_value);
+    }
+  }
+
   componentDidMount() {
     const {
       input,
