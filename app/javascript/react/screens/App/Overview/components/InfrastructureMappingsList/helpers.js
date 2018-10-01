@@ -53,8 +53,7 @@ export const mapInfrastructureMappings = (transformation_mapping_items, clusters
   });
   const datastoreMappingItems = transformation_mapping_items.filter(item => {
     const destination = item.destination_type.toLowerCase();
-    return destination === 'storage' || destination === 'cloudvolume';
-    // NOTE: we will need to change 'cloudvolume' to 'cloudvolumetype' here
+    return destination === 'storage' || destination === 'cloudvolumetype';
   });
   const networkMappingItems = transformation_mapping_items.filter(item => {
     const destination = item.destination_type.toLowerCase();
