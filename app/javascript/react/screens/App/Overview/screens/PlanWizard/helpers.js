@@ -22,8 +22,8 @@ export const createMigrationPlans = (
     vm_id: vmId,
     pre_service: preMigration.includes(vmId),
     post_service: postMigration.includes(vmId),
-    osp_security_group: ospInstanceProperties && ospInstanceProperties[vmId].osp_security_group_id,
-    osp_flavor: ospInstanceProperties && ospInstanceProperties[vmId].osp_flavor_id
+    osp_security_group_id: ospInstanceProperties && ospInstanceProperties[vmId].osp_security_group_id,
+    osp_flavor_id: ospInstanceProperties && ospInstanceProperties[vmId].osp_flavor_id
   }));
 
   return {
