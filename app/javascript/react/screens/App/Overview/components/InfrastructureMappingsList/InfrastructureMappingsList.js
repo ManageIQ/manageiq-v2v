@@ -137,12 +137,12 @@ class InfrastructureMappingsList extends React.Component {
                   {transformationMappingsMutable.map(mapping => {
                     const associatedPlansCount = mapping.service_templates && mapping.service_templates.length;
 
-                    const { targetClusters, targetDatastores, targetNetworks } = mapInfrastructureMappings(
-                      mapping.transformation_mapping_items,
-                      clusters,
-                      datastores,
-                      networks
-                    );
+                    const {
+                      targetClusters,
+                      targetDatastores,
+                      targetNetworks,
+                      isOSPMapping
+                    } = mapInfrastructureMappings(mapping.transformation_mapping_items, clusters, datastores, networks);
 
                     let sourceClusterCount = 0;
                     let targetClusterCount = 0;
@@ -336,10 +336,14 @@ class InfrastructureMappingsList extends React.Component {
                               <React.Fragment>
                                 <Grid.Row className="infra-mapping-header-row">
                                   <Grid.Col xs={6}>
-                                    <b>{__('Source Networks')}</b>
+                                    <b>
+                                      {!isOSPMapping
+                                        ? __('Source Networks')
+                                        : __('Source Provider \\ Datacenter \\ Network')}
+                                    </b>
                                   </Grid.Col>
                                   <Grid.Col xs={6}>
-                                    <b>{__('Target Networks')}</b>
+                                    <b>{!isOSPMapping ? __('Target Networks') : __('Target Project \\ Network')}</b>
                                   </Grid.Col>
                                 </Grid.Row>
 
@@ -372,10 +376,16 @@ class InfrastructureMappingsList extends React.Component {
                               <React.Fragment>
                                 <Grid.Row className="infra-mapping-header-row">
                                   <Grid.Col xs={6}>
-                                    <b>{__('Source Datastores')}</b>
+                                    <b>
+                                      {!isOSPMapping
+                                        ? __('Source Datastores')
+                                        : __('Source Provider \\ Datacenter \\ Datastore')}
+                                    </b>
                                   </Grid.Col>
                                   <Grid.Col xs={6}>
-                                    <b>{__('Target Datastores')}</b>
+                                    <b>
+                                      {!isOSPMapping ? __('Target Datastores') : __('Target Project \\ Volume Type')}
+                                    </b>
                                   </Grid.Col>
                                 </Grid.Row>
 
@@ -408,10 +418,14 @@ class InfrastructureMappingsList extends React.Component {
                               <React.Fragment>
                                 <Grid.Row className="infra-mapping-header-row">
                                   <Grid.Col xs={6}>
-                                    <b>{__('Source Clusters')}</b>
+                                    <b>
+                                      {!isOSPMapping
+                                        ? __('Source Clusters')
+                                        : __('Source Provider \\ Datacenter \\ Cluster')}
+                                    </b>
                                   </Grid.Col>
                                   <Grid.Col xs={6}>
-                                    <b>{__('Target Clusters')}</b>
+                                    <b>{!isOSPMapping ? __('Target Clusters') : __('Target Provider \\ Project')}</b>
                                   </Grid.Col>
                                 </Grid.Row>
 

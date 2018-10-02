@@ -60,6 +60,11 @@ export const mapInfrastructureMappings = (transformation_mapping_items, clusters
     return destination === 'lan' || destination === 'cloudnetwork';
   });
 
+  const isOSPMapping =
+    clusterMappingItems.some(item => item.destination_type === 'CloudTenant') ||
+    datastoreMappingItems.some(item => item.destination_type === 'CloudVolumeType') ||
+    networkMappingItems.some(item => item.destination_type === 'CloudNetwork');
+
   // create unique cluster mappings by unique target cluster
   const targetClusters = {};
   for (const clusterMapping of clusterMappingItems) {
@@ -183,6 +188,7 @@ export const mapInfrastructureMappings = (transformation_mapping_items, clusters
   return {
     targetClusters,
     targetDatastores: missingDatastores ? null : targetDatastores,
-    targetNetworks: missingNetworks ? null : targetNetworks
+    targetNetworks: missingNetworks ? null : targetNetworks,
+    isOSPMapping
   };
 };
