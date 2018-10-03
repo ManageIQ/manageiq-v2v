@@ -1,6 +1,37 @@
 import Immutable from 'seamless-immutable';
 import { networkKey } from '../../../common/networkKey';
 
+export const getMappingType = transformation_mapping_items => {
+  const isOSPMapping =
+    transformation_mapping_items.some(item => item.destination_type === 'CloudTenant') &&
+    transformation_mapping_items.some(item => item.destination_type === 'CloudVolumeType') &&
+    transformation_mapping_items.some(item => item.destination_type === 'CloudNetwork');
+  if (isOSPMapping) return 'OSP';
+  return 'RHV';
+};
+
+export const getHeaderText = transformation_mapping_items => {
+  const mappingType = getMappingType(transformation_mapping_items);
+  if (mappingType === 'OSP') {
+    return {
+      sourceNetworks: __('Source Provider \\ Datacenter \\ Network'),
+      targetNetworks: __('Target Project \\ Network'),
+      sourceDatastores: __('Source Provider \\ Datacenter \\ Datastore'),
+      targetDatastores: __('Target Project \\ Volume Type'),
+      sourceClusters: __('Source Provider \\ Datacenter \\ Cluster'),
+      targetClusters: __('Target Provider \\ Project')
+    };
+  }
+  return {
+    sourceNetworks: __('Source Networks'),
+    targetNetworks: __('Target Networks'),
+    sourceDatastores: __('Source Datastores'),
+    targetDatastores: __('Target Datastores'),
+    sourceClusters: __('Source Clusters'),
+    targetClusters: __('Target Clusters')
+  };
+};
+
 export const mapInfrastructureMappings = (transformation_mapping_items, clusters, datastores, networks) => {
   /**
    * map the target source -> destination clusters/networks/datastores for
@@ -59,11 +90,6 @@ export const mapInfrastructureMappings = (transformation_mapping_items, clusters
     const destination = item.destination_type.toLowerCase();
     return destination === 'lan' || destination === 'cloudnetwork';
   });
-
-  const isOSPMapping =
-    clusterMappingItems.some(item => item.destination_type === 'CloudTenant') ||
-    datastoreMappingItems.some(item => item.destination_type === 'CloudVolumeType') ||
-    networkMappingItems.some(item => item.destination_type === 'CloudNetwork');
 
   // create unique cluster mappings by unique target cluster
   const targetClusters = {};
@@ -188,7 +214,6 @@ export const mapInfrastructureMappings = (transformation_mapping_items, clusters
   return {
     targetClusters,
     targetDatastores: missingDatastores ? null : targetDatastores,
-    targetNetworks: missingNetworks ? null : targetNetworks,
-    isOSPMapping
+    targetNetworks: missingNetworks ? null : targetNetworks
   };
 };

@@ -8,7 +8,7 @@ import OverviewEmptyState from '../OverviewEmptyState/OverviewEmptyState';
 import DeleteInfrastructureMappingConfirmationModal from '../../components/DeleteInfrastructureMappingConfirmationModal/DeleteInfrastructureMappingConfirmationModal';
 import MappingSource from './components/MappingSource';
 import MappingTarget from './components/MappingTarget';
-import { mapInfrastructureMappings } from './helpers';
+import { mapInfrastructureMappings, getHeaderText } from './helpers';
 
 class InfrastructureMappingsList extends React.Component {
   state = { transformationMappingsMutable: [] };
@@ -137,12 +137,13 @@ class InfrastructureMappingsList extends React.Component {
                   {transformationMappingsMutable.map(mapping => {
                     const associatedPlansCount = mapping.service_templates && mapping.service_templates.length;
 
-                    const {
-                      targetClusters,
-                      targetDatastores,
-                      targetNetworks,
-                      isOSPMapping
-                    } = mapInfrastructureMappings(mapping.transformation_mapping_items, clusters, datastores, networks);
+                    const { targetClusters, targetDatastores, targetNetworks } = mapInfrastructureMappings(
+                      mapping.transformation_mapping_items,
+                      clusters,
+                      datastores,
+                      networks
+                    );
+                    const headerText = getHeaderText(mapping.transformation_mapping_items);
 
                     let sourceClusterCount = 0;
                     let targetClusterCount = 0;
@@ -336,14 +337,10 @@ class InfrastructureMappingsList extends React.Component {
                               <React.Fragment>
                                 <Grid.Row className="infra-mapping-header-row">
                                   <Grid.Col xs={6}>
-                                    <b>
-                                      {!isOSPMapping
-                                        ? __('Source Networks')
-                                        : __('Source Provider \\ Datacenter \\ Network')}
-                                    </b>
+                                    <b>{headerText.sourceNetworks}</b>
                                   </Grid.Col>
                                   <Grid.Col xs={6}>
-                                    <b>{!isOSPMapping ? __('Target Networks') : __('Target Project \\ Network')}</b>
+                                    <b>{headerText.targetNetworks}</b>
                                   </Grid.Col>
                                 </Grid.Row>
 
@@ -376,16 +373,10 @@ class InfrastructureMappingsList extends React.Component {
                               <React.Fragment>
                                 <Grid.Row className="infra-mapping-header-row">
                                   <Grid.Col xs={6}>
-                                    <b>
-                                      {!isOSPMapping
-                                        ? __('Source Datastores')
-                                        : __('Source Provider \\ Datacenter \\ Datastore')}
-                                    </b>
+                                    <b>{headerText.sourceDatastores}</b>
                                   </Grid.Col>
                                   <Grid.Col xs={6}>
-                                    <b>
-                                      {!isOSPMapping ? __('Target Datastores') : __('Target Project \\ Volume Type')}
-                                    </b>
+                                    <b>{headerText.targetDatastores}</b>
                                   </Grid.Col>
                                 </Grid.Row>
 
@@ -418,14 +409,10 @@ class InfrastructureMappingsList extends React.Component {
                               <React.Fragment>
                                 <Grid.Row className="infra-mapping-header-row">
                                   <Grid.Col xs={6}>
-                                    <b>
-                                      {!isOSPMapping
-                                        ? __('Source Clusters')
-                                        : __('Source Provider \\ Datacenter \\ Cluster')}
-                                    </b>
+                                    <b>{headerText.sourceClusters}</b>
                                   </Grid.Col>
                                   <Grid.Col xs={6}>
-                                    <b>{!isOSPMapping ? __('Target Clusters') : __('Target Provider \\ Project')}</b>
+                                    <b>{headerText.targetClusters}</b>
                                   </Grid.Col>
                                 </Grid.Row>
 
