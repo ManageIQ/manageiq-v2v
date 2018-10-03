@@ -84,7 +84,24 @@ export default (state = initialState, action) => {
           action.payload.data.results,
           state.plan.options.config_info.actions
         );
+
+        const tasksOfMostRecentRequest = commonUtilitiesHelper.getMostRecentEntityByCreationDate(
+          action.payload.data.results
+        ).miq_request_tasks;
+        const vmsBeingProcessedInCurrentRun = tasksOfMostRecentRequest.map(task => task.source_id);
+        const tasksCompletedSuccessfullyInPriorRuns = vmTasksForRequestOfPlan.filter(
+          task => vmsBeingProcessedInCurrentRun.indexOf(task.source_id) === -1
+        );
+
+        const addTaskToNotificationAlreadySentList = [];
+        tasksCompletedSuccessfullyInPriorRuns.forEach(task => {
+          if (state.notificationsSentList.indexOf(task.id) === -1) {
+            addTaskToNotificationAlreadySentList.push(task.id);
+          }
+        });
+
         return state
+          .set('notificationsSentList', state.notificationsSentList.concat(addTaskToNotificationAlreadySentList))
           .set('planRequestTasks', vmTasksForRequestOfPlan)
           .set(
             'selectedTasksForCancel',
