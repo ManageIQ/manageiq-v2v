@@ -85,10 +85,7 @@ export default (state = initialState, action) => {
           state.plan.options.config_info.actions
         );
         return state
-          .set(
-            'planRequestTasks',
-            allVMTasksForRequestOfPlan(action.payload.data.results, state.plan.options.config_info.actions)
-          )
+          .set('planRequestTasks', vmTasksForRequestOfPlan)
           .set(
             'selectedTasksForCancel',
             incompleteCancellationTasks(
