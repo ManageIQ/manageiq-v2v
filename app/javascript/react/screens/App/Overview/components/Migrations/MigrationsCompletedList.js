@@ -70,7 +70,8 @@ class MigrationsCompletedList extends React.Component {
       scheduleMigration,
       plansMutatedWithMappingInfo,
       fetchTransformationMappingsAction,
-      fetchTransformationMappingsUrl
+      fetchTransformationMappingsUrl,
+      showEditPlanNameModalAction
     } = this.props;
     const sortedMigrations = this.sortedMigrations();
 
@@ -310,6 +311,14 @@ class MigrationsCompletedList extends React.Component {
                                     {__('Archive')}
                                   </MenuItem>
                                 )}
+                                <MenuItem
+                                  onClick={e => {
+                                    e.stopPropagation();
+                                    showEditPlanNameModalAction(plan.id);
+                                  }}
+                                >
+                                  {__('Edit')}
+                                </MenuItem>
                                 <DeleteMigrationMenuItem
                                   showConfirmModalAction={showConfirmModalAction}
                                   hideConfirmModalAction={hideConfirmModalAction}
@@ -387,7 +396,8 @@ MigrationsCompletedList.propTypes = {
   scheduleMigration: PropTypes.func,
   plansMutatedWithMappingInfo: PropTypes.bool,
   fetchTransformationMappingsAction: PropTypes.func,
-  fetchTransformationMappingsUrl: PropTypes.string
+  fetchTransformationMappingsUrl: PropTypes.string,
+  showEditPlanNameModalAction: PropTypes.func
 };
 MigrationsCompletedList.defaultProps = {
   finishedTransformationPlans: [],
