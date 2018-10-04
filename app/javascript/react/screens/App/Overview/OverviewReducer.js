@@ -43,7 +43,9 @@ import {
   FETCH_DATASTORES,
   V2V_TOGGLE_SCHEDULE_MIGRATION_MODAL,
   V2V_SCHEDULE_MIGRATION,
-  SHOW_PLAN_WIZARD_EDIT_MODE
+  SHOW_PLAN_WIZARD_EDIT_MODE,
+  FETCH_CLOUD_TENANTS,
+  FETCH_CLOUD_VOLUME_TYPES
 } from './OverviewConstants';
 
 import { planTransmutation, sufficientProviders } from './helpers';
@@ -101,6 +103,12 @@ export const initialState = Immutable({
   networks: [],
   isFetchingNetworks: false,
   isRejectedNetworks: false,
+  cloudTenants: [],
+  isFetchingCloudTenants: false,
+  isRejectedCloudTenants: false,
+  cloudVolumeTypes: [],
+  isFetchingCloudVolumeTypes: false,
+  isRejectedCloudVolumeTypes: false,
   scheduleMigrationModal: false,
   scheduleMigrationPlan: {},
   isSchedulingMigration: false,
@@ -327,6 +335,32 @@ export default (state = initialState, action) => {
         .set('errorDatastores', action.payload)
         .set('isRejectedDatastores', true)
         .set('isFetchingDatastores', false);
+    case `${FETCH_CLOUD_TENANTS}_PENDING`:
+      return state.set('isFetchingCloudTenants', true);
+    case `${FETCH_CLOUD_TENANTS}_FULFILLED`:
+      return state
+        .set('cloudTenants', action.payload.data.resources)
+        .set('isFetchingCloudTenants', false)
+        .set('isRejectedCloudTenants', false)
+        .set('errorCloudTenants', null);
+    case `${FETCH_CLOUD_TENANTS}_REJECTED`:
+      return state
+        .set('errorCloudTenants', action.payload)
+        .set('isRejectedCloudTenants', true)
+        .set('isFetchingCloudTenants', false);
+    case `${FETCH_CLOUD_VOLUME_TYPES}_PENDING`:
+      return state.set('isFetchingCloudVolumeTypes', true);
+    case `${FETCH_CLOUD_VOLUME_TYPES}_FULFILLED`:
+      return state
+        .set('cloudVolumeTypes', action.payload.data.resources)
+        .set('isFetchingCloudVolumeTypes', false)
+        .set('isRejectedCloudVolumeTypes', false)
+        .set('errorCloudVolumeTypes', null);
+    case `${FETCH_CLOUD_VOLUME_TYPES}_REJECTED`:
+      return state
+        .set('errorCloudVolumeTypes', action.payload)
+        .set('isRejectedCloudVolumeTypes', true)
+        .set('isFetchingCloudVolumeTypes', false);
     case `${CREATE_V2V_TRANSFORMATION_PLAN_REQUEST}_PENDING`:
       return state.set('isCreatingTransformationPlanRequest', action.payload);
     case `${CREATE_V2V_TRANSFORMATION_PLAN_REQUEST}_FULFILLED`:

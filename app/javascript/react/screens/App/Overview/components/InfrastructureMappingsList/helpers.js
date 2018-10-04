@@ -6,13 +6,13 @@ export const getMappingType = transformation_mapping_items => {
     transformation_mapping_items.some(item => item.destination_type === 'CloudTenant') &&
     transformation_mapping_items.some(item => item.destination_type === 'CloudVolumeType') &&
     transformation_mapping_items.some(item => item.destination_type === 'CloudNetwork');
-  if (isOSPMapping) return 'OSP';
-  return 'RHV';
+  if (isOSPMapping) return 'openstack';
+  return 'rhevm';
 };
 
 export const getHeaderText = transformation_mapping_items => {
   const mappingType = getMappingType(transformation_mapping_items);
-  if (mappingType === 'OSP') {
+  if (mappingType === 'openstack') {
     return {
       sourceNetworks: __('Source Provider \\ Datacenter \\ Network'),
       targetNetworks: __('Target Project \\ Network'),
@@ -32,7 +32,7 @@ export const getHeaderText = transformation_mapping_items => {
   };
 };
 
-export const mapInfrastructureMappings = (transformation_mapping_items, clusters, datastores, networks) => {
+export const mapInfrastructureMappings = (transformation_mapping_items, clusters, datastores, networks, cloudTenants, cloudVolumeTypes) => {
   /**
    * map the target source -> destination clusters/networks/datastores for
    * display on the infrastructure mappings list view
@@ -90,6 +90,17 @@ export const mapInfrastructureMappings = (transformation_mapping_items, clusters
     const destination = item.destination_type.toLowerCase();
     return destination === 'lan' || destination === 'cloudnetwork';
   });
+
+  const mappingType = getMappingType(transformation_mapping_items);
+
+  console.log('cloudTenants', cloudTenants);
+  console.log('cloudVolumeTypes', cloudVolumeTypes);
+
+  const cloudNetworks = cloudTenants.flatMap(tenant => tenant.cloud_networks);
+
+  console.log('cloudNetworks', cloudNetworks);
+
+  // TODO use tenants instead of clusters for the openstack case, but only for targets
 
   // create unique cluster mappings by unique target cluster
   const targetClusters = {};

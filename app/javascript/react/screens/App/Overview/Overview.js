@@ -37,12 +37,18 @@ class Overview extends React.Component {
       fetchNetworksAction,
       fetchDatastoresUrl,
       fetchDatastoresAction,
+      fetchCloudTenantsUrl,
+      fetchCloudTenantsAction,
+      fetchCloudVolumeTypesUrl,
+      fetchCloudVolumeTypesAction,
       fetchServiceTemplateAnsiblePlaybooksAction,
       fetchServiceTemplateAnsiblePlaybooksUrl
     } = this.props;
 
     fetchNetworksAction(fetchNetworksUrl);
     fetchDatastoresAction(fetchDatastoresUrl);
+    fetchCloudTenantsAction(fetchCloudTenantsUrl);
+    fetchCloudVolumeTypesAction(fetchCloudVolumeTypesUrl);
     fetchProvidersAction();
     fetchClustersAction(fetchClustersUrl);
     fetchTransformationMappingsAction(fetchTransformationMappingsUrl);
@@ -251,6 +257,12 @@ class Overview extends React.Component {
       datastores,
       isFetchingDatastores,
       isRejectedDatastores,
+      cloudTenants,
+      isFetchingCloudTenants,
+      isRejectedCloudTenants,
+      cloudVolumeTypes,
+      isFetchingCloudVolumeTypes,
+      isRejectedCloudVolumeTypes,
       toggleScheduleMigrationModal,
       scheduleMigrationModal,
       scheduleMigrationPlan,
@@ -313,6 +325,8 @@ class Overview extends React.Component {
             isFetchingClusters ||
             isFetchingDatastores ||
             isFetchingNetworks ||
+            isFetchingCloudTenants ||
+            isFetchingCloudVolumeTypes ||
             (isFetchingAllRequestsWithTasks && !requestsWithTasksPreviouslyFetched)
           }
           style={{ marginTop: 200 }}
@@ -362,9 +376,16 @@ class Overview extends React.Component {
               clusters={clusters}
               datastores={datastores}
               networks={networks}
+              cloudTenants={cloudTenants}
+              cloudVolumeTypes={cloudVolumeTypes}
               transformationMappings={transformationMappings}
               error={
-                isRejectedTransformationMappings || isRejectedClusters || isRejectedDatastores || isRejectedNetworks
+                isRejectedTransformationMappings ||
+                isRejectedClusters ||
+                isRejectedDatastores ||
+                isRejectedNetworks ||
+                isRejectedCloudTenants ||
+                isRejectedCloudVolumeTypes
               }
               createInfraMappingClick={showMappingWizardAction}
               inProgressRequestsTransformationMappings={inProgressRequestsTransformationMappings()}
@@ -453,6 +474,12 @@ Overview.propTypes = {
   datastores: PropTypes.array,
   isFetchingDatastores: PropTypes.bool,
   isRejectedDatastores: PropTypes.bool,
+  cloudTenants: PropTypes.array,
+  isFetchingCloudTenants: PropTypes.bool,
+  isRejectedCloudTenants: PropTypes.bool,
+  cloudVolumeTypes: PropTypes.array,
+  isFetchingCloudVolumeTypes: PropTypes.bool,
+  isRejectedCloudVolumeTypes: PropTypes.bool,
   migrationsFilter: PropTypes.string,
   setMigrationsFilterAction: PropTypes.func,
   retryMigrationAction: PropTypes.func,
@@ -484,6 +511,10 @@ Overview.propTypes = {
   fetchNetworksAction: PropTypes.func,
   fetchDatastoresUrl: PropTypes.string,
   fetchDatastoresAction: PropTypes.func,
+  fetchCloudTenantsUrl: PropTypes.string,
+  fetchCloudTenantsAction: PropTypes.func,
+  fetchCloudVolumeTypesUrl: PropTypes.string,
+  fetchCloudVolumeTypesAction: PropTypes.func,
   toggleScheduleMigrationModal: PropTypes.func,
   scheduleMigrationModal: PropTypes.bool,
   scheduleMigrationPlan: PropTypes.object,
@@ -530,7 +561,9 @@ Overview.defaultProps = {
     '?attributes=ext_management_system.emstype,v_parent_datacenter,ext_management_system.name,lans,storages' +
     '&expand=resources',
   fetchNetworksUrl: 'api/lans/?expand=resources',
-  fetchDatastoresUrl: 'api/data_stores?expand=resources'
+  fetchDatastoresUrl: 'api/data_stores?expand=resources',
+  fetchCloudTenantsUrl: 'api/cloud_tenants?expand=resources&attributes=ext_management_system.name,cloud_networks',
+  fetchCloudVolumeTypesUrl: 'api/cloud_volume_types?expand=resources'
 };
 
 export default Overview;

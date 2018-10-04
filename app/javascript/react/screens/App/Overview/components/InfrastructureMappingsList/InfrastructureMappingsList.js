@@ -91,6 +91,8 @@ class InfrastructureMappingsList extends React.Component {
       clusters,
       networks,
       datastores,
+      cloudTenants,
+      cloudVolumeTypes,
       error,
       inProgressRequestsTransformationMappings,
       showDeleteConfirmationModalAction,
@@ -141,7 +143,9 @@ class InfrastructureMappingsList extends React.Component {
                       mapping.transformation_mapping_items,
                       clusters,
                       datastores,
-                      networks
+                      networks,
+                      cloudTenants,
+                      cloudVolumeTypes
                     );
                     const headerText = getHeaderText(mapping.transformation_mapping_items);
 
@@ -498,6 +502,8 @@ InfrastructureMappingsList.propTypes = {
   clusters: PropTypes.array,
   datastores: PropTypes.array,
   networks: PropTypes.array,
+  cloudTenants: PropTypes.array,
+  cloudVolumeTypes: PropTypes.array,
   transformationMappings: PropTypes.array, // eslint-disable-line react/no-unused-prop-types
   error: PropTypes.bool,
   createInfraMappingClick: PropTypes.func,
