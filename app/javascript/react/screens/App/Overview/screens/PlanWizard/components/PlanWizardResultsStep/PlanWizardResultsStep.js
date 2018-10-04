@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { noop, Spinner } from 'patternfly-react';
+import { planHasBeenEdited } from './helpers';
 
 class PlanWizardResultsStep extends React.Component {
   componentDidMount() {
@@ -15,7 +16,7 @@ class PlanWizardResultsStep extends React.Component {
     } = this.props;
     if (!editingPlan) {
       postMigrationPlansAction(postPlansUrl, plansBody, planSchedule);
-    } else {
+    } else if (planHasBeenEdited(editingPlan, plansBody, planSchedule)) {
       editMigrationPlansAction(editPlansUrl, editingPlan.id, plansBody, planSchedule);
     }
   }
