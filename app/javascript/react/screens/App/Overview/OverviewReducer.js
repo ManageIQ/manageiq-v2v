@@ -18,6 +18,8 @@ import {
   SHOW_PLAN_WIZARD,
   HIDE_PLAN_WIZARD,
   PLAN_WIZARD_EXITED,
+  SHOW_EDIT_PLAN_TITLE_MODAL,
+  HIDE_EDIT_PLAN_TITLE_MODAL,
   FETCH_PROVIDERS,
   FETCH_V2V_TRANSFORMATION_MAPPINGS,
   FETCH_V2V_TRANSFORMATION_PLANS,
@@ -55,6 +57,7 @@ export const initialState = Immutable({
   hidePlanWizard: true,
   planWizardId: null, // id of infrastructure mapping to use for new plan
   editingPlanId: null, // id of migration plan to edit
+  editPlanNameModalVisible: false,
   hasSufficientProviders: false,
   isRejectedProviders: false,
   isFetchingProviders: false,
@@ -157,6 +160,10 @@ export default (state = initialState, action) => {
         .set('editingPlanId', null)
         .set('shouldReloadMappings', (payload && payload.shouldReloadMappings) || false);
     }
+    case SHOW_EDIT_PLAN_TITLE_MODAL:
+      return state.set('editingPlanId', action.editingPlanId).set('editPlanNameModalVisible', true);
+    case HIDE_EDIT_PLAN_TITLE_MODAL:
+      return state.set('editingPlanId', null).set('editPlanNameModalVisible', false);
     case PLAN_WIZARD_EXITED:
       return state.set('planWizardVisible', false);
     case `${FETCH_PROVIDERS}_PENDING`:

@@ -16,8 +16,8 @@ export const asyncValidate = (values, dispatch, props) =>
     const duplicateIsEditingPlanName = editingPlan && duplicateName === editingPlan.name;
 
     if (duplicateName && !duplicateIsEditingPlanName) {
-      props.showAlertAction(sprintf(__('Name %s already exists'), newPlanName));
-      const error = { name: 'Please enter a unique name' };
+      if (props.showAlertAction) props.showAlertAction(sprintf(__('Name %s already exists'), newPlanName));
+      const error = { name: __('Plan name already exists. Enter a unique name.') };
       reject(error);
     } else {
       resolve();
@@ -26,6 +26,6 @@ export const asyncValidate = (values, dispatch, props) =>
 
 export const onChange = (values, dispatch, props) => {
   if (props.valid) {
-    props.hideAlertAction();
+    if (props.hideAlertAction) props.hideAlertAction();
   }
 };
