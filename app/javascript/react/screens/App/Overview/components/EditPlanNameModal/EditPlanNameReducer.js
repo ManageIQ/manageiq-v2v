@@ -2,7 +2,7 @@ import Immutable from 'seamless-immutable';
 import {
   V2V_EDIT_PLAN_TITLE_SHOW_ALERT,
   V2V_EDIT_PLAN_TITLE_HIDE_ALERT,
-  V2V_POST_EDIT_PLAN_TITLE
+  V2V_POST_EDIT_PLAN_NAME
 } from './EditPlanNameConstants';
 
 const initialState = Immutable({
@@ -18,17 +18,17 @@ export default (state = initialState, action) => {
       return Immutable.merge(state, action.payload);
     case V2V_EDIT_PLAN_TITLE_HIDE_ALERT:
       return state.set('alertText', '');
-    case `${V2V_POST_EDIT_PLAN_TITLE}_PENDING`:
+    case `${V2V_POST_EDIT_PLAN_NAME}_PENDING`:
       return state
         .set('savingPlan', true)
         .set('savingPlanRejected', false)
         .set('savingPlanError', null);
-    case `${V2V_POST_EDIT_PLAN_TITLE}_FULFILLED`:
+    case `${V2V_POST_EDIT_PLAN_NAME}_FULFILLED`:
       return state
         .set('savingPlan', false)
         .set('savingPlanRejected', false)
         .set('savingPlanError', null);
-    case `${V2V_POST_EDIT_PLAN_TITLE}_REJECTED`:
+    case `${V2V_POST_EDIT_PLAN_NAME}_REJECTED`:
       return state
         .set('savingPlan', false)
         .set('savingPlanRejected', true)

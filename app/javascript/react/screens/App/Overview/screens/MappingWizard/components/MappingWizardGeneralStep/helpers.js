@@ -13,7 +13,7 @@ export const asyncValidate = (values, dispatch, props) =>
 
     if (duplicateName && !duplicateIsEditingMappingName) {
       props.showAlertAction(sprintf(__('Infrastructure mapping %s already exists'), newTransformationName));
-      const error = { name: __('Please enter a unique name') };
+      const error = { name: __('Mapping name already exists. Enter a unique name.') };
       reject(error);
     } else {
       resolve();

@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import cx from 'classnames';
 import { Field, reduxForm } from 'redux-form';
 import { required } from 'redux-form-validators';
-import { Modal, Button, Form, Alert, Spinner, noop } from 'patternfly-react';
+import { Modal, Button, Form, Spinner, noop } from 'patternfly-react';
 import { FormField } from '../../../common/forms/FormField';
 import { validation } from '../../../../../../common/constants';
 import { asyncValidate, onChange } from '../../screens/PlanWizard/components/PlanWizardGeneralStep/helpers';
@@ -38,20 +37,9 @@ class EditPlanNameModal extends React.Component {
   };
 
   render() {
-    const {
-      editPlanNameModalVisible,
-      hideEditPlanNameModalAction,
-      editPlanNameModal,
-      alertType,
-      alertText,
-      hideAlertAction,
-      savingPlan
-    } = this.props;
+    const { editPlanNameModalVisible, hideEditPlanNameModalAction, editPlanNameModal, savingPlan } = this.props;
 
     const disableConfirmButton = savingPlan || !!editPlanNameModal.syncErrors || !!editPlanNameModal.asyncErrors;
-    const alertClasses = cx('modal-alert--alert', {
-      'is-visible': alertText
-    });
 
     const formBody = (
       <Form horizontal>
@@ -95,14 +83,7 @@ class EditPlanNameModal extends React.Component {
           <Modal.CloseButton onClick={hideEditPlanNameModalAction} />
           <Modal.Title>{__('Edit Migration Plan')}</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          {!savingPlan ? formBody : spinner}
-          <div className="modal-alert">
-            <Alert className={alertClasses} type={alertType} onDismiss={hideAlertAction}>
-              {alertText}
-            </Alert>
-          </div>
-        </Modal.Body>
+        <Modal.Body>{!savingPlan ? formBody : spinner}</Modal.Body>
         <Modal.Footer>
           <Button bsStyle="default" className="btn-cancel" onClick={hideEditPlanNameModalAction}>
             {__('Cancel')}
@@ -120,9 +101,6 @@ EditPlanNameModal.propTypes = {
   editPlanNameModalVisible: PropTypes.bool,
   hideEditPlanNameModalAction: PropTypes.func,
   editPlanNameModal: PropTypes.object,
-  alertType: PropTypes.string,
-  alertText: PropTypes.string,
-  hideAlertAction: PropTypes.func,
   editingPlan: PropTypes.object,
   editMigrationPlansAction: PropTypes.func,
   editMigrationPlansUrl: PropTypes.string,
@@ -136,9 +114,6 @@ EditPlanNameModal.defaultProps = {
   editPlanNameModalVisible: false,
   hideEditPlanNameModalAction: noop,
   editPlanNameModal: {},
-  alertType: 'error',
-  alertText: '',
-  hideAlertAction: noop,
   editMigrationPlansUrl: '/api/service_templates'
 };
 
