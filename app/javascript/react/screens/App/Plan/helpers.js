@@ -25,7 +25,8 @@ const processVMTasks = vmTasks => {
       state: task.state,
       status: task.status,
       options: {},
-      cancel_requested: task.options.cancel_requested
+      cancel_requested: task.options.cancel_requested,
+      source_id: task.source_id
     };
 
     if (task.options.playbooks) {
