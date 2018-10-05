@@ -179,9 +179,8 @@ export const mapInfrastructureMappings = (
     const targetCluster = targetComputeMap[mappingType].find(c => {
       if (mappingType === 'openstack') {
         return storagesMap.openstack.find(item => item[c.id] === datastoreMapping.destination_id);
-      } else {
-        return c.id === storagesMap.rhevm[datastoreMapping.destination_id];
       }
+      return c.id === storagesMap.rhevm[datastoreMapping.destination_id];
     });
     const sourceDatastore = datastores.find(d => d.id === datastoreMapping.source_id);
     const targetDatastore = targetStoragesMap[mappingType].find(d => d.id === datastoreMapping.destination_id);

@@ -35,7 +35,7 @@ class InfrastructureMappingsList extends React.Component {
   clusterName = cluster =>
     cluster.v_parent_datacenter
       ? `${cluster.ext_management_system.name} \\ ${cluster.v_parent_datacenter} \\ ${cluster.name}`
-      : `${cluster.ext_management_system.name} \\ ${cluster.name}`
+      : `${cluster.ext_management_system.name} \\ ${cluster.name}`;
 
   toggleExpand = (mapping, key) => {
     if (key === mapping.expandType) {
@@ -509,6 +509,7 @@ InfrastructureMappingsList.propTypes = {
   networks: PropTypes.array,
   cloudTenants: PropTypes.array,
   cloudVolumeTypes: PropTypes.array,
+  cloudNetworks: PropTypes.array,
   transformationMappings: PropTypes.array, // eslint-disable-line react/no-unused-prop-types
   error: PropTypes.bool,
   createInfraMappingClick: PropTypes.func,
