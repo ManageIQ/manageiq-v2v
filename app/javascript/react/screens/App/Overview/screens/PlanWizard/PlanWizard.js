@@ -81,7 +81,7 @@ class PlanWizard extends React.Component {
   };
 
   prevStep = () => {
-    const { resetVmStepAction, resetAdvancedOptionsStepAction, setMetadataWithBackButtonClickedAction } = this.props;
+    const { resetVmStepAction, setMetadataWithBackButtonClickedAction } = this.props;
     const { activeStepIndex } = this.state;
 
     const activeStep = this.getActiveWizardStep();
@@ -91,8 +91,6 @@ class PlanWizard extends React.Component {
     if (activeStep.id === stepIDs.vmStep) {
       // reset all vm step values if going back from that step
       resetVmStepAction();
-    } else if (activeStep.id === stepIDs.advancedOptionsStep) {
-      resetAdvancedOptionsStepAction();
     }
     this.setState({ activeStepIndex: Math.max(activeStepIndex - 1, 0) });
   };
@@ -292,7 +290,6 @@ PlanWizard.propTypes = {
   setMigrationsFilterAction: PropTypes.func,
   showConfirmModalAction: PropTypes.func,
   hideConfirmModalAction: PropTypes.func,
-  resetAdvancedOptionsStepAction: PropTypes.func,
   showAlertAction: PropTypes.func,
   hideAlertAction: PropTypes.func,
   alertText: PropTypes.string,
