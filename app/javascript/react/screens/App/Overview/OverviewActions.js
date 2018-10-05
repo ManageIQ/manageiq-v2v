@@ -34,6 +34,7 @@ import {
   YES_TO_DELETE_AND_HIDE_DELETE_CONFIRMATION_MODAL,
   SHOW_PLAN_WIZARD_EDIT_MODE,
   FETCH_CLOUD_TENANTS,
+  FETCH_CLOUD_NETWORKS,
   FETCH_CLOUD_VOLUME_TYPES
 } from './OverviewConstants';
 
@@ -218,6 +219,17 @@ const _getCloudTenantsActionCreator = url => dispatch =>
 export const fetchCloudTenantsAction = url => {
   const uri = new URI(url);
   return _getCloudTenantsActionCreator(uri.toString());
+};
+
+const _getCloudNetworksActionCreator = url => dispatch =>
+  dispatch({
+    type: FETCH_CLOUD_NETWORKS,
+    payload: API.get(url)
+  });
+
+export const fetchCloudNetworksAction = url => {
+  const uri = new URI(url);
+  return _getCloudNetworksActionCreator(uri.toString());
 };
 
 const _getCloudVolumeTypesActionCreator = url => dispatch =>

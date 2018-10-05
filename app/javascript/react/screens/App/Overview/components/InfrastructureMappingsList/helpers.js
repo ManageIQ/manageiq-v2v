@@ -32,7 +32,15 @@ export const getHeaderText = transformation_mapping_items => {
   };
 };
 
-export const mapInfrastructureMappings = (transformation_mapping_items, clusters, datastores, networks, cloudTenants, cloudVolumeTypes) => {
+export const mapInfrastructureMappings = (
+  transformation_mapping_items,
+  clusters,
+  datastores,
+  networks,
+  cloudTenants,
+  cloudNetworks,
+  cloudVolumeTypes
+) => {
   /**
    * map the target source -> destination clusters/networks/datastores for
    * display on the infrastructure mappings list view
@@ -93,20 +101,26 @@ export const mapInfrastructureMappings = (transformation_mapping_items, clusters
 
   const mappingType = getMappingType(transformation_mapping_items);
 
-  console.log('cloudTenants', cloudTenants);
-  console.log('cloudVolumeTypes', cloudVolumeTypes);
+  const targetComputeMap = {
+    openstack: cloudTenants,
+    rhevm: clusters
+  };
 
-  const cloudNetworks = cloudTenants.flatMap(tenant => tenant.cloud_networks);
+  const targetStoragesMap = {
+    openstack: cloudVolumeTypes,
+    rhevm: datastores
+  };
 
-  console.log('cloudNetworks', cloudNetworks);
-
-  // TODO use tenants instead of clusters for the openstack case, but only for targets
+  const targetNetworksMap = {
+    openstack: cloudNetworks,
+    rhevm: networks
+  };
 
   // create unique cluster mappings by unique target cluster
   const targetClusters = {};
   for (const clusterMapping of clusterMappingItems) {
     const sourceCluster = clusters.find(c => c.id === clusterMapping.source_id);
-    const targetCluster = clusters.find(c => c.id === clusterMapping.destination_id);
+    const targetCluster = targetComputeMap[mappingType].find(c => c.id === clusterMapping.destination_id);
 
     if (sourceCluster && targetCluster) {
       if (targetClusters[targetCluster.id]) {
@@ -127,12 +141,15 @@ export const mapInfrastructureMappings = (transformation_mapping_items, clusters
   }
 
   // transform cluster lans and datastores to key/value lookups for use in datastore/lan mappings
-  const clusterDatastores = {};
+  const storagesMap = {
+    openstack: [],
+    rhevm: {}
+  };
   const clusterLans = {};
   clusters.forEach(cluster => {
     if (cluster.storages && cluster.storages.length) {
       cluster.storages.forEach(datastore => {
-        clusterDatastores[datastore.id] = cluster.id;
+        storagesMap.rhevm[datastore.id] = cluster.id;
       });
     }
     if (cluster.lans && cluster.lans.length) {
@@ -141,15 +158,33 @@ export const mapInfrastructureMappings = (transformation_mapping_items, clusters
       });
     }
   });
+  cloudTenants.forEach(tenant => {
+    if (tenant.cloud_volume_types && tenant.cloud_volume_types.length) {
+      tenant.cloud_volume_types.forEach(cloud_volume_type => {
+        storagesMap.openstack.push({ [cloud_volume_type.id]: tenant.id });
+      });
+    }
+    if (tenant.cloud_networks && tenant.cloud_networks.length) {
+      tenant.cloud_networks.forEach(network => {
+        clusterLans[network.id] = tenant.id;
+      });
+    }
+  });
 
   // create unique datastore mappings by unique target datastore
   const targetDatastores = {};
   let missingDatastores = false;
   for (const datastoreMapping of datastoreMappingItems) {
-    const sourceCluster = clusters.find(c => c.id === clusterDatastores[datastoreMapping.source_id]);
-    const targetCluster = clusters.find(c => c.id === clusterDatastores[datastoreMapping.destination_id]);
+    const sourceCluster = clusters.find(c => c.id === storagesMap.rhevm[datastoreMapping.source_id]);
+    const targetCluster = targetComputeMap[mappingType].find(c => {
+      if (mappingType === 'openstack') {
+        return storagesMap.openstack.find(item => item[c.id] === datastoreMapping.destination_id);
+      } else {
+        return c.id === storagesMap.rhevm[datastoreMapping.destination_id];
+      }
+    });
     const sourceDatastore = datastores.find(d => d.id === datastoreMapping.source_id);
-    const targetDatastore = datastores.find(d => d.id === datastoreMapping.destination_id);
+    const targetDatastore = targetStoragesMap[mappingType].find(d => d.id === datastoreMapping.destination_id);
 
     if (sourceCluster && targetCluster && sourceDatastore && targetDatastore) {
       const source = {
@@ -186,9 +221,9 @@ export const mapInfrastructureMappings = (transformation_mapping_items, clusters
       break;
     }
     const sourceCluster = clusters.find(c => c.id === clusterLans[networkMapping.source_id]);
-    const targetCluster = clusters.find(c => c.id === clusterLans[networkMapping.destination_id]);
+    const targetCluster = targetComputeMap[mappingType].find(c => c.id === clusterLans[networkMapping.destination_id]);
     const sn = networks.find(d => d.id === networkMapping.source_id);
-    const tn = networks.find(d => d.id === networkMapping.destination_id);
+    const tn = targetNetworksMap[mappingType].find(d => d.id === networkMapping.destination_id);
 
     if (sourceCluster && targetCluster && sn && tn) {
       const sourceNetwork = Immutable.set(sn, 'clusterId', sourceCluster.id);

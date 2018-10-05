@@ -92,6 +92,7 @@ class InfrastructureMappingsList extends React.Component {
       networks,
       datastores,
       cloudTenants,
+      cloudNetworks,
       cloudVolumeTypes,
       error,
       inProgressRequestsTransformationMappings,
@@ -145,6 +146,7 @@ class InfrastructureMappingsList extends React.Component {
                       datastores,
                       networks,
                       cloudTenants,
+                      cloudNetworks,
                       cloudVolumeTypes
                     );
                     const headerText = getHeaderText(mapping.transformation_mapping_items);

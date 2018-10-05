@@ -45,6 +45,7 @@ import {
   V2V_SCHEDULE_MIGRATION,
   SHOW_PLAN_WIZARD_EDIT_MODE,
   FETCH_CLOUD_TENANTS,
+  FETCH_CLOUD_NETWORKS,
   FETCH_CLOUD_VOLUME_TYPES
 } from './OverviewConstants';
 
@@ -106,6 +107,9 @@ export const initialState = Immutable({
   cloudTenants: [],
   isFetchingCloudTenants: false,
   isRejectedCloudTenants: false,
+  cloudNetworks: [],
+  isFetchingCloudNetworks: false,
+  isRejectedCloudNetworks: false,
   cloudVolumeTypes: [],
   isFetchingCloudVolumeTypes: false,
   isRejectedCloudVolumeTypes: false,
@@ -348,6 +352,15 @@ export default (state = initialState, action) => {
         .set('errorCloudTenants', action.payload)
         .set('isRejectedCloudTenants', true)
         .set('isFetchingCloudTenants', false);
+    case `${FETCH_CLOUD_NETWORKS}_PENDING`:
+      return state.set('isFetchingCloudNetworks', true);
+    case `${FETCH_CLOUD_NETWORKS}_FULFILLED`:
+      return state
+        .set('cloudNetworks', action.payload.data.resources)
+        .set('isFetchingCloudNetworks', false)
+        .set('isRejectedCloudNetworks', false);
+    case `${FETCH_CLOUD_NETWORKS}_REJECTED`:
+      return state.set('isRejectedCloudNetworks', true).set('isFetchingCloudNetworks', false);
     case `${FETCH_CLOUD_VOLUME_TYPES}_PENDING`:
       return state.set('isFetchingCloudVolumeTypes', true);
     case `${FETCH_CLOUD_VOLUME_TYPES}_FULFILLED`:
