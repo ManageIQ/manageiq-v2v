@@ -262,7 +262,7 @@ class PlanWizardVMStepTable extends React.Component {
       // pagination default states
       pagination: {
         page: 1,
-        perPage: 5,
+        perPage: 10,
         perPageOptions: [5, 10, 15]
       },
 
@@ -488,7 +488,7 @@ class PlanWizardVMStepTable extends React.Component {
 
     return (
       <Grid fluid>
-        <h2>{__('VMs to be Migrated')}</h2>
+        <h2>{__('Select VMs to be Migrated')}</h2>
         <Toolbar>
           <Filter>
             <Filter.TypeSelector
@@ -502,6 +502,7 @@ class PlanWizardVMStepTable extends React.Component {
               placeholder={currentFilterType.placeholder}
               onChange={e => this.updateCurrentValue(e)}
               onKeyPress={e => this.onValueKeyPress(e)}
+              className="large-filter-input"
             />
           </Filter>
           {!discoveryMode && (
