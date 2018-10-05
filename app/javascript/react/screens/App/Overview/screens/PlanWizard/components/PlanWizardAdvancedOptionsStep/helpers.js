@@ -20,3 +20,18 @@ export const preselectPlaybooksForVms = (editingPlan, vms) => {
     postMigration: vmIdsWithPostService.some(id => id === vm.id)
   }));
 };
+
+export const applyPlaybookSelections = (vms, playbookVms) =>
+  vms.map(vm => ({
+    ...vm,
+    preMigration: playbookVms.preMigration.includes(vm.id),
+    postMigration: playbookVms.postMigration.includes(vm.id)
+  }));
+
+export const updatePlaybookSelections = (vms, playbookVms) => {
+  const vmIds = vms.map(vm => vm.id);
+  return {
+    preMigration: playbookVms.preMigration.filter(id => vmIds.includes(id)),
+    postMigration: playbookVms.postMigration.filter(id => vmIds.includes(id))
+  };
+};
