@@ -32,7 +32,10 @@ class InfrastructureMappingsList extends React.Component {
     };
   }
 
-  clusterName = cluster => `${cluster.v_parent_datacenter} \\ ${cluster.ext_management_system.name} ${cluster.name}`;
+  clusterName = cluster =>
+    cluster.v_parent_datacenter
+      ? `${cluster.ext_management_system.name} \\ ${cluster.v_parent_datacenter} \\ ${cluster.name}`
+      : `${cluster.ext_management_system.name} \\ ${cluster.name}`
 
   toggleExpand = (mapping, key) => {
     if (key === mapping.expandType) {

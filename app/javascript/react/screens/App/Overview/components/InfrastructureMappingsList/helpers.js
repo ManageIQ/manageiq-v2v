@@ -14,10 +14,10 @@ export const getHeaderText = transformation_mapping_items => {
   const mappingType = getMappingType(transformation_mapping_items);
   if (mappingType === 'openstack') {
     return {
-      sourceNetworks: __('Source Provider \\ Datacenter \\ Network'),
-      targetNetworks: __('Target Project \\ Network'),
-      sourceDatastores: __('Source Provider \\ Datacenter \\ Datastore'),
-      targetDatastores: __('Target Project \\ Volume Type'),
+      sourceNetworks: __('Source Provider \\ Datacenter \\ Cluster \\ Network'),
+      targetNetworks: __('Target Provider \\ Project \\ Network'),
+      sourceDatastores: __('Source Provider \\ Datacenter \\ Cluster \\ Datastore'),
+      targetDatastores: __('Target Provider \\ Project \\ Volume Type'),
       sourceClusters: __('Source Provider \\ Datacenter \\ Cluster'),
       targetClusters: __('Target Provider \\ Project')
     };
