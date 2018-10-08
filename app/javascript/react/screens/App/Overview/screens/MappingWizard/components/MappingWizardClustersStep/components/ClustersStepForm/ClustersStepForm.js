@@ -128,8 +128,14 @@ class ClustersStepForm extends React.Component {
 
     const targetCounter = <DualPaneMapperCount selectedItems={selectedTargetCluster ? 1 : 0} totalItems={1} />;
 
-    const targetConversionHostWarning =
-      __('At least one host in the target cluster must be enabled as a conversion host. You can continue to create an infrastructure mapping that includes the target cluster, but conversion host enablement must be completed prior to migration execution.'); // prettier-ignore
+    const targetConversionHostWarnings = {
+      rhevm: __('At least one host in the target cluster must be enabled as a conversion host. You can continue to create an infrastructure mapping that includes the target cluster, but conversion host enablement must be completed prior to migration execution.'), // prettier-ignore
+      openstack: __('At least one host in the admin tenant must be enabled as a conversion host. You can continue to create an infrastructure mapping, but you must configure a conversion host in the admin tenant before migration execution.') // prettier-ignore
+    };
+
+    const adminTenant = targetProvider === 'openstack' && targetClusters.find(cluster => cluster.name === 'admin');
+    const adminTenantConversionHostEnabled =
+      adminTenant && adminTenant.tags.some(tag => tag.name === '/managed/v2v_transformation_host/true');
 
     return (
       <div className="dual-pane-mapper-form">
@@ -180,7 +186,9 @@ class ClustersStepForm extends React.Component {
                 const someConversionHostEnabled =
                   hosts &&
                   hosts.some(host => host.tags.some(tag => tag.name === '/managed/v2v_transformation_host/true'));
-                const showWarning = hosts && !isFetchingHostsQuery && !someConversionHostEnabled;
+                const showWarning =
+                  (hosts && !isFetchingHostsQuery && !someConversionHostEnabled) ||
+                  (adminTenant && !adminTenantConversionHostEnabled && item.id === adminTenant.id);
                 return (
                   <DualPaneMapperListItem
                     item={item}
@@ -193,7 +201,7 @@ class ClustersStepForm extends React.Component {
                     selected={selectedTargetCluster && selectedTargetCluster.id === item.id}
                     handleClick={this.selectTargetCluster}
                     handleKeyPress={this.selectTargetCluster}
-                    warningMessage={showWarning ? targetConversionHostWarning : ''}
+                    warningMessage={showWarning ? targetConversionHostWarnings[targetProvider] : ''}
                   />
                 );
               })}
