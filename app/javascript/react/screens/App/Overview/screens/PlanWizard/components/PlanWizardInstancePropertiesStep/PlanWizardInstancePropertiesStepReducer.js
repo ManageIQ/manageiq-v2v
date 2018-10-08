@@ -97,9 +97,10 @@ export default (state = initialState, action) => {
             vm => vm.vm_id === existingInstancePropertiesRow.id
           );
           if (existingVm) {
-            const existingFlavor = tenantFlavors && tenantFlavors.find(flavor => flavor.id === existingVm.osp_flavor);
+            const existingFlavor =
+              tenantFlavors && tenantFlavors.find(flavor => flavor.id === existingVm.osp_flavor_id);
             const existingGroup =
-              tenantSecurityGroups && tenantSecurityGroups.find(group => group.id === existingVm.osp_security_group);
+              tenantSecurityGroups && tenantSecurityGroups.find(group => group.id === existingVm.osp_security_group_id);
             preselectedFlavor = existingFlavor && { name: existingFlavor.name, id: existingFlavor.id };
             preselectedGroup = existingGroup && { name: existingGroup.name, id: existingGroup.id };
           }
