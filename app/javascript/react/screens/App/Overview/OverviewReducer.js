@@ -112,8 +112,7 @@ export const initialState = Immutable({
   serviceTemplatePlaybooks: [],
   isFetchingServiceTemplatePlaybooks: false,
   isRejectedServiceTemplatePlaybooks: false,
-  errorServiceTemplatePlaybooks: null,
-  plansMutatedWithMappingInfo: false
+  errorServiceTemplatePlaybooks: null
 });
 
 export default (state = initialState, action) => {
@@ -216,7 +215,6 @@ export default (state = initialState, action) => {
         .set('transformationPlans', planTransmutation(action.payload.data.resources, state.transformationMappings))
         .set('isFetchingTransformationPlans', false)
         .set('isRejectedTransformationPlans', false)
-        .set('plansMutatedWithMappingInfo', !state.isFetchingTransformationMappings)
         .set('errorTransformationPlans', null);
     }
     case `${FETCH_V2V_TRANSFORMATION_PLANS}_REJECTED`:

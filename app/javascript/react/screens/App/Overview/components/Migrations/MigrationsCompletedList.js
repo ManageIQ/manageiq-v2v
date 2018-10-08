@@ -68,7 +68,6 @@ class MigrationsCompletedList extends React.Component {
       scheduleMigrationModal,
       scheduleMigrationPlan,
       scheduleMigration,
-      plansMutatedWithMappingInfo,
       fetchTransformationMappingsAction,
       fetchTransformationMappingsUrl,
       showEditPlanNameModalAction
@@ -386,7 +385,6 @@ MigrationsCompletedList.propTypes = {
   scheduleMigrationModal: PropTypes.bool,
   scheduleMigrationPlan: PropTypes.object,
   scheduleMigration: PropTypes.func,
-  plansMutatedWithMappingInfo: PropTypes.bool,
   fetchTransformationMappingsAction: PropTypes.func,
   fetchTransformationMappingsUrl: PropTypes.string,
   showEditPlanNameModalAction: PropTypes.func
