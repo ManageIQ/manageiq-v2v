@@ -33,6 +33,9 @@ describe('Overview component', () => {
   let fetchClustersAction;
   let fetchNetworksAction;
   let fetchDatastoresAction;
+  let fetchCloudTenantsAction;
+  let fetchCloudNetworksAction;
+  let fetchCloudVolumeTypesAction;
   beforeEach(() => {
     showMappingWizardAction = jest.fn();
     showPlanWizardAction = jest.fn();
@@ -43,6 +46,9 @@ describe('Overview component', () => {
     fetchClustersAction = jest.fn();
     fetchNetworksAction = jest.fn();
     fetchDatastoresAction = jest.fn();
+    fetchCloudTenantsAction = jest.fn();
+    fetchCloudNetworksAction = jest.fn();
+    fetchCloudVolumeTypesAction = jest.fn();
     fetchTransformationPlansAction.mockReturnValue(Promise.resolve());
     fetchServiceTemplateAnsiblePlaybooksAction.mockReturnValue(Promise.resolve());
   });
@@ -61,6 +67,9 @@ describe('Overview component', () => {
           fetchClustersAction={fetchClustersAction}
           fetchDatastoresAction={fetchDatastoresAction}
           fetchNetworksAction={fetchNetworksAction}
+          fetchCloudTenantsAction={fetchCloudTenantsAction}
+          fetchCloudNetworksAction={fetchCloudNetworksAction}
+          fetchCloudVolumeTypesAction={fetchCloudVolumeTypesAction}
         />
       );
 
@@ -81,6 +90,9 @@ describe('Overview component', () => {
           fetchClustersAction={fetchClustersAction}
           fetchDatastoresAction={fetchDatastoresAction}
           fetchNetworksAction={fetchNetworksAction}
+          fetchCloudTenantsAction={fetchCloudTenantsAction}
+          fetchCloudNetworksAction={fetchCloudNetworksAction}
+          fetchCloudVolumeTypesAction={fetchCloudVolumeTypesAction}
         />
       );
 
@@ -103,6 +115,9 @@ describe('Overview component', () => {
           fetchClustersAction={fetchClustersAction}
           fetchDatastoresAction={fetchDatastoresAction}
           fetchNetworksAction={fetchNetworksAction}
+          fetchCloudTenantsAction={fetchCloudTenantsAction}
+          fetchCloudNetworksAction={fetchCloudNetworksAction}
+          fetchCloudVolumeTypesAction={fetchCloudVolumeTypesAction}
         />
       );
     });
