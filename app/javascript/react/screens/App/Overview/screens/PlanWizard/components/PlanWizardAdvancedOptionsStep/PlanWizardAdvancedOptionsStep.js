@@ -5,18 +5,27 @@ import { Form, Spinner } from 'patternfly-react';
 
 import PlanWizardAdvancedOptionsStepTable from './components/PlanWizardAdvancedOptionsStepTable/PlanWizardAdvancedOptionsStepTable';
 import { BootstrapSelect } from '../../../../../common/forms/BootstrapSelect';
-import { preselectPlaybooksForVms } from './helpers';
+import { preselectPlaybooksForVms, applyPlaybookSelections, updatePlaybookSelections } from './helpers';
 
 class PlanWizardAdvancedOptionsStep extends Component {
   constructor(props) {
     super(props);
 
-    if (props.vms.length === 0) {
+    if (props.pristine) {
       if (!props.editingPlan) {
         props.setVmsAction(props.vmStepSelectedVms);
       } else {
         props.setVmsAction(preselectPlaybooksForVms(props.editingPlan, props.vmStepSelectedVms));
       }
+    } else {
+      const {
+        vmStepSelectedVms,
+        advancedOptionsStepForm: {
+          values: { playbookVms }
+        }
+      } = props;
+      props.change('playbookVms', updatePlaybookSelections(vmStepSelectedVms, playbookVms));
+      props.setVmsAction(applyPlaybookSelections(vmStepSelectedVms, playbookVms));
     }
   }
 
@@ -96,7 +105,8 @@ PlanWizardAdvancedOptionsStep.propTypes = {
   setVmsAction: PropTypes.func,
   vmStepSelectedVms: PropTypes.array,
   change: PropTypes.func,
-  editingPlan: PropTypes.object
+  editingPlan: PropTypes.object,
+  pristine: PropTypes.bool
 };
 
 PlanWizardAdvancedOptionsStep.defaultProps = {
