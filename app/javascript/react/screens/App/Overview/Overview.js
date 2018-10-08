@@ -526,7 +526,7 @@ Overview.defaultProps = {
     "filter[]=type='ServiceTemplateTransformationPlan'" +
     '&filter[]=active=true' +
     '&expand=resources,schedules' +
-    '&attributes=name,description,miq_requests,options,created_at' +
+    '&attributes=name,description,miq_requests,options,created_at,transformation_mapping' +
     '&sort_by=updated_at' +
     '&sort_order=desc',
   fetchServiceTemplateAnsiblePlaybooksUrl:
@@ -539,7 +539,7 @@ Overview.defaultProps = {
     "filter[]=type='ServiceTemplateTransformationPlan'" +
     '&filter[]=archived=true' +
     '&expand=resources' +
-    '&attributes=name,description,miq_requests,options,created_at' +
+    '&attributes=name,description,miq_requests,options,created_at,transformation_mapping' +
     '&sort_by=updated_at' +
     '&sort_order=desc',
   fetchClustersUrl:

@@ -167,22 +167,14 @@ class MigrationsNotStartedList extends React.Component {
                             <Icon type="pf" name="virtual-machine" />
                             <strong>{plan.options.config_info.actions.length}</strong> {__('VMs')}
                           </ListView.InfoItem>,
-                          plansMutatedWithMappingInfo &&
-                            isMissingMapping && (
-                              <ListView.InfoItem key={`${plan.id}-infraMappingWarning`}>
-                                <Icon type="pf" name="warning-triangle-o" />{' '}
-                                {__('Infrastucture mapping does not exist.')}
-                              </ListView.InfoItem>
-                            ),
-                          plansMutatedWithMappingInfo &&
-                            !isMissingMapping && (
-                              <ListView.InfoItem key={`${plan.id}-infraMappingName`}>
-                                {plan.infraMappingName}
-                              </ListView.InfoItem>
-                            ),
-                          !plansMutatedWithMappingInfo && (
+                          isMissingMapping && (
+                            <ListView.InfoItem key={`${plan.id}-infraMappingWarning`}>
+                              <Icon type="pf" name="warning-triangle-o" /> {__('Infrastucture mapping does not exist.')}
+                            </ListView.InfoItem>
+                          ),
+                          !isMissingMapping && (
                             <ListView.InfoItem key={`${plan.id}-infraMappingName`}>
-                              {__('Loading Infrastructure Mapping info...')}
+                              {plan.infraMappingName}
                             </ListView.InfoItem>
                           ),
                           migrationScheduled && (
