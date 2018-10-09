@@ -8,7 +8,7 @@ import OverviewEmptyState from '../OverviewEmptyState/OverviewEmptyState';
 import DeleteInfrastructureMappingConfirmationModal from '../../components/DeleteInfrastructureMappingConfirmationModal/DeleteInfrastructureMappingConfirmationModal';
 import MappingSource from './components/MappingSource';
 import MappingTarget from './components/MappingTarget';
-import { mapInfrastructureMappings, getHeaderText } from './helpers';
+import { mapInfrastructureMappings, getHeaderText, getMappingType } from './helpers';
 
 class InfrastructureMappingsList extends React.Component {
   state = { transformationMappingsMutable: [] };
@@ -153,6 +153,7 @@ class InfrastructureMappingsList extends React.Component {
                       cloudVolumeTypes
                     );
                     const headerText = getHeaderText(mapping.transformation_mapping_items);
+                    const mappingType = getMappingType(mapping.transformation_mapping_items);
 
                     let sourceClusterCount = 0;
                     let targetClusterCount = 0;
@@ -182,9 +183,13 @@ class InfrastructureMappingsList extends React.Component {
                       });
                     }
 
+                    const iconName = mappingType === 'openstack' ? 'cloud-tenant' : 'virtual-machine';
+                    const iconTitle = mappingType === 'openstack' ? __('OpenStack Target') : __('RHV Target');
+
                     return (
                       <ListView.Item
                         key={mapping.id}
+                        leftContent={<ListView.Icon type="pf" name={iconName} title={iconTitle} size="md" />}
                         heading={mapping.name}
                         description={
                           <EllipsisWithTooltip id={mapping.description}>
