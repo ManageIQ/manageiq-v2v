@@ -136,6 +136,7 @@ class ClustersStepForm extends React.Component {
     const adminTenant = targetProvider === 'openstack' && targetClusters.find(cluster => cluster.name === 'admin');
     const adminTenantConversionHostEnabled =
       adminTenant && adminTenant.tags.some(tag => tag.name === '/managed/v2v_transformation_host/true');
+      // TODO this is probably not the tag we are looking for, we need to look at tags on the VMs of the admin tenant
 
     return (
       <div className="dual-pane-mapper-form">

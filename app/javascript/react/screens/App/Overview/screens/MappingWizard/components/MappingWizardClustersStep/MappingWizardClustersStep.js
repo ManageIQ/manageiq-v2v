@@ -25,19 +25,25 @@ class MappingWizardClustersStep extends React.Component {
     fetchSourceClustersAction(fetchSourceClustersUrl);
     fetchTargetClustersAction(fetchTargetComputeUrls[targetProvider]).then(result => {
       if (
-        targetProvider !== 'openstack' &&
         result.value &&
         result.value.data &&
         result.value.data.resources.length > 0
       ) {
-        const hostIDsByClusterID = result.value.data.resources.reduce(
-          (newObject, cluster) => ({
-            ...newObject,
-            [cluster.id]: cluster.hosts.map(host => host.id)
-          }),
-          {}
-        );
-        queryHostsAction(queryHostsUrl, hostIDsByClusterID);
+        if (targetProvider === 'openstack') {
+          const adminTenant = result.value.data.resources.find(cluster => cluster.name === 'admin');
+          const adminVmIds = adminTenant.vms.map(vm => vm.id);
+          console.log('admin tenant vm ids:', adminVmIds);
+          // TODO query VMs of the admin tenant, look for tags on those VMs
+        } else {
+          const hostIDsByClusterID = result.value.data.resources.reduce(
+            (newObject, cluster) => ({
+              ...newObject,
+              [cluster.id]: cluster.hosts.map(host => host.id)
+            }),
+            {}
+          );
+          queryHostsAction(queryHostsUrl, hostIDsByClusterID);
+        }
       }
     });
   };
@@ -130,7 +136,7 @@ MappingWizardClustersStep.defaultProps = {
       '/api/clusters?expand=resources' +
       '&attributes=ext_management_system.emstype,v_parent_datacenter,ext_management_system.name,hosts' +
       '&filter[]=ext_management_system.emstype=rhevm',
-    openstack: '/api/cloud_tenants?expand=resources&attributes=ext_management_system.name,tags'
+    openstack: '/api/cloud_tenants?expand=resources&attributes=ext_management_system.name,tags,vms'
   }
 };
 
