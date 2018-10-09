@@ -7,13 +7,10 @@ import Routes from './config/Routes';
 import NotificationList from './screens/App/common/NotificationList';
 import createReducers from '../redux/reducers';
 
-// todo: convert this to use ManageIQ.redux.addReducer, ManageIQ.redux.store
-// <Provider store={store}>{componentRegistry.markup(component, data, store)}</Provider>,
 class App extends React.Component {
   constructor(props) {
     super(props);
     ManageIQ.redux.addReducer(createReducers());
-    ManageIQ.redux.store.dispatch({ type: 'init' });
   }
 
   render() {

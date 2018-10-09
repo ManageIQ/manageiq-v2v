@@ -1,4 +1,3 @@
-import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 import { reducers as notificationListReducers } from '../../react/screens/App/common/NotificationList';
 import { reducers as planReducers } from '../../react/screens/App/Plan';
@@ -16,22 +15,21 @@ import { reducers as planWizardAdvancedOptionsStepReducers } from '../../react/s
 import { reducers as planWizardInstancePropertiesStepReducers } from '../../react/screens/App/Overview/screens/PlanWizard/components/PlanWizardInstancePropertiesStep';
 import { reducers as editPlanNameReducers } from '../../react/screens/App/Overview/components/EditPlanNameModal';
 
-export default () =>
-  combineReducers({
-    ...notificationListReducers,
-    ...planReducers,
-    ...overviewReducers,
-    ...mappingWizardReducers,
-    ...mappingWizardGeneralStepReducers,
-    ...mappingWizardClustersStepReducers,
-    ...mappingWizardDatastoresStepReducers,
-    ...mappingWizardNetworksStepReducers,
-    ...mappingWizardResultsStepReducers,
-    ...planWizardReducers,
-    ...planWizardVMStepReducers,
-    ...planWizardResultsStepReducers,
-    ...planWizardAdvancedOptionsStepReducers,
-    ...planWizardInstancePropertiesStepReducers,
-    ...editPlanNameReducers,
-    form: formReducer
-  });
+export default () => ({
+  ...notificationListReducers,
+  ...planReducers,
+  ...overviewReducers,
+  ...mappingWizardReducers,
+  ...mappingWizardGeneralStepReducers,
+  ...mappingWizardClustersStepReducers,
+  ...mappingWizardDatastoresStepReducers,
+  ...mappingWizardNetworksStepReducers,
+  ...mappingWizardResultsStepReducers,
+  ...planWizardReducers,
+  ...planWizardVMStepReducers,
+  ...planWizardResultsStepReducers,
+  ...planWizardAdvancedOptionsStepReducers,
+  ...planWizardInstancePropertiesStepReducers,
+  ...editPlanNameReducers,
+  form: formReducer
+});
