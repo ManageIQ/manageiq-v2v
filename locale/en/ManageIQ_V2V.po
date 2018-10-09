@@ -103,6 +103,9 @@ msgstr ""
 msgid "%s of %s VMs"
 msgstr ""
 
+msgid "%s of %s item selected"
+msgstr ""
+
 msgid "%s of %s items selected"
 msgstr ""
 
@@ -110,6 +113,9 @@ msgid "%s of %s selected"
 msgstr ""
 
 msgid "%s successfully archived"
+msgstr ""
+
+msgid "%s successfully deleted"
 msgstr ""
 
 msgid "%s%% Complete"
@@ -122,6 +128,9 @@ msgid "0 GBs Migrated"
 msgstr ""
 
 msgid "1 day %02s:%02s:%02s"
+msgstr ""
+
+msgid "A flavor name appended with an * indicates that the flavor has CPU or memory capacity smaller than the source VM. Selecting these flavors might cause problems when the VM is migrated."
 msgstr ""
 
 msgid "Acquire Transformation Host"
@@ -155,6 +164,12 @@ msgid "Are you sure you want to archive migration plan "
 msgstr ""
 
 msgid "Are you sure you want to delete the infrastructure mapping %s ?"
+msgstr ""
+
+msgid "Are you sure you want to delete the migration plan "
+msgstr ""
+
+msgid "Are you sure you want to import a new file?"
 msgstr ""
 
 msgid "Are you sure you want to unschedule plan %s  targted to run on %s ?"
@@ -259,7 +274,7 @@ msgstr ""
 msgid "Creating Infrastructure Mapping..."
 msgstr ""
 
-msgid "Creating Migration Plans..."
+msgid "Creating Migration Plan..."
 msgstr ""
 
 msgid "Datastores"
@@ -272,6 +287,9 @@ msgid "Delete"
 msgstr ""
 
 msgid "Delete Infrastructure Mapping"
+msgstr ""
+
+msgid "Delete Migration Plan"
 msgstr ""
 
 msgid "Description"
@@ -289,10 +307,16 @@ msgstr ""
 msgid "Download Log"
 msgstr ""
 
-msgid "Download log in progress..."
+msgid "Duplicate VM"
 msgstr ""
 
-msgid "Duplicate VM"
+msgid "Edit"
+msgstr ""
+
+msgid "Edit Infrastructure Mapping"
+msgstr ""
+
+msgid "Edit Migration Plan"
 msgstr ""
 
 msgid "Elapsed Time"
@@ -307,10 +331,13 @@ msgstr ""
 msgid "Error Creating Infrastructure Mapping"
 msgstr ""
 
-msgid "Error Creating Migration Plans"
+msgid "Error Creating Migration Plan"
 msgstr ""
 
 msgid "Error Retrieving Clusters"
+msgstr ""
+
+msgid "Error Saving Migration Plan"
 msgstr ""
 
 msgid "Error Validating VMs"
@@ -376,6 +403,12 @@ msgstr ""
 msgid "Import a file including a list of VMs to be migrated."
 msgstr ""
 
+msgid "Importing a new VM list file will overwrite the contents of the existing list."
+msgstr ""
+
+msgid "In OpenStack, flavors define the compute, memory, and storage capacity of nova computing instances."
+msgstr ""
+
 msgid "In Progress Plans"
 msgstr ""
 
@@ -391,22 +424,28 @@ msgstr ""
 msgid "Infrastructure mapping %s already exists"
 msgstr ""
 
-msgid "Infrastructure mapping does not exist"
-msgstr ""
-
 msgid "Infrastucture mapping does not exist."
 msgstr ""
 
 msgid "Initiating migration. This might take a few minutes."
 msgstr ""
 
+msgid "Instance Properties"
+msgstr ""
+
 msgid "Invalid file extension. Only .csv files are accepted."
+msgstr ""
+
+msgid "Loading Infrastructure Mapping info..."
 msgstr ""
 
 msgid "Loading Infrastructure Mappings..."
 msgstr ""
 
 msgid "Loading Migration Plans..."
+msgstr ""
+
+msgid "Loading OpenStack Properties..."
 msgstr ""
 
 msgid "Loading Wizard..."
@@ -544,6 +583,9 @@ msgstr ""
 msgid "No VMs were returned for this migration plan. Please refresh and try again."
 msgstr ""
 
+msgid "No clusters found."
+msgstr ""
+
 msgid "No mappings have been added yet"
 msgstr ""
 
@@ -559,6 +601,15 @@ msgstr ""
 msgid "Ok"
 msgstr ""
 
+msgid "OpenStack Flavor"
+msgstr ""
+
+msgid "OpenStack Security Group"
+msgstr ""
+
+msgid "Overwrite Import File"
+msgstr ""
+
 msgid "Path"
 msgstr ""
 
@@ -569,6 +620,15 @@ msgid "Please refresh and try again."
 msgstr ""
 
 msgid "Please wait while infrastructure mapping is created."
+msgstr ""
+
+msgid "Please wait while infrastructure mapping is saved."
+msgstr ""
+
+msgid "Please wait while the migration plan is created."
+msgstr ""
+
+msgid "Please wait while the migration plan is saved."
 msgstr ""
 
 msgid "Post Migration Select %s"
@@ -652,7 +712,16 @@ msgstr ""
 msgid "Running playbook service %s. This might take a few minutes."
 msgstr ""
 
+msgid "Save"
+msgstr ""
+
 msgid "Save migration plan to run later"
+msgstr ""
+
+msgid "Saving Infrastructure Mapping..."
+msgstr ""
+
+msgid "Saving Migration Plan..."
 msgstr ""
 
 msgid "Schedule"
@@ -733,6 +802,9 @@ msgstr ""
 msgid "Source Provider \\\\ Datacenter \\\\ Network"
 msgstr ""
 
+msgid "Start Time"
+msgstr ""
+
 msgid "Start migration immediately"
 msgstr ""
 
@@ -757,13 +829,13 @@ msgstr ""
 msgid "Target Provider"
 msgstr ""
 
-msgid "Target Provider \\\\ Cloud Volume"
-msgstr ""
-
 msgid "Target Provider \\\\ Datacenter \\\\ Cluster"
 msgstr ""
 
 msgid "Target Provider \\\\ Project"
+msgstr ""
+
+msgid "Target Provider \\\\ Volume Type"
 msgstr ""
 
 msgid "The VMWare and Red Hat Virtualization providers must be configured before attempting a migration."
@@ -826,6 +898,9 @@ msgstr ""
 msgid "Update description of VM"
 msgstr ""
 
+msgid "V2V"
+msgstr ""
+
 msgid "VM Name"
 msgstr ""
 
@@ -863,6 +938,9 @@ msgid "VM unavailable for migration, no information available"
 msgstr ""
 
 msgid "VMs"
+msgstr ""
+
+msgid "VMs Selected for Migration"
 msgstr ""
 
 msgid "VMs successfully migrated."
