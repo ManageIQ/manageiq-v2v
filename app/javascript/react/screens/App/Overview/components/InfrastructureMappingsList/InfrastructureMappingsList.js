@@ -8,7 +8,7 @@ import OverviewEmptyState from '../OverviewEmptyState/OverviewEmptyState';
 import DeleteInfrastructureMappingConfirmationModal from '../../components/DeleteInfrastructureMappingConfirmationModal/DeleteInfrastructureMappingConfirmationModal';
 import MappingSource from './components/MappingSource';
 import MappingTarget from './components/MappingTarget';
-import { mapInfrastructureMappings } from './helpers';
+import { mapInfrastructureMappings, getHeaderText } from './helpers';
 
 class InfrastructureMappingsList extends React.Component {
   state = { transformationMappingsMutable: [] };
@@ -32,7 +32,10 @@ class InfrastructureMappingsList extends React.Component {
     };
   }
 
-  clusterName = cluster => `${cluster.v_parent_datacenter} \\ ${cluster.ext_management_system.name} ${cluster.name}`;
+  clusterName = cluster =>
+    cluster.v_parent_datacenter
+      ? `${cluster.ext_management_system.name} \\ ${cluster.v_parent_datacenter} \\ ${cluster.name}`
+      : `${cluster.ext_management_system.name} \\ ${cluster.name}`;
 
   toggleExpand = (mapping, key) => {
     if (key === mapping.expandType) {
@@ -91,6 +94,9 @@ class InfrastructureMappingsList extends React.Component {
       clusters,
       networks,
       datastores,
+      cloudTenants,
+      cloudNetworks,
+      cloudVolumeTypes,
       error,
       inProgressRequestsTransformationMappings,
       showDeleteConfirmationModalAction,
@@ -141,8 +147,12 @@ class InfrastructureMappingsList extends React.Component {
                       mapping.transformation_mapping_items,
                       clusters,
                       datastores,
-                      networks
+                      networks,
+                      cloudTenants,
+                      cloudNetworks,
+                      cloudVolumeTypes
                     );
+                    const headerText = getHeaderText(mapping.transformation_mapping_items);
 
                     let sourceClusterCount = 0;
                     let targetClusterCount = 0;
@@ -336,10 +346,10 @@ class InfrastructureMappingsList extends React.Component {
                               <React.Fragment>
                                 <Grid.Row className="infra-mapping-header-row">
                                   <Grid.Col xs={6}>
-                                    <b>{__('Source Networks')}</b>
+                                    <b>{headerText.sourceNetworks}</b>
                                   </Grid.Col>
                                   <Grid.Col xs={6}>
-                                    <b>{__('Target Networks')}</b>
+                                    <b>{headerText.targetNetworks}</b>
                                   </Grid.Col>
                                 </Grid.Row>
 
@@ -372,10 +382,10 @@ class InfrastructureMappingsList extends React.Component {
                               <React.Fragment>
                                 <Grid.Row className="infra-mapping-header-row">
                                   <Grid.Col xs={6}>
-                                    <b>{__('Source Datastores')}</b>
+                                    <b>{headerText.sourceDatastores}</b>
                                   </Grid.Col>
                                   <Grid.Col xs={6}>
-                                    <b>{__('Target Datastores')}</b>
+                                    <b>{headerText.targetDatastores}</b>
                                   </Grid.Col>
                                 </Grid.Row>
 
@@ -408,10 +418,10 @@ class InfrastructureMappingsList extends React.Component {
                               <React.Fragment>
                                 <Grid.Row className="infra-mapping-header-row">
                                   <Grid.Col xs={6}>
-                                    <b>{__('Source Clusters')}</b>
+                                    <b>{headerText.sourceClusters}</b>
                                   </Grid.Col>
                                   <Grid.Col xs={6}>
-                                    <b>{__('Target Clusters')}</b>
+                                    <b>{headerText.targetClusters}</b>
                                   </Grid.Col>
                                 </Grid.Row>
 
@@ -497,6 +507,9 @@ InfrastructureMappingsList.propTypes = {
   clusters: PropTypes.array,
   datastores: PropTypes.array,
   networks: PropTypes.array,
+  cloudTenants: PropTypes.array,
+  cloudVolumeTypes: PropTypes.array,
+  cloudNetworks: PropTypes.array,
   transformationMappings: PropTypes.array, // eslint-disable-line react/no-unused-prop-types
   error: PropTypes.bool,
   createInfraMappingClick: PropTypes.func,
