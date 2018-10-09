@@ -18,8 +18,8 @@ const processVMTasks = vmTasks => {
       delivered_on: new Date(task.options.delivered_on),
       updated_on: new Date(task.updated_on),
       completed:
-        task.message === STATUS_MESSAGE_KEYS.VM_MIGRATIONS_COMPLETED ||
-        task.message === STATUS_MESSAGE_KEYS.VM_MIGRATIONS_FAILED ||
+        task.message === STATUS_MESSAGE_KEYS.VM_TRANSFORMATIONS_COMPLETED ||
+        task.message === STATUS_MESSAGE_KEYS.VM_TRANSFORMATIONS_FAILED ||
         task.message === STATUS_MESSAGE_KEYS.FAILED ||
         (!V2V_MIGRATION_STATUS_MESSAGES[task.message] && task.state === 'finished'),
       state: task.state,
