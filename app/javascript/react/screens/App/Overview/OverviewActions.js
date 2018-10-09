@@ -34,7 +34,10 @@ import {
   V2V_SET_MIGRATIONS_FILTER,
   V2V_TOGGLE_SCHEDULE_MIGRATION_MODAL,
   YES_TO_DELETE_AND_HIDE_DELETE_CONFIRMATION_MODAL,
-  SHOW_PLAN_WIZARD_EDIT_MODE
+  SHOW_PLAN_WIZARD_EDIT_MODE,
+  FETCH_CLOUD_TENANTS,
+  FETCH_CLOUD_NETWORKS,
+  FETCH_CLOUD_VOLUME_TYPES
 } from './OverviewConstants';
 
 import { SET_V2V_EDITING_MAPPING } from './screens/MappingWizard/components/MappingWizardGeneralStep/MappingWizardGeneralStepConstants';
@@ -220,6 +223,39 @@ const _getNetworksActionCreator = url => dispatch =>
 export const fetchNetworksAction = url => {
   const uri = new URI(url);
   return _getNetworksActionCreator(uri.toString());
+};
+
+const _getCloudTenantsActionCreator = url => dispatch =>
+  dispatch({
+    type: `${FETCH_CLOUD_TENANTS}`,
+    payload: API.get(url)
+  });
+
+export const fetchCloudTenantsAction = url => {
+  const uri = new URI(url);
+  return _getCloudTenantsActionCreator(uri.toString());
+};
+
+const _getCloudNetworksActionCreator = url => dispatch =>
+  dispatch({
+    type: FETCH_CLOUD_NETWORKS,
+    payload: API.get(url)
+  });
+
+export const fetchCloudNetworksAction = url => {
+  const uri = new URI(url);
+  return _getCloudNetworksActionCreator(uri.toString());
+};
+
+const _getCloudVolumeTypesActionCreator = url => dispatch =>
+  dispatch({
+    type: `${FETCH_CLOUD_VOLUME_TYPES}`,
+    payload: API.get(url)
+  });
+
+export const fetchCloudVolumeTypesAction = url => {
+  const uri = new URI(url);
+  return _getCloudVolumeTypesActionCreator(uri.toString());
 };
 
 export const setMigrationsFilterAction = filter => ({

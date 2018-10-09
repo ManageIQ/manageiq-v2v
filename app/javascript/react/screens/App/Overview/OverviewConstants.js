@@ -25,6 +25,9 @@ export const DELETE_TRANSFORMATION_PLAN = 'DELETE_TRANSFORMATION_PLAN';
 export const FETCH_PROVIDERS = 'FETCH_PROVIDERS';
 export const FETCH_NETWORKS = 'FETCH_NETWORKS';
 export const FETCH_DATASTORES = 'FETCH_DATASTORES';
+export const FETCH_CLOUD_TENANTS = 'FETCH_CLOUD_TENANTS';
+export const FETCH_CLOUD_NETWORKS = 'FETCH_CLOUD_NETWORKS';
+export const FETCH_CLOUD_VOLUME_TYPES = 'FETCH_CLOUD_VOLUME_TYPES';
 export const FETCH_PROVIDERS_URL =
   '/api/providers?expand=resources&attributes=type&filter[]=or%20type=ManageIQ::Providers::Redhat::InfraManager&filter[]=type=ManageIQ::Providers::Vmware::InfraManager';
 
