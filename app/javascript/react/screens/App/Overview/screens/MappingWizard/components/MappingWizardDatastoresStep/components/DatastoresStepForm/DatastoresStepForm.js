@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import { Icon } from 'patternfly-react';
 
 import DualPaneMapper from '../../../DualPaneMapper/DualPaneMapper';
 import DualPaneMapperList from '../../../DualPaneMapper/DualPaneMapperList';
@@ -242,6 +243,13 @@ class DatastoresStepForm extends React.Component {
     input.onChange([]);
   };
 
+  allDatastoresMapped = filteredDatastores =>
+    !filteredDatastores.length && (
+      <div className="dual-pane-mapper-item">
+        <Icon type="pf" name="ok" /> {__('All source datastores have been mapped.')}
+      </div>
+    );
+
   render() {
     const {
       sourceDatastores,
@@ -285,20 +293,24 @@ class DatastoresStepForm extends React.Component {
             loading={isFetchingSourceDatastores}
             counter={sourceCounter}
           >
-            {sourceDatastores &&
-              sourceDatastoreFilter(sourceDatastores, input.value).map(item => (
-                <DualPaneMapperListItem
-                  item={item}
-                  text={sourceDatastoreInfo(item)}
-                  key={item.id}
-                  selected={
-                    selectedSourceDatastores &&
-                    selectedSourceDatastores.some(sourceDatastore => sourceDatastore.id === item.id)
-                  }
-                  handleClick={this.selectSourceDatastore}
-                  handleKeyPress={this.selectSourceDatastore}
-                />
-              ))}
+            {sourceDatastores && (
+              <React.Fragment>
+                {sourceDatastoreFilter(sourceDatastores, input.value).map(item => (
+                  <DualPaneMapperListItem
+                    item={item}
+                    text={sourceDatastoreInfo(item)}
+                    key={item.id}
+                    selected={
+                      selectedSourceDatastores &&
+                      selectedSourceDatastores.some(sourceDatastore => sourceDatastore.id === item.id)
+                    }
+                    handleClick={this.selectSourceDatastore}
+                    handleKeyPress={this.selectSourceDatastore}
+                  />
+                ))}
+                {this.allDatastoresMapped(sourceDatastoreFilter(sourceDatastores, input.value))}
+              </React.Fragment>
+            )}
           </DualPaneMapperList>
           <DualPaneMapperList
             id="target_datastores"

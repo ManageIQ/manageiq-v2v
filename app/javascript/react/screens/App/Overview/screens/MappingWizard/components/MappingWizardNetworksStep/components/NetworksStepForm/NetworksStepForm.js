@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import { Icon } from 'patternfly-react';
 
 import DualPaneMapper from '../../../DualPaneMapper/DualPaneMapper';
 import DualPaneMapperList from '../../../DualPaneMapper/DualPaneMapperList';
@@ -268,6 +269,13 @@ class NetworksStepForm extends React.Component {
     input.onChange([]);
   };
 
+  allNetworksMapped = filteredNetworks =>
+    !filteredNetworks.length && (
+      <div className="dual-pane-mapper-item">
+        <Icon type="pf" name="ok" /> {__('All source networks have been mapped.')}
+      </div>
+    );
+
   render() {
     const {
       groupedSourceNetworks,
@@ -311,24 +319,28 @@ class NetworksStepForm extends React.Component {
             loading={isFetchingSourceNetworks}
             counter={sourceCounter}
           >
-            {groupedSourceNetworks &&
-              sourceNetworksFilter(groupedSourceNetworks, input.value).map(sourceNetwork => (
-                <DualPaneMapperListItem
-                  item={sourceNetwork}
-                  text={`${sourceNetwork.providerName} \\ ${selectedCluster.v_parent_datacenter} \\ ${
-                    sourceNetwork.name
-                  }`}
-                  key={sourceNetwork.id}
-                  selected={
-                    selectedSourceNetworks &&
-                    selectedSourceNetworks.some(
-                      selectedSourceNetwork => networkKey(selectedSourceNetwork) === networkKey(sourceNetwork)
-                    )
-                  }
-                  handleClick={this.selectSourceNetwork}
-                  handleKeyPress={this.selectSourceNetwork}
-                />
-              ))}
+            {groupedSourceNetworks && (
+              <React.Fragment>
+                {sourceNetworksFilter(groupedSourceNetworks, input.value).map(sourceNetwork => (
+                  <DualPaneMapperListItem
+                    item={sourceNetwork}
+                    text={`${sourceNetwork.providerName} \\ ${selectedCluster.v_parent_datacenter} \\ ${
+                      sourceNetwork.name
+                    }`}
+                    key={sourceNetwork.id}
+                    selected={
+                      selectedSourceNetworks &&
+                      selectedSourceNetworks.some(
+                        selectedSourceNetwork => networkKey(selectedSourceNetwork) === networkKey(sourceNetwork)
+                      )
+                    }
+                    handleClick={this.selectSourceNetwork}
+                    handleKeyPress={this.selectSourceNetwork}
+                  />
+                ))}
+                {this.allNetworksMapped(sourceNetworksFilter(groupedSourceNetworks, input.value))}
+              </React.Fragment>
+            )}
           </DualPaneMapperList>
           <DualPaneMapperList
             id="target_networks"
