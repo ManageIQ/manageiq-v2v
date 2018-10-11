@@ -105,6 +105,14 @@ class ClustersStepForm extends React.Component {
       </div>
     );
 
+  allClustersMapped = (filteredClusters, loading) =>
+    !filteredClusters.length &&
+    !loading && (
+      <div className="dual-pane-mapper-item">
+        <Icon type="pf" name="ok" /> {__('All source clusters have been mapped.')}
+      </div>
+    );
+
   render() {
     const {
       sourceClusters,
@@ -166,6 +174,7 @@ class ClustersStepForm extends React.Component {
                 />
               ))}
               {this.noClustersFound(sourceClusters, isFetchingSourceClusters)}
+              {this.allClustersMapped(sourceClustersFilter(sourceClusters, input.value), isFetchingSourceClusters)}
             </DualPaneMapperList>
           )}
           {targetClusters && (
