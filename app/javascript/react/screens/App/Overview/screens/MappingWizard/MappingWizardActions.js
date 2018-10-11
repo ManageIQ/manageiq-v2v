@@ -1,24 +1,25 @@
 import { destroy } from 'redux-form';
-import { HIDE_MAPPING_WIZARD, MAPPING_WIZARD_EXITED } from '../../OverviewConstants';
 
 import {
   V2V_SET_TRANSFORMATIONS_BODY,
   V2V_SHOW_WARNING_MODAL,
   V2V_HIDE_WARNING_MODAL,
   V2V_SHOW_ALERT,
-  V2V_HIDE_ALERT
+  V2V_HIDE_ALERT,
+  V2V_MAPPING_WIZARD_EXITED,
+  V2V_HIDE_MAPPING_WIZARD
 } from './MappingWizardConstants';
 
 export const hideMappingWizardAction = shouldReloadMappings => dispatch => {
   dispatch({
-    type: HIDE_MAPPING_WIZARD,
+    type: V2V_HIDE_MAPPING_WIZARD,
     payload: { shouldReloadMappings }
   });
 };
 
 export const mappingWizardExitedAction = () => dispatch => {
   dispatch({
-    type: MAPPING_WIZARD_EXITED
+    type: V2V_MAPPING_WIZARD_EXITED
   });
 
   // Dispatch reset for all the wizard step forms here

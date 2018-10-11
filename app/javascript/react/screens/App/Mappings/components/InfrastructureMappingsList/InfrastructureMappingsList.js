@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import Immutable from 'seamless-immutable';
 import EllipsisWithTooltip from 'react-ellipsis-with-tooltip';
 import { Button, Icon, ListView, Grid } from 'patternfly-react';
+
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
 import ShowWizardEmptyState from '../../../common/ShowWizardEmptyState/ShowWizardEmptyState';
-import DeleteInfrastructureMappingConfirmationModal from '../../components/DeleteInfrastructureMappingConfirmationModal/DeleteInfrastructureMappingConfirmationModal';
+import DeleteInfrastructureMappingConfirmationModal from '../DeleteInfrastructureMappingConfirmationModal/DeleteInfrastructureMappingConfirmationModal';
 import MappingSource from './components/MappingSource';
 import MappingTarget from './components/MappingTarget';
 import { mapInfrastructureMappings, getHeaderText } from './helpers';

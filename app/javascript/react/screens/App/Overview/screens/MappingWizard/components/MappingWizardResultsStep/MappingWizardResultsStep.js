@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { noop, Button, Spinner } from 'patternfly-react';
 
 import { transformationHasBeenEdited } from './helpers';
+import { FETCH_TRANSFORMATION_MAPPINGS_URL } from '../../../../../Mappings/MappingsConstants';
 
 class MappingWizardResultsStep extends React.Component {
   componentDidMount() {
@@ -12,15 +13,21 @@ class MappingWizardResultsStep extends React.Component {
       transformationsBody,
       editingMapping,
       updateTransformationMappingAction,
-      targetProvider
+      targetProvider,
+      fetchTransformationMappingsAction,
+      fetchTransformationMappingsUrl
     } = this.props;
 
     if (editingMapping) {
       if (transformationHasBeenEdited(editingMapping, transformationsBody, targetProvider)) {
-        updateTransformationMappingAction(postMappingsUrl, editingMapping.id, transformationsBody);
+        updateTransformationMappingAction(postMappingsUrl, editingMapping.id, transformationsBody).then(() => {
+          fetchTransformationMappingsAction(fetchTransformationMappingsUrl);
+        });
       }
     } else {
-      postTransformMappingsAction(postMappingsUrl, transformationsBody);
+      postTransformMappingsAction(postMappingsUrl, transformationsBody).then(() => {
+        fetchTransformationMappingsAction(fetchTransformationMappingsUrl);
+      });
     }
   }
 
@@ -42,6 +49,11 @@ class MappingWizardResultsStep extends React.Component {
     </div>
   );
 
+  onContinueToPlanWizard = id => {
+    this.props.continueToPlanAction(id);
+    this.props.redirectTo('/');
+  };
+
   render() {
     const {
       isPostingMappings,
@@ -49,8 +61,7 @@ class MappingWizardResultsStep extends React.Component {
       isUpdatingMapping,
       transformationMappingsResult,
       errorPostingMappings, // eslint-disable-line no-unused-vars
-      transformationsBody,
-      continueToPlanAction
+      transformationsBody
     } = this.props;
 
     if (isPostingMappings) {
@@ -78,7 +89,7 @@ class MappingWizardResultsStep extends React.Component {
             {sprintf(__('All mappings in %s have been mapped.'), transformationsBody.name)}
           </h3>
           <p className="blank-slate-pf-secondary-action">
-            <Button bsStyle="link" onClick={() => continueToPlanAction(transformationMappingsResult.id)}>
+            <Button bsStyle="link" onClick={() => this.onContinueToPlanWizard(transformationMappingsResult.id)}>
               {__('Continue to the plan wizard')}
             </Button>
             {__('to create a migration plan using the infrastructure mapping.')}
@@ -101,7 +112,9 @@ MappingWizardResultsStep.propTypes = {
   editingMapping: PropTypes.object,
   updateTransformationMappingAction: PropTypes.func,
   isUpdatingMapping: PropTypes.bool,
-  targetProvider: PropTypes.string
+  targetProvider: PropTypes.string,
+  fetchTransformationMappingsAction: PropTypes.func,
+  fetchTransformationMappingsUrl: PropTypes.string
 };
 MappingWizardResultsStep.defaultProps = {
   postMappingsUrl: 'api/transformation_mappings',
@@ -111,6 +124,7 @@ MappingWizardResultsStep.defaultProps = {
   isRejectedPostingMappings: false,
   errorPostingMappings: null,
   transformationMappingsResult: null,
-  continueToPlanAction: noop
+  continueToPlanAction: noop,
+  fetchTransformationMappingsUrl: FETCH_TRANSFORMATION_MAPPINGS_URL
 };
 export default MappingWizardResultsStep;

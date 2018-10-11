@@ -1,16 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, Breadcrumb, CardGrid, Spinner } from 'patternfly-react';
+
 import Toolbar from '../../../config/Toolbar';
 import * as AggregateCards from './components/AggregateCards';
-import InfrastructureMappingsList from './components/InfrastructureMappingsList/InfrastructureMappingsList';
 import Migrations from './components/Migrations/Migrations';
 import ShowWizardEmptyState from '../common/ShowWizardEmptyState/ShowWizardEmptyState';
 import componentRegistry from '../../../../components/componentRegistry';
 import getMostRecentRequest from '../common/getMostRecentRequest';
 import ConfirmModal from '../common/ConfirmModal';
 import EditPlanNameModal from './components/EditPlanNameModal';
-import { MIGRATIONS_FILTERS } from './OverviewConstants';
+import {
+  MIGRATIONS_FILTERS,
+  FETCH_TRANSFORMATION_PLANS_URL,
+  FETCH_ARCHIVED_TRANSFORMATION_PLANS_URL
+} from './OverviewConstants';
+import { FETCH_TRANSFORMATION_MAPPINGS_URL } from '../Mappings/MappingsConstants';
 
 class Overview extends React.Component {
   constructor(props) {
@@ -27,34 +32,16 @@ class Overview extends React.Component {
   componentDidMount() {
     const {
       fetchProvidersAction,
-      fetchClustersUrl,
-      fetchClustersAction,
       fetchTransformationMappingsUrl,
       fetchTransformationMappingsAction,
       fetchTransformationPlansUrl,
       fetchTransformationPlansAction,
       fetchArchivedTransformationPlansUrl,
-      fetchNetworksUrl,
-      fetchNetworksAction,
-      fetchDatastoresUrl,
-      fetchDatastoresAction,
-      fetchCloudTenantsUrl,
-      fetchCloudTenantsAction,
-      fetchCloudNetworksUrl,
-      fetchCloudNetworksAction,
-      fetchCloudVolumeTypesUrl,
-      fetchCloudVolumeTypesAction,
       fetchServiceTemplateAnsiblePlaybooksAction,
       fetchServiceTemplateAnsiblePlaybooksUrl
     } = this.props;
 
-    fetchNetworksAction(fetchNetworksUrl);
-    fetchDatastoresAction(fetchDatastoresUrl);
-    fetchCloudTenantsAction(fetchCloudTenantsUrl);
-    fetchCloudNetworksAction(fetchCloudNetworksUrl);
-    fetchCloudVolumeTypesAction(fetchCloudVolumeTypesUrl);
     fetchProvidersAction();
-    fetchClustersAction(fetchClustersUrl);
     fetchTransformationMappingsAction(fetchTransformationMappingsUrl);
 
     const p1 = fetchTransformationPlansAction({
@@ -86,7 +73,7 @@ class Overview extends React.Component {
       fetchTransformationPlansUrl,
       fetchTransformationPlansAction,
       planWizardId,
-      continueToPlanAction,
+      showPlanWizardAction,
       shouldReloadMappings
     } = this.props;
     const { hasMadeInitialPlansFetch } = this.state;
@@ -94,18 +81,13 @@ class Overview extends React.Component {
     if (shouldReloadMappings !== nextProps.shouldReloadMappings && nextProps.shouldReloadMappings) {
       fetchTransformationMappingsAction(fetchTransformationMappingsUrl);
     } else if (isContinuingToPlan !== nextProps.isContinuingToPlan && !nextProps.isContinuingToPlan) {
-      continueToPlanAction(planWizardId);
+      showPlanWizardAction(planWizardId);
     }
 
     // kill interval if a wizard becomes visble
-    if (nextProps.mappingWizardVisible || nextProps.planWizardVisible) {
+    if (nextProps.planWizardVisible) {
       this.stopPolling();
-    } else if (
-      !nextProps.mappingWizardVisible &&
-      !nextProps.planWizardVisible &&
-      hasMadeInitialPlansFetch &&
-      !this.pollingInterval
-    ) {
+    } else if (!nextProps.planWizardVisible && hasMadeInitialPlansFetch && !this.pollingInterval) {
       fetchTransformationPlansAction({
         url: fetchTransformationPlansUrl,
         archived: false
@@ -115,7 +97,7 @@ class Overview extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { finishedTransformationPlans, addNotificationAction, yesToDeleteInfrastructureMapping } = this.props;
+    const { finishedTransformationPlans, addNotificationAction } = this.props;
     const { hasMadeInitialPlansFetch } = this.state;
 
     if (hasMadeInitialPlansFetch && finishedTransformationPlans.length > prevProps.finishedTransformationPlans.length) {
@@ -142,22 +124,6 @@ class Overview extends React.Component {
           },
           persistent: !planStatus,
           actionEnabled: true
-        });
-      });
-    }
-
-    if (yesToDeleteInfrastructureMapping) {
-      const {
-        deleteInfrastructureMappingAction,
-        mappingToDelete,
-        fetchTransformationPlansAction,
-        fetchTransformationPlansUrl
-      } = this.props;
-
-      deleteInfrastructureMappingAction(mappingToDelete).then(() => {
-        fetchTransformationPlansAction({
-          url: fetchTransformationPlansUrl,
-          archived: false
         });
       });
     }
@@ -209,8 +175,6 @@ class Overview extends React.Component {
     const {
       isFetchingProviders,
       hasSufficientProviders,
-      showMappingWizardAction,
-      showMappingWizardEditModeAction,
       showPlanWizardAction,
       mappingWizardVisible,
       planWizardVisible,
@@ -219,7 +183,6 @@ class Overview extends React.Component {
       hideEditPlanNameModalAction,
       transformationMappings,
       isFetchingTransformationMappings,
-      isRejectedTransformationMappings,
       transformationPlans,
       allRequestsWithTasks,
       reloadCard,
@@ -229,20 +192,9 @@ class Overview extends React.Component {
       activeTransformationPlans,
       serviceTemplatePlaybooks,
       finishedTransformationPlans,
-      finishedWithErrorTransformationPlans,
       isCreatingTransformationPlanRequest,
-      clusters,
-      isFetchingClusters,
-      isRejectedClusters,
       migrationsFilter,
       setMigrationsFilterAction,
-      showDeleteConfirmationModal,
-      showDeleteConfirmationModalAction,
-      hideDeleteConfirmationModalAction,
-      setMappingToDeleteAction,
-      mappingToDelete,
-      yesToDeleteInfrastructureMappingAction,
-      deleteInfrastructureMappingAction,
       confirmModalVisible,
       confirmModalOptions,
       showConfirmModalAction,
@@ -258,21 +210,6 @@ class Overview extends React.Component {
       deleteTransformationPlanUrl,
       isFetchingArchivedTransformationPlans,
       addNotificationAction,
-      networks,
-      isFetchingNetworks,
-      isRejectedNetworks,
-      datastores,
-      isFetchingDatastores,
-      isRejectedDatastores,
-      cloudTenants,
-      isFetchingCloudTenants,
-      isRejectedCloudTenants,
-      cloudNetworks,
-      isFetchingCloudNetworks,
-      isRejectedCloudNetworks,
-      cloudVolumeTypes,
-      isFetchingCloudVolumeTypes,
-      isRejectedCloudVolumeTypes,
       toggleScheduleMigrationModal,
       scheduleMigrationModal,
       scheduleMigrationPlan,
@@ -281,15 +218,6 @@ class Overview extends React.Component {
       fetchTransformationMappingsUrl,
       fetchTransformationMappingsAction
     } = this.props;
-
-    const inProgressRequestsTransformationMappings = () => {
-      const mappings = [];
-
-      if (activeTransformationPlans) {
-        activeTransformationPlans.map(plan => mappings.push(plan.options.config_info.transformation_mapping_id));
-      }
-      return mappings;
-    };
 
     const aggregateDataCards = (
       <div className="row-cards-pf">
@@ -331,88 +259,51 @@ class Overview extends React.Component {
           loading={
             isFetchingProviders ||
             isFetchingTransformationMappings ||
-            isFetchingClusters ||
-            isFetchingDatastores ||
-            isFetchingNetworks ||
-            isFetchingCloudTenants ||
-            isFetchingCloudNetworks ||
-            isFetchingCloudVolumeTypes ||
             (isFetchingAllRequestsWithTasks && !requestsWithTasksPreviouslyFetched)
           }
           style={{ marginTop: 200 }}
         >
-          {(!!transformationMappings.length ||
-            !!transformationPlans.length ||
-            !!archivedTransformationPlans.length) && (
-            <Migrations
-              activeFilter={migrationsFilter}
-              setActiveFilter={setMigrationsFilterAction}
-              transformationPlans={transformationPlans}
-              allRequestsWithTasks={allRequestsWithTasks}
-              archivedTransformationPlans={archivedTransformationPlans}
-              allArchivedPlanRequestsWithTasks={allArchivedPlanRequestsWithTasks}
-              reloadCard={reloadCard}
-              notStartedPlans={notStartedTransformationPlans}
-              activeTransformationPlans={activeTransformationPlans}
-              serviceTemplatePlaybooks={serviceTemplatePlaybooks}
-              finishedTransformationPlans={finishedTransformationPlans}
-              createMigrationPlanClick={showPlanWizardAction}
-              createTransformationPlanRequestClick={this.createTransformationPlanRequest}
-              isCreatingTransformationPlanRequest={isCreatingTransformationPlanRequest}
-              redirectTo={this.redirectTo}
-              showConfirmModalAction={showConfirmModalAction}
-              hideConfirmModalAction={hideConfirmModalAction}
-              fetchTransformationPlansAction={fetchTransformationPlansAction}
-              fetchTransformationPlansUrl={fetchTransformationPlansUrl}
-              fetchArchivedTransformationPlansUrl={fetchArchivedTransformationPlansUrl}
-              isFetchingArchivedTransformationPlans={isFetchingArchivedTransformationPlans}
-              archiveTransformationPlanAction={archiveTransformationPlanAction}
-              archiveTransformationPlanUrl={archiveTransformationPlanUrl}
-              deleteTransformationPlanAction={deleteTransformationPlanAction}
-              deleteTransformationPlanUrl={deleteTransformationPlanUrl}
-              addNotificationAction={addNotificationAction}
-              toggleScheduleMigrationModal={toggleScheduleMigrationModal}
-              scheduleMigrationModal={scheduleMigrationModal}
-              scheduleMigrationPlan={scheduleMigrationPlan}
-              scheduleMigration={scheduleMigration}
-              showPlanWizardEditModeAction={showPlanWizardEditModeAction}
-              fetchTransformationMappingsUrl={fetchTransformationMappingsUrl}
-              fetchTransformationMappingsAction={fetchTransformationMappingsAction}
-              showEditPlanNameModalAction={showEditPlanNameModalAction}
-            />
-          )}
           {hasSufficientProviders ? (
-            <InfrastructureMappingsList
-              clusters={clusters}
-              datastores={datastores}
-              networks={networks}
-              cloudTenants={cloudTenants}
-              cloudNetworks={cloudNetworks}
-              cloudVolumeTypes={cloudVolumeTypes}
-              transformationMappings={transformationMappings}
-              error={
-                isRejectedTransformationMappings ||
-                isRejectedClusters ||
-                isRejectedDatastores ||
-                isRejectedNetworks ||
-                isRejectedCloudTenants ||
-                isRejectedCloudNetworks ||
-                isRejectedCloudVolumeTypes
-              }
-              createInfraMappingClick={showMappingWizardAction}
-              inProgressRequestsTransformationMappings={inProgressRequestsTransformationMappings()}
-              showDeleteConfirmationModalAction={showDeleteConfirmationModalAction}
-              setMappingToDeleteAction={setMappingToDeleteAction}
-              showDeleteConfirmationModal={showDeleteConfirmationModal}
-              hideDeleteConfirmationModalAction={hideDeleteConfirmationModalAction}
-              mappingToDelete={mappingToDelete}
-              yesToDeleteInfrastructureMappingAction={yesToDeleteInfrastructureMappingAction}
-              notStartedTransformationPlans={notStartedTransformationPlans}
-              finishedWithErrorTransformationPlans={finishedWithErrorTransformationPlans}
-              deleteInfrastructureMappingAction={deleteInfrastructureMappingAction}
-              migrationPlansExist={transformationPlans.length > 0 || archivedTransformationPlans.length > 0}
-              showMappingWizardEditModeAction={showMappingWizardEditModeAction}
-            />
+            (!!transformationMappings.length ||
+              !!transformationPlans.length ||
+              !!archivedTransformationPlans.length) && (
+              <Migrations
+                activeFilter={migrationsFilter}
+                setActiveFilter={setMigrationsFilterAction}
+                transformationPlans={transformationPlans}
+                allRequestsWithTasks={allRequestsWithTasks}
+                archivedTransformationPlans={archivedTransformationPlans}
+                allArchivedPlanRequestsWithTasks={allArchivedPlanRequestsWithTasks}
+                reloadCard={reloadCard}
+                notStartedPlans={notStartedTransformationPlans}
+                activeTransformationPlans={activeTransformationPlans}
+                serviceTemplatePlaybooks={serviceTemplatePlaybooks}
+                finishedTransformationPlans={finishedTransformationPlans}
+                createMigrationPlanClick={showPlanWizardAction}
+                createTransformationPlanRequestClick={this.createTransformationPlanRequest}
+                isCreatingTransformationPlanRequest={isCreatingTransformationPlanRequest}
+                redirectTo={this.redirectTo}
+                showConfirmModalAction={showConfirmModalAction}
+                hideConfirmModalAction={hideConfirmModalAction}
+                fetchTransformationPlansAction={fetchTransformationPlansAction}
+                fetchTransformationPlansUrl={fetchTransformationPlansUrl}
+                fetchArchivedTransformationPlansUrl={fetchArchivedTransformationPlansUrl}
+                isFetchingArchivedTransformationPlans={isFetchingArchivedTransformationPlans}
+                archiveTransformationPlanAction={archiveTransformationPlanAction}
+                archiveTransformationPlanUrl={archiveTransformationPlanUrl}
+                deleteTransformationPlanAction={deleteTransformationPlanAction}
+                deleteTransformationPlanUrl={deleteTransformationPlanUrl}
+                addNotificationAction={addNotificationAction}
+                toggleScheduleMigrationModal={toggleScheduleMigrationModal}
+                scheduleMigrationModal={scheduleMigrationModal}
+                scheduleMigrationPlan={scheduleMigrationPlan}
+                scheduleMigration={scheduleMigration}
+                showPlanWizardEditModeAction={showPlanWizardEditModeAction}
+                fetchTransformationMappingsUrl={fetchTransformationMappingsUrl}
+                fetchTransformationMappingsAction={fetchTransformationMappingsAction}
+                showEditPlanNameModalAction={showEditPlanNameModalAction}
+              />
+            )
           ) : (
             <ShowWizardEmptyState
               description={
@@ -474,7 +365,6 @@ Overview.propTypes = {
   notStartedTransformationPlans: PropTypes.array,
   activeTransformationPlans: PropTypes.array,
   finishedTransformationPlans: PropTypes.array,
-  finishedWithErrorTransformationPlans: PropTypes.array,
   transformationMappings: PropTypes.array,
   fetchTransformationMappingsUrl: PropTypes.string,
   fetchTransformationMappingsAction: PropTypes.func,
@@ -487,35 +377,10 @@ Overview.propTypes = {
   continueToPlanAction: PropTypes.func,
   showPlanWizardEditModeAction: PropTypes.func,
   shouldReloadMappings: PropTypes.bool,
-  fetchClustersAction: PropTypes.func,
-  fetchClustersUrl: PropTypes.string,
-  clusters: PropTypes.array,
-  isFetchingClusters: PropTypes.bool,
-  isRejectedClusters: PropTypes.bool,
-  networks: PropTypes.array,
-  isFetchingNetworks: PropTypes.bool,
-  isRejectedNetworks: PropTypes.bool,
-  datastores: PropTypes.array,
-  isFetchingDatastores: PropTypes.bool,
-  isRejectedDatastores: PropTypes.bool,
-  cloudTenants: PropTypes.array,
-  isFetchingCloudTenants: PropTypes.bool,
-  isRejectedCloudTenants: PropTypes.bool,
-  cloudVolumeTypes: PropTypes.array,
-  isFetchingCloudVolumeTypes: PropTypes.bool,
-  isRejectedCloudVolumeTypes: PropTypes.bool,
-  cloudNetworks: PropTypes.array,
-  isFetchingCloudNetworks: PropTypes.bool,
-  isRejectedCloudNetworks: PropTypes.bool,
   migrationsFilter: PropTypes.string,
   setMigrationsFilterAction: PropTypes.func,
   retryMigrationAction: PropTypes.func,
   history: PropTypes.object,
-  showDeleteConfirmationModal: PropTypes.bool,
-  showDeleteConfirmationModalAction: PropTypes.func,
-  hideDeleteConfirmationModalAction: PropTypes.func,
-  setMappingToDeleteAction: PropTypes.func,
-  mappingToDelete: PropTypes.object,
   yesToDeleteInfrastructureMappingAction: PropTypes.func,
   deleteInfrastructureMappingAction: PropTypes.func,
   yesToDeleteInfrastructureMapping: PropTypes.bool,
@@ -534,16 +399,6 @@ Overview.propTypes = {
   archiveTransformationPlanUrl: PropTypes.string,
   deleteTransformationPlanAction: PropTypes.func,
   deleteTransformationPlanUrl: PropTypes.string,
-  fetchNetworksUrl: PropTypes.string,
-  fetchNetworksAction: PropTypes.func,
-  fetchDatastoresUrl: PropTypes.string,
-  fetchDatastoresAction: PropTypes.func,
-  fetchCloudTenantsUrl: PropTypes.string,
-  fetchCloudTenantsAction: PropTypes.func,
-  fetchCloudNetworksUrl: PropTypes.string,
-  fetchCloudNetworksAction: PropTypes.func,
-  fetchCloudVolumeTypesUrl: PropTypes.string,
-  fetchCloudVolumeTypesAction: PropTypes.func,
   toggleScheduleMigrationModal: PropTypes.func,
   scheduleMigrationModal: PropTypes.bool,
   scheduleMigrationPlan: PropTypes.object,
@@ -551,49 +406,20 @@ Overview.propTypes = {
   fetchServiceTemplateAnsiblePlaybooksAction: PropTypes.func,
   fetchServiceTemplateAnsiblePlaybooksUrl: PropTypes.string,
   serviceTemplatePlaybooks: PropTypes.array,
-  redirectTo: PropTypes.func.isRequired,
-  showMappingWizardEditModeAction: PropTypes.func
+  redirectTo: PropTypes.func.isRequired
 };
 
 Overview.defaultProps = {
   archiveTransformationPlanUrl: '/api/service_templates',
   deleteTransformationPlanUrl: '/api/service_templates',
-  fetchTransformationMappingsUrl:
-    'api/transformation_mappings?expand=resources' +
-    '&attributes=transformation_mapping_items,service_templates' +
-    '&sort_by=updated_at' +
-    '&sort_order=desc',
-  fetchTransformationPlansUrl:
-    '/api/service_templates/?' +
-    "filter[]=type='ServiceTemplateTransformationPlan'" +
-    '&filter[]=active=true' +
-    '&expand=resources,schedules' +
-    '&attributes=name,description,miq_requests,options,created_at,transformation_mapping' +
-    '&sort_by=updated_at' +
-    '&sort_order=desc',
+  fetchTransformationMappingsUrl: FETCH_TRANSFORMATION_MAPPINGS_URL,
+  fetchTransformationPlansUrl: FETCH_TRANSFORMATION_PLANS_URL,
   fetchServiceTemplateAnsiblePlaybooksUrl:
     '/api/service_templates/?' +
     "filter[]=type='ServiceTemplateAnsiblePlaybook'" +
     '&expand=resources' +
     '&attributes=name,description,created_at',
-  fetchArchivedTransformationPlansUrl:
-    '/api/service_templates/?' +
-    "filter[]=type='ServiceTemplateTransformationPlan'" +
-    '&filter[]=archived=true' +
-    '&expand=resources' +
-    '&attributes=name,description,miq_requests,options,created_at,transformation_mapping' +
-    '&sort_by=updated_at' +
-    '&sort_order=desc',
-  fetchClustersUrl:
-    'api/clusters/' +
-    '?attributes=ext_management_system.emstype,v_parent_datacenter,ext_management_system.name,lans,storages' +
-    '&expand=resources',
-  fetchNetworksUrl: 'api/lans/?expand=resources',
-  fetchDatastoresUrl: 'api/data_stores?expand=resources',
-  fetchCloudTenantsUrl:
-    'api/cloud_tenants?expand=resources&attributes=ext_management_system.name,cloud_networks,cloud_volume_types',
-  fetchCloudNetworksUrl: 'api/cloud_networks?expand=resources',
-  fetchCloudVolumeTypesUrl: 'api/cloud_volume_types?expand=resources'
+  fetchArchivedTransformationPlansUrl: FETCH_ARCHIVED_TRANSFORMATION_PLANS_URL
 };
 
 export default Overview;

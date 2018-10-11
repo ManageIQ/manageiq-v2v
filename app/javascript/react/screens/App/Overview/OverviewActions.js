@@ -7,9 +7,6 @@ import {
   ARCHIVE_TRANSFORMATION_PLAN,
   DELETE_TRANSFORMATION_PLAN,
   CREATE_V2V_TRANSFORMATION_PLAN_REQUEST,
-  DELETE_INFRASTRUCTURE_MAPPING,
-  FETCH_DATASTORES,
-  FETCH_NETWORKS,
   FETCH_PROVIDERS,
   FETCH_PROVIDERS_URL,
   FETCH_V2V_ALL_ARCHIVED_PLAN_REQUESTS_WITH_TASKS,
@@ -19,28 +16,16 @@ import {
   FETCH_V2V_TRANSFORMATION_MAPPINGS,
   FETCH_V2V_TRANSFORMATION_PLANS,
   HIDE_CONFIRM_MODAL,
-  HIDE_DELETE_CONFIRMATION_MODAL,
-  HIDE_MAPPING_WIZARD,
-  SET_MAPPING_TO_DELETE,
   SHOW_CONFIRM_MODAL,
-  SHOW_DELETE_CONFIRMATION_MODAL,
-  SHOW_MAPPING_WIZARD,
   SHOW_PLAN_WIZARD,
   SHOW_EDIT_PLAN_TITLE_MODAL,
   HIDE_EDIT_PLAN_TITLE_MODAL,
-  V2V_FETCH_CLUSTERS,
   V2V_RETRY_MIGRATION,
   V2V_SCHEDULE_MIGRATION,
   V2V_SET_MIGRATIONS_FILTER,
   V2V_TOGGLE_SCHEDULE_MIGRATION_MODAL,
-  YES_TO_DELETE_AND_HIDE_DELETE_CONFIRMATION_MODAL,
-  SHOW_PLAN_WIZARD_EDIT_MODE,
-  FETCH_CLOUD_TENANTS,
-  FETCH_CLOUD_NETWORKS,
-  FETCH_CLOUD_VOLUME_TYPES
+  SHOW_PLAN_WIZARD_EDIT_MODE
 } from './OverviewConstants';
-
-import { SET_V2V_EDITING_MAPPING } from './screens/MappingWizard/components/MappingWizardGeneralStep/MappingWizardGeneralStepConstants';
 
 export const showConfirmModalAction = modalOptions => ({
   type: SHOW_CONFIRM_MODAL,
@@ -51,26 +36,10 @@ export const hideConfirmModalAction = () => ({
   type: HIDE_CONFIRM_MODAL
 });
 
-export const showMappingWizardAction = () => dispatch => {
-  dispatch({
-    type: SHOW_MAPPING_WIZARD
-  });
-};
-
-export const showMappingWizardEditModeAction = mapping => dispatch => {
-  dispatch({
-    type: SHOW_MAPPING_WIZARD
-  });
-  dispatch({
-    type: SET_V2V_EDITING_MAPPING,
-    payload: mapping
-  });
-};
-
 export const showPlanWizardAction = id => dispatch => {
   dispatch({
     type: SHOW_PLAN_WIZARD,
-    payload: id
+    payload: { id }
   });
 };
 
@@ -182,82 +151,6 @@ export const fetchServiceTemplateAnsiblePlaybooksAction = url => {
   return _getServiceTemplateAnsiblePlaybooksActionCreator(uri.toString());
 };
 
-export const continueToPlanAction = id => dispatch => {
-  dispatch({
-    type: HIDE_MAPPING_WIZARD
-  });
-  dispatch({
-    type: SHOW_PLAN_WIZARD,
-    payload: { id }
-  });
-};
-
-const _getClustersActionCreator = url => dispatch =>
-  dispatch({
-    type: `${V2V_FETCH_CLUSTERS}`,
-    payload: API.get(url)
-  });
-
-export const fetchClustersAction = url => {
-  const uri = new URI(url);
-  return _getClustersActionCreator(uri.toString());
-};
-
-const _getDatastoresActionCreator = url => dispatch =>
-  dispatch({
-    type: `${FETCH_DATASTORES}`,
-    payload: API.get(url)
-  });
-
-export const fetchDatastoresAction = url => {
-  const uri = new URI(url);
-  return _getDatastoresActionCreator(uri.toString());
-};
-
-const _getNetworksActionCreator = url => dispatch =>
-  dispatch({
-    type: `${FETCH_NETWORKS}`,
-    payload: API.get(url)
-  });
-
-export const fetchNetworksAction = url => {
-  const uri = new URI(url);
-  return _getNetworksActionCreator(uri.toString());
-};
-
-const _getCloudTenantsActionCreator = url => dispatch =>
-  dispatch({
-    type: `${FETCH_CLOUD_TENANTS}`,
-    payload: API.get(url)
-  });
-
-export const fetchCloudTenantsAction = url => {
-  const uri = new URI(url);
-  return _getCloudTenantsActionCreator(uri.toString());
-};
-
-const _getCloudNetworksActionCreator = url => dispatch =>
-  dispatch({
-    type: FETCH_CLOUD_NETWORKS,
-    payload: API.get(url)
-  });
-
-export const fetchCloudNetworksAction = url => {
-  const uri = new URI(url);
-  return _getCloudNetworksActionCreator(uri.toString());
-};
-
-const _getCloudVolumeTypesActionCreator = url => dispatch =>
-  dispatch({
-    type: `${FETCH_CLOUD_VOLUME_TYPES}`,
-    payload: API.get(url)
-  });
-
-export const fetchCloudVolumeTypesAction = url => {
-  const uri = new URI(url);
-  return _getCloudVolumeTypesActionCreator(uri.toString());
-};
-
 export const setMigrationsFilterAction = filter => ({
   type: V2V_SET_MIGRATIONS_FILTER,
   payload: filter
@@ -267,43 +160,6 @@ export const retryMigrationAction = planId => ({
   type: V2V_RETRY_MIGRATION,
   payload: planId
 });
-
-export const showDeleteConfirmationModalAction = () => ({
-  type: SHOW_DELETE_CONFIRMATION_MODAL,
-  payload: true
-});
-
-export const hideDeleteConfirmationModalAction = () => ({
-  type: HIDE_DELETE_CONFIRMATION_MODAL,
-  payload: false
-});
-
-export const setMappingToDeleteAction = mapping => dispatch => {
-  dispatch({
-    type: SET_MAPPING_TO_DELETE,
-    payload: mapping
-  });
-};
-
-export const yesToDeleteInfrastructureMappingAction = () => dispatch => {
-  dispatch({
-    type: YES_TO_DELETE_AND_HIDE_DELETE_CONFIRMATION_MODAL
-  });
-};
-
-export const deleteInfrastructureMappingAction = mapping => dispatch =>
-  dispatch({
-    type: DELETE_INFRASTRUCTURE_MAPPING,
-    payload: new Promise((resolve, reject) => {
-      API.post(`/api/transformation_mappings/${mapping.id}`, {
-        action: 'delete'
-      })
-        .then(response => {
-          resolve(response);
-        })
-        .catch(e => reject(e));
-    })
-  });
 
 const _archiveTransformationPlanActionCreator = url => dispatch =>
   dispatch({

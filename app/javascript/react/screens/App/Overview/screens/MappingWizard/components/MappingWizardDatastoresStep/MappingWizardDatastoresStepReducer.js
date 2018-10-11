@@ -1,7 +1,7 @@
 import Immutable from 'seamless-immutable';
 
 import { FETCH_V2V_SOURCE_DATASTORES, FETCH_V2V_TARGET_DATASTORES } from './MappingWizardDatastoresStepConstants';
-import { MAPPING_WIZARD_EXITED } from '../../../../OverviewConstants';
+import { V2V_MAPPING_WIZARD_EXITED } from '../../../../screens/MappingWizard/MappingWizardConstants';
 
 const initialState = Immutable({
   isFetchingSourceDatastores: false,
@@ -42,7 +42,7 @@ export default (state = initialState, action) => {
         .set('isRejectedTargetDatastores', true)
         .set('isFetchingTargetDatastores', false);
 
-    case MAPPING_WIZARD_EXITED:
+    case V2V_MAPPING_WIZARD_EXITED:
       return initialState;
 
     default:

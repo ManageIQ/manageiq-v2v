@@ -1,7 +1,7 @@
 import Immutable from 'seamless-immutable';
 
 import { SET_V2V_EDITING_MAPPING } from './MappingWizardGeneralStepConstants';
-import { MAPPING_WIZARD_EXITED } from '../../../../OverviewConstants';
+import { V2V_MAPPING_WIZARD_EXITED } from '../../../../screens/MappingWizard/MappingWizardConstants';
 
 export const initialState = Immutable({
   editingMapping: null
@@ -12,7 +12,7 @@ export default (state = initialState, action) => {
     case SET_V2V_EDITING_MAPPING:
       return state.set('editingMapping', action.payload);
 
-    case MAPPING_WIZARD_EXITED:
+    case V2V_MAPPING_WIZARD_EXITED:
       return initialState;
 
     default:

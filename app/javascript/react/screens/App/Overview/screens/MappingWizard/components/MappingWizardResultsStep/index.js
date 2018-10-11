@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import MappingWizardResultsStep from './MappingWizardResultsStep';
 import * as MappingWizardResultsStepActions from './MappingWizardResultsStepActions';
+import * as RouterActions from '../../../../../../../../redux/actions/routerActions';
 
 import reducer from './MappingWizardResultsStepReducer';
 
@@ -26,6 +27,6 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => Object.assign(stateP
 
 export default connect(
   mapStateToProps,
-  MappingWizardResultsStepActions,
+  { ...MappingWizardResultsStepActions, ...RouterActions },
   mergeProps
 )(MappingWizardResultsStep);
