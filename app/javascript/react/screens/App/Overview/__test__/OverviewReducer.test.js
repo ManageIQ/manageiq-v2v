@@ -18,8 +18,7 @@ describe('fetching transformation plans', () => {
 
     expect(state).toEqual({
       ...initialStateWithInfraMapping,
-      isFetchingTransformationPlans: true,
-      plansMutatedWithMappingInfo: false
+      isFetchingTransformationPlans: true
     });
   });
 
@@ -41,8 +40,7 @@ describe('fetching transformation plans', () => {
 
     expect(state).toEqual({
       ...initialStateWithInfraMapping,
-      transformationPlans: payload.data.resources,
-      plansMutatedWithMappingInfo: true
+      transformationPlans: payload.data.resources
     });
   });
 

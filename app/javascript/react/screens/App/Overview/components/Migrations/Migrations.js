@@ -39,7 +39,6 @@ const Migrations = ({
   scheduleMigrationModal,
   scheduleMigrationPlan,
   scheduleMigration,
-  plansMutatedWithMappingInfo,
   showPlanWizardEditModeAction,
   fetchTransformationMappingsUrl,
   fetchTransformationMappingsAction,
@@ -126,7 +125,6 @@ const Migrations = ({
               scheduleMigration={scheduleMigration}
               fetchTransformationPlansAction={fetchTransformationPlansAction}
               fetchTransformationPlansUrl={fetchTransformationPlansUrl}
-              plansMutatedWithMappingInfo={plansMutatedWithMappingInfo}
               deleteTransformationPlanAction={deleteTransformationPlanAction}
               deleteTransformationPlanUrl={deleteTransformationPlanUrl}
               showPlanWizardEditModeAction={showPlanWizardEditModeAction}
@@ -165,7 +163,6 @@ const Migrations = ({
               scheduleMigrationModal={scheduleMigrationModal}
               scheduleMigrationPlan={scheduleMigrationPlan}
               scheduleMigration={scheduleMigration}
-              plansMutatedWithMappingInfo={plansMutatedWithMappingInfo}
               fetchTransformationMappingsAction={fetchTransformationMappingsAction}
               fetchTransformationMappingsUrl={fetchTransformationMappingsUrl}
               showEditPlanNameModalAction={showEditPlanNameModalAction}
@@ -178,7 +175,6 @@ const Migrations = ({
               redirectTo={redirectTo}
               loading={isFetchingArchivedTransformationPlans}
               archived
-              plansMutatedWithMappingInfo={plansMutatedWithMappingInfo}
               showConfirmModalAction={showConfirmModalAction}
               hideConfirmModalAction={hideConfirmModalAction}
               addNotificationAction={addNotificationAction}
@@ -229,7 +225,6 @@ Migrations.propTypes = {
   scheduleMigrationModal: PropTypes.bool,
   scheduleMigrationPlan: PropTypes.object,
   scheduleMigration: PropTypes.func,
-  plansMutatedWithMappingInfo: PropTypes.bool,
   showPlanWizardEditModeAction: PropTypes.func,
   fetchTransformationMappingsAction: PropTypes.func,
   fetchTransformationMappingsUrl: PropTypes.string,

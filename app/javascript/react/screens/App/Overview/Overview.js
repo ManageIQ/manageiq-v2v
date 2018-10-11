@@ -277,7 +277,6 @@ class Overview extends React.Component {
       scheduleMigrationModal,
       scheduleMigrationPlan,
       scheduleMigration,
-      plansMutatedWithMappingInfo,
       showPlanWizardEditModeAction,
       fetchTransformationMappingsUrl,
       fetchTransformationMappingsAction
@@ -376,7 +375,6 @@ class Overview extends React.Component {
               scheduleMigrationModal={scheduleMigrationModal}
               scheduleMigrationPlan={scheduleMigrationPlan}
               scheduleMigration={scheduleMigration}
-              plansMutatedWithMappingInfo={plansMutatedWithMappingInfo}
               showPlanWizardEditModeAction={showPlanWizardEditModeAction}
               fetchTransformationMappingsUrl={fetchTransformationMappingsUrl}
               fetchTransformationMappingsAction={fetchTransformationMappingsAction}
@@ -554,7 +552,6 @@ Overview.propTypes = {
   fetchServiceTemplateAnsiblePlaybooksUrl: PropTypes.string,
   serviceTemplatePlaybooks: PropTypes.array,
   redirectTo: PropTypes.func.isRequired,
-  plansMutatedWithMappingInfo: PropTypes.bool,
   showMappingWizardEditModeAction: PropTypes.func
 };
 
@@ -571,7 +568,7 @@ Overview.defaultProps = {
     "filter[]=type='ServiceTemplateTransformationPlan'" +
     '&filter[]=active=true' +
     '&expand=resources,schedules' +
-    '&attributes=name,description,miq_requests,options,created_at' +
+    '&attributes=name,description,miq_requests,options,created_at,transformation_mapping' +
     '&sort_by=updated_at' +
     '&sort_order=desc',
   fetchServiceTemplateAnsiblePlaybooksUrl:
@@ -584,7 +581,7 @@ Overview.defaultProps = {
     "filter[]=type='ServiceTemplateTransformationPlan'" +
     '&filter[]=archived=true' +
     '&expand=resources' +
-    '&attributes=name,description,miq_requests,options,created_at' +
+    '&attributes=name,description,miq_requests,options,created_at,transformation_mapping' +
     '&sort_by=updated_at' +
     '&sort_order=desc',
   fetchClustersUrl:
