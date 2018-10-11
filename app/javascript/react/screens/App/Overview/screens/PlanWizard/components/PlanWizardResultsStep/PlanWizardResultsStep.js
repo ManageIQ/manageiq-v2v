@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { noop, Spinner } from 'patternfly-react';
+import { noop, Spinner, Icon } from 'patternfly-react';
 import { planHasBeenEdited } from './helpers';
 
 class PlanWizardResultsStep extends React.Component {
@@ -39,7 +39,7 @@ class PlanWizardResultsStep extends React.Component {
       </button>
     </div>
   );
-  renderResult = (migrationPlanMessage, migrationPlanFollowupMessage, migrationPlanIcon) => (
+  renderResult = (migrationPlanMessage, migrationPlanFollowupMessage, migrationPlanIcon, showVmPowerWarning) => (
     <div className="wizard-pf-complete blank-slate-pf">
       <div className="plan-wizard-results-step-icon">
         <span className={migrationPlanIcon} />
@@ -48,6 +48,16 @@ class PlanWizardResultsStep extends React.Component {
         {migrationPlanMessage}
       </h3>
       <p className="blank-slate-pf-secondary-action">{migrationPlanFollowupMessage}</p>
+      {showVmPowerWarning && (
+        <div className="plan-wizard-vm-power-warning">
+          <Icon type="pf" name="warning-triangle-o" />
+          <p>
+            {__('VMs must be powered on in order to migrate.')}
+            <br />
+            {__('Ensure that all VMs in the Migration Plan are powered on before starting migration.')}
+          </p>
+        </div>
+      )}
     </div>
   );
 
@@ -63,7 +73,8 @@ class PlanWizardResultsStep extends React.Component {
       errorPuttingPlans,
       plansBody,
       planSchedule,
-      hidePlanWizardAction
+      hidePlanWizardAction,
+      targetProvider
     } = this.props;
 
     if (isPostingPlans) {
@@ -84,7 +95,13 @@ class PlanWizardResultsStep extends React.Component {
     } else if (planSchedule === 'migration_plan_later' && migrationPlansResult) {
       const migrationPlanSaved = sprintf(__(" Migration Plan: '%s' has been saved"), plansBody.name);
       const migrationPlanFollowupMessage = __('Select Migrate on the Overview page to begin migration');
-      return this.renderResult(migrationPlanSaved, migrationPlanFollowupMessage, 'pficon pficon-ok');
+      const showVmPowerWarning = targetProvider === 'openstack';
+      return this.renderResult(
+        migrationPlanSaved,
+        migrationPlanFollowupMessage,
+        'pficon pficon-ok',
+        showVmPowerWarning
+      );
     } else if (planSchedule === 'migration_plan_now' && migrationPlansResult && migrationRequestsResult) {
       const migrationPlanProgress = sprintf(__(" Migration Plan: '%s' is in progress"), plansBody.name);
       const migrationPlanFollowupMessage = __('This may take a long time. Progress of the plan will be shown in the Migration area'); // prettier-ignore
@@ -109,7 +126,8 @@ PlanWizardResultsStep.propTypes = {
   migrationPlansResult: PropTypes.object,
   migrationRequestsResult: PropTypes.object,
   hidePlanWizardAction: PropTypes.func,
-  editingPlan: PropTypes.object
+  editingPlan: PropTypes.object,
+  targetProvider: PropTypes.string
 };
 PlanWizardResultsStep.defaultProps = {
   postPlansUrl: '/api/service_templates',

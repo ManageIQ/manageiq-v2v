@@ -9,3 +9,27 @@
 .plan-wizard-confirm-modal {
   margin-top: 140px;
 }
+
+.plan-wizard-vm-power-warning {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: left;
+}
+
+.wizard-pf-complete .plan-wizard-vm-power-warning {
+  margin-top: 20px;
+  justify-content: center;
+}
+
+.plan-wizard-vm-power-warning .pficon {
+  font-size: 24px;
+}
+
+.wizard-pf-complete .plan-wizard-vm-power-warning .pficon::before {
+  color: #ec7a08; /* overrides grey color from .blank-slate-pf */
+}
+
+.plan-wizard-vm-power-warning p {
+  margin: 0 10px;
+}

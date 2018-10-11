@@ -24,13 +24,13 @@ const PlanWizardScheduleStep = ({ targetProvider, migration_plan_choice_radio })
       ]}
       help={
         targetProvider === 'openstack' && migration_plan_choice_radio === 'migration_plan_now' ? (
-          <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-            <span style={{ fontSize: '24px' }}><Icon type="pf" name="warning-triangle-o" /></span>
-            <span style={{ paddingLeft: 10 }}>
+          <div className="plan-wizard-vm-power-warning">
+            <Icon type="pf" name="warning-triangle-o" />
+            <p>
               {__('VMs must be powered on in order to migrate.')}
               <br />
               {__('Ensure that all VMs in the Migration Plan are powered on before selecting Create.')}
-            </span>
+            </p>
           </div>
         ) : null
       }
