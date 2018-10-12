@@ -19,7 +19,7 @@ class ScheduleMigrationModalBody extends React.Component {
     });
 
     if (defaultDate) {
-      datetimeSelector.data("DateTimePicker").date(new Date(defaultDate));
+      datetimeSelector.data('DateTimePicker').date(new Date(defaultDate));
     }
 
     datetimeSelector.on('dp.change', e => {
@@ -45,7 +45,8 @@ class ScheduleMigrationModalBody extends React.Component {
 }
 
 ScheduleMigrationModalBody.propTypes = {
-  handleChange: PropTypes.func
+  handleChange: PropTypes.func,
+  defaultDate: PropTypes.string
 };
 
 export default ScheduleMigrationModalBody;

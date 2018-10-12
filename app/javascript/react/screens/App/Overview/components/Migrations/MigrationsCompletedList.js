@@ -267,28 +267,15 @@ class MigrationsCompletedList extends React.Component {
                           <div>
                             {!archived &&
                               failed && (
-                                <React.Fragment>
-                                  <ScheduleMigrationMenuItems
-                                    showConfirmModalAction={showConfirmModalAction}
-                                    hideConfirmModalAction={hideConfirmModalAction}
-                                    loading={loading}
-                                    toggleScheduleMigrationModal={toggleScheduleMigrationModal}
-                                    scheduleMigration={scheduleMigration}
-                                    fetchTransformationPlansAction={fetchTransformationPlansAction}
-                                    fetchTransformationPlansUrl={fetchTransformationPlansUrl}
-                                    plan={plan}
-                                    isMissingMapping={isMissingMapping}
-                                  />
-                                  <Button
-                                    onClick={e => {
-                                      e.stopPropagation();
-                                      retryClick(plan.href, plan.id);
-                                    }}
-                                    disabled={isMissingMapping || loading === plan.href}
-                                  >
-                                    {__('Retry')}
-                                  </Button>
-                                </React.Fragment>
+                                <Button
+                                  onClick={e => {
+                                    e.stopPropagation();
+                                    retryClick(plan.href, plan.id);
+                                  }}
+                                  disabled={isMissingMapping || loading === plan.href}
+                                >
+                                  {__('Retry')}
+                                </Button>
                               )}
                             <StopPropagationOnClick>
                               <DropdownKebab id={`${plan.id}-kebab`} pullRight>
@@ -325,6 +312,20 @@ class MigrationsCompletedList extends React.Component {
                                   fetchTransformationMappingsAction={fetchTransformationMappingsAction}
                                   fetchTransformationMappingsUrl={fetchTransformationMappingsUrl}
                                 />
+                                {!archived &&
+                                  failed && (
+                                    <ScheduleMigrationMenuItems
+                                      showConfirmModalAction={showConfirmModalAction}
+                                      hideConfirmModalAction={hideConfirmModalAction}
+                                      loading={loading}
+                                      toggleScheduleMigrationModal={toggleScheduleMigrationModal}
+                                      scheduleMigration={scheduleMigration}
+                                      fetchTransformationPlansAction={fetchTransformationPlansAction}
+                                      fetchTransformationPlansUrl={fetchTransformationPlansUrl}
+                                      plan={plan}
+                                      isMissingMapping={isMissingMapping}
+                                    />
+                                  )}
                               </DropdownKebab>
                             </StopPropagationOnClick>
                           </div>

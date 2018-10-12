@@ -105,17 +105,6 @@ class MigrationsNotStartedList extends React.Component {
                         }}
                         actions={
                           <div>
-                            <ScheduleMigrationMenuItems
-                              showConfirmModalAction={showConfirmModalAction}
-                              hideConfirmModalAction={hideConfirmModalAction}
-                              loading={loading}
-                              toggleScheduleMigrationModal={toggleScheduleMigrationModal}
-                              scheduleMigration={scheduleMigration}
-                              fetchTransformationPlansAction={fetchTransformationPlansAction}
-                              fetchTransformationPlansUrl={fetchTransformationPlansUrl}
-                              plan={plan}
-                              isMissingMapping={isMissingMapping}
-                            />
                             <Button
                               id={`migrate_${plan.id}`}
                               onClick={e => {
@@ -149,6 +138,17 @@ class MigrationsNotStartedList extends React.Component {
                                   planName={plan.name}
                                   fetchTransformationMappingsAction={fetchTransformationMappingsAction}
                                   fetchTransformationMappingsUrl={fetchTransformationMappingsUrl}
+                                />
+                                <ScheduleMigrationMenuItems
+                                  showConfirmModalAction={showConfirmModalAction}
+                                  hideConfirmModalAction={hideConfirmModalAction}
+                                  loading={loading}
+                                  toggleScheduleMigrationModal={toggleScheduleMigrationModal}
+                                  scheduleMigration={scheduleMigration}
+                                  fetchTransformationPlansAction={fetchTransformationPlansAction}
+                                  fetchTransformationPlansUrl={fetchTransformationPlansUrl}
+                                  plan={plan}
+                                  isMissingMapping={isMissingMapping}
                                 />
                               </DropdownKebab>
                             </StopPropagationOnClick>
