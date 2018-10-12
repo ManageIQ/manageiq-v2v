@@ -25,7 +25,7 @@ const processVMTasks = vmTasks => {
       state: task.state,
       status: task.status,
       options: {},
-      cancel_requested: task.options.cancel_requested,
+      cancelation_status: task.cancelation_status,
       source_id: task.source_id,
       log_available: task.options.virtv2v_wrapper && task.options.virtv2v_wrapper.v2v_log.length > 0
     };
