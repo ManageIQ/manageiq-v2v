@@ -60,7 +60,6 @@ export const initialState = Immutable({
   mappingToDelete: null,
   mappingWizardVisible: false,
   networks: [],
-  shouldReloadMappings: false,
   showDeleteConfirmationModal: false,
   transformationMappings: [],
   yesToDeleteInfrastructureMapping: false
@@ -79,7 +78,6 @@ export default (state = initialState, action) => {
         .set('deleteInfrastructureMappingResponse', action.payload.data)
         .set('isDeletingInfrastructureMapping', null)
         .set('isRejectedInfrastructureMapping', false)
-        .set('shouldReloadMappings', true)
         .set('errorDeleteInfrastructureMapping', null);
     case `${DELETE_V2V_INFRASTRUCTURE_MAPPING}_REJECTED`:
       return state
@@ -182,7 +180,6 @@ export default (state = initialState, action) => {
         .set('transformationMappings', action.payload.data.resources)
         .set('isRejectedTransformationMappings', false)
         .set('isFetchingTransformationMappings', false)
-        .set('shouldReloadMappings', false)
         .set('isContinuingToPlan', false);
     case `${FETCH_V2V_TRANSFORMATION_MAPPINGS}_REJECTED`:
       return state
@@ -203,10 +200,7 @@ export default (state = initialState, action) => {
       return state.set('yesToDeleteInfrastructureMapping', true).set('showDeleteConfirmationModal', false);
 
     case V2V_HIDE_MAPPING_WIZARD: {
-      const { payload } = action;
-      return state
-        .set('hideMappingWizard', true)
-        .set('shouldReloadMappings', (payload && payload.shouldReloadMappings) || false);
+      return state.set('hideMappingWizard', true);
     }
 
     case V2V_MAPPING_WIZARD_EXITED:

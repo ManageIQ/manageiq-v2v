@@ -258,7 +258,6 @@ Mappings.propTypes = {
   mappingWizardVisible: PropTypes.bool,
   notStartedTransformationPlans: PropTypes.array,
   setMappingToDeleteAction: PropTypes.func,
-  shouldReloadMappings: PropTypes.bool,
   showDeleteConfirmationModal: PropTypes.bool,
   showDeleteConfirmationModalAction: PropTypes.func,
   showMappingWizardAction: PropTypes.func,

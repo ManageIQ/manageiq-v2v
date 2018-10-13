@@ -10,10 +10,9 @@ import {
   V2V_HIDE_MAPPING_WIZARD
 } from './MappingWizardConstants';
 
-export const hideMappingWizardAction = shouldReloadMappings => dispatch => {
+export const hideMappingWizardAction = () => dispatch => {
   dispatch({
-    type: V2V_HIDE_MAPPING_WIZARD,
-    payload: { shouldReloadMappings }
+    type: V2V_HIDE_MAPPING_WIZARD
   });
 };
 

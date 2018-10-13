@@ -71,7 +71,6 @@ export const initialState = Immutable({
   isCreatingTransformationPlanRequest: null,
   errorCreateTransformationPlanRequest: null,
   isContinuingToPlan: false,
-  shouldReloadMappings: false,
   migrationsFilter: MIGRATIONS_FILTERS.notStarted,
   showDeleteConfirmationModal: false,
   confirmModalVisible: false,
@@ -114,12 +113,10 @@ export default (state = initialState, action) => {
       });
     }
     case HIDE_PLAN_WIZARD: {
-      const { payload } = action;
       return state
         .set('hidePlanWizard', true)
         .set('planWizardId', null)
-        .set('editingPlanId', null)
-        .set('shouldReloadMappings', (payload && payload.shouldReloadMappings) || false);
+        .set('editingPlanId', null);
     }
     case SHOW_EDIT_PLAN_TITLE_MODAL:
       return state.set('editingPlanId', action.editingPlanId).set('editPlanNameModalVisible', true);
@@ -155,7 +152,6 @@ export default (state = initialState, action) => {
           .set('transformationMappings', action.payload.data.resources)
           .set('isRejectedTransformationMappings', false)
           .set('isFetchingTransformationMappings', false)
-          .set('shouldReloadMappings', false)
           .set('isContinuingToPlan', false);
       }
       return state

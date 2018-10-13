@@ -21,7 +21,6 @@ class Overview extends React.Component {
   constructor(props) {
     super(props);
 
-    this.mappingWizard = componentRegistry.markup('MappingWizardContainer', props.store);
     this.planWizard = componentRegistry.markup('PlanWizardContainer', props.store);
   }
 
@@ -68,19 +67,14 @@ class Overview extends React.Component {
   componentWillReceiveProps(nextProps) {
     const {
       isContinuingToPlan,
-      fetchTransformationMappingsUrl,
-      fetchTransformationMappingsAction,
       fetchTransformationPlansUrl,
       fetchTransformationPlansAction,
       planWizardId,
-      showPlanWizardAction,
-      shouldReloadMappings
+      showPlanWizardAction
     } = this.props;
     const { hasMadeInitialPlansFetch } = this.state;
 
-    if (shouldReloadMappings !== nextProps.shouldReloadMappings && nextProps.shouldReloadMappings) {
-      fetchTransformationMappingsAction(fetchTransformationMappingsUrl);
-    } else if (isContinuingToPlan !== nextProps.isContinuingToPlan && !nextProps.isContinuingToPlan) {
+    if (isContinuingToPlan !== nextProps.isContinuingToPlan && !nextProps.isContinuingToPlan) {
       showPlanWizardAction(planWizardId);
     }
 
@@ -376,7 +370,6 @@ Overview.propTypes = {
   planWizardId: PropTypes.string,
   continueToPlanAction: PropTypes.func,
   showPlanWizardEditModeAction: PropTypes.func,
-  shouldReloadMappings: PropTypes.bool,
   migrationsFilter: PropTypes.string,
   setMigrationsFilterAction: PropTypes.func,
   retryMigrationAction: PropTypes.func,
