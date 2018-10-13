@@ -6,7 +6,7 @@ import ShowWizardEmptyState from '../../../common/ShowWizardEmptyState/ShowWizar
 import ScheduleMigrationModal from '../ScheduleMigrationModal/ScheduleMigrationModal';
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
 import { MIGRATIONS_NOT_STARTED_SORT_FIELDS } from './MigrationsConstants';
-import sortFilter from '../../../Plan/components/sortFilter';
+import sortFilter from '../../../common/ListViewToolbar/sortFilter';
 import ScheduleMigrationButton from './ScheduleMigrationButton';
 import StopPropagationOnClick from '../../../common/StopPropagationOnClick';
 import DeleteMigrationMenuItem from './DeleteMigrationMenuItem';

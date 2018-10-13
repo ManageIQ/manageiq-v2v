@@ -24,6 +24,7 @@ import {
 } from '../Overview/screens/MappingWizard/MappingWizardConstants';
 
 import { CONTINUE_TO_PLAN } from '../Overview/OverviewConstants';
+import { addAssociatedPlansCount } from './helpers';
 
 export const initialState = Immutable({
   cloudNetworks: [],
@@ -177,7 +178,7 @@ export default (state = initialState, action) => {
     case `${FETCH_V2V_TRANSFORMATION_MAPPINGS}_FULFILLED`:
       validateMappings(action.payload.data.resources);
       return state
-        .set('transformationMappings', action.payload.data.resources)
+        .set('transformationMappings', addAssociatedPlansCount(action.payload.data.resources))
         .set('isRejectedTransformationMappings', false)
         .set('isFetchingTransformationMappings', false)
         .set('isContinuingToPlan', false);

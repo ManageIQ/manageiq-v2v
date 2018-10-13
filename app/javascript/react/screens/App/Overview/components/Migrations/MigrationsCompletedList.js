@@ -5,7 +5,7 @@ import { IsoElapsedTime } from '../../../../../../components/dates/IsoElapsedTim
 import ShowWizardEmptyState from '../../../common/ShowWizardEmptyState/ShowWizardEmptyState';
 import getMostRecentRequest from '../../../common/getMostRecentRequest';
 import getMostRecentVMTasksFromRequests from './helpers/getMostRecentVMTasksFromRequests';
-import sortFilter from '../../../Plan/components/sortFilter';
+import sortFilter from '../../../common/ListViewToolbar/sortFilter';
 import { MIGRATIONS_COMPLETED_SORT_FIELDS } from './MigrationsConstants';
 import ScheduleMigrationButton from './ScheduleMigrationButton';
 import ScheduleMigrationModal from '../ScheduleMigrationModal/ScheduleMigrationModal';
