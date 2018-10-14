@@ -20,7 +20,7 @@ import { V2V_SHOW_MAPPING_WIZARD } from '../Overview/screens/MappingWizard/Mappi
 
 import { SET_V2V_EDITING_MAPPING } from '../Overview/screens/MappingWizard/components/MappingWizardGeneralStep/MappingWizardGeneralStepConstants';
 
-export { fetchTransformationPlansAction } from '../Overview/OverviewActions';
+export { fetchTransformationPlansAction, fetchProvidersAction } from '../Overview/OverviewActions';
 
 // ****************************************************************************
 // DELETE_V2V_INFRASTRUCTURE_MAPPING

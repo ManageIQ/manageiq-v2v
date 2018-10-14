@@ -14,13 +14,28 @@ import {
 export const reducers = { mappings: reducer, form: {} };
 
 const mapStateToProps = (
-  { mappings, overview: { archivedTransformationPlans, transformationPlans, planId } },
+  {
+    mappings,
+    overview: {
+      archivedTransformationPlans,
+      transformationPlans,
+      planId,
+      hasSufficientProviders,
+      isRejectedProviders,
+      isFetchingProviders,
+      errorProviders
+    }
+  },
   ownProps
 ) => ({
   ...mappings,
   ...ownProps.data,
   archivedTransformationPlans,
   transformationPlans,
+  hasSufficientProviders,
+  isRejectedProviders,
+  isFetchingProviders,
+  errorProviders,
   activeTransformationPlans: activeTransformationPlansFilter(transformationPlans, planId),
   finishedWithErrorTransformationPlans: finishedWithErrorTransformationPlansFilter(transformationPlans),
   notStartedTransformationPlans: notStartedTransformationPlansFilter(transformationPlans)

@@ -8,6 +8,7 @@ import componentRegistry from '../../../../components/componentRegistry';
 import InfrastructureMappingsList from './components/InfrastructureMappingsList/InfrastructureMappingsList';
 import { FETCH_TRANSFORMATION_PLANS_URL, FETCH_ARCHIVED_TRANSFORMATION_PLANS_URL } from '../Overview/OverviewConstants';
 import { FETCH_TRANSFORMATION_MAPPINGS_URL } from './MappingsConstants';
+import ShowWizardEmptyState from '../common/ShowWizardEmptyState/ShowWizardEmptyState';
 
 class Mappings extends Component {
   mappingWizard = componentRegistry.markup('MappingWizardContainer', this.props.store);
@@ -27,6 +28,7 @@ class Mappings extends Component {
       fetchDatastoresUrl,
       fetchNetworksAction,
       fetchNetworksUrl,
+      fetchProvidersAction,
       fetchTransformationMappingsAction,
       fetchTransformationMappingsUrl,
       fetchTransformationPlansAction,
@@ -39,6 +41,7 @@ class Mappings extends Component {
     fetchClustersAction(fetchClustersUrl);
     fetchDatastoresAction(fetchDatastoresUrl);
     fetchNetworksAction(fetchNetworksUrl);
+    fetchProvidersAction();
     fetchTransformationMappingsAction(fetchTransformationMappingsUrl);
 
     Promise.all([
@@ -122,6 +125,7 @@ class Mappings extends Component {
       datastores,
       deleteInfrastructureMappingAction,
       finishedWithErrorTransformationPlans,
+      hasSufficientProviders,
       hideDeleteConfirmationModalAction,
       isFetchingCloudNetworks,
       isFetchingCloudTenants,
@@ -129,6 +133,7 @@ class Mappings extends Component {
       isFetchingClusters,
       isFetchingDatastores,
       isFetchingNetworks,
+      isFetchingProviders,
       isFetchingTransformationMappings,
       isRejectedCloudNetworks,
       isRejectedCloudTenants,
@@ -168,41 +173,53 @@ class Mappings extends Component {
             isFetchingClusters ||
             isFetchingDatastores ||
             isFetchingNetworks ||
+            isFetchingProviders ||
             isFetchingTransformationMappings
           }
           style={{ marginTop: 100 }}
         >
-          <InfrastructureMappingsList
-            clusters={clusters}
-            datastores={datastores}
-            networks={networks}
-            cloudTenants={cloudTenants}
-            cloudNetworks={cloudNetworks}
-            cloudVolumeTypes={cloudVolumeTypes}
-            transformationMappings={transformationMappings}
-            error={
-              isRejectedClusters ||
-              isRejectedDatastores ||
-              isRejectedNetworks ||
-              isRejectedCloudNetworks ||
-              isRejectedCloudTenants ||
-              isRejectedCloudVolumeTypes ||
-              isRejectedTransformationMappings
-            }
-            createInfraMappingClick={showMappingWizardAction}
-            inProgressRequestsTransformationMappings={this.inProgressRequestsTransformationMappings()}
-            showDeleteConfirmationModalAction={showDeleteConfirmationModalAction}
-            setMappingToDeleteAction={setMappingToDeleteAction}
-            showDeleteConfirmationModal={showDeleteConfirmationModal}
-            hideDeleteConfirmationModalAction={hideDeleteConfirmationModalAction}
-            mappingToDelete={mappingToDelete}
-            yesToDeleteInfrastructureMappingAction={yesToDeleteInfrastructureMappingAction}
-            notStartedTransformationPlans={notStartedTransformationPlans}
-            finishedWithErrorTransformationPlans={finishedWithErrorTransformationPlans}
-            deleteInfrastructureMappingAction={deleteInfrastructureMappingAction}
-            migrationPlansExist={transformationPlans.length > 0 || archivedTransformationPlans.length > 0}
-            showMappingWizardEditModeAction={showMappingWizardEditModeAction}
-          />
+          {hasSufficientProviders ? (
+            <InfrastructureMappingsList
+              clusters={clusters}
+              datastores={datastores}
+              networks={networks}
+              cloudTenants={cloudTenants}
+              cloudNetworks={cloudNetworks}
+              cloudVolumeTypes={cloudVolumeTypes}
+              transformationMappings={transformationMappings}
+              error={
+                isRejectedClusters ||
+                isRejectedDatastores ||
+                isRejectedNetworks ||
+                isRejectedCloudNetworks ||
+                isRejectedCloudTenants ||
+                isRejectedCloudVolumeTypes ||
+                isRejectedTransformationMappings
+              }
+              createInfraMappingClick={showMappingWizardAction}
+              inProgressRequestsTransformationMappings={this.inProgressRequestsTransformationMappings()}
+              showDeleteConfirmationModalAction={showDeleteConfirmationModalAction}
+              setMappingToDeleteAction={setMappingToDeleteAction}
+              showDeleteConfirmationModal={showDeleteConfirmationModal}
+              hideDeleteConfirmationModalAction={hideDeleteConfirmationModalAction}
+              mappingToDelete={mappingToDelete}
+              yesToDeleteInfrastructureMappingAction={yesToDeleteInfrastructureMappingAction}
+              notStartedTransformationPlans={notStartedTransformationPlans}
+              finishedWithErrorTransformationPlans={finishedWithErrorTransformationPlans}
+              deleteInfrastructureMappingAction={deleteInfrastructureMappingAction}
+              migrationPlansExist={transformationPlans.length > 0 || archivedTransformationPlans.length > 0}
+              showMappingWizardEditModeAction={showMappingWizardEditModeAction}
+            />
+          ) : (
+            <ShowWizardEmptyState
+              description={
+                __('The VMWare and Red Hat Virtualization providers must be configured before attempting a migration.') // prettier-ignore
+              }
+              buttonText={__('Configure Providers')}
+              buttonHref="/ems_infra/show_list"
+              className="full-page-empty"
+            />
+          )}
         </Spinner>
         {mappingWizardVisible && this.mappingWizard}
       </React.Fragment>
@@ -234,11 +251,13 @@ Mappings.propTypes = {
   fetchDatastoresUrl: PropTypes.string,
   fetchNetworksAction: PropTypes.func,
   fetchNetworksUrl: PropTypes.string,
+  fetchProvidersAction: PropTypes.func,
   fetchTransformationMappingsAction: PropTypes.func,
   fetchTransformationMappingsUrl: PropTypes.string,
   fetchTransformationPlansAction: PropTypes.func,
   fetchTransformationPlansUrl: PropTypes.string,
   finishedWithErrorTransformationPlans: PropTypes.array,
+  hasSufficientProviders: PropTypes.bool,
   hideDeleteConfirmationModalAction: PropTypes.func,
   isFetchingCloudNetworks: PropTypes.bool,
   isFetchingCloudTenants: PropTypes.bool,
@@ -246,6 +265,7 @@ Mappings.propTypes = {
   isFetchingClusters: PropTypes.bool,
   isFetchingDatastores: PropTypes.bool,
   isFetchingNetworks: PropTypes.bool,
+  isFetchingProviders: PropTypes.bool,
   isFetchingTransformationMappings: PropTypes.bool,
   isRejectedCloudNetworks: PropTypes.bool,
   isRejectedCloudTenants: PropTypes.bool,
