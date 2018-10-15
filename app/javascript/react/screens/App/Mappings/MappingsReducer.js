@@ -12,6 +12,7 @@ import {
   FETCH_V2V_NETWORKS,
   FETCH_V2V_TRANSFORMATION_MAPPINGS,
   HIDE_V2V_DELETE_CONFIRMATION_MODAL,
+  OPEN_V2V_MAPPING_WIZARD_ON_MOUNT,
   SET_V2V_MAPPING_TO_DELETE,
   SHOW_V2V_DELETE_CONFIRMATION_MODAL,
   YES_TO_DELETE_AND_HIDE_DELETE_CONFIRMATION_MODAL
@@ -61,6 +62,7 @@ export const initialState = Immutable({
   mappingToDelete: null,
   mappingWizardVisible: false,
   networks: [],
+  openMappingWizardOnMount: false,
   showDeleteConfirmationModal: false,
   transformationMappings: [],
   yesToDeleteInfrastructureMapping: false
@@ -191,6 +193,9 @@ export default (state = initialState, action) => {
     case HIDE_V2V_DELETE_CONFIRMATION_MODAL:
       return state.set('yesToDeleteInfrastructureMapping', false).set('showDeleteConfirmationModal', action.payload);
 
+    case OPEN_V2V_MAPPING_WIZARD_ON_MOUNT:
+      return state.set('openMappingWizardOnMount', true);
+
     case SET_V2V_MAPPING_TO_DELETE:
       return state.set('mappingToDelete', action.payload);
 
@@ -205,7 +210,7 @@ export default (state = initialState, action) => {
     }
 
     case V2V_MAPPING_WIZARD_EXITED:
-      return state.set('mappingWizardVisible', false);
+      return state.set('mappingWizardVisible', false).set('openMappingWizardOnMount', false);
 
     case V2V_SHOW_MAPPING_WIZARD:
       return Immutable.merge(state, { mappingWizardVisible: true, hideMappingWizard: false });

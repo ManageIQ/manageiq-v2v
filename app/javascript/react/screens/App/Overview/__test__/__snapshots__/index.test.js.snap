@@ -44,6 +44,7 @@ Object {
   "mappingWizardVisible": false,
   "networks": Array [],
   "notStartedTransformationPlans": Array [],
+  "openMappingWizardOnTransitionAction": [Function],
   "planWizardVisible": false,
   "redirectTo": [Function],
   "removeNotificationAction": [Function],

@@ -210,7 +210,8 @@ class Overview extends React.Component {
       scheduleMigration,
       showPlanWizardEditModeAction,
       fetchTransformationMappingsUrl,
-      fetchTransformationMappingsAction
+      fetchTransformationMappingsAction,
+      openMappingWizardOnTransitionAction
     } = this.props;
 
     const aggregateDataCards = (
@@ -299,7 +300,10 @@ class Overview extends React.Component {
               <ShowWizardEmptyState
                 description={__('Create an infrastructure mapping to later be used by a migration plan')}
                 buttonText={__('Create Infrastructure Mapping')}
-                buttonHref="/migration#/mappings"
+                showWizardAction={() => {
+                  this.redirectTo('/mappings');
+                  openMappingWizardOnTransitionAction();
+                }}
                 className="full-page-empty"
               />
             )
@@ -404,7 +408,8 @@ Overview.propTypes = {
   fetchServiceTemplateAnsiblePlaybooksAction: PropTypes.func,
   fetchServiceTemplateAnsiblePlaybooksUrl: PropTypes.string,
   serviceTemplatePlaybooks: PropTypes.array,
-  redirectTo: PropTypes.func.isRequired
+  redirectTo: PropTypes.func.isRequired,
+  openMappingWizardOnTransitionAction: PropTypes.func
 };
 
 Overview.defaultProps = {

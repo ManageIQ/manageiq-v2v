@@ -27,6 +27,8 @@ import {
   SHOW_PLAN_WIZARD_EDIT_MODE
 } from './OverviewConstants';
 
+import { OPEN_V2V_MAPPING_WIZARD_ON_MOUNT } from '../Mappings/MappingsConstants';
+
 export const showConfirmModalAction = modalOptions => ({
   type: SHOW_CONFIRM_MODAL,
   payload: modalOptions
@@ -235,3 +237,5 @@ export const scheduleMigration = payload => dispatch =>
         .catch(e => reject(e));
     })
   });
+
+export const openMappingWizardOnTransitionAction = () => ({ type: OPEN_V2V_MAPPING_WIZARD_ON_MOUNT });

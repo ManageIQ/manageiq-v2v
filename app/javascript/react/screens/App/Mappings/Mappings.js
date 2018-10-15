@@ -32,8 +32,14 @@ class Mappings extends Component {
       fetchTransformationMappingsAction,
       fetchTransformationMappingsUrl,
       fetchTransformationPlansAction,
-      fetchTransformationPlansUrl
+      fetchTransformationPlansUrl,
+      openMappingWizardOnMount,
+      showMappingWizardAction
     } = this.props;
+
+    if (openMappingWizardOnMount) {
+      showMappingWizardAction();
+    }
 
     fetchCloudNetworksAction(fetchCloudNetworksUrl);
     fetchCloudTenantsAction(fetchCloudTenantsUrl);
@@ -277,6 +283,7 @@ Mappings.propTypes = {
   mappingToDelete: PropTypes.object,
   mappingWizardVisible: PropTypes.bool,
   notStartedTransformationPlans: PropTypes.array,
+  openMappingWizardOnMount: PropTypes.bool,
   setMappingToDeleteAction: PropTypes.func,
   showDeleteConfirmationModal: PropTypes.bool,
   showDeleteConfirmationModalAction: PropTypes.func,
