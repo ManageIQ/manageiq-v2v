@@ -149,7 +149,21 @@ class InfrastructureMappingsList extends React.Component {
             }
           ) => {
             const paginatedSortedFiltersMappings = filterSortPaginateListItems();
-            return (
+            return error ? (
+              <ShowWizardEmptyState
+                title={__('Error loading mappings.')}
+                iconType="pf"
+                iconName="error-circle-o"
+                className="mappings"
+                description={
+                  <React.Fragment>
+                    <span>{__('There was an error loading Infrastructure Mappings.')}</span>
+                    <br />
+                    <span>{__('Please refresh and try again.')}</span>
+                  </React.Fragment>
+                }
+              />
+            ) : transformationMappingsMutable.length > 0 ? (
               <React.Fragment>
                 <Grid.Row>
                   <Toolbar>
@@ -216,389 +230,369 @@ class InfrastructureMappingsList extends React.Component {
                       )}
                   </Toolbar>
                 </Grid.Row>
-                {error ? (
-                  <ShowWizardEmptyState
-                    title={__('Error loading mappings.')}
-                    iconType="pf"
-                    iconName="error-circle-o"
-                    className="mappings"
-                    description={
-                      <React.Fragment>
-                        <span>{__('There was an error loading Infrastructure Mappings.')}</span>
-                        <br />
-                        <span>{__('Please refresh and try again.')}</span>
-                      </React.Fragment>
-                    }
-                  />
-                ) : transformationMappingsMutable.length > 0 ? (
-                  <div style={{ overflow: 'auto', paddingBottom: 300, height: '100%' }}>
-                    <ListView
-                      style={{ marginTop: 10 }}
-                      className="infra-mappings-list-view"
-                      id="infrastructure_mappings"
-                    >
-                      {paginatedSortedFiltersMappings.tasks.map(mapping => {
-                        const associatedPlansCount = mapping.service_templates && mapping.service_templates.length;
+                <div style={{ overflow: 'auto', paddingBottom: 300, height: '100%' }}>
+                  <ListView style={{ marginTop: 10 }} className="infra-mappings-list-view" id="infrastructure_mappings">
+                    {paginatedSortedFiltersMappings.tasks.map(mapping => {
+                      const associatedPlansCount = mapping.service_templates && mapping.service_templates.length;
 
-                        const { targetClusters, targetDatastores, targetNetworks } = mapInfrastructureMappings(
-                          mapping.transformation_mapping_items,
-                          clusters,
-                          datastores,
-                          networks,
-                          cloudTenants,
-                          cloudNetworks,
-                          cloudVolumeTypes
-                        );
-                        const headerText = getHeaderText(mapping.transformation_mapping_items);
+                      const { targetClusters, targetDatastores, targetNetworks } = mapInfrastructureMappings(
+                        mapping.transformation_mapping_items,
+                        clusters,
+                        datastores,
+                        networks,
+                        cloudTenants,
+                        cloudNetworks,
+                        cloudVolumeTypes
+                      );
+                      const headerText = getHeaderText(mapping.transformation_mapping_items);
 
-                        let sourceClusterCount = 0;
-                        let targetClusterCount = 0;
+                      let sourceClusterCount = 0;
+                      let targetClusterCount = 0;
 
-                        if (targetClusters) {
-                          Object.keys(targetClusters).forEach(key => {
-                            targetClusterCount += 1;
-                            sourceClusterCount += targetClusters[key].sourceClusters.length;
-                          });
-                        }
+                      if (targetClusters) {
+                        Object.keys(targetClusters).forEach(key => {
+                          targetClusterCount += 1;
+                          sourceClusterCount += targetClusters[key].sourceClusters.length;
+                        });
+                      }
 
-                        let sourceDatastoreCount = 0;
-                        let targetDatastoreCount = 0;
-                        if (targetDatastores) {
-                          Object.keys(targetDatastores).forEach(key => {
-                            targetDatastoreCount += 1;
-                            sourceDatastoreCount += targetDatastores[key].sources.length;
-                          });
-                        }
+                      let sourceDatastoreCount = 0;
+                      let targetDatastoreCount = 0;
+                      if (targetDatastores) {
+                        Object.keys(targetDatastores).forEach(key => {
+                          targetDatastoreCount += 1;
+                          sourceDatastoreCount += targetDatastores[key].sources.length;
+                        });
+                      }
 
-                        let sourceLanCount = 0;
-                        let targetLanCount = 0;
-                        if (targetNetworks) {
-                          Object.keys(targetNetworks).forEach(key => {
-                            targetLanCount += 1;
-                            sourceLanCount += targetNetworks[key].sources.length;
-                          });
-                        }
+                      let sourceLanCount = 0;
+                      let targetLanCount = 0;
+                      if (targetNetworks) {
+                        Object.keys(targetNetworks).forEach(key => {
+                          targetLanCount += 1;
+                          sourceLanCount += targetNetworks[key].sources.length;
+                        });
+                      }
 
-                        return (
-                          <ListView.Item
-                            key={mapping.id}
-                            heading={mapping.name}
-                            description={
-                              <EllipsisWithTooltip id={mapping.description}>
-                                <small>{mapping.description}</small>
-                              </EllipsisWithTooltip>
-                            }
-                            stacked
-                            compoundExpand
-                            compoundExpanded={mapping.expanded}
-                            onCloseCompoundExpand={() => this.closeExpand(mapping)}
-                            additionalInfo={[
-                              <ListView.InfoItem key={0} id="networks">
-                                {targetNetworks === null ? (
-                                  <div className="list-view-pf-expand">
-                                    <Icon type="pf" name="error-circle-o" />
-                                    {__('Networks missing')}
-                                  </div>
-                                ) : (
-                                  <ListView.Expand
-                                    expanded={mapping.expanded && mapping.expandType === 0}
-                                    toggleExpanded={() => {
-                                      this.toggleExpand(mapping, 0);
-                                    }}
-                                  >
-                                    <Icon type="pf" name="network" />
-                                    <div className="mappings-expand-label-group">
-                                      <div className="mappings-expand-label">
-                                        {sprintf(
-                                          n__('%d Source Network', '%d Source Networks', sourceLanCount),
-                                          sourceLanCount
-                                        )}
-                                      </div>
-                                      <div className="mappings-expand-label">
-                                        {sprintf(
-                                          n__('%d Target Network', '%d Target Networks', targetLanCount),
-                                          targetLanCount
-                                        )}
-                                      </div>
-                                    </div>
-                                  </ListView.Expand>
-                                )}
-                              </ListView.InfoItem>,
-                              <ListView.InfoItem key={1} id="datastores">
-                                {targetDatastores === null ? (
-                                  <div className="list-view-pf-expand">
-                                    <Icon type="pf" name="error-circle-o" />
-                                    {__('Datastores missing')}
-                                  </div>
-                                ) : (
-                                  <ListView.Expand
-                                    expanded={mapping.expanded && mapping.expandType === 1}
-                                    toggleExpanded={() => {
-                                      this.toggleExpand(mapping, 1);
-                                    }}
-                                  >
-                                    <Icon type="fa" name="database" />
-                                    <div className="mappings-expand-label-group">
-                                      <div className="mappings-expand-label">
-                                        {sprintf(
-                                          n__('%d Source Datastore', '%d Source Datastores', sourceDatastoreCount),
-                                          sourceDatastoreCount
-                                        )}
-                                      </div>
-                                      <div className="mappings-expand-label">
-                                        {sprintf(
-                                          n__('%d Target Datastore', '%d Target Datastores', targetDatastoreCount),
-                                          targetDatastoreCount
-                                        )}
-                                      </div>
-                                    </div>
-                                  </ListView.Expand>
-                                )}
-                              </ListView.InfoItem>,
-                              <ListView.InfoItem key={2} id="clusters">
-                                {targetClusters === null ? (
-                                  <div className="list-view-pf-expand">
-                                    <Icon type="pf" name="error-circle-o" />
-                                    {__('Clusters missing')}
-                                  </div>
-                                ) : (
-                                  <ListView.Expand
-                                    expanded={mapping.expanded && mapping.expandType === 2}
-                                    toggleExpanded={() => {
-                                      this.toggleExpand(mapping, 2);
-                                    }}
-                                  >
-                                    <Icon type="pf" name="cluster" />
-                                    <div className="mappings-expand-label-group">
-                                      <div className="mappings-expand-label">
-                                        {sprintf(
-                                          n__('%d Source Cluster', '%d Source Clusters', sourceClusterCount),
-                                          sourceClusterCount
-                                        )}
-                                      </div>
-                                      <div className="mappings-expand-label">
-                                        {sprintf(
-                                          n__('%d Target Cluster', '%d Target Clusters', targetClusterCount),
-                                          targetClusterCount
-                                        )}
-                                      </div>
-                                    </div>
-                                  </ListView.Expand>
-                                )}
-                              </ListView.InfoItem>,
-                              associatedPlansCount ? (
-                                <ListView.InfoItem key={3} id="associated-plans">
-                                  <ListView.Expand
-                                    expanded={mapping.expanded && mapping.expandType === 3}
-                                    toggleExpanded={() => {
-                                      this.toggleExpand(mapping, 3);
-                                    }}
-                                  >
-                                    <Icon type="pf" name="catalog" />
-                                    {sprintf(
-                                      n__('%d Associated Plan', '%d Associated Plans', associatedPlansCount),
-                                      associatedPlansCount
-                                    )}
-                                  </ListView.Expand>
-                                </ListView.InfoItem>
-                              ) : null
-                            ]}
-                            actions={
-                              <div>
-                                <Button
-                                  bsStyle="link"
-                                  disabled={!!associatedPlansCount}
-                                  onClick={e => {
-                                    e.stopPropagation();
-                                    showMappingWizardEditModeAction(mapping);
+                      return (
+                        <ListView.Item
+                          key={mapping.id}
+                          heading={mapping.name}
+                          description={
+                            <EllipsisWithTooltip id={mapping.description}>
+                              <small>{mapping.description}</small>
+                            </EllipsisWithTooltip>
+                          }
+                          stacked
+                          compoundExpand
+                          compoundExpanded={mapping.expanded}
+                          onCloseCompoundExpand={() => this.closeExpand(mapping)}
+                          additionalInfo={[
+                            <ListView.InfoItem key={0} id="networks">
+                              {targetNetworks === null ? (
+                                <div className="list-view-pf-expand">
+                                  <Icon type="pf" name="error-circle-o" />
+                                  {__('Networks missing')}
+                                </div>
+                              ) : (
+                                <ListView.Expand
+                                  expanded={mapping.expanded && mapping.expandType === 0}
+                                  toggleExpanded={() => {
+                                    this.toggleExpand(mapping, 0);
                                   }}
                                 >
-                                  <Icon type="pf" name="edit" />
+                                  <Icon type="pf" name="network" />
+                                  <div className="mappings-expand-label-group">
+                                    <div className="mappings-expand-label">
+                                      {sprintf(
+                                        n__('%d Source Network', '%d Source Networks', sourceLanCount),
+                                        sourceLanCount
+                                      )}
+                                    </div>
+                                    <div className="mappings-expand-label">
+                                      {sprintf(
+                                        n__('%d Target Network', '%d Target Networks', targetLanCount),
+                                        targetLanCount
+                                      )}
+                                    </div>
+                                  </div>
+                                </ListView.Expand>
+                              )}
+                            </ListView.InfoItem>,
+                            <ListView.InfoItem key={1} id="datastores">
+                              {targetDatastores === null ? (
+                                <div className="list-view-pf-expand">
+                                  <Icon type="pf" name="error-circle-o" />
+                                  {__('Datastores missing')}
+                                </div>
+                              ) : (
+                                <ListView.Expand
+                                  expanded={mapping.expanded && mapping.expandType === 1}
+                                  toggleExpanded={() => {
+                                    this.toggleExpand(mapping, 1);
+                                  }}
+                                >
+                                  <Icon type="fa" name="database" />
+                                  <div className="mappings-expand-label-group">
+                                    <div className="mappings-expand-label">
+                                      {sprintf(
+                                        n__('%d Source Datastore', '%d Source Datastores', sourceDatastoreCount),
+                                        sourceDatastoreCount
+                                      )}
+                                    </div>
+                                    <div className="mappings-expand-label">
+                                      {sprintf(
+                                        n__('%d Target Datastore', '%d Target Datastores', targetDatastoreCount),
+                                        targetDatastoreCount
+                                      )}
+                                    </div>
+                                  </div>
+                                </ListView.Expand>
+                              )}
+                            </ListView.InfoItem>,
+                            <ListView.InfoItem key={2} id="clusters">
+                              {targetClusters === null ? (
+                                <div className="list-view-pf-expand">
+                                  <Icon type="pf" name="error-circle-o" />
+                                  {__('Clusters missing')}
+                                </div>
+                              ) : (
+                                <ListView.Expand
+                                  expanded={mapping.expanded && mapping.expandType === 2}
+                                  toggleExpanded={() => {
+                                    this.toggleExpand(mapping, 2);
+                                  }}
+                                >
+                                  <Icon type="pf" name="cluster" />
+                                  <div className="mappings-expand-label-group">
+                                    <div className="mappings-expand-label">
+                                      {sprintf(
+                                        n__('%d Source Cluster', '%d Source Clusters', sourceClusterCount),
+                                        sourceClusterCount
+                                      )}
+                                    </div>
+                                    <div className="mappings-expand-label">
+                                      {sprintf(
+                                        n__('%d Target Cluster', '%d Target Clusters', targetClusterCount),
+                                        targetClusterCount
+                                      )}
+                                    </div>
+                                  </div>
+                                </ListView.Expand>
+                              )}
+                            </ListView.InfoItem>,
+                            associatedPlansCount ? (
+                              <ListView.InfoItem key={3} id="associated-plans">
+                                <ListView.Expand
+                                  expanded={mapping.expanded && mapping.expandType === 3}
+                                  toggleExpanded={() => {
+                                    this.toggleExpand(mapping, 3);
+                                  }}
+                                >
+                                  <Icon type="pf" name="catalog" />
+                                  {sprintf(
+                                    n__('%d Associated Plan', '%d Associated Plans', associatedPlansCount),
+                                    associatedPlansCount
+                                  )}
+                                </ListView.Expand>
+                              </ListView.InfoItem>
+                            ) : null
+                          ]}
+                          actions={
+                            <div>
+                              <Button
+                                bsStyle="link"
+                                disabled={!!associatedPlansCount}
+                                onClick={e => {
+                                  e.stopPropagation();
+                                  showMappingWizardEditModeAction(mapping);
+                                }}
+                              >
+                                <Icon type="pf" name="edit" />
+                              </Button>
+                              {inProgressRequestsTransformationMappings.find(
+                                inProgressRequestsTransformationMapping =>
+                                  inProgressRequestsTransformationMapping === mapping.id
+                              ) ? (
+                                <Button bsStyle="link" disabled>
+                                  <Icon type="pf" className="delete-infra-mapping-icon-disabled" name="delete" />
                                 </Button>
-                                {inProgressRequestsTransformationMappings.find(
-                                  inProgressRequestsTransformationMapping =>
-                                    inProgressRequestsTransformationMapping === mapping.id
-                                ) ? (
-                                  <Button bsStyle="link" disabled>
-                                    <Icon type="pf" className="delete-infra-mapping-icon-disabled" name="delete" />
-                                  </Button>
-                                ) : (
-                                  <Button
-                                    bsStyle="link"
-                                    onClick={e => {
-                                      e.stopPropagation();
-                                      setMappingToDeleteAction(mapping);
-                                      showDeleteConfirmationModalAction();
-                                    }}
-                                  >
-                                    <Icon type="pf" name="delete" />
-                                  </Button>
-                                )}
-                              </div>
-                            }
-                          >
-                            <Grid.Row>
-                              <Grid.Col sm={12}>
-                                {mapping.expandType === 0 && (
-                                  <React.Fragment>
-                                    <Grid.Row className="infra-mapping-header-row">
-                                      <Grid.Col xs={6}>
-                                        <b>{headerText.sourceNetworks}</b>
-                                      </Grid.Col>
-                                      <Grid.Col xs={6}>
-                                        <b>{headerText.targetNetworks}</b>
-                                      </Grid.Col>
-                                    </Grid.Row>
+                              ) : (
+                                <Button
+                                  bsStyle="link"
+                                  onClick={e => {
+                                    e.stopPropagation();
+                                    setMappingToDeleteAction(mapping);
+                                    showDeleteConfirmationModalAction();
+                                  }}
+                                >
+                                  <Icon type="pf" name="delete" />
+                                </Button>
+                              )}
+                            </div>
+                          }
+                        >
+                          <Grid.Row>
+                            <Grid.Col sm={12}>
+                              {mapping.expandType === 0 && (
+                                <React.Fragment>
+                                  <Grid.Row className="infra-mapping-header-row">
+                                    <Grid.Col xs={6}>
+                                      <b>{headerText.sourceNetworks}</b>
+                                    </Grid.Col>
+                                    <Grid.Col xs={6}>
+                                      <b>{headerText.targetNetworks}</b>
+                                    </Grid.Col>
+                                  </Grid.Row>
 
-                                    {Object.keys(targetNetworks).map(key => {
-                                      const mappedTarget = targetNetworks[key];
-                                      return (
-                                        <Grid.Row key={key} className="infra-mapping-networks-row">
-                                          <Grid.Col xs={6}>
-                                            <MappingSource>
-                                              {mappedTarget.sources.map(source => (
-                                                <div key={source.sourceNetwork.id}>
-                                                  {this.clusterName(source.sourceCluster)}
-                                                  {` \\ ${source.sourceNetwork.name} `}
-                                                </div>
-                                              ))}
-                                            </MappingSource>
-                                          </Grid.Col>
-                                          <Grid.Col xs={6}>
-                                            <MappingTarget>
-                                              {this.clusterName(mappedTarget.target.targetCluster)}
-                                              {` \\ ${mappedTarget.target.targetNetwork.name} `}
-                                            </MappingTarget>
-                                          </Grid.Col>
-                                        </Grid.Row>
-                                      );
-                                    })}
-                                  </React.Fragment>
-                                )}
-                                {mapping.expandType === 1 && (
-                                  <React.Fragment>
-                                    <Grid.Row className="infra-mapping-header-row">
-                                      <Grid.Col xs={6}>
-                                        <b>{headerText.sourceDatastores}</b>
-                                      </Grid.Col>
-                                      <Grid.Col xs={6}>
-                                        <b>{headerText.targetDatastores}</b>
-                                      </Grid.Col>
-                                    </Grid.Row>
-
-                                    {Object.keys(targetDatastores).map(key => {
-                                      const mappedTarget = targetDatastores[key];
-                                      return (
-                                        <Grid.Row key={key} className="infra-mapping-datastores-row">
-                                          <Grid.Col xs={6}>
-                                            <MappingSource>
-                                              {mappedTarget.sources.map(source => (
-                                                <div key={source.sourceDatastore.id}>
-                                                  {this.clusterName(source.sourceCluster)}
-                                                  {` \\ ${source.sourceDatastore.name} `}
-                                                </div>
-                                              ))}
-                                            </MappingSource>
-                                          </Grid.Col>
-                                          <Grid.Col xs={6}>
-                                            <MappingTarget>
-                                              {this.clusterName(mappedTarget.target.targetCluster)}
-                                              {` \\ ${mappedTarget.target.targetDatastore.name} `}
-                                            </MappingTarget>
-                                          </Grid.Col>
-                                        </Grid.Row>
-                                      );
-                                    })}
-                                  </React.Fragment>
-                                )}
-                                {mapping.expandType === 2 && (
-                                  <React.Fragment>
-                                    <Grid.Row className="infra-mapping-header-row">
-                                      <Grid.Col xs={6}>
-                                        <b>{headerText.sourceClusters}</b>
-                                      </Grid.Col>
-                                      <Grid.Col xs={6}>
-                                        <b>{headerText.targetClusters}</b>
-                                      </Grid.Col>
-                                    </Grid.Row>
-
-                                    {Object.keys(targetClusters).map(key => {
-                                      const target = targetClusters[key];
-                                      return (
-                                        <Grid.Row key={key} className="infra-mapping-clusters-row">
-                                          <Grid.Col xs={6}>
-                                            <MappingSource>
-                                              {target.sourceClusters.map(source => (
-                                                <div key={source.id}>{this.clusterName(source)}</div>
-                                              ))}
-                                            </MappingSource>
-                                          </Grid.Col>
-                                          <Grid.Col xs={6}>
-                                            <MappingTarget>{this.clusterName(target.targetCluster)}</MappingTarget>
-                                          </Grid.Col>
-                                        </Grid.Row>
-                                      );
-                                    })}
-                                  </React.Fragment>
-                                )}
-                                {mapping.expandType === 3 && (
-                                  <React.Fragment>
-                                    <Grid.Row>
-                                      <Grid.Col xs={12}>
-                                        <b>{__('Created:')}</b>
-                                        {` `}
-                                        {formatDateTime(mapping.created_at)}
-                                      </Grid.Col>
-                                    </Grid.Row>
-                                    <br />
-                                    <Grid.Row>
-                                      <Grid.Col xs={12}>
-                                        <b>{__('Associated Plans')}</b>
-                                      </Grid.Col>
-                                    </Grid.Row>
-                                    <Grid.Row className="infra-mapping-associated-plans-row">
-                                      <Grid.Col xs={12}>
-                                        {' '}
-                                        {associatedPlansCount > 0
-                                          ? mapping.service_templates.map((plan, id) => (
-                                              <div key={id}>
-                                                <span>{plan.name}</span>
-                                                {` `}
-                                                {` `}
+                                  {Object.keys(targetNetworks).map(key => {
+                                    const mappedTarget = targetNetworks[key];
+                                    return (
+                                      <Grid.Row key={key} className="infra-mapping-networks-row">
+                                        <Grid.Col xs={6}>
+                                          <MappingSource>
+                                            {mappedTarget.sources.map(source => (
+                                              <div key={source.sourceNetwork.id}>
+                                                {this.clusterName(source.sourceCluster)}
+                                                {` \\ ${source.sourceNetwork.name} `}
                                               </div>
-                                            ))
-                                          : null}
-                                      </Grid.Col>
-                                    </Grid.Row>
-                                  </React.Fragment>
-                                )}
-                              </Grid.Col>
-                            </Grid.Row>
-                          </ListView.Item>
-                        );
-                      })}
-                    </ListView>
-                    <PaginationRow
-                      viewType={PAGINATION_VIEW.LIST}
-                      pagination={pagination}
-                      pageInputValue={pageChangeValue}
-                      amountOfPages={paginatedSortedFiltersMappings.amountOfPages}
-                      itemCount={paginatedSortedFiltersMappings.itemCount}
-                      itemsStart={paginatedSortedFiltersMappings.itemsStart}
-                      itemsEnd={paginatedSortedFiltersMappings.itemsEnd}
-                      onPerPageSelect={onPerPageSelect}
-                      onFirstPage={onFirstPage}
-                      onPreviousPage={onPreviousPage}
-                      onPageInput={onPageInput}
-                      onNextPage={onNextPage}
-                      onLastPage={onLastPage}
-                      onSubmit={onSubmit}
-                    />
-                  </div>
-                ) : (
-                  this.renderEmptyState()
-                )}
+                                            ))}
+                                          </MappingSource>
+                                        </Grid.Col>
+                                        <Grid.Col xs={6}>
+                                          <MappingTarget>
+                                            {this.clusterName(mappedTarget.target.targetCluster)}
+                                            {` \\ ${mappedTarget.target.targetNetwork.name} `}
+                                          </MappingTarget>
+                                        </Grid.Col>
+                                      </Grid.Row>
+                                    );
+                                  })}
+                                </React.Fragment>
+                              )}
+                              {mapping.expandType === 1 && (
+                                <React.Fragment>
+                                  <Grid.Row className="infra-mapping-header-row">
+                                    <Grid.Col xs={6}>
+                                      <b>{headerText.sourceDatastores}</b>
+                                    </Grid.Col>
+                                    <Grid.Col xs={6}>
+                                      <b>{headerText.targetDatastores}</b>
+                                    </Grid.Col>
+                                  </Grid.Row>
+
+                                  {Object.keys(targetDatastores).map(key => {
+                                    const mappedTarget = targetDatastores[key];
+                                    return (
+                                      <Grid.Row key={key} className="infra-mapping-datastores-row">
+                                        <Grid.Col xs={6}>
+                                          <MappingSource>
+                                            {mappedTarget.sources.map(source => (
+                                              <div key={source.sourceDatastore.id}>
+                                                {this.clusterName(source.sourceCluster)}
+                                                {` \\ ${source.sourceDatastore.name} `}
+                                              </div>
+                                            ))}
+                                          </MappingSource>
+                                        </Grid.Col>
+                                        <Grid.Col xs={6}>
+                                          <MappingTarget>
+                                            {this.clusterName(mappedTarget.target.targetCluster)}
+                                            {` \\ ${mappedTarget.target.targetDatastore.name} `}
+                                          </MappingTarget>
+                                        </Grid.Col>
+                                      </Grid.Row>
+                                    );
+                                  })}
+                                </React.Fragment>
+                              )}
+                              {mapping.expandType === 2 && (
+                                <React.Fragment>
+                                  <Grid.Row className="infra-mapping-header-row">
+                                    <Grid.Col xs={6}>
+                                      <b>{headerText.sourceClusters}</b>
+                                    </Grid.Col>
+                                    <Grid.Col xs={6}>
+                                      <b>{headerText.targetClusters}</b>
+                                    </Grid.Col>
+                                  </Grid.Row>
+
+                                  {Object.keys(targetClusters).map(key => {
+                                    const target = targetClusters[key];
+                                    return (
+                                      <Grid.Row key={key} className="infra-mapping-clusters-row">
+                                        <Grid.Col xs={6}>
+                                          <MappingSource>
+                                            {target.sourceClusters.map(source => (
+                                              <div key={source.id}>{this.clusterName(source)}</div>
+                                            ))}
+                                          </MappingSource>
+                                        </Grid.Col>
+                                        <Grid.Col xs={6}>
+                                          <MappingTarget>{this.clusterName(target.targetCluster)}</MappingTarget>
+                                        </Grid.Col>
+                                      </Grid.Row>
+                                    );
+                                  })}
+                                </React.Fragment>
+                              )}
+                              {mapping.expandType === 3 && (
+                                <React.Fragment>
+                                  <Grid.Row>
+                                    <Grid.Col xs={12}>
+                                      <b>{__('Created:')}</b>
+                                      {` `}
+                                      {formatDateTime(mapping.created_at)}
+                                    </Grid.Col>
+                                  </Grid.Row>
+                                  <br />
+                                  <Grid.Row>
+                                    <Grid.Col xs={12}>
+                                      <b>{__('Associated Plans')}</b>
+                                    </Grid.Col>
+                                  </Grid.Row>
+                                  <Grid.Row className="infra-mapping-associated-plans-row">
+                                    <Grid.Col xs={12}>
+                                      {' '}
+                                      {associatedPlansCount > 0
+                                        ? mapping.service_templates.map((plan, id) => (
+                                            <div key={id}>
+                                              <span>{plan.name}</span>
+                                              {` `}
+                                              {` `}
+                                            </div>
+                                          ))
+                                        : null}
+                                    </Grid.Col>
+                                  </Grid.Row>
+                                </React.Fragment>
+                              )}
+                            </Grid.Col>
+                          </Grid.Row>
+                        </ListView.Item>
+                      );
+                    })}
+                  </ListView>
+                  <PaginationRow
+                    viewType={PAGINATION_VIEW.LIST}
+                    pagination={pagination}
+                    pageInputValue={pageChangeValue}
+                    amountOfPages={paginatedSortedFiltersMappings.amountOfPages}
+                    itemCount={paginatedSortedFiltersMappings.itemCount}
+                    itemsStart={paginatedSortedFiltersMappings.itemsStart}
+                    itemsEnd={paginatedSortedFiltersMappings.itemsEnd}
+                    onPerPageSelect={onPerPageSelect}
+                    onFirstPage={onFirstPage}
+                    onPreviousPage={onPreviousPage}
+                    onPageInput={onPageInput}
+                    onNextPage={onNextPage}
+                    onLastPage={onLastPage}
+                    onSubmit={onSubmit}
+                  />
+                </div>
               </React.Fragment>
+            ) : (
+              this.renderEmptyState()
             );
           }}
         />
