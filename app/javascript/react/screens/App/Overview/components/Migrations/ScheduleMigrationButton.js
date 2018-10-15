@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Icon } from 'patternfly-react';
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
+import getPlanScheduleInfo from './helpers/getPlanScheduleInfo';
 
 const ScheduleMigrationButton = ({
   showConfirmModalAction,
@@ -14,13 +15,14 @@ const ScheduleMigrationButton = ({
   plan,
   isMissingMapping
 }) => {
-  const migrationScheduled = (plan.schedules && plan.schedules[0].run_at.start_time) || 0;
-  const staleMigrationSchedule = new Date(migrationScheduled).getTime() < Date.now();
+  const { migrationScheduled, staleMigrationSchedule, migrationStarting } = getPlanScheduleInfo(plan);
+  const showScheduleButton = staleMigrationSchedule && !migrationStarting;
+
   const confirmationWarningText = (
     <React.Fragment>
       <p>
         {sprintf(
-          __('Are you sure you want to unschedule plan %s  targted to run on %s ?'),
+          __('Are you sure you want to unschedule plan %s  targeted to run on %s ?'),
           plan.name,
           formatDateTime(migrationScheduled)
         )}
@@ -49,7 +51,7 @@ const ScheduleMigrationButton = ({
 
   return (
     <React.Fragment>
-      {staleMigrationSchedule && (
+      {showScheduleButton && (
         <Button
           id={`schedule_${plan.id}`}
           onClick={e => {
@@ -61,7 +63,7 @@ const ScheduleMigrationButton = ({
           {__('Schedule')}
         </Button>
       )}
-      {!staleMigrationSchedule && (
+      {!showScheduleButton && (
         <Button
           id={`unschedule_${plan.id}`}
           onClick={e => {
@@ -72,7 +74,7 @@ const ScheduleMigrationButton = ({
               onConfirm
             });
           }}
-          disabled={isMissingMapping || loading === plan.href}
+          disabled={isMissingMapping || loading === plan.href || migrationStarting}
         >
           {__('Unschedule')}
         </Button>

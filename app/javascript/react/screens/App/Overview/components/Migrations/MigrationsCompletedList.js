@@ -12,6 +12,7 @@ import ScheduleMigrationModal from '../ScheduleMigrationModal/ScheduleMigrationM
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
 import DeleteMigrationMenuItem from './DeleteMigrationMenuItem';
 import StopPropagationOnClick from '../../../common/StopPropagationOnClick';
+import getPlanScheduleInfo from './helpers/getPlanScheduleInfo';
 
 class MigrationsCompletedList extends React.Component {
   state = {
@@ -102,8 +103,7 @@ class MigrationsCompletedList extends React.Component {
                 )}
                 <ListView className="plans-complete-list" style={{ marginTop: 0 }}>
                   {sortedMigrations.map(plan => {
-                    const migrationScheduled = plan.schedules && plan.schedules[0].run_at.start_time;
-                    const staleMigrationSchedule = (new Date(migrationScheduled).getTime() || 0) < Date.now();
+                    const { migrationScheduled, staleMigrationSchedule, migrationStarting } = getPlanScheduleInfo(plan);
 
                     const requestsOfAssociatedPlan = allRequestsWithTasks.filter(
                       request => request.source_id === plan.id
@@ -254,14 +254,20 @@ class MigrationsCompletedList extends React.Component {
                             {elapsedTime}
                           </ListView.InfoItem>,
                           migrationScheduled &&
-                            !staleMigrationSchedule && (
-                              <ListView.InfoItem key={plan.id + 1} style={{ textAlign: 'left' }}>
+                            !staleMigrationSchedule &&
+                            !migrationStarting && (
+                              <ListView.InfoItem key={`${plan.id}-scheduledTime`} style={{ textAlign: 'left' }}>
                                 <Icon type="fa" name="clock-o" />
                                 {__(`Migration scheduled`)}
                                 <br />
                                 {formatDateTime(migrationScheduled)}
                               </ListView.InfoItem>
-                            )
+                            ),
+                          migrationStarting && (
+                            <ListView.InfoItem key={`${plan.id}-starting`} style={{ textAlign: 'left' }}>
+                              {__(`Migration in progress`)}
+                            </ListView.InfoItem>
+                          )
                         ]}
                         actions={
                           <div>
@@ -284,7 +290,7 @@ class MigrationsCompletedList extends React.Component {
                                       e.stopPropagation();
                                       retryClick(plan.href, plan.id);
                                     }}
-                                    disabled={isMissingMapping || loading === plan.href}
+                                    disabled={isMissingMapping || loading === plan.href || migrationStarting}
                                   >
                                     {__('Retry')}
                                   </Button>
