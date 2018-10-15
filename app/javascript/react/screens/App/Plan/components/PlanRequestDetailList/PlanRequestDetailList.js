@@ -541,16 +541,14 @@ class PlanRequestDetailList extends React.Component {
                       <b>{__('Conversion Host')}: </b>
                       {task.transformation_host_name}
                     </div>
-                    {task.completed &&
-                      task.options.virtv2v_wrapper &&
-                      task.options.virtv2v_wrapper.v2v_log.length > 0 && (
-                        <div>
-                          <br />
-                          <strong>{__('Log:')}</strong>
-                          <br />
-                          {task.options.virtv2v_wrapper.v2v_log}
-                        </div>
-                      )}
+                    {task.log_available && (
+                      <div>
+                        <br />
+                        <strong>{__('Log:')}</strong>
+                        <br />
+                        {task.options.virtv2v_wrapper.v2v_log}
+                      </div>
+                    )}
                   </div>
                 </Popover>
               );
@@ -647,10 +645,11 @@ class PlanRequestDetailList extends React.Component {
                       pullRight
                       onSelect={eventKey => this.onSelect(eventKey, task)}
                       disabled={
-                        downloadLogInProgressTaskIds &&
-                        downloadLogInProgressTaskIds.find(element => element === task.id) &&
-                        !task.options.prePlaybookComplete &&
-                        !task.options.postPlaybookComplete
+                        !task.log_available ||
+                        (downloadLogInProgressTaskIds &&
+                          downloadLogInProgressTaskIds.find(element => element === task.id) &&
+                          !task.options.prePlaybookComplete &&
+                          !task.options.postPlaybookComplete)
                       }
                     >
                       {task.options.prePlaybookComplete && (
