@@ -102,7 +102,7 @@ const Migrations = ({
           </div>
         ) : (
           <ShowWizardEmptyState
-            showWizardAction={createMigrationPlanClick}
+            showWizardAction={() => createMigrationPlanClick()}
             description={__('Create a migration plan to select VMs for migration.')}
             buttonText={__('Create Migration Plan')}
           />

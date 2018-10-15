@@ -258,9 +258,7 @@ class Overview extends React.Component {
           style={{ marginTop: 200 }}
         >
           {hasSufficientProviders ? (
-            (!!transformationMappings.length ||
-              !!transformationPlans.length ||
-              !!archivedTransformationPlans.length) && (
+            !!transformationMappings.length || !!transformationPlans.length || !!archivedTransformationPlans.length ? (
               <Migrations
                 activeFilter={migrationsFilter}
                 setActiveFilter={setMigrationsFilterAction}
@@ -296,6 +294,13 @@ class Overview extends React.Component {
                 fetchTransformationMappingsUrl={fetchTransformationMappingsUrl}
                 fetchTransformationMappingsAction={fetchTransformationMappingsAction}
                 showEditPlanNameModalAction={showEditPlanNameModalAction}
+              />
+            ) : (
+              <ShowWizardEmptyState
+                description={__('Create an infrastructure mapping to later be used by a migration plan')}
+                buttonText={__('Create Infrastructure Mapping')}
+                buttonHref="/migration#/mappings"
+                className="full-page-empty"
               />
             )
           ) : (
