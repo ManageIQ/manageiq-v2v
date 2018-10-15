@@ -208,24 +208,28 @@ const MigrationsInProgressCard = ({
 
   return (
     <InProgressWithDetailCard plan={plan} failedOverlay={failedOverlay} handleClick={handleClick}>
-      <UtilizationBar
-        now={totalMigratedDiskSpace}
-        max={totalDiskSpace}
-        description={__('Datastores')}
-        label={diskSpaceBarLabel}
-        descriptionPlacementTop
-        availableTooltipFunction={availableDiskSpaceTooltip}
-        usedTooltipFunction={usedDiskSpaceTooltip}
-      />
-      <UtilizationBar
-        now={completedVMs}
-        max={totalVMs}
-        description={__('VMs')}
-        label={vmBarLabel}
-        descriptionPlacementTop
-        availableTooltipFunction={availableVmTooltip}
-        usedTooltipFunction={usedVmTooltip}
-      />
+      <div id={`datastore-progress-bar-${plan.id}`}>
+        <UtilizationBar
+          now={totalMigratedDiskSpace}
+          max={totalDiskSpace}
+          description={__('Datastores')}
+          label={diskSpaceBarLabel}
+          descriptionPlacementTop
+          availableTooltipFunction={availableDiskSpaceTooltip}
+          usedTooltipFunction={usedDiskSpaceTooltip}
+        />
+      </div>
+      <div id={`vm-progress-bar-${plan.id}`}>
+        <UtilizationBar
+          now={completedVMs}
+          max={totalVMs}
+          description={__('VMs')}
+          label={vmBarLabel}
+          descriptionPlacementTop
+          availableTooltipFunction={availableVmTooltip}
+          usedTooltipFunction={usedVmTooltip}
+        />
+      </div>
       <div className="active-migration-elapsed-time">
         <Icon type="fa" name="clock-o" />
         {elapsedTime}
