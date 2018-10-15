@@ -12,7 +12,7 @@ const ShowWizardEmptyState = ({
   iconName,
   ...props
 }) => (
-  <EmptyState className="overview" {...props}>
+  <EmptyState {...props}>
     <EmptyState.Icon type={iconType} name={iconName} />
     <EmptyState.Title>{title}</EmptyState.Title>
     <EmptyState.Info>{description}</EmptyState.Info>

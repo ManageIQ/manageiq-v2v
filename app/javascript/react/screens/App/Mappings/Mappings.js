@@ -217,7 +217,7 @@ class Mappings extends Component {
               }
               buttonText={__('Configure Providers')}
               buttonHref="/ems_infra/show_list"
-              className="full-page-empty"
+              className="mappings"
             />
           )}
         </Spinner>
