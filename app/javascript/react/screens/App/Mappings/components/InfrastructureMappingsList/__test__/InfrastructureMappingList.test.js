@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 
 import InfrastructureMappingsList from '../InfrastructureMappingsList';
 import ShowWizardEmptyState from '../../../../common/ShowWizardEmptyState/ShowWizardEmptyState';
@@ -10,7 +10,7 @@ beforeEach(() => {
 });
 
 test('it shows the create infra mapping empty state when there are no transformation mappings', () => {
-  const wrapper = shallow(
+  const wrapper = mount(
     <InfrastructureMappingsList
       clusters={[]}
       transformationMappings={[]}
@@ -18,10 +18,11 @@ test('it shows the create infra mapping empty state when there are no transforma
     />
   );
   expect(wrapper.find(ShowWizardEmptyState).props().buttonText).toBe('Create Infrastructure Mapping');
+  wrapper.unmount();
 });
 
 test('it shows the error empty state when there is an error loading mappings', () => {
-  const wrapper = shallow(
+  const wrapper = mount(
     <InfrastructureMappingsList
       clusters={[{ dummyCluster: 1 }]}
       transformationMappings={[{ dummyMappings: 1 }]}
@@ -29,4 +30,5 @@ test('it shows the error empty state when there is an error loading mappings', (
     />
   );
   expect(wrapper.find(ShowWizardEmptyState).props().iconName).toBe('error-circle-o');
+  wrapper.unmount();
 });

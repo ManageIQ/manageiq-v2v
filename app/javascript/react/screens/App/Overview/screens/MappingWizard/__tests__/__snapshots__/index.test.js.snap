@@ -5,7 +5,7 @@ Object {
   "alert": "",
   "editingMapping": null,
   "hideAlertAction": [Function],
-  "hideMappingWizard": false,
+  "hideMappingWizard": true,
   "hideMappingWizardAction": [Function],
   "hideWarningModalAction": [Function],
   "mappingWizardClustersStep": Object {},

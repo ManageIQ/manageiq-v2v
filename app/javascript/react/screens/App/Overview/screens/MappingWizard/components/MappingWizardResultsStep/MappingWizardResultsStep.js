@@ -114,7 +114,8 @@ MappingWizardResultsStep.propTypes = {
   isUpdatingMapping: PropTypes.bool,
   targetProvider: PropTypes.string,
   fetchTransformationMappingsAction: PropTypes.func,
-  fetchTransformationMappingsUrl: PropTypes.string
+  fetchTransformationMappingsUrl: PropTypes.string,
+  redirectTo: PropTypes.func
 };
 MappingWizardResultsStep.defaultProps = {
   postMappingsUrl: 'api/transformation_mappings',

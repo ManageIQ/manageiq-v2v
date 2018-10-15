@@ -3,7 +3,6 @@ import { shallow } from 'enzyme';
 import Overview from '../Overview';
 import { coreComponents } from '../../../../../components';
 import componentRegistry from '../../../../../components/componentRegistry';
-import { transformationMappings } from '../overview.fixtures';
 
 jest.mock('../../../../../components/componentRegistry');
 jest.useFakeTimers();
@@ -53,53 +52,6 @@ describe('Overview component', () => {
     fetchServiceTemplateAnsiblePlaybooksAction.mockReturnValue(Promise.resolve());
   });
 
-  describe('overview sections', () => {
-    test('does not render Migrations if there are no transformation mappings', () => {
-      const wrapper = shallow(
-        <Overview
-          {...baseProps}
-          showMappingWizardAction={showMappingWizardAction}
-          showPlanWizardAction={showPlanWizardAction}
-          fetchProvidersAction={fetchProvidersAction}
-          fetchTransformationMappingsAction={fetchTransformationMappingsAction}
-          fetchTransformationPlansAction={fetchTransformationPlansAction}
-          fetchServiceTemplateAnsiblePlaybooksAction={fetchServiceTemplateAnsiblePlaybooksAction}
-          fetchClustersAction={fetchClustersAction}
-          fetchDatastoresAction={fetchDatastoresAction}
-          fetchNetworksAction={fetchNetworksAction}
-          fetchCloudTenantsAction={fetchCloudTenantsAction}
-          fetchCloudNetworksAction={fetchCloudNetworksAction}
-          fetchCloudVolumeTypesAction={fetchCloudVolumeTypesAction}
-        />
-      );
-
-      expect(wrapper.find('Migrations').exists()).toBe(false);
-    });
-
-    test('renders Migrations if there are transformation mappings', () => {
-      const wrapper = shallow(
-        <Overview
-          {...baseProps}
-          transformationMappings={transformationMappings}
-          showMappingWizardAction={showMappingWizardAction}
-          showPlanWizardAction={showPlanWizardAction}
-          fetchProvidersAction={fetchProvidersAction}
-          fetchTransformationMappingsAction={fetchTransformationMappingsAction}
-          fetchTransformationPlansAction={fetchTransformationPlansAction}
-          fetchServiceTemplateAnsiblePlaybooksAction={fetchServiceTemplateAnsiblePlaybooksAction}
-          fetchClustersAction={fetchClustersAction}
-          fetchDatastoresAction={fetchDatastoresAction}
-          fetchNetworksAction={fetchNetworksAction}
-          fetchCloudTenantsAction={fetchCloudTenantsAction}
-          fetchCloudNetworksAction={fetchCloudNetworksAction}
-          fetchCloudVolumeTypesAction={fetchCloudVolumeTypesAction}
-        />
-      );
-
-      expect(wrapper.find('Migrations').exists()).toBe(true);
-    });
-  });
-
   describe('polling', () => {
     let wrapper; // eslint-disable-line no-unused-vars
     beforeEach(() => {
@@ -129,10 +81,5 @@ describe('Overview component', () => {
       jest.advanceTimersByTime(15000);
       expect(fetchTransformationPlansAction).toHaveBeenCalledTimes(3);
     });
-
-    // TODO: Come back to these once the UI is closer to final form
-    test.skip('stops if the mapping wizard is visible', () => {});
-
-    test.skip('stops if the plan wizard is visible', () => {});
   });
 });
