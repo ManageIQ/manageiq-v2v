@@ -1,3 +1,5 @@
+import { getMappingType } from '../../components/InfrastructureMappingsList/helpers';
+
 export const findEditingPlan = (transformationPlans, editingPlanId) =>
   editingPlanId && transformationPlans.find(plan => plan.id === editingPlanId);
 
@@ -14,3 +16,9 @@ export const planWizardFormFilter = form => ({
   planWizardAdvancedOptionsStep: form.planWizardAdvancedOptionsStep,
   planWizardScheduleStep: form.planWizardScheduleStep
 });
+
+export const getCurrentTargetProvider = (form, transformationMappings) => {
+  const mappingId = form.planWizardGeneralStep.values.infrastructure_mapping;
+  const selectedMapping = transformationMappings.find(mapping => mapping.id === mappingId);
+  return getMappingType(selectedMapping.transformation_mapping_items);
+};

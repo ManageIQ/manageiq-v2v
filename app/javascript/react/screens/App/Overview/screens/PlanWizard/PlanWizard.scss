@@ -27,7 +27,7 @@
 }
 
 .wizard-pf-complete .plan-wizard-vm-power-warning .pficon::before {
-  color: #ec7a08; /* overrides grey color from .blank-slate-pf */
+  color: $color-pf-orange-400; /* overrides grey color from .blank-slate-pf */
 }
 
 .plan-wizard-vm-power-warning p {
