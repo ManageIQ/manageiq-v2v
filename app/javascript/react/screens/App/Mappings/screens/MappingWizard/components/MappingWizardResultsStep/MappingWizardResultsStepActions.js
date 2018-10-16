@@ -2,7 +2,7 @@ import URI from 'urijs';
 
 import API from '../../../../../../../../common/API';
 import { POST_V2V_TRANSFORM_MAPPINGS, UPDATE_V2V_TRANSFORMATION_MAPPING } from './MappingWizardResultsStepConstants';
-import { CONTINUE_TO_PLAN } from '../../../../OverviewConstants';
+import { CONTINUE_TO_PLAN } from '../../../../../Overview/OverviewConstants';
 import { V2V_MAPPING_WIZARD_EXITED } from '../../MappingWizardConstants';
 
 export { fetchTransformationMappingsAction } from '../../../../../Mappings/MappingsActions';

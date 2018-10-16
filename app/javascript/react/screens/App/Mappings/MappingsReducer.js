@@ -22,7 +22,7 @@ import {
   V2V_SHOW_MAPPING_WIZARD,
   V2V_HIDE_MAPPING_WIZARD,
   V2V_MAPPING_WIZARD_EXITED
-} from '../Overview/screens/MappingWizard/MappingWizardConstants';
+} from '../Mappings/screens/MappingWizard/MappingWizardConstants';
 
 import { CONTINUE_TO_PLAN } from '../Overview/OverviewConstants';
 import { addAssociatedPlansCount } from './helpers';

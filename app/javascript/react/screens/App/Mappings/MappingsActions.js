@@ -16,9 +16,9 @@ import {
   YES_TO_DELETE_AND_HIDE_DELETE_CONFIRMATION_MODAL
 } from './MappingsConstants';
 
-import { V2V_SHOW_MAPPING_WIZARD } from '../Overview/screens/MappingWizard/MappingWizardConstants';
+import { V2V_SHOW_MAPPING_WIZARD } from '../Mappings/screens/MappingWizard/MappingWizardConstants';
 
-import { SET_V2V_EDITING_MAPPING } from '../Overview/screens/MappingWizard/components/MappingWizardGeneralStep/MappingWizardGeneralStepConstants';
+import { SET_V2V_EDITING_MAPPING } from '../Mappings/screens/MappingWizard/components/MappingWizardGeneralStep/MappingWizardGeneralStepConstants';
 
 export { fetchTransformationPlansAction, fetchProvidersAction } from '../Overview/OverviewActions';
 

@@ -9,12 +9,12 @@ import { reducer as formReducer } from 'redux-form';
 import MappingWizard from '../MappingWizard';
 import MappingWizardContainer, { reducers } from '../index';
 import { initialState } from '../MappingWizardReducer';
-import { initialState as overviewInitialState } from '../../../overview.fixtures';
+import { initialState as overviewInitialState } from '../../../../Overview/overview.fixtures';
 import { initialState as generalStepInitialState } from '../components/MappingWizardGeneralStep/MappingWizardGeneralStepReducer';
 import { initialState as mappingsInitialState } from '../../../../Mappings/MappingsReducer';
 import { reducers as generalStepReducers } from '../components/MappingWizardGeneralStep/index';
 import { reducers as mappingsReducers } from '../../../../Mappings/index';
-import { reducers as overviewReducers } from '../../../index';
+import { reducers as overviewReducers } from '../../../../Overview/index';
 import { coreComponents } from '../../../../../../../components/';
 import componentRegistry from '../../../../../../../components/componentRegistry';
 
