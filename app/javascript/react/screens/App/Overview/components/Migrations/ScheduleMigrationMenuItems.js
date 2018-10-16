@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Icon } from 'patternfly-react';
+import { MenuItem, Icon } from 'patternfly-react';
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
 
-const ScheduleMigrationButton = ({
+const ScheduleMigrationMenuItems = ({
   showConfirmModalAction,
   hideConfirmModalAction,
   loading,
@@ -47,41 +47,62 @@ const ScheduleMigrationButton = ({
     hideConfirmModalAction();
   };
 
+  const scheduleDisabled = isMissingMapping || loading === plan.href || plan.schedule_type;
+  const rescheduleDisabled = isMissingMapping || loading === plan.href;
+
   return (
     <React.Fragment>
       {staleMigrationSchedule && (
-        <Button
+        <MenuItem
           id={`schedule_${plan.id}`}
           onClick={e => {
             e.stopPropagation();
-            toggleScheduleMigrationModal({ plan });
+            if (!scheduleDisabled) {
+              toggleScheduleMigrationModal({ plan });
+            }
           }}
-          disabled={isMissingMapping || loading === plan.href || plan.schedule_type}
+          disabled={scheduleDisabled}
         >
           {__('Schedule')}
-        </Button>
+        </MenuItem>
       )}
       {!staleMigrationSchedule && (
-        <Button
-          id={`unschedule_${plan.id}`}
-          onClick={e => {
-            e.stopPropagation();
+        <React.Fragment>
+          <MenuItem
+            id={`unschedule_${plan.id}`}
+            onClick={e => {
+              e.stopPropagation();
 
-            showConfirmModalAction({
-              ...confirmModalProps,
-              onConfirm
-            });
-          }}
-          disabled={isMissingMapping || loading === plan.href}
-        >
-          {__('Unschedule')}
-        </Button>
+              if (!rescheduleDisabled) {
+                showConfirmModalAction({
+                  ...confirmModalProps,
+                  onConfirm
+                });
+              }
+            }}
+            disabled={rescheduleDisabled}
+          >
+            {__('Unschedule')}
+          </MenuItem>
+          <MenuItem
+            id={`reschedule_${plan.id}`}
+            onClick={e => {
+              e.stopPropagation();
+              if (!rescheduleDisabled) {
+                toggleScheduleMigrationModal({ plan });
+              }
+            }}
+            disabled={rescheduleDisabled}
+          >
+            {__('Reschedule')}
+          </MenuItem>
+        </React.Fragment>
       )}
     </React.Fragment>
   );
 };
 
-ScheduleMigrationButton.propTypes = {
+ScheduleMigrationMenuItems.propTypes = {
   showConfirmModalAction: PropTypes.func,
   hideConfirmModalAction: PropTypes.func,
   loading: PropTypes.string,
@@ -93,4 +114,4 @@ ScheduleMigrationButton.propTypes = {
   isMissingMapping: PropTypes.bool
 };
 
-export default ScheduleMigrationButton;
+export default ScheduleMigrationMenuItems;

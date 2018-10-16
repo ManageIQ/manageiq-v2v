@@ -7,7 +7,7 @@ import ScheduleMigrationModal from '../ScheduleMigrationModal/ScheduleMigrationM
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
 import { MIGRATIONS_NOT_STARTED_SORT_FIELDS } from './MigrationsConstants';
 import sortFilter from '../../../Plan/components/sortFilter';
-import ScheduleMigrationButton from './ScheduleMigrationButton';
+import ScheduleMigrationMenuItems from './ScheduleMigrationMenuItems';
 import StopPropagationOnClick from '../../../common/StopPropagationOnClick';
 import DeleteMigrationMenuItem from './DeleteMigrationMenuItem';
 
@@ -105,17 +105,6 @@ class MigrationsNotStartedList extends React.Component {
                         }}
                         actions={
                           <div>
-                            <ScheduleMigrationButton
-                              showConfirmModalAction={showConfirmModalAction}
-                              hideConfirmModalAction={hideConfirmModalAction}
-                              loading={loading}
-                              toggleScheduleMigrationModal={toggleScheduleMigrationModal}
-                              scheduleMigration={scheduleMigration}
-                              fetchTransformationPlansAction={fetchTransformationPlansAction}
-                              fetchTransformationPlansUrl={fetchTransformationPlansUrl}
-                              plan={plan}
-                              isMissingMapping={isMissingMapping}
-                            />
                             <Button
                               id={`migrate_${plan.id}`}
                               onClick={e => {
@@ -149,6 +138,17 @@ class MigrationsNotStartedList extends React.Component {
                                   planName={plan.name}
                                   fetchTransformationMappingsAction={fetchTransformationMappingsAction}
                                   fetchTransformationMappingsUrl={fetchTransformationMappingsUrl}
+                                />
+                                <ScheduleMigrationMenuItems
+                                  showConfirmModalAction={showConfirmModalAction}
+                                  hideConfirmModalAction={hideConfirmModalAction}
+                                  loading={loading}
+                                  toggleScheduleMigrationModal={toggleScheduleMigrationModal}
+                                  scheduleMigration={scheduleMigration}
+                                  fetchTransformationPlansAction={fetchTransformationPlansAction}
+                                  fetchTransformationPlansUrl={fetchTransformationPlansUrl}
+                                  plan={plan}
+                                  isMissingMapping={isMissingMapping}
                                 />
                               </DropdownKebab>
                             </StopPropagationOnClick>

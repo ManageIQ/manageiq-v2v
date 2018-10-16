@@ -7,7 +7,7 @@ import getMostRecentRequest from '../../../common/getMostRecentRequest';
 import getMostRecentVMTasksFromRequests from './helpers/getMostRecentVMTasksFromRequests';
 import sortFilter from '../../../Plan/components/sortFilter';
 import { MIGRATIONS_COMPLETED_SORT_FIELDS } from './MigrationsConstants';
-import ScheduleMigrationButton from './ScheduleMigrationButton';
+import ScheduleMigrationMenuItems from './ScheduleMigrationMenuItems';
 import ScheduleMigrationModal from '../ScheduleMigrationModal/ScheduleMigrationModal';
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
 import DeleteMigrationMenuItem from './DeleteMigrationMenuItem';
@@ -267,28 +267,15 @@ class MigrationsCompletedList extends React.Component {
                           <div>
                             {!archived &&
                               failed && (
-                                <React.Fragment>
-                                  <ScheduleMigrationButton
-                                    showConfirmModalAction={showConfirmModalAction}
-                                    hideConfirmModalAction={hideConfirmModalAction}
-                                    loading={loading}
-                                    toggleScheduleMigrationModal={toggleScheduleMigrationModal}
-                                    scheduleMigration={scheduleMigration}
-                                    fetchTransformationPlansAction={fetchTransformationPlansAction}
-                                    fetchTransformationPlansUrl={fetchTransformationPlansUrl}
-                                    plan={plan}
-                                    isMissingMapping={isMissingMapping}
-                                  />
-                                  <Button
-                                    onClick={e => {
-                                      e.stopPropagation();
-                                      retryClick(plan.href, plan.id);
-                                    }}
-                                    disabled={isMissingMapping || loading === plan.href}
-                                  >
-                                    {__('Retry')}
-                                  </Button>
-                                </React.Fragment>
+                                <Button
+                                  onClick={e => {
+                                    e.stopPropagation();
+                                    retryClick(plan.href, plan.id);
+                                  }}
+                                  disabled={isMissingMapping || loading === plan.href}
+                                >
+                                  {__('Retry')}
+                                </Button>
                               )}
                             <StopPropagationOnClick>
                               <DropdownKebab id={`${plan.id}-kebab`} pullRight>
@@ -325,6 +312,20 @@ class MigrationsCompletedList extends React.Component {
                                   fetchTransformationMappingsAction={fetchTransformationMappingsAction}
                                   fetchTransformationMappingsUrl={fetchTransformationMappingsUrl}
                                 />
+                                {!archived &&
+                                  failed && (
+                                    <ScheduleMigrationMenuItems
+                                      showConfirmModalAction={showConfirmModalAction}
+                                      hideConfirmModalAction={hideConfirmModalAction}
+                                      loading={loading}
+                                      toggleScheduleMigrationModal={toggleScheduleMigrationModal}
+                                      scheduleMigration={scheduleMigration}
+                                      fetchTransformationPlansAction={fetchTransformationPlansAction}
+                                      fetchTransformationPlansUrl={fetchTransformationPlansUrl}
+                                      plan={plan}
+                                      isMissingMapping={isMissingMapping}
+                                    />
+                                  )}
                               </DropdownKebab>
                             </StopPropagationOnClick>
                           </div>
