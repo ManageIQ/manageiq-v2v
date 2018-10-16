@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { Breadcrumb, Spinner } from 'patternfly-react';
 
 import Toolbar from '../../../config/Toolbar';
@@ -166,9 +165,7 @@ class Mappings extends Component {
       <React.Fragment>
         <Toolbar>
           <Breadcrumb.Item href="/dashboard/maintab?tab=compute">{__('Compute')}</Breadcrumb.Item>
-          <li>
-            <Link to="/">{__('Migration')}</Link>
-          </li>
+          <Breadcrumb.Item href="/migration">{__('Migration')}</Breadcrumb.Item>
           <Breadcrumb.Item active>{__('Infrastructure Mappings')}</Breadcrumb.Item>
         </Toolbar>
         <Spinner
