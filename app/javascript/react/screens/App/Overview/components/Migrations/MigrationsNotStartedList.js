@@ -10,6 +10,7 @@ import sortFilter from '../../../Plan/components/sortFilter';
 import ScheduleMigrationButton from './ScheduleMigrationButton';
 import StopPropagationOnClick from '../../../common/StopPropagationOnClick';
 import DeleteMigrationMenuItem from './DeleteMigrationMenuItem';
+import getPlanScheduleInfo from './helpers/getPlanScheduleInfo';
 
 class MigrationsNotStartedList extends React.Component {
   state = {
@@ -91,7 +92,7 @@ class MigrationsNotStartedList extends React.Component {
                 </Grid.Row>
                 <ListView className="plans-not-started-list" style={{ marginTop: 0 }}>
                   {sortedMigrations.map(plan => {
-                    const migrationScheduled = plan.schedules && plan.schedules[0].run_at.start_time;
+                    const { migrationScheduled, migrationStarting } = getPlanScheduleInfo(plan);
                     const isMissingMapping = !plan.infraMappingName;
 
                     const editPlanDisabled = isMissingMapping || loading === plan.href;
@@ -122,7 +123,9 @@ class MigrationsNotStartedList extends React.Component {
                                 e.stopPropagation();
                                 migrateClick(plan.href);
                               }}
-                              disabled={isMissingMapping || loading === plan.href || plan.schedule_type}
+                              disabled={
+                                isMissingMapping || loading === plan.href || plan.schedule_type || migrationStarting
+                              }
                             >
                               {__('Migrate')}
                             </Button>
@@ -176,12 +179,18 @@ class MigrationsNotStartedList extends React.Component {
                               {plan.infraMappingName}
                             </ListView.InfoItem>
                           ),
-                          migrationScheduled && (
-                            <ListView.InfoItem key={plan.id + 1} style={{ textAlign: 'left' }}>
-                              <Icon type="fa" name="clock-o" />
-                              {__(`Migration scheduled`)}
-                              <br />
-                              {formatDateTime(migrationScheduled)}
+                          migrationScheduled &&
+                            !migrationStarting && (
+                              <ListView.InfoItem key={`${plan.id}-scheduledTime`} style={{ textAlign: 'left' }}>
+                                <Icon type="fa" name="clock-o" />
+                                {__('Migration scheduled')}
+                                <br />
+                                {formatDateTime(migrationScheduled)}
+                              </ListView.InfoItem>
+                            ),
+                          migrationStarting && (
+                            <ListView.InfoItem key={`${plan.id}-starting`} style={{ textAlign: 'left' }}>
+                              {__('Migration in progress')}
                             </ListView.InfoItem>
                           )
                         ]}
