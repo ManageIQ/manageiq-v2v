@@ -101,7 +101,7 @@ FormField.propTypes = {
   optionValue: PropTypes.string,
   labelWidth: PropTypes.string,
   meta: PropTypes.object,
-  help: PropTypes.string,
+  help: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   maxLength: PropTypes.number,
   maxLengthWarning: PropTypes.string
 };
