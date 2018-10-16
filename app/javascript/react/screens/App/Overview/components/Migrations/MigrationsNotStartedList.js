@@ -183,14 +183,14 @@ class MigrationsNotStartedList extends React.Component {
                             !migrationStarting && (
                               <ListView.InfoItem key={`${plan.id}-scheduledTime`} style={{ textAlign: 'left' }}>
                                 <Icon type="fa" name="clock-o" />
-                                {__(`Migration scheduled`)}
+                                {__('Migration scheduled')}
                                 <br />
                                 {formatDateTime(migrationScheduled)}
                               </ListView.InfoItem>
                             ),
                           migrationStarting && (
                             <ListView.InfoItem key={`${plan.id}-starting`} style={{ textAlign: 'left' }}>
-                              {__(`Migration in progress`)}
+                              {__('Migration in progress')}
                             </ListView.InfoItem>
                           )
                         ]}
