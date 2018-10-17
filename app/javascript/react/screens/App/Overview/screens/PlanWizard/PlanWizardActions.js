@@ -9,10 +9,9 @@ import {
 import { RESET_V2V_ADVANCED_OPTIONS_STEP_VMS } from './components/PlanWizardAdvancedOptionsStep/PlanWizardAdvancedOptionsStepConstants';
 import { V2V_VM_STEP_RESET } from './components/PlanWizardVMStep/PlanWizardVMStepConstants';
 
-export const hidePlanWizardAction = shouldReloadMappings => dispatch => {
+export const hidePlanWizardAction = () => dispatch => {
   dispatch({
-    type: HIDE_PLAN_WIZARD,
-    payload: { shouldReloadMappings }
+    type: HIDE_PLAN_WIZARD
   });
 };
 

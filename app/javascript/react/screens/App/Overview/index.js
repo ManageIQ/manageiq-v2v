@@ -8,8 +8,7 @@ import reducer from './OverviewReducer';
 import {
   notStartedTransformationPlansFilter,
   activeTransformationPlansFilter,
-  finishedTransformationPlansFilter,
-  finishedWithErrorTransformationPlansFilter
+  finishedTransformationPlansFilter
 } from './OverviewSelectors';
 
 export const reducers = { overview: reducer, form: {} };
@@ -19,8 +18,7 @@ const mapStateToProps = ({ overview, overview: { transformationPlans, allRequest
   ...ownProps.data,
   notStartedTransformationPlans: notStartedTransformationPlansFilter(transformationPlans),
   activeTransformationPlans: activeTransformationPlansFilter(transformationPlans, planId),
-  finishedTransformationPlans: finishedTransformationPlansFilter(transformationPlans),
-  finishedWithErrorTransformationPlans: finishedWithErrorTransformationPlansFilter(transformationPlans)
+  finishedTransformationPlans: finishedTransformationPlansFilter(transformationPlans)
 });
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => Object.assign(stateProps, ownProps.data, dispatchProps);

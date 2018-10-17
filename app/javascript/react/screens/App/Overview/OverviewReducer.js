@@ -1,9 +1,6 @@
 import Immutable from 'seamless-immutable';
 
 import {
-  validateOverviewClusters,
-  validateOverviewDatastores,
-  validateOverviewNetworks,
   validateOverviewPlans,
   validateOverviewProviders,
   validateOverviewRequests,
@@ -12,9 +9,6 @@ import {
 } from './OverviewValidators';
 
 import {
-  SHOW_MAPPING_WIZARD,
-  HIDE_MAPPING_WIZARD,
-  MAPPING_WIZARD_EXITED,
   SHOW_PLAN_WIZARD,
   HIDE_PLAN_WIZARD,
   PLAN_WIZARD_EXITED,
@@ -28,34 +22,21 @@ import {
   FETCH_V2V_ALL_REQUESTS_WITH_TASKS,
   FETCH_V2V_ALL_ARCHIVED_PLAN_REQUESTS_WITH_TASKS,
   CREATE_V2V_TRANSFORMATION_PLAN_REQUEST,
-  V2V_FETCH_CLUSTERS,
   CONTINUE_TO_PLAN,
   V2V_SET_MIGRATIONS_FILTER,
   V2V_RETRY_MIGRATION,
-  SHOW_DELETE_CONFIRMATION_MODAL,
-  HIDE_DELETE_CONFIRMATION_MODAL,
-  SET_MAPPING_TO_DELETE,
-  YES_TO_DELETE_AND_HIDE_DELETE_CONFIRMATION_MODAL,
-  DELETE_INFRASTRUCTURE_MAPPING,
   SHOW_CONFIRM_MODAL,
   HIDE_CONFIRM_MODAL,
   MIGRATIONS_FILTERS,
   ARCHIVE_TRANSFORMATION_PLAN,
-  FETCH_NETWORKS,
-  FETCH_DATASTORES,
   V2V_TOGGLE_SCHEDULE_MIGRATION_MODAL,
   V2V_SCHEDULE_MIGRATION,
-  SHOW_PLAN_WIZARD_EDIT_MODE,
-  FETCH_CLOUD_TENANTS,
-  FETCH_CLOUD_NETWORKS,
-  FETCH_CLOUD_VOLUME_TYPES
+  SHOW_PLAN_WIZARD_EDIT_MODE
 } from './OverviewConstants';
 
 import { planTransmutation, sufficientProviders } from './helpers';
 
 export const initialState = Immutable({
-  mappingWizardVisible: false,
-  hideMappingWizard: true,
   planWizardVisible: false,
   hidePlanWizard: true,
   planWizardId: null, // id of infrastructure mapping to use for new plan
@@ -90,8 +71,6 @@ export const initialState = Immutable({
   isCreatingTransformationPlanRequest: null,
   errorCreateTransformationPlanRequest: null,
   isContinuingToPlan: false,
-  shouldReloadMappings: false,
-  clusters: [],
   migrationsFilter: MIGRATIONS_FILTERS.notStarted,
   showDeleteConfirmationModal: false,
   confirmModalVisible: false,
@@ -99,23 +78,6 @@ export const initialState = Immutable({
   isArchivingTransformationPlan: false,
   isRejectedArchivingTransformationPlan: false,
   errorArchivingTransformationPlan: null,
-  isFetchingClusters: false,
-  isRejectedClusters: false,
-  datastores: [],
-  isFetchingDatastores: false,
-  isRejectedDatastores: false,
-  networks: [],
-  isFetchingNetworks: false,
-  isRejectedNetworks: false,
-  cloudTenants: [],
-  isFetchingCloudTenants: false,
-  isRejectedCloudTenants: false,
-  cloudNetworks: [],
-  isFetchingCloudNetworks: false,
-  isRejectedCloudNetworks: false,
-  cloudVolumeTypes: [],
-  isFetchingCloudVolumeTypes: false,
-  isRejectedCloudVolumeTypes: false,
   scheduleMigrationModal: false,
   scheduleMigrationPlan: {},
   isSchedulingMigration: false,
@@ -133,19 +95,6 @@ export default (state = initialState, action) => {
       return state.set('confirmModalOptions', action.payload).set('confirmModalVisible', true);
     case HIDE_CONFIRM_MODAL:
       return state.set('confirmModalVisible', false);
-    case SHOW_MAPPING_WIZARD:
-      return Immutable.merge(state, {
-        mappingWizardVisible: true,
-        hideMappingWizard: false
-      });
-    case HIDE_MAPPING_WIZARD: {
-      const { payload } = action;
-      return state
-        .set('hideMappingWizard', true)
-        .set('shouldReloadMappings', (payload && payload.shouldReloadMappings) || false);
-    }
-    case MAPPING_WIZARD_EXITED:
-      return state.set('mappingWizardVisible', false);
     case SHOW_PLAN_WIZARD: {
       const { payload } = action;
       return Immutable.merge(state, {
@@ -164,12 +113,10 @@ export default (state = initialState, action) => {
       });
     }
     case HIDE_PLAN_WIZARD: {
-      const { payload } = action;
       return state
         .set('hidePlanWizard', true)
         .set('planWizardId', null)
-        .set('editingPlanId', null)
-        .set('shouldReloadMappings', (payload && payload.shouldReloadMappings) || false);
+        .set('editingPlanId', null);
     }
     case SHOW_EDIT_PLAN_TITLE_MODAL:
       return state.set('editingPlanId', action.editingPlanId).set('editPlanNameModalVisible', true);
@@ -189,7 +136,6 @@ export default (state = initialState, action) => {
           return insufficient;
         }
         validateOverviewProviders(action.payload.data.resources);
-
         return insufficient.set('hasSufficientProviders', sufficientProviders(action.payload.data.resources));
       })();
     case `${FETCH_PROVIDERS}_REJECTED`:
@@ -206,7 +152,6 @@ export default (state = initialState, action) => {
           .set('transformationMappings', action.payload.data.resources)
           .set('isRejectedTransformationMappings', false)
           .set('isFetchingTransformationMappings', false)
-          .set('shouldReloadMappings', false)
           .set('isContinuingToPlan', false);
       }
       return state
@@ -222,7 +167,6 @@ export default (state = initialState, action) => {
       return state.set('isFetchingTransformationPlans', true);
     case `${FETCH_V2V_TRANSFORMATION_PLANS}_FULFILLED`: {
       validateOverviewPlans(action.payload.data.resources);
-
       return state
         .set('transformationPlans', planTransmutation(action.payload.data.resources, state.transformationMappings))
         .set('isFetchingTransformationPlans', false)
@@ -240,7 +184,6 @@ export default (state = initialState, action) => {
         .set('isRejectedArchivedTransformationPlans', false);
     case `${FETCH_V2V_ARCHIVED_TRANSFORMATION_PLANS}_FULFILLED`:
       validateOverviewPlans(action.payload.data.resources);
-
       return state
         .set(
           'archivedTransformationPlans',
@@ -302,83 +245,6 @@ export default (state = initialState, action) => {
         .set('errorAllArchivedPlanRequestsWithTasks', action.payload)
         .set('isRejectedAllArchivedPlanRequestsWithTasks', true)
         .set('isFetchingAllArchivedPlanRequestsWithTasks', false);
-    case `${V2V_FETCH_CLUSTERS}_PENDING`:
-      return state.set('isFetchingClusters', true);
-    case `${V2V_FETCH_CLUSTERS}_FULFILLED`:
-      validateOverviewClusters(action.payload.data.resources);
-      return state
-        .set('clusters', action.payload.data.resources)
-        .set('isFetchingClusters', false)
-        .set('isRejectedClusters', false)
-        .set('errorClusters', null);
-    case `${V2V_FETCH_CLUSTERS}_REJECTED`:
-      return state
-        .set('errorClusters', action.payload)
-        .set('isRejectedClusters', true)
-        .set('isFetchingClusters', false);
-    case `${FETCH_NETWORKS}_PENDING`:
-      return state.set('isFetchingNetworks', true);
-    case `${FETCH_NETWORKS}_FULFILLED`:
-      validateOverviewNetworks(action.payload.data.resources);
-      return state
-        .set('networks', action.payload.data.resources)
-        .set('isFetchingNetworks', false)
-        .set('isRejectedNetworks', false)
-        .set('errorNetworks', null);
-    case `${FETCH_NETWORKS}_REJECTED`:
-      return state
-        .set('errorNetworks', action.payload)
-        .set('isRejectedNetworks', true)
-        .set('isFetchingNetworks', false);
-    case `${FETCH_DATASTORES}_PENDING`:
-      return state.set('isFetchingDatastores', true);
-    case `${FETCH_DATASTORES}_FULFILLED`:
-      validateOverviewDatastores(action.payload.data.resources);
-      return state
-        .set('datastores', action.payload.data.resources)
-        .set('isFetchingDatastores', false)
-        .set('isRejectedDatastores', false)
-        .set('errorDatastores', null);
-    case `${FETCH_DATASTORES}_REJECTED`:
-      return state
-        .set('errorDatastores', action.payload)
-        .set('isRejectedDatastores', true)
-        .set('isFetchingDatastores', false);
-    case `${FETCH_CLOUD_TENANTS}_PENDING`:
-      return state.set('isFetchingCloudTenants', true);
-    case `${FETCH_CLOUD_TENANTS}_FULFILLED`:
-      return state
-        .set('cloudTenants', action.payload.data.resources)
-        .set('isFetchingCloudTenants', false)
-        .set('isRejectedCloudTenants', false)
-        .set('errorCloudTenants', null);
-    case `${FETCH_CLOUD_TENANTS}_REJECTED`:
-      return state
-        .set('errorCloudTenants', action.payload)
-        .set('isRejectedCloudTenants', true)
-        .set('isFetchingCloudTenants', false);
-    case `${FETCH_CLOUD_NETWORKS}_PENDING`:
-      return state.set('isFetchingCloudNetworks', true);
-    case `${FETCH_CLOUD_NETWORKS}_FULFILLED`:
-      return state
-        .set('cloudNetworks', action.payload.data.resources)
-        .set('isFetchingCloudNetworks', false)
-        .set('isRejectedCloudNetworks', false);
-    case `${FETCH_CLOUD_NETWORKS}_REJECTED`:
-      return state.set('isRejectedCloudNetworks', true).set('isFetchingCloudNetworks', false);
-    case `${FETCH_CLOUD_VOLUME_TYPES}_PENDING`:
-      return state.set('isFetchingCloudVolumeTypes', true);
-    case `${FETCH_CLOUD_VOLUME_TYPES}_FULFILLED`:
-      return state
-        .set('cloudVolumeTypes', action.payload.data.resources)
-        .set('isFetchingCloudVolumeTypes', false)
-        .set('isRejectedCloudVolumeTypes', false)
-        .set('errorCloudVolumeTypes', null);
-    case `${FETCH_CLOUD_VOLUME_TYPES}_REJECTED`:
-      return state
-        .set('errorCloudVolumeTypes', action.payload)
-        .set('isRejectedCloudVolumeTypes', true)
-        .set('isFetchingCloudVolumeTypes', false);
     case `${CREATE_V2V_TRANSFORMATION_PLAN_REQUEST}_PENDING`:
       return state.set('isCreatingTransformationPlanRequest', action.payload);
     case `${CREATE_V2V_TRANSFORMATION_PLAN_REQUEST}_FULFILLED`:
@@ -393,37 +259,11 @@ export default (state = initialState, action) => {
         .set('isRejectedCreateTranformationPlanRequest', true)
         .set('isCreatingTransformationPlanRequest', null);
     case CONTINUE_TO_PLAN:
-      return state
-        .set('isContinuingToPlan', true)
-        .set('shouldReloadMappings', true)
-        .set('planWizardId', action.payload.id);
+      return state.set('isContinuingToPlan', true).set('planWizardId', action.payload.id);
     case V2V_SET_MIGRATIONS_FILTER:
       return state.set('migrationsFilter', action.payload);
     case V2V_RETRY_MIGRATION:
       return state.set('planId', action.payload).set('reloadCard', true);
-    case SHOW_DELETE_CONFIRMATION_MODAL:
-    case HIDE_DELETE_CONFIRMATION_MODAL:
-      return state.set('yesToDeleteInfrastructureMapping', false).set('showDeleteConfirmationModal', action.payload);
-    case SET_MAPPING_TO_DELETE:
-      return state.set('mappingToDelete', action.payload);
-    case YES_TO_DELETE_AND_HIDE_DELETE_CONFIRMATION_MODAL:
-      return state.set('yesToDeleteInfrastructureMapping', true).set('showDeleteConfirmationModal', false);
-    case `${DELETE_INFRASTRUCTURE_MAPPING}_PENDING`:
-      return state
-        .set('yesToDeleteInfrastructureMapping', false)
-        .set('isDeletingInfrastructureMapping', action.payload);
-    case `${DELETE_INFRASTRUCTURE_MAPPING}_FULFILLED`:
-      return state
-        .set('deleteInfrastructureMappingResponse', action.payload.data)
-        .set('isDeletingInfrastructureMapping', null)
-        .set('isRejectedInfrastructureMapping', false)
-        .set('shouldReloadMappings', true)
-        .set('errorDeleteInfrastructureMapping', null);
-    case `${DELETE_INFRASTRUCTURE_MAPPING}_REJECTED`:
-      return state
-        .set('errorDeleteInfrastructureMapping', action.payload)
-        .set('isRejectedInfrastructureMapping', true)
-        .set('isDeletingInfrastructureMapping', null);
     case `${ARCHIVE_TRANSFORMATION_PLAN}_PENDING`:
       return state.set('isArchivingTransformationPlan', true).set('isRejectedArchivingTransformationPlan', false);
     case `${ARCHIVE_TRANSFORMATION_PLAN}_FULFILLED`:

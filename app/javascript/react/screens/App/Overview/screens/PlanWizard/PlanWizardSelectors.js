@@ -1,4 +1,4 @@
-import { getMappingType } from '../../components/InfrastructureMappingsList/helpers';
+import { getMappingType } from '../../../Mappings/components/InfrastructureMappingsList/helpers';
 
 export const findEditingPlan = (transformationPlans, editingPlanId) =>
   editingPlanId && transformationPlans.find(plan => plan.id === editingPlanId);

@@ -12,9 +12,9 @@ import {
   UtilizationBar,
   PAGINATION_VIEW
 } from 'patternfly-react';
-import listFilter from './listFilter';
-import sortFilter from './sortFilter';
-import paginate from './paginate';
+import listFilter from '../../common/ListViewToolbar/listFilter';
+import sortFilter from '../../common/ListViewToolbar/sortFilter';
+import paginate from '../../common/ListViewToolbar/paginate';
 
 class PlanVmsList extends React.Component {
   state = {

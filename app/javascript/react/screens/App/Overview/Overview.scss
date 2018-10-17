@@ -1,11 +1,7 @@
-@import './screens/MappingWizard/MappingWizard.scss';
 @import './screens/PlanWizard/PlanWizard.scss';
 @import './screens/PlanWizard/components/PlanWizardResultsStep/PlanWizardResultsStep.scss';
-@import 'components/InfrastructureMappingsList/InfrastructureMappingsList.scss';
 @import 'components/Migrations/Migrations.scss';
-@import 'components/ModalWizard/ModalWizard.scss';
 @import 'components/AggregateCards/AggregateCards.scss';
-@import 'components/OverviewEmptyState/OverviewEmptyState.scss';
 
 hr {
   margin-top: 10px;
@@ -65,28 +61,17 @@ hr {
   cursor: not-allowed;
 }
 
-.wizard-pf-steps.step-buttons-disabled
-  .wizard-pf-steps-indicator
-  li.wizard-pf-step
-  a {
+.wizard-pf-steps.step-buttons-disabled .wizard-pf-steps-indicator li.wizard-pf-step a {
   cursor: default;
 }
 
-.wizard-pf-steps.step-buttons-disabled
-  .wizard-pf-steps-indicator
-  li
-  a:hover
-  .wizard-pf-step-number {
+.wizard-pf-steps.step-buttons-disabled .wizard-pf-steps-indicator li a:hover .wizard-pf-step-number {
   background-color: #fff;
   border-color: #bbb;
   color: #bbb;
 }
 
-.wizard-pf-steps.step-buttons-disabled
-  .wizard-pf-steps-indicator
-  li.active
-  a:hover
-  .wizard-pf-step-number {
+.wizard-pf-steps.step-buttons-disabled .wizard-pf-steps-indicator li.active a:hover .wizard-pf-step-number {
   background-color: #39a5dc;
   border-color: #39a5dc;
   color: #fff;
