@@ -21,6 +21,9 @@ class ScheduleMigrationModalBody extends React.Component {
     datetimeSelector.on('dp.change', e => {
       handleChange(e.date._d);
     });
+
+    const picker = datetimeSelector.data('DateTimePicker');
+    handleChange(picker.date().toDate());
   }
   render() {
     return (
