@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-
 import {
   Icon,
   Card,
@@ -11,8 +10,8 @@ import {
   Spinner
 } from 'patternfly-react';
 
-const InfrastructureMappings = ({ mappings, loading }) => {
-  const countDescription = mappings.length === 1 ? __('Infrastructure Mapping') : __('Infrastructure Mappings');
+const ArchivedTransformationPlans = ({ archivedPlans, loading }) => {
+  const countDescription = archivedPlans.length === 1 ? __('Migration Plan Archived') : __('Migration Plans Archived');
 
   const classes = cx('overview-aggregate-card', { 'is-loading': loading });
 
@@ -20,9 +19,9 @@ const InfrastructureMappings = ({ mappings, loading }) => {
     <Card className={classes} accented aggregated matchHeight>
       <Spinner loading={loading}>
         <Card.Title>
-          <AggregateStatusCount>{mappings.length}</AggregateStatusCount> {countDescription}
+          <AggregateStatusCount>{archivedPlans.length}</AggregateStatusCount> {countDescription}
         </Card.Title>
-        {mappings.length > 0 && (
+        {archivedPlans.length > 0 && (
           <Card.Body className="overview-aggregate-card--body">
             <AggregateStatusNotifications>
               <AggregateStatusNotification>
@@ -36,9 +35,9 @@ const InfrastructureMappings = ({ mappings, loading }) => {
   );
 };
 
-InfrastructureMappings.propTypes = {
-  mappings: PropTypes.array,
+ArchivedTransformationPlans.propTypes = {
+  archivedPlans: PropTypes.array,
   loading: PropTypes.bool
 };
 
-export default InfrastructureMappings;
+export default ArchivedTransformationPlans;
