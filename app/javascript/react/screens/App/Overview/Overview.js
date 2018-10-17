@@ -275,7 +275,6 @@ class Overview extends React.Component {
             !!transformationMappings.length || !!transformationPlans.length || !!archivedTransformationPlans.length ? (
               <Migrations
                 activeFilter={migrationsFilter}
-                setActiveFilter={setMigrationsFilterAction}
                 transformationPlans={transformationPlans}
                 allRequestsWithTasks={allRequestsWithTasks}
                 archivedTransformationPlans={archivedTransformationPlans}

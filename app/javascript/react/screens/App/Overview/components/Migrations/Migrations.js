@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Immutable from 'seamless-immutable';
-import { noop, DropdownButton, Grid, Icon, MenuItem } from 'patternfly-react';
+import { noop, Grid, Icon } from 'patternfly-react';
 import MigrationsInProgressCards from './MigrationsInProgressCards';
 import MigrationsNotStartedList from './MigrationsNotStartedList';
 import MigrationsCompletedList from './MigrationsCompletedList';
@@ -10,7 +10,6 @@ import { MIGRATIONS_FILTERS } from '../../OverviewConstants';
 
 const Migrations = ({
   activeFilter,
-  setActiveFilter,
   transformationPlans,
   allRequestsWithTasks,
   reloadCard,
@@ -44,23 +43,7 @@ const Migrations = ({
   fetchTransformationMappingsAction,
   showEditPlanNameModalAction
 }) => {
-  const filterOptions = [
-    MIGRATIONS_FILTERS.notStarted,
-    MIGRATIONS_FILTERS.inProgress,
-    MIGRATIONS_FILTERS.completed,
-    MIGRATIONS_FILTERS.archived
-  ];
-
   const plansExist = transformationPlans.length > 0 || archivedTransformationPlans.length > 0;
-  const onSelect = eventKey => {
-    if (eventKey === MIGRATIONS_FILTERS.archived) {
-      fetchTransformationPlansAction({
-        url: fetchArchivedTransformationPlansUrl,
-        archived: true
-      });
-    }
-    setActiveFilter(eventKey);
-  };
 
   return (
     <React.Fragment>
@@ -85,22 +68,7 @@ const Migrations = ({
           </div>
         </div>
         <hr style={{ borderTopColor: '#d1d1d1' }} />
-        {plansExist ? (
-          <div style={{ marginBottom: 15 }}>
-            <DropdownButton
-              bsStyle="default"
-              title={sprintf(__('%s'), activeFilter)}
-              id="dropdown-filter"
-              onSelect={eventKey => onSelect(eventKey)}
-            >
-              {filterOptions.map((filter, i) => (
-                <MenuItem eventKey={filter} active={filter === activeFilter} key={i}>
-                  {sprintf(__('%s'), filter)}
-                </MenuItem>
-              ))}
-            </DropdownButton>
-          </div>
-        ) : (
+        {!plansExist && (
           <ShowWizardEmptyState
             showWizardAction={() => createMigrationPlanClick()}
             description={__('Create a migration plan to select VMs for migration.')}
@@ -196,7 +164,6 @@ const Migrations = ({
 
 Migrations.propTypes = {
   activeFilter: PropTypes.string,
-  setActiveFilter: PropTypes.func,
   transformationPlans: PropTypes.array,
   allRequestsWithTasks: PropTypes.array,
   reloadCard: PropTypes.bool,
