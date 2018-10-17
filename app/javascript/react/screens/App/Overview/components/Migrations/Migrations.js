@@ -50,7 +50,7 @@ const Migrations = ({
       <Grid.Col xs={12}>
         <div className="heading-with-link-container">
           <div className="pull-left">
-            <h3>{__('Migration Plans')}</h3>
+            <h3>{activeFilter}</h3>
           </div>
           <div className="pull-right">
             {/** todo: create IconLink in patternfly-react * */}

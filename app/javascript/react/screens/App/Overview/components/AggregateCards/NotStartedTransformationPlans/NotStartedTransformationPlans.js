@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-
 import {
   Icon,
   Card,
@@ -11,14 +10,22 @@ import {
   Spinner
 } from 'patternfly-react';
 
-const NotStartedTransformationPlans = ({ notStartedPlans, loading }) => {
+import { MIGRATIONS_FILTERS } from '../../../OverviewConstants';
+
+const NotStartedTransformationPlans = ({ notStartedPlans, loading, migrationsFilter, setMigrationsFilterAction }) => {
   const countDescription =
     notStartedPlans.length === 1 ? __('Migration Plan Not Started') : __('Migration Plans Not Started');
-
-  const classes = cx('overview-aggregate-card', { 'is-loading': loading });
+  const active = migrationsFilter === MIGRATIONS_FILTERS.notStarted;
+  const classes = cx('overview-aggregate-card', { 'is-loading': loading, active });
 
   return (
-    <Card className={classes} accented aggregated matchHeight>
+    <Card
+      className={classes}
+      accented
+      aggregated
+      matchHeight
+      onClick={() => setMigrationsFilterAction(MIGRATIONS_FILTERS.notStarted)}
+    >
       <Spinner loading={loading}>
         <Card.Title>
           <AggregateStatusCount>{notStartedPlans.length}</AggregateStatusCount> {countDescription}
@@ -39,7 +46,9 @@ const NotStartedTransformationPlans = ({ notStartedPlans, loading }) => {
 
 NotStartedTransformationPlans.propTypes = {
   notStartedPlans: PropTypes.array,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
+  migrationsFilter: PropTypes.string,
+  setMigrationsFilterAction: PropTypes.func
 };
 
 export default NotStartedTransformationPlans;

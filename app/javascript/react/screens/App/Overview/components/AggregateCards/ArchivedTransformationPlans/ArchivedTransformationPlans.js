@@ -10,13 +10,21 @@ import {
   Spinner
 } from 'patternfly-react';
 
-const ArchivedTransformationPlans = ({ archivedPlans, loading }) => {
-  const countDescription = archivedPlans.length === 1 ? __('Migration Plan Archived') : __('Migration Plans Archived');
+import { MIGRATIONS_FILTERS } from '../../../OverviewConstants';
 
-  const classes = cx('overview-aggregate-card', { 'is-loading': loading });
+const ArchivedTransformationPlans = ({ archivedPlans, loading, migrationsFilter, setMigrationsFilterAction }) => {
+  const countDescription = archivedPlans.length === 1 ? __('Migration Plan Archived') : __('Migration Plans Archived');
+  const active = migrationsFilter === MIGRATIONS_FILTERS.archived;
+  const classes = cx('overview-aggregate-card', { 'is-loading': loading, active });
 
   return (
-    <Card className={classes} accented aggregated matchHeight>
+    <Card
+      className={classes}
+      accented
+      aggregated
+      matchHeight
+      onClick={() => setMigrationsFilterAction(MIGRATIONS_FILTERS.archived)}
+    >
       <Spinner loading={loading}>
         <Card.Title>
           <AggregateStatusCount>{archivedPlans.length}</AggregateStatusCount> {countDescription}
@@ -37,7 +45,9 @@ const ArchivedTransformationPlans = ({ archivedPlans, loading }) => {
 
 ArchivedTransformationPlans.propTypes = {
   archivedPlans: PropTypes.array,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
+  migrationsFilter: PropTypes.string,
+  setMigrationsFilterAction: PropTypes.func
 };
 
 export default ArchivedTransformationPlans;

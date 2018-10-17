@@ -171,9 +171,11 @@ class Overview extends React.Component {
       archivedTransformationPlans,
       finishedTransformationPlans,
       isFetchingAllRequestsWithTasks,
+      migrationsFilter,
       notStartedTransformationPlans,
       reloadCard,
-      requestsWithTasksPreviouslyFetched
+      requestsWithTasksPreviouslyFetched,
+      setMigrationsFilterAction
     } = this.props;
     return (
       <div className="row-cards-pf">
@@ -182,6 +184,8 @@ class Overview extends React.Component {
             <AggregateCards.NotStartedTransformationPlans
               notStartedPlans={notStartedTransformationPlans}
               loading={isFetchingAllRequestsWithTasks && !requestsWithTasksPreviouslyFetched}
+              migrationsFilter={migrationsFilter}
+              setMigrationsFilterAction={setMigrationsFilterAction}
             />
           </CardGrid.Col>
           <CardGrid.Col xs={6} sm={3}>
@@ -190,18 +194,24 @@ class Overview extends React.Component {
               allRequestsWithTasks={allRequestsWithTasks}
               reloadCard={reloadCard}
               loading={isFetchingAllRequestsWithTasks && !requestsWithTasksPreviouslyFetched}
+              migrationsFilter={migrationsFilter}
+              setMigrationsFilterAction={setMigrationsFilterAction}
             />
           </CardGrid.Col>
           <CardGrid.Col xs={6} sm={3}>
             <AggregateCards.FinishedTransformationPlans
               finishedPlans={finishedTransformationPlans}
               loading={isFetchingAllRequestsWithTasks && !requestsWithTasksPreviouslyFetched}
+              migrationsFilter={migrationsFilter}
+              setMigrationsFilterAction={setMigrationsFilterAction}
             />
           </CardGrid.Col>
           <CardGrid.Col xs={6} sm={3}>
             <AggregateCards.ArchivedTransformationPlans
               archivedPlans={archivedTransformationPlans}
               loading={isFetchingAllRequestsWithTasks && !requestsWithTasksPreviouslyFetched}
+              migrationsFilter={migrationsFilter}
+              setMigrationsFilterAction={setMigrationsFilterAction}
             />
           </CardGrid.Col>
         </Card.HeightMatching>
@@ -234,7 +244,6 @@ class Overview extends React.Component {
       finishedTransformationPlans,
       isCreatingTransformationPlanRequest,
       migrationsFilter,
-      setMigrationsFilterAction,
       confirmModalVisible,
       confirmModalOptions,
       showConfirmModalAction,
