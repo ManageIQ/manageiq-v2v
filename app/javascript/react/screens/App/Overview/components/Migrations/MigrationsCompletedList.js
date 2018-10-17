@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { noop, Button, ListView, Grid, Spinner, Icon, Toolbar, Sort, DropdownKebab, MenuItem } from 'patternfly-react';
 import { IsoElapsedTime } from '../../../../../../components/dates/IsoElapsedTime';
-import OverviewEmptyState from '../OverviewEmptyState/OverviewEmptyState';
+import ShowWizardEmptyState from '../../../common/ShowWizardEmptyState/ShowWizardEmptyState';
 import getMostRecentRequest from '../../../common/getMostRecentRequest';
 import getMostRecentVMTasksFromRequests from './helpers/getMostRecentVMTasksFromRequests';
-import sortFilter from '../../../Plan/components/sortFilter';
+import sortFilter from '../../../common/ListViewToolbar/sortFilter';
 import { MIGRATIONS_COMPLETED_SORT_FIELDS } from './MigrationsConstants';
 import ScheduleMigrationButton from './ScheduleMigrationButton';
 import ScheduleMigrationModal from '../ScheduleMigrationModal/ScheduleMigrationModal';
@@ -341,7 +341,7 @@ class MigrationsCompletedList extends React.Component {
                 </ListView>
               </React.Fragment>
             ) : (
-              <OverviewEmptyState
+              <ShowWizardEmptyState
                 title={archived ? __('No Archived Migration Plans') : __('No Completed Migration Plans')}
                 iconType="pf"
                 iconName="info"

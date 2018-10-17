@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { noop, Button, ListView, Grid, Icon, Spinner, Toolbar, Sort, DropdownKebab, MenuItem } from 'patternfly-react';
 import EllipsisWithTooltip from 'react-ellipsis-with-tooltip';
-import OverviewEmptyState from '../OverviewEmptyState/OverviewEmptyState';
+import ShowWizardEmptyState from '../../../common/ShowWizardEmptyState/ShowWizardEmptyState';
 import ScheduleMigrationModal from '../ScheduleMigrationModal/ScheduleMigrationModal';
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
 import { MIGRATIONS_NOT_STARTED_SORT_FIELDS } from './MigrationsConstants';
-import sortFilter from '../../../Plan/components/sortFilter';
+import sortFilter from '../../../common/ListViewToolbar/sortFilter';
 import ScheduleMigrationButton from './ScheduleMigrationButton';
 import StopPropagationOnClick from '../../../common/StopPropagationOnClick';
 import DeleteMigrationMenuItem from './DeleteMigrationMenuItem';
@@ -201,7 +201,7 @@ class MigrationsNotStartedList extends React.Component {
                 </ListView>
               </React.Fragment>
             ) : (
-              <OverviewEmptyState
+              <ShowWizardEmptyState
                 title={__('No Migration Plans Not Started')}
                 iconType="pf"
                 iconName="info"

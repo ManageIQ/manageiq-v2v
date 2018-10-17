@@ -1,9 +1,9 @@
-import MappingWizardContainer from '../react/screens/App/Overview/screens/MappingWizard';
-import MappingWizardGeneralStepContainer from '../react/screens/App/Overview/screens/MappingWizard/components/MappingWizardGeneralStep';
-import MappingWizardClustersStepContainer from '../react/screens/App/Overview/screens/MappingWizard/components/MappingWizardClustersStep';
-import MappingWizardDatastoresStepContainer from '../react/screens/App/Overview/screens/MappingWizard/components/MappingWizardDatastoresStep';
-import MappingWizardNetworksStepContainer from '../react/screens/App/Overview/screens/MappingWizard/components/MappingWizardNetworksStep';
-import MappingWizardResultsStepContainer from '../react/screens/App/Overview/screens/MappingWizard/components/MappingWizardResultsStep';
+import MappingWizardContainer from '../react/screens/App/Mappings/screens/MappingWizard';
+import MappingWizardGeneralStepContainer from '../react/screens/App/Mappings/screens/MappingWizard/components/MappingWizardGeneralStep';
+import MappingWizardClustersStepContainer from '../react/screens/App/Mappings/screens/MappingWizard/components/MappingWizardClustersStep';
+import MappingWizardDatastoresStepContainer from '../react/screens/App/Mappings/screens/MappingWizard/components/MappingWizardDatastoresStep';
+import MappingWizardNetworksStepContainer from '../react/screens/App/Mappings/screens/MappingWizard/components/MappingWizardNetworksStep';
+import MappingWizardResultsStepContainer from '../react/screens/App/Mappings/screens/MappingWizard/components/MappingWizardResultsStep';
 
 import PlanWizardVMStepContainer from '../react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep';
 import PlanWizardResultsStepContainer from '../react/screens/App/Overview/screens/PlanWizard/components/PlanWizardResultsStep';
@@ -13,6 +13,7 @@ import PlanWizardInstancePropertiesStepContainer from '../react/screens/App/Over
 
 import OverviewContainer from '../react/screens/App/Overview';
 import PlanContainer from '../react/screens/App/Plan';
+import MappingsContainer from '../react/screens/App/Mappings';
 import NotificationList from '../react/screens/App/common/NotificationList';
 import IsoDate from './dates/IsoDate';
 import LongDateTime from './dates/LongDateTime';
@@ -88,6 +89,11 @@ export const coreComponents = [
   {
     name: 'PlanContainer',
     type: PlanContainer,
+    store: true
+  },
+  {
+    name: 'MappingsContainer',
+    type: MappingsContainer,
     store: true
   },
   {
