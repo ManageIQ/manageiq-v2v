@@ -203,7 +203,7 @@ export const scheduleMigration = payload => dispatch =>
       let body = {
         action: 'order',
         resource: {
-          schedule_time: scheduleTime
+          schedule_time: new Date(scheduleTime)
         }
       };
       if (scheduleId) {
