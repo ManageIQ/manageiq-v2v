@@ -292,7 +292,7 @@ class PlanRequestDetailList extends React.Component {
     const { selectedTasksForCancel, markedForCancellation } = this.props;
     const filteredTasks = this.filterPlanRequestTasks();
     const incompleteTasks = filteredTasks.filter(
-      task => !task.completed && !task.cancel_requested && !markedForCancellation.find(t => t.id === task.id)
+      task => !task.completed && !task.cancelation_status && !markedForCancellation.find(t => t.id === task.id)
     );
     return {
       filteredTasks,
@@ -472,17 +472,30 @@ class PlanRequestDetailList extends React.Component {
         <div style={{ overflow: 'auto', paddingBottom: 300, height: '100%' }}>
           <ListView className="plan-request-details-list">
             {paginatedSortedFiltersTasks.tasks.map((task, n) => {
-              let taskCancelled = false;
-              let taskCancelling = false;
               let taskMessage = task.message;
-              if (task.cancel_requested) {
+              let taskCancelled = false;
+
+              if (markedForCancellation.find(t => t.id === task.id)) {
+                taskMessage = `${task.message}: ${__('Cancel request sent')}`;
                 taskCancelled = true;
-              } else if (markedForCancellation.find(t => t.id === task.id)) {
-                taskCancelling = true;
               }
-              if (taskCancelled || taskCancelling) {
-                taskMessage = `${task.message}: ${__('Cancelling migration')}`;
+              switch (task.cancelation_status) {
+                case 'cancel_requested':
+                  taskMessage = `${task.message}: ${__('Cancel requested')}`;
+                  taskCancelled = true;
+                  break;
+                case 'canceling':
+                  taskMessage = `${task.message}: ${__('Canceling')}`;
+                  taskCancelled = true;
+                  break;
+                case 'canceled':
+                  taskMessage = `${task.message}: ${__('Canceled')}`;
+                  taskCancelled = true;
+                  break;
+                default:
+                  taskCancelled = false;
               }
+
               let leftContent;
               if (task.message === 'Pending') {
                 leftContent = (
@@ -571,7 +584,7 @@ class PlanRequestDetailList extends React.Component {
                   checkboxInput={
                     <input
                       type="checkbox"
-                      disabled={taskCancelling || !!task.completed || !!taskCancelled}
+                      disabled={taskCancelled || task.completed}
                       checked={this.taskIsSelected(task)}
                       onChange={() => {
                         this.handleCheckboxChange(task);
