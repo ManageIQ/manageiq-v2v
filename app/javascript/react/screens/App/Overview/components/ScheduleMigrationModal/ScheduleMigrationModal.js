@@ -35,7 +35,7 @@ class ScheduleMigrationModal extends React.Component {
           <Modal.Title>{__('Schedule Migration Plan')}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <ScheduleMigrationModalBody handleChange={handleChange} defaultDate={migrationScheduled} />
+          <ScheduleMigrationModalBody handleChange={handleChange} defaultDate={migrationScheduled || ''} />
         </Modal.Body>
         <Modal.Footer>
           <Button bsStyle="default" className="btn-cancel" onClick={modalClose}>
