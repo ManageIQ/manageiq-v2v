@@ -4,7 +4,7 @@ import { Button, Icon } from 'patternfly-react';
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
 import getPlanScheduleInfo from './helpers/getPlanScheduleInfo';
 
-const ScheduleMigrationButton = ({
+const ScheduleMigrationButtons = ({
   showConfirmModalAction,
   hideConfirmModalAction,
   loading,
@@ -95,7 +95,7 @@ const ScheduleMigrationButton = ({
   );
 };
 
-ScheduleMigrationButton.propTypes = {
+ScheduleMigrationButtons.propTypes = {
   showConfirmModalAction: PropTypes.func,
   hideConfirmModalAction: PropTypes.func,
   loading: PropTypes.string,
@@ -107,4 +107,4 @@ ScheduleMigrationButton.propTypes = {
   isMissingMapping: PropTypes.bool
 };
 
-export default ScheduleMigrationButton;
+export default ScheduleMigrationButtons;

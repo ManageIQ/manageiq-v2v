@@ -7,7 +7,7 @@ import getMostRecentRequest from '../../../common/getMostRecentRequest';
 import getMostRecentVMTasksFromRequests from './helpers/getMostRecentVMTasksFromRequests';
 import sortFilter from '../../../common/ListViewToolbar/sortFilter';
 import { MIGRATIONS_COMPLETED_SORT_FIELDS } from './MigrationsConstants';
-import ScheduleMigrationButton from './ScheduleMigrationButton';
+import ScheduleMigrationButtons from './ScheduleMigrationButtons';
 import ScheduleMigrationModal from '../ScheduleMigrationModal/ScheduleMigrationModal';
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
 import DeleteMigrationMenuItem from './DeleteMigrationMenuItem';
@@ -272,7 +272,7 @@ class MigrationsCompletedList extends React.Component {
                             {!archived &&
                               failed && (
                                 <React.Fragment>
-                                  <ScheduleMigrationButton
+                                  <ScheduleMigrationButtons
                                     showConfirmModalAction={showConfirmModalAction}
                                     hideConfirmModalAction={hideConfirmModalAction}
                                     loading={loading}

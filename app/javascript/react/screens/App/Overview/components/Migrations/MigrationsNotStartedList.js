@@ -7,7 +7,7 @@ import ScheduleMigrationModal from '../ScheduleMigrationModal/ScheduleMigrationM
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
 import { MIGRATIONS_NOT_STARTED_SORT_FIELDS } from './MigrationsConstants';
 import sortFilter from '../../../common/ListViewToolbar/sortFilter';
-import ScheduleMigrationButton from './ScheduleMigrationButton';
+import ScheduleMigrationButtons from './ScheduleMigrationButtons';
 import StopPropagationOnClick from '../../../common/StopPropagationOnClick';
 import DeleteMigrationMenuItem from './DeleteMigrationMenuItem';
 import getPlanScheduleInfo from './helpers/getPlanScheduleInfo';
@@ -106,7 +106,7 @@ class MigrationsNotStartedList extends React.Component {
                         }}
                         actions={
                           <div>
-                            <ScheduleMigrationButton
+                            <ScheduleMigrationButtons
                               showConfirmModalAction={showConfirmModalAction}
                               hideConfirmModalAction={hideConfirmModalAction}
                               loading={loading}
