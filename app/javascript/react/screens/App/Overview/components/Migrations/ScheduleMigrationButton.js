@@ -64,20 +64,32 @@ const ScheduleMigrationButton = ({
         </Button>
       )}
       {!showScheduleButton && (
-        <Button
-          id={`unschedule_${plan.id}`}
-          onClick={e => {
-            e.stopPropagation();
+        <React.Fragment>
+          <Button
+            id={`edit_schedule_${plan.id}`}
+            onClick={e => {
+              e.stopPropagation();
+              toggleScheduleMigrationModal({ plan });
+            }}
+            disabled={isMissingMapping || loading === plan.href}
+          >
+            {__('Edit Schedule')}
+          </Button>
+          <Button
+            id={`unschedule_${plan.id}`}
+            onClick={e => {
+              e.stopPropagation();
 
-            showConfirmModalAction({
-              ...confirmModalProps,
-              onConfirm
-            });
-          }}
-          disabled={isMissingMapping || loading === plan.href || migrationStarting}
-        >
-          {__('Unschedule')}
-        </Button>
+              showConfirmModalAction({
+                ...confirmModalProps,
+                onConfirm
+              });
+            }}
+            disabled={isMissingMapping || loading === plan.href || migrationStarting}
+          >
+            {__('Delete Schedule')}
+          </Button>
+        </React.Fragment>
       )}
     </React.Fragment>
   );

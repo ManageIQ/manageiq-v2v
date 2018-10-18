@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 class ScheduleMigrationModalBody extends React.Component {
   componentDidMount() {
-    const { handleChange } = this.props;
+    const { handleChange, defaultDate } = this.props;
     const datetimeSelector = $('#dateTimePicker');
 
     datetimeSelector.datetimepicker({
@@ -23,6 +23,9 @@ class ScheduleMigrationModalBody extends React.Component {
     });
 
     const picker = datetimeSelector.data('DateTimePicker');
+    if (defaultDate) {
+      picker.date(new Date(defaultDate));
+    }
     handleChange(picker.date().toDate());
   }
   render() {
