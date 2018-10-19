@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-
 import {
   Icon,
   Card,
@@ -10,20 +9,28 @@ import {
   AggregateStatusNotification,
   Spinner
 } from 'patternfly-react';
+
 import getMostRecentRequest from '../../../../common/getMostRecentRequest';
+import { MIGRATIONS_FILTERS } from '../../../OverviewConstants';
 
-const FinishedTransformationPlans = ({ finishedPlans, loading }) => {
+const FinishedTransformationPlans = ({ finishedPlans, loading, migrationsFilter, setMigrationsFilterAction }) => {
   const countDescription = finishedPlans.length === 1 ? __('Migration Plan Complete') : __('Migration Plans Complete');
-
+  const active = migrationsFilter === MIGRATIONS_FILTERS.completed;
   const failedPlans = finishedPlans.filter(plan => {
     const mostRecentRequest = plan.miq_requests.length > 0 && getMostRecentRequest(plan.miq_requests);
     return mostRecentRequest.status === 'Error';
   });
 
-  const classes = cx('overview-aggregate-card', { 'is-loading': loading });
+  const classes = cx('overview-aggregate-card', { 'is-loading': loading, active });
 
   return (
-    <Card className={classes} accented aggregated matchHeight>
+    <Card
+      className={classes}
+      accented
+      aggregated
+      matchHeight
+      onClick={() => setMigrationsFilterAction(MIGRATIONS_FILTERS.completed)}
+    >
       <Spinner loading={loading}>
         <Card.Title>
           <AggregateStatusCount>{finishedPlans.length}</AggregateStatusCount> {countDescription}
@@ -45,7 +52,9 @@ const FinishedTransformationPlans = ({ finishedPlans, loading }) => {
 
 FinishedTransformationPlans.propTypes = {
   finishedPlans: PropTypes.array,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
+  migrationsFilter: PropTypes.string,
+  setMigrationsFilterAction: PropTypes.func
 };
 
 export default FinishedTransformationPlans;
