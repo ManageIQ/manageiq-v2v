@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-
 import {
   Icon,
   Card,
@@ -10,13 +9,22 @@ import {
   AggregateStatusNotification,
   Spinner
 } from 'patternfly-react';
+
 import getMostRecentRequest from '../../../../common/getMostRecentRequest';
 import { PLAN_JOB_STATUS } from '../../../../../../../data/models/plans';
+import { MIGRATIONS_FILTERS } from '../../../OverviewConstants';
 
-const ActiveTransformationPlans = ({ activePlans, allRequestsWithTasks, reloadCard, loading }) => {
+const ActiveTransformationPlans = ({
+  activePlans,
+  allRequestsWithTasks,
+  reloadCard,
+  loading,
+  migrationsFilter,
+  setMigrationsFilterAction
+}) => {
   const countDescription =
     activePlans.length === 1 ? __('Migration Plan In Progress') : __('Migration Plans In Progress');
-
+  const active = migrationsFilter === MIGRATIONS_FILTERS.inProgress;
   const erroredPlans = activePlans.filter(plan => {
     if (allRequestsWithTasks && allRequestsWithTasks.length > 0) {
       const requestsOfAssociatedPlan = allRequestsWithTasks.filter(request => request.source_id === plan.id);
@@ -45,10 +53,16 @@ const ActiveTransformationPlans = ({ activePlans, allRequestsWithTasks, reloadCa
     erroredPlansLen -= 1;
   }
 
-  const classes = cx('overview-aggregate-card', { 'is-loading': loading });
+  const classes = cx('overview-aggregate-card', { 'is-loading': loading, active });
 
   return (
-    <Card className={classes} accented aggregated matchHeight>
+    <Card
+      className={classes}
+      accented
+      aggregated
+      matchHeight
+      onClick={() => setMigrationsFilterAction(MIGRATIONS_FILTERS.inProgress)}
+    >
       <Spinner loading={loading}>
         <Card.Title>
           <AggregateStatusCount>{activePlans.length}</AggregateStatusCount> {countDescription}
@@ -72,7 +86,9 @@ ActiveTransformationPlans.propTypes = {
   activePlans: PropTypes.array,
   allRequestsWithTasks: PropTypes.array,
   reloadCard: PropTypes.bool,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
+  migrationsFilter: PropTypes.string,
+  setMigrationsFilterAction: PropTypes.func
 };
 
 export default ActiveTransformationPlans;

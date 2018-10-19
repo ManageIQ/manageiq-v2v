@@ -12,10 +12,9 @@ import {
 
 import { MIGRATIONS_FILTERS } from '../../../OverviewConstants';
 
-const NotStartedTransformationPlans = ({ notStartedPlans, loading, migrationsFilter, setMigrationsFilterAction }) => {
-  const countDescription =
-    notStartedPlans.length === 1 ? __('Migration Plan Not Started') : __('Migration Plans Not Started');
-  const active = migrationsFilter === MIGRATIONS_FILTERS.notStarted;
+const ArchivedTransformationPlans = ({ archivedPlans, loading, migrationsFilter, setMigrationsFilterAction }) => {
+  const countDescription = archivedPlans.length === 1 ? __('Migration Plan Archived') : __('Migration Plans Archived');
+  const active = migrationsFilter === MIGRATIONS_FILTERS.archived;
   const classes = cx('overview-aggregate-card', { 'is-loading': loading, active });
 
   return (
@@ -24,13 +23,13 @@ const NotStartedTransformationPlans = ({ notStartedPlans, loading, migrationsFil
       accented
       aggregated
       matchHeight
-      onClick={() => setMigrationsFilterAction(MIGRATIONS_FILTERS.notStarted)}
+      onClick={() => setMigrationsFilterAction(MIGRATIONS_FILTERS.archived)}
     >
       <Spinner loading={loading}>
         <Card.Title>
-          <AggregateStatusCount>{notStartedPlans.length}</AggregateStatusCount> {countDescription}
+          <AggregateStatusCount>{archivedPlans.length}</AggregateStatusCount> {countDescription}
         </Card.Title>
-        {notStartedPlans.length > 0 && (
+        {archivedPlans.length > 0 && (
           <Card.Body className="overview-aggregate-card--body">
             <AggregateStatusNotifications>
               <AggregateStatusNotification>
@@ -44,11 +43,11 @@ const NotStartedTransformationPlans = ({ notStartedPlans, loading, migrationsFil
   );
 };
 
-NotStartedTransformationPlans.propTypes = {
-  notStartedPlans: PropTypes.array,
+ArchivedTransformationPlans.propTypes = {
+  archivedPlans: PropTypes.array,
   loading: PropTypes.bool,
   migrationsFilter: PropTypes.string,
   setMigrationsFilterAction: PropTypes.func
 };
 
-export default NotStartedTransformationPlans;
+export default ArchivedTransformationPlans;

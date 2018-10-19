@@ -1,7 +1,11 @@
 .overview-aggregate-card {
   min-height: 90px;
+  cursor: pointer;
   &.is-loading {
     display: flex;
     align-items: center;
+  }
+  &.active {
+    background: $color-pf-blue-50;
   }
 }

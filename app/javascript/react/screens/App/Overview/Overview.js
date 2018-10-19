@@ -64,6 +64,7 @@ class Overview extends React.Component {
       }
     });
   }
+
   componentWillReceiveProps(nextProps) {
     const {
       isContinuingToPlan,
@@ -163,6 +164,61 @@ class Overview extends React.Component {
     });
   };
 
+  renderAggregateDataCards = () => {
+    const {
+      activeTransformationPlans,
+      allRequestsWithTasks,
+      archivedTransformationPlans,
+      finishedTransformationPlans,
+      isFetchingAllRequestsWithTasks,
+      migrationsFilter,
+      notStartedTransformationPlans,
+      reloadCard,
+      requestsWithTasksPreviouslyFetched,
+      setMigrationsFilterAction
+    } = this.props;
+    return (
+      <div className="row-cards-pf">
+        <Card.HeightMatching selector={['.card-pf-match-height']}>
+          <CardGrid.Col xs={6} sm={3}>
+            <AggregateCards.NotStartedTransformationPlans
+              notStartedPlans={notStartedTransformationPlans}
+              loading={isFetchingAllRequestsWithTasks && !requestsWithTasksPreviouslyFetched}
+              migrationsFilter={migrationsFilter}
+              setMigrationsFilterAction={setMigrationsFilterAction}
+            />
+          </CardGrid.Col>
+          <CardGrid.Col xs={6} sm={3}>
+            <AggregateCards.ActiveTransformationPlans
+              activePlans={activeTransformationPlans}
+              allRequestsWithTasks={allRequestsWithTasks}
+              reloadCard={reloadCard}
+              loading={isFetchingAllRequestsWithTasks && !requestsWithTasksPreviouslyFetched}
+              migrationsFilter={migrationsFilter}
+              setMigrationsFilterAction={setMigrationsFilterAction}
+            />
+          </CardGrid.Col>
+          <CardGrid.Col xs={6} sm={3}>
+            <AggregateCards.FinishedTransformationPlans
+              finishedPlans={finishedTransformationPlans}
+              loading={isFetchingAllRequestsWithTasks && !requestsWithTasksPreviouslyFetched}
+              migrationsFilter={migrationsFilter}
+              setMigrationsFilterAction={setMigrationsFilterAction}
+            />
+          </CardGrid.Col>
+          <CardGrid.Col xs={6} sm={3}>
+            <AggregateCards.ArchivedTransformationPlans
+              archivedPlans={archivedTransformationPlans}
+              loading={isFetchingAllRequestsWithTasks && !requestsWithTasksPreviouslyFetched}
+              migrationsFilter={migrationsFilter}
+              setMigrationsFilterAction={setMigrationsFilterAction}
+            />
+          </CardGrid.Col>
+        </Card.HeightMatching>
+      </div>
+    );
+  };
+
   redirectTo = path => this.props.redirectTo(path);
 
   render() {
@@ -188,7 +244,6 @@ class Overview extends React.Component {
       finishedTransformationPlans,
       isCreatingTransformationPlanRequest,
       migrationsFilter,
-      setMigrationsFilterAction,
       confirmModalVisible,
       confirmModalOptions,
       showConfirmModalAction,
@@ -214,42 +269,9 @@ class Overview extends React.Component {
       openMappingWizardOnTransitionAction
     } = this.props;
 
-    const aggregateDataCards = (
-      <div className="row-cards-pf">
-        <Card.HeightMatching selector={['.card-pf-match-height']}>
-          <CardGrid.Col xs={6} sm={3}>
-            <AggregateCards.NotStartedTransformationPlans
-              notStartedPlans={notStartedTransformationPlans}
-              loading={isFetchingAllRequestsWithTasks && !requestsWithTasksPreviouslyFetched}
-            />
-          </CardGrid.Col>
-          <CardGrid.Col xs={6} sm={3}>
-            <AggregateCards.ActiveTransformationPlans
-              activePlans={activeTransformationPlans}
-              allRequestsWithTasks={allRequestsWithTasks}
-              reloadCard={reloadCard}
-              loading={isFetchingAllRequestsWithTasks && !requestsWithTasksPreviouslyFetched}
-            />
-          </CardGrid.Col>
-          <CardGrid.Col xs={6} sm={3}>
-            <AggregateCards.FinishedTransformationPlans
-              finishedPlans={finishedTransformationPlans}
-              loading={isFetchingAllRequestsWithTasks && !requestsWithTasksPreviouslyFetched}
-            />
-          </CardGrid.Col>
-          <CardGrid.Col xs={6} sm={3}>
-            <AggregateCards.InfrastructureMappings
-              mappings={transformationMappings}
-              loading={isFetchingTransformationMappings}
-            />
-          </CardGrid.Col>
-        </Card.HeightMatching>
-      </div>
-    );
-
     const overviewContent = (
       <div className="row cards-pf" style={{ overflow: 'auto', paddingBottom: 1, height: '100%' }}>
-        {aggregateDataCards}
+        {this.renderAggregateDataCards()}
         <Spinner
           loading={
             isFetchingProviders ||
@@ -262,7 +284,6 @@ class Overview extends React.Component {
             !!transformationMappings.length || !!transformationPlans.length || !!archivedTransformationPlans.length ? (
               <Migrations
                 activeFilter={migrationsFilter}
-                setActiveFilter={setMigrationsFilterAction}
                 transformationPlans={transformationPlans}
                 allRequestsWithTasks={allRequestsWithTasks}
                 archivedTransformationPlans={archivedTransformationPlans}
