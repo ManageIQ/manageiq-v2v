@@ -40,22 +40,19 @@ class Overview extends React.Component {
       fetchServiceTemplateAnsiblePlaybooksUrl
     } = this.props;
 
-    fetchProvidersAction();
-    fetchTransformationMappingsAction(fetchTransformationMappingsUrl);
-
     const p1 = fetchTransformationPlansAction({
       url: fetchTransformationPlansUrl,
       archived: false
     });
-    // fetch archived plans initially so we have them for plan name validation in plan wizard
     const p2 = fetchTransformationPlansAction({
       url: fetchArchivedTransformationPlansUrl,
       archived: true
     });
-
     const p3 = fetchServiceTemplateAnsiblePlaybooksAction(fetchServiceTemplateAnsiblePlaybooksUrl);
+    const p4 = fetchTransformationMappingsAction(fetchTransformationMappingsUrl);
+    const p5 = fetchProvidersAction();
 
-    Promise.all([p1, p2, p3]).then(() => {
+    Promise.all([p1, p2, p3, p4, p5]).then(() => {
       this.setState(() => ({
         hasMadeInitialPlansFetch: true
       }));
@@ -257,6 +254,7 @@ class Overview extends React.Component {
       archiveTransformationPlanUrl,
       deleteTransformationPlanAction,
       deleteTransformationPlanUrl,
+      isFetchingTransformationPlans,
       isFetchingArchivedTransformationPlans,
       addNotificationAction,
       toggleScheduleMigrationModal,
@@ -273,9 +271,12 @@ class Overview extends React.Component {
       <React.Fragment>
         <Spinner
           loading={
-            isFetchingProviders ||
-            isFetchingTransformationMappings ||
-            (isFetchingAllRequestsWithTasks && !requestsWithTasksPreviouslyFetched)
+            !requestsWithTasksPreviouslyFetched &&
+            (isFetchingAllRequestsWithTasks ||
+              isFetchingProviders ||
+              isFetchingTransformationPlans ||
+              isFetchingArchivedTransformationPlans ||
+              isFetchingTransformationMappings)
           }
           style={{ marginTop: 200 }}
         >
@@ -441,6 +442,7 @@ Overview.propTypes = {
   fetchArchivedTransformationPlansUrl: PropTypes.string,
   archivedTransformationPlans: PropTypes.array,
   allArchivedPlanRequestsWithTasks: PropTypes.array,
+  isFetchingTransformationPlans: PropTypes.bool,
   isFetchingArchivedTransformationPlans: PropTypes.string,
   archiveTransformationPlanAction: PropTypes.func,
   archiveTransformationPlanUrl: PropTypes.string,
