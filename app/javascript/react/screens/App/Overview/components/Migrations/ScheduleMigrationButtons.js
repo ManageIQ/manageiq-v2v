@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, MenuItem, Icon } from 'patternfly-react';
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
-import getPlanScheduleInfo from './helpers/getPlanScheduleInfo';
 
 const ScheduleMigrationButtons = ({
   showConfirmModalAction,
@@ -13,10 +12,11 @@ const ScheduleMigrationButtons = ({
   fetchTransformationPlansAction,
   fetchTransformationPlansUrl,
   plan,
-  isMissingMapping
+  isMissingMapping,
+  migrationScheduled,
+  migrationStarting,
+  showInitialScheduleButton
 }) => {
-  const { migrationScheduled, migrationStarting, showInitialScheduleButton } = getPlanScheduleInfo(plan);
-
   const confirmationWarningText = (
     <React.Fragment>
       <p>
@@ -108,7 +108,10 @@ ScheduleMigrationButtons.propTypes = {
   fetchTransformationPlansAction: PropTypes.func,
   fetchTransformationPlansUrl: PropTypes.string,
   plan: PropTypes.object,
-  isMissingMapping: PropTypes.bool
+  isMissingMapping: PropTypes.bool,
+  migrationScheduled: PropTypes.oneOfType(PropTypes.string, PropTypes.number),
+  migrationStarting: PropTypes.bool,
+  showInitialScheduleButton: PropTypes.bool
 };
 
 export default ScheduleMigrationButtons;

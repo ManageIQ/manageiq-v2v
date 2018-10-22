@@ -211,6 +211,9 @@ class MigrationsCompletedList extends React.Component {
                         fetchTransformationPlansUrl={fetchTransformationPlansUrl}
                         plan={plan}
                         isMissingMapping={isMissingMapping}
+                        migrationScheduled={migrationScheduled}
+                        migrationStarting={migrationStarting}
+                        showInitialScheduleButton={showInitialScheduleButton}
                       />
                     );
 
