@@ -109,7 +109,7 @@ ScheduleMigrationButtons.propTypes = {
   fetchTransformationPlansUrl: PropTypes.string,
   plan: PropTypes.object,
   isMissingMapping: PropTypes.bool,
-  migrationScheduled: PropTypes.oneOfType(PropTypes.string, PropTypes.number),
+  migrationScheduled: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   migrationStarting: PropTypes.bool,
   showInitialScheduleButton: PropTypes.bool
 };
