@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 
 import MigrationsNotStartedList from '../MigrationsNotStartedList';
 import { transformationPlans } from '../../../overview.transformationPlans.fixtures';
@@ -13,11 +13,11 @@ let wrapper;
 beforeEach(() => {
   migrateClick = jest.fn();
   redirectTo = jest.fn();
-  wrapper = shallow(
+  wrapper = mount(
     <MigrationsNotStartedList
       migrateClick={migrateClick}
       redirectTo={redirectTo}
-      loading="href"
+      loading=""
       notStartedPlans={[notStartedPlan]}
     />
   );
