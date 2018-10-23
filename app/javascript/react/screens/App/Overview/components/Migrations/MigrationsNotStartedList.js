@@ -1,241 +1,305 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { noop, Button, ListView, Grid, Icon, Spinner, Toolbar, Sort, DropdownKebab, MenuItem } from 'patternfly-react';
+import {
+  noop,
+  Button,
+  ListView,
+  Grid,
+  Icon,
+  Spinner,
+  Toolbar,
+  Filter,
+  Sort,
+  DropdownKebab,
+  MenuItem,
+  PaginationRow,
+  PAGINATION_VIEW
+} from 'patternfly-react';
 import EllipsisWithTooltip from 'react-ellipsis-with-tooltip';
 import ShowWizardEmptyState from '../../../common/ShowWizardEmptyState/ShowWizardEmptyState';
 import ScheduleMigrationModal from '../ScheduleMigrationModal/ScheduleMigrationModal';
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
-import { MIGRATIONS_NOT_STARTED_SORT_FIELDS } from './MigrationsConstants';
-import sortFilter from '../../../common/ListViewToolbar/sortFilter';
+import { MIGRATIONS_NOT_STARTED_SORT_FIELDS, MIGRATIONS_FILTER_TYPES } from './MigrationsConstants';
 import ScheduleMigrationButtons from './ScheduleMigrationButtons';
 import StopPropagationOnClick from '../../../common/StopPropagationOnClick';
+import ListViewToolbar from '../../../common/ListViewToolbar/ListViewToolbar';
 import DeleteMigrationMenuItem from './DeleteMigrationMenuItem';
 import getPlanScheduleInfo from './helpers/getPlanScheduleInfo';
 
-class MigrationsNotStartedList extends React.Component {
-  state = {
-    sortFields: MIGRATIONS_NOT_STARTED_SORT_FIELDS,
-    currentSortType: MIGRATIONS_NOT_STARTED_SORT_FIELDS[0],
-    isSortNumeric: MIGRATIONS_NOT_STARTED_SORT_FIELDS[0].isNumeric,
-    isSortAscending: true
-  };
-
-  sortedMigrations = () => {
-    const { currentSortType, isSortNumeric, isSortAscending } = this.state;
-    const { notStartedPlans } = this.props;
-
-    return sortFilter(currentSortType, isSortNumeric, isSortAscending, notStartedPlans);
-  };
-
-  toggleCurrentSortDirection = () => {
-    this.setState(prevState => ({
-      isSortAscending: !prevState.isSortAscending
-    }));
-  };
-
-  updateCurrentSortType = sortType => {
-    const { currentSortType } = this.state;
-    if (currentSortType !== sortType) {
-      this.setState({
-        currentSortType: sortType,
-        isSortNumeric: sortType.isNumeric,
-        isSortAscending: true
-      });
-    }
-  };
-
-  render() {
-    const { sortFields, currentSortType, isSortNumeric, isSortAscending } = this.state;
-    const {
-      migrateClick,
-      notStartedPlans,
-      loading,
-      redirectTo,
-      showConfirmModalAction,
-      hideConfirmModalAction,
-      addNotificationAction,
-      toggleScheduleMigrationModal,
-      scheduleMigrationModal,
-      scheduleMigrationPlan,
-      scheduleMigration,
-      fetchTransformationPlansAction,
-      fetchTransformationPlansUrl,
-      deleteTransformationPlanAction,
-      deleteTransformationPlanUrl,
-      showPlanWizardEditModeAction,
-      fetchTransformationMappingsAction,
-      fetchTransformationMappingsUrl
-    } = this.props;
-    const sortedMigrations = this.sortedMigrations();
-
-    return (
-      <React.Fragment>
-        <Grid.Col xs={12}>
-          <Spinner loading={!!loading}>
-            {notStartedPlans.length > 0 ? (
-              <React.Fragment>
-                <Grid.Row>
-                  <Toolbar>
-                    <Sort>
-                      <Sort.TypeSelector
-                        sortTypes={sortFields}
-                        currentSortType={currentSortType}
-                        onSortTypeSelected={this.updateCurrentSortType}
-                      />
-                      <Sort.DirectionSelector
-                        isNumeric={isSortNumeric}
-                        isAscending={isSortAscending}
-                        onClick={this.toggleCurrentSortDirection}
-                      />
-                    </Sort>
-                  </Toolbar>
-                </Grid.Row>
-                <ListView className="plans-not-started-list" style={{ marginTop: 0 }}>
-                  {sortedMigrations.map(plan => {
-                    const { migrationScheduled, migrationStarting, showInitialScheduleButton } = getPlanScheduleInfo(
-                      plan
-                    );
-                    const isMissingMapping = !plan.infraMappingName;
-
-                    const editPlanDisabled = isMissingMapping || loading === plan.href;
-
-                    const scheduleButtons = (
-                      <ScheduleMigrationButtons
-                        showConfirmModalAction={showConfirmModalAction}
-                        hideConfirmModalAction={hideConfirmModalAction}
-                        loading={loading}
-                        toggleScheduleMigrationModal={toggleScheduleMigrationModal}
-                        scheduleMigration={scheduleMigration}
-                        fetchTransformationPlansAction={fetchTransformationPlansAction}
-                        fetchTransformationPlansUrl={fetchTransformationPlansUrl}
-                        plan={plan}
-                        isMissingMapping={isMissingMapping}
-                        migrationScheduled={migrationScheduled}
-                        migrationStarting={migrationStarting}
-                        showInitialScheduleButton={showInitialScheduleButton}
-                      />
-                    );
-
-                    return (
-                      <ListView.Item
-                        stacked
-                        className="plans-not-started-list__list-item"
-                        onClick={() => {
-                          redirectTo(`/plan/${plan.id}`);
-                        }}
-                        actions={
-                          <div>
-                            {showInitialScheduleButton && scheduleButtons}
-                            <Button
-                              id={`migrate_${plan.id}`}
+const MigrationsNotStartedList = ({
+  migrateClick,
+  notStartedPlans,
+  loading,
+  redirectTo,
+  showConfirmModalAction,
+  hideConfirmModalAction,
+  addNotificationAction,
+  toggleScheduleMigrationModal,
+  scheduleMigrationModal,
+  scheduleMigrationPlan,
+  scheduleMigration,
+  fetchTransformationPlansAction,
+  fetchTransformationPlansUrl,
+  deleteTransformationPlanAction,
+  deleteTransformationPlanUrl,
+  showPlanWizardEditModeAction,
+  fetchTransformationMappingsAction,
+  fetchTransformationMappingsUrl
+}) => (
+  <React.Fragment>
+    <Grid.Col xs={12}>
+      <Spinner loading={!!loading}>
+        {notStartedPlans.length > 0 ? (
+          <ListViewToolbar
+            filterTypes={MIGRATIONS_FILTER_TYPES}
+            sortFields={MIGRATIONS_NOT_STARTED_SORT_FIELDS}
+            listItems={notStartedPlans}
+            render={(
+              {
+                filterTypes,
+                currentFilterType,
+                sortFields,
+                currentSortType,
+                isSortNumeric,
+                isSortAscending,
+                activeFilters,
+                pagination,
+                pageChangeValue
+              },
+              {
+                filterSortPaginateListItems,
+                selectFilterType,
+                renderInput,
+                updateCurrentSortType,
+                toggleCurrentSortDirection,
+                clearFilters,
+                removeFilter,
+                onPerPageSelect,
+                onFirstPage,
+                onPreviousPage,
+                onPageInput,
+                onNextPage,
+                onLastPage,
+                onSubmit
+              }
+            ) => {
+              const paginatedSortedFilteredPlans = filterSortPaginateListItems();
+              return (
+                <React.Fragment>
+                  <Grid.Row>
+                    <Toolbar>
+                      <Filter style={{ paddingLeft: 0 }}>
+                        <Filter.TypeSelector
+                          filterTypes={filterTypes}
+                          currentFilterType={currentFilterType}
+                          onFilterTypeSelected={selectFilterType}
+                        />
+                        {renderInput()}
+                      </Filter>
+                      <Sort>
+                        <Sort.TypeSelector
+                          sortTypes={sortFields}
+                          currentSortType={currentSortType}
+                          onSortTypeSelected={updateCurrentSortType}
+                        />
+                        <Sort.DirectionSelector
+                          isNumeric={isSortNumeric}
+                          isAscending={isSortAscending}
+                          onClick={toggleCurrentSortDirection}
+                        />
+                      </Sort>
+                      {activeFilters &&
+                        activeFilters.length > 0 && (
+                          <Toolbar.Results>
+                            <h5>
+                              {paginatedSortedFilteredPlans.itemCount}{' '}
+                              {paginatedSortedFilteredPlans.itemCount === 1 ? __('Result') : __('Results')}
+                            </h5>
+                            <Filter.ActiveLabel>{__('Active Filters')}:</Filter.ActiveLabel>
+                            <Filter.List>
+                              {activeFilters.map((item, index) => (
+                                <Filter.Item key={index} onRemove={removeFilter} filterData={item}>
+                                  {item.label}
+                                </Filter.Item>
+                              ))}
+                            </Filter.List>
+                            <a
+                              href="#"
                               onClick={e => {
-                                e.stopPropagation();
-                                migrateClick(plan.href);
+                                e.preventDefault();
+                                clearFilters();
                               }}
-                              disabled={
-                                isMissingMapping || loading === plan.href || plan.schedule_type || migrationStarting
-                              }
                             >
-                              {__('Migrate')}
-                            </Button>
-                            <StopPropagationOnClick>
-                              <DropdownKebab id={`${plan.id}-kebab`} pullRight>
-                                <MenuItem
-                                  onClick={e => {
-                                    e.stopPropagation();
-                                    if (!editPlanDisabled) showPlanWizardEditModeAction(plan.id);
-                                  }}
-                                  disabled={editPlanDisabled}
-                                >
-                                  {__('Edit plan')}
-                                </MenuItem>
-                                <DeleteMigrationMenuItem
-                                  showConfirmModalAction={showConfirmModalAction}
-                                  hideConfirmModalAction={hideConfirmModalAction}
-                                  deleteTransformationPlanAction={deleteTransformationPlanAction}
-                                  deleteTransformationPlanUrl={deleteTransformationPlanUrl}
-                                  addNotificationAction={addNotificationAction}
-                                  fetchTransformationPlansAction={fetchTransformationPlansAction}
-                                  fetchTransformationPlansUrl={fetchTransformationPlansUrl}
-                                  planId={plan.id}
-                                  planName={plan.name}
-                                  fetchTransformationMappingsAction={fetchTransformationMappingsAction}
-                                  fetchTransformationMappingsUrl={fetchTransformationMappingsUrl}
-                                />
-                                {!showInitialScheduleButton && scheduleButtons}
-                              </DropdownKebab>
-                            </StopPropagationOnClick>
-                          </div>
-                        }
-                        leftContent={<div />}
-                        heading={plan.name}
-                        description={
-                          <EllipsisWithTooltip id={plan.description}>
-                            <React.Fragment>{plan.description}</React.Fragment>
-                          </EllipsisWithTooltip>
-                        }
-                        additionalInfo={[
-                          <ListView.InfoItem key={plan.id}>
-                            <Icon type="pf" name="virtual-machine" />
-                            <strong>{plan.options.config_info.actions.length}</strong> {__('VMs')}
-                          </ListView.InfoItem>,
-                          isMissingMapping && (
-                            <ListView.InfoItem key={`${plan.id}-infraMappingWarning`}>
-                              <Icon type="pf" name="warning-triangle-o" /> {__('Infrastucture mapping does not exist.')}
-                            </ListView.InfoItem>
-                          ),
-                          !isMissingMapping && (
-                            <ListView.InfoItem key={`${plan.id}-infraMappingName`}>
-                              {plan.infraMappingName}
-                            </ListView.InfoItem>
-                          ),
-                          migrationScheduled && !migrationStarting ? (
-                            <ListView.InfoItem key={`${plan.id}-scheduledTime`} style={{ textAlign: 'left' }}>
-                              <Icon type="fa" name="clock-o" />
-                              {__('Migration scheduled')}
-                              <br />
-                              {formatDateTime(migrationScheduled)}
-                            </ListView.InfoItem>
-                          ) : null,
-                          migrationStarting && (
-                            <ListView.InfoItem key={`${plan.id}-starting`} style={{ textAlign: 'left' }}>
-                              {__('Migration in progress')}
-                            </ListView.InfoItem>
-                          )
-                        ]}
-                        key={plan.id}
-                      />
-                    );
-                  })}
-                </ListView>
-              </React.Fragment>
-            ) : (
-              <ShowWizardEmptyState
-                title={__('No Migration Plans Not Started')}
-                iconType="pf"
-                iconName="info"
-                description={
-                  <span>
-                    {__('There are no existing migration plans in a Not Started state.')}
-                    <br /> {__('Make a selection in the dropdown to view plans in other states.')}
-                  </span>
-                }
-              />
-            )}
-          </Spinner>
-        </Grid.Col>
-        <ScheduleMigrationModal
-          toggleScheduleMigrationModal={toggleScheduleMigrationModal}
-          scheduleMigrationModal={scheduleMigrationModal}
-          scheduleMigrationPlan={scheduleMigrationPlan}
-          scheduleMigration={scheduleMigration}
-          fetchTransformationPlansAction={fetchTransformationPlansAction}
-          fetchTransformationPlansUrl={fetchTransformationPlansUrl}
-        />
-      </React.Fragment>
-    );
-  }
-}
+                              {__('Clear All Filters')}
+                            </a>
+                          </Toolbar.Results>
+                        )}
+                    </Toolbar>
+                  </Grid.Row>
+                  <ListView className="plans-not-started-list" style={{ marginTop: 0 }}>
+                    {paginatedSortedFilteredPlans.tasks.map(plan => {
+                      const { migrationScheduled, migrationStarting, showInitialScheduleButton } = getPlanScheduleInfo(
+                        plan
+                      );
+                      const isMissingMapping = !plan.infraMappingName;
+
+                      const scheduleButtons = (
+                        <ScheduleMigrationButtons
+                          showConfirmModalAction={showConfirmModalAction}
+                          hideConfirmModalAction={hideConfirmModalAction}
+                          loading={loading}
+                          toggleScheduleMigrationModal={toggleScheduleMigrationModal}
+                          scheduleMigration={scheduleMigration}
+                          fetchTransformationPlansAction={fetchTransformationPlansAction}
+                          fetchTransformationPlansUrl={fetchTransformationPlansUrl}
+                          plan={plan}
+                          isMissingMapping={isMissingMapping}
+                          migrationScheduled={migrationScheduled}
+                          migrationStarting={migrationStarting}
+                          showInitialScheduleButton={showInitialScheduleButton}
+                        />
+                      );
+
+                      const editPlanDisabled = isMissingMapping || loading === plan.href;
+
+                      return (
+                        <ListView.Item
+                          stacked
+                          className="plans-not-started-list__list-item"
+                          onClick={() => {
+                            redirectTo(`/plan/${plan.id}`);
+                          }}
+                          actions={
+                            <div>
+                              {showInitialScheduleButton && scheduleButtons}
+                              <Button
+                                id={`migrate_${plan.id}`}
+                                onClick={e => {
+                                  e.stopPropagation();
+                                  migrateClick(plan.href);
+                                }}
+                                disabled={
+                                  isMissingMapping || loading === plan.href || plan.schedule_type || migrationStarting
+                                }
+                              >
+                                {__('Migrate')}
+                              </Button>
+                              <StopPropagationOnClick>
+                                <DropdownKebab id={`${plan.id}-kebab`} pullRight>
+                                  <MenuItem
+                                    onClick={e => {
+                                      e.stopPropagation();
+                                      if (!editPlanDisabled) showPlanWizardEditModeAction(plan.id);
+                                    }}
+                                    disabled={editPlanDisabled}
+                                  >
+                                    {__('Edit plan')}
+                                  </MenuItem>
+                                  <DeleteMigrationMenuItem
+                                    showConfirmModalAction={showConfirmModalAction}
+                                    hideConfirmModalAction={hideConfirmModalAction}
+                                    deleteTransformationPlanAction={deleteTransformationPlanAction}
+                                    deleteTransformationPlanUrl={deleteTransformationPlanUrl}
+                                    addNotificationAction={addNotificationAction}
+                                    fetchTransformationPlansAction={fetchTransformationPlansAction}
+                                    fetchTransformationPlansUrl={fetchTransformationPlansUrl}
+                                    planId={plan.id}
+                                    planName={plan.name}
+                                    fetchTransformationMappingsAction={fetchTransformationMappingsAction}
+                                    fetchTransformationMappingsUrl={fetchTransformationMappingsUrl}
+                                  />
+                                  {!showInitialScheduleButton && scheduleButtons}
+                                </DropdownKebab>
+                              </StopPropagationOnClick>
+                            </div>
+                          }
+                          leftContent={<div />}
+                          heading={plan.name}
+                          description={
+                            <EllipsisWithTooltip id={plan.description}>
+                              <React.Fragment>{plan.description}</React.Fragment>
+                            </EllipsisWithTooltip>
+                          }
+                          additionalInfo={[
+                            <ListView.InfoItem key={plan.id}>
+                              <Icon type="pf" name="virtual-machine" />
+                              <strong>{plan.options.config_info.actions.length}</strong> {__('VMs')}
+                            </ListView.InfoItem>,
+                            isMissingMapping && (
+                              <ListView.InfoItem key={`${plan.id}-infraMappingWarning`}>
+                                <Icon type="pf" name="warning-triangle-o" />{' '}
+                                {__('Infrastucture mapping does not exist.')}
+                              </ListView.InfoItem>
+                            ),
+                            !isMissingMapping && (
+                              <ListView.InfoItem key={`${plan.id}-infraMappingName`}>
+                                {plan.infraMappingName}
+                              </ListView.InfoItem>
+                            ),
+                            migrationScheduled && !migrationStarting ? (
+                              <ListView.InfoItem key={`${plan.id}-scheduledTime`} style={{ textAlign: 'left' }}>
+                                <Icon type="fa" name="clock-o" />
+                                {__('Migration scheduled')}
+                                <br />
+                                {formatDateTime(migrationScheduled)}
+                              </ListView.InfoItem>
+                            ) : null,
+                            migrationStarting && (
+                              <ListView.InfoItem key={`${plan.id}-starting`} style={{ textAlign: 'left' }}>
+                                {__('Migration in progress')}
+                              </ListView.InfoItem>
+                            )
+                          ]}
+                          key={plan.id}
+                        />
+                      );
+                    })}
+                  </ListView>
+                  <PaginationRow
+                    viewType={PAGINATION_VIEW.LIST}
+                    pagination={pagination}
+                    pageInputValue={pageChangeValue}
+                    amountOfPages={paginatedSortedFilteredPlans.amountOfPages}
+                    itemCount={paginatedSortedFilteredPlans.itemCount}
+                    itemsStart={paginatedSortedFilteredPlans.itemsStart}
+                    itemsEnd={paginatedSortedFilteredPlans.itemsEnd}
+                    onPerPageSelect={onPerPageSelect}
+                    onFirstPage={onFirstPage}
+                    onPreviousPage={onPreviousPage}
+                    onPageInput={onPageInput}
+                    onNextPage={onNextPage}
+                    onLastPage={onLastPage}
+                    onSubmit={onSubmit}
+                  />
+                </React.Fragment>
+              );
+            }}
+          />
+        ) : (
+          <ShowWizardEmptyState
+            title={__('No Migration Plans Not Started')}
+            iconType="pf"
+            iconName="info"
+            description={
+              <span>
+                {__('There are no existing migration plans in a Not Started state.')}
+                <br /> {__('Make a selection in the dropdown to view plans in other states.')}
+              </span>
+            }
+          />
+        )}
+      </Spinner>
+    </Grid.Col>
+    <ScheduleMigrationModal
+      toggleScheduleMigrationModal={toggleScheduleMigrationModal}
+      scheduleMigrationModal={scheduleMigrationModal}
+      scheduleMigrationPlan={scheduleMigrationPlan}
+      scheduleMigration={scheduleMigration}
+      fetchTransformationPlansAction={fetchTransformationPlansAction}
+      fetchTransformationPlansUrl={fetchTransformationPlansUrl}
+    />
+  </React.Fragment>
+);
 
 MigrationsNotStartedList.propTypes = {
   migrateClick: PropTypes.func,
