@@ -47,7 +47,7 @@ const Migrations = ({
 
   return (
     <React.Fragment>
-      <Grid.Col xs={12}>
+      <Grid.Col xs={12} style={{ backgroundColor: '#fff' }}>
         <div className="heading-with-link-container">
           <div className="pull-left">
             <h3>{activeFilter}</h3>
