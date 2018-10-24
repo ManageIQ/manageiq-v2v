@@ -7,7 +7,7 @@ import getMostRecentRequest from '../../../common/getMostRecentRequest';
 import getMostRecentVMTasksFromRequests from './helpers/getMostRecentVMTasksFromRequests';
 import sortFilter from '../../../common/ListViewToolbar/sortFilter';
 import { MIGRATIONS_COMPLETED_SORT_FIELDS } from './MigrationsConstants';
-import ScheduleMigrationButton from './ScheduleMigrationButton';
+import ScheduleMigrationButtons from './ScheduleMigrationButtons';
 import ScheduleMigrationModal from '../ScheduleMigrationModal/ScheduleMigrationModal';
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
 import DeleteMigrationMenuItem from './DeleteMigrationMenuItem';
@@ -103,7 +103,12 @@ class MigrationsCompletedList extends React.Component {
                 )}
                 <ListView className="plans-complete-list" style={{ marginTop: 0 }}>
                   {sortedMigrations.map(plan => {
-                    const { migrationScheduled, staleMigrationSchedule, migrationStarting } = getPlanScheduleInfo(plan);
+                    const {
+                      migrationScheduled,
+                      staleMigrationSchedule,
+                      migrationStarting,
+                      showInitialScheduleButton
+                    } = getPlanScheduleInfo(plan);
 
                     const requestsOfAssociatedPlan = allRequestsWithTasks.filter(
                       request => request.source_id === plan.id
@@ -195,6 +200,23 @@ class MigrationsCompletedList extends React.Component {
 
                     const isMissingMapping = !plan.infraMappingName;
 
+                    const scheduleButtons = (
+                      <ScheduleMigrationButtons
+                        showConfirmModalAction={showConfirmModalAction}
+                        hideConfirmModalAction={hideConfirmModalAction}
+                        loading={loading}
+                        toggleScheduleMigrationModal={toggleScheduleMigrationModal}
+                        scheduleMigration={scheduleMigration}
+                        fetchTransformationPlansAction={fetchTransformationPlansAction}
+                        fetchTransformationPlansUrl={fetchTransformationPlansUrl}
+                        plan={plan}
+                        isMissingMapping={isMissingMapping}
+                        migrationScheduled={migrationScheduled}
+                        migrationStarting={migrationStarting}
+                        showInitialScheduleButton={showInitialScheduleButton}
+                      />
+                    );
+
                     return (
                       <ListView.Item
                         stacked
@@ -272,17 +294,7 @@ class MigrationsCompletedList extends React.Component {
                             {!archived &&
                               failed && (
                                 <React.Fragment>
-                                  <ScheduleMigrationButton
-                                    showConfirmModalAction={showConfirmModalAction}
-                                    hideConfirmModalAction={hideConfirmModalAction}
-                                    loading={loading}
-                                    toggleScheduleMigrationModal={toggleScheduleMigrationModal}
-                                    scheduleMigration={scheduleMigration}
-                                    fetchTransformationPlansAction={fetchTransformationPlansAction}
-                                    fetchTransformationPlansUrl={fetchTransformationPlansUrl}
-                                    plan={plan}
-                                    isMissingMapping={isMissingMapping}
-                                  />
+                                  {showInitialScheduleButton && scheduleButtons}
                                   <Button
                                     onClick={e => {
                                       e.stopPropagation();
@@ -303,7 +315,7 @@ class MigrationsCompletedList extends React.Component {
                                       showConfirmModalAction(confirmModalOptions);
                                     }}
                                   >
-                                    {__('Archive')}
+                                    {__('Archive plan')}
                                   </MenuItem>
                                 )}
                                 <MenuItem
@@ -312,7 +324,7 @@ class MigrationsCompletedList extends React.Component {
                                     showEditPlanNameModalAction(plan.id);
                                   }}
                                 >
-                                  {__('Edit')}
+                                  {__('Edit plan')}
                                 </MenuItem>
                                 <DeleteMigrationMenuItem
                                   showConfirmModalAction={showConfirmModalAction}
@@ -329,6 +341,7 @@ class MigrationsCompletedList extends React.Component {
                                   fetchTransformationMappingsAction={fetchTransformationMappingsAction}
                                   fetchTransformationMappingsUrl={fetchTransformationMappingsUrl}
                                 />
+                                {!showInitialScheduleButton && scheduleButtons}
                               </DropdownKebab>
                             </StopPropagationOnClick>
                           </div>

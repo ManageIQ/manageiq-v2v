@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Modal } from 'patternfly-react';
 import ScheduleMigrationModalBody from './ScheduleMigrationModalBody';
+import getPlanScheduleInfo from '../Migrations/helpers/getPlanScheduleInfo';
 
 class ScheduleMigrationModal extends React.Component {
   state = { dateTimeInput: '' };
@@ -15,6 +16,8 @@ class ScheduleMigrationModal extends React.Component {
       fetchTransformationPlansAction,
       fetchTransformationPlansUrl
     } = this.props;
+
+    const { migrationScheduled } = getPlanScheduleInfo(scheduleMigrationPlan);
 
     const handleChange = event => {
       this.setState({ dateTimeInput: event });
@@ -32,7 +35,7 @@ class ScheduleMigrationModal extends React.Component {
           <Modal.Title>{__('Schedule Migration Plan')}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <ScheduleMigrationModalBody handleChange={handleChange} />
+          <ScheduleMigrationModalBody handleChange={handleChange} defaultDate={migrationScheduled || ''} />
         </Modal.Body>
         <Modal.Footer>
           <Button bsStyle="default" className="btn-cancel" onClick={modalClose}>

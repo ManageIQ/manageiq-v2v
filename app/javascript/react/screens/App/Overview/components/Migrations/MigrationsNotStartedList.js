@@ -7,7 +7,7 @@ import ScheduleMigrationModal from '../ScheduleMigrationModal/ScheduleMigrationM
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
 import { MIGRATIONS_NOT_STARTED_SORT_FIELDS } from './MigrationsConstants';
 import sortFilter from '../../../common/ListViewToolbar/sortFilter';
-import ScheduleMigrationButton from './ScheduleMigrationButton';
+import ScheduleMigrationButtons from './ScheduleMigrationButtons';
 import StopPropagationOnClick from '../../../common/StopPropagationOnClick';
 import DeleteMigrationMenuItem from './DeleteMigrationMenuItem';
 import getPlanScheduleInfo from './helpers/getPlanScheduleInfo';
@@ -92,10 +92,29 @@ class MigrationsNotStartedList extends React.Component {
                 </Grid.Row>
                 <ListView className="plans-not-started-list" style={{ marginTop: 0 }}>
                   {sortedMigrations.map(plan => {
-                    const { migrationScheduled, migrationStarting } = getPlanScheduleInfo(plan);
+                    const { migrationScheduled, migrationStarting, showInitialScheduleButton } = getPlanScheduleInfo(
+                      plan
+                    );
                     const isMissingMapping = !plan.infraMappingName;
 
                     const editPlanDisabled = isMissingMapping || loading === plan.href;
+
+                    const scheduleButtons = (
+                      <ScheduleMigrationButtons
+                        showConfirmModalAction={showConfirmModalAction}
+                        hideConfirmModalAction={hideConfirmModalAction}
+                        loading={loading}
+                        toggleScheduleMigrationModal={toggleScheduleMigrationModal}
+                        scheduleMigration={scheduleMigration}
+                        fetchTransformationPlansAction={fetchTransformationPlansAction}
+                        fetchTransformationPlansUrl={fetchTransformationPlansUrl}
+                        plan={plan}
+                        isMissingMapping={isMissingMapping}
+                        migrationScheduled={migrationScheduled}
+                        migrationStarting={migrationStarting}
+                        showInitialScheduleButton={showInitialScheduleButton}
+                      />
+                    );
 
                     return (
                       <ListView.Item
@@ -106,17 +125,7 @@ class MigrationsNotStartedList extends React.Component {
                         }}
                         actions={
                           <div>
-                            <ScheduleMigrationButton
-                              showConfirmModalAction={showConfirmModalAction}
-                              hideConfirmModalAction={hideConfirmModalAction}
-                              loading={loading}
-                              toggleScheduleMigrationModal={toggleScheduleMigrationModal}
-                              scheduleMigration={scheduleMigration}
-                              fetchTransformationPlansAction={fetchTransformationPlansAction}
-                              fetchTransformationPlansUrl={fetchTransformationPlansUrl}
-                              plan={plan}
-                              isMissingMapping={isMissingMapping}
-                            />
+                            {showInitialScheduleButton && scheduleButtons}
                             <Button
                               id={`migrate_${plan.id}`}
                               onClick={e => {
@@ -138,7 +147,7 @@ class MigrationsNotStartedList extends React.Component {
                                   }}
                                   disabled={editPlanDisabled}
                                 >
-                                  {__('Edit')}
+                                  {__('Edit plan')}
                                 </MenuItem>
                                 <DeleteMigrationMenuItem
                                   showConfirmModalAction={showConfirmModalAction}
@@ -153,6 +162,7 @@ class MigrationsNotStartedList extends React.Component {
                                   fetchTransformationMappingsAction={fetchTransformationMappingsAction}
                                   fetchTransformationMappingsUrl={fetchTransformationMappingsUrl}
                                 />
+                                {!showInitialScheduleButton && scheduleButtons}
                               </DropdownKebab>
                             </StopPropagationOnClick>
                           </div>

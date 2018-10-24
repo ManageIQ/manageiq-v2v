@@ -42,7 +42,7 @@ describe('when displaying archived migration plans', () => {
     );
 
     wrapper.find('ListViewItem').forEach(item => {
-      const archiveButton = item.find('a').filterWhere(link => link.text() === 'Archive');
+      const archiveButton = item.find('a').filterWhere(link => link.text() === 'Archive plan');
       expect(archiveButton).toHaveLength(0);
     });
   });
@@ -79,7 +79,7 @@ describe('when displaying active (not archived) migration plans', () => {
 
   test('clicking the archive button launches the confirmation modal', () => {
     wrapper.find('ListViewItem').forEach(item => {
-      const archiveButton = item.find('a').filterWhere(link => link.text() === 'Archive');
+      const archiveButton = item.find('a').filterWhere(link => link.text() === 'Archive plan');
 
       archiveButton.simulate('click');
 
