@@ -7,12 +7,15 @@ class ScheduleMigrationModalBody extends React.Component {
     const { handleChange, defaultDate } = this.props;
     const datetimeSelector = $('#dateTimePicker');
 
+    const minDate = new Date(Date.now() + 120000);
+    const validDefaultDate = defaultDate && new Date(defaultDate) > minDate ? new Date(defaultDate) : false;
+
     datetimeSelector.datetimepicker({
-      defaultDate: defaultDate ? new Date(defaultDate) : false,
-      useCurrent: !defaultDate,
+      defaultDate: validDefaultDate,
+      useCurrent: !validDefaultDate,
       allowInputToggle: true,
       showTodayButton: true,
-      minDate: new Date(Date.now() + 120000),
+      minDate,
       toolbarPlacement: 'bottom',
       sideBySide: true,
       icons: {
