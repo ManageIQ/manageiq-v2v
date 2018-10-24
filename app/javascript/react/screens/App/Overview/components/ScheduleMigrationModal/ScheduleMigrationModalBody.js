@@ -4,10 +4,12 @@ import PropTypes from 'prop-types';
 
 class ScheduleMigrationModalBody extends React.Component {
   componentDidMount() {
-    const { handleChange } = this.props;
+    const { handleChange, defaultDate } = this.props;
     const datetimeSelector = $('#dateTimePicker');
 
     datetimeSelector.datetimepicker({
+      defaultDate: defaultDate ? new Date(defaultDate) : false,
+      useCurrent: !defaultDate,
       allowInputToggle: true,
       showTodayButton: true,
       minDate: new Date(Date.now() + 120000),
@@ -44,7 +46,8 @@ class ScheduleMigrationModalBody extends React.Component {
 }
 
 ScheduleMigrationModalBody.propTypes = {
-  handleChange: PropTypes.func
+  handleChange: PropTypes.func,
+  defaultDate: PropTypes.string
 };
 
 export default ScheduleMigrationModalBody;

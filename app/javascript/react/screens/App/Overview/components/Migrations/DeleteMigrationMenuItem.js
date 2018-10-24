@@ -61,7 +61,7 @@ const DeleteMigrationMenuItem = ({
         });
       }}
     >
-      {__('Delete')}
+      {__('Delete plan')}
     </MenuItem>
   );
 };
