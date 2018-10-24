@@ -9,12 +9,12 @@ import paginate from './paginate';
 class ListViewToolbar extends Component {
   state = {
     filterTypes: this.props.filterTypes,
-    currentFilterType: this.props.filterTypes[0],
+    currentFilterType: this.props.filterTypes[this.props.defaultFilterTypeIndex],
     currentValue: '',
     activeFilters: [],
     sortFields: this.props.sortFields,
-    currentSortType: this.props.sortFields[1],
-    isSortNumeric: this.props.sortFields[1].isNumeric,
+    currentSortType: this.props.sortFields[this.props.defaultSortTypeIndex],
+    isSortNumeric: this.props.sortFields[this.props.defaultSortTypeIndex].isNumeric,
     isSortAscending: true,
     pagination: {
       page: 1,
@@ -225,7 +225,14 @@ ListViewToolbar.propTypes = {
   filterTypes: PropTypes.array,
   listItems: PropTypes.array,
   render: PropTypes.func,
-  sortFields: PropTypes.array
+  sortFields: PropTypes.array,
+  defaultSortTypeIndex: PropTypes.number,
+  defaultFilterTypeIndex: PropTypes.number
+};
+
+ListViewToolbar.defaultProps = {
+  defaultSortTypeIndex: 1,
+  defaultFilterTypeIndex: 0
 };
 
 export default ListViewToolbar;

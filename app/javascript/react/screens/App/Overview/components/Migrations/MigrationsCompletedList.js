@@ -20,7 +20,11 @@ import ShowWizardEmptyState from '../../../common/ShowWizardEmptyState/ShowWizar
 import getMostRecentRequest from '../../../common/getMostRecentRequest';
 import getMostRecentVMTasksFromRequests from './helpers/getMostRecentVMTasksFromRequests';
 import ListViewToolbar from '../../../common/ListViewToolbar/ListViewToolbar';
-import { MIGRATIONS_COMPLETED_SORT_FIELDS, MIGRATIONS_FILTER_TYPES } from './MigrationsConstants';
+import {
+  MIGRATIONS_COMPLETED_SORT_FIELDS,
+  MIGRATIONS_FILTER_TYPES,
+  MIGRATIONS_ARCHIVED_SORT_FIELDS
+} from './MigrationsConstants';
 import ScheduleMigrationButtons from './ScheduleMigrationButtons';
 import ScheduleMigrationModal from '../ScheduleMigrationModal/ScheduleMigrationModal';
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
@@ -59,7 +63,9 @@ const MigrationsCompletedList = ({
         {finishedTransformationPlans.length > 0 ? (
           <ListViewToolbar
             filterTypes={MIGRATIONS_FILTER_TYPES}
-            sortFields={MIGRATIONS_COMPLETED_SORT_FIELDS}
+            defaultFilterTypeIndex={0}
+            sortFields={!archived ? MIGRATIONS_COMPLETED_SORT_FIELDS : MIGRATIONS_ARCHIVED_SORT_FIELDS}
+            defaultSortTypeIndex={!archived ? 1 : 0}
             listItems={finishedTransformationPlans}
             render={(
               {

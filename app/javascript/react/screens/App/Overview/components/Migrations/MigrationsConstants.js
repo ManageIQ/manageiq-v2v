@@ -18,6 +18,8 @@ export const MIGRATIONS_COMPLETED_SORT_FIELDS = [
   { id: 'status', title: __('Status'), isNumeric: false }
 ];
 
+export const MIGRATIONS_ARCHIVED_SORT_FIELDS = [{ id: 'name', title: __('Name'), isNumeric: false }];
+
 export const MIGRATIONS_FILTER_TYPES = [
   {
     id: 'name',

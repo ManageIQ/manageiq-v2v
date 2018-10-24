@@ -52,7 +52,9 @@ const MigrationsNotStartedList = ({
         {notStartedPlans.length > 0 ? (
           <ListViewToolbar
             filterTypes={MIGRATIONS_FILTER_TYPES}
+            defaultFilterTypeIndex={0}
             sortFields={MIGRATIONS_NOT_STARTED_SORT_FIELDS}
+            defaultSortTypeIndex={0}
             listItems={notStartedPlans}
             render={(
               {
