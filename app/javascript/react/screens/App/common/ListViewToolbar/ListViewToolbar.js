@@ -202,7 +202,7 @@ class ListViewToolbar extends Component {
   };
 
   render() {
-    return this.props.render(this.state, {
+    return this.props.children(this.state, {
       onFirstPage: this.onFirstPage,
       onLastPage: this.onLastPage,
       onNextPage: this.onNextPage,
@@ -213,7 +213,7 @@ class ListViewToolbar extends Component {
       clearFilters: this.clearFilters,
       removeFilter: this.removeFilter,
       selectFilterType: this.selectFilterType,
-      filterSortPaginateListItems: this.filterSortPaginateListItems,
+      filteredSortedPaginatedListItems: this.filterSortPaginateListItems(),
       toggleCurrentSortDirection: this.toggleCurrentSortDirection,
       updateCurrentSortType: this.updateCurrentSortType,
       renderInput: this.renderInput
@@ -224,7 +224,7 @@ class ListViewToolbar extends Component {
 ListViewToolbar.propTypes = {
   filterTypes: PropTypes.array,
   listItems: PropTypes.array,
-  render: PropTypes.func,
+  children: PropTypes.func,
   sortFields: PropTypes.array,
   defaultSortTypeIndex: PropTypes.number,
   defaultFilterTypeIndex: PropTypes.number

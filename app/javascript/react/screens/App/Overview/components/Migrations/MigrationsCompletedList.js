@@ -67,7 +67,8 @@ const MigrationsCompletedList = ({
             sortFields={!archived ? MIGRATIONS_COMPLETED_SORT_FIELDS : MIGRATIONS_ARCHIVED_SORT_FIELDS}
             defaultSortTypeIndex={!archived ? 1 : 0}
             listItems={finishedTransformationPlans}
-            render={(
+          >
+            {(
               {
                 filterTypes,
                 currentFilterType,
@@ -80,7 +81,7 @@ const MigrationsCompletedList = ({
                 pageChangeValue
               },
               {
-                filterSortPaginateListItems,
+                filteredSortedPaginatedListItems,
                 selectFilterType,
                 renderInput,
                 updateCurrentSortType,
@@ -95,330 +96,326 @@ const MigrationsCompletedList = ({
                 onLastPage,
                 onSubmit
               }
-            ) => {
-              const paginatedSortedFilteredPlans = filterSortPaginateListItems();
-              return (
-                <React.Fragment>
-                  <Grid.Row>
-                    <Toolbar>
-                      <Filter style={{ paddingLeft: 0 }}>
-                        <Filter.TypeSelector
-                          filterTypes={filterTypes}
-                          currentFilterType={currentFilterType}
-                          onFilterTypeSelected={selectFilterType}
-                        />
-                        {renderInput()}
-                      </Filter>
-                      <Sort>
-                        <Sort.TypeSelector
-                          sortTypes={sortFields}
-                          currentSortType={currentSortType}
-                          onSortTypeSelected={updateCurrentSortType}
-                        />
-                        <Sort.DirectionSelector
-                          isNumeric={isSortNumeric}
-                          isAscending={isSortAscending}
-                          onClick={toggleCurrentSortDirection}
-                        />
-                      </Sort>
-                      {activeFilters &&
-                        activeFilters.length > 0 && (
-                          <Toolbar.Results>
-                            <h5>
-                              {paginatedSortedFilteredPlans.itemCount}{' '}
-                              {paginatedSortedFilteredPlans.itemCount === 1 ? __('Result') : __('Results')}
-                            </h5>
-                            <Filter.ActiveLabel>{__('Active Filters')}:</Filter.ActiveLabel>
-                            <Filter.List>
-                              {activeFilters.map((item, index) => (
-                                <Filter.Item key={index} onRemove={removeFilter} filterData={item}>
-                                  {item.label}
-                                </Filter.Item>
-                              ))}
-                            </Filter.List>
-                            <a
-                              href="#"
-                              onClick={e => {
-                                e.preventDefault();
-                                clearFilters();
-                              }}
-                            >
-                              {__('Clear All Filters')}
-                            </a>
-                          </Toolbar.Results>
-                        )}
-                    </Toolbar>
-                  </Grid.Row>
-                  <ListView className="plans-complete-list" style={{ marginTop: 0 }}>
-                    {paginatedSortedFilteredPlans.tasks.map(plan => {
-                      const {
-                        migrationScheduled,
-                        staleMigrationSchedule,
-                        migrationStarting,
-                        showInitialScheduleButton
-                      } = getPlanScheduleInfo(plan);
+            ) => (
+              <React.Fragment>
+                <Grid.Row>
+                  <Toolbar>
+                    <Filter style={{ paddingLeft: 0 }}>
+                      <Filter.TypeSelector
+                        filterTypes={filterTypes}
+                        currentFilterType={currentFilterType}
+                        onFilterTypeSelected={selectFilterType}
+                      />
+                      {renderInput()}
+                    </Filter>
+                    <Sort>
+                      <Sort.TypeSelector
+                        sortTypes={sortFields}
+                        currentSortType={currentSortType}
+                        onSortTypeSelected={updateCurrentSortType}
+                      />
+                      <Sort.DirectionSelector
+                        isNumeric={isSortNumeric}
+                        isAscending={isSortAscending}
+                        onClick={toggleCurrentSortDirection}
+                      />
+                    </Sort>
+                    {activeFilters &&
+                      activeFilters.length > 0 && (
+                        <Toolbar.Results>
+                          <h5>
+                            {filteredSortedPaginatedListItems.itemCount}{' '}
+                            {filteredSortedPaginatedListItems.itemCount === 1 ? __('Result') : __('Results')}
+                          </h5>
+                          <Filter.ActiveLabel>{__('Active Filters')}:</Filter.ActiveLabel>
+                          <Filter.List>
+                            {activeFilters.map((item, index) => (
+                              <Filter.Item key={index} onRemove={removeFilter} filterData={item}>
+                                {item.label}
+                              </Filter.Item>
+                            ))}
+                          </Filter.List>
+                          <a
+                            href="#"
+                            onClick={e => {
+                              e.preventDefault();
+                              clearFilters();
+                            }}
+                          >
+                            {__('Clear All Filters')}
+                          </a>
+                        </Toolbar.Results>
+                      )}
+                  </Toolbar>
+                </Grid.Row>
+                <ListView className="plans-complete-list" style={{ marginTop: 0 }}>
+                  {filteredSortedPaginatedListItems.tasks.map(plan => {
+                    const {
+                      migrationScheduled,
+                      staleMigrationSchedule,
+                      migrationStarting,
+                      showInitialScheduleButton
+                    } = getPlanScheduleInfo(plan);
 
-                      const requestsOfAssociatedPlan = allRequestsWithTasks.filter(
-                        request => request.source_id === plan.id
+                    const requestsOfAssociatedPlan = allRequestsWithTasks.filter(
+                      request => request.source_id === plan.id
+                    );
+
+                    const mostRecentRequest =
+                      requestsOfAssociatedPlan.length > 0 && getMostRecentRequest(requestsOfAssociatedPlan);
+
+                    const failed = mostRecentRequest && mostRecentRequest.status === 'Error';
+
+                    const tasks = {};
+                    let tasksOfPlan = {};
+                    if (requestsOfAssociatedPlan.length > 0) {
+                      tasksOfPlan = getMostRecentVMTasksFromRequests(
+                        requestsOfAssociatedPlan,
+                        plan.options.config_info.actions
                       );
-
-                      const mostRecentRequest =
-                        requestsOfAssociatedPlan.length > 0 && getMostRecentRequest(requestsOfAssociatedPlan);
-
-                      const failed = mostRecentRequest && mostRecentRequest.status === 'Error';
-
-                      const tasks = {};
-                      let tasksOfPlan = {};
-                      if (requestsOfAssociatedPlan.length > 0) {
-                        tasksOfPlan = getMostRecentVMTasksFromRequests(
-                          requestsOfAssociatedPlan,
-                          plan.options.config_info.actions
-                        );
-                        tasksOfPlan.forEach(task => {
-                          tasks[task.source_id] = task.status === 'Ok';
-                        });
-                      } else if (mostRecentRequest) {
-                        mostRecentRequest.miq_request_tasks.forEach(task => {
-                          tasks[task.source_id] = task.status === 'Ok';
-                        });
-                      }
-                      let succeedCount = 0;
-                      Object.keys(tasks).forEach(key => {
-                        if (tasks[key]) succeedCount += 1;
+                      tasksOfPlan.forEach(task => {
+                        tasks[task.source_id] = task.status === 'Ok';
                       });
+                    } else if (mostRecentRequest) {
+                      mostRecentRequest.miq_request_tasks.forEach(task => {
+                        tasks[task.source_id] = task.status === 'Ok';
+                      });
+                    }
+                    let succeedCount = 0;
+                    Object.keys(tasks).forEach(key => {
+                      if (tasks[key]) succeedCount += 1;
+                    });
 
-                      const elapsedTime = IsoElapsedTime(
-                        new Date(mostRecentRequest && mostRecentRequest.options.delivered_on),
-                        new Date(mostRecentRequest && mostRecentRequest.fulfilled_on)
-                      );
+                    const elapsedTime = IsoElapsedTime(
+                      new Date(mostRecentRequest && mostRecentRequest.options.delivered_on),
+                      new Date(mostRecentRequest && mostRecentRequest.fulfilled_on)
+                    );
 
-                      const archiveMigrationWarningText = (
-                        <React.Fragment>
+                    const archiveMigrationWarningText = (
+                      <React.Fragment>
+                        <p>
+                          {__('Are you sure you want to archive migration plan ')}
+                          <strong>{plan.name}</strong>?
+                        </p>
+                        {failed && (
                           <p>
-                            {__('Are you sure you want to archive migration plan ')}
-                            <strong>{plan.name}</strong>?
+                            {__('This plan includes VMs that failed to migrate. If you archive the plan, you will not be able to retry the failed migrations.') // prettier-ignore
+                            }
                           </p>
-                          {failed && (
-                            <p>
-                              {__('This plan includes VMs that failed to migrate. If you archive the plan, you will not be able to retry the failed migrations.') // prettier-ignore
-                              }
-                            </p>
-                          )}
-                        </React.Fragment>
-                      );
+                        )}
+                      </React.Fragment>
+                    );
 
-                      const confirmModalBaseProps = {
-                        title: __('Archive Migration Plan'),
-                        body: archiveMigrationWarningText,
-                        icon: failed && <Icon className="confirm-warning-icon" type="pf" name="warning-triangle-o" />,
-                        confirmButtonLabel: __('Archive')
-                      };
+                    const confirmModalBaseProps = {
+                      title: __('Archive Migration Plan'),
+                      body: archiveMigrationWarningText,
+                      icon: failed && <Icon className="confirm-warning-icon" type="pf" name="warning-triangle-o" />,
+                      confirmButtonLabel: __('Archive')
+                    };
 
-                      const onConfirm = () => {
-                        showConfirmModalAction({
-                          ...confirmModalBaseProps,
-                          disableCancelButton: true,
-                          disableConfirmButton: true
-                        });
-                        archiveTransformationPlanAction(archiveTransformationPlanUrl, plan.id)
-                          .then(() => {
-                            addNotificationAction({
-                              message: sprintf(__('%s successfully archived'), plan.name),
-                              notificationType: 'success'
-                            });
-                            const fetchArchived = fetchTransformationPlansAction({
-                              url: fetchArchivedTransformationPlansUrl,
-                              archived: true
-                            });
-                            const fetchNonArchived = fetchTransformationPlansAction({
-                              url: fetchTransformationPlansUrl,
-                              archived: false
-                            });
-                            return Promise.all([fetchArchived, fetchNonArchived]);
-                          })
-                          .then(() => {
-                            hideConfirmModalAction();
-                          });
-                      };
-
-                      const confirmModalOptions = {
+                    const onConfirm = () => {
+                      showConfirmModalAction({
                         ...confirmModalBaseProps,
-                        onConfirm
-                      };
+                        disableCancelButton: true,
+                        disableConfirmButton: true
+                      });
+                      archiveTransformationPlanAction(archiveTransformationPlanUrl, plan.id)
+                        .then(() => {
+                          addNotificationAction({
+                            message: sprintf(__('%s successfully archived'), plan.name),
+                            notificationType: 'success'
+                          });
+                          const fetchArchived = fetchTransformationPlansAction({
+                            url: fetchArchivedTransformationPlansUrl,
+                            archived: true
+                          });
+                          const fetchNonArchived = fetchTransformationPlansAction({
+                            url: fetchTransformationPlansUrl,
+                            archived: false
+                          });
+                          return Promise.all([fetchArchived, fetchNonArchived]);
+                        })
+                        .then(() => {
+                          hideConfirmModalAction();
+                        });
+                    };
 
-                      const isMissingMapping = !plan.infraMappingName;
+                    const confirmModalOptions = {
+                      ...confirmModalBaseProps,
+                      onConfirm
+                    };
 
-                      const scheduleButtons = (
-                        <ScheduleMigrationButtons
-                          showConfirmModalAction={showConfirmModalAction}
-                          hideConfirmModalAction={hideConfirmModalAction}
-                          loading={loading}
-                          toggleScheduleMigrationModal={toggleScheduleMigrationModal}
-                          scheduleMigration={scheduleMigration}
-                          fetchTransformationPlansAction={fetchTransformationPlansAction}
-                          fetchTransformationPlansUrl={fetchTransformationPlansUrl}
-                          plan={plan}
-                          isMissingMapping={isMissingMapping}
-                          migrationScheduled={migrationScheduled}
-                          migrationStarting={migrationStarting}
-                          showInitialScheduleButton={showInitialScheduleButton}
-                        />
-                      );
+                    const isMissingMapping = !plan.infraMappingName;
 
-                      return (
-                        <ListView.Item
-                          stacked
-                          className="plans-complete-list__list-item"
-                          onClick={e => {
-                            e.stopPropagation();
+                    const scheduleButtons = (
+                      <ScheduleMigrationButtons
+                        showConfirmModalAction={showConfirmModalAction}
+                        hideConfirmModalAction={hideConfirmModalAction}
+                        loading={loading}
+                        toggleScheduleMigrationModal={toggleScheduleMigrationModal}
+                        scheduleMigration={scheduleMigration}
+                        fetchTransformationPlansAction={fetchTransformationPlansAction}
+                        fetchTransformationPlansUrl={fetchTransformationPlansUrl}
+                        plan={plan}
+                        isMissingMapping={isMissingMapping}
+                        migrationScheduled={migrationScheduled}
+                        migrationStarting={migrationStarting}
+                        showInitialScheduleButton={showInitialScheduleButton}
+                      />
+                    );
 
-                            redirectTo(`/plan/${plan.id}`);
-                          }}
-                          key={plan.id}
-                          leftContent={
-                            archived ? (
-                              <ListView.Icon
-                                type="fa"
-                                name="archive"
-                                size="md"
-                                style={{
-                                  width: 'inherit',
-                                  backgroundColor: 'transparent',
-                                  border: 'none'
-                                }}
-                              />
-                            ) : (
-                              <ListView.Icon
-                                type="pf"
-                                name={failed ? 'error-circle-o' : 'ok'}
-                                size="md"
-                                style={{
-                                  width: 'inherit',
-                                  backgroundColor: 'transparent'
-                                }}
-                              />
-                            )
-                          }
-                          heading={plan.name}
-                          description={plan.description}
-                          additionalInfo={[
-                            <ListView.InfoItem key={`${plan.id}-migrated`} style={{ paddingRight: 40 }}>
-                              <ListView.Icon type="pf" size="lg" name="screen" />
-                              &nbsp;
-                              <strong>{succeedCount}</strong> {__('of')} &nbsp;
-                              <strong>{Object.keys(tasks).length} </strong>
-                              {__('VMs successfully migrated.')}
-                            </ListView.InfoItem>,
-                            isMissingMapping && (
-                              <ListView.InfoItem key={`${plan.id}-infraMappingWarning`}>
-                                <Icon type="pf" name="warning-triangle-o" />{' '}
-                                {__('Infrastucture mapping does not exist.')}
-                              </ListView.InfoItem>
-                            ),
-                            !isMissingMapping && (
-                              <ListView.InfoItem key={`${plan.id}-infraMappingName`}>
-                                {plan.infraMappingName}
-                              </ListView.InfoItem>
-                            ),
-                            <ListView.InfoItem key={`${plan.id}-elapsed`}>
-                              <ListView.Icon type="fa" size="lg" name="clock-o" />
-                              {elapsedTime}
-                            </ListView.InfoItem>,
-                            migrationScheduled && !staleMigrationSchedule && !migrationStarting ? (
-                              <ListView.InfoItem key={`${plan.id}-scheduledTime`} style={{ textAlign: 'left' }}>
-                                <Icon type="fa" name="clock-o" />
-                                {__('Migration scheduled')}
-                                <br />
-                                {formatDateTime(migrationScheduled)}
-                              </ListView.InfoItem>
-                            ) : null,
-                            migrationStarting && (
-                              <ListView.InfoItem key={`${plan.id}-starting`} style={{ textAlign: 'left' }}>
-                                {__('Migration in progress')}
-                              </ListView.InfoItem>
-                            )
-                          ]}
-                          actions={
-                            <div>
-                              {!archived &&
-                                failed && (
-                                  <React.Fragment>
-                                    {showInitialScheduleButton && scheduleButtons}
-                                    <Button
-                                      onClick={e => {
-                                        e.stopPropagation();
-                                        retryClick(plan.href, plan.id);
-                                      }}
-                                      disabled={isMissingMapping || loading === plan.href || migrationStarting}
-                                    >
-                                      {__('Retry')}
-                                    </Button>
-                                  </React.Fragment>
-                                )}
-                              <StopPropagationOnClick>
-                                <DropdownKebab id={`${plan.id}-kebab`} pullRight>
-                                  {!archived && (
-                                    <MenuItem
-                                      onClick={e => {
-                                        e.stopPropagation();
-                                        showConfirmModalAction(confirmModalOptions);
-                                      }}
-                                    >
-                                      {__('Archive plan')}
-                                    </MenuItem>
-                                  )}
+                    return (
+                      <ListView.Item
+                        stacked
+                        className="plans-complete-list__list-item"
+                        onClick={e => {
+                          e.stopPropagation();
+
+                          redirectTo(`/plan/${plan.id}`);
+                        }}
+                        key={plan.id}
+                        leftContent={
+                          archived ? (
+                            <ListView.Icon
+                              type="fa"
+                              name="archive"
+                              size="md"
+                              style={{
+                                width: 'inherit',
+                                backgroundColor: 'transparent',
+                                border: 'none'
+                              }}
+                            />
+                          ) : (
+                            <ListView.Icon
+                              type="pf"
+                              name={failed ? 'error-circle-o' : 'ok'}
+                              size="md"
+                              style={{
+                                width: 'inherit',
+                                backgroundColor: 'transparent'
+                              }}
+                            />
+                          )
+                        }
+                        heading={plan.name}
+                        description={plan.description}
+                        additionalInfo={[
+                          <ListView.InfoItem key={`${plan.id}-migrated`} style={{ paddingRight: 40 }}>
+                            <ListView.Icon type="pf" size="lg" name="screen" />
+                            &nbsp;
+                            <strong>{succeedCount}</strong> {__('of')} &nbsp;
+                            <strong>{Object.keys(tasks).length} </strong>
+                            {__('VMs successfully migrated.')}
+                          </ListView.InfoItem>,
+                          isMissingMapping && (
+                            <ListView.InfoItem key={`${plan.id}-infraMappingWarning`}>
+                              <Icon type="pf" name="warning-triangle-o" /> {__('Infrastucture mapping does not exist.')}
+                            </ListView.InfoItem>
+                          ),
+                          !isMissingMapping && (
+                            <ListView.InfoItem key={`${plan.id}-infraMappingName`}>
+                              {plan.infraMappingName}
+                            </ListView.InfoItem>
+                          ),
+                          <ListView.InfoItem key={`${plan.id}-elapsed`}>
+                            <ListView.Icon type="fa" size="lg" name="clock-o" />
+                            {elapsedTime}
+                          </ListView.InfoItem>,
+                          migrationScheduled && !staleMigrationSchedule && !migrationStarting ? (
+                            <ListView.InfoItem key={`${plan.id}-scheduledTime`} style={{ textAlign: 'left' }}>
+                              <Icon type="fa" name="clock-o" />
+                              {__('Migration scheduled')}
+                              <br />
+                              {formatDateTime(migrationScheduled)}
+                            </ListView.InfoItem>
+                          ) : null,
+                          migrationStarting && (
+                            <ListView.InfoItem key={`${plan.id}-starting`} style={{ textAlign: 'left' }}>
+                              {__('Migration in progress')}
+                            </ListView.InfoItem>
+                          )
+                        ]}
+                        actions={
+                          <div>
+                            {!archived &&
+                              failed && (
+                                <React.Fragment>
+                                  {showInitialScheduleButton && scheduleButtons}
+                                  <Button
+                                    onClick={e => {
+                                      e.stopPropagation();
+                                      retryClick(plan.href, plan.id);
+                                    }}
+                                    disabled={isMissingMapping || loading === plan.href || migrationStarting}
+                                  >
+                                    {__('Retry')}
+                                  </Button>
+                                </React.Fragment>
+                              )}
+                            <StopPropagationOnClick>
+                              <DropdownKebab id={`${plan.id}-kebab`} pullRight>
+                                {!archived && (
                                   <MenuItem
                                     onClick={e => {
                                       e.stopPropagation();
-                                      showEditPlanNameModalAction(plan.id);
+                                      showConfirmModalAction(confirmModalOptions);
                                     }}
                                   >
-                                    {__('Edit plan')}
+                                    {__('Archive plan')}
                                   </MenuItem>
-                                  <DeleteMigrationMenuItem
-                                    showConfirmModalAction={showConfirmModalAction}
-                                    hideConfirmModalAction={hideConfirmModalAction}
-                                    deleteTransformationPlanAction={deleteTransformationPlanAction}
-                                    deleteTransformationPlanUrl={deleteTransformationPlanUrl}
-                                    addNotificationAction={addNotificationAction}
-                                    fetchTransformationPlansAction={fetchTransformationPlansAction}
-                                    fetchTransformationPlansUrl={fetchTransformationPlansUrl}
-                                    fetchArchivedTransformationPlansUrl={fetchArchivedTransformationPlansUrl}
-                                    planId={plan.id}
-                                    planName={plan.name}
-                                    archived={archived}
-                                    fetchTransformationMappingsAction={fetchTransformationMappingsAction}
-                                    fetchTransformationMappingsUrl={fetchTransformationMappingsUrl}
-                                  />
-                                  {!showInitialScheduleButton && scheduleButtons}
-                                </DropdownKebab>
-                              </StopPropagationOnClick>
-                            </div>
-                          }
-                        />
-                      );
-                    })}
-                  </ListView>
-                  <PaginationRow
-                    viewType={PAGINATION_VIEW.LIST}
-                    pagination={pagination}
-                    pageInputValue={pageChangeValue}
-                    amountOfPages={paginatedSortedFilteredPlans.amountOfPages}
-                    itemCount={paginatedSortedFilteredPlans.itemCount}
-                    itemsStart={paginatedSortedFilteredPlans.itemsStart}
-                    itemsEnd={paginatedSortedFilteredPlans.itemsEnd}
-                    onPerPageSelect={onPerPageSelect}
-                    onFirstPage={onFirstPage}
-                    onPreviousPage={onPreviousPage}
-                    onPageInput={onPageInput}
-                    onNextPage={onNextPage}
-                    onLastPage={onLastPage}
-                    onSubmit={onSubmit}
-                  />
-                </React.Fragment>
-              );
-            }}
-          />
+                                )}
+                                <MenuItem
+                                  onClick={e => {
+                                    e.stopPropagation();
+                                    showEditPlanNameModalAction(plan.id);
+                                  }}
+                                >
+                                  {__('Edit plan')}
+                                </MenuItem>
+                                <DeleteMigrationMenuItem
+                                  showConfirmModalAction={showConfirmModalAction}
+                                  hideConfirmModalAction={hideConfirmModalAction}
+                                  deleteTransformationPlanAction={deleteTransformationPlanAction}
+                                  deleteTransformationPlanUrl={deleteTransformationPlanUrl}
+                                  addNotificationAction={addNotificationAction}
+                                  fetchTransformationPlansAction={fetchTransformationPlansAction}
+                                  fetchTransformationPlansUrl={fetchTransformationPlansUrl}
+                                  fetchArchivedTransformationPlansUrl={fetchArchivedTransformationPlansUrl}
+                                  planId={plan.id}
+                                  planName={plan.name}
+                                  archived={archived}
+                                  fetchTransformationMappingsAction={fetchTransformationMappingsAction}
+                                  fetchTransformationMappingsUrl={fetchTransformationMappingsUrl}
+                                />
+                                {!showInitialScheduleButton && scheduleButtons}
+                              </DropdownKebab>
+                            </StopPropagationOnClick>
+                          </div>
+                        }
+                      />
+                    );
+                  })}
+                </ListView>
+                <PaginationRow
+                  viewType={PAGINATION_VIEW.LIST}
+                  pagination={pagination}
+                  pageInputValue={pageChangeValue}
+                  amountOfPages={filteredSortedPaginatedListItems.amountOfPages}
+                  itemCount={filteredSortedPaginatedListItems.itemCount}
+                  itemsStart={filteredSortedPaginatedListItems.itemsStart}
+                  itemsEnd={filteredSortedPaginatedListItems.itemsEnd}
+                  onPerPageSelect={onPerPageSelect}
+                  onFirstPage={onFirstPage}
+                  onPreviousPage={onPreviousPage}
+                  onPageInput={onPageInput}
+                  onNextPage={onNextPage}
+                  onLastPage={onLastPage}
+                  onSubmit={onSubmit}
+                />
+              </React.Fragment>
+            )}
+          </ListViewToolbar>
         ) : (
           <ShowWizardEmptyState
             title={archived ? __('No Archived Migration Plans') : __('No Completed Migration Plans')}

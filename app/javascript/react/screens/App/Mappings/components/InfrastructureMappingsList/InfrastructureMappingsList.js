@@ -121,7 +121,8 @@ class InfrastructureMappingsList extends React.Component {
           sortFields={INFRA_MAPPINGS_SORT_FIELDS}
           defaultSortTypeIndex={1}
           listItems={transformationMappingsMutable}
-          render={(
+        >
+          {(
             {
               filterTypes,
               currentFilterType,
@@ -134,7 +135,7 @@ class InfrastructureMappingsList extends React.Component {
               pageChangeValue
             },
             {
-              filterSortPaginateListItems,
+              filteredSortedPaginatedListItems,
               selectFilterType,
               renderInput,
               updateCurrentSortType,
@@ -149,9 +150,8 @@ class InfrastructureMappingsList extends React.Component {
               onLastPage,
               onSubmit
             }
-          ) => {
-            const paginatedSortedFiltersMappings = filterSortPaginateListItems();
-            return error ? (
+          ) =>
+            error ? (
               <ShowWizardEmptyState
                 title={__('Error loading mappings.')}
                 iconType="pf"
@@ -208,8 +208,8 @@ class InfrastructureMappingsList extends React.Component {
                       activeFilters.length > 0 && (
                         <Toolbar.Results>
                           <h5>
-                            {paginatedSortedFiltersMappings.itemCount}{' '}
-                            {paginatedSortedFiltersMappings.itemCount === 1 ? __('Result') : __('Results')}
+                            {filteredSortedPaginatedListItems.itemCount}{' '}
+                            {filteredSortedPaginatedListItems.itemCount === 1 ? __('Result') : __('Results')}
                           </h5>
                           <Filter.ActiveLabel>{__('Active Filters')}:</Filter.ActiveLabel>
                           <Filter.List>
@@ -234,7 +234,7 @@ class InfrastructureMappingsList extends React.Component {
                 </Grid.Row>
                 <div style={{ overflow: 'auto', paddingBottom: 300, height: '100%' }}>
                   <ListView style={{ marginTop: 10 }} className="infra-mappings-list-view" id="infrastructure_mappings">
-                    {paginatedSortedFiltersMappings.tasks.map(mapping => {
+                    {filteredSortedPaginatedListItems.tasks.map(mapping => {
                       const associatedPlansCount = mapping.service_templates && mapping.service_templates.length;
 
                       const { targetClusters, targetDatastores, targetNetworks } = mapInfrastructureMappings(
@@ -579,10 +579,10 @@ class InfrastructureMappingsList extends React.Component {
                     viewType={PAGINATION_VIEW.LIST}
                     pagination={pagination}
                     pageInputValue={pageChangeValue}
-                    amountOfPages={paginatedSortedFiltersMappings.amountOfPages}
-                    itemCount={paginatedSortedFiltersMappings.itemCount}
-                    itemsStart={paginatedSortedFiltersMappings.itemsStart}
-                    itemsEnd={paginatedSortedFiltersMappings.itemsEnd}
+                    amountOfPages={filteredSortedPaginatedListItems.amountOfPages}
+                    itemCount={filteredSortedPaginatedListItems.itemCount}
+                    itemsStart={filteredSortedPaginatedListItems.itemsStart}
+                    itemsEnd={filteredSortedPaginatedListItems.itemsEnd}
                     onPerPageSelect={onPerPageSelect}
                     onFirstPage={onFirstPage}
                     onPreviousPage={onPreviousPage}
@@ -595,9 +595,9 @@ class InfrastructureMappingsList extends React.Component {
               </React.Fragment>
             ) : (
               this.renderEmptyState()
-            );
-          }}
-        />
+            )
+          }
+        </ListViewToolbar>
         <DeleteInfrastructureMappingConfirmationModal
           showDeleteConfirmationModal={showDeleteConfirmationModal}
           hideDeleteConfirmationModalAction={hideDeleteConfirmationModalAction}
