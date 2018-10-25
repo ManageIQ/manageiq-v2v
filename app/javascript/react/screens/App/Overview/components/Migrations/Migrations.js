@@ -47,7 +47,7 @@ const Migrations = ({
 
   return (
     <React.Fragment>
-      <Grid.Col xs={12}>
+      <Grid.Col xs={12} style={{ backgroundColor: '#fff' }}>
         <div className="heading-with-link-container">
           <div className="pull-left">
             <h3>{activeFilter}</h3>
@@ -67,15 +67,18 @@ const Migrations = ({
             </a>
           </div>
         </div>
-        <hr style={{ borderTopColor: '#d1d1d1' }} />
+        <hr style={{ borderTopColor: '#d1d1d1', marginBottom: 0, marginLeft: '-20px', marginRight: '-20px' }} />
         {!plansExist && (
-          <ShowWizardEmptyState
-            showWizardAction={() => createMigrationPlanClick()}
-            description={__('Create a migration plan to select VMs for migration.')}
-            buttonText={__('Create Migration Plan')}
-          />
+          <div style={{ marginLeft: '-20px', marginRight: '-20px', marginBottom: '-20px' }}>
+            <ShowWizardEmptyState
+              showWizardAction={() => createMigrationPlanClick()}
+              description={__('Create a migration plan to select VMs for migration.')}
+              buttonText={__('Create Migration Plan')}
+            />
+          </div>
         )}
       </Grid.Col>
+
       {plansExist && (
         <div className="migrations">
           {activeFilter === MIGRATIONS_FILTERS.notStarted && (
