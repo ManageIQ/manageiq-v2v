@@ -10,11 +10,12 @@
  *  ...
  * }]
  */
-export default function sortFilter(currentSortType, isSortNumeric, isSortAscending, tasks) {
-  if (currentSortType && tasks && tasks.length) {
+export default function sortFilter(currentSortType, isSortNumeric, isSortAscending, items = []) {
+  const itemsCopy = [...items];
+  if (currentSortType && itemsCopy && itemsCopy.length) {
     if (isSortNumeric) {
       // handle numbers and dates
-      return tasks.sort((a, b) => {
+      return itemsCopy.sort((a, b) => {
         const x = a[currentSortType.id];
         const y = b[currentSortType.id];
         return isSortAscending ? x - y : y - x;
@@ -31,7 +32,7 @@ export default function sortFilter(currentSortType, isSortNumeric, isSortAscendi
     const rx = /(\d+)|(\D+)/g;
     const rd = /\d+/;
 
-    return tasks.sort((as, bs) => {
+    return itemsCopy.sort((as, bs) => {
       a = String(as[currentSortType.id])
         .toLowerCase()
         .match(rx);
@@ -64,5 +65,5 @@ export default function sortFilter(currentSortType, isSortNumeric, isSortAscendi
       return b.length - a.length;
     });
   }
-  return tasks;
+  return itemsCopy;
 }

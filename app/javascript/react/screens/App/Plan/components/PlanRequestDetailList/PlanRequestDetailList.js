@@ -471,7 +471,7 @@ class PlanRequestDetailList extends React.Component {
         </Grid.Row>
         <div style={{ overflow: 'auto', paddingBottom: 300, height: '100%' }}>
           <ListView className="plan-request-details-list">
-            {paginatedSortedFiltersTasks.tasks.map((task, n) => {
+            {paginatedSortedFiltersTasks.items.map((task, n) => {
               let taskMessage = task.message;
               let taskCancelled = false;
 
