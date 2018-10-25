@@ -147,7 +147,7 @@ const MigrationsCompletedList = ({
                       )}
                   </Toolbar>
                 </Grid.Row>
-                <ListView className="plans-complete-list" style={{ marginTop: 0 }}>
+                <ListView className="plans-complete-list" style={{ marginTop: 10 }}>
                   {filteredSortedPaginatedListItems.tasks.map(plan => {
                     const {
                       migrationScheduled,
