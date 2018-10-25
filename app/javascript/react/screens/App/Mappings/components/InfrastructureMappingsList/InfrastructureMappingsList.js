@@ -117,9 +117,7 @@ class InfrastructureMappingsList extends React.Component {
       <React.Fragment>
         <ListViewToolbar
           filterTypes={INFRA_MAPPINGS_FILTER_TYPES}
-          defaultFilterTypeIndex={0}
           sortFields={INFRA_MAPPINGS_SORT_FIELDS}
-          defaultSortTypeIndex={1}
           listItems={transformationMappingsMutable}
         >
           {(

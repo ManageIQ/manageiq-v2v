@@ -231,7 +231,7 @@ ListViewToolbar.propTypes = {
 };
 
 ListViewToolbar.defaultProps = {
-  defaultSortTypeIndex: 1,
+  defaultSortTypeIndex: 0,
   defaultFilterTypeIndex: 0
 };
 
