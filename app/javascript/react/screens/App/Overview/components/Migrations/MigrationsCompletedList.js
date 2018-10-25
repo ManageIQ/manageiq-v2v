@@ -8,7 +8,6 @@ import {
   Spinner,
   Icon,
   Toolbar,
-  Filter,
   DropdownKebab,
   MenuItem,
   PaginationRow,
@@ -67,13 +66,12 @@ const MigrationsCompletedList = ({
             listItems={finishedTransformationPlans}
           >
             {(
-              { activeFilters, pagination, pageChangeValue },
+              { pagination, pageChangeValue },
               {
                 filteredSortedPaginatedListItems,
                 renderFilterControls,
                 renderSortControls,
-                clearFilters,
-                removeFilter,
+                renderActiveFilters,
                 onPerPageSelect,
                 onFirstPage,
                 onPreviousPage,
@@ -88,32 +86,7 @@ const MigrationsCompletedList = ({
                   <Toolbar>
                     {renderFilterControls()}
                     {renderSortControls()}
-                    {activeFilters &&
-                      activeFilters.length > 0 && (
-                        <Toolbar.Results>
-                          <h5>
-                            {filteredSortedPaginatedListItems.itemCount}{' '}
-                            {filteredSortedPaginatedListItems.itemCount === 1 ? __('Result') : __('Results')}
-                          </h5>
-                          <Filter.ActiveLabel>{__('Active Filters')}:</Filter.ActiveLabel>
-                          <Filter.List>
-                            {activeFilters.map((item, index) => (
-                              <Filter.Item key={index} onRemove={removeFilter} filterData={item}>
-                                {item.label}
-                              </Filter.Item>
-                            ))}
-                          </Filter.List>
-                          <a
-                            href="#"
-                            onClick={e => {
-                              e.preventDefault();
-                              clearFilters();
-                            }}
-                          >
-                            {__('Clear All Filters')}
-                          </a>
-                        </Toolbar.Results>
-                      )}
+                    {renderActiveFilters(filteredSortedPaginatedListItems)}
                   </Toolbar>
                 </Grid.Row>
                 <ListView className="plans-complete-list" style={{ marginTop: 10 }}>

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Immutable from 'seamless-immutable';
 import EllipsisWithTooltip from 'react-ellipsis-with-tooltip';
-import { Button, Icon, ListView, Grid, Toolbar, Filter, PaginationRow, PAGINATION_VIEW } from 'patternfly-react';
+import { Button, Icon, ListView, Grid, Toolbar, PaginationRow, PAGINATION_VIEW } from 'patternfly-react';
 
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
 import ShowWizardEmptyState from '../../../common/ShowWizardEmptyState/ShowWizardEmptyState';
@@ -121,13 +121,12 @@ class InfrastructureMappingsList extends React.Component {
           listItems={transformationMappingsMutable}
         >
           {(
-            { activeFilters, pagination, pageChangeValue },
+            { pagination, pageChangeValue },
             {
               filteredSortedPaginatedListItems,
               renderFilterControls,
               renderSortControls,
-              clearFilters,
-              removeFilter,
+              renderActiveFilters,
               onPerPageSelect,
               onFirstPage,
               onPreviousPage,
@@ -172,32 +171,7 @@ class InfrastructureMappingsList extends React.Component {
                         </a>
                       </Toolbar.RightContent>
                     )}
-                    {activeFilters &&
-                      activeFilters.length > 0 && (
-                        <Toolbar.Results>
-                          <h5>
-                            {filteredSortedPaginatedListItems.itemCount}{' '}
-                            {filteredSortedPaginatedListItems.itemCount === 1 ? __('Result') : __('Results')}
-                          </h5>
-                          <Filter.ActiveLabel>{__('Active Filters')}:</Filter.ActiveLabel>
-                          <Filter.List>
-                            {activeFilters.map((item, index) => (
-                              <Filter.Item key={index} onRemove={removeFilter} filterData={item}>
-                                {item.label}
-                              </Filter.Item>
-                            ))}
-                          </Filter.List>
-                          <a
-                            href="#"
-                            onClick={e => {
-                              e.preventDefault();
-                              clearFilters();
-                            }}
-                          >
-                            {__('Clear All Filters')}
-                          </a>
-                        </Toolbar.Results>
-                      )}
+                    {renderActiveFilters(filteredSortedPaginatedListItems)}
                   </Toolbar>
                 </Grid.Row>
                 <div style={{ overflow: 'auto', paddingBottom: 300, height: '100%' }}>

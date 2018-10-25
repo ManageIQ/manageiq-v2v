@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { FormControl, Filter, Sort } from 'patternfly-react';
+import { FormControl, Filter, Sort, Toolbar } from 'patternfly-react';
 
 import listFilter from './listFilter';
 import sortFilter from './sortFilter';
@@ -233,6 +233,38 @@ class ListViewToolbar extends Component {
     );
   };
 
+  renderActiveFilters = filteredSortedPaginatedListItems => {
+    const { activeFilters } = this.state;
+    return (
+      activeFilters &&
+      activeFilters.length > 0 && (
+        <Toolbar.Results>
+          <h5>
+            {filteredSortedPaginatedListItems.itemCount}{' '}
+            {filteredSortedPaginatedListItems.itemCount === 1 ? __('Result') : __('Results')}
+          </h5>
+          <Filter.ActiveLabel>{__('Active Filters')}:</Filter.ActiveLabel>
+          <Filter.List>
+            {activeFilters.map((item, index) => (
+              <Filter.Item key={index} onRemove={this.removeFilter} filterData={item}>
+                {item.label}
+              </Filter.Item>
+            ))}
+          </Filter.List>
+          <a
+            href="#"
+            onClick={e => {
+              e.preventDefault();
+              this.clearFilters();
+            }}
+          >
+            {__('Clear All Filters')}
+          </a>
+        </Toolbar.Results>
+      )
+    );
+  };
+
   render() {
     return this.props.children(this.state, {
       onFirstPage: this.onFirstPage,
@@ -250,7 +282,8 @@ class ListViewToolbar extends Component {
       updateCurrentSortType: this.updateCurrentSortType,
       renderInput: this.renderInput,
       renderFilterControls: this.renderFilterControls,
-      renderSortControls: this.renderSortControls
+      renderSortControls: this.renderSortControls,
+      renderActiveFilters: this.renderActiveFilters
     });
   }
 }

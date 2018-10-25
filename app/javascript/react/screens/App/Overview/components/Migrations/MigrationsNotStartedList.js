@@ -8,7 +8,6 @@ import {
   Icon,
   Spinner,
   Toolbar,
-  Filter,
   DropdownKebab,
   MenuItem,
   PaginationRow,
@@ -55,13 +54,12 @@ const MigrationsNotStartedList = ({
             listItems={notStartedPlans}
           >
             {(
-              { activeFilters, pagination, pageChangeValue },
+              { pagination, pageChangeValue },
               {
                 filteredSortedPaginatedListItems,
                 renderFilterControls,
                 renderSortControls,
-                clearFilters,
-                removeFilter,
+                renderActiveFilters,
                 onPerPageSelect,
                 onFirstPage,
                 onPreviousPage,
@@ -76,32 +74,7 @@ const MigrationsNotStartedList = ({
                   <Toolbar>
                     {renderFilterControls()}
                     {renderSortControls()}
-                    {activeFilters &&
-                      activeFilters.length > 0 && (
-                        <Toolbar.Results>
-                          <h5>
-                            {filteredSortedPaginatedListItems.itemCount}{' '}
-                            {filteredSortedPaginatedListItems.itemCount === 1 ? __('Result') : __('Results')}
-                          </h5>
-                          <Filter.ActiveLabel>{__('Active Filters')}:</Filter.ActiveLabel>
-                          <Filter.List>
-                            {activeFilters.map((item, index) => (
-                              <Filter.Item key={index} onRemove={removeFilter} filterData={item}>
-                                {item.label}
-                              </Filter.Item>
-                            ))}
-                          </Filter.List>
-                          <a
-                            href="#"
-                            onClick={e => {
-                              e.preventDefault();
-                              clearFilters();
-                            }}
-                          >
-                            {__('Clear All Filters')}
-                          </a>
-                        </Toolbar.Results>
-                      )}
+                    {renderActiveFilters(filteredSortedPaginatedListItems)}
                   </Toolbar>
                 </Grid.Row>
                 <ListView className="plans-not-started-list" style={{ marginTop: 10 }}>
