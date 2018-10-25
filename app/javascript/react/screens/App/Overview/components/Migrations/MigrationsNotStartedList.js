@@ -57,8 +57,6 @@ const MigrationsNotStartedList = ({
           >
             {(
               {
-                filterTypes,
-                currentFilterType,
                 sortFields,
                 currentSortType,
                 isSortNumeric,
@@ -69,8 +67,7 @@ const MigrationsNotStartedList = ({
               },
               {
                 filteredSortedPaginatedListItems,
-                selectFilterType,
-                renderInput,
+                renderFilterControls,
                 updateCurrentSortType,
                 toggleCurrentSortDirection,
                 clearFilters,
@@ -87,14 +84,7 @@ const MigrationsNotStartedList = ({
               <React.Fragment>
                 <Grid.Row>
                   <Toolbar>
-                    <Filter style={{ paddingLeft: 0 }}>
-                      <Filter.TypeSelector
-                        filterTypes={filterTypes}
-                        currentFilterType={currentFilterType}
-                        onFilterTypeSelected={selectFilterType}
-                      />
-                      {renderInput()}
-                    </Filter>
+                    {renderFilterControls()}
                     <Sort>
                       <Sort.TypeSelector
                         sortTypes={sortFields}

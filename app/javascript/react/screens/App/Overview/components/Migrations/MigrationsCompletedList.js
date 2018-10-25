@@ -69,8 +69,6 @@ const MigrationsCompletedList = ({
           >
             {(
               {
-                filterTypes,
-                currentFilterType,
                 sortFields,
                 currentSortType,
                 isSortNumeric,
@@ -81,8 +79,7 @@ const MigrationsCompletedList = ({
               },
               {
                 filteredSortedPaginatedListItems,
-                selectFilterType,
-                renderInput,
+                renderFilterControls,
                 updateCurrentSortType,
                 toggleCurrentSortDirection,
                 clearFilters,
@@ -99,14 +96,7 @@ const MigrationsCompletedList = ({
               <React.Fragment>
                 <Grid.Row>
                   <Toolbar>
-                    <Filter style={{ paddingLeft: 0 }}>
-                      <Filter.TypeSelector
-                        filterTypes={filterTypes}
-                        currentFilterType={currentFilterType}
-                        onFilterTypeSelected={selectFilterType}
-                      />
-                      {renderInput()}
-                    </Filter>
+                    {renderFilterControls()}
                     <Sort>
                       <Sort.TypeSelector
                         sortTypes={sortFields}

@@ -121,21 +121,10 @@ class InfrastructureMappingsList extends React.Component {
           listItems={transformationMappingsMutable}
         >
           {(
-            {
-              filterTypes,
-              currentFilterType,
-              sortFields,
-              currentSortType,
-              isSortNumeric,
-              isSortAscending,
-              activeFilters,
-              pagination,
-              pageChangeValue
-            },
+            { sortFields, currentSortType, isSortNumeric, isSortAscending, activeFilters, pagination, pageChangeValue },
             {
               filteredSortedPaginatedListItems,
-              selectFilterType,
-              renderInput,
+              renderFilterControls,
               updateCurrentSortType,
               toggleCurrentSortDirection,
               clearFilters,
@@ -167,14 +156,7 @@ class InfrastructureMappingsList extends React.Component {
               <React.Fragment>
                 <Grid.Row>
                   <Toolbar>
-                    <Filter style={{ paddingLeft: 0 }}>
-                      <Filter.TypeSelector
-                        filterTypes={filterTypes}
-                        currentFilterType={currentFilterType}
-                        onFilterTypeSelected={selectFilterType}
-                      />
-                      {renderInput()}
-                    </Filter>
+                    {renderFilterControls()}
                     <Sort>
                       <Sort.TypeSelector
                         sortTypes={sortFields}

@@ -201,6 +201,20 @@ class ListViewToolbar extends Component {
     );
   };
 
+  renderFilterControls = () => {
+    const { filterTypes, currentFilterType } = this.state;
+    return (
+      <Filter style={{ paddingLeft: 0 }}>
+        <Filter.TypeSelector
+          filterTypes={filterTypes}
+          currentFilterType={currentFilterType}
+          onFilterTypeSelected={this.selectFilterType}
+        />
+        {this.renderInput()}
+      </Filter>
+    );
+  };
+
   render() {
     return this.props.children(this.state, {
       onFirstPage: this.onFirstPage,
@@ -216,7 +230,8 @@ class ListViewToolbar extends Component {
       filteredSortedPaginatedListItems: this.filterSortPaginateListItems(),
       toggleCurrentSortDirection: this.toggleCurrentSortDirection,
       updateCurrentSortType: this.updateCurrentSortType,
-      renderInput: this.renderInput
+      renderInput: this.renderInput,
+      renderFilterControls: this.renderFilterControls
     });
   }
 }
