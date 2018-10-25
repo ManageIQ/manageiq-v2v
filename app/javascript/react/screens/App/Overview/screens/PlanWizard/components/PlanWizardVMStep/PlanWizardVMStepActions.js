@@ -5,11 +5,14 @@ import { V2V_VM_STEP_RESET, V2V_VALIDATE_VMS, QUERY_V2V_PLAN_VMS } from './PlanW
 
 export { showConfirmModalAction, hideConfirmModalAction } from '../../../../OverviewActions';
 
-const _validateVmsActionCreator = (url, vms) => dispatch => {
-  const postBody = {
+const _validateVmsActionCreator = (url, vms, planId) => dispatch => {
+  let postBody = {
     action: 'validate_vms',
     import: vms
   };
+  if (planId) {
+    postBody = { ...postBody, service_template_id: planId };
+  }
   dispatch({
     type: V2V_VALIDATE_VMS,
     payload: new Promise((resolve, reject) => {
@@ -24,10 +27,10 @@ const _validateVmsActionCreator = (url, vms) => dispatch => {
   });
 };
 
-export const validateVmsAction = (url, id, vms) => {
+export const validateVmsAction = (url, id, vms, planId) => {
   const uri = new URI(`${url}/${id}`);
 
-  return _validateVmsActionCreator(uri.toString(), vms);
+  return _validateVmsActionCreator(uri.toString(), vms, planId);
 };
 
 export const csvImportAction = () => dispatch => {
