@@ -9,7 +9,6 @@ import {
   Spinner,
   Toolbar,
   Filter,
-  Sort,
   DropdownKebab,
   MenuItem,
   PaginationRow,
@@ -56,20 +55,11 @@ const MigrationsNotStartedList = ({
             listItems={notStartedPlans}
           >
             {(
-              {
-                sortFields,
-                currentSortType,
-                isSortNumeric,
-                isSortAscending,
-                activeFilters,
-                pagination,
-                pageChangeValue
-              },
+              { activeFilters, pagination, pageChangeValue },
               {
                 filteredSortedPaginatedListItems,
                 renderFilterControls,
-                updateCurrentSortType,
-                toggleCurrentSortDirection,
+                renderSortControls,
                 clearFilters,
                 removeFilter,
                 onPerPageSelect,
@@ -85,18 +75,7 @@ const MigrationsNotStartedList = ({
                 <Grid.Row>
                   <Toolbar>
                     {renderFilterControls()}
-                    <Sort>
-                      <Sort.TypeSelector
-                        sortTypes={sortFields}
-                        currentSortType={currentSortType}
-                        onSortTypeSelected={updateCurrentSortType}
-                      />
-                      <Sort.DirectionSelector
-                        isNumeric={isSortNumeric}
-                        isAscending={isSortAscending}
-                        onClick={toggleCurrentSortDirection}
-                      />
-                    </Sort>
+                    {renderSortControls()}
                     {activeFilters &&
                       activeFilters.length > 0 && (
                         <Toolbar.Results>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { FormControl, Filter } from 'patternfly-react';
+import { FormControl, Filter, Sort } from 'patternfly-react';
 
 import listFilter from './listFilter';
 import sortFilter from './sortFilter';
@@ -215,6 +215,24 @@ class ListViewToolbar extends Component {
     );
   };
 
+  renderSortControls = () => {
+    const { sortFields, currentSortType, isSortNumeric, isSortAscending } = this.state;
+    return (
+      <Sort>
+        <Sort.TypeSelector
+          sortTypes={sortFields}
+          currentSortType={currentSortType}
+          onSortTypeSelected={this.updateCurrentSortType}
+        />
+        <Sort.DirectionSelector
+          isNumeric={isSortNumeric}
+          isAscending={isSortAscending}
+          onClick={this.toggleCurrentSortDirection}
+        />
+      </Sort>
+    );
+  };
+
   render() {
     return this.props.children(this.state, {
       onFirstPage: this.onFirstPage,
@@ -231,7 +249,8 @@ class ListViewToolbar extends Component {
       toggleCurrentSortDirection: this.toggleCurrentSortDirection,
       updateCurrentSortType: this.updateCurrentSortType,
       renderInput: this.renderInput,
-      renderFilterControls: this.renderFilterControls
+      renderFilterControls: this.renderFilterControls,
+      renderSortControls: this.renderSortControls
     });
   }
 }

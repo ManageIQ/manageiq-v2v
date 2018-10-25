@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Immutable from 'seamless-immutable';
 import EllipsisWithTooltip from 'react-ellipsis-with-tooltip';
-import { Button, Icon, ListView, Grid, Toolbar, Filter, Sort, PaginationRow, PAGINATION_VIEW } from 'patternfly-react';
+import { Button, Icon, ListView, Grid, Toolbar, Filter, PaginationRow, PAGINATION_VIEW } from 'patternfly-react';
 
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
 import ShowWizardEmptyState from '../../../common/ShowWizardEmptyState/ShowWizardEmptyState';
@@ -121,12 +121,11 @@ class InfrastructureMappingsList extends React.Component {
           listItems={transformationMappingsMutable}
         >
           {(
-            { sortFields, currentSortType, isSortNumeric, isSortAscending, activeFilters, pagination, pageChangeValue },
+            { activeFilters, pagination, pageChangeValue },
             {
               filteredSortedPaginatedListItems,
               renderFilterControls,
-              updateCurrentSortType,
-              toggleCurrentSortDirection,
+              renderSortControls,
               clearFilters,
               removeFilter,
               onPerPageSelect,
@@ -157,18 +156,7 @@ class InfrastructureMappingsList extends React.Component {
                 <Grid.Row>
                   <Toolbar>
                     {renderFilterControls()}
-                    <Sort>
-                      <Sort.TypeSelector
-                        sortTypes={sortFields}
-                        currentSortType={currentSortType}
-                        onSortTypeSelected={updateCurrentSortType}
-                      />
-                      <Sort.DirectionSelector
-                        isNumeric={isSortNumeric}
-                        isAscending={isSortAscending}
-                        onClick={toggleCurrentSortDirection}
-                      />
-                    </Sort>
+                    {renderSortControls()}
                     {!error && (
                       <Toolbar.RightContent>
                         <a

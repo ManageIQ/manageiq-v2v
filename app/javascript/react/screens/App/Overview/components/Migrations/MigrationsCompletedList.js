@@ -8,7 +8,6 @@ import {
   Spinner,
   Icon,
   Toolbar,
-  Sort,
   Filter,
   DropdownKebab,
   MenuItem,
@@ -68,20 +67,11 @@ const MigrationsCompletedList = ({
             listItems={finishedTransformationPlans}
           >
             {(
-              {
-                sortFields,
-                currentSortType,
-                isSortNumeric,
-                isSortAscending,
-                activeFilters,
-                pagination,
-                pageChangeValue
-              },
+              { activeFilters, pagination, pageChangeValue },
               {
                 filteredSortedPaginatedListItems,
                 renderFilterControls,
-                updateCurrentSortType,
-                toggleCurrentSortDirection,
+                renderSortControls,
                 clearFilters,
                 removeFilter,
                 onPerPageSelect,
@@ -97,18 +87,7 @@ const MigrationsCompletedList = ({
                 <Grid.Row>
                   <Toolbar>
                     {renderFilterControls()}
-                    <Sort>
-                      <Sort.TypeSelector
-                        sortTypes={sortFields}
-                        currentSortType={currentSortType}
-                        onSortTypeSelected={updateCurrentSortType}
-                      />
-                      <Sort.DirectionSelector
-                        isNumeric={isSortNumeric}
-                        isAscending={isSortAscending}
-                        onClick={toggleCurrentSortDirection}
-                      />
-                    </Sort>
+                    {renderSortControls()}
                     {activeFilters &&
                       activeFilters.length > 0 && (
                         <Toolbar.Results>
