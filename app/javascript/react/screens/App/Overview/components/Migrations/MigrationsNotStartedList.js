@@ -1,18 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  noop,
-  Button,
-  ListView,
-  Grid,
-  Icon,
-  Spinner,
-  Toolbar,
-  DropdownKebab,
-  MenuItem,
-  PaginationRow,
-  PAGINATION_VIEW
-} from 'patternfly-react';
+import { noop, Button, ListView, Grid, Icon, Spinner, Toolbar, DropdownKebab, MenuItem } from 'patternfly-react';
 import EllipsisWithTooltip from 'react-ellipsis-with-tooltip';
 import ShowWizardEmptyState from '../../../common/ShowWizardEmptyState/ShowWizardEmptyState';
 import ScheduleMigrationModal from '../ScheduleMigrationModal/ScheduleMigrationModal';
@@ -53,22 +41,13 @@ const MigrationsNotStartedList = ({
             sortFields={MIGRATIONS_NOT_STARTED_SORT_FIELDS}
             listItems={notStartedPlans}
           >
-            {(
-              { pagination, pageChangeValue },
-              {
-                filteredSortedPaginatedListItems,
-                renderFilterControls,
-                renderSortControls,
-                renderActiveFilters,
-                onPerPageSelect,
-                onFirstPage,
-                onPreviousPage,
-                onPageInput,
-                onNextPage,
-                onLastPage,
-                onSubmit
-              }
-            ) => (
+            {({
+              filteredSortedPaginatedListItems,
+              renderFilterControls,
+              renderSortControls,
+              renderActiveFilters,
+              renderPaginationRow
+            }) => (
               <React.Fragment>
                 <Grid.Row>
                   <Toolbar>
@@ -195,22 +174,7 @@ const MigrationsNotStartedList = ({
                     );
                   })}
                 </ListView>
-                <PaginationRow
-                  viewType={PAGINATION_VIEW.LIST}
-                  pagination={pagination}
-                  pageInputValue={pageChangeValue}
-                  amountOfPages={filteredSortedPaginatedListItems.amountOfPages}
-                  itemCount={filteredSortedPaginatedListItems.itemCount}
-                  itemsStart={filteredSortedPaginatedListItems.itemsStart}
-                  itemsEnd={filteredSortedPaginatedListItems.itemsEnd}
-                  onPerPageSelect={onPerPageSelect}
-                  onFirstPage={onFirstPage}
-                  onPreviousPage={onPreviousPage}
-                  onPageInput={onPageInput}
-                  onNextPage={onNextPage}
-                  onLastPage={onLastPage}
-                  onSubmit={onSubmit}
-                />
+                {renderPaginationRow(filteredSortedPaginatedListItems)}
               </React.Fragment>
             )}
           </ListViewToolbar>

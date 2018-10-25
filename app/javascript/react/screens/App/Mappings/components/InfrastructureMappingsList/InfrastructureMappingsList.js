@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Immutable from 'seamless-immutable';
 import EllipsisWithTooltip from 'react-ellipsis-with-tooltip';
-import { Button, Icon, ListView, Grid, Toolbar, PaginationRow, PAGINATION_VIEW } from 'patternfly-react';
+import { Button, Icon, ListView, Grid, Toolbar } from 'patternfly-react';
 
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
 import ShowWizardEmptyState from '../../../common/ShowWizardEmptyState/ShowWizardEmptyState';
@@ -120,22 +120,13 @@ class InfrastructureMappingsList extends React.Component {
           sortFields={INFRA_MAPPINGS_SORT_FIELDS}
           listItems={transformationMappingsMutable}
         >
-          {(
-            { pagination, pageChangeValue },
-            {
-              filteredSortedPaginatedListItems,
-              renderFilterControls,
-              renderSortControls,
-              renderActiveFilters,
-              onPerPageSelect,
-              onFirstPage,
-              onPreviousPage,
-              onPageInput,
-              onNextPage,
-              onLastPage,
-              onSubmit
-            }
-          ) =>
+          {({
+            filteredSortedPaginatedListItems,
+            renderFilterControls,
+            renderSortControls,
+            renderActiveFilters,
+            renderPaginationRow
+          }) =>
             error ? (
               <ShowWizardEmptyState
                 title={__('Error loading mappings.')}
@@ -517,22 +508,7 @@ class InfrastructureMappingsList extends React.Component {
                       );
                     })}
                   </ListView>
-                  <PaginationRow
-                    viewType={PAGINATION_VIEW.LIST}
-                    pagination={pagination}
-                    pageInputValue={pageChangeValue}
-                    amountOfPages={filteredSortedPaginatedListItems.amountOfPages}
-                    itemCount={filteredSortedPaginatedListItems.itemCount}
-                    itemsStart={filteredSortedPaginatedListItems.itemsStart}
-                    itemsEnd={filteredSortedPaginatedListItems.itemsEnd}
-                    onPerPageSelect={onPerPageSelect}
-                    onFirstPage={onFirstPage}
-                    onPreviousPage={onPreviousPage}
-                    onPageInput={onPageInput}
-                    onNextPage={onNextPage}
-                    onLastPage={onLastPage}
-                    onSubmit={onSubmit}
-                  />
+                  {renderPaginationRow(filteredSortedPaginatedListItems)}
                 </div>
               </React.Fragment>
             ) : (
