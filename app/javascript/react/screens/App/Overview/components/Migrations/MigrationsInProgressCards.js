@@ -14,7 +14,10 @@ const MigrationsInProgressCards = ({
 }) => (
   <div className="row-cards-pf">
     <Grid.Row>
-      <Grid.Col xs={12}>
+      <Grid.Col
+        xs={12}
+        style={activeTransformationPlans.length > 0 && allRequestsWithTasks.length > 0 ? { marginTop: '20px' } : {}}
+      >
         <Card.HeightMatching selector={['.card-pf-match-height']}>
           <Spinner loading={loading}>
             {activeTransformationPlans.length > 0 && allRequestsWithTasks.length > 0 ? (

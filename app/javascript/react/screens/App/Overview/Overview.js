@@ -269,9 +269,8 @@ class Overview extends React.Component {
       openMappingWizardOnTransitionAction
     } = this.props;
 
-    const overviewContent = (
-      <div className="row cards-pf" style={{ overflow: 'auto', paddingBottom: 1, height: '100%' }}>
-        {this.renderAggregateDataCards()}
+    const mainContent = (
+      <React.Fragment>
         <Spinner
           loading={
             isFetchingProviders ||
@@ -349,8 +348,33 @@ class Overview extends React.Component {
           fetchTransformationPlansUrl={fetchTransformationPlansUrl}
           fetchArchivedTransformationPlansUrl={fetchArchivedTransformationPlansUrl}
         />
-      </div>
+      </React.Fragment>
     );
+
+    const inProgressCardsVisible =
+      migrationsFilter === MIGRATIONS_FILTERS.inProgress && activeTransformationPlans.length > 0;
+
+    const emptyStateVisible =
+      (migrationsFilter === MIGRATIONS_FILTERS.notStarted && notStartedTransformationPlans.length === 0) ||
+      (migrationsFilter === MIGRATIONS_FILTERS.inProgress && activeTransformationPlans.length === 0) ||
+      (migrationsFilter === MIGRATIONS_FILTERS.completed && finishedTransformationPlans.length === 0) ||
+      (migrationsFilter === MIGRATIONS_FILTERS.archived && archivedTransformationPlans.length === 0);
+
+    // Full-height grey background (.cards-pf) for in-progress cards and empty states, otherwise only grey behind aggregate cards
+    const overviewContent =
+      inProgressCardsVisible || emptyStateVisible ? (
+        <div className="row cards-pf" style={{ overflow: 'auto', paddingBottom: 1, height: '100%' }}>
+          {this.renderAggregateDataCards()}
+          {mainContent}
+        </div>
+      ) : (
+        <React.Fragment>
+          <div className="row cards-pf" style={{ overflow: 'auto', paddingBottom: 1 }}>
+            {this.renderAggregateDataCards()}
+          </div>
+          <div className="row">{mainContent}</div>
+        </React.Fragment>
+      );
 
     const toolbarContent = (
       <Toolbar>
