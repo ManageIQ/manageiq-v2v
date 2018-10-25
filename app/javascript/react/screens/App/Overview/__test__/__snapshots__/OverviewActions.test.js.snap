@@ -10,3 +10,25 @@ Array [
   },
 ]
 `;
+
+exports[`setMigrationsFilterAction dispatches additional actions 1`] = `
+Array [
+  Object {
+    "payload": "Migrations Plans Not Started",
+    "type": "V2V_SET_MIGRATIONS_FILTER",
+  },
+  Object {
+    "payload": "Some payload",
+    "type": "SOME_ACTION_TYPE",
+  },
+]
+`;
+
+exports[`setMigrationsFilterAction dispatches an action with correct type and payload 1`] = `
+Array [
+  Object {
+    "payload": "Migrations Plans Not Started",
+    "type": "V2V_SET_MIGRATIONS_FILTER",
+  },
+]
+`;

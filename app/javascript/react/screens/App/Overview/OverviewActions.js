@@ -153,10 +153,23 @@ export const fetchServiceTemplateAnsiblePlaybooksAction = url => {
   return _getServiceTemplateAnsiblePlaybooksActionCreator(uri.toString());
 };
 
-export const setMigrationsFilterAction = filter => ({
-  type: V2V_SET_MIGRATIONS_FILTER,
-  payload: filter
-});
+export const setMigrationsFilterAction = (filter, additionalActions) => dispatch => {
+  dispatch({
+    type: V2V_SET_MIGRATIONS_FILTER,
+    payload: filter
+  });
+
+  if (additionalActions) {
+    for (const type in additionalActions) {
+      if ({}.hasOwnProperty.call(additionalActions, type)) {
+        dispatch({
+          type,
+          payload: additionalActions[type]
+        });
+      }
+    }
+  }
+};
 
 export const retryMigrationAction = planId => ({
   type: V2V_RETRY_MIGRATION,

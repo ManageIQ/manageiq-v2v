@@ -264,7 +264,9 @@ class Overview extends React.Component {
       showPlanWizardEditModeAction,
       fetchTransformationMappingsUrl,
       fetchTransformationMappingsAction,
-      openMappingWizardOnTransitionAction
+      openMappingWizardOnTransitionAction,
+      setMigrationsFilterAction,
+      initialMigrationsFilterSet
     } = this.props;
 
     const mainContent = (
@@ -284,6 +286,8 @@ class Overview extends React.Component {
             !!transformationMappings.length || !!transformationPlans.length || !!archivedTransformationPlans.length ? (
               <Migrations
                 activeFilter={migrationsFilter}
+                initialMigrationsFilterSet={initialMigrationsFilterSet}
+                setMigrationsFilterAction={setMigrationsFilterAction}
                 transformationPlans={transformationPlans}
                 allRequestsWithTasks={allRequestsWithTasks}
                 archivedTransformationPlans={archivedTransformationPlans}
@@ -456,7 +460,8 @@ Overview.propTypes = {
   fetchServiceTemplateAnsiblePlaybooksUrl: PropTypes.string,
   serviceTemplatePlaybooks: PropTypes.array,
   redirectTo: PropTypes.func.isRequired,
-  openMappingWizardOnTransitionAction: PropTypes.func
+  openMappingWizardOnTransitionAction: PropTypes.func,
+  initialMigrationsFilterSet: PropTypes.bool
 };
 
 Overview.defaultProps = {

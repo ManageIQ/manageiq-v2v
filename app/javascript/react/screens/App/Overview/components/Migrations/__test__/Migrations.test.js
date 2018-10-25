@@ -4,8 +4,10 @@ import { shallow } from 'enzyme';
 import Migrations from '../Migrations';
 
 let createMigrationPlanClick;
+let setMigrationsFilterAction;
 beforeEach(() => {
   createMigrationPlanClick = jest.fn();
+  setMigrationsFilterAction = jest.fn();
 });
 
 test('shows the empty state when there are no transformation plans', () => {
@@ -15,6 +17,7 @@ test('shows the empty state when there are no transformation plans', () => {
       transformationPlans={[]}
       archivedTransformationPlans={[]}
       createMigrationPlanClick={createMigrationPlanClick}
+      setMigrationsFilterAction={setMigrationsFilterAction}
     />
   );
 
