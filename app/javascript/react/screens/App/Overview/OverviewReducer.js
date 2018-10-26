@@ -24,6 +24,7 @@ import {
   CREATE_V2V_TRANSFORMATION_PLAN_REQUEST,
   CONTINUE_TO_PLAN,
   V2V_SET_MIGRATIONS_FILTER,
+  V2V_AUTO_SET_MIGRATIONS_FILTER,
   V2V_RETRY_MIGRATION,
   SHOW_CONFIRM_MODAL,
   HIDE_CONFIRM_MODAL,
@@ -86,7 +87,8 @@ export const initialState = Immutable({
   serviceTemplatePlaybooks: [],
   isFetchingServiceTemplatePlaybooks: false,
   isRejectedServiceTemplatePlaybooks: false,
-  errorServiceTemplatePlaybooks: null
+  errorServiceTemplatePlaybooks: null,
+  initialMigrationsFilterSet: false
 });
 
 export default (state = initialState, action) => {
@@ -297,6 +299,9 @@ export default (state = initialState, action) => {
         .set('isRejectedSchedulingMigration', true)
         .set('errorSchedulingMigration', action.payload)
         .set('scheduleMigrationModal', false);
+
+    case V2V_AUTO_SET_MIGRATIONS_FILTER:
+      return state.set('initialMigrationsFilterSet', true);
 
     default:
       return state;

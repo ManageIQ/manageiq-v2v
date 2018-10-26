@@ -6,167 +6,196 @@ import MigrationsInProgressCards from './MigrationsInProgressCards';
 import MigrationsNotStartedList from './MigrationsNotStartedList';
 import MigrationsCompletedList from './MigrationsCompletedList';
 import ShowWizardEmptyState from '../../../common/ShowWizardEmptyState/ShowWizardEmptyState';
-import { MIGRATIONS_FILTERS } from '../../OverviewConstants';
+import { MIGRATIONS_FILTERS, V2V_AUTO_SET_MIGRATIONS_FILTER } from '../../OverviewConstants';
 
-const Migrations = ({
-  activeFilter,
-  transformationPlans,
-  allRequestsWithTasks,
-  reloadCard,
-  notStartedPlans,
-  activeTransformationPlans,
-  serviceTemplatePlaybooks,
-  createMigrationPlanClick,
-  createTransformationPlanRequestClick,
-  isCreatingTransformationPlanRequest,
-  finishedTransformationPlans,
-  redirectTo,
-  showConfirmModalAction,
-  hideConfirmModalAction,
-  fetchTransformationPlansAction,
-  fetchTransformationPlansUrl,
-  fetchArchivedTransformationPlansUrl,
-  isFetchingArchivedTransformationPlans,
-  archivedTransformationPlans,
-  allArchivedPlanRequestsWithTasks,
-  archiveTransformationPlanAction,
-  archiveTransformationPlanUrl,
-  deleteTransformationPlanAction,
-  deleteTransformationPlanUrl,
-  addNotificationAction,
-  toggleScheduleMigrationModal,
-  scheduleMigrationModal,
-  scheduleMigrationPlan,
-  scheduleMigration,
-  showPlanWizardEditModeAction,
-  fetchTransformationMappingsUrl,
-  fetchTransformationMappingsAction,
-  showEditPlanNameModalAction
-}) => {
-  const plansExist = transformationPlans.length > 0 || archivedTransformationPlans.length > 0;
+class Migrations extends React.Component {
+  componentDidMount = () => {
+    const {
+      activeTransformationPlans,
+      archivedTransformationPlans,
+      finishedTransformationPlans,
+      initialMigrationsFilterSet,
+      notStartedPlans,
+      setMigrationsFilterAction
+    } = this.props;
 
-  return (
-    <React.Fragment>
-      <Grid.Col xs={12} style={{ backgroundColor: '#fff' }}>
-        <div className="heading-with-link-container">
-          <div className="pull-left">
-            <h3>{activeFilter}</h3>
+    if (!initialMigrationsFilterSet) {
+      setMigrationsFilterAction(
+        MIGRATIONS_FILTERS[
+          (activeTransformationPlans.length && 'inProgress') ||
+            (notStartedPlans.length && 'notStarted') ||
+            (finishedTransformationPlans.length && 'completed') ||
+            (archivedTransformationPlans.length && 'archived')
+        ],
+        { [V2V_AUTO_SET_MIGRATIONS_FILTER]: true }
+      );
+    }
+  };
+
+  render() {
+    const {
+      activeFilter,
+      transformationPlans,
+      allRequestsWithTasks,
+      reloadCard,
+      notStartedPlans,
+      activeTransformationPlans,
+      serviceTemplatePlaybooks,
+      createMigrationPlanClick,
+      createTransformationPlanRequestClick,
+      isCreatingTransformationPlanRequest,
+      finishedTransformationPlans,
+      redirectTo,
+      showConfirmModalAction,
+      hideConfirmModalAction,
+      fetchTransformationPlansAction,
+      fetchTransformationPlansUrl,
+      fetchArchivedTransformationPlansUrl,
+      isFetchingArchivedTransformationPlans,
+      archivedTransformationPlans,
+      allArchivedPlanRequestsWithTasks,
+      archiveTransformationPlanAction,
+      archiveTransformationPlanUrl,
+      deleteTransformationPlanAction,
+      deleteTransformationPlanUrl,
+      addNotificationAction,
+      toggleScheduleMigrationModal,
+      scheduleMigrationModal,
+      scheduleMigrationPlan,
+      scheduleMigration,
+      showPlanWizardEditModeAction,
+      fetchTransformationMappingsUrl,
+      fetchTransformationMappingsAction,
+      showEditPlanNameModalAction
+    } = this.props;
+
+    const plansExist = transformationPlans.length > 0 || archivedTransformationPlans.length > 0;
+
+    return (
+      <React.Fragment>
+        <Grid.Col xs={12} style={{ backgroundColor: '#fff' }}>
+          <div className="heading-with-link-container">
+            <div className="pull-left">
+              <h3>{activeFilter}</h3>
+            </div>
+            <div className="pull-right">
+              {/** todo: create IconLink in patternfly-react * */}
+              <a
+                href="#"
+                onClick={e => {
+                  e.preventDefault();
+                  createMigrationPlanClick();
+                }}
+              >
+                <Icon type="pf" name="add-circle-o" />
+                &nbsp;
+                {__('Create Migration Plan')}
+              </a>
+            </div>
           </div>
-          <div className="pull-right">
-            {/** todo: create IconLink in patternfly-react * */}
-            <a
-              href="#"
-              onClick={e => {
-                e.preventDefault();
-                createMigrationPlanClick();
-              }}
-            >
-              <Icon type="pf" name="add-circle-o" />
-              &nbsp;
-              {__('Create Migration Plan')}
-            </a>
-          </div>
-        </div>
-        <hr style={{ borderTopColor: '#d1d1d1', marginBottom: 0, marginLeft: '-20px', marginRight: '-20px' }} />
-        {!plansExist && (
-          <div style={{ marginLeft: '-20px', marginRight: '-20px', marginBottom: '-20px' }}>
-            <ShowWizardEmptyState
-              showWizardAction={() => createMigrationPlanClick()}
-              description={__('Create a migration plan to select VMs for migration.')}
-              buttonText={__('Create Migration Plan')}
-            />
+          <hr style={{ borderTopColor: '#d1d1d1', marginBottom: 0, marginLeft: '-20px', marginRight: '-20px' }} />
+          {!plansExist && (
+            <div style={{ marginLeft: '-20px', marginRight: '-20px', marginBottom: '-20px' }}>
+              <ShowWizardEmptyState
+                showWizardAction={() => createMigrationPlanClick()}
+                description={__('Create a migration plan to select VMs for migration.')}
+                buttonText={__('Create Migration Plan')}
+              />
+            </div>
+          )}
+        </Grid.Col>
+
+        {plansExist && (
+          <div className="migrations">
+            {activeFilter === MIGRATIONS_FILTERS.notStarted && (
+              <MigrationsNotStartedList
+                notStartedPlans={Immutable.asMutable(notStartedPlans, { deep: true })}
+                migrateClick={createTransformationPlanRequestClick}
+                loading={isCreatingTransformationPlanRequest}
+                redirectTo={redirectTo}
+                showConfirmModalAction={showConfirmModalAction}
+                hideConfirmModalAction={hideConfirmModalAction}
+                addNotificationAction={addNotificationAction}
+                toggleScheduleMigrationModal={toggleScheduleMigrationModal}
+                scheduleMigrationModal={scheduleMigrationModal}
+                scheduleMigrationPlan={scheduleMigrationPlan}
+                scheduleMigration={scheduleMigration}
+                fetchTransformationPlansAction={fetchTransformationPlansAction}
+                fetchTransformationPlansUrl={fetchTransformationPlansUrl}
+                deleteTransformationPlanAction={deleteTransformationPlanAction}
+                deleteTransformationPlanUrl={deleteTransformationPlanUrl}
+                showPlanWizardEditModeAction={showPlanWizardEditModeAction}
+                fetchTransformationMappingsAction={fetchTransformationMappingsAction}
+                fetchTransformationMappingsUrl={fetchTransformationMappingsUrl}
+              />
+            )}
+            {activeFilter === MIGRATIONS_FILTERS.inProgress && (
+              <MigrationsInProgressCards
+                activeTransformationPlans={activeTransformationPlans}
+                serviceTemplatePlaybooks={serviceTemplatePlaybooks}
+                allRequestsWithTasks={allRequestsWithTasks}
+                reloadCard={reloadCard}
+                loading={isCreatingTransformationPlanRequest !== null}
+                redirectTo={redirectTo}
+              />
+            )}
+            {activeFilter === MIGRATIONS_FILTERS.completed && (
+              <MigrationsCompletedList
+                finishedTransformationPlans={Immutable.asMutable(finishedTransformationPlans, { deep: true })}
+                allRequestsWithTasks={allRequestsWithTasks}
+                retryClick={createTransformationPlanRequestClick}
+                loading={isCreatingTransformationPlanRequest}
+                redirectTo={redirectTo}
+                showConfirmModalAction={showConfirmModalAction}
+                hideConfirmModalAction={hideConfirmModalAction}
+                archiveTransformationPlanAction={archiveTransformationPlanAction}
+                archiveTransformationPlanUrl={archiveTransformationPlanUrl}
+                deleteTransformationPlanAction={deleteTransformationPlanAction}
+                deleteTransformationPlanUrl={deleteTransformationPlanUrl}
+                fetchTransformationPlansAction={fetchTransformationPlansAction}
+                fetchTransformationPlansUrl={fetchTransformationPlansUrl}
+                fetchArchivedTransformationPlansUrl={fetchArchivedTransformationPlansUrl}
+                addNotificationAction={addNotificationAction}
+                toggleScheduleMigrationModal={toggleScheduleMigrationModal}
+                scheduleMigrationModal={scheduleMigrationModal}
+                scheduleMigrationPlan={scheduleMigrationPlan}
+                scheduleMigration={scheduleMigration}
+                fetchTransformationMappingsAction={fetchTransformationMappingsAction}
+                fetchTransformationMappingsUrl={fetchTransformationMappingsUrl}
+                showEditPlanNameModalAction={showEditPlanNameModalAction}
+              />
+            )}
+            {activeFilter === MIGRATIONS_FILTERS.archived && (
+              <MigrationsCompletedList
+                finishedTransformationPlans={Immutable.asMutable(archivedTransformationPlans, { deep: true })}
+                allRequestsWithTasks={allArchivedPlanRequestsWithTasks}
+                redirectTo={redirectTo}
+                loading={isFetchingArchivedTransformationPlans}
+                archived
+                showConfirmModalAction={showConfirmModalAction}
+                hideConfirmModalAction={hideConfirmModalAction}
+                addNotificationAction={addNotificationAction}
+                deleteTransformationPlanAction={deleteTransformationPlanAction}
+                deleteTransformationPlanUrl={deleteTransformationPlanUrl}
+                fetchTransformationPlansAction={fetchTransformationPlansAction}
+                fetchTransformationPlansUrl={fetchTransformationPlansUrl}
+                fetchArchivedTransformationPlansUrl={fetchArchivedTransformationPlansUrl}
+                fetchTransformationMappingsAction={fetchTransformationMappingsAction}
+                fetchTransformationMappingsUrl={fetchTransformationMappingsUrl}
+                showEditPlanNameModalAction={showEditPlanNameModalAction}
+              />
+            )}
           </div>
         )}
-      </Grid.Col>
-
-      {plansExist && (
-        <div className="migrations">
-          {activeFilter === MIGRATIONS_FILTERS.notStarted && (
-            <MigrationsNotStartedList
-              notStartedPlans={Immutable.asMutable(notStartedPlans, { deep: true })}
-              migrateClick={createTransformationPlanRequestClick}
-              loading={isCreatingTransformationPlanRequest}
-              redirectTo={redirectTo}
-              showConfirmModalAction={showConfirmModalAction}
-              hideConfirmModalAction={hideConfirmModalAction}
-              addNotificationAction={addNotificationAction}
-              toggleScheduleMigrationModal={toggleScheduleMigrationModal}
-              scheduleMigrationModal={scheduleMigrationModal}
-              scheduleMigrationPlan={scheduleMigrationPlan}
-              scheduleMigration={scheduleMigration}
-              fetchTransformationPlansAction={fetchTransformationPlansAction}
-              fetchTransformationPlansUrl={fetchTransformationPlansUrl}
-              deleteTransformationPlanAction={deleteTransformationPlanAction}
-              deleteTransformationPlanUrl={deleteTransformationPlanUrl}
-              showPlanWizardEditModeAction={showPlanWizardEditModeAction}
-              fetchTransformationMappingsAction={fetchTransformationMappingsAction}
-              fetchTransformationMappingsUrl={fetchTransformationMappingsUrl}
-            />
-          )}
-          {activeFilter === MIGRATIONS_FILTERS.inProgress && (
-            <MigrationsInProgressCards
-              activeTransformationPlans={activeTransformationPlans}
-              serviceTemplatePlaybooks={serviceTemplatePlaybooks}
-              allRequestsWithTasks={allRequestsWithTasks}
-              reloadCard={reloadCard}
-              loading={isCreatingTransformationPlanRequest !== null}
-              redirectTo={redirectTo}
-            />
-          )}
-          {activeFilter === MIGRATIONS_FILTERS.completed && (
-            <MigrationsCompletedList
-              finishedTransformationPlans={Immutable.asMutable(finishedTransformationPlans, { deep: true })}
-              allRequestsWithTasks={allRequestsWithTasks}
-              retryClick={createTransformationPlanRequestClick}
-              loading={isCreatingTransformationPlanRequest}
-              redirectTo={redirectTo}
-              showConfirmModalAction={showConfirmModalAction}
-              hideConfirmModalAction={hideConfirmModalAction}
-              archiveTransformationPlanAction={archiveTransformationPlanAction}
-              archiveTransformationPlanUrl={archiveTransformationPlanUrl}
-              deleteTransformationPlanAction={deleteTransformationPlanAction}
-              deleteTransformationPlanUrl={deleteTransformationPlanUrl}
-              fetchTransformationPlansAction={fetchTransformationPlansAction}
-              fetchTransformationPlansUrl={fetchTransformationPlansUrl}
-              fetchArchivedTransformationPlansUrl={fetchArchivedTransformationPlansUrl}
-              addNotificationAction={addNotificationAction}
-              toggleScheduleMigrationModal={toggleScheduleMigrationModal}
-              scheduleMigrationModal={scheduleMigrationModal}
-              scheduleMigrationPlan={scheduleMigrationPlan}
-              scheduleMigration={scheduleMigration}
-              fetchTransformationMappingsAction={fetchTransformationMappingsAction}
-              fetchTransformationMappingsUrl={fetchTransformationMappingsUrl}
-              showEditPlanNameModalAction={showEditPlanNameModalAction}
-            />
-          )}
-          {activeFilter === MIGRATIONS_FILTERS.archived && (
-            <MigrationsCompletedList
-              finishedTransformationPlans={Immutable.asMutable(archivedTransformationPlans, { deep: true })}
-              allRequestsWithTasks={allArchivedPlanRequestsWithTasks}
-              redirectTo={redirectTo}
-              loading={isFetchingArchivedTransformationPlans}
-              archived
-              showConfirmModalAction={showConfirmModalAction}
-              hideConfirmModalAction={hideConfirmModalAction}
-              addNotificationAction={addNotificationAction}
-              deleteTransformationPlanAction={deleteTransformationPlanAction}
-              deleteTransformationPlanUrl={deleteTransformationPlanUrl}
-              fetchTransformationPlansAction={fetchTransformationPlansAction}
-              fetchTransformationPlansUrl={fetchTransformationPlansUrl}
-              fetchArchivedTransformationPlansUrl={fetchArchivedTransformationPlansUrl}
-              fetchTransformationMappingsAction={fetchTransformationMappingsAction}
-              fetchTransformationMappingsUrl={fetchTransformationMappingsUrl}
-              showEditPlanNameModalAction={showEditPlanNameModalAction}
-            />
-          )}
-        </div>
-      )}
-    </React.Fragment>
-  );
-};
+      </React.Fragment>
+    );
+  }
+}
 
 Migrations.propTypes = {
   activeFilter: PropTypes.string,
+  initialMigrationsFilterSet: PropTypes.bool,
+  setMigrationsFilterAction: PropTypes.func,
   transformationPlans: PropTypes.array,
   allRequestsWithTasks: PropTypes.array,
   reloadCard: PropTypes.bool,
