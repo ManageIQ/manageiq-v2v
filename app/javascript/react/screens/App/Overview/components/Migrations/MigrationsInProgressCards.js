@@ -36,12 +36,7 @@ const MigrationsInProgressCards = ({
                 title={__('No Migration Plans In Progress')}
                 iconType="pf"
                 iconName="info"
-                description={
-                  <span>
-                    {__('There are no existing migration plans in an In Progress state.')}
-                    <br /> {__('Make a selection in the dropdown to view plans in other states.')}
-                  </span>
-                }
+                description={<span>{__('There are no existing migration plans in an In Progress state.')}</span>}
               />
             )}
           </Spinner>
