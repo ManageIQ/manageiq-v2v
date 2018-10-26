@@ -24,6 +24,15 @@ class ListViewToolbar extends Component {
     pageChangeValue: 1
   };
 
+  componentDidMount() {
+    const { initialFilter, filterTypes } = this.props;
+    if (initialFilter) {
+      const { filterTypeId, filterValue } = initialFilter;
+      const fieldObj = filterTypes.find(ft => ft.id === filterTypeId);
+      if (fieldObj) this.filterAdded(fieldObj, filterValue);
+    }
+  }
+
   onValueKeyPress = keyEvent => {
     const { currentValue, currentFilterType } = this.state;
 
@@ -320,7 +329,11 @@ ListViewToolbar.propTypes = {
   children: PropTypes.func,
   sortFields: PropTypes.array,
   defaultSortTypeIndex: PropTypes.number,
-  defaultFilterTypeIndex: PropTypes.number
+  defaultFilterTypeIndex: PropTypes.number,
+  initialFilter: PropTypes.shape({
+    filterTypeId: PropTypes.string,
+    filterValue: PropTypes.string
+  })
 };
 
 ListViewToolbar.defaultProps = {

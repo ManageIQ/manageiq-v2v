@@ -294,7 +294,7 @@ Mappings.propTypes = {
   yesToDeleteInfrastructureMapping: PropTypes.bool,
   yesToDeleteInfrastructureMappingAction: PropTypes.func,
   filterMappingsListOnTransitionAction: PropTypes.func,
-  initialFilterUntilUnmount: PropTypes.object,
+  initialFilterUntilUnmount: PropTypes.object
 };
 
 Mappings.defaultProps = {

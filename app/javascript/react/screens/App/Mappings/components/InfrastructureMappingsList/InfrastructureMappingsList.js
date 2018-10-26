@@ -114,12 +114,11 @@ class InfrastructureMappingsList extends React.Component {
 
     const { transformationMappingsMutable } = this.state;
 
-    console.log('DEFAULT FILTER', initialFilter);
-
     return (
       <React.Fragment>
         <ListViewToolbar
           filterTypes={INFRA_MAPPINGS_FILTER_TYPES}
+          initialFilter={initialFilter}
           sortFields={INFRA_MAPPINGS_SORT_FIELDS}
           listItems={transformationMappingsMutable}
         >
