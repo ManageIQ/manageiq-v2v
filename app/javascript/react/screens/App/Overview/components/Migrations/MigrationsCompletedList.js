@@ -1,20 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  noop,
-  Button,
-  ListView,
-  Grid,
-  Spinner,
-  Icon,
-  Toolbar,
-  Sort,
-  Filter,
-  DropdownKebab,
-  MenuItem,
-  PaginationRow,
-  PAGINATION_VIEW
-} from 'patternfly-react';
+import { noop, Button, ListView, Grid, Spinner, Icon, Toolbar, DropdownKebab, MenuItem } from 'patternfly-react';
 import { IsoElapsedTime } from '../../../../../../components/dates/IsoElapsedTime';
 import ShowWizardEmptyState from '../../../common/ShowWizardEmptyState/ShowWizardEmptyState';
 import getMostRecentRequest from '../../../common/getMostRecentRequest';
@@ -67,84 +53,19 @@ const MigrationsCompletedList = ({
             defaultSortTypeIndex={!archived ? 1 : 0}
             listItems={finishedTransformationPlans}
           >
-            {(
-              {
-                filterTypes,
-                currentFilterType,
-                sortFields,
-                currentSortType,
-                isSortNumeric,
-                isSortAscending,
-                activeFilters,
-                pagination,
-                pageChangeValue
-              },
-              {
-                filteredSortedPaginatedListItems,
-                selectFilterType,
-                renderInput,
-                updateCurrentSortType,
-                toggleCurrentSortDirection,
-                clearFilters,
-                removeFilter,
-                onPerPageSelect,
-                onFirstPage,
-                onPreviousPage,
-                onPageInput,
-                onNextPage,
-                onLastPage,
-                onSubmit
-              }
-            ) => (
+            {({
+              filteredSortedPaginatedListItems,
+              renderFilterControls,
+              renderSortControls,
+              renderActiveFilters,
+              renderPaginationRow
+            }) => (
               <React.Fragment>
                 <Grid.Row>
                   <Toolbar>
-                    <Filter style={{ paddingLeft: 0 }}>
-                      <Filter.TypeSelector
-                        filterTypes={filterTypes}
-                        currentFilterType={currentFilterType}
-                        onFilterTypeSelected={selectFilterType}
-                      />
-                      {renderInput()}
-                    </Filter>
-                    <Sort>
-                      <Sort.TypeSelector
-                        sortTypes={sortFields}
-                        currentSortType={currentSortType}
-                        onSortTypeSelected={updateCurrentSortType}
-                      />
-                      <Sort.DirectionSelector
-                        isNumeric={isSortNumeric}
-                        isAscending={isSortAscending}
-                        onClick={toggleCurrentSortDirection}
-                      />
-                    </Sort>
-                    {activeFilters &&
-                      activeFilters.length > 0 && (
-                        <Toolbar.Results>
-                          <h5>
-                            {filteredSortedPaginatedListItems.itemCount}{' '}
-                            {filteredSortedPaginatedListItems.itemCount === 1 ? __('Result') : __('Results')}
-                          </h5>
-                          <Filter.ActiveLabel>{__('Active Filters')}:</Filter.ActiveLabel>
-                          <Filter.List>
-                            {activeFilters.map((item, index) => (
-                              <Filter.Item key={index} onRemove={removeFilter} filterData={item}>
-                                {item.label}
-                              </Filter.Item>
-                            ))}
-                          </Filter.List>
-                          <a
-                            href="#"
-                            onClick={e => {
-                              e.preventDefault();
-                              clearFilters();
-                            }}
-                          >
-                            {__('Clear All Filters')}
-                          </a>
-                        </Toolbar.Results>
-                      )}
+                    {renderFilterControls()}
+                    {renderSortControls()}
+                    {renderActiveFilters(filteredSortedPaginatedListItems)}
                   </Toolbar>
                 </Grid.Row>
                 <ListView className="plans-complete-list" style={{ marginTop: 10 }}>
@@ -396,22 +317,7 @@ const MigrationsCompletedList = ({
                     );
                   })}
                 </ListView>
-                <PaginationRow
-                  viewType={PAGINATION_VIEW.LIST}
-                  pagination={pagination}
-                  pageInputValue={pageChangeValue}
-                  amountOfPages={filteredSortedPaginatedListItems.amountOfPages}
-                  itemCount={filteredSortedPaginatedListItems.itemCount}
-                  itemsStart={filteredSortedPaginatedListItems.itemsStart}
-                  itemsEnd={filteredSortedPaginatedListItems.itemsEnd}
-                  onPerPageSelect={onPerPageSelect}
-                  onFirstPage={onFirstPage}
-                  onPreviousPage={onPreviousPage}
-                  onPageInput={onPageInput}
-                  onNextPage={onNextPage}
-                  onLastPage={onLastPage}
-                  onSubmit={onSubmit}
-                />
+                {renderPaginationRow(filteredSortedPaginatedListItems)}
               </React.Fragment>
             )}
           </ListViewToolbar>

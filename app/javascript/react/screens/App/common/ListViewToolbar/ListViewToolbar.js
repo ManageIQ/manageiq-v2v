@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { FormControl, Filter } from 'patternfly-react';
+import { FormControl, Filter, Sort, Toolbar, PaginationRow, PAGINATION_VIEW } from 'patternfly-react';
 
 import listFilter from './listFilter';
 import sortFilter from './sortFilter';
@@ -201,23 +201,116 @@ class ListViewToolbar extends Component {
     );
   };
 
+  renderFilterControls = () => {
+    const { filterTypes, currentFilterType } = this.state;
+    return (
+      <Filter style={{ paddingLeft: 0 }}>
+        <Filter.TypeSelector
+          filterTypes={filterTypes}
+          currentFilterType={currentFilterType}
+          onFilterTypeSelected={this.selectFilterType}
+        />
+        {this.renderInput()}
+      </Filter>
+    );
+  };
+
+  renderSortControls = () => {
+    const { sortFields, currentSortType, isSortNumeric, isSortAscending } = this.state;
+    return (
+      <Sort>
+        <Sort.TypeSelector
+          sortTypes={sortFields}
+          currentSortType={currentSortType}
+          onSortTypeSelected={this.updateCurrentSortType}
+        />
+        <Sort.DirectionSelector
+          isNumeric={isSortNumeric}
+          isAscending={isSortAscending}
+          onClick={this.toggleCurrentSortDirection}
+        />
+      </Sort>
+    );
+  };
+
+  renderActiveFilters = filteredSortedPaginatedListItems => {
+    const { activeFilters } = this.state;
+    return (
+      activeFilters &&
+      activeFilters.length > 0 && (
+        <Toolbar.Results>
+          <h5>
+            {filteredSortedPaginatedListItems.itemCount}{' '}
+            {filteredSortedPaginatedListItems.itemCount === 1 ? __('Result') : __('Results')}
+          </h5>
+          <Filter.ActiveLabel>{__('Active Filters')}:</Filter.ActiveLabel>
+          <Filter.List>
+            {activeFilters.map((item, index) => (
+              <Filter.Item key={index} onRemove={this.removeFilter} filterData={item}>
+                {item.label}
+              </Filter.Item>
+            ))}
+          </Filter.List>
+          <a
+            href="#"
+            onClick={e => {
+              e.preventDefault();
+              this.clearFilters();
+            }}
+          >
+            {__('Clear All Filters')}
+          </a>
+        </Toolbar.Results>
+      )
+    );
+  };
+
+  renderPaginationRow = filteredSortedPaginatedListItems => {
+    const { pagination, pageChangeValue } = this.state;
+    return (
+      <PaginationRow
+        viewType={PAGINATION_VIEW.LIST}
+        pagination={pagination}
+        pageInputValue={pageChangeValue}
+        amountOfPages={filteredSortedPaginatedListItems.amountOfPages}
+        itemCount={filteredSortedPaginatedListItems.itemCount}
+        itemsStart={filteredSortedPaginatedListItems.itemsStart}
+        itemsEnd={filteredSortedPaginatedListItems.itemsEnd}
+        onPerPageSelect={this.onPerPageSelect}
+        onFirstPage={this.onFirstPage}
+        onPreviousPage={this.onPreviousPage}
+        onPageInput={this.onPageInput}
+        onNextPage={this.onNextPage}
+        onLastPage={this.onLastPage}
+        onSubmit={this.onSubmit}
+      />
+    );
+  };
+
   render() {
-    return this.props.children(this.state, {
-      onFirstPage: this.onFirstPage,
-      onLastPage: this.onLastPage,
-      onNextPage: this.onNextPage,
-      onPageInput: this.onPageInput,
-      onPerPageSelect: this.onPerPageSelect,
-      onPreviousPage: this.onPreviousPage,
-      onSubmit: this.onSubmit,
-      clearFilters: this.clearFilters,
-      removeFilter: this.removeFilter,
-      selectFilterType: this.selectFilterType,
-      filteredSortedPaginatedListItems: this.filterSortPaginateListItems(),
-      toggleCurrentSortDirection: this.toggleCurrentSortDirection,
-      updateCurrentSortType: this.updateCurrentSortType,
-      renderInput: this.renderInput
-    });
+    return this.props.children(
+      {
+        onFirstPage: this.onFirstPage,
+        onLastPage: this.onLastPage,
+        onNextPage: this.onNextPage,
+        onPageInput: this.onPageInput,
+        onPerPageSelect: this.onPerPageSelect,
+        onPreviousPage: this.onPreviousPage,
+        onSubmit: this.onSubmit,
+        clearFilters: this.clearFilters,
+        removeFilter: this.removeFilter,
+        selectFilterType: this.selectFilterType,
+        filteredSortedPaginatedListItems: this.filterSortPaginateListItems(),
+        toggleCurrentSortDirection: this.toggleCurrentSortDirection,
+        updateCurrentSortType: this.updateCurrentSortType,
+        renderInput: this.renderInput,
+        renderFilterControls: this.renderFilterControls,
+        renderSortControls: this.renderSortControls,
+        renderActiveFilters: this.renderActiveFilters,
+        renderPaginationRow: this.renderPaginationRow
+      },
+      this.state
+    );
   }
 }
 
