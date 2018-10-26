@@ -23,6 +23,7 @@ Object {
   "fetchTransformationMappingsUrl": "/api/dummyMappings",
   "fetchTransformationPlansAction": [Function],
   "fetchTransformationPlansUrl": "/api/dummyTransformationPlans",
+  "filterMappingsListOnTransitionAction": [Function],
   "finishedTransformationPlans": Array [],
   "hideConfirmModalAction": [Function],
   "hideEditPlanNameModalAction": [Function],
