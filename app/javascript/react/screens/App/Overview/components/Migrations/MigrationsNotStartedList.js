@@ -277,12 +277,7 @@ const MigrationsNotStartedList = ({
             title={__('No Migration Plans Not Started')}
             iconType="pf"
             iconName="info"
-            description={
-              <span>
-                {__('There are no existing migration plans in a Not Started state.')}
-                <br /> {__('Make a selection in the dropdown to view plans in other states.')}
-              </span>
-            }
+            description={<span>{__('There are no existing migration plans in a Not Started state.')}</span>}
           />
         )}
       </Spinner>

@@ -425,7 +425,6 @@ const MigrationsCompletedList = ({
                 {archived
                   ? __('There are no exisitng migration plans in an Archived state.')
                   : __('There are no existing migration plans in a Completed state.')}
-                <br /> {__('Make a selection in the dropdown to view plans in other states.')}
               </span>
             }
           />
