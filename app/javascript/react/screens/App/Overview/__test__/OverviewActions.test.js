@@ -5,7 +5,6 @@ import { mockRequest, mockReset } from '../../../../../common/mockRequests';
 
 import { fetchTransformationPlansAction, setMigrationsFilterAction } from '../OverviewActions';
 import { requestTransformationPlansData } from '../overview.transformationPlans.fixtures';
-import { V2V_SET_MIGRATIONS_FILTER } from '../OverviewConstants';
 
 const middlewares = [thunk, promiseMiddleware()];
 const mockStore = configureMockStore(middlewares);
@@ -63,13 +62,19 @@ describe('fetchTransformationPlansAction', () => {
 });
 
 describe('setMigrationsFilterAction', () => {
-  test('sets up the migrations filter action object', () => {
-    const activeFilter = 'Migrations Plans Not Started';
-    const result = setMigrationsFilterAction(activeFilter);
+  const activeFilter = 'Migrations Plans Not Started';
 
-    expect(result).toEqual({
-      type: V2V_SET_MIGRATIONS_FILTER,
-      payload: activeFilter
-    });
+  test('dispatches an action with correct type and payload', () => {
+    store.dispatch(setMigrationsFilterAction(activeFilter));
+
+    expect(store.getActions()).toMatchSnapshot();
+  });
+
+  test('dispatches additional actions', () => {
+    const SOME_ACTION_TYPE = 'SOME_ACTION_TYPE';
+    const payload = 'Some payload';
+    store.dispatch(setMigrationsFilterAction(activeFilter, { [SOME_ACTION_TYPE]: payload }));
+
+    expect(store.getActions()).toMatchSnapshot();
   });
 });
