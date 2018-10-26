@@ -108,10 +108,13 @@ class InfrastructureMappingsList extends React.Component {
       yesToDeleteInfrastructureMappingAction,
       notStartedTransformationPlans,
       finishedWithErrorTransformationPlans,
-      showMappingWizardEditModeAction
+      showMappingWizardEditModeAction,
+      initialFilter
     } = this.props;
 
     const { transformationMappingsMutable } = this.state;
+
+    console.log('DEFAULT FILTER', initialFilter);
 
     return (
       <React.Fragment>
@@ -548,7 +551,8 @@ InfrastructureMappingsList.propTypes = {
   yesToDeleteInfrastructureMappingAction: PropTypes.func,
   notStartedTransformationPlans: PropTypes.array,
   finishedWithErrorTransformationPlans: PropTypes.array,
-  showMappingWizardEditModeAction: PropTypes.func
+  showMappingWizardEditModeAction: PropTypes.func,
+  initialFilter: PropTypes.object
 };
 
 export default InfrastructureMappingsList;

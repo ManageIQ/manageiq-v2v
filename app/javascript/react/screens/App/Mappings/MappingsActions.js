@@ -13,7 +13,8 @@ import {
   HIDE_V2V_DELETE_CONFIRMATION_MODAL,
   SET_V2V_MAPPING_TO_DELETE,
   SHOW_V2V_DELETE_CONFIRMATION_MODAL,
-  YES_TO_DELETE_AND_HIDE_DELETE_CONFIRMATION_MODAL
+  YES_TO_DELETE_AND_HIDE_DELETE_CONFIRMATION_MODAL,
+  FILTER_V2V_MAPPINGS_LIST_UNTIL_UNMOUNT
 } from './MappingsConstants';
 
 import { V2V_SHOW_MAPPING_WIZARD } from '../Mappings/screens/MappingWizard/MappingWizardConstants';
@@ -187,4 +188,12 @@ export const showMappingWizardEditModeAction = mapping => dispatch => {
 // ****************************************************************************
 export const yesToDeleteInfrastructureMappingAction = () => ({
   type: YES_TO_DELETE_AND_HIDE_DELETE_CONFIRMATION_MODAL
+});
+
+// ****************************************************************************
+// FILTER_V2V_MAPPINGS_LIST_UNTIL_UNMOUNT
+// ****************************************************************************
+export const filterMappingsListOnTransitionAction = payload => ({
+  type: FILTER_V2V_MAPPINGS_LIST_UNTIL_UNMOUNT,
+  payload
 });

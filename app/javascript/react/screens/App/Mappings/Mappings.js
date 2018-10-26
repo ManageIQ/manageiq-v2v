@@ -90,6 +90,7 @@ class Mappings extends Component {
 
   componentWillUnmount() {
     this.stopPolling();
+    this.props.filterMappingsListOnTransitionAction(null);
   }
 
   startPolling = () => {
@@ -158,7 +159,8 @@ class Mappings extends Component {
       showDeleteConfirmationModalAction,
       showMappingWizardAction,
       showMappingWizardEditModeAction,
-      yesToDeleteInfrastructureMappingAction
+      yesToDeleteInfrastructureMappingAction,
+      initialFilterUntilUnmount
     } = this.props;
 
     return (
@@ -212,6 +214,7 @@ class Mappings extends Component {
               deleteInfrastructureMappingAction={deleteInfrastructureMappingAction}
               migrationPlansExist={transformationPlans.length > 0 || archivedTransformationPlans.length > 0}
               showMappingWizardEditModeAction={showMappingWizardEditModeAction}
+              initialFilter={initialFilterUntilUnmount}
             />
           ) : (
             <ShowWizardEmptyState
@@ -289,7 +292,9 @@ Mappings.propTypes = {
   store: PropTypes.object,
   transformationPlans: PropTypes.array,
   yesToDeleteInfrastructureMapping: PropTypes.bool,
-  yesToDeleteInfrastructureMappingAction: PropTypes.func
+  yesToDeleteInfrastructureMappingAction: PropTypes.func,
+  filterMappingsListOnTransitionAction: PropTypes.func,
+  initialFilterUntilUnmount: PropTypes.object,
 };
 
 Mappings.defaultProps = {

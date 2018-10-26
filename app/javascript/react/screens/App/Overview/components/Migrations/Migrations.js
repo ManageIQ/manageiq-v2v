@@ -66,7 +66,8 @@ class Migrations extends React.Component {
       showPlanWizardEditModeAction,
       fetchTransformationMappingsUrl,
       fetchTransformationMappingsAction,
-      showEditPlanNameModalAction
+      showEditPlanNameModalAction,
+      filterMappingsListOnTransitionAction
     } = this.props;
 
     const plansExist = transformationPlans.length > 0 || archivedTransformationPlans.length > 0;
@@ -127,6 +128,7 @@ class Migrations extends React.Component {
                 showPlanWizardEditModeAction={showPlanWizardEditModeAction}
                 fetchTransformationMappingsAction={fetchTransformationMappingsAction}
                 fetchTransformationMappingsUrl={fetchTransformationMappingsUrl}
+                filterMappingsListOnTransitionAction={filterMappingsListOnTransitionAction}
               />
             )}
             {activeFilter === MIGRATIONS_FILTERS.inProgress && (
@@ -163,6 +165,7 @@ class Migrations extends React.Component {
                 fetchTransformationMappingsAction={fetchTransformationMappingsAction}
                 fetchTransformationMappingsUrl={fetchTransformationMappingsUrl}
                 showEditPlanNameModalAction={showEditPlanNameModalAction}
+                filterMappingsListOnTransitionAction={filterMappingsListOnTransitionAction}
               />
             )}
             {activeFilter === MIGRATIONS_FILTERS.archived && (
@@ -227,7 +230,8 @@ Migrations.propTypes = {
   showPlanWizardEditModeAction: PropTypes.func,
   fetchTransformationMappingsAction: PropTypes.func,
   fetchTransformationMappingsUrl: PropTypes.string,
-  showEditPlanNameModalAction: PropTypes.func
+  showEditPlanNameModalAction: PropTypes.func,
+  filterMappingsListOnTransitionAction: PropTypes.func
 };
 Migrations.defaultProps = {
   transformationPlans: [],

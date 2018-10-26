@@ -30,7 +30,8 @@ const MigrationsNotStartedList = ({
   deleteTransformationPlanUrl,
   showPlanWizardEditModeAction,
   fetchTransformationMappingsAction,
-  fetchTransformationMappingsUrl
+  fetchTransformationMappingsUrl,
+  filterMappingsListOnTransitionAction
 }) => (
   <React.Fragment>
     <Grid.Col xs={12}>
@@ -152,7 +153,19 @@ const MigrationsNotStartedList = ({
                           ),
                           !isMissingMapping && (
                             <ListView.InfoItem key={`${plan.id}-infraMappingName`}>
-                              {plan.infraMappingName}
+                              <a
+                                href="#"
+                                onClick={e => {
+                                  e.preventDefault();
+                                  filterMappingsListOnTransitionAction({
+                                    filterTypeId: 'name',
+                                    filterValue: plan.infraMappingName
+                                  });
+                                  redirectTo('/mappings');
+                                }}
+                              >
+                                {plan.infraMappingName}
+                              </a>
                             </ListView.InfoItem>
                           ),
                           migrationScheduled && !migrationStarting ? (
@@ -217,7 +230,8 @@ MigrationsNotStartedList.propTypes = {
   deleteTransformationPlanUrl: PropTypes.string,
   showPlanWizardEditModeAction: PropTypes.func,
   fetchTransformationMappingsAction: PropTypes.func,
-  fetchTransformationMappingsUrl: PropTypes.string
+  fetchTransformationMappingsUrl: PropTypes.string,
+  filterMappingsListOnTransitionAction: PropTypes.func
 };
 MigrationsNotStartedList.defaultProps = {
   migrateClick: noop,

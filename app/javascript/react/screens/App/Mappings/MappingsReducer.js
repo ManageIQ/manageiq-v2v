@@ -15,7 +15,8 @@ import {
   OPEN_V2V_MAPPING_WIZARD_ON_MOUNT,
   SET_V2V_MAPPING_TO_DELETE,
   SHOW_V2V_DELETE_CONFIRMATION_MODAL,
-  YES_TO_DELETE_AND_HIDE_DELETE_CONFIRMATION_MODAL
+  YES_TO_DELETE_AND_HIDE_DELETE_CONFIRMATION_MODAL,
+  FILTER_V2V_MAPPINGS_LIST_UNTIL_UNMOUNT
 } from './MappingsConstants';
 
 import {
@@ -63,6 +64,7 @@ export const initialState = Immutable({
   mappingWizardVisible: false,
   networks: [],
   openMappingWizardOnMount: false,
+  initialFilterUntilUnmount: null,
   showDeleteConfirmationModal: false,
   transformationMappings: [],
   yesToDeleteInfrastructureMapping: false
@@ -195,6 +197,9 @@ export default (state = initialState, action) => {
 
     case OPEN_V2V_MAPPING_WIZARD_ON_MOUNT:
       return state.set('openMappingWizardOnMount', true);
+
+    case FILTER_V2V_MAPPINGS_LIST_UNTIL_UNMOUNT:
+      return state.set('initialFilterUntilUnmount', action.payload);
 
     case SET_V2V_MAPPING_TO_DELETE:
       return state.set('mappingToDelete', action.payload);

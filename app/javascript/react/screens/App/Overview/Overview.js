@@ -232,7 +232,8 @@ class Overview extends React.Component {
       fetchTransformationMappingsAction,
       openMappingWizardOnTransitionAction,
       setMigrationsFilterAction,
-      initialMigrationsFilterSet
+      initialMigrationsFilterSet,
+      filterMappingsListOnTransitionAction
     } = this.props;
 
     const mainContent = (
@@ -286,6 +287,7 @@ class Overview extends React.Component {
                 fetchTransformationMappingsUrl={fetchTransformationMappingsUrl}
                 fetchTransformationMappingsAction={fetchTransformationMappingsAction}
                 showEditPlanNameModalAction={showEditPlanNameModalAction}
+                filterMappingsListOnTransitionAction={filterMappingsListOnTransitionAction}
               />
             ) : (
               <ShowWizardEmptyState
@@ -427,6 +429,7 @@ Overview.propTypes = {
   serviceTemplatePlaybooks: PropTypes.array,
   redirectTo: PropTypes.func.isRequired,
   openMappingWizardOnTransitionAction: PropTypes.func,
+  filterMappingsListOnTransitionAction: PropTypes.func,
   initialMigrationsFilterSet: PropTypes.bool
 };
 

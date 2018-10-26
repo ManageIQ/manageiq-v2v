@@ -29,6 +29,8 @@ import {
 
 import { OPEN_V2V_MAPPING_WIZARD_ON_MOUNT } from '../Mappings/MappingsConstants';
 
+export { filterMappingsListOnTransitionAction } from '../Mappings/MappingsActions';
+
 export const showConfirmModalAction = modalOptions => ({
   type: SHOW_CONFIRM_MODAL,
   payload: modalOptions

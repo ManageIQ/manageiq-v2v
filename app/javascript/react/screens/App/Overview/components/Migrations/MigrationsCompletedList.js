@@ -41,7 +41,8 @@ const MigrationsCompletedList = ({
   scheduleMigration,
   fetchTransformationMappingsAction,
   fetchTransformationMappingsUrl,
-  showEditPlanNameModalAction
+  showEditPlanNameModalAction,
+  filterMappingsListOnTransitionAction
 }) => (
   <React.Fragment>
     <Grid.Col xs={12}>
@@ -235,7 +236,19 @@ const MigrationsCompletedList = ({
                           ),
                           !isMissingMapping && (
                             <ListView.InfoItem key={`${plan.id}-infraMappingName`}>
-                              {plan.infraMappingName}
+                              <a
+                                href="#"
+                                onClick={e => {
+                                  e.preventDefault();
+                                  filterMappingsListOnTransitionAction({
+                                    filterTypeId: 'name',
+                                    filterValue: plan.infraMappingName
+                                  });
+                                  redirectTo('/mappings');
+                                }}
+                              >
+                                {plan.infraMappingName}
+                              </a>
                             </ListView.InfoItem>
                           ),
                           <ListView.InfoItem key={`${plan.id}-elapsed`}>
@@ -371,7 +384,8 @@ MigrationsCompletedList.propTypes = {
   scheduleMigration: PropTypes.func,
   fetchTransformationMappingsAction: PropTypes.func,
   fetchTransformationMappingsUrl: PropTypes.string,
-  showEditPlanNameModalAction: PropTypes.func
+  showEditPlanNameModalAction: PropTypes.func,
+  filterMappingsListOnTransitionAction: PropTypes.func
 };
 MigrationsCompletedList.defaultProps = {
   finishedTransformationPlans: [],
