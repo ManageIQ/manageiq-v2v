@@ -7,10 +7,30 @@ import Routes from './config/Routes';
 import NotificationList from './screens/App/common/NotificationList';
 import createReducers from '../redux/reducers';
 
+const onHashChange = event => {
+  // Forces the jQuery-based nav to update its active item when the route changes
+  const hash = event.newURL.split('#')[1];
+  const href = hash !== '/' ? `/migration#${hash}` : '/migration';
+  const navItem = $('.nav-pf-vertical')
+    .find(`a[href="${href}"]`)
+    .closest('.list-group-item');
+  if (!navItem.hasClass('active')) {
+    navItem.trigger('click');
+  }
+};
+
 class App extends React.Component {
   constructor(props) {
     super(props);
     ManageIQ.redux.addReducer(createReducers());
+  }
+
+  componentDidMount() {
+    window.addEventListener('hashchange', onHashChange);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('hashchange', onHashChange);
   }
 
   render() {
