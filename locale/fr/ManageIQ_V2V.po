@@ -1,986 +1,1522 @@
 # Laurence Ganseman <laurence.ganseman@stoquart.com>, 2018. #zanata
 # Marie Robert <marie.robert@stoquart.com>, 2018. #zanata
+# croe <croe@redhat.com>, 2018. #zanata
 msgid ""
 msgstr ""
-"Project-Id-Version: MiqV2vUI 1.0.0\n"
+"Project-Id-Version: ManageIQ_V2V 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2018-08-09 12:11+0000\n"
-"Last-Translator: Marie Robert <marie.robert@stoquart.com>\n"
+"POT-Creation-Date: 2018-10-03 16:24+0200\n"
+"PO-Revision-Date: 2018-10-29 02:15+0000\n"
+"Last-Translator: croe <croe@redhat.com>\n"
 "Language-Team: French\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
-"X-Generator: Zanata 4.6.0\n"
+"X-Generator: Zanata 4.6.2\n"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardResultsStep/PlanWizardResultsStep.js:84
 msgid " Migration Plan: '%s' has been saved"
 msgstr "Plan de migration : '%s' a été enregistré"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardResultsStep/PlanWizardResultsStep.js:88
 msgid " Migration Plan: '%s' is in progress"
 msgstr " Plan de migration : '%s' est en cours"
 
+#: ../app/javascript/react/screens/App/Plan/PlanActions.js:48
+#: ../app/javascript/react/screens/App/Plan/PlanActions.js:181
 msgid "\"%s\" download successful"
 msgstr "Téléchargement de \"%s\" réussi"
 
+#: ../app/javascript/components/dates/IsoElapsedTime.js:16
 msgid "%02s:%02s:%02s"
 msgstr "%02s:%02s:%02s"
 
+#: ../app/javascript/react/screens/App/Overview/components/InfrastructureMappingsList/InfrastructureMappingsList.js:292
 msgid "%d Associated Plan"
 msgid_plural "%d Associated Plans"
 msgstr[0] "%d plan associé"
 msgstr[1] "%d plans associés"
 
+#: ../app/javascript/react/screens/App/Overview/components/InfrastructureMappingsList/InfrastructureMappingsList.js:268
 msgid "%d Source Cluster"
 msgid_plural "%d Source Clusters"
 msgstr[0] "%d cluster source"
 msgstr[1] "%d clusters sources"
 
+#: ../app/javascript/react/screens/App/Overview/components/InfrastructureMappingsList/InfrastructureMappingsList.js:237
 msgid "%d Source Datastore"
 msgid_plural "%d Source Datastores"
 msgstr[0] "%d datastore source"
 msgstr[1] "%d datastores sources"
 
+#: ../app/javascript/react/screens/App/Overview/components/InfrastructureMappingsList/InfrastructureMappingsList.js:206
 msgid "%d Source Network"
 msgid_plural "%d Source Networks"
 msgstr[0] "%d réseau source"
 msgstr[1] "%d réseaux sources"
 
+#: ../app/javascript/react/screens/App/Overview/components/InfrastructureMappingsList/InfrastructureMappingsList.js:274
 msgid "%d Target Cluster"
 msgid_plural "%d Target Clusters"
 msgstr[0] "%d cluster cible"
 msgstr[1] "%d clusters cibles"
 
+#: ../app/javascript/react/screens/App/Overview/components/InfrastructureMappingsList/InfrastructureMappingsList.js:243
 msgid "%d Target Datastore"
 msgid_plural "%d Target Datastores"
 msgstr[0] "%d datastore cible"
 msgstr[1] "%d datastores cibles"
 
+#: ../app/javascript/react/screens/App/Overview/components/InfrastructureMappingsList/InfrastructureMappingsList.js:212
 msgid "%d Target Network"
 msgid_plural "%d Target Networks"
 msgstr[0] "%d réseau cible"
 msgstr[1] "%d réseaux cibles"
 
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/Migrations.js:92
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/Migrations.js:98
+#: ../app/javascript/react/screens/App/Overview/components/OverviewEmptyState/OverviewEmptyState.js:22
+#: ../app/javascript/react/screens/App/Plan/components/PlanEmptyState.js:10
+#: ../app/javascript/react/screens/App/Plan/components/PlanEmptyState.js:11
 msgid "%s"
 msgstr "%s"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/components/PlanWizardVMStepTable.js:588
 msgid "%s VMs selected."
 msgstr "%s VM sélectionnées."
 
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardDatastoresStep/components/DatastoresStepForm/helpers.js:39
 msgid "%s \\\\ %s"
 msgstr "%s \\\\ %s"
 
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardDatastoresStep/components/DatastoresStepForm/helpers.js:36
 msgid "%s \\\\ %s \\\\ %s"
-msgstr ""
+msgstr "%s \\\\ %s \\\\ %s"
 
+#: ../app/javascript/react/screens/App/Overview/Overview.js:123
 msgid "%s completed successfully"
 msgstr "%s s'est terminé avec succès"
 
+#: ../app/javascript/react/screens/App/Overview/Overview.js:120
 msgid "%s completed with errors"
 msgstr "%s s'est terminé avec des erreurs"
 
+#: ../app/javascript/components/dates/IsoElapsedTime.js:12
 msgid "%s days %02s:%02s:%02s"
 msgstr "%s jours %02s:%02s:%02s"
 
+#: ../app/javascript/react/screens/App/Plan/PlanActions.js:309
 msgid "%s failed to migrate"
-msgstr ""
+msgstr "Échec de la migration de %s"
 
+#: ../app/javascript/react/screens/App/Plan/PlanActions.js:326
 msgid "%s migrated successfully"
-msgstr ""
+msgstr "%s a migré correctement"
 
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCard.js:183
 msgid "%s of %s"
 msgstr "%s sur %s"
 
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:525
 msgid "%s of %s Migrated"
 msgstr "%s migrés sur %s"
 
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCard.js:107
 msgid "%s of %s VM migrations failed."
 msgstr "%s migrations de VM sur %s ont échoué."
 
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCard.js:174
 msgid "%s of %s VMs"
 msgstr "%s VM sur %s"
 
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/DualPaneMapper/DualPaneMapperCount.js:5
 msgid "%s of %s item selected"
-msgstr ""
+msgstr "%s sur %s éléments sélectionnés"
 
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/DualPaneMapper/DualPaneMapperCount.js:5
 msgid "%s of %s items selected"
 msgstr "%s éléments sélectionnés sur %s"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardAdvancedOptionsStep/components/PlanWizardAdvancedOptionsStepTable/PlanWizardAdvancedOptionsStepTable.js:383
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardAdvancedOptionsStep/components/PlanWizardAdvancedOptionsStepTable/PlanWizardAdvancedOptionsStepTable.js:386
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:465
 msgid "%s of %s selected"
 msgstr "%s sélectionné(s) sur %s"
 
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:173
 msgid "%s successfully archived"
 msgstr "Archivage réussi de %s"
 
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/DeleteMigrationMenuItem.js:40
 msgid "%s successfully deleted"
-msgstr ""
+msgstr "%s a été supprimé"
 
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCard.js:197
 msgid "%s%% Complete"
 msgstr "%s%% terminé"
 
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCard.js:191
 msgid "%s%% Remaining"
 msgstr "%s%% restant"
 
+#: ../app/javascript/react/screens/App/Plan/components/PlanVmsList.js:277
 msgid "0 GBs Migrated"
 msgstr "0 Go migré"
 
+#: ../app/javascript/components/dates/IsoElapsedTime.js:14
 msgid "1 day %02s:%02s:%02s"
 msgstr "1 jour %02s:%02s:%02s"
 
-msgid "A flavor name appended with an * indicates that the flavor has CPU or memory capacity smaller than the source VM. Selecting these flavors might cause problems when the VM is migrated."
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardInstancePropertiesStep/components/PlanWizardInstancePropertiesStepTable.js:210
+msgid ""
+"A flavor name appended with an * indicates that the flavor has CPU or memory"
+" capacity smaller than the source VM. Selecting these flavors might cause "
+"problems when the VM is migrated."
 msgstr ""
+"Un astérisque (*) ajouté au nom du gabarit indique que la capacité de "
+"mémoire ou de processeur installée est inférieure à la VM source. Des "
+"problèmes peuvent survenir lors de la migration de la VM si vous "
+"sélectionnez un gabarit de ce type."
 
+#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:43
 msgid "Acquire Transformation Host"
 msgstr "Acquérir un hôte de transformation"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/components/PlanWizardVMStepTable.js:528
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardAdvancedOptionsStep/components/PlanWizardAdvancedOptionsStepTable/PlanWizardAdvancedOptionsStepTable.js:426
+#: ../app/javascript/react/screens/App/Plan/components/PlanVmsList.js:235
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:442
 msgid "Active Filters"
 msgstr "Filtres actifs"
 
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/DualPaneMapper/DualPaneMapper.js:10
 msgid "Add Mapping"
 msgstr "Ajouter un mappage"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizard.js:45
 msgid "Advanced Options"
 msgstr "Options avancées"
 
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardResultsStep/MappingWizardResultsStep.js:78
 msgid "All mappings in %s have been mapped."
 msgstr "Tous les mappages de %s ont été effectués."
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/components/PlanWizardVMStepTable.js:239
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardInstancePropertiesStep/components/PlanWizardInstancePropertiesStepTable.js:289
 msgid "Allocated Size"
 msgstr "Taille allouée"
 
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:161
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:310
 msgid "Archive"
 msgstr "Archiver"
 
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:158
 msgid "Archive Migration Plan"
 msgstr "Archiver le plan de migration"
 
+#: ../app/javascript/react/screens/App/Overview/OverviewConstants.js:50
 msgid "Archived Plans"
 msgstr "Plans archivés"
 
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:145
 msgid "Are you sure you want to archive migration plan "
 msgstr "Êtes-vous sûr de vouloir archiver le plan de migration ?"
 
+#: ../app/javascript/react/screens/App/Overview/components/DeleteInfrastructureMappingConfirmationModal/DeleteInfrastructureMappingConfirmationModal.js:50
 msgid "Are you sure you want to delete the infrastructure mapping %s ?"
 msgstr "Êtes-vous sûr de vouloir supprimer le mappage d'infrastructure %s ?"
 
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/DeleteMigrationMenuItem.js:24
 msgid "Are you sure you want to delete the migration plan "
-msgstr ""
+msgstr "Êtes-vous sûr de vouloir supprimer le plan de migration ?"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizardConstants.js:23
 msgid "Are you sure you want to import a new file?"
-msgstr ""
+msgstr "Êtes-vous sûr de vouloir importer un nouveau fichier ?"
 
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/ScheduleMigrationButton.js:23
 msgid "Are you sure you want to unschedule plan %s  targted to run on %s ?"
-msgstr "Voulez-vous vraiment annuler le plan %s dont l'exécution devait avoir lieu le %s ?"
+msgstr ""
+"Voulez-vous vraiment annuler le plan %s dont l'exécution devait avoir lieu "
+"le %s ?"
 
+#: ../app/javascript/react/screens/App/common/ConfirmModal.js:70
 msgid "Are you sure?"
 msgstr "Êtes-vous sûr?"
 
+#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:44
 msgid "Assess Migration"
 msgstr "Évaluer la migration"
 
+#: ../app/javascript/react/screens/App/Overview/components/InfrastructureMappingsList/InfrastructureMappingsList.js:449
 msgid "Associated Plans"
 msgstr "Plans associés"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/PlanWizardVMStep.js:157
 msgid "At least one VM needs to be selected to create the Migration Plan."
-msgstr "Au moins une VM doit être sélectionnée pour créer le plan de migration."
-
-msgid "At least one host in the target cluster must be enabled as a conversion host. You can continue to create an infrastructure mapping that includes the target cluster, but conversion host enablement must be completed prior to migration execution."
 msgstr ""
+"Au moins une VM doit être sélectionnée pour créer le plan de migration."
 
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardClustersStep/components/ClustersStepForm/ClustersStepForm.js:132
+msgid ""
+"At least one host in the target cluster must be enabled as a conversion "
+"host. You can continue to create an infrastructure mapping that includes the"
+" target cluster, but conversion host enablement must be completed prior to "
+"migration execution."
+msgstr ""
+"Au moins un hôte du cluster hôte doit être activé comme hôte de conversion. "
+"Vous pouvez continuer à créer un mappage d'infrastructure comprenant le "
+"cluster cible, mais l'activation de l'hôte de conversion doit être terminée "
+"avant l'exécution de la migration."
+
+#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:45
 msgid "Automation Starting"
 msgstr "Démarrage de l'automatisation"
 
+#: ../app/javascript/react/screens/App/Overview/components/ModalWizard/ModalWizard.js:60
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizard.js:264
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/MappingWizard.js:187
 msgid "Back"
 msgstr "Retour"
 
+#: ../app/javascript/react/screens/App/common/ConfirmModal.js:71
+#: ../app/javascript/react/screens/App/Overview/components/ScheduleMigrationModal/ScheduleMigrationModal.js:39
+#: ../app/javascript/react/screens/App/Overview/components/DeleteInfrastructureMappingConfirmationModal/DeleteInfrastructureMappingConfirmationModal.js:83
+#: ../app/javascript/react/screens/App/Overview/components/ModalWizard/ModalWizard.js:56
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizard.js:260
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/WarningModal/WarningModal.js:47
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/MappingWizard.js:182
 msgid "Cancel"
 msgstr "Annuler"
 
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:432
 msgid "Cancel Migration"
 msgstr "Annuler la migration"
 
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:702
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:717
 msgid "Cancel Migrations"
 msgstr "Annuler les migrations"
 
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:482
 msgid "Cancelling migration"
-msgstr ""
+msgstr "Annulation de la migration"
 
+#: ../app/javascript/react/screens/App/Plan/PlanActions.js:236
 msgid "Cannot cancel completed VM Migrations"
 msgstr "Impossible d'annuler les migrations de VM terminées"
 
+#: ../app/javascript/react/screens/App/common/forms/BootstrapSelect.js:77
+#: ../app/javascript/react/screens/App/common/forms/FormField.js:49
 msgid "Choose"
 msgstr "Choisir"
 
-msgid "Choose from a list of VMs discovered in the selected infrastructure mapping"
-msgstr "Choisir parmi une liste de VM découvertes dans le mappage d'infrastructure sélectionné"
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardGeneralStep/PlanWizardGeneralStep.js:60
+msgid ""
+"Choose from a list of VMs discovered in the selected infrastructure mapping"
+msgstr ""
+"Choisir parmi une liste de VM découvertes dans le mappage d'infrastructure "
+"sélectionné"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/components/PlanWizardVMStepTable.js:543
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardAdvancedOptionsStep/components/PlanWizardAdvancedOptionsStepTable/PlanWizardAdvancedOptionsStepTable.js:441
+#: ../app/javascript/react/screens/App/Plan/components/PlanVmsList.js:251
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:457
 msgid "Clear All Filters"
 msgstr "Effacer tous les filtres"
 
+#: ../app/javascript/react/screens/App/Overview/components/ModalWizard/ModalWizard.js:63
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardResultsStep/PlanWizardResultsStep.js:37
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizard.js:271
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/WarningModal/WarningModal.js:50
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/MappingWizard.js:195
 msgid "Close"
 msgstr "Fermer"
 
+#: ../app/javascript/react/screens/App/Overview/components/InfrastructureMappingsList/InfrastructureMappingsList.js:255
 msgid "Clusters missing"
 msgstr "Clusters manquants"
 
+#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:46
 msgid "Collapse Snapshots"
 msgstr "Réduire tous les clichés"
 
+#: ../app/javascript/react/screens/App/Overview/OverviewConstants.js:49
 msgid "Completed Plans"
 msgstr "Plans terminés"
 
+#: ../app/javascript/react/screens/App/Overview/Overview.js:400
+#: ../app/javascript/react/screens/App/Plan/Plan.js:156
 msgid "Compute"
 msgstr "Compute"
 
+#: ../app/javascript/react/screens/App/Overview/Overview.js:388
 msgid "Configure Providers"
 msgstr "Configurer les fournisseurs"
 
+#: ../app/javascript/react/screens/App/common/ConfirmModal.js:68
 msgid "Confirm"
 msgstr "Confirmer"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizard.js:159
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/WarningModal/WarningModal.js:50
 msgid "Continue"
 msgstr "Continuer"
 
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardResultsStep/MappingWizardResultsStep.js:82
 msgid "Continue to the plan wizard"
 msgstr "Continuer avec l'assistant de plan"
 
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:539
 msgid "Conversion Host"
 msgstr "Hôte de conversion"
 
+#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:47
 msgid "Convert disks"
 msgstr "Convertir les disques"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizard.js:231
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/WarningModal/WarningModal.js:50
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/MappingWizard.js:199
 msgid "Create"
 msgstr "Créer"
 
+#: ../app/javascript/react/screens/App/Overview/components/InfrastructureMappingsList/InfrastructureMappingsList.js:62
+#: ../app/javascript/react/screens/App/Overview/components/InfrastructureMappingsList/InfrastructureMappingsList.js:83
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/MappingWizard.js:153
 msgid "Create Infrastructure Mapping"
 msgstr "Créer un mappage d'infrastructure"
 
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/Migrations.js:83
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/Migrations.js:107
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizard.js:233
 msgid "Create Migration Plan"
 msgstr "Créer un plan de migration"
 
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/Migrations.js:106
 msgid "Create a migration plan to select VMs for migration."
-msgstr "Créer un plan de migration pour sélectionner des VM pour la migration."
+msgstr ""
+"Créer un plan de migration pour sélectionner des VM pour la migration."
 
+#: ../app/javascript/react/screens/App/Overview/components/InfrastructureMappingsList/InfrastructureMappingsList.js:61
 msgid "Create an infrastructure mapping to later be used by a migration plan"
 msgstr ""
+"Créer un mappage d'infrastructure pour qu'il soit utilisé ultérieurement par"
+" un plan de migration"
 
+#: ../app/javascript/react/screens/App/Overview/components/InfrastructureMappingsList/InfrastructureMappingsList.js:441
 msgid "Created:"
 msgstr "Date de création :"
 
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardResultsStep/MappingWizardResultsStep.js:58
 msgid "Creating Infrastructure Mapping..."
 msgstr "Création du mappage d'infrastructure en cours..."
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardResultsStep/PlanWizardResultsStep.js:70
 msgid "Creating Migration Plan..."
-msgstr ""
+msgstr "Création du plan de migration..."
 
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCard.js:214
 msgid "Datastores"
 msgstr "Datastores"
 
+#: ../app/javascript/react/screens/App/Overview/components/InfrastructureMappingsList/InfrastructureMappingsList.js:224
 msgid "Datastores missing"
 msgstr "Datastores manquants"
 
+#: ../app/javascript/react/screens/App/Overview/components/DeleteInfrastructureMappingConfirmationModal/DeleteInfrastructureMappingConfirmationModal.js:86
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/DeleteMigrationMenuItem.js:28
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/DeleteMigrationMenuItem.js:64
 msgid "Delete"
 msgstr "Supprimer"
 
+#: ../app/javascript/react/screens/App/Overview/components/DeleteInfrastructureMappingConfirmationModal/DeleteInfrastructureMappingConfirmationModal.js:67
 msgid "Delete Infrastructure Mapping"
 msgstr "Supprimer le mappage d'infrastructure"
 
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/DeleteMigrationMenuItem.js:21
 msgid "Delete Migration Plan"
-msgstr ""
+msgstr "Supprimer le plan de migration"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardGeneralStep/PlanWizardGeneralStep.js:46
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardGeneralStep/MappingWizardGeneralStep.js:59
 msgid "Description"
 msgstr "Description"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/PlanWizardVMStep.js:105
 msgid "Discovering VMs"
 msgstr "Découverte des VM"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/PlanWizardVMStep.js:107
 msgid "Discovering VMs associated with the Infrastructure Mapping selected."
 msgstr "Découverte des VM associées au mappage d'infrastructure sélectionné."
 
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:713
 msgid "Do you want to cancel?"
 msgstr "Voulez-vous annuler ?"
 
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:644
 msgid "Download Log"
 msgstr "Journal des téléchargements"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/PlanWizardVMStepConstants.js:12
 msgid "Duplicate VM"
 msgstr "Dupliquer la VM"
 
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsNotStartedList.js:139
 msgid "Edit"
-msgstr ""
+msgstr "Modifier"
 
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/MappingWizard.js:153
 msgid "Edit Infrastructure Mapping"
-msgstr ""
+msgstr "Modifier le mappage d'infrastructure"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizard.js:233
 msgid "Edit Migration Plan"
-msgstr ""
+msgstr "Modifier le plan de migration"
 
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailListConstants.js:51
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailListConstants.js:61
 msgid "Elapsed Time"
 msgstr "Temps écoulé"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/PlanWizardVMStepConstants.js:7
 msgid "Empty name specified"
 msgstr "Aucun nom spécifié"
 
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailListConstants.js:15
 msgid "Error"
 msgstr "Erreur"
 
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardResultsStep/MappingWizardResultsStep.js:63
 msgid "Error Creating Infrastructure Mapping"
 msgstr "Erreur lors de la création du mappage d'infrastructure"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardResultsStep/PlanWizardResultsStep.js:76
 msgid "Error Creating Migration Plan"
-msgstr ""
+msgstr "Erreur lors de la création du plan de migration"
 
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardClustersStep/MappingWizardClustersStep.js:65
 msgid "Error Retrieving Clusters"
 msgstr "Erreur lors de la récupération des clusters"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardResultsStep/PlanWizardResultsStep.js:82
 msgid "Error Saving Migration Plan"
-msgstr ""
+msgstr "Erreur lors de l'enregistrement du plan de migration"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/PlanWizardVMStep.js:77
 msgid "Error Validating VMs"
 msgstr "Erreur lors de la validation des VM"
 
+#: ../app/javascript/react/screens/App/Overview/components/InfrastructureMappingsList/InfrastructureMappingsList.js:124
 msgid "Error loading mappings."
 msgstr "Erreur lors du chargement des mappages."
 
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardDatastoresStep/MappingWizardDatastoresStep.js:67
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardDatastoresStep/MappingWizardDatastoresStep.js:78
 msgid "Error retrieving cluster datastores: %s, ID: %s"
-msgstr "Erreur lors de la récupération des datastores de clusters : %s, ID : %s"
+msgstr ""
+"Erreur lors de la récupération des datastores de clusters : %s, ID : %s"
 
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardNetworksStep/MappingWizardNetworksStep.js:68
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardNetworksStep/MappingWizardNetworksStep.js:79
 msgid "Error retrieving cluster networks: %s, ID: %s"
 msgstr "Erreur lors de la récupération des réseaux de clusters : %s, ID : %s"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/components/CSVDropzoneField.js:46
 msgid "Error: Possibly a blank .CSV file"
 msgstr "Erreur : fichier .CSV probablement vide"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/components/CSVDropzoneField.js:32
 msgid "Error: Required column 'Name' does not exist in the .CSV file"
-msgstr "Erreur : la colonne obligatoire « Nom » n'existe pas dans le fichier .CSV"
+msgstr ""
+"Erreur : la colonne obligatoire « Nom » n'existe pas dans le fichier .CSV"
 
+#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:48
 msgid "Failed"
 msgstr "Échec"
 
+#: ../app/javascript/react/screens/App/Plan/PlanActions.js:190
 msgid "Failed to download \"%s\". Reason - \"%s\""
 msgstr "Échec du téléchargement de \"%s\". Motif : \"%s\""
 
+#: ../app/javascript/react/screens/App/Plan/components/PlanVmsList.js:328
 msgid "Filter by Name"
 msgstr "Filtrer par nom"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/components/PlanWizardVMStepTable.js:88
 msgid "Filter by Path"
 msgstr "Filtrer par chemin"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/components/PlanWizardVMStepTable.js:82
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardAdvancedOptionsStep/PlanWizardAdvancedOptionsStepConstants.js:15
 msgid "Filter by Source Cluster"
 msgstr "Filtrer par cluster source"
 
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailListConstants.js:13
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailListConstants.js:29
 msgid "Filter by Status"
 msgstr "Filtrer par état"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/components/PlanWizardVMStepTable.js:76
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardAdvancedOptionsStep/PlanWizardAdvancedOptionsStepConstants.js:9
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailListConstants.js:7
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailListConstants.js:23
 msgid "Filter by VM Name"
 msgstr "Filtrer par nom de VM"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/components/PlanWizardVMStepTable.js:516
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardAdvancedOptionsStep/components/PlanWizardAdvancedOptionsStepTable/PlanWizardAdvancedOptionsStepTable.js:414
 msgid "Find By Keyword..."
 msgstr "Rechercher par mot-clé..."
 
+#: ../app/javascript/react/screens/App/Overview/components/ModalWizard/ModalWizardBody.js:125
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizard.js:27
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/MappingWizardBody.js:33
 msgid "General"
 msgstr "Général"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/components/CSVDropzoneField.js:58
 msgid "Host"
 msgstr "Hôte"
 
-msgid "If you cancel, these VMs will not be migrated and will be fully restored in the source provider."
-msgstr "Si vous annulez, ces VM ne seront pas migrées et seront entièrement restaurées dans le fournisseur de la source."
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:706
+msgid ""
+"If you cancel, these VMs will not be migrated and will be fully restored in "
+"the source provider."
+msgstr ""
+"Si vous annulez, ces VM ne seront pas migrées et seront entièrement "
+"restaurées dans le fournisseur de la source."
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/components/CSVDropzoneField.js:89
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/PlanWizardVMStep.js:96
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizardConstants.js:27
 msgid "Import"
 msgstr "Importer"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/components/CSVDropzoneField.js:80
 msgid "Import File"
 msgstr "Importer un fichier"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardGeneralStep/PlanWizardGeneralStep.js:64
 msgid "Import a CSV file with a list of VMs to be migrated"
 msgstr "Importer un fichier CSV avec une liste de VM à migrer"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/components/CSVDropzoneField.js:81
 msgid "Import a file including a list of VMs to be migrated."
 msgstr "Importer un fichier comprenant une liste de VM à migrer."
 
-msgid "Importing a new VM list file will overwrite the contents of the existing list."
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizardConstants.js:22
+msgid ""
+"Importing a new VM list file will overwrite the contents of the existing "
+"list."
 msgstr ""
+"L'importation d'un nouveau fichier de liste de VM va remplacer le contenu de"
+" la liste existante."
 
-msgid "In OpenStack, flavors define the compute, memory, and storage capacity of nova computing instances."
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardInstancePropertiesStep/components/PlanWizardInstancePropertiesStepTable.js:207
+msgid ""
+"In OpenStack, flavors define the compute, memory, and storage capacity of "
+"nova computing instances."
 msgstr ""
+"Dans OpenStack, les gabarits définissent la capacité de calcul, de mémoire "
+"et de stockage des instances informatiques Nova."
 
+#: ../app/javascript/react/screens/App/Overview/OverviewConstants.js:48
 msgid "In Progress Plans"
 msgstr "Plans en cours"
 
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsConstants.js:5
+#: ../app/javascript/react/screens/App/Overview/components/AggregateCards/InfrastructureMappings/InfrastructureMappings.js:15
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardGeneralStep/PlanWizardGeneralStep.js:15
 msgid "Infrastructure Mapping"
 msgstr "Mappage d'infrastructure"
 
+#: ../app/javascript/react/screens/App/Overview/components/ModalWizard/ModalWizard.js:8
 msgid "Infrastructure Mapping Wizard"
 msgstr "Assistant de mappage d'infrastructure"
 
+#: ../app/javascript/react/screens/App/Overview/components/AggregateCards/InfrastructureMappings/InfrastructureMappings.js:15
+#: ../app/javascript/react/screens/App/Overview/components/InfrastructureMappingsList/InfrastructureMappingsList.js:70
 msgid "Infrastructure Mappings"
 msgstr "Mappages d'infrastructure"
 
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardGeneralStep/helpers.js:15
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/MappingWizard.js:41
 msgid "Infrastructure mapping %s already exists"
 msgstr "Le mappage d'infrastructure %s existe déjà"
 
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsNotStartedList.js:174
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:246
 msgid "Infrastucture mapping does not exist."
-msgstr ""
+msgstr "Le mappage d'infrastructure n'existe pas."
 
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCard.js:34
 msgid "Initiating migration. This might take a few minutes."
 msgstr "Lancement de la migration. Cela peut prendre quelques minutes."
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizard.js:39
 msgid "Instance Properties"
-msgstr ""
+msgstr "Propriétés d'instance"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/components/CSVDropzoneField.js:18
 msgid "Invalid file extension. Only .csv files are accepted."
-msgstr "Extension de fichier incorrecte. Seuls les fichiers .csv sont acceptés."
-
-msgid "Loading Infrastructure Mapping info..."
 msgstr ""
+"Extension de fichier incorrecte. Seuls les fichiers .csv sont acceptés."
 
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsNotStartedList.js:185
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:257
+msgid "Loading Infrastructure Mapping info..."
+msgstr "Chargement des informations de mappage d'infrastructure..."
+
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/MappingWizardBody.js:28
 msgid "Loading Infrastructure Mappings..."
 msgstr "Chargement des mappages d'infrastructure en cours..."
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizardBody.js:19
 msgid "Loading Migration Plans..."
 msgstr "Chargement des plans de migration..."
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardInstancePropertiesStep/PlanWizardInstancePropertiesStep.js:67
 msgid "Loading OpenStack Properties..."
-msgstr ""
+msgstr "Chargement des propriétés OpenStack..."
 
+#: ../app/javascript/react/screens/App/Overview/components/ModalWizard/ModalWizardBody.js:122
 msgid "Loading Wizard..."
 msgstr "Chargement de l'assistant..."
 
+#: ../app/javascript/react/screens/App/Overview/components/ModalWizard/ModalWizardBody.js:123
 msgid "Loading..."
 msgstr "Chargement..."
 
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:547
 msgid "Log:"
 msgstr "Journal :"
 
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCards.js:39
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsNotStartedList.js:211
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:347
 msgid "Make a selection in the dropdown to view plans in other states."
-msgstr "Effectuez une sélection dans la liste déroulante pour afficher les plans se trouvant dans d'autres états."
+msgstr ""
+"Effectuez une sélection dans la liste déroulante pour afficher les plans se "
+"trouvant dans d'autres états."
 
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/MappingWizardBody.js:38
 msgid "Map Compute"
-msgstr ""
+msgstr "Mapper le calcul"
 
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/MappingWizardBody.js:48
 msgid "Map Networks"
-msgstr ""
+msgstr "Mapper les réseaux"
 
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/MappingWizardBody.js:43
 msgid "Map Storage"
-msgstr ""
+msgstr "Mapper le stockage"
 
+#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:49
 msgid "Mark source as migrated"
 msgstr "Marquer la source comme étant migrée"
 
+#: ../app/javascript/common/constants.js:4
 msgid "Maximum length is %s characters."
 msgstr "La longueur maximale est de %s caractères."
 
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsNotStartedList.js:128
 msgid "Migrate"
 msgstr "Migrer"
 
+#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:58
 msgid "Migrate VM"
 msgstr "Migrer la VM"
 
+#: ../app/javascript/react/screens/App/Plan/components/PlanVmsList.js:281
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:629
 msgid "Migrated"
 msgstr "Migré"
 
+#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:50
 msgid "Migrating"
 msgstr "Migration en cours"
 
+#: ../app/controllers/migration_controller.rb:10
+#: ../app/javascript/react/screens/App/Overview/Overview.js:401
+#: ../app/javascript/react/screens/App/Plan/Plan.js:158
+#: ../lib/manageiq/v2v/engine.rb:15
 msgid "Migration"
 msgstr "Migration"
 
+#: ../app/javascript/react/screens/App/Overview/components/AggregateCards/FinishedTransformationPlans/FinishedTransformationPlans.js:16
 msgid "Migration Plan Complete"
 msgstr "Plan de migration terminé"
 
+#: ../app/javascript/react/screens/App/Overview/components/AggregateCards/ActiveTransformationPlans/ActiveTransformationPlans.js:18
 msgid "Migration Plan In Progress"
 msgstr "Plan de migration en cours"
 
+#: ../app/javascript/react/screens/App/Overview/components/AggregateCards/NotStartedTransformationPlans/NotStartedTransformationPlans.js:16
 msgid "Migration Plan Not Started"
 msgstr "Plan de migration non démarré"
 
+#: ../app/javascript/react/screens/App/Overview/components/ModalWizard/ModalWizard.js:9
 msgid "Migration Plan Wizard"
 msgstr "Assistant de plan de migration"
 
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/Migrations.js:70
 msgid "Migration Plans"
 msgstr "Plans de migration"
 
+#: ../app/javascript/react/screens/App/Overview/components/AggregateCards/FinishedTransformationPlans/FinishedTransformationPlans.js:16
 msgid "Migration Plans Complete"
 msgstr "Plans de migration terminés"
 
+#: ../app/javascript/react/screens/App/Overview/components/AggregateCards/ActiveTransformationPlans/ActiveTransformationPlans.js:18
 msgid "Migration Plans In Progress"
 msgstr "Plans de migration en cours"
 
+#: ../app/javascript/react/screens/App/Overview/components/AggregateCards/NotStartedTransformationPlans/NotStartedTransformationPlans.js:16
 msgid "Migration Plans Not Started"
 msgstr "Plans de migration non démarrés"
 
+#: ../app/javascript/react/screens/App/Plan/PlanActions.js:254
 msgid "Migration cancel request submitted for VMs: "
-msgstr ""
+msgstr "Demande d'annulation de la migration envoyée pour les VM :"
 
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:495
 msgid "Migration cancelled"
-msgstr ""
+msgstr "Migration annulée"
 
+#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:51
 msgid "Migration complete"
 msgstr "Migration terminée"
 
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:666
 msgid "Migration log"
 msgstr "Journal de migration"
 
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsNotStartedList.js:191
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:268
 msgid "Migration scheduled"
 msgstr "Migration planifiée"
 
+#: ../app/javascript/react/screens/App/Overview/OverviewActions.js:317
 msgid "Migration successfully scheduled for %s"
 msgstr "Migration planifiée pour %s"
 
+#: ../app/javascript/react/screens/App/Overview/OverviewActions.js:314
 msgid "Migration successfully unscheduled"
 msgstr "Annulation de la migration confirmée"
 
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsConstants.js:2
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsConstants.js:17
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/components/CSVDropzoneField.js:57
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardGeneralStep/PlanWizardGeneralStep.js:31
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardGeneralStep/MappingWizardGeneralStep.js:44
+#: ../app/javascript/react/screens/App/Plan/components/PlanVmsList.js:322
+#: ../app/javascript/react/screens/App/Plan/components/PlanVmsList.js:327
 msgid "Name"
 msgstr "Nom"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardGeneralStep/helpers.js:19
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizard.js:126
 msgid "Name %s already exists"
 msgstr "Le nom %s existe déjà"
 
+#: ../app/javascript/react/screens/App/Overview/components/InfrastructureMappingsList/InfrastructureMappingsList.js:193
 msgid "Networks missing"
 msgstr "Réseaux manquants"
 
+#: ../app/javascript/react/screens/App/Overview/components/ModalWizard/ModalWizard.js:63
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizard.js:271
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/MappingWizard.js:200
 msgid "Next"
 msgstr "Suivant"
 
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:716
 msgid "No"
 msgstr "Non"
 
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:339
 msgid "No Archived Migration Plans"
 msgstr "Aucun plan de migration archivé"
 
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:339
 msgid "No Completed Migration Plans"
 msgstr "Aucun plan de migration terminé"
 
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCard.js:193
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCard.js:199
 msgid "No Data"
 msgstr "Aucune donnée"
 
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCards.js:33
 msgid "No Migration Plans In Progress"
 msgstr "Aucun plan de migration en cours"
 
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsNotStartedList.js:205
 msgid "No Migration Plans Not Started"
 msgstr "Aucun plan de migration non démarré"
 
+#: ../app/javascript/react/screens/App/Plan/Plan.js:202
 msgid "No Migration Tasks."
 msgstr "Aucune tâche de migration."
 
-msgid "No VM migration tasks have been started for this plan. Please refresh and try again."
-msgstr "Aucune tâche de migration démarrée pour ce plan. Veuillez rafraîchir la page et réessayer."
+#: ../app/javascript/react/screens/App/Plan/Plan.js:205
+msgid ""
+"No VM migration tasks have been started for this plan. Please refresh and "
+"try again."
+msgstr ""
+"Aucune tâche de migration démarrée pour ce plan. Veuillez rafraîchir la page"
+" et réessayer."
 
+#: ../app/javascript/react/screens/App/Plan/Plan.js:212
 msgid "No VMs"
 msgstr "Aucune VM"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizard.js:156
 msgid "No VMs Selected"
 msgstr "Aucune VM sélectionnée"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/PlanWizardVMStep.js:170
 msgid "No VMs were found."
 msgstr "Aucune VM trouvée."
 
-msgid "No VMs were returned for this migration plan. Please refresh and try again."
-msgstr "Aucune VM n'a été retournée pour ce plan de migration. Veuillez rafraîchir la page et réessayer."
-
-msgid "No clusters found."
+#: ../app/javascript/react/screens/App/Plan/Plan.js:215
+msgid ""
+"No VMs were returned for this migration plan. Please refresh and try again."
 msgstr ""
+"Aucune VM n'a été retournée pour ce plan de migration. Veuillez rafraîchir "
+"la page et réessayer."
 
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardClustersStep/components/ClustersStepForm/ClustersStepForm.js:104
+msgid "No clusters found."
+msgstr "Aucun cluster n'a été trouvé."
+
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardTreeView/MappingWizardTreeView.js:15
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardClustersStep/components/ClustersStepTreeView.js:15
 msgid "No mappings have been added yet"
 msgstr "Aucun mappage n'a encore été ajouté"
 
+#: ../app/javascript/react/screens/App/Overview/OverviewConstants.js:47
 msgid "Not Started Plans"
 msgstr "Plans non démarrés"
 
+#: ../app/javascript/react/screens/App/Plan/components/PlanVmsList.js:269
 msgid "Not started"
 msgstr "Non démarré"
 
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsConstants.js:10
 msgid "Number of VMs"
 msgstr "Nombre de VM"
 
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailListConstants.js:15
 msgid "Ok"
 msgstr "Ok"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardInstancePropertiesStep/components/PlanWizardInstancePropertiesStepTable.js:333
 msgid "OpenStack Flavor"
-msgstr ""
+msgstr "Gabarit OpenStack"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardInstancePropertiesStep/components/PlanWizardInstancePropertiesStepTable.js:309
 msgid "OpenStack Security Group"
-msgstr ""
+msgstr "Groupe de sécurité OpenStack"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizardConstants.js:19
 msgid "Overwrite Import File"
-msgstr ""
+msgstr "Remplacer le fichier d'importation"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/components/PlanWizardVMStepTable.js:87
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/components/PlanWizardVMStepTable.js:219
 msgid "Path"
 msgstr "Chemin"
 
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardGeneralStep/helpers.js:16
 msgid "Please enter a unique name"
 msgstr "Veuillez saisir un nom unique"
 
+#: ../app/javascript/react/screens/App/Overview/components/InfrastructureMappingsList/InfrastructureMappingsList.js:131
 msgid "Please refresh and try again."
 msgstr "Veuillez rafraîchir la page et réessayer."
 
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardResultsStep/MappingWizardResultsStep.js:59
 msgid "Please wait while infrastructure mapping is created."
 msgstr "Veuillez patienter pendant la création du mappage d'infrastructure."
 
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardResultsStep/MappingWizardResultsStep.js:69
 msgid "Please wait while infrastructure mapping is saved."
 msgstr ""
+"Veuillez patienter pendant l'enregistrement du mappage d'infrastructure."
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardResultsStep/PlanWizardResultsStep.js:71
 msgid "Please wait while the migration plan is created."
-msgstr ""
+msgstr "Veuillez patienter pendant la création du plan de migration."
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardResultsStep/PlanWizardResultsStep.js:78
 msgid "Please wait while the migration plan is saved."
-msgstr ""
+msgstr "Veuillez patienter pendant l'enregistrement du plan de migration."
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardAdvancedOptionsStep/components/PlanWizardAdvancedOptionsStepTable/PlanWizardAdvancedOptionsStepTable.js:246
 msgid "Post Migration Select %s"
 msgstr "Post-migration - Sélectionner %s"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardAdvancedOptionsStep/components/PlanWizardAdvancedOptionsStepTable/PlanWizardAdvancedOptionsStepTable.js:226
 msgid "Post-Migration Service"
 msgstr "Service de post-migration"
 
+#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:52
 msgid "Post-migration"
 msgstr "Post-migration"
 
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:673
 msgid "Post-migration log"
 msgstr "Journal de post-migration"
 
+#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:53
 msgid "Power off"
 msgstr "Éteindre"
 
+#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:54
 msgid "Power-on VM"
 msgstr "Activer la VM"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardAdvancedOptionsStep/components/PlanWizardAdvancedOptionsStepTable/PlanWizardAdvancedOptionsStepTable.js:217
 msgid "Pre Migration Select %s"
 msgstr "Pré-migration - Sélectionner %s"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardAdvancedOptionsStep/components/PlanWizardAdvancedOptionsStepTable/PlanWizardAdvancedOptionsStepTable.js:197
 msgid "Pre-Migration Service"
 msgstr "Service de pré-migration"
 
+#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:55
 msgid "Pre-migration"
 msgstr "Pré-migration"
 
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:659
 msgid "Pre-migration log"
 msgstr "Journal de pré-migration"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/components/CSVDropzoneField.js:59
 msgid "Provider"
 msgstr "Fournisseur"
 
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/MappingWizardConstants.js:9
 msgid "Red Hat OpenStack Platform"
-msgstr ""
+msgstr "Red Hat OpenStack Platform"
 
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/MappingWizardConstants.js:8
 msgid "Red Hat Virtualization"
-msgstr ""
+msgstr "Red Hat Virtualization"
 
+#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:56
 msgid "Refresh inventory"
 msgstr "Actualiser l'inventaire"
 
+#: ../app/javascript/react/screens/App/Plan/components/PlanVmsList.js:286
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:634
 msgid "Remaining"
 msgstr "Restant"
 
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardTreeView/MappingWizardTreeView.js:25
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardClustersStep/components/ClustersStepTreeView.js:25
 msgid "Remove All"
 msgstr "Tout supprimer"
 
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardClustersStep/components/ClustersStepTreeView.js:22
 msgid "Remove Mapping"
 msgstr "Supprimer le mappage"
 
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardTreeView/MappingWizardTreeView.js:22
 msgid "Remove Selected"
 msgstr "Supprimer la sélection"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardGeneralStep/PlanWizardGeneralStep.js:19
 msgid "Required"
 msgstr "Obligatoire"
 
+#: ../app/javascript/common/constants.js:5
 msgid "Required. Maximum length is %s characters."
 msgstr "La longueur maximale requise est de %s caractères."
 
+#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:57
 msgid "Restore VM Attributes"
 msgstr "Restaurer les attributs de VM"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/components/PlanWizardVMStepTable.js:526
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardAdvancedOptionsStep/components/PlanWizardAdvancedOptionsStepTable/PlanWizardAdvancedOptionsStepTable.js:424
+#: ../app/javascript/react/screens/App/Plan/components/PlanVmsList.js:233
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:440
 msgid "Result"
 msgstr "Résultat"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/components/PlanWizardVMStepTable.js:526
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardAdvancedOptionsStep/components/PlanWizardAdvancedOptionsStepTable/PlanWizardAdvancedOptionsStepTable.js:424
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizard.js:57
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/MappingWizardBody.js:53
+#: ../app/javascript/react/screens/App/Plan/components/PlanVmsList.js:233
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:440
 msgid "Results"
 msgstr "Résultats"
 
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:297
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardClustersStep/MappingWizardClustersStep.js:70
 msgid "Retry"
 msgstr "Recommencer"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardScheduleStep/PlanWizardScheduleStep.js:10
 msgid "Run migration plan"
 msgstr "Exécuter le plan de migration"
 
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:559
 msgid "Running playbook service"
 msgstr "Exécution du service de playbook"
 
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCard.js:134
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCard.js:162
 msgid "Running playbook service %s. This might take a few minutes."
-msgstr "Exécution du service de playbook %s. Cela peut prendre quelques minutes."
-
-msgid "Save"
 msgstr ""
+"Exécution du service de playbook %s. Cela peut prendre quelques minutes."
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizard.js:231
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/MappingWizard.js:198
+msgid "Save"
+msgstr "Enregistrer"
+
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardScheduleStep/PlanWizardScheduleStep.js:16
 msgid "Save migration plan to run later"
 msgstr "Enregistrer le plan de migration pour une exécution ultérieure"
 
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardResultsStep/MappingWizardResultsStep.js:68
 msgid "Saving Infrastructure Mapping..."
-msgstr ""
+msgstr "Enregistrement du mappage d'infrastructure..."
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardResultsStep/PlanWizardResultsStep.js:78
 msgid "Saving Migration Plan..."
-msgstr ""
+msgstr "Enregistrement du plan de migration..."
 
+#: ../app/javascript/react/screens/App/Overview/components/ScheduleMigrationModal/ScheduleMigrationModal.js:57
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/ScheduleMigrationButton.js:61
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizard.js:51
 msgid "Schedule"
 msgstr "Échéancier"
 
+#: ../app/javascript/react/screens/App/Overview/components/ScheduleMigrationModal/ScheduleMigrationModal.js:32
 msgid "Schedule Migration Plan"
 msgstr "Planifier le plan de migration"
 
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsConstants.js:13
 msgid "Scheduled Time"
 msgstr "Durée programmée"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/PlanWizardVMStep.js:92
 msgid "See product documentation for the correct format of the .csv file"
-msgstr "Consulter la documentation du produit pour connaître le format correct du fichier .csv"
+msgstr ""
+"Consulter la documentation du produit pour connaître le format correct du "
+"fichier .csv"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/components/PlanWizardVMStepTable.js:114
 msgid "Select"
 msgstr "Sélectionner"
 
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:403
 msgid "Select All"
 msgstr "Sélectionner tout"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardResultsStep/PlanWizardResultsStep.js:85
 msgid "Select Migrate on the Overview page to begin migration"
-msgstr "Sélectionner Migrer sur la page Présentation pour commencer la migration"
+msgstr ""
+"Sélectionner Migrer sur la page Présentation pour commencer la migration"
 
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:406
 msgid "Select None"
 msgstr "Ne rien sélectionner"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardGeneralStep/PlanWizardGeneralStep.js:55
 msgid "Select VMs"
 msgstr "Sélectionner des VM"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardAdvancedOptionsStep/components/PlanWizardAdvancedOptionsStepTable/PlanWizardAdvancedOptionsStepTable.js:396
 msgid "Select VMs on which to run the playbook services"
 msgstr "Sélectionner les VM sur lesquelles exécuter les services de playbook"
 
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardDatastoresStep/MappingWizardDatastoresStep.js:143
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardNetworksStep/MappingWizardNetworksStep.js:140
 msgid "Select a source cluster"
 msgstr "Sélectionner un cluster source"
 
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardDatastoresStep/MappingWizardDatastoresStep.js:135
 msgid "Select a source cluster whose datastores you want to map"
 msgstr ""
+"Sélectionnez un cluster source dont vous souhaitez mapper les magasins de "
+"données"
 
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardNetworksStep/MappingWizardNetworksStep.js:132
 msgid "Select a source cluster whose networks you want to map"
-msgstr ""
+msgstr "Sélectionnez un cluster source dont vous souhaitez mapper les réseaux"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardAdvancedOptionsStep/PlanWizardAdvancedOptionsStep.js:60
 msgid "Select post-migration playbook service (optional)"
 msgstr "Sélectionner le service de playbook post-migration (facultatif)"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardAdvancedOptionsStep/PlanWizardAdvancedOptionsStep.js:48
 msgid "Select pre-migration playbook service (optional)"
 msgstr "Sélectionner le service de playbook pré-migration (facultatif)"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/components/vmSelectionCellFormatter.js:8
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardAdvancedOptionsStep/components/PlanWizardAdvancedOptionsStepTable/vmSelectionCellFormatter.js:7
 msgid "Select row %s"
 msgstr "Sélectionner la ligne %s"
 
-msgid "Sorry, no VMs were associated with this Infrastructure Mapping. Please try again."
-msgstr "Aucune VM n'est associée à ce mappage d'infrastructure. Veuillez réessayer."
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/PlanWizardVMStep.js:172
+msgid ""
+"Sorry, no VMs were associated with this Infrastructure Mapping. Please try "
+"again."
+msgstr ""
+"Aucune VM n'est associée à ce mappage d'infrastructure. Veuillez réessayer."
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/PlanWizardVMStep.js:79
 msgid "Sorry, there was an error validating VMs. Please try again."
-msgstr "Veuillez nous excuser, une erreur s'est produite lors de la validation des VM. Réessayez."
+msgstr ""
+"Veuillez nous excuser, une erreur s'est produite lors de la validation des "
+"VM. Réessayez."
 
-msgid "Sorry, we were unable to retrieve migration details at this time. Please refresh and try again."
-msgstr "Veuillez nous excuser, nous ne parvenons pas pour le moment à récupérer les détails de la migration. Rafraîchissez la page et réessayez."
+#: ../app/javascript/react/screens/App/Plan/Plan.js:225
+msgid ""
+"Sorry, we were unable to retrieve migration details at this time. Please "
+"refresh and try again."
+msgstr ""
+"Veuillez nous excuser, nous ne parvenons pas pour le moment à récupérer les "
+"détails de la migration. Rafraîchissez la page et réessayez."
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/components/PlanWizardVMStepTable.js:81
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/components/PlanWizardVMStepTable.js:199
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardAdvancedOptionsStep/components/PlanWizardAdvancedOptionsStepTable/PlanWizardAdvancedOptionsStepTable.js:275
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardAdvancedOptionsStep/PlanWizardAdvancedOptionsStepConstants.js:14
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardInstancePropertiesStep/components/PlanWizardInstancePropertiesStepTable.js:249
 msgid "Source Cluster"
 msgstr "Cluster source"
 
+#: ../app/javascript/react/screens/App/Overview/components/InfrastructureMappingsList/InfrastructureMappingsList.js:411
 msgid "Source Clusters"
 msgstr "Clusters sources"
 
+#: ../app/javascript/react/screens/App/Overview/components/InfrastructureMappingsList/InfrastructureMappingsList.js:375
 msgid "Source Datastores"
 msgstr "Datastores sources"
 
+#: ../app/javascript/react/screens/App/Overview/components/InfrastructureMappingsList/InfrastructureMappingsList.js:339
 msgid "Source Networks"
 msgstr "Réseaux sources"
 
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardClustersStep/components/ClustersStepForm/ClustersStepForm.js:148
 msgid "Source Provider \\\\ Datacenter \\\\ Cluster"
-msgstr ""
+msgstr "Fournisseur source \\\\ Datacenter \\\\ Cluster"
 
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardDatastoresStep/components/DatastoresStepForm/DatastoresStepForm.js:284
 msgid "Source Provider \\\\ Datacenter \\\\ Datastore"
-msgstr ""
+msgstr "Fournisseur source \\\\ Datacenter \\\\ Magasin de données"
 
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardNetworksStep/components/NetworksStepForm/NetworksStepForm.js:310
 msgid "Source Provider \\\\ Datacenter \\\\ Network"
-msgstr ""
+msgstr "Fournisseur source \\\\ Datacenter \\\\ Réseau"
 
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:535
 msgid "Start Time"
-msgstr ""
+msgstr "Heure de début"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardScheduleStep/PlanWizardScheduleStep.js:20
 msgid "Start migration immediately"
 msgstr "Démarrer la migration immédiatement"
 
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsConstants.js:18
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailListConstants.js:12
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailListConstants.js:28
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailListConstants.js:57
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailListConstants.js:67
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:564
 msgid "Status"
 msgstr "État"
 
+#: ../app/javascript/react/screens/App/Overview/components/InfrastructureMappingsList/InfrastructureMappingsList.js:414
 msgid "Target Clusters"
 msgstr "Clusters cibles"
 
+#: ../app/javascript/react/screens/App/Overview/components/InfrastructureMappingsList/InfrastructureMappingsList.js:378
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/helpers.js:43
 msgid "Target Datastores"
 msgstr "Datastores cibles"
 
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/helpers.js:45
 msgid "Target Network"
-msgstr ""
+msgstr "Réseau cible"
 
+#: ../app/javascript/react/screens/App/Overview/components/InfrastructureMappingsList/InfrastructureMappingsList.js:342
 msgid "Target Networks"
 msgstr "Réseaux cibles"
 
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/helpers.js:34
 msgid "Target Project \\\\ Network"
-msgstr ""
+msgstr "Projet cible \\\\ Réseau"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardInstancePropertiesStep/components/PlanWizardInstancePropertiesStepTable.js:269
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardGeneralStep/MappingWizardGeneralStep.js:68
 msgid "Target Provider"
-msgstr ""
+msgstr "Fournisseur cible"
 
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/helpers.js:41
 msgid "Target Provider \\\\ Datacenter \\\\ Cluster"
-msgstr ""
+msgstr "Fournisseur cible \\\\ Datacenter \\\\ Cluster"
 
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/helpers.js:30
 msgid "Target Provider \\\\ Project"
-msgstr ""
+msgstr "Fournisseur cible \\\\ Projet"
 
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/helpers.js:32
 msgid "Target Provider \\\\ Volume Type"
+msgstr "Fournisseur cible \\\\ Type de volume"
+
+#: ../app/javascript/react/screens/App/Overview/Overview.js:386
+msgid ""
+"The VMWare and Red Hat Virtualization providers must be configured before "
+"attempting a migration."
 msgstr ""
+"Les fournisseurs VMWare et Red Hat Virtualization doivent être configurés "
+"avant toute tentative de migration."
 
-msgid "The VMWare and Red Hat Virtualization providers must be configured before attempting a migration."
-msgstr "Les fournisseurs VMWare et Red Hat Virtualization doivent être configurés avant toute tentative de migration."
-
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/WarningModal/WarningModal.js:38
 msgid "The following source clusters have no mapped %s"
 msgstr "Les clusters sources suivants n'ont pas de %s mappé"
 
-msgid "The infrastructure mapping is associated with migration plans that include unmigrated VMs. Deleting the mapping will prevent you from migrating the VMs in these plans:"
-msgstr "Le mappage d'infrastructure est associé aux plans de migration comprenant des VM non migrées. La suppression du mappage vous empêchera de migrer les VM de ces plans :"
+#: ../app/javascript/react/screens/App/Overview/components/DeleteInfrastructureMappingConfirmationModal/DeleteInfrastructureMappingConfirmationModal.js:22
+msgid ""
+"The infrastructure mapping is associated with migration plans that include "
+"unmigrated VMs. Deleting the mapping will prevent you from migrating the VMs"
+" in these plans:"
+msgstr ""
+"Le mappage d'infrastructure est associé aux plans de migration comprenant "
+"des VM non migrées. La suppression du mappage vous empêchera de migrer les "
+"VM de ces plans :"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/PlanWizardVMStep.js:89
 msgid "The selected file does not have the expected format."
 msgstr "Le fichier sélectionné n'a pas le format attendu."
 
-msgid "The size of the selected source datastores exceeds the available space in the target datastore"
-msgstr "La taille des datastores sources sélectionnés dépasse l'espace disponible dans le datastore cible"
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardDatastoresStep/components/DatastoresStepForm/helpers.js:61
+msgid ""
+"The size of the selected source datastores exceeds the available space in "
+"the target datastore"
+msgstr ""
+"La taille des datastores sources sélectionnés dépasse l'espace disponible "
+"dans le datastore cible"
 
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:345
 msgid "There are no exisitng migration plans in an Archived state."
 msgstr "Aucun plan de migration existant à l'état Archivé."
 
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:346
 msgid "There are no existing migration plans in a Completed state."
 msgstr "Aucun plan de migration existant à l'état Terminé."
 
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsNotStartedList.js:210
 msgid "There are no existing migration plans in a Not Started state."
 msgstr "Aucun plan de migration existant à l'état Non démarré."
 
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCards.js:38
 msgid "There are no existing migration plans in an In Progress state."
 msgstr "Aucun plan de migration existant à l'état En cours."
 
+#: ../app/javascript/react/screens/App/Overview/components/InfrastructureMappingsList/InfrastructureMappingsList.js:129
 msgid "There was an error loading Infrastructure Mappings."
-msgstr "Une erreur s'est produite lors du chargement des mappages d'infrastructure."
+msgstr ""
+"Une erreur s'est produite lors du chargement des mappages d'infrastructure."
 
-msgid "This may take a long time. Progress of the plan will be shown in the Migration area"
-msgstr "Cela risque de prendre beaucoup de temps. L'état d'avancement du plan s'affichera dans la zone Migration"
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardResultsStep/PlanWizardResultsStep.js:89
+msgid ""
+"This may take a long time. Progress of the plan will be shown in the "
+"Migration area"
+msgstr ""
+"Cela risque de prendre beaucoup de temps. L'état d'avancement du plan "
+"s'affichera dans la zone Migration"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizardBody.js:20
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/MappingWizardBody.js:29
 msgid "This may take a minute."
 msgstr "Cela peut prendre une minute."
 
-msgid "This plan includes VMs that failed to migrate. If you archive the plan, you will not be able to retry the failed migrations."
-msgstr "Ce plan inclut les VM dont la migration a échoué. Si vous archivez le plan, vous ne serez plus en mesure de relancer les migrations en échec."
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:150
+msgid ""
+"This plan includes VMs that failed to migrate. If you archive the plan, you "
+"will not be able to retry the failed migrations."
+msgstr ""
+"Ce plan inclut les VM dont la migration a échoué. Si vous archivez le plan, "
+"vous ne serez plus en mesure de relancer les migrations en échec."
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/components/CSVDropzoneField.js:60
 msgid "UID"
 msgstr "UID"
 
+#: ../app/javascript/react/screens/App/Plan/Plan.js:221
 msgid "Unable to retrieve migration details."
 msgstr "Impossible de récupérer les détails de la migration."
 
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/helpers/getPlaybookName.js:2
 msgid "Unknown"
 msgstr "Inconnu"
 
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/WarningModal/WarningModal.js:31
 msgid "Unmapped %s"
 msgstr "%s non mappé"
 
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/ScheduleMigrationButton.js:35
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/ScheduleMigrationButton.js:77
 msgid "Unschedule"
 msgstr "Déprogrammer"
 
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/ScheduleMigrationButton.js:32
 msgid "Unschedule Migration Plan"
 msgstr "Déprogrammer le plan de migration"
 
+#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:59
 msgid "Update description of VM"
 msgstr "Mettre à jour la description de la VM"
 
+#: ../lib/manageiq/v2v/engine.rb:20
 msgid "V2V"
-msgstr ""
+msgstr "V2V"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/components/PlanWizardVMStepTable.js:75
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/components/PlanWizardVMStepTable.js:179
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardAdvancedOptionsStep/components/PlanWizardAdvancedOptionsStepTable/PlanWizardAdvancedOptionsStepTable.js:255
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardAdvancedOptionsStep/PlanWizardAdvancedOptionsStepConstants.js:8
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardInstancePropertiesStep/components/PlanWizardInstancePropertiesStepTable.js:229
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailListConstants.js:6
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailListConstants.js:22
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailListConstants.js:54
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailListConstants.js:64
 msgid "VM Name"
 msgstr "Nom de la VM"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/PlanWizardVMStepConstants.js:11
 msgid "VM available for migration"
 msgstr "VM disponible pour la migration"
 
+#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:64
 msgid "VM cancelled"
 msgstr "VM annulée"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/PlanWizardVMStepConstants.js:10
 msgid "VM does not exist"
 msgstr "La VM n'existe pas"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/PlanWizardVMStepConstants.js:8
 msgid "VM exists in a different migration plan"
 msgstr "La VM existe dans un autre plan de migration"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/PlanWizardVMStepConstants.js:9
 msgid "VM has already been migrated"
 msgstr "La VM a déjà été migrée"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/PlanWizardVMStepConstants.js:6
 msgid "VM is in conflict"
 msgstr "La VM est en conflit"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/PlanWizardVMStepConstants.js:13
 msgid "VM is inactive"
 msgstr "VM inactive"
 
+#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:61
 msgid "VM migrations completed"
 msgstr "Migrations de VM terminées"
 
+#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:63
 msgid "VM migrations failed"
 msgstr "Échec des migrations de VM"
 
+#: ../app/javascript/react/screens/App/Plan/helpers.js:16
 msgid "VM migrations stalled"
 msgstr "Migrations de VM bloquées"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/PlanWizardVMStepConstants.js:14
 msgid "VM unavailable for migration, no information available"
 msgstr "VM indisponible pour la migration. Aucune information disponible"
 
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsNotStartedList.js:168
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCard.js:223
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizard.js:33
 msgid "VMs"
 msgstr "VM"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardInstancePropertiesStep/components/PlanWizardInstancePropertiesStepTable.js:446
 msgid "VMs Selected for Migration"
-msgstr ""
+msgstr "VM sélectionnées pour la migration"
 
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:240
 msgid "VMs successfully migrated."
 msgstr "VM migrées avec succès."
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/components/PlanWizardVMStepTable.js:491
 msgid "VMs to be Migrated"
 msgstr "VM à migrer"
 
+#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:60
 msgid "Validating"
 msgstr "Validation"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/PlanWizardVMStep.js:115
 msgid "Validating CSV Import"
 msgstr "Validation de l'import CSV"
 
-msgid "Validating CSV VMs are associated with the Infrastructure Mapping selected."
-msgstr "Les VM de validation CSV sont associées au mappage d'infrastructure sélectionné."
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/PlanWizardVMStep.js:117
+msgid ""
+"Validating CSV VMs are associated with the Infrastructure Mapping selected."
+msgstr ""
+"Les VM de validation CSV sont associées au mappage d'infrastructure "
+"sélectionné."
 
+#: ../app/javascript/react/screens/App/common/NotificationList/NotificationList.js:28
 msgid "View Details"
 msgstr "Afficher les détails"
 
+#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:62
 msgid "Virtual machine migrated"
 msgstr "Machine virtuelle migrée"
 
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardResultsStep/MappingWizardResultsStep.js:64
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardClustersStep/MappingWizardClustersStep.js:67
 msgid "We're sorry, something went wrong. Please try again."
 msgstr "Veuillez nous excuser, une erreur s'est produite. Réessayez."
 
+#: ../app/javascript/react/screens/App/common/ConfirmModal.js:72
 msgid "Yes"
 msgstr "Oui"
 
+#: ../app/javascript/common/constants.js:6
 msgid "You have reached the maximum length of %s characters."
 msgstr "Vous avez atteint la longueur maximale de %s caractères."
 
-msgid "You've selected a pre-migration or post-migration playbook service but no VMs on which to run the playbook service. Are you sure you want to continue?"
-msgstr "Vous avez sélectionné un service de playbook pré-migration ou post-migration, mais aucune VM sur laquelle exécuter le service de playbook. Voulez-vraiment continuer ?"
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizard.js:157
+msgid ""
+"You've selected a pre-migration or post-migration playbook service but no "
+"VMs on which to run the playbook service. Are you sure you want to continue?"
+msgstr ""
+"Vous avez sélectionné un service de playbook pré-migration ou post-"
+"migration, mais aucune VM sur laquelle exécuter le service de playbook. "
+"Voulez-vraiment continuer ?"
 
+#: ../app/javascript/react/screens/App/Plan/components/PlanVmsList.js:239
 msgid "label="
 msgstr "libellé="
 
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCard.js:176
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCard.js:185
 msgid "migrated"
 msgstr "migré"
 
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:238
 msgid "of"
 msgstr "sur"
 
+#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardResultsStep/MappingWizardResultsStep.js:84
 msgid "to create a migration plan using the infrastructure mapping."
 msgstr "pour créer un plan de migration à l'aide du mappage d'infrastructure."
