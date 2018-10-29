@@ -152,7 +152,7 @@ const MigrationsNotStartedList = ({
                           ),
                           !isMissingMapping && (
                             <ListView.InfoItem key={`${plan.id}-infraMappingName`}>
-                              {plan.infraMappingName}
+                              <a href="/migration/mappings#">{plan.infraMappingName}</a>
                             </ListView.InfoItem>
                           ),
                           migrationScheduled && !migrationStarting ? (
