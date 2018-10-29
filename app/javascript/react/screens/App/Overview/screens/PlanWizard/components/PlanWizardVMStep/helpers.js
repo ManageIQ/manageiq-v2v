@@ -20,14 +20,11 @@ const manageBlankReason = vm => {
   }
 };
 
-const manageNoIdVMRows = (vm, vmIndex) => {
-  if (!vm.id) {
-    vm.id = `no-id-${vmIndex}`;
-  }
-};
+const manageNoIdVMRows = (vm, vmIndex) => (!vm.id ? { ...vm, id: `no-id-${vmIndex}` } : vm);
+
+const fillMissingIds = vms => vms && vms.map((vm, vmIndex) => (vm.id ? vm : manageNoIdVMRows(vm, vmIndex)));
 
 const manageOddCSVImportErrors = (vm, vmIndex, uniqueIds) => {
-  manageNoIdVMRows(vm, vmIndex);
   manageDuplicateVMRows(vm, vmIndex, uniqueIds);
   manageBlankReason(vm);
 };
@@ -47,10 +44,11 @@ export const _formatValidVms = vms => {
 };
 
 export const _formatInvalidVms = vms => {
-  const uniqueIds = vms && [...new Set(vms.map(value => value.id))];
+  const backfilledVms = fillMissingIds(vms);
+  const uniqueIds = backfilledVms && [...new Set(backfilledVms.map(vm => vm.id))];
   return (
-    vms &&
-    vms.map((v, vIndex) => {
+    backfilledVms &&
+    backfilledVms.map((v, vIndex) => {
       v.allocated_size = numeral(v.allocated_size).format('0.00b');
       v.reason = V2V_VM_POST_VALIDATION_REASONS[v.reason];
       if (
@@ -71,10 +69,11 @@ export const _formatConflictVms = vms => {
   const inactiveVMCount = (vms && vms.filter(vm => vm.cluster === '' || vm.path === '').length) || 0;
   const allVMCount = (vms && vms.length) || 0;
   const vmCount = inactiveVMCount > 0 ? allVMCount - inactiveVMCount : allVMCount;
-  const uniqueIds = vms && [...new Set(vms.map(value => value.id))];
+  const backfilledVms = fillMissingIds(vms);
+  const uniqueIds = backfilledVms && [...new Set(backfilledVms.map(value => value.id))];
   return (
-    vms &&
-    vms.map((v, vIndex) => {
+    backfilledVms &&
+    backfilledVms.map((v, vIndex) => {
       v.allocated_size = numeral(v.allocated_size).format('0.00b');
       v.reason = V2V_VM_POST_VALIDATION_REASONS[v.reason];
 
