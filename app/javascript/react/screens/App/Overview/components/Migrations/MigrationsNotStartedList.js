@@ -57,7 +57,7 @@ const MigrationsNotStartedList = ({
                   </Toolbar>
                 </Grid.Row>
                 <ListView className="plans-not-started-list" style={{ marginTop: 10 }}>
-                  {filteredSortedPaginatedListItems.tasks.map(plan => {
+                  {filteredSortedPaginatedListItems.items.map(plan => {
                     const { migrationScheduled, migrationStarting, showInitialScheduleButton } = getPlanScheduleInfo(
                       plan
                     );

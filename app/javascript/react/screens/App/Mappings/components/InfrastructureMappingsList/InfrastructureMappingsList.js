@@ -167,7 +167,7 @@ class InfrastructureMappingsList extends React.Component {
                 </Grid.Row>
                 <div style={{ overflow: 'auto', paddingBottom: 300, height: '100%' }}>
                   <ListView style={{ marginTop: 10 }} className="infra-mappings-list-view" id="infrastructure_mappings">
-                    {filteredSortedPaginatedListItems.tasks.map(mapping => {
+                    {filteredSortedPaginatedListItems.items.map(mapping => {
                       const associatedPlansCount = mapping.service_templates && mapping.service_templates.length;
 
                       const { targetClusters, targetDatastores, targetNetworks } = mapInfrastructureMappings(
