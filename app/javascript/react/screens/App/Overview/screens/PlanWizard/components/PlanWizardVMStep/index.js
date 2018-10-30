@@ -13,7 +13,7 @@ const mapStateToProps = ({ planWizardVMStep, form, overview }, ownProps) => ({
   vm_choice_radio: form.planWizardGeneralStep.values.vm_choice_radio,
   infrastructure_mapping_id: form.planWizardGeneralStep.values.infrastructure_mapping,
   editingPlan: findEditingPlan(overview.transformationPlans, overview.editingPlanId),
-  formSelectedVms: form.planWizardVMStep && form.planWizardVMStep.values.selectedVms
+  formSelectedVms: form.planWizardVMStep && form.planWizardVMStep.values && form.planWizardVMStep.values.selectedVms
 });
 
 export default connect(
