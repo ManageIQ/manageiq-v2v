@@ -256,7 +256,7 @@ class PlanVmsList extends React.Component {
         </Grid.Row>
         <div style={{ overflow: 'auto', paddingBottom: 300, height: '100%' }}>
           <ListView className="plan-request-details-list">
-            {paginatedSortedFiltersVms.tasks.map((task, n) => (
+            {paginatedSortedFiltersVms.items.map((task, n) => (
               <ListView.Item
                 key={task.id}
                 heading={task.name}
