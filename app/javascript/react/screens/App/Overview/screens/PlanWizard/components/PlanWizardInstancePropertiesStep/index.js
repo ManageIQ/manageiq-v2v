@@ -44,7 +44,8 @@ const mapStateToProps = (
       osp_flavor: {}
     })),
     selectedMapping,
-    editingPlan
+    editingPlan,
+    shouldPrefillForEditing: editingPlan && editingPlan.transformation_mapping.id === infrastructure_mapping
   };
 };
 

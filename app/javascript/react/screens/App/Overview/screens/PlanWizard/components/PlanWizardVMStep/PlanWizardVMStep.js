@@ -29,7 +29,13 @@ class PlanWizardVMStep extends React.Component {
     }
   }
   onCSVParseSuccess = parsedRows => {
-    const { infrastructure_mapping_id, validateVmsUrl, validateVmsAction, editingPlan, shouldPrefillForEditing } = this.props;
+    const {
+      infrastructure_mapping_id,
+      validateVmsUrl,
+      validateVmsAction,
+      editingPlan,
+      shouldPrefillForEditing
+    } = this.props;
     // skip the header row
     parsedRows.shift();
     validateVmsAction(validateVmsUrl, infrastructure_mapping_id, parsedRows, shouldPrefillForEditing && editingPlan.id);
