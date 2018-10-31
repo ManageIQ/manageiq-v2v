@@ -8,7 +8,7 @@ import { BootstrapSelect } from '../../../../../common/forms/BootstrapSelect';
 import { validation } from '../../../../../../../../common/constants';
 import { asyncValidate, onChange } from './helpers';
 
-const PlanWizardGeneralStep = ({ transformationMappings, editingPlan }) => (
+const PlanWizardGeneralStep = ({ transformationMappings }) => (
   <Form className="form-horizontal">
     <Field
       name="infrastructure_mapping"
@@ -24,7 +24,6 @@ const PlanWizardGeneralStep = ({ transformationMappings, editingPlan }) => (
       inline_label
       labelWidth={2}
       controlWidth={9}
-      disabled={!!editingPlan}
     />
     <Field
       name="name"
@@ -70,8 +69,7 @@ const PlanWizardGeneralStep = ({ transformationMappings, editingPlan }) => (
 );
 
 PlanWizardGeneralStep.propTypes = {
-  transformationMappings: PropTypes.array,
-  editingPlan: PropTypes.object
+  transformationMappings: PropTypes.array
 };
 
 export default reduxForm({
