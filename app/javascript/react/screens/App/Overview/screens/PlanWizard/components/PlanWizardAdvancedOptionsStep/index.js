@@ -15,7 +15,7 @@ const mapStateToProps = (
     overview: { transformationPlans, editingPlanId },
     form: {
       planWizardGeneralStep: {
-        values: { vm_choice_radio }
+        values: { vm_choice_radio, infrastructure_mapping }
       },
       planWizardVMStep: {
         values: { selectedVms }
@@ -26,7 +26,8 @@ const mapStateToProps = (
   ownProps
 ) => {
   const editingPlan = findEditingPlan(transformationPlans, editingPlanId);
-  const validVmsDeduped = !editingPlan
+  const shouldPrefillForEditing = editingPlan && editingPlan.transformation_mapping.id === infrastructure_mapping;
+  const validVmsDeduped = !shouldPrefillForEditing
     ? planWizardVMStep.valid_vms
     : planWizardVMStep.valid_vms.filter(
         validVm => !planWizardVMStep.preselected_vms.some(preselectedVm => preselectedVm.id === validVm.id)
@@ -46,15 +47,20 @@ const mapStateToProps = (
     vmStepSelectedVms,
     initialValues: {
       playbookVms: {
-        preMigration: editingPlan ? getVmIdsWithProperty(editingPlan, 'pre_service', vmStepSelectedVms) : [],
-        postMigration: editingPlan ? getVmIdsWithProperty(editingPlan, 'post_service', vmStepSelectedVms) : []
+        preMigration: shouldPrefillForEditing
+          ? getVmIdsWithProperty(editingPlan, 'pre_service', vmStepSelectedVms)
+          : [],
+        postMigration: shouldPrefillForEditing
+          ? getVmIdsWithProperty(editingPlan, 'post_service', vmStepSelectedVms)
+          : []
       },
-      preMigrationPlaybook: editingPlan ? configInfo.pre_service_id : '',
-      postMigrationPlaybook: editingPlan ? configInfo.post_service_id : ''
+      preMigrationPlaybook: shouldPrefillForEditing ? configInfo.pre_service_id : '',
+      postMigrationPlaybook: shouldPrefillForEditing ? configInfo.post_service_id : ''
     },
     enableReinitialize: true, // Tells redux-form to use new initialValues when they change
     keepDirtyOnReinitialize: true,
-    editingPlan
+    editingPlan,
+    shouldPrefillForEditing
   };
 };
 
