@@ -29,7 +29,7 @@ test('clicking on a plan fires redirectTo with the path to its details page', ()
     .at(0)
     .simulate('click');
 
-  expect(redirectTo).toHaveBeenLastCalledWith(`/plan/${notStartedPlan.id}`);
+  expect(redirectTo).toHaveBeenLastCalledWith(`/migration/plan/${notStartedPlan.id}`);
 });
 
 test.skip('clicking on the Migrate button fires migrateClick with the correct API endpoint', () => {

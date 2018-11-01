@@ -51,7 +51,7 @@ class MappingWizardResultsStep extends React.Component {
 
   onContinueToPlanWizard = id => {
     this.props.continueToPlanAction(id);
-    this.props.redirectTo('/');
+    this.props.redirectTo('/migration/overview');
   };
 
   render() {

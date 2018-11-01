@@ -87,7 +87,7 @@ const MigrationsNotStartedList = ({
                         stacked
                         className="plans-not-started-list__list-item"
                         onClick={() => {
-                          redirectTo(`/plan/${plan.id}`);
+                          redirectTo(`/migration/plan/${plan.id}`);
                         }}
                         actions={
                           <div>

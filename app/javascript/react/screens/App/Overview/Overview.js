@@ -328,7 +328,7 @@ class Overview extends React.Component {
                 description={__('Create an infrastructure mapping to later be used by a migration plan')}
                 buttonText={__('Create Infrastructure Mapping')}
                 showWizardAction={() => {
-                  this.redirectTo('/mappings');
+                  this.redirectTo('/migration/mappings');
                   openMappingWizardOnTransitionAction();
                 }}
                 className="full-page-empty"
