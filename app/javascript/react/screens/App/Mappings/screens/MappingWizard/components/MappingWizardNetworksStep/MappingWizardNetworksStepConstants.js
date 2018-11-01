@@ -9,9 +9,9 @@ export const QUERY_ATTRIBUTES = {
 };
 
 export const FETCH_NETWORK_URLS = {
-  source: 'api/clusters',
-  rhevm: 'api/clusters',
-  openstack: 'api/cloud_tenants',
+  source: '/api/clusters',
+  rhevm: '/api/clusters',
+  openstack: '/api/cloud_tenants',
   public: '/api/providers'
 };
 

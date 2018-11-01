@@ -293,16 +293,16 @@ Mappings.propTypes = {
 };
 
 Mappings.defaultProps = {
-  fetchCloudNetworksUrl: 'api/cloud_networks?expand=resources',
+  fetchCloudNetworksUrl: '/api/cloud_networks?expand=resources',
   fetchCloudTenantsUrl:
-    'api/cloud_tenants?expand=resources&attributes=ext_management_system.name,cloud_networks,cloud_volume_types',
-  fetchCloudVolumeTypesUrl: 'api/cloud_volume_types?expand=resources',
+    '/api/cloud_tenants?expand=resources&attributes=ext_management_system.name,cloud_networks,cloud_volume_types',
+  fetchCloudVolumeTypesUrl: '/api/cloud_volume_types?expand=resources',
   fetchClustersUrl:
-    'api/clusters/' +
+    '/api/clusters/' +
     '?attributes=ext_management_system.emstype,v_parent_datacenter,ext_management_system.name,lans,storages' +
     '&expand=resources',
-  fetchDatastoresUrl: 'api/data_stores?expand=resources',
-  fetchNetworksUrl: 'api/lans/?expand=resources',
+  fetchDatastoresUrl: '/api/data_stores?expand=resources',
+  fetchNetworksUrl: '/api/lans/?expand=resources',
   fetchTransformationMappingsUrl: FETCH_TRANSFORMATION_MAPPINGS_URL,
   fetchArchivedTransformationPlansUrl: FETCH_ARCHIVED_TRANSFORMATION_PLANS_URL,
   fetchTransformationPlansUrl: FETCH_TRANSFORMATION_PLANS_URL

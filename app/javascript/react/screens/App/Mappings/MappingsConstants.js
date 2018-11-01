@@ -13,7 +13,7 @@ export const SHOW_V2V_DELETE_CONFIRMATION_MODAL = 'SHOW_V2V_DELETE_CONFIRMATION_
 export const YES_TO_DELETE_AND_HIDE_DELETE_CONFIRMATION_MODAL = 'YES_TO_DELETE_AND_HIDE_DELETE_CONFIRMATION_MODAL';
 
 export const FETCH_TRANSFORMATION_MAPPINGS_URL =
-  'api/transformation_mappings?expand=resources' +
+  '/api/transformation_mappings?expand=resources' +
   '&attributes=transformation_mapping_items,service_templates' +
   '&sort_by=updated_at' +
   '&sort_order=desc';

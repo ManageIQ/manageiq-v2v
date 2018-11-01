@@ -118,7 +118,7 @@ MappingWizardResultsStep.propTypes = {
   redirectTo: PropTypes.func
 };
 MappingWizardResultsStep.defaultProps = {
-  postMappingsUrl: 'api/transformation_mappings',
+  postMappingsUrl: '/api/transformation_mappings',
   postTransformMappingsAction: noop,
   transformationsBody: {},
   isPostingMappings: true,
