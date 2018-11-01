@@ -334,17 +334,19 @@ class Overview extends React.Component {
     // Full-height grey background (.cards-pf) for in-progress cards and empty states, otherwise only grey behind aggregate cards
     const overviewContent =
       inProgressCardsVisible || emptyStateVisible ? (
-        <div className="row cards-pf" style={{ overflow: 'auto', paddingBottom: 1, height: '100%' }}>
+        <div className="row cards-pf" style={{ overflow: 'auto', paddingBottom: 50, height: '100%' }}>
           {this.renderAggregateDataCards()}
           {mainContent}
         </div>
       ) : (
-        <React.Fragment>
-          <div className="row cards-pf" style={{ overflow: 'auto', paddingBottom: 1 }}>
+        <div className="row" style={{ overflow: 'auto', paddingBottom: 50, height: '100%' }}>
+          <div className="row cards-pf" style={{ marginLeft: 0, marginRight: 0 }}>
             {this.renderAggregateDataCards()}
           </div>
-          <div className="row">{mainContent}</div>
-        </React.Fragment>
+          <div className="row" style={{ marginLeft: 0, marginRight: 0 }}>
+            {mainContent}
+          </div>
+        </div>
       );
 
     const toolbarContent = (
