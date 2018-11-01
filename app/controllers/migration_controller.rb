@@ -5,8 +5,12 @@ class MigrationController < ApplicationController
   after_action :cleanup_action
 
   def index
-    # this sets the active menu item, must match the item name in lib/manageiq-v2v/engine.rb
-    @layout = 'migration'
+    @layout = case request.path
+              when '/migration/overview'
+                'overview'
+              when '/migration/mappings'
+                'mappings'
+              end
     @page_title = _('Migration')
   end
 
