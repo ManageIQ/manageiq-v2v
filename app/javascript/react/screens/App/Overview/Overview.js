@@ -21,11 +21,10 @@ class Overview extends React.Component {
     super(props);
 
     this.planWizard = componentRegistry.markup('PlanWizardContainer', props.store);
-  }
 
-  state = {
-    hasMadeInitialPlansFetch: false
-  };
+    this.hasMadeInitialPlansFetch = false;
+    this.willUnmount = false;
+  }
 
   componentDidMount() {
     const {
@@ -52,10 +51,9 @@ class Overview extends React.Component {
     const p5 = fetchProvidersAction();
 
     Promise.all([p1, p2, p3, p4, p5]).then(() => {
-      this.setState(() => ({
-        hasMadeInitialPlansFetch: true
-      }));
-      if (!this.pollingInterval) {
+      this.hasMadeInitialPlansFetch = true;
+
+      if (!this.pollingInterval && !this.willUnmount) {
         this.startPolling();
       }
     });
@@ -68,7 +66,6 @@ class Overview extends React.Component {
       fetchTransformationPlansAction,
       planWizardId
     } = this.props;
-    const { hasMadeInitialPlansFetch } = this.state;
 
     if (isContinuingToPlan !== nextProps.isContinuingToPlan && !nextProps.isContinuingToPlan) {
       this.showPlanWizardOrError(planWizardId);
@@ -77,7 +74,7 @@ class Overview extends React.Component {
     // kill interval if a wizard becomes visble
     if (nextProps.planWizardVisible) {
       this.stopPolling();
-    } else if (!nextProps.planWizardVisible && hasMadeInitialPlansFetch && !this.pollingInterval) {
+    } else if (!nextProps.planWizardVisible && this.hasMadeInitialPlansFetch && !this.pollingInterval) {
       fetchTransformationPlansAction({
         url: fetchTransformationPlansUrl,
         archived: false
@@ -87,6 +84,7 @@ class Overview extends React.Component {
   }
 
   componentWillUnmount() {
+    this.willUnmount = true;
     this.stopPolling();
   }
 
