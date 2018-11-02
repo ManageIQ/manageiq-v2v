@@ -211,11 +211,11 @@ class ListViewToolbar extends Component {
     );
   };
 
-  renderFilterControls = () => {
+  renderFilterControls = filterProps => {
     const { filterTypes } = this.props;
     const { currentFilterType } = this.state;
     return (
-      <Filter style={{ paddingLeft: 0 }}>
+      <Filter style={{ paddingLeft: 0 }} {...filterProps}>
         <Filter.TypeSelector
           filterTypes={filterTypes}
           currentFilterType={currentFilterType}
