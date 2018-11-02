@@ -105,7 +105,8 @@ class ClustersStepForm extends React.Component {
       </div>
     );
 
-  allClustersMapped = (filteredClusters, loading) =>
+  allClustersMapped = (sourceClusters, filteredClusters, loading) =>
+    !!sourceClusters.length &&
     !filteredClusters.length &&
     !loading && (
       <div className="dual-pane-mapper-item">
@@ -127,11 +128,10 @@ class ClustersStepForm extends React.Component {
 
     const { selectedTargetCluster, selectedSourceClusters, selectedMapping } = this.state;
 
+    const filteredSourceClusters = sourceClustersFilter(sourceClusters, input.value);
+
     const sourceCounter = (
-      <DualPaneMapperCount
-        selectedItems={selectedSourceClusters.length}
-        totalItems={sourceClustersFilter(sourceClusters, input.value).length}
-      />
+      <DualPaneMapperCount selectedItems={selectedSourceClusters.length} totalItems={filteredSourceClusters.length} />
     );
 
     const targetCounter = <DualPaneMapperCount selectedItems={selectedTargetCluster ? 1 : 0} totalItems={1} />;
@@ -157,7 +157,7 @@ class ClustersStepForm extends React.Component {
               loading={isFetchingSourceClusters}
               counter={sourceCounter}
             >
-              {sourceClustersFilter(sourceClusters, input.value).map(item => (
+              {filteredSourceClusters.map(item => (
                 <DualPaneMapperListItem
                   item={item}
                   text={
@@ -174,7 +174,7 @@ class ClustersStepForm extends React.Component {
                 />
               ))}
               {this.noClustersFound(sourceClusters, isFetchingSourceClusters)}
-              {this.allClustersMapped(sourceClustersFilter(sourceClusters, input.value), isFetchingSourceClusters)}
+              {this.allClustersMapped(sourceClusters, filteredSourceClusters, isFetchingSourceClusters)}
             </DualPaneMapperList>
           )}
           {targetClusters && (
