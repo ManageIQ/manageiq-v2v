@@ -1,5 +1,6 @@
 export const FETCH_V2V_SOURCE_NETWORKS = 'FETCH_V2V_SOURCE_NETWORKS';
 export const FETCH_V2V_TARGET_NETWORKS = 'FETCH_V2V_TARGET_NETWORKS';
+export const FETCH_V2V_PUBLIC_CLOUD_NETWORKS = 'FETCH_V2V_PUBLIC_CLOUD_NETWORKS';
 
 export const QUERY_ATTRIBUTES = {
   source: 'lans,ext_management_system.name,v_parent_datacenter',
@@ -10,7 +11,8 @@ export const QUERY_ATTRIBUTES = {
 export const FETCH_NETWORK_URLS = {
   source: 'api/clusters',
   rhevm: 'api/clusters',
-  openstack: 'api/cloud_tenants'
+  openstack: 'api/cloud_tenants',
+  public: '/api/providers'
 };
 
 export const NETWORK_ATTRIBUTES = {

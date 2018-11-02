@@ -3,6 +3,7 @@ import API from '../../../../../../../../common/API';
 import {
   FETCH_V2V_SOURCE_NETWORKS,
   FETCH_V2V_TARGET_NETWORKS,
+  FETCH_V2V_PUBLIC_CLOUD_NETWORKS,
   QUERY_ATTRIBUTES
 } from './MappingWizardNetworksStepConstants';
 import { V2V_TARGET_PROVIDER_NETWORK_KEYS } from '../../MappingWizardConstants';
@@ -84,4 +85,17 @@ export const fetchTargetNetworksAction = (url, id, targetProvider) => {
   uri.addSearch({ attributes: QUERY_ATTRIBUTES[targetProvider] });
 
   return _getTargetNetworksActionCreator(uri.toString(), targetProvider);
+};
+
+const _getPublicCloudNetworksActionCreator = url => dispatch =>
+  dispatch({
+    type: FETCH_V2V_PUBLIC_CLOUD_NETWORKS,
+    payload: API.get(url)
+  });
+
+export const fetchPublicCloudNetworksAction = (url, id) => {
+  const uri = new URI(`${url}/${id}/cloud_networks`);
+  uri.addSearch({ expand: 'resources' });
+
+  return _getPublicCloudNetworksActionCreator(uri.toString());
 };
