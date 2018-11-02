@@ -12,7 +12,7 @@ class PlanWizardAdvancedOptionsStep extends Component {
     super(props);
 
     if (props.pristine) {
-      if (!props.editingPlan) {
+      if (!props.shouldPrefillForEditing) {
         props.setVmsAction(props.vmStepSelectedVms);
       } else {
         props.setVmsAction(preselectPlaybooksForVms(props.editingPlan, props.vmStepSelectedVms));
@@ -106,6 +106,7 @@ PlanWizardAdvancedOptionsStep.propTypes = {
   vmStepSelectedVms: PropTypes.array,
   change: PropTypes.func,
   editingPlan: PropTypes.object,
+  shouldPrefillForEditing: PropTypes.bool,
   pristine: PropTypes.bool
 };
 
