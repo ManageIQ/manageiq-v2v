@@ -10,6 +10,11 @@ import { FETCH_TRANSFORMATION_MAPPINGS_URL } from './MappingsConstants';
 import ShowWizardEmptyState from '../common/ShowWizardEmptyState/ShowWizardEmptyState';
 
 class Mappings extends Component {
+  constructor(props) {
+    super(props);
+    this.willUnmount = false;
+  }
+
   mappingWizard = componentRegistry.markup('MappingWizardContainer', this.props.store);
 
   componentDidMount = () => {
@@ -59,7 +64,7 @@ class Mappings extends Component {
         archived: true
       })
     ]).then(() => {
-      if (!this.pollingInterval) {
+      if (!this.pollingInterval && !this.willUnmount) {
         this.startPolling();
       }
     });
@@ -78,7 +83,7 @@ class Mappings extends Component {
     if (prevProps.mappinWizardVisible !== this.props.mappingWizardVisible) {
       if (this.props.mappingWizardVisible) {
         this.stopPolling();
-      } else if (!this.props.mappingWizardVisible && !this.pollingInterval) {
+      } else if (!this.props.mappingWizardVisible && !this.pollingInterval && !this.willUnmount) {
         this.props.fetchTransformationPlansAction({
           url: this.props.fetchTransformationPlansUrl,
           archived: false
@@ -89,6 +94,7 @@ class Mappings extends Component {
   };
 
   componentWillUnmount() {
+    this.willUnmount = true;
     this.stopPolling();
   }
 

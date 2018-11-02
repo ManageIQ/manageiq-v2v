@@ -74,7 +74,7 @@ class Overview extends React.Component {
     // kill interval if a wizard becomes visble
     if (nextProps.planWizardVisible) {
       this.stopPolling();
-    } else if (!nextProps.planWizardVisible && this.hasMadeInitialPlansFetch && !this.pollingInterval) {
+    } else if (!nextProps.planWizardVisible && this.hasMadeInitialPlansFetch && !this.pollingInterval && !this.willUnmount) {
       fetchTransformationPlansAction({
         url: fetchTransformationPlansUrl,
         archived: false
