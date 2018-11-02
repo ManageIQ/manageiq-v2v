@@ -300,6 +300,7 @@ class ListViewToolbar extends Component {
   };
 
   render() {
+    const filteredListItems = this.filterListItems();
     return this.props.children(
       {
         onFirstPage: this.onFirstPage,
@@ -312,7 +313,8 @@ class ListViewToolbar extends Component {
         clearFilters: this.clearFilters,
         removeFilter: this.removeFilter,
         selectFilterType: this.selectFilterType,
-        filteredSortedPaginatedListItems: this.filterSortPaginateListItems(),
+        filteredListItems,
+        filteredSortedPaginatedListItems: this.filterSortPaginateListItems(filteredListItems),
         toggleCurrentSortDirection: this.toggleCurrentSortDirection,
         updateCurrentSortType: this.updateCurrentSortType,
         renderInput: this.renderInput,
