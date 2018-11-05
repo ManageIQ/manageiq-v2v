@@ -7,7 +7,7 @@ import { length } from 'redux-form-validators';
 import NetworksStepForm from './components/NetworksStepForm/NetworksStepForm';
 import { BootstrapSelect } from '../../../../../common/forms/BootstrapSelect';
 import { getClusterOptions, updateMappings } from '../helpers';
-import { FETCH_NETWORK_URLS } from './MappingWizardNetworksStepConstants';
+import { FETCH_NETWORK_URLS, HAS_CLOUD_NETWORKS } from './MappingWizardNetworksStepConstants';
 import { createNetworksMappings } from './components/NetworksStepForm/helpers';
 
 class MappingWizardNetworksStep extends React.Component {
@@ -91,6 +91,7 @@ class MappingWizardNetworksStep extends React.Component {
       fetchNetworksUrls,
       fetchSourceNetworksAction,
       fetchTargetNetworksAction,
+      fetchPublicCloudNetworksAction,
       clusterMappings,
       targetProvider
     } = this.props;
@@ -108,6 +109,10 @@ class MappingWizardNetworksStep extends React.Component {
 
     fetchSourceNetworksAction(fetchNetworksUrls.source, sourceClusterId);
     fetchTargetNetworksAction(fetchNetworksUrls[targetProvider], targetCluster.id, targetProvider);
+
+    if (HAS_CLOUD_NETWORKS[targetProvider]) {
+      fetchPublicCloudNetworksAction(fetchNetworksUrls.public, targetCluster.ext_management_system.id);
+    }
   };
 
   render() {
@@ -166,6 +171,7 @@ MappingWizardNetworksStep.propTypes = {
   clusterMappings: PropTypes.array,
   editingMapping: PropTypes.object,
   fetchNetworksUrls: PropTypes.object,
+  fetchPublicCloudNetworksAction: PropTypes.func,
   fetchSourceNetworksAction: PropTypes.func,
   fetchTargetNetworksAction: PropTypes.func,
   initialize: PropTypes.func,

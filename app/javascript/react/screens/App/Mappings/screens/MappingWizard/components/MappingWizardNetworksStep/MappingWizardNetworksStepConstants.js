@@ -19,3 +19,8 @@ export const NETWORK_ATTRIBUTES = {
   openstack: 'cloud_networks',
   rhevm: 'lans'
 };
+
+export const HAS_CLOUD_NETWORKS = {
+  openstack: true,
+  rhevm: false
+};
