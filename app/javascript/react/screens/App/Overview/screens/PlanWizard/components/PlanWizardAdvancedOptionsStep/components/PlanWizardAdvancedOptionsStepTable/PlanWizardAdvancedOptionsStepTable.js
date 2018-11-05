@@ -400,6 +400,7 @@ class PlanWizardAdvancedOptionsStepTable extends React.Component {
               filterTypes={filterTypes}
               currentFilterType={currentFilterType}
               onFilterTypeSelected={this.selectFilterType}
+              id="advanced_options_step"
             />
             <FormControl
               type={currentFilterType.filterType}

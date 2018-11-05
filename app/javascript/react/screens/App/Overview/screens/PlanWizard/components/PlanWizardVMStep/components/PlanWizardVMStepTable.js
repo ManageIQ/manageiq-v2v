@@ -495,6 +495,7 @@ class PlanWizardVMStepTable extends React.Component {
               filterTypes={filterTypes}
               currentFilterType={currentFilterType}
               onFilterTypeSelected={this.selectFilterType}
+              id="vms_step"
             />
             <FormControl
               type={currentFilterType.filterType}
