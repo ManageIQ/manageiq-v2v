@@ -27,8 +27,8 @@ class MappingWizardDatastoresStep extends React.Component {
       []
     );
 
-    const synchronousSetState = (fn) => {
-      this.state = { ...this.state, ...fn() }
+    const synchronousSetState = fn => {
+      this.state = { ...this.state, ...fn() };
     };
 
     if (sourceClusters.length === 1 || !pristine) {
