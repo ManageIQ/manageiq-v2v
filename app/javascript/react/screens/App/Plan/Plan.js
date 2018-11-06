@@ -8,6 +8,13 @@ import PlanRequestDetailList from './components/PlanRequestDetailList/PlanReques
 import PlanVmsList from './components/PlanVmsList';
 import PlanEmptyState from './components/PlanEmptyState';
 import getMostRecentRequest from '../common/getMostRecentRequest';
+import ListViewToolbar from '../common/ListViewToolbar/ListViewToolbar';
+import {
+  ACTIVE_PLAN_FILTER_TYPES,
+  FINISHED_PLAN_FILTER_TYPES,
+  ACTIVE_PLAN_SORT_FIELDS,
+  FINISHED_PLAN_SORT_FIELDS
+} from './components/PlanRequestDetailList/PlanRequestDetailListConstants';
 
 class Plan extends React.Component {
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -171,29 +178,51 @@ class Plan extends React.Component {
             planRequestPreviouslyFetched &&
             !isRejectedPlanRequest &&
             planRequestTasksMutable.length > 0 && (
-              <PlanRequestDetailList
-                plan={plan}
-                planFinished={planFinished}
-                planRequestTasks={planRequestTasksMutable}
-                downloadLogAction={downloadLogAction}
-                downloadLogInProgressTaskIds={downloadLogInProgressTaskIds}
-                fetchAnsiblePlaybookTemplateAction={fetchAnsiblePlaybookTemplateAction}
-                fetchAnsiblePlaybookTemplateUrl={fetchPlanUrl}
-                ansiblePlaybookTemplate={ansiblePlaybookTemplate}
-                fetchOrchestrationStackUrl={fetchOrchestrationStackUrl}
-                fetchOrchestrationStackAction={fetchOrchestrationStackAction}
-                orchestrationStack={orchestrationStack}
-                cancelPlanRequestTasksUrl={cancelPlanRequestTasksUrl}
-                cancelPlanRequestTasksAction={cancelPlanRequestTasksAction}
-                selectedTasksForCancel={selectedTasksForCancel}
-                updateSelectedTasksForCancelAction={updateSelectedTasksForCancelAction}
-                deleteAllSelectedTasksForCancelAction={deleteAllSelectedTasksForCancelAction}
-                markedForCancellation={markedForCancellation}
-                failedMigrations={failedMigrations}
-                successfulMigrations={successfulMigrations}
-                notificationsSentList={notificationsSentList}
-                dispatchVMTasksCompletionNotificationAction={dispatchVMTasksCompletionNotificationAction}
-              />
+              <ListViewToolbar
+                filterTypes={planFinished ? FINISHED_PLAN_FILTER_TYPES : ACTIVE_PLAN_FILTER_TYPES}
+                sortFields={planFinished ? FINISHED_PLAN_SORT_FIELDS : ACTIVE_PLAN_SORT_FIELDS}
+                listItems={planRequestTasksMutable}
+                defaultSortTypeIndex={1}
+              >
+                {({
+                  filteredListItems,
+                  filteredSortedPaginatedListItems,
+                  renderFilterControls,
+                  renderSortControls,
+                  renderActiveFilters,
+                  renderPaginationRow
+                }) => (
+                  <PlanRequestDetailList
+                    plan={plan}
+                    planFinished={planFinished}
+                    planRequestTasks={planRequestTasksMutable}
+                    downloadLogAction={downloadLogAction}
+                    downloadLogInProgressTaskIds={downloadLogInProgressTaskIds}
+                    fetchAnsiblePlaybookTemplateAction={fetchAnsiblePlaybookTemplateAction}
+                    fetchAnsiblePlaybookTemplateUrl={fetchPlanUrl}
+                    ansiblePlaybookTemplate={ansiblePlaybookTemplate}
+                    fetchOrchestrationStackUrl={fetchOrchestrationStackUrl}
+                    fetchOrchestrationStackAction={fetchOrchestrationStackAction}
+                    orchestrationStack={orchestrationStack}
+                    cancelPlanRequestTasksUrl={cancelPlanRequestTasksUrl}
+                    cancelPlanRequestTasksAction={cancelPlanRequestTasksAction}
+                    selectedTasksForCancel={selectedTasksForCancel}
+                    updateSelectedTasksForCancelAction={updateSelectedTasksForCancelAction}
+                    deleteAllSelectedTasksForCancelAction={deleteAllSelectedTasksForCancelAction}
+                    markedForCancellation={markedForCancellation}
+                    failedMigrations={failedMigrations}
+                    successfulMigrations={successfulMigrations}
+                    notificationsSentList={notificationsSentList}
+                    dispatchVMTasksCompletionNotificationAction={dispatchVMTasksCompletionNotificationAction}
+                    filteredListItems={filteredListItems}
+                    filteredSortedPaginatedListItems={filteredSortedPaginatedListItems}
+                    renderFilterControls={renderFilterControls}
+                    renderSortControls={renderSortControls}
+                    renderActiveFilters={renderActiveFilters}
+                    renderPaginationRow={renderPaginationRow}
+                  />
+                )}
+              </ListViewToolbar>
             )}
           {!planNotStarted &&
             planRequestPreviouslyFetched &&
