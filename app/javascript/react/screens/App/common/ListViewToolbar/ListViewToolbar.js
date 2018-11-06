@@ -8,11 +8,9 @@ import paginate from './paginate';
 
 class ListViewToolbar extends Component {
   state = {
-    filterTypes: this.props.filterTypes,
     currentFilterType: this.props.filterTypes[this.props.defaultFilterTypeIndex],
     currentValue: '',
     activeFilters: [],
-    sortFields: this.props.sortFields,
     currentSortType: this.props.sortFields[this.props.defaultSortTypeIndex],
     isSortNumeric: this.props.sortFields[this.props.defaultSortTypeIndex].isNumeric,
     isSortAscending: true,
@@ -23,6 +21,18 @@ class ListViewToolbar extends Component {
     },
     pageChangeValue: 1
   };
+
+  componentDidUpdate(prevProps) {
+    const { filterTypes, sortFields, defaultFilterTypeIndex, defaultSortTypeIndex } = this.props;
+    if (filterTypes !== prevProps.filterTypes) {
+      const newDefaultFilterType = filterTypes[defaultFilterTypeIndex];
+      this.selectFilterType(newDefaultFilterType);
+    }
+    if (sortFields !== prevProps.sortFields) {
+      const newDefaultSortType = sortFields[defaultSortTypeIndex];
+      this.updateCurrentSortType(newDefaultSortType);
+    }
+  }
 
   onValueKeyPress = keyEvent => {
     const { currentValue, currentFilterType } = this.state;
@@ -125,7 +135,7 @@ class ListViewToolbar extends Component {
     return listFilter(activeFilters, listItems);
   };
 
-  filterSortPaginateListItems = (filteredItems = this.filterListItems()) => {
+  filterSortPaginateListItems = filteredItems => {
     const { currentSortType, isSortNumeric, isSortAscending, pagination } = this.state;
     return paginate(
       sortFilter(currentSortType, isSortNumeric, isSortAscending, filteredItems),
@@ -201,10 +211,11 @@ class ListViewToolbar extends Component {
     );
   };
 
-  renderFilterControls = () => {
-    const { filterTypes, currentFilterType } = this.state;
+  renderFilterControls = filterProps => {
+    const { filterTypes } = this.props;
+    const { currentFilterType } = this.state;
     return (
-      <Filter style={{ paddingLeft: 0 }}>
+      <Filter style={{ paddingLeft: 0 }} {...filterProps}>
         <Filter.TypeSelector
           filterTypes={filterTypes}
           currentFilterType={currentFilterType}
@@ -216,7 +227,8 @@ class ListViewToolbar extends Component {
   };
 
   renderSortControls = () => {
-    const { sortFields, currentSortType, isSortNumeric, isSortAscending } = this.state;
+    const { sortFields } = this.props;
+    const { currentSortType, isSortNumeric, isSortAscending } = this.state;
     return (
       <Sort>
         <Sort.TypeSelector
@@ -288,6 +300,7 @@ class ListViewToolbar extends Component {
   };
 
   render() {
+    const filteredListItems = this.filterListItems();
     return this.props.children(
       {
         onFirstPage: this.onFirstPage,
@@ -300,7 +313,8 @@ class ListViewToolbar extends Component {
         clearFilters: this.clearFilters,
         removeFilter: this.removeFilter,
         selectFilterType: this.selectFilterType,
-        filteredSortedPaginatedListItems: this.filterSortPaginateListItems(),
+        filteredListItems,
+        filteredSortedPaginatedListItems: this.filterSortPaginateListItems(filteredListItems),
         toggleCurrentSortDirection: this.toggleCurrentSortDirection,
         updateCurrentSortType: this.updateCurrentSortType,
         renderInput: this.renderInput,

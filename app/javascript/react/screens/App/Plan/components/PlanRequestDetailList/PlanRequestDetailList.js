@@ -4,68 +4,25 @@ import {
   Button,
   Icon,
   Grid,
-  FormControl,
   FormGroup,
   ListView,
-  PaginationRow,
   Popover,
   OverlayTrigger,
   Spinner,
   Toolbar,
-  Filter,
-  Sort,
   Tooltip,
   UtilizationBar,
-  PAGINATION_VIEW,
   DropdownButton,
   MenuItem
 } from 'patternfly-react';
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
-import listFilter from '../../../common/ListViewToolbar/listFilter';
-import sortFilter from '../../../common/ListViewToolbar/sortFilter';
-import paginate from '../../../common/ListViewToolbar/paginate';
-import {
-  ACTIVE_PLAN_FILTER_TYPES,
-  FINISHED_PLAN_FILTER_TYPES,
-  ACTIVE_PLAN_SORT_FIELDS,
-  FINISHED_PLAN_SORT_FIELDS
-} from './PlanRequestDetailListConstants';
 import { V2V_MIGRATION_STATUS_MESSAGES } from '../../PlanConstants';
 import TickingIsoElapsedTime from '../../../../../../components/dates/TickingIsoElapsedTime';
 import ConfirmModal from '../../../common/ConfirmModal';
 
 class PlanRequestDetailList extends React.Component {
-  static getDerivedStateFromProps(nextProps) {
-    const filterTypes = nextProps.planFinished ? FINISHED_PLAN_FILTER_TYPES : ACTIVE_PLAN_FILTER_TYPES;
-    const sortFields = nextProps.planFinished ? FINISHED_PLAN_SORT_FIELDS : ACTIVE_PLAN_SORT_FIELDS;
-    return {
-      filterTypes,
-      sortFields
-    };
-  }
-
   state = {
-    // filter states
-    filterTypes: ACTIVE_PLAN_FILTER_TYPES,
-    currentFilterType: ACTIVE_PLAN_FILTER_TYPES[0],
-    currentValue: '',
-    activeFilters: [],
-
-    // sort states
-    sortFields: ACTIVE_PLAN_SORT_FIELDS,
-    currentSortType: ACTIVE_PLAN_SORT_FIELDS[1],
-    isSortNumeric: ACTIVE_PLAN_SORT_FIELDS[1].isNumeric,
-    isSortAscending: true,
-
-    // pagination default states
-    pagination: {
-      page: 1,
-      perPage: 5,
-      perPageOptions: [5, 10, 15]
-    },
-
-    // page input value
-    pageChangeValue: 1
+    showConfirmCancel: false
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -79,179 +36,6 @@ class PlanRequestDetailList extends React.Component {
       dispatchVMTasksCompletionNotificationAction(failedMigrations, successfulMigrations, notificationsSentList);
     }
   }
-
-  onValueKeyPress = keyEvent => {
-    const { currentValue, currentFilterType } = this.state;
-
-    if (keyEvent.key === 'Enter' && currentValue && currentValue.length > 0) {
-      this.setState({ currentValue: '' });
-      this.filterAdded(currentFilterType, currentValue);
-      keyEvent.stopPropagation();
-      keyEvent.preventDefault();
-    }
-  };
-
-  onFirstPage = () => {
-    this.setPage(1);
-  };
-
-  onLastPage = () => {
-    const { page } = this.state.pagination;
-    const totalPages = this.totalPages();
-    if (page < totalPages) {
-      this.setPage(totalPages);
-    }
-  };
-
-  onNextPage = () => {
-    const { page } = this.state.pagination;
-    if (page < this.totalPages()) {
-      this.setPage(this.state.pagination.page + 1);
-    }
-  };
-
-  onPageInput = e => {
-    this.setState({ pageChangeValue: e.target.value });
-  };
-
-  onPerPageSelect = (eventKey, e) => {
-    const newPaginationState = Object.assign({}, this.state.pagination);
-    newPaginationState.perPage = eventKey;
-    newPaginationState.page = 1;
-    this.setState({ pagination: newPaginationState });
-  };
-
-  onPreviousPage = () => {
-    if (this.state.pagination.page > 1) {
-      this.setPage(this.state.pagination.page - 1);
-    }
-  };
-
-  onSubmit = () => {
-    this.setPage(this.state.pageChangeValue);
-  };
-
-  setPage = value => {
-    const page = Number(value);
-    if (!Number.isNaN(value) && value !== '' && page > 0 && page <= this.totalPages()) {
-      const newPaginationState = Object.assign({}, this.state.pagination);
-      newPaginationState.page = page;
-      this.setState({ pagination: newPaginationState, pageChangeValue: page });
-    }
-  };
-
-  filterValueSelected = filterValue => {
-    const { currentFilterType, currentValue } = this.state;
-
-    if (filterValue !== currentValue) {
-      this.setState({ currentValue: filterValue });
-      if (filterValue) {
-        this.filterAdded(currentFilterType, filterValue);
-      }
-    }
-  };
-
-  clearFilters = () => {
-    this.setState({ activeFilters: [], currentValue: '' });
-  };
-  removeFilter = filter => {
-    const { activeFilters } = this.state;
-    const index = activeFilters.indexOf(filter);
-    if (index > -1) {
-      const updated = [...activeFilters.slice(0, index), ...activeFilters.slice(index + 1)];
-      this.setState({ activeFilters: updated });
-    }
-  };
-  selectFilterType = filterType => {
-    const { currentFilterType } = this.state;
-    if (currentFilterType !== filterType) {
-      this.setState({ currentValue: '', currentFilterType: filterType });
-    }
-  };
-  updateCurrentValue = event => {
-    this.setState({ currentValue: event.target.value });
-  };
-
-  filterPlanRequestTasks = () => {
-    const { activeFilters } = this.state;
-    const { planRequestTasks } = this.props;
-    return listFilter(activeFilters, planRequestTasks);
-  };
-
-  filterSortPaginatePlanRequestTasks = (filteredTasks = this.filterPlanRequestTasks()) => {
-    const { currentSortType, isSortNumeric, isSortAscending, pagination } = this.state;
-    return paginate(
-      sortFilter(currentSortType, isSortNumeric, isSortAscending, filteredTasks),
-      pagination.page,
-      pagination.perPage
-    );
-  };
-
-  toggleCurrentSortDirection = () => {
-    this.setState(prevState => ({
-      isSortAscending: !prevState.isSortAscending
-    }));
-  };
-
-  updateCurrentSortType = sortType => {
-    const { currentSortType } = this.state;
-    if (currentSortType !== sortType) {
-      this.setState({
-        currentSortType: sortType,
-        isSortNumeric: sortType.isNumeric,
-        isSortAscending: true
-      });
-    }
-  };
-
-  filterAdded = (field, value) => {
-    let filterText = field.title || field;
-
-    filterText += ': ';
-    filterText += value.title || value;
-
-    this.setState(prevState => ({
-      activeFilters: [...prevState.activeFilters, { label: filterText, field, value: value.title || value }],
-      pagination: {
-        ...prevState.pagination,
-        page: 1
-      },
-      pageChangeValue: 1
-    }));
-  };
-  totalPages = () => {
-    const { activeFilters, pagination } = this.state;
-    const { planRequestTasks } = this.props;
-    const allFilteredTasks = listFilter(activeFilters, planRequestTasks);
-
-    return Math.ceil(allFilteredTasks.length / pagination.perPage);
-  };
-
-  renderInput = () => {
-    const { currentFilterType, currentValue } = this.state;
-    if (!currentFilterType) {
-      return null;
-    }
-    if (currentFilterType.filterType === 'select') {
-      return (
-        <Filter.ValueSelector
-          filterValues={currentFilterType.filterValues}
-          placeholder={currentFilterType.placeholder}
-          currentValue={currentValue}
-          onFilterValueSelected={this.filterValueSelected}
-        />
-      );
-    }
-    return (
-      <FormControl
-        type={currentFilterType.filterType}
-        value={currentValue}
-        placeholder={currentFilterType.placeholder}
-        onChange={e => this.updateCurrentValue(e)}
-        onKeyPress={e => this.onValueKeyPress(e)}
-      />
-    );
-  };
 
   onSelect = (eventKey, task) => {
     const { downloadLogAction, fetchOrchestrationStackUrl, fetchOrchestrationStackAction } = this.props;
@@ -289,13 +73,11 @@ class PlanRequestDetailList extends React.Component {
   };
 
   getCancelSelectionState = () => {
-    const { selectedTasksForCancel, markedForCancellation } = this.props;
-    const filteredTasks = this.filterPlanRequestTasks();
-    const incompleteTasks = filteredTasks.filter(
+    const { selectedTasksForCancel, markedForCancellation, filteredListItems } = this.props;
+    const incompleteTasks = filteredListItems.filter(
       task => !task.completed && !task.cancelation_status && !markedForCancellation.find(t => t.id === task.id)
     );
     return {
-      filteredTasks,
       incompleteTasks,
       allSelected: selectedTasksForCancel.length === incompleteTasks.length && selectedTasksForCancel.length > 0,
       noneSelected: selectedTasksForCancel.length === 0
@@ -357,30 +139,23 @@ class PlanRequestDetailList extends React.Component {
   };
 
   render() {
-    const {
-      activeFilters,
-      filterTypes,
-      currentFilterType,
-      sortFields,
-      currentSortType,
-      isSortNumeric,
-      isSortAscending,
-      pagination,
-      pageChangeValue,
-      showConfirmCancel
-    } = this.state;
+    const { showConfirmCancel } = this.state;
 
     const {
       downloadLogInProgressTaskIds,
       ansiblePlaybookTemplate,
       planRequestTasks,
       selectedTasksForCancel,
-      markedForCancellation
+      markedForCancellation,
+      filteredSortedPaginatedListItems,
+      renderFilterControls,
+      renderSortControls,
+      renderActiveFilters,
+      renderPaginationRow
     } = this.props;
 
-    const { filteredTasks, allSelected, noneSelected } = this.getCancelSelectionState();
+    const { allSelected, noneSelected } = this.getCancelSelectionState();
 
-    const paginatedSortedFiltersTasks = this.filterSortPaginatePlanRequestTasks(filteredTasks);
     const totalNumTasks = planRequestTasks.length;
 
     const selectAllCheckbox = (
@@ -409,57 +184,14 @@ class PlanRequestDetailList extends React.Component {
                 </MenuItem>
               </DropdownButton>
             </FormGroup>
-            <Filter style={{ paddingLeft: 20 }}>
-              <Filter.TypeSelector
-                filterTypes={filterTypes}
-                currentFilterType={currentFilterType}
-                onFilterTypeSelected={this.selectFilterType}
-              />
-              {this.renderInput()}
-            </Filter>
-            <Sort>
-              <Sort.TypeSelector
-                sortTypes={sortFields}
-                currentSortType={currentSortType}
-                onSortTypeSelected={this.updateCurrentSortType}
-              />
-              <Sort.DirectionSelector
-                isNumeric={isSortNumeric}
-                isAscending={isSortAscending}
-                onClick={this.toggleCurrentSortDirection}
-              />
-            </Sort>
+            {renderFilterControls({ style: { paddingLeft: 20 } })}
+            {renderSortControls()}
             <Toolbar.RightContent>
               <Button disabled={selectedTasksForCancel.length === 0} onClick={this.onCancelMigrationsClick}>
                 {__('Cancel Migration')}
               </Button>
             </Toolbar.RightContent>
-            {activeFilters &&
-              activeFilters.length > 0 && (
-                <Toolbar.Results>
-                  <h5>
-                    {paginatedSortedFiltersTasks.itemCount}{' '}
-                    {paginatedSortedFiltersTasks.itemCount === 1 ? __('Result') : __('Results')}
-                  </h5>
-                  <Filter.ActiveLabel>{__('Active Filters')}:</Filter.ActiveLabel>
-                  <Filter.List>
-                    {activeFilters.map((item, index) => (
-                      <Filter.Item key={index} onRemove={this.removeFilter} filterData={item}>
-                        {item.label}
-                      </Filter.Item>
-                    ))}
-                  </Filter.List>
-                  <a
-                    href="#"
-                    onClick={e => {
-                      e.preventDefault();
-                      this.clearFilters();
-                    }}
-                  >
-                    {__('Clear All Filters')}
-                  </a>
-                </Toolbar.Results>
-              )}
+            {renderActiveFilters(filteredSortedPaginatedListItems)}
           </Toolbar>
           {selectedTasksForCancel.length > 0 && (
             <Toolbar>
@@ -471,7 +203,7 @@ class PlanRequestDetailList extends React.Component {
         </Grid.Row>
         <div style={{ overflow: 'auto', paddingBottom: 300, height: '100%' }}>
           <ListView className="plan-request-details-list">
-            {paginatedSortedFiltersTasks.items.map((task, n) => {
+            {filteredSortedPaginatedListItems.items.map((task, n) => {
               let taskMessage = task.message;
               let taskCancelled = false;
 
@@ -694,22 +426,7 @@ class PlanRequestDetailList extends React.Component {
               );
             })}
           </ListView>
-          <PaginationRow
-            viewType={PAGINATION_VIEW.LIST}
-            pagination={pagination}
-            pageInputValue={pageChangeValue}
-            amountOfPages={paginatedSortedFiltersTasks.amountOfPages}
-            itemCount={paginatedSortedFiltersTasks.itemCount}
-            itemsStart={paginatedSortedFiltersTasks.itemsStart}
-            itemsEnd={paginatedSortedFiltersTasks.itemsEnd}
-            onPerPageSelect={this.onPerPageSelect}
-            onFirstPage={this.onFirstPage}
-            onPreviousPage={this.onPreviousPage}
-            onPageInput={this.onPageInput}
-            onNextPage={this.onNextPage}
-            onLastPage={this.onLastPage}
-            onSubmit={this.onSubmit}
-          />
+          {renderPaginationRow(filteredSortedPaginatedListItems)}
         </div>
         <ConfirmModal
           show={showConfirmCancel}
@@ -756,7 +473,13 @@ PlanRequestDetailList.propTypes = {
   failedMigrations: PropTypes.array,
   successfulMigrations: PropTypes.array,
   notificationsSentList: PropTypes.array,
-  dispatchVMTasksCompletionNotificationAction: PropTypes.func
+  dispatchVMTasksCompletionNotificationAction: PropTypes.func,
+  filteredListItems: PropTypes.array,
+  filteredSortedPaginatedListItems: PropTypes.object,
+  renderFilterControls: PropTypes.func,
+  renderSortControls: PropTypes.func,
+  renderActiveFilters: PropTypes.func,
+  renderPaginationRow: PropTypes.func
 };
 
 export default PlanRequestDetailList;
