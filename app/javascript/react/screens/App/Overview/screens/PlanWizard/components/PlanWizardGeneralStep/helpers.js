@@ -26,6 +26,6 @@ export const asyncValidate = (values, dispatch, props) =>
 
 export const onChange = (values, dispatch, props) => {
   if (props.valid) {
-    if (props.hideAlertAction) props.hideAlertAction();
+    if (props.hideAlertAction && props.alertType === 'error') props.hideAlertAction();
   }
 };

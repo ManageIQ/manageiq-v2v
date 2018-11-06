@@ -3,7 +3,7 @@ import PlanWizardGeneralStep from './PlanWizardGeneralStep';
 import { showAlertAction, hideAlertAction } from '../../PlanWizardActions';
 import { findEditingPlan } from '../../PlanWizardSelectors';
 
-const mapStateToProps = ({ overview }) => {
+const mapStateToProps = ({ overview, planWizard }) => {
   const editingPlan = findEditingPlan(overview.transformationPlans, overview.editingPlanId);
   const prefilledMappingId =
     editingPlan &&
@@ -22,7 +22,8 @@ const mapStateToProps = ({ overview }) => {
     },
     enableReinitialize: true, // Tells redux-form to use new initialValues when they change
     keepDirtyOnReinitialize: true,
-    editingPlan
+    editingPlan,
+    alertType: planWizard && planWizard.alertType
   };
 };
 

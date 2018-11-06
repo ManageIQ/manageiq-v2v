@@ -8,7 +8,7 @@ import { BootstrapSelect } from '../../../../../common/forms/BootstrapSelect';
 import { validation } from '../../../../../../../../common/constants';
 import { asyncValidate, onChange } from './helpers';
 
-const PlanWizardGeneralStep = ({ transformationMappings }) => (
+const PlanWizardGeneralStep = ({ transformationMappings, editingPlan, showAlertAction, hideAlertAction }) => (
   <Form className="form-horizontal">
     <Field
       name="infrastructure_mapping"
@@ -24,6 +24,16 @@ const PlanWizardGeneralStep = ({ transformationMappings }) => (
       inline_label
       labelWidth={2}
       controlWidth={9}
+      onChange={event => {
+        if (editingPlan && event.target.value !== editingPlan.transformation_mapping.id) {
+          showAlertAction(
+            __('Selecting a different infrastructure mapping will cause all VM and option selections to be cleared.'),
+            'warning'
+          );
+        } else {
+          hideAlertAction();
+        }
+      }}
     />
     <Field
       name="name"
@@ -69,7 +79,10 @@ const PlanWizardGeneralStep = ({ transformationMappings }) => (
 );
 
 PlanWizardGeneralStep.propTypes = {
-  transformationMappings: PropTypes.array
+  transformationMappings: PropTypes.array,
+  editingPlan: PropTypes.object,
+  showAlertAction: PropTypes.func,
+  hideAlertAction: PropTypes.func
 };
 
 export default reduxForm({
