@@ -1,4 +1,5 @@
 import getMostRecentRequest from '../common/getMostRecentRequest';
+import { PROVIDERS } from './OverviewConstants';
 
 export const planTransmutation = (plans = [], mappings = []) =>
   plans.map(plan => {
@@ -13,5 +14,5 @@ export const planTransmutation = (plans = [], mappings = []) =>
   });
 
 export const sufficientProviders = (providers = []) =>
-  providers.some(p => p.type === 'ManageIQ::Providers::Vmware::InfraManager') &&
-  providers.some(p => p.type === 'ManageIQ::Providers::Redhat::InfraManager');
+  providers.some(provider => PROVIDERS.source.includes(provider.type)) &&
+  providers.some(provider => PROVIDERS.target.includes(provider.type));
