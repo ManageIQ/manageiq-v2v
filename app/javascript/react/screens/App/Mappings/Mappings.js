@@ -216,7 +216,7 @@ class Mappings extends Component {
           ) : (
             <ShowWizardEmptyState
               description={
-                __('The VMWare and Red Hat Virtualization providers must be configured before attempting a migration.') // prettier-ignore
+                __('The source and target providers must be configured before attempting a migration') // prettier-ignore
               }
               buttonText={__('Configure Providers')}
               buttonHref="/ems_infra/show_list"
