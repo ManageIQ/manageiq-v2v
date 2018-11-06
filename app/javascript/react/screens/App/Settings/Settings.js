@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { reduxForm, Field } from 'redux-form';
 import { Breadcrumb, Form, Grid, Button } from 'patternfly-react';
 import Toolbar from '../../../config/Toolbar';
+import NumberInput from '../common/forms/NumberInput';
 
 const normalizeStringToInt = str => str && parseInt(str.replace(/\D/g, ''), 10) || 0;
 
@@ -36,13 +37,14 @@ class Settings extends React.Component {
               {__('Maximum Concurrent migrations per conversion host')}
             </Grid.Col>
             <Grid.Col sm={7}>
-              <Field
-                name="maxMigrationsPerHost"
-                component="input"
-                type="text"
-                className="bootstrap-touchspin"
-                normalize={normalizeStringToInt}
-              />
+              <div style={{ width: 100 }}>
+                <Field
+                  id="maxMigrationsPerHost"
+                  name="maxMigrationsPerHost"
+                  component={NumberInput}
+                  normalize={normalizeStringToInt}
+                />
+              </div>
             </Grid.Col>
           </Form.FormGroup>
           <Form.FormGroup>
