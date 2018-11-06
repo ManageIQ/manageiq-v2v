@@ -135,7 +135,7 @@ class ListViewToolbar extends Component {
     return listFilter(activeFilters, listItems);
   };
 
-  filterSortPaginateListItems = (filteredItems = this.filterListItems()) => {
+  filterSortPaginateListItems = filteredItems => {
     const { currentSortType, isSortNumeric, isSortAscending, pagination } = this.state;
     return paginate(
       sortFilter(currentSortType, isSortNumeric, isSortAscending, filteredItems),
