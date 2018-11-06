@@ -182,6 +182,7 @@ class Plan extends React.Component {
                 filterTypes={planFinished ? FINISHED_PLAN_FILTER_TYPES : ACTIVE_PLAN_FILTER_TYPES}
                 sortFields={planFinished ? FINISHED_PLAN_SORT_FIELDS : ACTIVE_PLAN_SORT_FIELDS}
                 listItems={planRequestTasksMutable}
+                defaultSortTypeIndex={1}
               >
                 {({
                   filteredListItems,
