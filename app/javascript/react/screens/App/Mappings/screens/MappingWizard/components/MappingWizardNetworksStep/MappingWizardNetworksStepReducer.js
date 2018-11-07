@@ -53,9 +53,7 @@ export default (state = initialState, action) => {
     case `${FETCH_V2V_PUBLIC_CLOUD_NETWORKS}_PENDING`:
       return state.set('isFetchingPublicCloudNetworks', true).set('isRejectedPublicCloudNetworks', false);
     case `${FETCH_V2V_PUBLIC_CLOUD_NETWORKS}_FULFILLED`:
-      return state
-        .set('publicCloudNetworks', action.payload.data.resources)
-        .set('isFetchingPublicCloudNetworks', false);
+      return state.set('publicCloudNetworks', action.payload).set('isFetchingPublicCloudNetworks', false);
     case `${FETCH_V2V_PUBLIC_CLOUD_NETWORKS}_REJECTED`:
       return state
         .set('errorPublicCloudNetworks', action.payload)

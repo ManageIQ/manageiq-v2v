@@ -111,7 +111,7 @@ class MappingWizardNetworksStep extends React.Component {
     fetchTargetNetworksAction(fetchNetworksUrls[targetProvider], targetCluster.id, targetProvider);
 
     if (HAS_CLOUD_NETWORKS[targetProvider]) {
-      fetchPublicCloudNetworksAction(fetchNetworksUrls.public, targetCluster.ext_management_system.id);
+      fetchPublicCloudNetworksAction(fetchNetworksUrls.public, targetCluster);
     }
   };
 
