@@ -58,8 +58,15 @@ class Settings extends React.Component {
             <Form.FormGroup>
               <Grid.Col sm={12}>
                 <Button bsStyle="primary" onClick={this.onApplyClick} disabled={!hasUnsavedChanges || isSavingSettings}>
-                  {!isSavingSettings ? __('Apply') : __('Applying...')}
+                  {__('Apply')}
                 </Button>
+                <br />
+                {isSavingSettings && (
+                  <div style={{ paddingTop: 10 }}>
+                    <Spinner loading size="xs" inline />
+                    {__(' Applying...')}
+                  </div>
+                )}
               </Grid.Col>
             </Form.FormGroup>
           </Form>
