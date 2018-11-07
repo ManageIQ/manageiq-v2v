@@ -14,11 +14,13 @@ class Settings extends React.Component {
   }
 
   onApplyClick = () => {
-    console.log('TODO: apply settings changes');
+    const { postSettingsAction, settingsForm } = this.props;
+    const newSettings = { ...settingsForm.values };
+    postSettingsAction('TODO: url here', newSettings); // TODO
   };
 
   render() {
-    const { isFetchingSettings, savedSettings, settingsForm } = this.props;
+    const { isFetchingSettings, isSavingSettings, savedSettings, settingsForm } = this.props;
 
     const toolbarContent = (
       <Toolbar>
@@ -55,8 +57,8 @@ class Settings extends React.Component {
             </Form.FormGroup>
             <Form.FormGroup>
               <Grid.Col sm={12}>
-                <Button bsStyle="primary" onClick={this.onApplyClick} disabled={!hasUnsavedChanges}>
-                  {__('Apply')}
+                <Button bsStyle="primary" onClick={this.onApplyClick} disabled={!hasUnsavedChanges || isSavingSettings}>
+                  {!isSavingSettings ? __('Apply') : __('Applying...')}
                 </Button>
               </Grid.Col>
             </Form.FormGroup>
@@ -76,6 +78,10 @@ class Settings extends React.Component {
 
 Settings.propTypes = {
   fetchSettingsAction: PropTypes.func,
+  postSettingsAction: PropTypes.func,
+  isFetchingSettings: PropTypes.bool,
+  isSavingSettings: PropTypes.bool,
+  savedSettings: PropTypes.object,
   settingsForm: PropTypes.object
 };
 
