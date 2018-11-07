@@ -4,7 +4,10 @@ import 'bootstrap-touchspin';
 
 class NumberInput extends React.Component {
   componentDidMount() {
-    const { id, input: { onChange } } = this.props;
+    const {
+      id,
+      input: { onChange }
+    } = this.props;
     const input = $(`#${id}`);
     input.TouchSpin({
       buttondown_class: 'btn btn-default',
@@ -21,7 +24,10 @@ class NumberInput extends React.Component {
   }
 
   render() {
-    const { id, input: { value, onChange } } = this.props;
+    const {
+      id,
+      input: { value, onChange }
+    } = this.props;
     return <input id={id} value={value} onChange={event => onChange(event.target.value)} />;
   }
 }

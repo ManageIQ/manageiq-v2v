@@ -5,7 +5,7 @@ import { Breadcrumb, Form, Grid, Button, Spinner } from 'patternfly-react';
 import Toolbar from '../../../config/Toolbar';
 import NumberInput from '../common/forms/NumberInput';
 
-const normalizeStringToInt = str => str && parseInt(str.replace(/\D/g, ''), 10) || 0;
+const normalizeStringToInt = str => (str && parseInt(str.replace(/\D/g, ''), 10)) || 0;
 
 class Settings extends React.Component {
   componentDidMount() {
@@ -18,7 +18,7 @@ class Settings extends React.Component {
   };
 
   render() {
-    const { settingsForm, isFetchingSettings } = this.props;
+    const { isFetchingSettings, savedSettings, settingsForm } = this.props;
 
     const toolbarContent = (
       <Toolbar>
@@ -27,6 +27,11 @@ class Settings extends React.Component {
         <Breadcrumb.Item active>{__('Migration Settings')}</Breadcrumb.Item>
       </Toolbar>
     );
+
+    const hasUnsavedChanges =
+      settingsForm &&
+      settingsForm.values &&
+      Object.keys(savedSettings).some(key => savedSettings[key] !== settingsForm.values[key]);
 
     const settingsContent = (
       <Spinner loading={isFetchingSettings} style={{ marginTop: 15 }}>
@@ -50,7 +55,7 @@ class Settings extends React.Component {
             </Form.FormGroup>
             <Form.FormGroup>
               <Grid.Col sm={12}>
-                <Button bsStyle="primary" onClick={this.onApplyClick}>
+                <Button bsStyle="primary" onClick={this.onApplyClick} disabled={!hasUnsavedChanges}>
                   {__('Apply')}
                 </Button>
               </Grid.Col>
