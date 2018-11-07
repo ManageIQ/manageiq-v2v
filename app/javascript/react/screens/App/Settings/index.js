@@ -12,9 +12,7 @@ const mapStateToProps = ({ settings, form }, ownProps) => ({
   ...settings,
   ...ownProps.data,
   settingsForm: form.settings,
-  initialValues: {
-    maxMigrationsPerHost: 10
-  },
+  initialValues: settings.savedSettings,
   enableReinitialize: true
 });
 

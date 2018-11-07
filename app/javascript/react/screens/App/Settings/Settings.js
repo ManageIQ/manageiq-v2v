@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { reduxForm, Field } from 'redux-form';
-import { Breadcrumb, Form, Grid, Button } from 'patternfly-react';
+import { Breadcrumb, Form, Grid, Button, Spinner } from 'patternfly-react';
 import Toolbar from '../../../config/Toolbar';
 import NumberInput from '../common/forms/NumberInput';
 
@@ -18,7 +18,7 @@ class Settings extends React.Component {
   };
 
   render() {
-    const { settingsForm } = this.props;
+    const { settingsForm, isFetchingSettings } = this.props;
 
     const toolbarContent = (
       <Toolbar>
@@ -29,33 +29,35 @@ class Settings extends React.Component {
     );
 
     const settingsContent = (
-      <div className="migration-settings">
-        <h2>{__('Concurrent Migrations')}</h2>
-        <Form horizontal>
-          <Form.FormGroup>
-            <Grid.Col componentClass={Form.ControlLabel} sm={5}>
-              {__('Maximum Concurrent migrations per conversion host')}
-            </Grid.Col>
-            <Grid.Col sm={7}>
-              <div style={{ width: 100 }}>
-                <Field
-                  id="maxMigrationsPerHost"
-                  name="maxMigrationsPerHost"
-                  component={NumberInput}
-                  normalize={normalizeStringToInt}
-                />
-              </div>
-            </Grid.Col>
-          </Form.FormGroup>
-          <Form.FormGroup>
-            <Grid.Col sm={12}>
-              <Button bsStyle="primary" onClick={this.onApplyClick}>
-                {__('Apply')}
-              </Button>
-            </Grid.Col>
-          </Form.FormGroup>
-        </Form>
-      </div>
+      <Spinner loading={isFetchingSettings} style={{ marginTop: 15 }}>
+        <div className="migration-settings">
+          <h2>{__('Concurrent Migrations')}</h2>
+          <Form horizontal>
+            <Form.FormGroup>
+              <Grid.Col componentClass={Form.ControlLabel} sm={5}>
+                {__('Maximum Concurrent migrations per conversion host')}
+              </Grid.Col>
+              <Grid.Col sm={7}>
+                <div style={{ width: 100 }}>
+                  <Field
+                    id="maxMigrationsPerHost"
+                    name="maxMigrationsPerHost"
+                    component={NumberInput}
+                    normalize={normalizeStringToInt}
+                  />
+                </div>
+              </Grid.Col>
+            </Form.FormGroup>
+            <Form.FormGroup>
+              <Grid.Col sm={12}>
+                <Button bsStyle="primary" onClick={this.onApplyClick}>
+                  {__('Apply')}
+                </Button>
+              </Grid.Col>
+            </Form.FormGroup>
+          </Form>
+        </div>
+      </Spinner>
     );
 
     return (
