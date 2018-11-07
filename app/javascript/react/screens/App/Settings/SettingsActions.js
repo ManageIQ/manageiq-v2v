@@ -1,16 +1,13 @@
 import URI from 'urijs';
 // import API from '../../../../common/API';
 
-import { V2V_FETCH_SETTINGS, V2V_POST_SETTINGS } from './SettingsConstants';
+import { V2V_FETCH_SETTINGS, V2V_PATCH_SETTINGS } from './SettingsConstants';
+import { getApiSettingsFromFormValues } from './helpers';
 
 const _getSettingsActionCreator = url => dispatch =>
   dispatch({
     type: V2V_FETCH_SETTINGS,
-    // payload: API.get(url)
-    // TODO replace this dummy payload with actual settings from API
-    payload: new Promise(resolve => {
-      setTimeout(() => resolve({ maxMigrationsPerHost: 10 }), 2000);
-    })
+    payload: API.get(url)
   });
 
 export const fetchSettingsAction = url => {
@@ -18,17 +15,13 @@ export const fetchSettingsAction = url => {
   return _getSettingsActionCreator(uri.toString());
 };
 
-const _postSettingsActionCreator = (url, newSettings) => dispatch =>
+const _patchSettingsActionCreator = (url, settingsFormValues) => dispatch =>
   dispatch({
-    type: V2V_POST_SETTINGS,
-    // payload: API.post(url, newSettings)
-    // TODO replace this dummy payload with a real POST
-    payload: new Promise(resolve => {
-      setTimeout(() => resolve(newSettings), 2000);
-    })
+    type: V2V_PATCH_SETTINGS,
+    payload: API.patch(url, getApiSettingsFromFormValues(settingsFormValues))
   });
 
-export const postSettingsAction = (url, newSettings) => {
+export const patchSettingsAction = (url, newSettings) => {
   const uri = new URI(url);
-  return _postSettingsActionCreator(uri.toString(), newSettings);
+  return _patchSettingsActionCreator(uri.toString(), newSettings);
 };

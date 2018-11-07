@@ -9,14 +9,13 @@ const normalizeStringToInt = str => (str && parseInt(str.replace(/\D/g, ''), 10)
 
 class Settings extends React.Component {
   componentDidMount() {
-    const { fetchSettingsAction } = this.props;
-    fetchSettingsAction('TODO: url here'); // TODO
+    const { fetchSettingsAction, fetchSettingsUrl } = this.props;
+    fetchSettingsAction(fetchSettingsUrl);
   }
 
   onApplyClick = () => {
-    const { postSettingsAction, settingsForm } = this.props;
-    const newSettings = { ...settingsForm.values };
-    postSettingsAction('TODO: url here', newSettings); // TODO
+    const { patchSettingsAction, patchSettingsUrl, settingsForm } = this.props;
+    patchSettingsAction(patchSettingsUrl, settingsForm.values);
   };
 
   render() {
@@ -47,8 +46,8 @@ class Settings extends React.Component {
               <Grid.Col sm={7}>
                 <div style={{ width: 100 }}>
                   <Field
-                    id="maxMigrationsPerHost"
-                    name="maxMigrationsPerHost"
+                    id="max_concurrent_tasks_per_host"
+                    name="max_concurrent_tasks_per_host"
                     component={NumberInput}
                     normalize={normalizeStringToInt}
                   />
@@ -85,11 +84,18 @@ class Settings extends React.Component {
 
 Settings.propTypes = {
   fetchSettingsAction: PropTypes.func,
-  postSettingsAction: PropTypes.func,
+  patchSettingsAction: PropTypes.func,
   isFetchingSettings: PropTypes.bool,
   isSavingSettings: PropTypes.bool,
   savedSettings: PropTypes.object,
-  settingsForm: PropTypes.object
+  settingsForm: PropTypes.object,
+  fetchSettingsUrl: PropTypes.string,
+  patchSettingsUrl: PropTypes.string
+};
+
+Settings.defaultProps = {
+  fetchSettingsUrl: '/api/settings',
+  patchSettingsUrl: '/api/settings'
 };
 
 export default reduxForm({

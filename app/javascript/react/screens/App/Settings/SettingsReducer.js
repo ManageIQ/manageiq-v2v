@@ -1,6 +1,7 @@
 import Immutable from 'seamless-immutable';
 
-import { V2V_FETCH_SETTINGS, V2V_POST_SETTINGS } from './SettingsConstants';
+import { V2V_FETCH_SETTINGS, V2V_PATCH_SETTINGS } from './SettingsConstants';
+import { getFormValuesFromApiSettings } from './helpers';
 
 export const initialState = Immutable({
   isFetchingSettings: false,
@@ -29,24 +30,24 @@ export default (state = initialState, action) => {
         .set('isFetchingSettings', false)
         .set('fetchingSettingsRejected', false)
         .set('errorFetchingSettings', null)
-        .set('savedSettings', action.payload);
+        .set('savedSettings', getFormValuesFromApiSettings(action.payload));
 
-    case `${V2V_POST_SETTINGS}_PENDING`:
+    case `${V2V_PATCH_SETTINGS}_PENDING`:
       return state
         .set('isSavingSettings', true)
         .set('savingSettingsRejected', false)
         .set('errorSavingSettings', null);
-    case `${V2V_POST_SETTINGS}_REJECTED`:
+    case `${V2V_PATCH_SETTINGS}_REJECTED`:
       return state
         .set('isSavingSettings', false)
         .set('savingSettingsRejected', true)
         .set('errorSavingSettings', action.payload);
-    case `${V2V_POST_SETTINGS}_FULFILLED`:
+    case `${V2V_PATCH_SETTINGS}_FULFILLED`:
       return state
         .set('isSavingSettings', false)
         .set('savingSettingsRejected', false)
         .set('errorSavingSettings', null)
-        .set('savedSettings', action.payload);
+        .set('savedSettings', getFormValuesFromApiSettings(action.payload));
 
     default:
       return state;
