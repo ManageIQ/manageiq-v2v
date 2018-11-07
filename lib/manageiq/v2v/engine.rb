@@ -14,7 +14,7 @@ module ManageIQ::V2V
       Menu::CustomLoader.register(
         Menu::Section.new(:migration, N_("Migration"), 'fa fa-plus', [
           Menu::Item.new('migration', N_("Overview"), 'miq_report', {:feature => 'miq_report', :any => true}, '/migration'),
-          Menu::Item.new('mappings', N_("Infrastructure Mappings"), 'miq_report', {:feature => 'miq_report', :any => true}, '/migration#/mappings')
+          Menu::Item.new('mappings', N_("Infrastructure Mappings"), 'miq_report', {:feature => 'miq_report', :any => true}, '/migration#/mappings'),
           Menu::Item.new('settings', N_("Migration Settings"), 'miq_report', {:feature => 'miq_report', :any => true}, '/migration#/settings')
         ], nil, nil, nil, nil, :compute)
       )
