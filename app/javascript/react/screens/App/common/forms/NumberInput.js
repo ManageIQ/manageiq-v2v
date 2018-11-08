@@ -40,4 +40,6 @@ NumberInput.propTypes = {
   })
 };
 
+NumberInput.normalizeStringToInt = str => (str && parseInt(str.replace(/\D/g, ''), 10)) || 0;
+
 export default NumberInput;

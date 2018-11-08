@@ -5,8 +5,6 @@ import { Breadcrumb, Form, Grid, Button, Spinner } from 'patternfly-react';
 import Toolbar from '../../../config/Toolbar';
 import NumberInput from '../common/forms/NumberInput';
 
-const normalizeStringToInt = str => (str && parseInt(str.replace(/\D/g, ''), 10)) || 0;
-
 class Settings extends React.Component {
   componentDidMount() {
     const { fetchApiInfoAction, fetchApiInfoUrl, fetchSettingsAction, fetchSettingsUrl } = this.props;
@@ -51,7 +49,7 @@ class Settings extends React.Component {
                     id="max_concurrent_tasks_per_host"
                     name="max_concurrent_tasks_per_host"
                     component={NumberInput}
-                    normalize={normalizeStringToInt}
+                    normalize={NumberInput.normalizeStringToInt}
                   />
                 </div>
               </Grid.Col>
