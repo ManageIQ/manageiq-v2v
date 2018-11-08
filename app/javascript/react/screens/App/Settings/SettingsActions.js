@@ -1,8 +1,19 @@
 import URI from 'urijs';
 import API from '../../../../common/API';
 
-import { V2V_FETCH_SETTINGS, V2V_PATCH_SETTINGS } from './SettingsConstants';
+import { V2V_FETCH_API_INFO, V2V_FETCH_SETTINGS, V2V_PATCH_SETTINGS } from './SettingsConstants';
 import { getApiSettingsFromFormValues } from './helpers';
+
+const _getApiInfoActionCreator = url => dispatch =>
+  dispatch({
+    type: V2V_FETCH_API_INFO,
+    payload: API.get(url)
+  });
+
+export const fetchApiInfoAction = url => {
+  const uri = new URI(url);
+  return _getApiInfoActionCreator(uri.toString());
+};
 
 const _getSettingsActionCreator = url => dispatch =>
   dispatch({

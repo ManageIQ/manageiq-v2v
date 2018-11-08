@@ -9,17 +9,19 @@ const normalizeStringToInt = str => (str && parseInt(str.replace(/\D/g, ''), 10)
 
 class Settings extends React.Component {
   componentDidMount() {
-    const { fetchSettingsAction, fetchSettingsUrl } = this.props;
+    const { fetchApiInfoAction, fetchApiInfoUrl, fetchSettingsAction, fetchSettingsUrl } = this.props;
     fetchSettingsAction(fetchSettingsUrl);
+    fetchApiInfoAction(fetchApiInfoUrl);
   }
 
   onApplyClick = () => {
-    const { patchSettingsAction, patchSettingsUrl, settingsForm } = this.props;
+    const { patchSettingsAction, apiInfo, settingsForm } = this.props;
+    const patchSettingsUrl = `${apiInfo.server_info.server_href}/settings`;
     patchSettingsAction(patchSettingsUrl, settingsForm.values);
   };
 
   render() {
-    const { isFetchingSettings, isSavingSettings, savedSettings, settingsForm } = this.props;
+    const { isFetchingApiInfo, isFetchingSettings, isSavingSettings, savedSettings, settingsForm } = this.props;
 
     const toolbarContent = (
       <Toolbar>
@@ -35,13 +37,13 @@ class Settings extends React.Component {
       Object.keys(savedSettings).some(key => savedSettings[key] !== settingsForm.values[key]);
 
     const settingsContent = (
-      <Spinner loading={isFetchingSettings} style={{ marginTop: 15 }}>
+      <Spinner loading={isFetchingApiInfo || isFetchingSettings} style={{ marginTop: 15 }}>
         <div className="migration-settings">
           <h2>{__('Concurrent Migrations')}</h2>
           <Form horizontal>
             <Form.FormGroup>
               <Grid.Col componentClass={Form.ControlLabel} sm={5}>
-                {__('Maximum Concurrent migrations per conversion host')}
+                {__('Maximum concurrent migrations per conversion host')}
               </Grid.Col>
               <Grid.Col sm={7}>
                 <div style={{ width: 100 }}>
@@ -83,19 +85,22 @@ class Settings extends React.Component {
 }
 
 Settings.propTypes = {
+  fetchApiInfoAction: PropTypes.func,
   fetchSettingsAction: PropTypes.func,
   patchSettingsAction: PropTypes.func,
+  isFetchingApiInfo: PropTypes.bool,
   isFetchingSettings: PropTypes.bool,
   isSavingSettings: PropTypes.bool,
+  apiInfo: PropTypes.object,
   savedSettings: PropTypes.object,
   settingsForm: PropTypes.object,
   fetchSettingsUrl: PropTypes.string,
-  patchSettingsUrl: PropTypes.string
+  fetchApiInfoUrl: PropTypes.string
 };
 
 Settings.defaultProps = {
-  fetchSettingsUrl: '/api/settings',
-  patchSettingsUrl: '/api/settings'
+  fetchApiInfoUrl: '/api',
+  fetchSettingsUrl: '/api/settings'
 };
 
 export default reduxForm({
