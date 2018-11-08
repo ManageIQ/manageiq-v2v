@@ -7,19 +7,18 @@ import NumberInput from '../common/forms/NumberInput';
 
 class Settings extends React.Component {
   componentDidMount() {
-    const { fetchApiInfoAction, fetchApiInfoUrl, fetchSettingsAction, fetchSettingsUrl } = this.props;
+    const { fetchServersAction, fetchServersUrl, fetchSettingsAction, fetchSettingsUrl } = this.props;
+    fetchServersAction(fetchServersUrl);
     fetchSettingsAction(fetchSettingsUrl);
-    fetchApiInfoAction(fetchApiInfoUrl);
   }
 
   onApplyClick = () => {
-    const { patchSettingsAction, apiInfo, settingsForm } = this.props;
-    const patchSettingsUrl = `${apiInfo.server_info.server_href}/settings`;
-    patchSettingsAction(patchSettingsUrl, settingsForm.values);
+    const { patchSettingsAction, servers, settingsForm } = this.props;
+    patchSettingsAction(servers, settingsForm.values);
   };
 
   render() {
-    const { isFetchingApiInfo, isFetchingSettings, isSavingSettings, savedSettings, settingsForm } = this.props;
+    const { isFetchingServers, isFetchingSettings, isSavingSettings, savedSettings, settingsForm } = this.props;
 
     const toolbarContent = (
       <Toolbar>
@@ -35,7 +34,7 @@ class Settings extends React.Component {
       Object.keys(savedSettings).some(key => savedSettings[key] !== settingsForm.values[key]);
 
     const settingsContent = (
-      <Spinner loading={isFetchingApiInfo || isFetchingSettings} style={{ marginTop: 15 }}>
+      <Spinner loading={isFetchingServers || isFetchingSettings} style={{ marginTop: 15 }}>
         <div className="migration-settings">
           <h2>{__('Concurrent Migrations')}</h2>
           <Form horizontal>
@@ -83,21 +82,21 @@ class Settings extends React.Component {
 }
 
 Settings.propTypes = {
-  fetchApiInfoAction: PropTypes.func,
+  fetchServersAction: PropTypes.func,
   fetchSettingsAction: PropTypes.func,
   patchSettingsAction: PropTypes.func,
-  isFetchingApiInfo: PropTypes.bool,
+  isFetchingServers: PropTypes.bool,
   isFetchingSettings: PropTypes.bool,
   isSavingSettings: PropTypes.bool,
-  apiInfo: PropTypes.object,
+  servers: PropTypes.array,
   savedSettings: PropTypes.object,
   settingsForm: PropTypes.object,
-  fetchSettingsUrl: PropTypes.string,
-  fetchApiInfoUrl: PropTypes.string
+  fetchServersUrl: PropTypes.string,
+  fetchSettingsUrl: PropTypes.string
 };
 
 Settings.defaultProps = {
-  fetchApiInfoUrl: '/api',
+  fetchServersUrl: '/api/servers',
   fetchSettingsUrl: '/api/settings'
 };
 
