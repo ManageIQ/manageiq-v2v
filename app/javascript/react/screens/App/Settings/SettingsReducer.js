@@ -30,7 +30,7 @@ export default (state = initialState, action) => {
         .set('isFetchingSettings', false)
         .set('fetchingSettingsRejected', false)
         .set('errorFetchingSettings', null)
-        .set('savedSettings', getFormValuesFromApiSettings(action.payload));
+        .set('savedSettings', getFormValuesFromApiSettings(action.payload.data));
 
     case `${V2V_PATCH_SETTINGS}_PENDING`:
       return state

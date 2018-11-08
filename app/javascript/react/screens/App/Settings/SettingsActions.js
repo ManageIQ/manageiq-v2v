@@ -1,5 +1,5 @@
 import URI from 'urijs';
-// import API from '../../../../common/API';
+import API from '../../../../common/API';
 
 import { V2V_FETCH_SETTINGS, V2V_PATCH_SETTINGS } from './SettingsConstants';
 import { getApiSettingsFromFormValues } from './helpers';
