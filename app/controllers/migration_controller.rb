@@ -14,12 +14,6 @@ class MigrationController < ApplicationController
     def layout_full_center
       "layouts/full_center_v2v"
     end
-
-    def mount_react_component(name, selector, data = [])
-      javascript_tag(:defer => 'defer') do
-        "$(v2v.mount('#{name}', '#{selector}', #{data.to_json}));".html_safe
-      end
-    end
   end
 
   menu_section :migration
