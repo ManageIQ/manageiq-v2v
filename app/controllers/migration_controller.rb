@@ -10,6 +10,8 @@ class MigrationController < ApplicationController
                 'overview'
               when '/migration/mappings'
                 'mappings'
+              when '/migration/settings'
+                'settings'
               end
     @page_title = _('Migration')
   end
