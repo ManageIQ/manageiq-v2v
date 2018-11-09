@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { reduxForm, Field } from 'redux-form';
-import { Breadcrumb, Form, Grid, Button, Spinner, Icon } from 'patternfly-react';
+import { Breadcrumb, Form, Button, Spinner, Icon } from 'patternfly-react';
 import Toolbar from '../../../config/Toolbar';
 import NumberInput from '../common/forms/NumberInput';
 
@@ -42,36 +42,29 @@ class Settings extends React.Component {
               <Icon type="pf" name="info" />
             </a>
           </h2>
-          <Form horizontal>
+          <Form style={{ padding: '0 20px' }}>
             <Form.FormGroup>
-              <Grid.Col componentClass={Form.ControlLabel} sm={5}>
-                {__('Maximum concurrent migrations per conversion host')}
-              </Grid.Col>
-              <Grid.Col sm={7}>
-                <div style={{ width: 100 }}>
-                  <Field
-                    id="max_concurrent_tasks_per_host"
-                    name="max_concurrent_tasks_per_host"
-                    component={NumberInput}
-                    normalize={NumberInput.normalizeStringToInt}
-                  />
-                </div>
-              </Grid.Col>
+              <Form.ControlLabel>{__('Maximum concurrent migrations per conversion host')}</Form.ControlLabel>
+              <div style={{ width: 100 }}>
+                <Field
+                  id="max_concurrent_tasks_per_host"
+                  name="max_concurrent_tasks_per_host"
+                  component={NumberInput}
+                  normalize={NumberInput.normalizeStringToInt}
+                />
+              </div>
             </Form.FormGroup>
             <Form.FormGroup>
-              <Grid.Col sm={5} />
-              <Grid.Col sm={7}>
-                <Button bsStyle="primary" onClick={this.onApplyClick} disabled={!hasUnsavedChanges || isSavingSettings}>
-                  {__('Apply')}
-                </Button>
-                <br />
-                {isSavingSettings && (
-                  <div style={{ paddingTop: 10 }}>
-                    <Spinner loading size="xs" inline />
-                    {__(' Applying...')}
-                  </div>
-                )}
-              </Grid.Col>
+              <Button bsStyle="primary" onClick={this.onApplyClick} disabled={!hasUnsavedChanges || isSavingSettings}>
+                {__('Apply')}
+              </Button>
+              <br />
+              {isSavingSettings && (
+                <div style={{ paddingTop: 10 }}>
+                  <Spinner loading size="xs" inline />
+                  {__(' Applying...')}
+                </div>
+              )}
             </Form.FormGroup>
           </Form>
         </div>
