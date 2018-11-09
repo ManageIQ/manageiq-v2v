@@ -3,6 +3,7 @@ import { reducers as notificationListReducers } from '../../react/screens/App/co
 import { reducers as planReducers } from '../../react/screens/App/Plan';
 import { reducers as overviewReducers } from '../../react/screens/App/Overview';
 import { reducers as mappingsReducers } from '../../react/screens/App/Mappings';
+import { reducers as settingsReducers } from '../../react/screens/App/Settings';
 import { reducers as mappingWizardReducers } from '../../react/screens/App/Mappings/screens/MappingWizard';
 import { reducers as mappingWizardGeneralStepReducers } from '../../react/screens/App/Mappings/screens/MappingWizard/components/MappingWizardGeneralStep';
 import { reducers as mappingWizardClustersStepReducers } from '../../react/screens/App/Mappings/screens/MappingWizard/components/MappingWizardClustersStep';
@@ -21,6 +22,7 @@ export default () => ({
   ...planReducers,
   ...overviewReducers,
   ...mappingsReducers,
+  ...settingsReducers,
   ...mappingWizardReducers,
   ...mappingWizardGeneralStepReducers,
   ...mappingWizardClustersStepReducers,

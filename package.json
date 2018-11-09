@@ -58,6 +58,7 @@
     "stylelint-config-standard": "^18.0.0"
   },
   "dependencies": {
+    "bootstrap-touchspin": "^4.2.5",
     "classnames": "^2.2.5",
     "connected-react-router": "^4.3.0",
     "core-js": "^2.5.7",
