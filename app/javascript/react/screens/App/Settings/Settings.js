@@ -59,7 +59,8 @@ class Settings extends React.Component {
               </Grid.Col>
             </Form.FormGroup>
             <Form.FormGroup>
-              <Grid.Col sm={12}>
+              <Grid.Col sm={5} />
+              <Grid.Col sm={7}>
                 <Button bsStyle="primary" onClick={this.onApplyClick} disabled={!hasUnsavedChanges || isSavingSettings}>
                   {__('Apply')}
                 </Button>
