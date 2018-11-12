@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import MappingWizardNetworksStep from './MappingWizardNetworksStep';
 import * as MappingWizardNetworksStepActions from './MappingWizardNetworksStepActions';
 import { showAlertAction } from '../../MappingWizardActions';
-import { uniqueNetworks } from './MappingWizardNetworksStepSelectors';
+import { uniqueNetworks, combineNetworks } from './MappingWizardNetworksStepSelectors';
 
 import reducer from './MappingWizardNetworksStepReducer';
 
@@ -17,7 +17,9 @@ const mapStateToProps = (
   editingMapping,
   clusterMappings: form.mappingWizardClustersStep.values.clusterMappings,
   groupedSourceNetworks: uniqueNetworks(mappingWizardNetworksStep.sourceNetworks),
-  groupedTargetNetworks: uniqueNetworks(mappingWizardNetworksStep.targetNetworks),
+  groupedTargetNetworks: uniqueNetworks(
+    combineNetworks(mappingWizardNetworksStep.targetNetworks, mappingWizardNetworksStep.publicCloudNetworks)
+  ),
   targetProvider: form.mappingWizardGeneralStep.values.targetProvider,
   mappingWizardNetworksStepForm: form.mappingWizardNetworksStep,
   initialValues: {

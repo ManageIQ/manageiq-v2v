@@ -1,6 +1,10 @@
 import Immutable from 'seamless-immutable';
 
-import { FETCH_V2V_SOURCE_NETWORKS, FETCH_V2V_TARGET_NETWORKS } from './MappingWizardNetworksStepConstants';
+import {
+  FETCH_V2V_SOURCE_NETWORKS,
+  FETCH_V2V_TARGET_NETWORKS,
+  FETCH_V2V_PUBLIC_CLOUD_NETWORKS
+} from './MappingWizardNetworksStepConstants';
 import { V2V_MAPPING_WIZARD_EXITED } from '../../../../screens/MappingWizard/MappingWizardConstants';
 
 const initialState = Immutable({
@@ -11,7 +15,11 @@ const initialState = Immutable({
   isRejectedTargetNetworks: false,
   errorTargetNetworks: null,
   sourceNetworks: [],
-  targetNetworks: []
+  targetNetworks: [],
+  isFetchingPublicCloudNetworks: false,
+  isRejectedPublicCloudNetworks: false,
+  errorPublicCloudNetworks: null,
+  publicCloudNetworks: []
 });
 
 export default (state = initialState, action) => {
@@ -41,6 +49,17 @@ export default (state = initialState, action) => {
         .set('errorTargetNetworks', action.payload)
         .set('isRejectedTargetNetworks', true)
         .set('isFetchingTargetNetworks', false);
+
+    case `${FETCH_V2V_PUBLIC_CLOUD_NETWORKS}_PENDING`:
+      return state.set('isFetchingPublicCloudNetworks', true).set('isRejectedPublicCloudNetworks', false);
+    case `${FETCH_V2V_PUBLIC_CLOUD_NETWORKS}_FULFILLED`:
+      return state.set('publicCloudNetworks', action.payload).set('isFetchingPublicCloudNetworks', false);
+    case `${FETCH_V2V_PUBLIC_CLOUD_NETWORKS}_REJECTED`:
+      return state
+        .set('errorPublicCloudNetworks', action.payload)
+        .set('isRejectedPublicCloudNetworks', true)
+        .set('isFetchingPublicCloudNetworks', false);
+
     case V2V_MAPPING_WIZARD_EXITED:
       return initialState;
 
