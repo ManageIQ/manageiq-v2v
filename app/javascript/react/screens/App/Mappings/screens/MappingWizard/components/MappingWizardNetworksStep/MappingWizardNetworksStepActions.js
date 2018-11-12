@@ -3,6 +3,7 @@ import API from '../../../../../../../../common/API';
 import {
   FETCH_V2V_SOURCE_NETWORKS,
   FETCH_V2V_TARGET_NETWORKS,
+  FETCH_V2V_PUBLIC_CLOUD_NETWORKS,
   QUERY_ATTRIBUTES
 } from './MappingWizardNetworksStepConstants';
 import { V2V_TARGET_PROVIDER_NETWORK_KEYS } from '../../MappingWizardConstants';
@@ -84,4 +85,35 @@ export const fetchTargetNetworksAction = (url, id, targetProvider) => {
   uri.addSearch({ attributes: QUERY_ATTRIBUTES[targetProvider] });
 
   return _getTargetNetworksActionCreator(uri.toString(), targetProvider);
+};
+
+const _normalizePublicCloudNetworks = (response, targetCloudTenant) => {
+  const {
+    data: { resources: networks }
+  } = response;
+
+  return networks.map(network => ({
+    ...network,
+    providerName: targetCloudTenant.ext_management_system.name,
+    clusterId: targetCloudTenant.id
+  }));
+};
+
+const _getPublicCloudNetworksActionCreator = (url, targetCloudTenant) => dispatch =>
+  dispatch({
+    type: FETCH_V2V_PUBLIC_CLOUD_NETWORKS,
+    payload: new Promise((resolve, reject) => {
+      API.get(url)
+        .then(response => {
+          resolve(_normalizePublicCloudNetworks(response, targetCloudTenant));
+        })
+        .catch(e => reject(e));
+    })
+  });
+
+export const fetchPublicCloudNetworksAction = (url, targetCloudTenant) => {
+  const uri = new URI(`${url}/${targetCloudTenant.ext_management_system.id}/cloud_networks`);
+  uri.addSearch({ expand: 'resources' });
+
+  return _getPublicCloudNetworksActionCreator(uri.toString(), targetCloudTenant);
 };
