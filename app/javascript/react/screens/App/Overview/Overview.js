@@ -240,6 +240,7 @@ class Overview extends React.Component {
         <Spinner
           loading={
             !requestsWithTasksPreviouslyFetched &&
+            !this.state.hasMadeInitialPlansFetch &&
             (isFetchingAllRequestsWithTasks ||
               isFetchingProviders ||
               isFetchingTransformationPlans ||
