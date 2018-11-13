@@ -10,7 +10,7 @@ module ManageIQ::V2V
       app.config.assets.paths << root.join('assets', 'images').to_s
     end
 
-    initializer 'plugin' do
+    def render_migration_menu
       Menu::CustomLoader.register(
         Menu::Section.new(:migration, N_("Migration"), 'fa fa-plus', [
           Menu::Item.new('migration', N_("Overview"), 'miq_report', {:feature => 'miq_report', :any => true}, '/migration'),
@@ -18,6 +18,10 @@ module ManageIQ::V2V
           Menu::Item.new('settings', N_("Migration Settings"), 'miq_report', {:feature => 'miq_report', :any => true}, '/migration#/settings')
         ], nil, nil, nil, nil, :compute)
       )
+    end
+
+    initializer 'plugin' do
+      Menu::CustomLoader.register(::Settings.product.ims == true ? render_migration_menu : nil)
     end
 
     def self.plugin_name
