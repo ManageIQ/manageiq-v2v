@@ -45,7 +45,10 @@ const mapStateToProps = (
     })),
     selectedMapping,
     editingPlan,
-    shouldPrefillForEditing: editingPlan && editingPlan.transformation_mapping.id === infrastructure_mapping
+    shouldPrefillForEditing:
+      editingPlan &&
+      editingPlan.transformation_mapping &&
+      editingPlan.transformation_mapping.id === infrastructure_mapping
   };
 };
 

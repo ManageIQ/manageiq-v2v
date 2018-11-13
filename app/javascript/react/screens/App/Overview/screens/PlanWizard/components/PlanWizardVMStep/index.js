@@ -16,7 +16,10 @@ const mapStateToProps = ({ planWizardVMStep, form, overview }, ownProps) => {
     vm_choice_radio: form.planWizardGeneralStep.values.vm_choice_radio,
     infrastructure_mapping_id,
     editingPlan,
-    shouldPrefillForEditing: editingPlan && editingPlan.transformation_mapping.id === infrastructure_mapping_id,
+    shouldPrefillForEditing:
+      editingPlan &&
+      editingPlan.transformation_mapping &&
+      editingPlan.transformation_mapping.id === infrastructure_mapping_id,
     formSelectedVms: form.planWizardVMStep && form.planWizardVMStep.values && form.planWizardVMStep.values.selectedVms
   };
 };
