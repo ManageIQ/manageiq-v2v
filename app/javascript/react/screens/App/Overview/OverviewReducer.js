@@ -241,6 +241,7 @@ export default (state = initialState, action) => {
         .set('allArchivedPlanRequestsWithTasks', action.payload.data.results)
         .set('isFetchingAllArchivedPlanRequestsWithTasks', false)
         .set('isRejectedAllArchivedPlanRequestsWithTasks', false)
+        .set('requestsWithTasksPreviouslyFetched', true)
         .set('errorAllArchivedPlanRequestsWithTasks', null);
     case `${FETCH_V2V_ALL_ARCHIVED_PLAN_REQUESTS_WITH_TASKS}_REJECTED`:
       return state
