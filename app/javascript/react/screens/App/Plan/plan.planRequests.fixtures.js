@@ -156,7 +156,6 @@ const sampleTask = {
     requester_group: 'EvmGroup-super_administrator',
     src_id: '2',
     transformation_host_id: '1',
-    transformation_host_name: 'rhvh01.example.com',
     virtv2v_disks: [
       {
         path: '[NFS_Datastore] test_migration/test_migration.vmdk',
@@ -236,7 +235,6 @@ for (let i = 0; i < 30; i += 1) {
     }
   }
 
-  copy.options.transformation_host_name = `rhvh${i}.example.com`;
   for (let j = 0; j < copy.options.virtv2v_disks.length; j += 1) {
     copy.options.virtv2v_disks[j].percent = Math.floor(Math.random() * 100);
     copy.options.virtv2v_disks[j].size = Math.floor(Math.random() * 17179869184);
@@ -273,7 +271,6 @@ for (let i = 0; i < 30; i += 1) {
     }
   }
 
-  copy.options.transformation_host_name = `rhvh${i}.example.com`;
   completeSampleTasksWithFailures.push(copy);
 }
 
@@ -297,7 +294,6 @@ for (let i = 0; i < 30; i += 1) {
     copy.options.virtv2v_disks[j].size = Math.floor(Math.random() * 17179869184);
   }
 
-  copy.options.transformation_host_name = `rhvh${i}.example.com`;
   completeSampleTasks.push(copy);
 }
 

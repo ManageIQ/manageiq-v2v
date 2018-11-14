@@ -27,8 +27,7 @@ export const requestsSchema = array()
             options: object()
               .shape({
                 src_id: string(),
-                delivered_on: string().nullable(),
-                transformation_host_name: string().nullable()
+                delivered_on: string().nullable()
               })
               .required(),
             created_on: string().required(),

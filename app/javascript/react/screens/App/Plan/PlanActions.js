@@ -18,7 +18,9 @@ import {
   UPDATE_TASKS_SELECTED_FOR_CANCELLATION,
   DELETE_ALL_TASKS_SELECTED_FOR_CANCELLATION,
   ADD_TASKS_TO_MARKED_FOR_CANCELLATION,
-  ADD_TASK_TO_NOTIFICATION_SENT_LIST
+  ADD_TASK_TO_NOTIFICATION_SENT_LIST,
+  FETCH_V2V_REQUEST_TASK,
+  FETCH_V2V_CONVERSION_HOST
 } from './PlanConstants';
 
 import { V2V_NOTIFICATION_ADD } from '../common/NotificationList/NotificationConstants';
@@ -335,5 +337,37 @@ export const dispatchVMTasksCompletionNotificationAction = (
         payload: migration.id
       });
     }
+  });
+};
+
+// *****************************************************************************
+// * FETCH_V2V_REQUEST_TASK
+// *****************************************************************************
+const _getRequestTaskActionCreator = url => dispatch =>
+  dispatch({
+    type: FETCH_V2V_REQUEST_TASK,
+    payload: API.get(url)
+  });
+
+export const fetchRequestTaskAction = (url, id, options = {}) => {
+  const uri = new URI(`${url}/${id}`);
+  const { attributes } = options;
+
+  if (attributes) {
+    uri.addSearch({ attributes });
+  }
+
+  return _getRequestTaskActionCreator(uri.toString());
+};
+
+// *****************************************************************************
+// * FETCH_V2V_CONVERSION_HOST
+// *****************************************************************************
+export const fetchConversionHostAction = (url, id) => dispatch => {
+  dispatch(fetchRequestTaskAction(url, id, { attributes: 'conversion_host' })).then(response => {
+    dispatch({
+      type: FETCH_V2V_CONVERSION_HOST,
+      payload: response.value.data
+    });
   });
 };
