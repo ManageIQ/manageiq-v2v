@@ -16,7 +16,7 @@ import {
   MenuItem
 } from 'patternfly-react';
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
-import { V2V_MIGRATION_STATUS_MESSAGES } from '../../PlanConstants';
+import { V2V_MIGRATION_STATUS_MESSAGES, REQUEST_TASKS_URL } from '../../PlanConstants';
 import TickingIsoElapsedTime from '../../../../../../components/dates/TickingIsoElapsedTime';
 import ConfirmModal from '../../../common/ConfirmModal';
 
@@ -47,6 +47,10 @@ class PlanRequestDetailList extends React.Component {
   };
 
   overlayTriggerClick = task => {
+    if (!this.props.conversionHosts[task.id]) {
+      this.props.fetchConversionHostAction(this.props.fetchConversionHostUrl, task.id);
+    }
+
     if (task.options.playbooks) {
       const playbookStatuses = task.options.playbooks;
       let runningPlaybook = null;
@@ -151,7 +155,8 @@ class PlanRequestDetailList extends React.Component {
       renderFilterControls,
       renderSortControls,
       renderActiveFilters,
-      renderPaginationRow
+      renderPaginationRow,
+      conversionHosts
     } = this.props;
 
     const { allSelected, noneSelected } = this.getCancelSelectionState();
@@ -284,7 +289,7 @@ class PlanRequestDetailList extends React.Component {
                     </div>
                     <div>
                       <b>{__('Conversion Host')}: </b>
-                      {task.transformation_host_name}
+                      {conversionHosts[task.id] && conversionHosts[task.id].name}
                     </div>
                     {task.log_available && (
                       <div>
@@ -479,7 +484,14 @@ PlanRequestDetailList.propTypes = {
   renderFilterControls: PropTypes.func,
   renderSortControls: PropTypes.func,
   renderActiveFilters: PropTypes.func,
-  renderPaginationRow: PropTypes.func
+  renderPaginationRow: PropTypes.func,
+  conversionHosts: PropTypes.object,
+  fetchConversionHostAction: PropTypes.func,
+  fetchConversionHostUrl: PropTypes.string
+};
+
+PlanRequestDetailList.defaultProps = {
+  fetchConversionHostUrl: REQUEST_TASKS_URL
 };
 
 export default PlanRequestDetailList;

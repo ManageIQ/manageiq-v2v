@@ -15,7 +15,9 @@ import {
   UPDATE_TASKS_SELECTED_FOR_CANCELLATION,
   DELETE_ALL_TASKS_SELECTED_FOR_CANCELLATION,
   ADD_TASKS_TO_MARKED_FOR_CANCELLATION,
-  ADD_TASK_TO_NOTIFICATION_SENT_LIST
+  ADD_TASK_TO_NOTIFICATION_SENT_LIST,
+  FETCH_V2V_REQUEST_TASK,
+  FETCH_V2V_CONVERSION_HOST
 } from './PlanConstants';
 import {
   excludeDownloadDoneTaskId,
@@ -55,7 +57,12 @@ export const initialState = Immutable({
   markedForCancellation: [],
   failedMigrations: [],
   successfulMigrations: [],
-  notificationsSentList: []
+  notificationsSentList: [],
+  isFetchingRequestTask: false,
+  isRejectedRequestTask: false,
+  requestTask: {},
+  errorRequestTask: null,
+  conversionHosts: {}
 });
 
 export default (state = initialState, action) => {
@@ -226,6 +233,26 @@ export default (state = initialState, action) => {
 
     case ADD_TASK_TO_NOTIFICATION_SENT_LIST:
       return state.set('notificationsSentList', state.notificationsSentList.concat(action.payload));
+
+    case `${FETCH_V2V_REQUEST_TASK}_PENDING`:
+      return state.set('isFetchingRequestTask', false).set('isRejectedRequestTask', false);
+    case `${FETCH_V2V_REQUEST_TASK}_FULFILLED`:
+      return state
+        .set('requestTask', action.payload.data)
+        .set('isFetchingRequestTask', false)
+        .set('isRejectedRequestTask', false)
+        .set('errorRequestTask', null);
+    case `${FETCH_V2V_REQUEST_TASK}_REJECTED`:
+      return state
+        .set('errorRequestTask', action.payload)
+        .set('isRejectedRequestTask', true)
+        .set('isFetchingRequestTask', false);
+
+    case FETCH_V2V_CONVERSION_HOST:
+      return state.set('conversionHosts', {
+        ...state.conversionHosts,
+        [action.payload.id]: action.payload.conversion_host
+      });
 
     default:
       return state;

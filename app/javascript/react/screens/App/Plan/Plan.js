@@ -15,6 +15,7 @@ import {
   ACTIVE_PLAN_SORT_FIELDS,
   FINISHED_PLAN_SORT_FIELDS
 } from './components/PlanRequestDetailList/PlanRequestDetailListConstants';
+import { REQUEST_TASKS_URL } from './PlanConstants';
 
 class Plan extends React.Component {
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -133,7 +134,9 @@ class Plan extends React.Component {
       failedMigrations,
       successfulMigrations,
       notificationsSentList,
-      dispatchVMTasksCompletionNotificationAction
+      dispatchVMTasksCompletionNotificationAction,
+      fetchConversionHostAction,
+      conversionHosts
     } = this.props;
 
     const {
@@ -220,6 +223,8 @@ class Plan extends React.Component {
                     renderSortControls={renderSortControls}
                     renderActiveFilters={renderActiveFilters}
                     renderPaginationRow={renderPaginationRow}
+                    fetchConversionHostAction={fetchConversionHostAction}
+                    conversionHosts={conversionHosts}
                   />
                 )}
               </ListViewToolbar>
@@ -296,7 +301,9 @@ Plan.propTypes = {
   failedMigrations: PropTypes.array,
   successfulMigrations: PropTypes.array,
   notificationsSentList: PropTypes.array,
-  dispatchVMTasksCompletionNotificationAction: PropTypes.func
+  dispatchVMTasksCompletionNotificationAction: PropTypes.func,
+  fetchConversionHostAction: PropTypes.func,
+  conversionHosts: PropTypes.object
 };
 Plan.defaultProps = {
   planName: '',
@@ -308,6 +315,6 @@ Plan.defaultProps = {
   fetchPlanUrl: '/api/service_templates',
   fetchTasksForAllRequestsForPlanUrl: '/api/requests?expand=resource&attributes=miq_request_tasks',
   fetchOrchestrationStackUrl: '/api/orchestration_stacks',
-  cancelPlanRequestTasksUrl: '/api/request_tasks'
+  cancelPlanRequestTasksUrl: REQUEST_TASKS_URL
 };
 export default Plan;

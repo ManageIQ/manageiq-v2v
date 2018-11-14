@@ -14,7 +14,6 @@ const processVMTasks = vmTasks => {
     const taskDetails = {
       id: task.id,
       message: V2V_MIGRATION_STATUS_MESSAGES[task.message] || __('VM migrations stalled'),
-      transformation_host_name: task.options && task.options.transformation_host_name,
       delivered_on: new Date(task.options.delivered_on),
       updated_on: new Date(task.updated_on),
       completed:
