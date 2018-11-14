@@ -4,7 +4,6 @@
  * currentSortType: { id: 'delivered_on', title: 'Started', isNumeric: true }
  *
  * tasks: [{
- *  transformation_host_name: 'rhvh01.example.com',
  *  message: 'Migrating',
  *  delivered_on: '2018-01-30T21:12:34.808Z'
  *  ...

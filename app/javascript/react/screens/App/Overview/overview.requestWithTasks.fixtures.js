@@ -190,7 +190,6 @@ export const allRequestsWithTasks = Immutable({
             requester_group: 'EvmGroup-super_administrator',
             src_id: '3',
             transformation_host_id: '1',
-            transformation_host_name: 'rhvh01.example.com',
             virtv2v_disks: [
               {
                 path: '[NFS_Datastore] test_migration/test_migration.vmdk',
@@ -313,7 +312,6 @@ export const allRequestsWithTasks = Immutable({
             requester_group: 'EvmGroup-super_administrator',
             src_id: '5',
             transformation_host_id: '1',
-            transformation_host_name: 'rhvh01.example.com',
             virtv2v_disks: [
               {
                 path: '[NFS_Datastore] test_migration/test_migration.vmdk',
@@ -525,7 +523,6 @@ export const allRequestsWithTasks = Immutable({
             requester_group: 'EvmGroup-super_administrator',
             src_id: '2',
             transformation_host_id: '1',
-            transformation_host_name: 'rhvh01.example.com',
             virtv2v_disks: [
               {
                 path: '[NFS_Datastore] test_migration/test_migration.vmdk',
@@ -719,7 +716,6 @@ export const allRequestsWithTasks = Immutable({
             requester_group: 'EvmGroup-super_administrator',
             src_id: '2',
             transformation_host_id: '1',
-            transformation_host_name: 'rhvh01.example.com',
             virtv2v_disks: [
               {
                 path: '[NFS_Datastore] test_migration/test_migration.vmdk',
@@ -931,7 +927,6 @@ export const allRequestsWithTasks = Immutable({
             requester_group: 'EvmGroup-super_administrator',
             src_id: '2',
             transformation_host_id: '1',
-            transformation_host_name: 'rhvh01.example.com',
             virtv2v_disks: [
               {
                 path: '[NFS_Datastore] test_migration/test_migration.vmdk',
@@ -1125,7 +1120,6 @@ export const allRequestsWithTasks = Immutable({
             requester_group: 'EvmGroup-super_administrator',
             src_id: '2',
             transformation_host_id: '1',
-            transformation_host_name: 'rhvh01.example.com',
             virtv2v_disks: [
               {
                 path: '[NFS_Datastore] test_migration/test_migration.vmdk',
@@ -1338,7 +1332,6 @@ export const allRequestsWithTasks = Immutable({
             requester_group: 'EvmGroup-super_administrator',
             src_id: '2',
             transformation_host_id: '1',
-            transformation_host_name: 'rhvh01.example.com',
             virtv2v_disks: [
               {
                 path: '[NFS_Datastore] test_migration/test_migration.vmdk',
@@ -1532,7 +1525,6 @@ export const allRequestsWithTasks = Immutable({
             requester_group: 'EvmGroup-super_administrator',
             src_id: '2',
             transformation_host_id: '1',
-            transformation_host_name: 'rhvh01.example.com',
             virtv2v_disks: [
               {
                 path: '[NFS_Datastore] test_migration/test_migration.vmdk',
@@ -1744,7 +1736,6 @@ export const allRequestsWithTasks = Immutable({
             requester_group: 'EvmGroup-super_administrator',
             src_id: '2',
             transformation_host_id: '1',
-            transformation_host_name: 'rhvh01.example.com',
             virtv2v_disks: [
               {
                 path: '[NFS_Datastore] test_migration/test_migration.vmdk',
@@ -1938,7 +1929,6 @@ export const allRequestsWithTasks = Immutable({
             requester_group: 'EvmGroup-super_administrator',
             src_id: '2',
             transformation_host_id: '1',
-            transformation_host_name: 'rhvh01.example.com',
             virtv2v_disks: [
               {
                 path: '[NFS_Datastore] test_migration/test_migration.vmdk',
