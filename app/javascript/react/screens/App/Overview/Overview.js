@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, Breadcrumb, CardGrid, Spinner } from 'patternfly-react';
+import { Card, Breadcrumb, CardGrid, Spinner, Icon } from 'patternfly-react';
 
 import Toolbar from '../../../config/Toolbar';
 import * as AggregateCards from './components/AggregateCards';
@@ -66,13 +66,12 @@ class Overview extends React.Component {
       isContinuingToPlan,
       fetchTransformationPlansUrl,
       fetchTransformationPlansAction,
-      planWizardId,
-      showPlanWizardAction
+      planWizardId
     } = this.props;
     const { hasMadeInitialPlansFetch } = this.state;
 
     if (isContinuingToPlan !== nextProps.isContinuingToPlan && !nextProps.isContinuingToPlan) {
-      showPlanWizardAction(planWizardId);
+      this.showPlanWizardOrError(planWizardId);
     }
 
     // kill interval if a wizard becomes visble
@@ -90,6 +89,44 @@ class Overview extends React.Component {
   componentWillUnmount() {
     this.stopPolling();
   }
+
+  showPlanWizardOrError = planWizardId => {
+    const { transformationMappings, showPlanWizardAction } = this.props;
+    if (transformationMappings.length > 0) {
+      showPlanWizardAction(planWizardId);
+    } else {
+      this.showNoMappingsError();
+    }
+  };
+
+  showPlanWizardEditModeOrError = editingPlanId => {
+    const { transformationMappings, showPlanWizardEditModeAction } = this.props;
+    if (transformationMappings.length > 0) {
+      showPlanWizardEditModeAction(editingPlanId);
+    } else {
+      this.showNoMappingsError();
+    }
+  };
+
+  showNoMappingsError = () => {
+    const { showConfirmModalAction, hideConfirmModalAction } = this.props;
+    showConfirmModalAction({
+      title: __('Migration plan error'),
+      icon: <Icon className="confirm-warning-icon" type="pf" name="error-circle-o" />,
+      body: (
+        <React.Fragment>
+          <h3 style={{ marginTop: 0 }}>{__('No infrastructure mapping exists')}</h3>
+          <p>
+            {__('A migration plan must include an infrastructure mapping.')}{' '}
+            <a href="/migration#/mappings">{__('Go to the Infrastructure Mappings page to create one.')}</a>
+          </p>
+        </React.Fragment>
+      ),
+      cancelButtonLabel: null,
+      confirmButtonLabel: __('Close'),
+      onConfirm: hideConfirmModalAction
+    });
+  };
 
   startPolling = () => {
     const { fetchTransformationPlansAction, fetchTransformationPlansUrl } = this.props;
@@ -188,7 +225,6 @@ class Overview extends React.Component {
     const {
       isFetchingProviders,
       hasSufficientProviders,
-      showPlanWizardAction,
       mappingWizardVisible,
       planWizardVisible,
       editPlanNameModalVisible,
@@ -227,7 +263,6 @@ class Overview extends React.Component {
       scheduleMigrationModal,
       scheduleMigrationPlan,
       scheduleMigration,
-      showPlanWizardEditModeAction,
       fetchTransformationMappingsUrl,
       fetchTransformationMappingsAction,
       openMappingWizardOnTransitionAction,
@@ -263,7 +298,7 @@ class Overview extends React.Component {
                 activeTransformationPlans={activeTransformationPlans}
                 serviceTemplatePlaybooks={serviceTemplatePlaybooks}
                 finishedTransformationPlans={finishedTransformationPlans}
-                createMigrationPlanClick={showPlanWizardAction}
+                createMigrationPlanClick={this.showPlanWizardOrError}
                 createTransformationPlanRequestClick={this.createTransformationPlanRequest}
                 isCreatingTransformationPlanRequest={isCreatingTransformationPlanRequest}
                 redirectTo={this.redirectTo}
@@ -282,7 +317,7 @@ class Overview extends React.Component {
                 scheduleMigrationModal={scheduleMigrationModal}
                 scheduleMigrationPlan={scheduleMigrationPlan}
                 scheduleMigration={scheduleMigration}
-                showPlanWizardEditModeAction={showPlanWizardEditModeAction}
+                showPlanWizardEditModeAction={this.showPlanWizardEditModeOrError}
                 fetchTransformationMappingsUrl={fetchTransformationMappingsUrl}
                 fetchTransformationMappingsAction={fetchTransformationMappingsAction}
                 showEditPlanNameModalAction={showEditPlanNameModalAction}
