@@ -26,7 +26,10 @@ const mapStateToProps = (
   ownProps
 ) => {
   const editingPlan = findEditingPlan(transformationPlans, editingPlanId);
-  const shouldPrefillForEditing = editingPlan && editingPlan.transformation_mapping.id === infrastructure_mapping;
+  const shouldPrefillForEditing =
+    editingPlan &&
+    editingPlan.transformation_mapping &&
+    editingPlan.transformation_mapping.id === infrastructure_mapping;
   const validVmsDeduped = !shouldPrefillForEditing
     ? planWizardVMStep.valid_vms
     : planWizardVMStep.valid_vms.filter(

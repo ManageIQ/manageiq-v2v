@@ -39,9 +39,11 @@ const ConfirmModal = props => {
         )}
       </Modal.Body>
       <Modal.Footer>
-        <Button bsStyle="default" className="btn-cancel" onClick={onCancel} disabled={disableCancelButton}>
-          {cancelButtonLabel}
-        </Button>
+        {cancelButtonLabel && (
+          <Button bsStyle="default" className="btn-cancel" onClick={onCancel} disabled={disableCancelButton}>
+            {cancelButtonLabel}
+          </Button>
+        )}
         <Button bsStyle="primary" onClick={onConfirm} disabled={disableConfirmButton}>
           {confirmButtonLabel}
         </Button>

@@ -80,7 +80,7 @@ const MigrationsNotStartedList = ({
                       />
                     );
 
-                    const editPlanDisabled = isMissingMapping || loading === plan.href;
+                    const editPlanDisabled = loading === plan.href;
 
                     return (
                       <ListView.Item

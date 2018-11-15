@@ -8,7 +8,13 @@ import { BootstrapSelect } from '../../../../../common/forms/BootstrapSelect';
 import { validation } from '../../../../../../../../common/constants';
 import { asyncValidate, onChange } from './helpers';
 
-const PlanWizardGeneralStep = ({ transformationMappings, editingPlan, showAlertAction, hideAlertAction }) => (
+const PlanWizardGeneralStep = ({
+  transformationMappings,
+  editingPlan,
+  editingOrphanedPlan,
+  showAlertAction,
+  hideAlertAction
+}) => (
   <Form className="form-horizontal">
     <Field
       name="infrastructure_mapping"
@@ -25,7 +31,7 @@ const PlanWizardGeneralStep = ({ transformationMappings, editingPlan, showAlertA
       labelWidth={2}
       controlWidth={9}
       onChange={event => {
-        if (editingPlan && event.target.value !== editingPlan.transformation_mapping.id) {
+        if (editingPlan && (editingOrphanedPlan || event.target.value !== editingPlan.transformation_mapping.id)) {
           showAlertAction(
             __('Selecting a different infrastructure mapping will cause all VM and option selections to be cleared.'),
             'warning'
@@ -81,6 +87,7 @@ const PlanWizardGeneralStep = ({ transformationMappings, editingPlan, showAlertA
 PlanWizardGeneralStep.propTypes = {
   transformationMappings: PropTypes.array,
   editingPlan: PropTypes.object,
+  editingOrphanedPlan: PropTypes.bool,
   showAlertAction: PropTypes.func,
   hideAlertAction: PropTypes.func
 };
