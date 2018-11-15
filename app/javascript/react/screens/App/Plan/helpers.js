@@ -1,6 +1,11 @@
 import numeral from 'numeral';
 
-import { STATUS_MESSAGE_KEYS, V2V_MIGRATION_STATUS_MESSAGES, V2V_DOWNLOAD_LOG_STATUS_MESSAGES } from './PlanConstants';
+import {
+  STATUS_MESSAGE_KEYS,
+  V2V_MIGRATION_STATUS_MESSAGES,
+  V2V_DOWNLOAD_LOG_STATUS_MESSAGES,
+  V2V_BACKEND_ERROR_MESSAGES
+} from './PlanConstants';
 import { IsoElapsedTime } from '../../../../components/dates/IsoElapsedTime';
 import getMostRecentVMTasksFromRequests from '../Overview/components/Migrations/helpers/getMostRecentVMTasksFromRequests';
 
@@ -117,19 +122,15 @@ export const incompleteCancellationTasks = (requestWithTasks, actions, tasksForC
 };
 
 export const parseComplexErrorMessages = complexErrorMessage => {
-  const regex1 = RegExp('Conversion host was not found. Download of transformation log aborted.', 'g');
-  const regex2 = RegExp('Credential was not found for host [^]*. Download of transformation log aborted.', 'g');
-  const regex3 = RegExp('Download of transformation log for [^]* with ID [^]* failed with error: [^]*', 'g');
-
-  if (regex1.exec(complexErrorMessage) !== null) {
+  if (V2V_BACKEND_ERROR_MESSAGES.DOWNLOAD_LOG_ERROR_NO_HOST.exec(complexErrorMessage) !== null) {
     return V2V_DOWNLOAD_LOG_STATUS_MESSAGES.DOWNLOAD_LOG_ERROR_NO_HOST;
   }
 
-  if (regex2.exec(complexErrorMessage) !== null) {
+  if (V2V_BACKEND_ERROR_MESSAGES.DOWNLOAD_LOG_ERROR_NO_CREDS_SET.exec(complexErrorMessage) !== null) {
     return V2V_DOWNLOAD_LOG_STATUS_MESSAGES.DOWNLOAD_LOG_ERROR_NO_CREDS_SET;
   }
 
-  if (regex3.exec(complexErrorMessage) !== null) {
+  if (V2V_BACKEND_ERROR_MESSAGES.DOWNLOAD_LOG_ERROR_SCP_ISSUE.exec(complexErrorMessage) !== null) {
     return V2V_DOWNLOAD_LOG_STATUS_MESSAGES.DOWNLOAD_LOG_ERROR_SCP_ISSUE;
   }
 
