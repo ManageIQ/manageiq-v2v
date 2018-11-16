@@ -51,7 +51,7 @@ class MappingWizardResultsStep extends React.Component {
 
   onContinueToPlanWizard = id => {
     this.props.continueToPlanAction(id);
-    this.props.redirectTo('/');
+    this.props.redirectTo('/migration/overview');
   };
 
   render() {
@@ -118,7 +118,7 @@ MappingWizardResultsStep.propTypes = {
   redirectTo: PropTypes.func
 };
 MappingWizardResultsStep.defaultProps = {
-  postMappingsUrl: 'api/transformation_mappings',
+  postMappingsUrl: '/api/transformation_mappings',
   postTransformMappingsAction: noop,
   transformationsBody: {},
   isPostingMappings: true,

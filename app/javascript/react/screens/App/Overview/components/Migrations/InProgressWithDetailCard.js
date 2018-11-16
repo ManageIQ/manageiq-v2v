@@ -7,7 +7,7 @@ const InProgressWithDetailCard = ({ plan, failedOverlay, handleClick, children }
   <InProgressCard
     onClick={e => {
       if (!e.target.classList.contains('pficon-error-circle-o')) {
-        handleClick(`/plan/${plan.id}`);
+        handleClick(`/migration/plan/${plan.id}`);
       }
     }}
     className="in-progress"

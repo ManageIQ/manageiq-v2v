@@ -14,7 +14,7 @@ const Routes = ({ store }) =>
         <Route
           exact
           key={path}
-          path={`/${path}`}
+          path={path}
           render={props => {
             if (props.match.isExact) {
               return (
@@ -28,7 +28,7 @@ const Routes = ({ store }) =>
         />
       );
     }
-    return <Route exact key={path} path={`/${path}`} />;
+    return <Route exact key={path} path={path} />;
   });
 
 Routes.propTypes = {

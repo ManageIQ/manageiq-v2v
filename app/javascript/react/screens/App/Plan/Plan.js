@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Immutable from 'seamless-immutable';
-import { Link } from 'react-router-dom';
 import { Breadcrumb, Spinner, Icon } from 'patternfly-react';
 import Toolbar from '../../../config/Toolbar';
 import PlanRequestDetailList from './components/PlanRequestDetailList/PlanRequestDetailList';
@@ -165,7 +164,7 @@ class Plan extends React.Component {
         <Toolbar>
           <Breadcrumb.Item href="/dashboard/maintab?tab=compute">{__('Compute')}</Breadcrumb.Item>
           <li>
-            <Link to="/">{__('Migration')}</Link>
+            <a href="/migration/overview">{__('Migration')}</a>
           </li>
           {!isRejectedPlan &&
             planName && (
