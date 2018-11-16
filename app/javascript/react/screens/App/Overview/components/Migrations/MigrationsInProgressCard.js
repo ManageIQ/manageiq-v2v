@@ -1,7 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import numeral from 'numeral';
-import { EmptyState, Icon, OverlayTrigger, Popover, Tooltip, UtilizationBar, Spinner } from 'patternfly-react';
+import {
+  EmptyState,
+  Icon,
+  OverlayTrigger,
+  Popover,
+  Tooltip,
+  UtilizationBar,
+  Spinner,
+  Card,
+  Button
+} from 'patternfly-react';
 import InProgressCard from './InProgressCard';
 import InProgressWithDetailCard from './InProgressWithDetailCard';
 import TickingIsoElapsedTime from '../../../../../../components/dates/TickingIsoElapsedTime';
@@ -32,6 +42,36 @@ const MigrationsInProgressCard = ({
     return (
       <InProgressCard title={<h3 className="card-pf-title">{plan.name}</h3>}>
         {emptyStateSpinner(__('Initiating migration. This might take a few minutes.'))}
+      </InProgressCard>
+    );
+  }
+
+  // TODO: remove plan.name condition here
+  if (mostRecentRequest.approval_state === 'denied' || plan.name === 'test-denied-state') {
+    const cardEmptyState = (
+      <EmptyState>
+        <EmptyState.Icon type="pf" name="error-circle-o" />
+        <EmptyState.Info style={{ marginTop: 10 }}>
+          {__('Unable to start migration because no conversion host is configured.')}{' '}
+          <a href="https://access.redhat.com/documentation/en-us/red_hat_infrastructure_migration_solution/1.0/html/infrastructure_migration_solution_guide/installation#rhv_conversion_hosts">
+            {__('See the product documentation for information on configuring conversion hosts.')}
+          </a>
+        </EmptyState.Info>
+      </EmptyState>
+    );
+    const cardFooter = (
+      <Card.Footer style={{ position: 'relative', top: '-2px' }}>
+        <Button
+          style={{ position: 'relative', top: '-5px' }}
+          onClick={() => alert('TODO: handle cancel')}
+        >
+          {__('Cancel Migration')}
+        </Button>
+      </Card.Footer>
+    );
+    return (
+      <InProgressCard title={<h3 className="card-pf-title">{plan.name}</h3>} footer={cardFooter}>
+        {cardEmptyState}
       </InProgressCard>
     );
   }
