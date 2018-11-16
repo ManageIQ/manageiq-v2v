@@ -119,7 +119,7 @@ PlanWizardInstancePropertiesStep.propTypes = {
 
 PlanWizardInstancePropertiesStep.defaultProps = {
   fetchOpenstackTenantUrl: '/api/cloud_tenants',
-  bestFitFlavorUrl: 'api/transformation_mappings',
+  bestFitFlavorUrl: '/api/transformation_mappings',
   queryOpenstackTenantAttributes: ['flavors', 'security_groups', 'default_security_group']
 };
 

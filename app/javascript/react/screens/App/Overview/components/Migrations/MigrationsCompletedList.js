@@ -191,7 +191,7 @@ const MigrationsCompletedList = ({
                         onClick={e => {
                           e.stopPropagation();
 
-                          redirectTo(`/plan/${plan.id}`);
+                          redirectTo(`/migration/plan/${plan.id}`);
                         }}
                         key={plan.id}
                         leftContent={

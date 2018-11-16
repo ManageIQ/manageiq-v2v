@@ -8,9 +8,9 @@ export const QUERY_ATTRIBUTES = {
 };
 
 export const FETCH_STORAGE_URLS = {
-  source: 'api/clusters',
-  rhevm: 'api/clusters',
-  openstack: 'api/cloud_tenants'
+  source: '/api/clusters',
+  rhevm: '/api/clusters',
+  openstack: '/api/cloud_tenants'
 };
 
 export const STORAGE_ATTRIBUTES = {
