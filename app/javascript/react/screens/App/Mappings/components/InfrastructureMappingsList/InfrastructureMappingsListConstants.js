@@ -25,3 +25,18 @@ export const INFRA_MAPPINGS_SORT_FIELDS = [
     isNumeric: true
   }
 ];
+
+export const MAPPING_TYPE_RESOURCE_MAP = {
+  openstack: {
+    networks: {
+      source: 'Lan',
+      target: 'CloudNetwork'
+    }
+  },
+  rhevm: {
+    networks: {
+      source: 'Lan',
+      target: 'Lan'
+    }
+  }
+};
