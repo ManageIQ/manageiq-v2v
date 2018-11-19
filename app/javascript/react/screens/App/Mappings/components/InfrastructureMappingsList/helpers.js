@@ -1,5 +1,7 @@
 import Immutable from 'seamless-immutable';
+
 import { networkKey } from '../../../common/networkKey';
+import { MAPPING_TYPE_RESOURCE_MAP } from './InfrastructureMappingsListConstants';
 
 export const getMappingType = transformation_mapping_items => {
   const isOSPMapping =
@@ -145,7 +147,12 @@ export const mapInfrastructureMappings = (
     openstack: [],
     rhevm: {}
   };
-  const clusterLans = {};
+
+  const networksMap = {
+    CloudNetwork: {},
+    Lan: {}
+  };
+
   clusters.forEach(cluster => {
     if (cluster.storages && cluster.storages.length) {
       cluster.storages.forEach(datastore => {
@@ -154,7 +161,7 @@ export const mapInfrastructureMappings = (
     }
     if (cluster.lans && cluster.lans.length) {
       cluster.lans.forEach(lan => {
-        clusterLans[lan.id] = cluster.id;
+        networksMap.Lan[lan.id] = cluster.id;
       });
     }
   });
@@ -166,7 +173,7 @@ export const mapInfrastructureMappings = (
     }
     if (tenant.cloud_networks && tenant.cloud_networks.length) {
       tenant.cloud_networks.forEach(network => {
-        clusterLans[network.id] = tenant.id;
+        networksMap.CloudNetwork[network.id] = tenant.id;
       });
     }
   });
@@ -178,7 +185,7 @@ export const mapInfrastructureMappings = (
     const sourceCluster = clusters.find(c => c.id === storagesMap.rhevm[datastoreMapping.source_id]);
     const targetCluster = targetComputeMap[mappingType].find(c => {
       if (mappingType === 'openstack') {
-        return storagesMap.openstack.find(item => item[c.id] === datastoreMapping.destination_id);
+        return storagesMap.openstack.find(item => item[datastoreMapping.destination_id] === c.id);
       }
       return c.id === storagesMap.rhevm[datastoreMapping.destination_id];
     });
@@ -211,18 +218,23 @@ export const mapInfrastructureMappings = (
   const targetNetworks = {};
   let missingNetworks = false;
   for (const networkMapping of networkMappingItems) {
-    if (!(networkMapping.source_id in clusterLans)) {
+    if (!(networkMapping.source_id in networksMap[networkMapping.source_type])) {
       missingNetworks = true;
       break;
     }
-    if (!(networkMapping.destination_id in clusterLans)) {
+    if (!(networkMapping.destination_id in networksMap[networkMapping.destination_type])) {
       missingNetworks = true;
       break;
     }
-    const sourceCluster = clusters.find(c => c.id === clusterLans[networkMapping.source_id]);
-    const targetCluster = targetComputeMap[mappingType].find(c => c.id === clusterLans[networkMapping.destination_id]);
-    const sn = networks.find(d => d.id === networkMapping.source_id);
-    const tn = targetNetworksMap[mappingType].find(d => d.id === networkMapping.destination_id);
+
+    const sourceCluster = clusters.find(
+      c => c.id === networksMap[MAPPING_TYPE_RESOURCE_MAP[mappingType].networks.source][networkMapping.source_id]
+    );
+    const targetCluster = targetComputeMap[mappingType].find(
+      c => c.id === networksMap[MAPPING_TYPE_RESOURCE_MAP[mappingType].networks.target][networkMapping.destination_id]
+    );
+    const sn = networks.find(network => network.id === networkMapping.source_id);
+    const tn = targetNetworksMap[mappingType].find(network => network.id === networkMapping.destination_id);
 
     if (sourceCluster && targetCluster && sn && tn) {
       const sourceNetwork = Immutable.set(sn, 'clusterId', sourceCluster.id);
