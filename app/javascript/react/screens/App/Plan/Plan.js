@@ -43,6 +43,7 @@ class Plan extends React.Component {
     };
 
     this.props.resetPlanStateAction();
+    this.willUnmount = false;
   }
 
   componentDidMount() {
@@ -71,7 +72,7 @@ class Plan extends React.Component {
       if (miq_requests.length > 0) {
         const mostRecentRequest = getMostRecentRequest(miq_requests);
         fetchTasksForAllRequestsForPlanAction(fetchTasksForAllRequestsForPlanUrl, miq_requests);
-        if (mostRecentRequest.request_state === 'active') {
+        if (mostRecentRequest.request_state === 'active' && !this.pollingInterval && !this.willUnmount) {
           this.startPolling(miq_requests);
         } else {
           this.setState(() => ({
@@ -85,6 +86,7 @@ class Plan extends React.Component {
   }
 
   componentWillUnmount() {
+    this.willUnmount = true;
     const { resetPlanStateAction } = this.props;
     this.stopPolling();
     resetPlanStateAction();
