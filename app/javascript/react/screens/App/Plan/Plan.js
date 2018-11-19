@@ -243,6 +243,24 @@ class Plan extends React.Component {
             )}
           {planNotStarted && !isRejectedVms && vmsMutable.length > 0 && <PlanVmsList planVms={vmsMutable} />}
           {planNotStarted &&
+            planRequestDenied && (
+              <PlanEmptyState
+                title={__('Migration Failed')}
+                iconType="pf"
+                iconName="error-circle-o"
+                description={
+                  <React.Fragment>
+                    {__('Unable to start migration because no conversion host is configured.')}{' '}
+                    <a href="https://access.redhat.com/documentation/en-us/red_hat_infrastructure_migration_solution/1.0/html/infrastructure_migration_solution_guide/installation#rhv_conversion_hosts">
+                      {__('See the product documentation for information on configuring conversion hosts.')}
+                    </a>
+                  </React.Fragment>
+                }
+                descriptionIsNode
+              />
+            )}
+          {planNotStarted &&
+            !planRequestDenied &&
             vmsMutable.length === 0 && (
               <PlanEmptyState
                 title={__('No VMs')}
