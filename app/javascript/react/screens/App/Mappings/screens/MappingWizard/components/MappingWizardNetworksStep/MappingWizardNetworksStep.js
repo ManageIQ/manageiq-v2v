@@ -17,7 +17,9 @@ class MappingWizardNetworksStep extends React.Component {
     preLoadingMappings: false
   };
 
-  componentWillMount() {
+  constructor(props) {
+    super(props);
+
     const { clusterMappings, pristine } = this.props;
 
     const sourceClusters = clusterMappings.reduce(
@@ -25,8 +27,12 @@ class MappingWizardNetworksStep extends React.Component {
       []
     );
 
+    const synchronousSetState = fn => {
+      this.state = { ...this.state, ...fn() };
+    };
+
     if (sourceClusters.length === 1 || !pristine) {
-      this.selectSourceCluster(sourceClusters[0].id);
+      this.selectSourceCluster(sourceClusters[0].id, synchronousSetState);
     }
   }
 
@@ -84,7 +90,7 @@ class MappingWizardNetworksStep extends React.Component {
     }
   }
 
-  selectSourceCluster = sourceClusterId => {
+  selectSourceCluster = (sourceClusterId, setState = this.setState) => {
     // when dropdown selection occurs for source cluster, we go retrieve the
     // newworks for that cluster
     const {
@@ -102,7 +108,7 @@ class MappingWizardNetworksStep extends React.Component {
 
     const { nodes: sourceClusters, ...targetCluster } = selectedClusterMapping;
 
-    this.setState(() => ({
+    setState(() => ({
       selectedCluster: sourceClusters.find(sourceCluster => sourceCluster.id === sourceClusterId),
       selectedClusterMapping
     }));
