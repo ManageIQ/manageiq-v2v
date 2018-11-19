@@ -12,7 +12,13 @@ const getMostRecentVMTasksFromRequests = (requests, actions) => {
 
   const vmTasksForRequestOfPlan = [];
   vmTasksForRequestOfPlan.push(
-    vm_ids.map(vmId => commonUtilitiesHelper.getMostRecentEntityByCreationDate(groupedByVMId[vmId]))
+    vm_ids.reduce((tasks, id) => {
+      const task = commonUtilitiesHelper.getMostRecentEntityByCreationDate(groupedByVMId[id]);
+      if (task) {
+        return [...tasks, task];
+      }
+      return tasks;
+    }, [])
   );
 
   const flattenVMTasksForRequestOfPlan = [];
