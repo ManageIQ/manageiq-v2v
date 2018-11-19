@@ -112,6 +112,7 @@ class Plan extends React.Component {
       planName,
       planArchived,
       planRequestFailed,
+      planRequestDenied,
       isRejectedPlanRequest,
       isFetchingPlanRequest,
       isRejectedPlan,
@@ -155,7 +156,7 @@ class Plan extends React.Component {
       archived: <Icon type="fa" name="archive" />
     };
     const breadcrumbIcon =
-      (planRequestFailed && icons.failed) ||
+      ((planRequestFailed || planRequestDenied) && icons.failed) ||
       (planArchived && icons.archived) ||
       (planFinished && icons.success) ||
       (!planNotStarted && icons.inProgress) ||
@@ -270,6 +271,7 @@ Plan.propTypes = {
   fetchTasksForAllRequestsForPlanAction: PropTypes.func.isRequired,
   planName: PropTypes.string,
   planRequestFailed: PropTypes.bool,
+  planRequestDenied: PropTypes.bool,
   planArchived: PropTypes.bool,
   planRequestTasks: PropTypes.array,
   isRejectedPlanRequest: PropTypes.bool,

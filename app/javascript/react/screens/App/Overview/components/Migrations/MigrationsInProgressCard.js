@@ -61,10 +61,7 @@ const MigrationsInProgressCard = ({
     );
     const cardFooter = (
       <Card.Footer style={{ position: 'relative', top: '-2px' }}>
-        <Button
-          style={{ position: 'relative', top: '-5px' }}
-          onClick={() => alert('TODO: handle cancel')}
-        >
+        <Button style={{ position: 'relative', top: '-5px' }} onClick={() => alert('TODO: handle cancel')}>
           {__('Cancel Migration')}
         </Button>
       </Card.Footer>

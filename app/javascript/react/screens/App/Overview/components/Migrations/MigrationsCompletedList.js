@@ -210,7 +210,7 @@ const MigrationsCompletedList = ({
                           ) : (
                             <ListView.Icon
                               type="pf"
-                              name={(failed || denied) ? 'error-circle-o' : 'ok'}
+                              name={failed || denied ? 'error-circle-o' : 'ok'}
                               size="md"
                               style={{
                                 width: 'inherit',
@@ -240,7 +240,7 @@ const MigrationsCompletedList = ({
                             </ListView.InfoItem>
                           ),
                           !denied ? (
-                              <ListView.InfoItem key={`${plan.id}-elapsed`}>
+                            <ListView.InfoItem key={`${plan.id}-elapsed`}>
                               <ListView.Icon type="fa" size="lg" name="clock-o" />
                               {elapsedTime}
                             </ListView.InfoItem>
