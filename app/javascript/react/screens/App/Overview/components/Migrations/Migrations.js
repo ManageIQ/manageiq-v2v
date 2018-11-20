@@ -70,7 +70,8 @@ class Migrations extends React.Component {
       fetchTransformationMappingsAction,
       showEditPlanNameModalAction,
       acknowledgeDeniedPlanRequestAction,
-      isEditingPlanRequest
+      isEditingPlanRequest,
+      setMigrationsFilterAction
     } = this.props;
 
     const plansExist = transformationPlans.length > 0 || archivedTransformationPlans.length > 0;
@@ -146,6 +147,7 @@ class Migrations extends React.Component {
                 isEditingPlanRequest={isEditingPlanRequest}
                 isFetchingTransformationPlans={isFetchingTransformationPlans}
                 isFetchingAllRequestsWithTasks={isFetchingAllRequestsWithTasks}
+                setMigrationsFilterAction={setMigrationsFilterAction}
               />
             )}
             {activeFilter === MIGRATIONS_FILTERS.completed && (

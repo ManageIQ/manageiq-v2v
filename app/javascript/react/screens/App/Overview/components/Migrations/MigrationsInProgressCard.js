@@ -20,6 +20,7 @@ import getMostRecentVMTasksFromRequests from './helpers/getMostRecentVMTasksFrom
 import getPlaybookName from './helpers/getPlaybookName';
 import { PLAN_JOB_STATES } from '../../../../../../data/models/plans';
 import { DOCS_URL_CONFIGURE_CONVERSION_HOSTS } from '../../../Plan/PlanConstants';
+import { MIGRATIONS_FILTERS } from '../../OverviewConstants';
 
 const MigrationsInProgressCard = ({
   plan,
@@ -31,7 +32,8 @@ const MigrationsInProgressCard = ({
   acknowledgeDeniedPlanRequestAction,
   isEditingPlanRequest,
   isFetchingTransformationPlans,
-  isFetchingAllRequestsWithTasks
+  isFetchingAllRequestsWithTasks,
+  setMigrationsFilterAction
 }) => {
   const requestsOfAssociatedPlan = allRequestsWithTasks.filter(request => request.source_id === plan.id);
   const mostRecentRequest = requestsOfAssociatedPlan.length > 0 && getMostRecentRequest(requestsOfAssociatedPlan);
@@ -72,7 +74,7 @@ const MigrationsInProgressCard = ({
             acknowledgeDeniedPlanRequestAction({
               plansUrl: fetchTransformationPlansUrl,
               planRequest: mostRecentRequest
-            })
+            }).then(() => setMigrationsFilterAction(MIGRATIONS_FILTERS.completed))
           }
           disabled={isEditingPlanRequest || isFetchingTransformationPlans || isFetchingAllRequestsWithTasks}
         >
@@ -299,7 +301,8 @@ MigrationsInProgressCard.propTypes = {
   acknowledgeDeniedPlanRequestAction: PropTypes.func,
   isEditingPlanRequest: PropTypes.bool,
   isFetchingTransformationPlans: PropTypes.bool,
-  isFetchingAllRequestsWithTasks: PropTypes.bool
+  isFetchingAllRequestsWithTasks: PropTypes.bool,
+  setMigrationsFilterAction: PropTypes.func
 };
 
 export default MigrationsInProgressCard;

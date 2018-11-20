@@ -15,7 +15,8 @@ const MigrationsInProgressCards = ({
   acknowledgeDeniedPlanRequestAction,
   isEditingPlanRequest,
   isFetchingTransformationPlans,
-  isFetchingAllRequestsWithTasks
+  isFetchingAllRequestsWithTasks,
+  setMigrationsFilterAction
 }) => (
   <div className="row-cards-pf">
     <Grid.Row>
@@ -39,6 +40,7 @@ const MigrationsInProgressCards = ({
                   isEditingPlanRequest={isEditingPlanRequest}
                   isFetchingTransformationPlans={isFetchingTransformationPlans}
                   isFetchingAllRequestsWithTasks={isFetchingAllRequestsWithTasks}
+                  setMigrationsFilterAction={setMigrationsFilterAction}
                 />
               ))
             ) : (
@@ -67,7 +69,8 @@ MigrationsInProgressCards.propTypes = {
   acknowledgeDeniedPlanRequestAction: PropTypes.func,
   isEditingPlanRequest: PropTypes.bool,
   isFetchingTransformationPlans: PropTypes.bool,
-  isFetchingAllRequestsWithTasks: PropTypes.bool
+  isFetchingAllRequestsWithTasks: PropTypes.bool,
+  setMigrationsFilterAction: PropTypes.func
 };
 
 MigrationsInProgressCards.defaultProps = {
