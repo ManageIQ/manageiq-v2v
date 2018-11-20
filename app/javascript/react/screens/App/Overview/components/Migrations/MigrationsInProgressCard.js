@@ -19,6 +19,7 @@ import getMostRecentRequest from '../../../common/getMostRecentRequest';
 import getMostRecentVMTasksFromRequests from './helpers/getMostRecentVMTasksFromRequests';
 import getPlaybookName from './helpers/getPlaybookName';
 import { PLAN_JOB_STATES } from '../../../../../../data/models/plans';
+import { DOCS_URL_CONFIGURE_CONVERSION_HOSTS } from '../../../Plan/PlanConstants';
 
 const MigrationsInProgressCard = ({
   plan,
@@ -53,7 +54,7 @@ const MigrationsInProgressCard = ({
         <EmptyState.Icon type="pf" name="error-circle-o" />
         <EmptyState.Info style={{ marginTop: 10 }}>
           {__('Unable to start migration because no conversion host is configured.')}{' '}
-          <a href="https://access.redhat.com/documentation/en-us/red_hat_infrastructure_migration_solution/1.0/html/infrastructure_migration_solution_guide/installation#rhv_conversion_hosts">
+          <a href={DOCS_URL_CONFIGURE_CONVERSION_HOSTS} target="_blank">
             {__('See the product documentation for information on configuring conversion hosts.')}
           </a>
         </EmptyState.Info>

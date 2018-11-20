@@ -14,7 +14,7 @@ import {
   ACTIVE_PLAN_SORT_FIELDS,
   FINISHED_PLAN_SORT_FIELDS
 } from './components/PlanRequestDetailList/PlanRequestDetailListConstants';
-import { REQUEST_TASKS_URL } from './PlanConstants';
+import { REQUEST_TASKS_URL, DOCS_URL_CONFIGURE_CONVERSION_HOSTS } from './PlanConstants';
 
 class Plan extends React.Component {
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -251,7 +251,7 @@ class Plan extends React.Component {
                 description={
                   <React.Fragment>
                     {__('Unable to start migration because no conversion host is configured.')}{' '}
-                    <a href="https://access.redhat.com/documentation/en-us/red_hat_infrastructure_migration_solution/1.0/html/infrastructure_migration_solution_guide/installation#rhv_conversion_hosts">
+                    <a href={DOCS_URL_CONFIGURE_CONVERSION_HOSTS} target="_blank">
                       {__('See the product documentation for information on configuring conversion hosts.')}
                     </a>
                   </React.Fragment>
