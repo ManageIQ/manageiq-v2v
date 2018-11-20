@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { noop, Button, Spinner } from 'patternfly-react';
+import { noop, Spinner } from 'patternfly-react';
 
 import { transformationHasBeenEdited } from './helpers';
 import { FETCH_TRANSFORMATION_MAPPINGS_URL } from '../../../../../Mappings/MappingsConstants';
@@ -88,12 +88,6 @@ class MappingWizardResultsStep extends React.Component {
           <h3 className="blank-slate-pf-main-action">
             {sprintf(__('All mappings in %s have been mapped.'), transformationsBody.name)}
           </h3>
-          <p className="blank-slate-pf-secondary-action">
-            <Button bsStyle="link" onClick={() => this.onContinueToPlanWizard(transformationMappingsResult.id)}>
-              {__('Continue to the plan wizard')}
-            </Button>
-            {__('to create a migration plan using the infrastructure mapping.')}
-          </p>
         </div>
       );
     }
