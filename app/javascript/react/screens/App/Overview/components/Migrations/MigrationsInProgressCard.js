@@ -26,7 +26,12 @@ const MigrationsInProgressCard = ({
   serviceTemplatePlaybooks,
   allRequestsWithTasks,
   reloadCard,
-  handleClick
+  handleClick,
+  fetchTransformationPlansUrl,
+  acknowledgeDeniedPlanRequestAction,
+  isEditingPlanRequest,
+  isFetchingTransformationPlans,
+  isFetchingAllRequestsWithTasks
 }) => {
   const requestsOfAssociatedPlan = allRequestsWithTasks.filter(request => request.source_id === plan.id);
   const mostRecentRequest = requestsOfAssociatedPlan.length > 0 && getMostRecentRequest(requestsOfAssociatedPlan);
@@ -47,14 +52,13 @@ const MigrationsInProgressCard = ({
     );
   }
 
-  // TODO: remove plan.name condition here
-  if (mostRecentRequest.approval_state === 'denied' || plan.name === 'test-denied-state') {
+  if (mostRecentRequest.approval_state === 'denied') {
     const cardEmptyState = (
       <EmptyState>
         <EmptyState.Icon type="pf" name="error-circle-o" />
         <EmptyState.Info style={{ marginTop: 10 }}>
-          {__('Unable to migrate VMs because no conversion host was configured at the time of the attempted migration.')}{' '}
-          <a href={DOCS_URL_CONFIGURE_CONVERSION_HOSTS} target="_blank">
+          {__('Unable to migrate VMs because no conversion host was configured at the time of the attempted migration.') /* prettier-ignore */}{' '}
+          <a href={DOCS_URL_CONFIGURE_CONVERSION_HOSTS} target="_blank" rel="noopener noreferrer">
             {__('See the product documentation for information on configuring conversion hosts.')}
           </a>
         </EmptyState.Info>
@@ -62,7 +66,16 @@ const MigrationsInProgressCard = ({
     );
     const cardFooter = (
       <Card.Footer style={{ position: 'relative', top: '-2px' }}>
-        <Button style={{ position: 'relative', top: '-5px' }} onClick={() => alert('TODO: handle cancel')}>
+        <Button
+          style={{ position: 'relative', top: '-5px' }}
+          onClick={() =>
+            acknowledgeDeniedPlanRequestAction({
+              plansUrl: fetchTransformationPlansUrl,
+              planRequest: mostRecentRequest
+            })
+          }
+          disabled={isEditingPlanRequest || isFetchingTransformationPlans || isFetchingAllRequestsWithTasks}
+        >
           {__('Cancel Migration')}
         </Button>
       </Card.Footer>
@@ -281,7 +294,12 @@ MigrationsInProgressCard.propTypes = {
   serviceTemplatePlaybooks: PropTypes.array,
   allRequestsWithTasks: PropTypes.array,
   reloadCard: PropTypes.bool,
-  handleClick: PropTypes.func
+  handleClick: PropTypes.func,
+  fetchTransformationPlansUrl: PropTypes.string,
+  acknowledgeDeniedPlanRequestAction: PropTypes.func,
+  isEditingPlanRequest: PropTypes.bool,
+  isFetchingTransformationPlans: PropTypes.bool,
+  isFetchingAllRequestsWithTasks: PropTypes.bool
 };
 
 export default MigrationsInProgressCard;

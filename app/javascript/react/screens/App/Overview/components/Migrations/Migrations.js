@@ -51,7 +51,9 @@ class Migrations extends React.Component {
       fetchTransformationPlansAction,
       fetchTransformationPlansUrl,
       fetchArchivedTransformationPlansUrl,
+      isFetchingTransformationPlans,
       isFetchingArchivedTransformationPlans,
+      isFetchingAllRequestsWithTasks,
       archivedTransformationPlans,
       allArchivedPlanRequestsWithTasks,
       archiveTransformationPlanAction,
@@ -66,7 +68,9 @@ class Migrations extends React.Component {
       showPlanWizardEditModeAction,
       fetchTransformationMappingsUrl,
       fetchTransformationMappingsAction,
-      showEditPlanNameModalAction
+      showEditPlanNameModalAction,
+      acknowledgeDeniedPlanRequestAction,
+      isEditingPlanRequest
     } = this.props;
 
     const plansExist = transformationPlans.length > 0 || archivedTransformationPlans.length > 0;
@@ -137,6 +141,11 @@ class Migrations extends React.Component {
                 reloadCard={reloadCard}
                 loading={isCreatingTransformationPlanRequest !== null}
                 redirectTo={redirectTo}
+                fetchTransformationPlansUrl={fetchTransformationPlansUrl}
+                acknowledgeDeniedPlanRequestAction={acknowledgeDeniedPlanRequestAction}
+                isEditingPlanRequest={isEditingPlanRequest}
+                isFetchingTransformationPlans={isFetchingTransformationPlans}
+                isFetchingAllRequestsWithTasks={isFetchingAllRequestsWithTasks}
               />
             )}
             {activeFilter === MIGRATIONS_FILTERS.completed && (
@@ -214,7 +223,9 @@ Migrations.propTypes = {
   fetchArchivedTransformationPlansUrl: PropTypes.string,
   archivedTransformationPlans: PropTypes.array,
   allArchivedPlanRequestsWithTasks: PropTypes.array,
+  isFetchingTransformationPlans: PropTypes.bool,
   isFetchingArchivedTransformationPlans: PropTypes.string,
+  isFetchingAllRequestsWithTasks: PropTypes.bool,
   archiveTransformationPlanAction: PropTypes.func,
   archiveTransformationPlanUrl: PropTypes.string,
   deleteTransformationPlanAction: PropTypes.func,
@@ -227,7 +238,9 @@ Migrations.propTypes = {
   showPlanWizardEditModeAction: PropTypes.func,
   fetchTransformationMappingsAction: PropTypes.func,
   fetchTransformationMappingsUrl: PropTypes.string,
-  showEditPlanNameModalAction: PropTypes.func
+  showEditPlanNameModalAction: PropTypes.func,
+  acknowledgeDeniedPlanRequestAction: PropTypes.func,
+  isEditingPlanRequest: PropTypes.bool
 };
 Migrations.defaultProps = {
   transformationPlans: [],

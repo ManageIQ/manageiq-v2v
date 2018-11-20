@@ -76,4 +76,5 @@ STATUS_MESSAGES[STATUS_MESSAGE_KEYS.CANCELLED] = __('VM cancelled');
 export { STATUS_MESSAGES as V2V_MIGRATION_STATUS_MESSAGES };
 
 // TODO FIXME this is a 404:
-export const DOCS_URL_CONFIGURE_CONVERSION_HOSTS = "https://access.redhat.com/documentation/en-us/red_hat_infrastructure_migration_solution/1.0/html/infrastructure_migration_solution_guide/installation#rhv_conversion_hosts";
+export const DOCS_URL_CONFIGURE_CONVERSION_HOSTS =
+  'https://access.redhat.com/documentation/en-us/red_hat_infrastructure_migration_solution/1.0/html/infrastructure_migration_solution_guide/installation#rhv_conversion_hosts';
