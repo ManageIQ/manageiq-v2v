@@ -31,8 +31,6 @@ const MigrationsInProgressCard = ({
   fetchTransformationPlansUrl,
   acknowledgeDeniedPlanRequestAction,
   isEditingPlanRequest,
-  isFetchingTransformationPlans,
-  isFetchingAllRequestsWithTasks,
   setMigrationsFilterAction
 }) => {
   const requestsOfAssociatedPlan = allRequestsWithTasks.filter(request => request.source_id === plan.id);
@@ -76,7 +74,7 @@ const MigrationsInProgressCard = ({
               planRequest: mostRecentRequest
             }).then(() => setMigrationsFilterAction(MIGRATIONS_FILTERS.completed))
           }
-          disabled={isEditingPlanRequest || isFetchingTransformationPlans || isFetchingAllRequestsWithTasks}
+          disabled={isEditingPlanRequest}
         >
           {__('Cancel Migration')}
         </Button>
@@ -300,8 +298,6 @@ MigrationsInProgressCard.propTypes = {
   fetchTransformationPlansUrl: PropTypes.string,
   acknowledgeDeniedPlanRequestAction: PropTypes.func,
   isEditingPlanRequest: PropTypes.bool,
-  isFetchingTransformationPlans: PropTypes.bool,
-  isFetchingAllRequestsWithTasks: PropTypes.bool,
   setMigrationsFilterAction: PropTypes.func
 };
 

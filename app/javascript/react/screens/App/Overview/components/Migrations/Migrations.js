@@ -51,9 +51,7 @@ class Migrations extends React.Component {
       fetchTransformationPlansAction,
       fetchTransformationPlansUrl,
       fetchArchivedTransformationPlansUrl,
-      isFetchingTransformationPlans,
       isFetchingArchivedTransformationPlans,
-      isFetchingAllRequestsWithTasks,
       archivedTransformationPlans,
       allArchivedPlanRequestsWithTasks,
       archiveTransformationPlanAction,
@@ -145,8 +143,6 @@ class Migrations extends React.Component {
                 fetchTransformationPlansUrl={fetchTransformationPlansUrl}
                 acknowledgeDeniedPlanRequestAction={acknowledgeDeniedPlanRequestAction}
                 isEditingPlanRequest={isEditingPlanRequest}
-                isFetchingTransformationPlans={isFetchingTransformationPlans}
-                isFetchingAllRequestsWithTasks={isFetchingAllRequestsWithTasks}
                 setMigrationsFilterAction={setMigrationsFilterAction}
               />
             )}
@@ -225,9 +221,7 @@ Migrations.propTypes = {
   fetchArchivedTransformationPlansUrl: PropTypes.string,
   archivedTransformationPlans: PropTypes.array,
   allArchivedPlanRequestsWithTasks: PropTypes.array,
-  isFetchingTransformationPlans: PropTypes.bool,
   isFetchingArchivedTransformationPlans: PropTypes.string,
-  isFetchingAllRequestsWithTasks: PropTypes.bool,
   archiveTransformationPlanAction: PropTypes.func,
   archiveTransformationPlanUrl: PropTypes.string,
   deleteTransformationPlanAction: PropTypes.func,

@@ -14,8 +14,6 @@ const MigrationsInProgressCards = ({
   fetchTransformationPlansUrl,
   acknowledgeDeniedPlanRequestAction,
   isEditingPlanRequest,
-  isFetchingTransformationPlans,
-  isFetchingAllRequestsWithTasks,
   setMigrationsFilterAction
 }) => (
   <div className="row-cards-pf">
@@ -38,8 +36,6 @@ const MigrationsInProgressCards = ({
                   fetchTransformationPlansUrl={fetchTransformationPlansUrl}
                   acknowledgeDeniedPlanRequestAction={acknowledgeDeniedPlanRequestAction}
                   isEditingPlanRequest={isEditingPlanRequest}
-                  isFetchingTransformationPlans={isFetchingTransformationPlans}
-                  isFetchingAllRequestsWithTasks={isFetchingAllRequestsWithTasks}
                   setMigrationsFilterAction={setMigrationsFilterAction}
                 />
               ))
@@ -68,8 +64,6 @@ MigrationsInProgressCards.propTypes = {
   fetchTransformationPlansUrl: PropTypes.string,
   acknowledgeDeniedPlanRequestAction: PropTypes.func,
   isEditingPlanRequest: PropTypes.bool,
-  isFetchingTransformationPlans: PropTypes.bool,
-  isFetchingAllRequestsWithTasks: PropTypes.bool,
   setMigrationsFilterAction: PropTypes.func
 };
 

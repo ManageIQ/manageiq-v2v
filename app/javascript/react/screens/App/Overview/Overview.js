@@ -313,9 +313,7 @@ class Overview extends React.Component {
                 fetchTransformationPlansAction={fetchTransformationPlansAction}
                 fetchTransformationPlansUrl={fetchTransformationPlansUrl}
                 fetchArchivedTransformationPlansUrl={fetchArchivedTransformationPlansUrl}
-                isFetchingTransformationPlans={isFetchingTransformationPlans}
                 isFetchingArchivedTransformationPlans={isFetchingArchivedTransformationPlans}
-                isFetchingAllRequestsWithTasks={isFetchingAllRequestsWithTasks}
                 archiveTransformationPlanAction={archiveTransformationPlanAction}
                 archiveTransformationPlanUrl={archiveTransformationPlanUrl}
                 deleteTransformationPlanAction={deleteTransformationPlanAction}
