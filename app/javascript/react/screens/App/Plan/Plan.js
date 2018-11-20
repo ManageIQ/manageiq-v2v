@@ -250,7 +250,7 @@ class Plan extends React.Component {
                 iconName="error-circle-o"
                 description={
                   <React.Fragment>
-                    {__('Unable to start migration because no conversion host is configured.')}{' '}
+                    {__('Unable to migrate VMs because no conversion host was configured at the time of the attempted migration.')}{' '}
                     <a href={DOCS_URL_CONFIGURE_CONVERSION_HOSTS} target="_blank">
                       {__('See the product documentation for information on configuring conversion hosts.')}
                     </a>
