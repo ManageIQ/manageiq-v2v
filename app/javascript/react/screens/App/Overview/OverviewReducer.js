@@ -32,7 +32,8 @@ import {
   ARCHIVE_TRANSFORMATION_PLAN,
   V2V_TOGGLE_SCHEDULE_MIGRATION_MODAL,
   V2V_SCHEDULE_MIGRATION,
-  SHOW_PLAN_WIZARD_EDIT_MODE
+  SHOW_PLAN_WIZARD_EDIT_MODE,
+  V2V_EDIT_PLAN_REQUEST
 } from './OverviewConstants';
 
 import { planTransmutation, sufficientProviders } from './helpers';
@@ -88,7 +89,10 @@ export const initialState = Immutable({
   isFetchingServiceTemplatePlaybooks: false,
   isRejectedServiceTemplatePlaybooks: false,
   errorServiceTemplatePlaybooks: null,
-  initialMigrationsFilterSet: false
+  initialMigrationsFilterSet: false,
+  isEditingPlanRequest: false,
+  isRejectedEditingPlanRequest: false,
+  errorEditingPlanRequest: null
 });
 
 export default (state = initialState, action) => {
@@ -303,6 +307,22 @@ export default (state = initialState, action) => {
 
     case V2V_AUTO_SET_MIGRATIONS_FILTER:
       return state.set('initialMigrationsFilterSet', true);
+
+    case `${V2V_EDIT_PLAN_REQUEST}_PENDING`:
+      return state
+        .set('isEditingPlanRequest', true)
+        .set('isRejectedEditingPlanRequest', false)
+        .set('errorEditingPlanRequest', null);
+    case `${V2V_EDIT_PLAN_REQUEST}_FULFILLED`:
+      return state
+        .set('isEditingPlanRequest', false)
+        .set('isRejectedEditingPlanRequest', false)
+        .set('errorEditingPlanRequest', null);
+    case `${V2V_EDIT_PLAN_REQUEST}_REJECTED`:
+      return state
+        .set('isEditingPlanRequest', false)
+        .set('isRejectedEditingPlanRequest', true)
+        .set('errorEditingPlanRequest', action.payload);
 
     default:
       return state;

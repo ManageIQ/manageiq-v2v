@@ -10,7 +10,11 @@ const MigrationsInProgressCards = ({
   allRequestsWithTasks,
   reloadCard,
   loading,
-  redirectTo
+  redirectTo,
+  fetchTransformationPlansUrl,
+  acknowledgeDeniedPlanRequestAction,
+  isEditingPlanRequest,
+  setMigrationsFilterAction
 }) => (
   <div className="row-cards-pf">
     <Grid.Row>
@@ -29,6 +33,10 @@ const MigrationsInProgressCards = ({
                   reloadCard={reloadCard}
                   key={plan.id}
                   handleClick={redirectTo}
+                  fetchTransformationPlansUrl={fetchTransformationPlansUrl}
+                  acknowledgeDeniedPlanRequestAction={acknowledgeDeniedPlanRequestAction}
+                  isEditingPlanRequest={isEditingPlanRequest}
+                  setMigrationsFilterAction={setMigrationsFilterAction}
                 />
               ))
             ) : (
@@ -52,7 +60,11 @@ MigrationsInProgressCards.propTypes = {
   allRequestsWithTasks: PropTypes.array,
   reloadCard: PropTypes.bool,
   loading: PropTypes.bool,
-  redirectTo: PropTypes.func
+  redirectTo: PropTypes.func,
+  fetchTransformationPlansUrl: PropTypes.string,
+  acknowledgeDeniedPlanRequestAction: PropTypes.func,
+  isEditingPlanRequest: PropTypes.bool,
+  setMigrationsFilterAction: PropTypes.func
 };
 
 MigrationsInProgressCards.defaultProps = {

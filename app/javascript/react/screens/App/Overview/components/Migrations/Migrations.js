@@ -66,7 +66,10 @@ class Migrations extends React.Component {
       showPlanWizardEditModeAction,
       fetchTransformationMappingsUrl,
       fetchTransformationMappingsAction,
-      showEditPlanNameModalAction
+      showEditPlanNameModalAction,
+      acknowledgeDeniedPlanRequestAction,
+      isEditingPlanRequest,
+      setMigrationsFilterAction
     } = this.props;
 
     const plansExist = transformationPlans.length > 0 || archivedTransformationPlans.length > 0;
@@ -137,6 +140,10 @@ class Migrations extends React.Component {
                 reloadCard={reloadCard}
                 loading={isCreatingTransformationPlanRequest !== null}
                 redirectTo={redirectTo}
+                fetchTransformationPlansUrl={fetchTransformationPlansUrl}
+                acknowledgeDeniedPlanRequestAction={acknowledgeDeniedPlanRequestAction}
+                isEditingPlanRequest={isEditingPlanRequest}
+                setMigrationsFilterAction={setMigrationsFilterAction}
               />
             )}
             {activeFilter === MIGRATIONS_FILTERS.completed && (
@@ -227,7 +234,9 @@ Migrations.propTypes = {
   showPlanWizardEditModeAction: PropTypes.func,
   fetchTransformationMappingsAction: PropTypes.func,
   fetchTransformationMappingsUrl: PropTypes.string,
-  showEditPlanNameModalAction: PropTypes.func
+  showEditPlanNameModalAction: PropTypes.func,
+  acknowledgeDeniedPlanRequestAction: PropTypes.func,
+  isEditingPlanRequest: PropTypes.bool
 };
 Migrations.defaultProps = {
   transformationPlans: [],

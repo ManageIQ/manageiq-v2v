@@ -18,7 +18,7 @@ const FinishedTransformationPlans = ({ finishedPlans, loading, migrationsFilter,
   const active = migrationsFilter === MIGRATIONS_FILTERS.completed;
   const failedPlans = finishedPlans.filter(plan => {
     const mostRecentRequest = plan.miq_requests.length > 0 && getMostRecentRequest(plan.miq_requests);
-    return mostRecentRequest.status === 'Error';
+    return mostRecentRequest.status === 'Error' || mostRecentRequest.status === 'Denied';
   });
 
   const classes = cx('overview-aggregate-card', { 'is-loading': loading, active });

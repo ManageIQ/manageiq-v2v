@@ -270,7 +270,9 @@ class Overview extends React.Component {
       fetchTransformationMappingsAction,
       openMappingWizardOnTransitionAction,
       setMigrationsFilterAction,
-      initialMigrationsFilterSet
+      initialMigrationsFilterSet,
+      acknowledgeDeniedPlanRequestAction,
+      isEditingPlanRequest
     } = this.props;
 
     const mainContent = (
@@ -325,6 +327,8 @@ class Overview extends React.Component {
                 fetchTransformationMappingsUrl={fetchTransformationMappingsUrl}
                 fetchTransformationMappingsAction={fetchTransformationMappingsAction}
                 showEditPlanNameModalAction={showEditPlanNameModalAction}
+                acknowledgeDeniedPlanRequestAction={acknowledgeDeniedPlanRequestAction}
+                isEditingPlanRequest={isEditingPlanRequest}
               />
             ) : (
               <ShowWizardEmptyState
@@ -471,7 +475,9 @@ Overview.propTypes = {
   serviceTemplatePlaybooks: PropTypes.array,
   redirectTo: PropTypes.func.isRequired,
   openMappingWizardOnTransitionAction: PropTypes.func,
-  initialMigrationsFilterSet: PropTypes.bool
+  initialMigrationsFilterSet: PropTypes.bool,
+  acknowledgeDeniedPlanRequestAction: PropTypes.func,
+  isEditingPlanRequest: PropTypes.bool
 };
 
 Overview.defaultProps = {

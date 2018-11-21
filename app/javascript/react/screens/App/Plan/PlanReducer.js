@@ -36,6 +36,7 @@ export const initialState = Immutable({
   errorPlanRequest: null,
   planRequestTasks: [],
   planRequestFailed: false,
+  planRequestDenied: false,
   isFetchingPlan: false,
   isRejectedPlan: false,
   errorPlan: null,
@@ -92,9 +93,8 @@ export default (state = initialState, action) => {
           state.plan.options.config_info.actions
         );
 
-        const tasksOfMostRecentRequest = commonUtilitiesHelper.getMostRecentEntityByCreationDate(
-          action.payload.data.results
-        ).miq_request_tasks;
+        const mostRecentRequest = commonUtilitiesHelper.getMostRecentEntityByCreationDate(action.payload.data.results);
+        const tasksOfMostRecentRequest = mostRecentRequest.miq_request_tasks;
         const vmsBeingProcessedInCurrentRun = tasksOfMostRecentRequest.map(task => task.source_id);
         const tasksCompletedSuccessfullyInPriorRuns = vmTasksForRequestOfPlan.filter(
           task => vmsBeingProcessedInCurrentRun.indexOf(task.source_id) === -1
@@ -120,10 +120,8 @@ export default (state = initialState, action) => {
           )
           .set('allRequestsWithTasksForPlan', action.payload.data.results)
           .set('planRequestPreviouslyFetched', true)
-          .set(
-            'planRequestFailed',
-            commonUtilitiesHelper.getMostRecentEntityByCreationDate(action.payload.data.results).status === 'Error'
-          )
+          .set('planRequestFailed', mostRecentRequest.status === 'Error')
+          .set('planRequestDenied', mostRecentRequest.status === 'Denied')
           .set('failedMigrations', getFailedMigrations(vmTasksForRequestOfPlan))
           .set('successfulMigrations', getSuccessfulMigrations(vmTasksForRequestOfPlan))
           .set('isRejectedPlanRequest', false)
@@ -162,7 +160,8 @@ export default (state = initialState, action) => {
         .set('planRequestPreviouslyFetched', false)
         .set('markedForCancellation', [])
         .set('selectedTasksForCancel', [])
-        .set('planRequestFailed', false);
+        .set('planRequestFailed', false)
+        .set('planRequestDenied', false);
 
     case `${FETCH_V2V_MIGRATION_TASK_LOG}_PENDING`:
       return state.set('isFetchingMigrationTaskLog', true).set('isRejectedMigrationTaskLog', false);

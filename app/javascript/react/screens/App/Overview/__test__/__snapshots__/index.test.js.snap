@@ -2,6 +2,7 @@
 
 exports[`Overview integration test should mount the Overview with mapStateToProps reduced 1`] = `
 Object {
+  "acknowledgeDeniedPlanRequestAction": [Function],
   "activeTransformationPlans": Array [],
   "addNotificationAction": [Function],
   "archiveTransformationPlanAction": [Function],
@@ -12,6 +13,7 @@ Object {
   "datastores": Array [],
   "deleteTransformationPlanAction": [Function],
   "deleteTransformationPlanUrl": "/api/service_templates",
+  "editPlanRequestAction": [Function],
   "fetchArchivedTransformationPlansUrl": "/api/dummyArchivedTransformationPlans",
   "fetchClustersUrl": "/api/dummyClusters",
   "fetchDatastoresUrl": "/api/dummyDatastores",
