@@ -11,10 +11,16 @@ const MigrationsInProgressCards = ({
   reloadCard,
   loading,
   redirectTo,
+  fetchTransformationPlansAction,
   fetchTransformationPlansUrl,
+  isFetchingTransformationPlans,
+  isFetchingAllRequestsWithTasks,
   acknowledgeDeniedPlanRequestAction,
   isEditingPlanRequest,
-  setMigrationsFilterAction
+  setMigrationsFilterAction,
+  cancelPlanRequestAction,
+  isCancellingPlanRequest,
+  requestsProcessingCancellation
 }) => (
   <div className="row-cards-pf">
     <Grid.Row>
@@ -33,10 +39,16 @@ const MigrationsInProgressCards = ({
                   reloadCard={reloadCard}
                   key={plan.id}
                   handleClick={redirectTo}
+                  fetchTransformationPlansAction={fetchTransformationPlansAction}
                   fetchTransformationPlansUrl={fetchTransformationPlansUrl}
+                  isFetchingTransformationPlans={isFetchingTransformationPlans}
+                  isFetchingAllRequestsWithTasks={isFetchingAllRequestsWithTasks}
                   acknowledgeDeniedPlanRequestAction={acknowledgeDeniedPlanRequestAction}
                   isEditingPlanRequest={isEditingPlanRequest}
                   setMigrationsFilterAction={setMigrationsFilterAction}
+                  cancelPlanRequestAction={cancelPlanRequestAction}
+                  isCancellingPlanRequest={isCancellingPlanRequest}
+                  requestsProcessingCancellation={requestsProcessingCancellation}
                 />
               ))
             ) : (
@@ -61,10 +73,16 @@ MigrationsInProgressCards.propTypes = {
   reloadCard: PropTypes.bool,
   loading: PropTypes.bool,
   redirectTo: PropTypes.func,
+  fetchTransformationPlansAction: PropTypes.func,
   fetchTransformationPlansUrl: PropTypes.string,
+  isFetchingTransformationPlans: PropTypes.bool,
+  isFetchingAllRequestsWithTasks: PropTypes.bool,
   acknowledgeDeniedPlanRequestAction: PropTypes.func,
   isEditingPlanRequest: PropTypes.bool,
-  setMigrationsFilterAction: PropTypes.func
+  setMigrationsFilterAction: PropTypes.func,
+  cancelPlanRequestAction: PropTypes.func,
+  isCancellingPlanRequest: PropTypes.bool,
+  requestsProcessingCancellation: PropTypes.array
 };
 
 MigrationsInProgressCards.defaultProps = {

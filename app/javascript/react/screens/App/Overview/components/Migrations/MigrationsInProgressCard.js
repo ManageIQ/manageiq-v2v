@@ -11,9 +11,10 @@ import getMostRecentVMTasksFromRequests from './helpers/getMostRecentVMTasksFrom
 import getPlaybookName from './helpers/getPlaybookName';
 import { PLAN_JOB_STATES } from '../../../../../../data/models/plans';
 import { DOCS_URL_CONFIGURE_CONVERSION_HOSTS } from '../../../Plan/PlanConstants';
-import { MIGRATIONS_FILTERS } from '../../OverviewConstants';
+import { MIGRATIONS_FILTERS, TRANSFORMATION_PLAN_REQUESTS_URL } from '../../OverviewConstants';
 import CardEmptyState from './CardEmptyState';
 import CardFooter from './CardFooter';
+import { urlBuilder } from './helpers';
 
 const MigrationsInProgressCard = ({
   plan,
@@ -21,10 +22,16 @@ const MigrationsInProgressCard = ({
   allRequestsWithTasks,
   reloadCard,
   handleClick,
+  fetchTransformationPlansAction,
   fetchTransformationPlansUrl,
+  isFetchingTransformationPlans,
+  isFetchingAllRequestsWithTasks,
   acknowledgeDeniedPlanRequestAction,
   isEditingPlanRequest,
-  setMigrationsFilterAction
+  setMigrationsFilterAction,
+  cancelPlanRequestAction,
+  isCancellingPlanRequest,
+  requestsProcessingCancellation
 }) => {
   const requestsOfAssociatedPlan = allRequestsWithTasks.filter(request => request.source_id === plan.id);
   const mostRecentRequest = requestsOfAssociatedPlan.length > 0 && getMostRecentRequest(requestsOfAssociatedPlan);
@@ -48,11 +55,31 @@ const MigrationsInProgressCard = ({
   }
 
   if (waitingForConversionHost) {
+    const cancelPlanRequest = () => {
+      cancelPlanRequestAction(TRANSFORMATION_PLAN_REQUESTS_URL, mostRecentRequest.id).then(() =>
+        fetchTransformationPlansAction({ url: fetchTransformationPlansUrl, archived: false })
+      );
+    };
+
+    const isProcessingCancellation = requestsProcessingCancellation.includes(
+      urlBuilder(TRANSFORMATION_PLAN_REQUESTS_URL, mostRecentRequest.id)
+    );
+
     return (
       <InProgressCard
         title={<h3 className="card-pf-title">{plan.name}</h3>}
         footer={
-          <CardFooter disabled={isEditingPlanRequest} buttonText={__('Cancel Migration')} onButtonClick={() => {}} />
+          <CardFooter
+            disabled={
+              isProcessingCancellation &&
+              (isFetchingTransformationPlans ||
+                isFetchingAllRequestsWithTasks ||
+                isCancellingPlanRequest ||
+                !!mostRecentRequest.cancelation_status)
+            }
+            buttonText={__('Cancel Migration')}
+            onButtonClick={cancelPlanRequest}
+          />
         }
       >
         <CardEmptyState
@@ -315,10 +342,16 @@ MigrationsInProgressCard.propTypes = {
   allRequestsWithTasks: PropTypes.array,
   reloadCard: PropTypes.bool,
   handleClick: PropTypes.func,
+  fetchTransformationPlansAction: PropTypes.func,
   fetchTransformationPlansUrl: PropTypes.string,
+  isFetchingTransformationPlans: PropTypes.bool,
+  isFetchingAllRequestsWithTasks: PropTypes.bool,
   acknowledgeDeniedPlanRequestAction: PropTypes.func,
   isEditingPlanRequest: PropTypes.bool,
-  setMigrationsFilterAction: PropTypes.func
+  setMigrationsFilterAction: PropTypes.func,
+  cancelPlanRequestAction: PropTypes.func,
+  isCancellingPlanRequest: PropTypes.bool,
+  requestsProcessingCancellation: PropTypes.array
 };
 
 export default MigrationsInProgressCard;

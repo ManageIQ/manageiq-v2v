@@ -14,6 +14,7 @@ export const V2V_RETRY_MIGRATION = 'V2V_RETRY_MIGRATION';
 export const V2V_TOGGLE_SCHEDULE_MIGRATION_MODAL = 'V2V_TOGGLE_SCHEDULE_MIGRATION_MODAL';
 export const V2V_SCHEDULE_MIGRATION = 'V2V_SCHEDULE_MIGRATION';
 export const V2V_EDIT_PLAN_REQUEST = 'V2V_EDIT_PLAN_REQUEST';
+export const V2V_CANCEL_PLAN_REQUEST = 'V2V_CANCEL_PLAN_REQUEST';
 export const SHOW_CONFIRM_MODAL = 'SHOW_CONFIRM_MODAL';
 export const HIDE_CONFIRM_MODAL = 'HIDE_CONFIRM_MODAL';
 export const ARCHIVE_TRANSFORMATION_PLAN = 'ARCHIVE_TRANSFORMATION_PLAN';
@@ -67,3 +68,5 @@ export const FETCH_ARCHIVED_TRANSFORMATION_PLANS_URL =
   '&attributes=name,description,miq_requests,options,created_at,transformation_mapping' +
   '&sort_by=updated_at' +
   '&sort_order=desc';
+
+export const TRANSFORMATION_PLAN_REQUESTS_URL = '/api/requests';

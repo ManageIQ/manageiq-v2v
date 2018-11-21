@@ -33,7 +33,8 @@ import {
   V2V_TOGGLE_SCHEDULE_MIGRATION_MODAL,
   V2V_SCHEDULE_MIGRATION,
   SHOW_PLAN_WIZARD_EDIT_MODE,
-  V2V_EDIT_PLAN_REQUEST
+  V2V_EDIT_PLAN_REQUEST,
+  V2V_CANCEL_PLAN_REQUEST
 } from './OverviewConstants';
 
 import { planTransmutation, sufficientProviders } from './helpers';
@@ -92,7 +93,11 @@ export const initialState = Immutable({
   initialMigrationsFilterSet: false,
   isEditingPlanRequest: false,
   isRejectedEditingPlanRequest: false,
-  errorEditingPlanRequest: null
+  errorEditingPlanRequest: null,
+  requestsProcessingCancellation: [],
+  isCancellingPlanRequest: false,
+  isRejectedCancelPlanRequest: false,
+  errorCancelPlanRequest: null
 });
 
 export default (state = initialState, action) => {
@@ -323,6 +328,27 @@ export default (state = initialState, action) => {
         .set('isEditingPlanRequest', false)
         .set('isRejectedEditingPlanRequest', true)
         .set('errorEditingPlanRequest', action.payload);
+
+    case `${V2V_CANCEL_PLAN_REQUEST}_PENDING`:
+      return state
+        .set('isCancellingPlanRequest', true)
+        .set('isRejectedCancelPlanRequest', false)
+        .set('requestsProcessingCancellation', [...state.requestsProcessingCancellation, action.payload]);
+    case `${V2V_CANCEL_PLAN_REQUEST}_FULFILLED`: {
+      return state
+        .set('isCancellingPlanRequest', false)
+        .set('isRejectedCancelPlanRequest', false)
+        .set('errorCancelPlanRequest', null);
+    }
+    case `${V2V_CANCEL_PLAN_REQUEST}_REJECTED`:
+      return state
+        .set(
+          'requestsProcessingCancellation',
+          state.requestsProcessingCancellation.filter(url => action.meta.url !== url)
+        )
+        .set('isCancellingPlanRequest', false)
+        .set('isRejectedCancelPlanRequest', true)
+        .set('errorCancelPlanRequest', action.payload);
 
     default:
       return state;
