@@ -24,7 +24,8 @@ import {
   V2V_SCHEDULE_MIGRATION,
   V2V_SET_MIGRATIONS_FILTER,
   V2V_TOGGLE_SCHEDULE_MIGRATION_MODAL,
-  SHOW_PLAN_WIZARD_EDIT_MODE
+  SHOW_PLAN_WIZARD_EDIT_MODE,
+  V2V_EDIT_PLAN_REQUEST
 } from './OverviewConstants';
 
 import { OPEN_V2V_MAPPING_WIZARD_ON_MOUNT } from '../Mappings/MappingsConstants';
@@ -252,3 +253,38 @@ export const scheduleMigration = payload => dispatch =>
   });
 
 export const openMappingWizardOnTransitionAction = () => ({ type: OPEN_V2V_MAPPING_WIZARD_ON_MOUNT });
+
+const _editPlanRequestActionCreator = ({ planRequestUrl, plansUrl, resource }) => dispatch =>
+  dispatch({
+    type: V2V_EDIT_PLAN_REQUEST,
+    payload: new Promise((resolve, reject) =>
+      API.post(planRequestUrl, { action: 'edit', resource })
+        .then(response => {
+          resolve(response);
+          fetchTransformationPlansAction({
+            url: plansUrl,
+            archived: false
+          })(dispatch);
+        })
+        .catch(e => reject(e))
+    )
+  });
+
+export const editPlanRequestAction = ({ planRequestUrl, plansUrl, resource }) =>
+  _editPlanRequestActionCreator({
+    planRequestUrl: new URI(planRequestUrl).toString(),
+    plansUrl: new URI(plansUrl).toString(),
+    resource
+  });
+
+export const acknowledgeDeniedPlanRequestAction = ({ plansUrl, planRequest }) =>
+  editPlanRequestAction({
+    planRequestUrl: planRequest.href,
+    plansUrl,
+    resource: {
+      options: {
+        ...planRequest.options,
+        denial_acknowledged: true
+      }
+    }
+  });

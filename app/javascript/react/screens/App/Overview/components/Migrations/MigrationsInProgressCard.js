@@ -1,7 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import numeral from 'numeral';
-import { EmptyState, Icon, OverlayTrigger, Popover, Tooltip, UtilizationBar, Spinner } from 'patternfly-react';
+import {
+  EmptyState,
+  Icon,
+  OverlayTrigger,
+  Popover,
+  Tooltip,
+  UtilizationBar,
+  Spinner,
+  Card,
+  Button
+} from 'patternfly-react';
 import InProgressCard from './InProgressCard';
 import InProgressWithDetailCard from './InProgressWithDetailCard';
 import TickingIsoElapsedTime from '../../../../../../components/dates/TickingIsoElapsedTime';
@@ -9,13 +19,19 @@ import getMostRecentRequest from '../../../common/getMostRecentRequest';
 import getMostRecentVMTasksFromRequests from './helpers/getMostRecentVMTasksFromRequests';
 import getPlaybookName from './helpers/getPlaybookName';
 import { PLAN_JOB_STATES } from '../../../../../../data/models/plans';
+import { DOCS_URL_CONFIGURE_CONVERSION_HOSTS } from '../../../Plan/PlanConstants';
+import { MIGRATIONS_FILTERS } from '../../OverviewConstants';
 
 const MigrationsInProgressCard = ({
   plan,
   serviceTemplatePlaybooks,
   allRequestsWithTasks,
   reloadCard,
-  handleClick
+  handleClick,
+  fetchTransformationPlansUrl,
+  acknowledgeDeniedPlanRequestAction,
+  isEditingPlanRequest,
+  setMigrationsFilterAction
 }) => {
   const requestsOfAssociatedPlan = allRequestsWithTasks.filter(request => request.source_id === plan.id);
   const mostRecentRequest = requestsOfAssociatedPlan.length > 0 && getMostRecentRequest(requestsOfAssociatedPlan);
@@ -32,6 +48,41 @@ const MigrationsInProgressCard = ({
     return (
       <InProgressCard title={<h3 className="card-pf-title">{plan.name}</h3>}>
         {emptyStateSpinner(__('Initiating migration. This might take a few minutes.'))}
+      </InProgressCard>
+    );
+  }
+
+  if (mostRecentRequest.approval_state === 'denied') {
+    const cardEmptyState = (
+      <EmptyState>
+        <EmptyState.Icon type="pf" name="error-circle-o" />
+        <EmptyState.Info style={{ marginTop: 10 }}>
+          {__('Unable to migrate VMs because no conversion host was configured at the time of the attempted migration.') /* prettier-ignore */}{' '}
+          <a href={DOCS_URL_CONFIGURE_CONVERSION_HOSTS} target="_blank" rel="noopener noreferrer">
+            {__('See the product documentation for information on configuring conversion hosts.')}
+          </a>
+        </EmptyState.Info>
+      </EmptyState>
+    );
+    const cardFooter = (
+      <Card.Footer style={{ position: 'relative', top: '-2px' }}>
+        <Button
+          style={{ position: 'relative', top: '-5px' }}
+          onClick={() =>
+            acknowledgeDeniedPlanRequestAction({
+              plansUrl: fetchTransformationPlansUrl,
+              planRequest: mostRecentRequest
+            }).then(() => setMigrationsFilterAction(MIGRATIONS_FILTERS.completed))
+          }
+          disabled={isEditingPlanRequest}
+        >
+          {__('Cancel Migration')}
+        </Button>
+      </Card.Footer>
+    );
+    return (
+      <InProgressCard title={<h3 className="card-pf-title">{plan.name}</h3>} footer={cardFooter}>
+        {cardEmptyState}
       </InProgressCard>
     );
   }
@@ -243,7 +294,11 @@ MigrationsInProgressCard.propTypes = {
   serviceTemplatePlaybooks: PropTypes.array,
   allRequestsWithTasks: PropTypes.array,
   reloadCard: PropTypes.bool,
-  handleClick: PropTypes.func
+  handleClick: PropTypes.func,
+  fetchTransformationPlansUrl: PropTypes.string,
+  acknowledgeDeniedPlanRequestAction: PropTypes.func,
+  isEditingPlanRequest: PropTypes.bool,
+  setMigrationsFilterAction: PropTypes.func
 };
 
 export default MigrationsInProgressCard;

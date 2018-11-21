@@ -10,7 +10,11 @@ export const activeTransformationPlansFilter = (transformationPlans, planId) =>
     }
     if (transformationPlan.miq_requests.length > 0) {
       const mostRecentRequest = getMostRecentRequest(transformationPlan.miq_requests);
-      return mostRecentRequest.request_state === 'active' || mostRecentRequest.request_state === 'pending';
+      return (
+        mostRecentRequest.request_state === 'active' ||
+        mostRecentRequest.request_state === 'pending' ||
+        (mostRecentRequest.approval_state === 'denied' && !mostRecentRequest.options.denial_acknowledged)
+      );
     }
     return false;
   });
@@ -19,7 +23,11 @@ export const finishedTransformationPlansFilter = transformationPlans =>
   transformationPlans.filter(transformationPlan => {
     if (transformationPlan.miq_requests.length > 0) {
       const mostRecentRequest = getMostRecentRequest(transformationPlan.miq_requests);
-      return mostRecentRequest.request_state === 'finished' || mostRecentRequest.request_state === 'failed';
+      return (
+        (mostRecentRequest.request_state === 'finished' && mostRecentRequest.approval_state !== 'denied') ||
+        mostRecentRequest.request_state === 'failed' ||
+        (mostRecentRequest.approval_state === 'denied' && mostRecentRequest.options.denial_acknowledged)
+      );
     }
     return false;
   });
@@ -28,7 +36,10 @@ export const finishedWithErrorTransformationPlansFilter = transformationPlans =>
   transformationPlans.filter(transformationPlan => {
     if (transformationPlan.miq_requests.length > 0) {
       const mostRecentRequest = getMostRecentRequest(transformationPlan.miq_requests);
-      return mostRecentRequest.request_state === 'finished' && mostRecentRequest.status === 'Error';
+      return (
+        (mostRecentRequest.request_state === 'finished' && mostRecentRequest.status === 'Error') ||
+        mostRecentRequest.approval_state === 'denied'
+      );
     }
     return false;
   });

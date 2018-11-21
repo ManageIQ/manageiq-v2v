@@ -14,7 +14,7 @@ import {
   ACTIVE_PLAN_SORT_FIELDS,
   FINISHED_PLAN_SORT_FIELDS
 } from './components/PlanRequestDetailList/PlanRequestDetailListConstants';
-import { REQUEST_TASKS_URL } from './PlanConstants';
+import { REQUEST_TASKS_URL, DOCS_URL_CONFIGURE_CONVERSION_HOSTS } from './PlanConstants';
 
 class Plan extends React.Component {
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -112,6 +112,7 @@ class Plan extends React.Component {
       planName,
       planArchived,
       planRequestFailed,
+      planRequestDenied,
       isRejectedPlanRequest,
       isFetchingPlanRequest,
       isRejectedPlan,
@@ -155,7 +156,7 @@ class Plan extends React.Component {
       archived: <Icon type="fa" name="archive" />
     };
     const breadcrumbIcon =
-      (planRequestFailed && icons.failed) ||
+      ((planRequestFailed || planRequestDenied) && icons.failed) ||
       (planArchived && icons.archived) ||
       (planFinished && icons.success) ||
       (!planNotStarted && icons.inProgress) ||
@@ -242,6 +243,24 @@ class Plan extends React.Component {
             )}
           {planNotStarted && !isRejectedVms && vmsMutable.length > 0 && <PlanVmsList planVms={vmsMutable} />}
           {planNotStarted &&
+            planRequestDenied && (
+              <PlanEmptyState
+                title={__('Migration Failed')}
+                iconType="pf"
+                iconName="error-circle-o"
+                description={
+                  <React.Fragment>
+                    {__('Unable to migrate VMs because no conversion host was configured at the time of the attempted migration.') /* prettier-ignore */}{' '}
+                    <a href={DOCS_URL_CONFIGURE_CONVERSION_HOSTS} target="_blank" rel="noopener noreferrer">
+                      {__('See the product documentation for information on configuring conversion hosts.')}
+                    </a>
+                  </React.Fragment>
+                }
+                descriptionIsNode
+              />
+            )}
+          {planNotStarted &&
+            !planRequestDenied &&
             vmsMutable.length === 0 && (
               <PlanEmptyState
                 title={__('No VMs')}
@@ -270,6 +289,7 @@ Plan.propTypes = {
   fetchTasksForAllRequestsForPlanAction: PropTypes.func.isRequired,
   planName: PropTypes.string,
   planRequestFailed: PropTypes.bool,
+  planRequestDenied: PropTypes.bool,
   planArchived: PropTypes.bool,
   planRequestTasks: PropTypes.array,
   isRejectedPlanRequest: PropTypes.bool,

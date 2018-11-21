@@ -85,6 +85,7 @@ const MigrationsCompletedList = ({
                       requestsOfAssociatedPlan.length > 0 && getMostRecentRequest(requestsOfAssociatedPlan);
 
                     const failed = mostRecentRequest && mostRecentRequest.status === 'Error';
+                    const denied = mostRecentRequest && mostRecentRequest.status === 'Denied';
 
                     const tasks = {};
                     let tasksOfPlan = {};
@@ -209,7 +210,7 @@ const MigrationsCompletedList = ({
                           ) : (
                             <ListView.Icon
                               type="pf"
-                              name={failed ? 'error-circle-o' : 'ok'}
+                              name={failed || denied ? 'error-circle-o' : 'ok'}
                               size="md"
                               style={{
                                 width: 'inherit',
@@ -238,10 +239,12 @@ const MigrationsCompletedList = ({
                               <a href="/migration/mappings#">{plan.infraMappingName}</a>
                             </ListView.InfoItem>
                           ),
-                          <ListView.InfoItem key={`${plan.id}-elapsed`}>
-                            <ListView.Icon type="fa" size="lg" name="clock-o" />
-                            {elapsedTime}
-                          </ListView.InfoItem>,
+                          !denied ? (
+                            <ListView.InfoItem key={`${plan.id}-elapsed`}>
+                              <ListView.Icon type="fa" size="lg" name="clock-o" />
+                              {elapsedTime}
+                            </ListView.InfoItem>
+                          ) : null,
                           migrationScheduled && !staleMigrationSchedule && !migrationStarting ? (
                             <ListView.InfoItem key={`${plan.id}-scheduledTime`} style={{ textAlign: 'left' }}>
                               <Icon type="fa" name="clock-o" />
@@ -259,7 +262,7 @@ const MigrationsCompletedList = ({
                         actions={
                           <div>
                             {!archived &&
-                              failed && (
+                              (failed || denied) && (
                                 <React.Fragment>
                                   {showInitialScheduleButton && scheduleButtons}
                                   <Button
