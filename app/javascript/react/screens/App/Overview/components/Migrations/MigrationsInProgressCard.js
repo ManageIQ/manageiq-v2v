@@ -1,17 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import numeral from 'numeral';
-import {
-  EmptyState,
-  Icon,
-  OverlayTrigger,
-  Popover,
-  Tooltip,
-  UtilizationBar,
-  Spinner,
-  Card,
-  Button
-} from 'patternfly-react';
+import { Icon, OverlayTrigger, Popover, Tooltip, UtilizationBar, Card, Button } from 'patternfly-react';
+
 import InProgressCard from './InProgressCard';
 import InProgressWithDetailCard from './InProgressWithDetailCard';
 import TickingIsoElapsedTime from '../../../../../../components/dates/TickingIsoElapsedTime';
@@ -21,6 +12,7 @@ import getPlaybookName from './helpers/getPlaybookName';
 import { PLAN_JOB_STATES } from '../../../../../../data/models/plans';
 import { DOCS_URL_CONFIGURE_CONVERSION_HOSTS } from '../../../Plan/PlanConstants';
 import { MIGRATIONS_FILTERS } from '../../OverviewConstants';
+import CardEmptyState from './CardEmptyState';
 
 const MigrationsInProgressCard = ({
   plan,
@@ -36,34 +28,20 @@ const MigrationsInProgressCard = ({
   const requestsOfAssociatedPlan = allRequestsWithTasks.filter(request => request.source_id === plan.id);
   const mostRecentRequest = requestsOfAssociatedPlan.length > 0 && getMostRecentRequest(requestsOfAssociatedPlan);
 
-  const emptyStateSpinner = emptyStateMessage => (
-    <EmptyState>
-      <Spinner loading size="lg" style={{ marginBottom: '15px' }} />
-      <EmptyState.Info>{emptyStateMessage}</EmptyState.Info>
-    </EmptyState>
-  );
-
   // if most recent request is still pending, show loading card
   if (reloadCard || !mostRecentRequest || mostRecentRequest.request_state === 'pending') {
     return (
       <InProgressCard title={<h3 className="card-pf-title">{plan.name}</h3>}>
-        {emptyStateSpinner(__('Initiating migration. This might take a few minutes.'))}
+        <CardEmptyState
+          emptyStateInfo={__('Initiating migration. This might take a few minutes.')}
+          showSpinner
+          spinnerStyles={{ marginBottom: '15px' }}
+        />
       </InProgressCard>
     );
   }
 
   if (mostRecentRequest.approval_state === 'denied') {
-    const cardEmptyState = (
-      <EmptyState>
-        <EmptyState.Icon type="pf" name="error-circle-o" />
-        <EmptyState.Info style={{ marginTop: 10 }}>
-          {__('Unable to migrate VMs because no conversion host was configured at the time of the attempted migration.') /* prettier-ignore */}{' '}
-          <a href={DOCS_URL_CONFIGURE_CONVERSION_HOSTS} target="_blank" rel="noopener noreferrer">
-            {__('See the product documentation for information on configuring conversion hosts.')}
-          </a>
-        </EmptyState.Info>
-      </EmptyState>
-    );
     const cardFooter = (
       <Card.Footer style={{ position: 'relative', top: '-2px' }}>
         <Button
@@ -82,7 +60,19 @@ const MigrationsInProgressCard = ({
     );
     return (
       <InProgressCard title={<h3 className="card-pf-title">{plan.name}</h3>} footer={cardFooter}>
-        {cardEmptyState}
+        <CardEmptyState
+          iconType="pf"
+          iconName="error-circle-o"
+          emptyStateInfo={
+            <React.Fragment>
+              {__('Unable to migrate VMs because no conversion host was configured at the time of the attempted migration.') /* prettier-ignore */}{' '}
+              <a href={DOCS_URL_CONFIGURE_CONVERSION_HOSTS} target="_blank" rel="noopener noreferrer">
+                {__('See the product documentation for information on configuring conversion hosts.')}
+              </a>
+            </React.Fragment>
+          }
+          emptyStateInfoStyles={{ marginTop: 10 }}
+        />
       </InProgressCard>
     );
   }
@@ -182,7 +172,11 @@ const MigrationsInProgressCard = ({
     const playbookName = getPlaybookName(serviceTemplatePlaybooks, plan.options.config_info.pre_service_id);
     return (
       <InProgressWithDetailCard plan={plan} failedOverlay={failedOverlay} handleClick={handleClick}>
-        {emptyStateSpinner(sprintf(__('Running playbook service %s. This might take a few minutes.'), playbookName))}
+        <CardEmptyState
+          emptyStateInfo={sprintf(__('Running playbook service %s. This might take a few minutes.'), playbookName)}
+          showSpinner
+          spinnerStyles={{ marginBottom: '15px' }}
+        />
       </InProgressWithDetailCard>
     );
   }
@@ -210,7 +204,11 @@ const MigrationsInProgressCard = ({
     const playbookName = getPlaybookName(serviceTemplatePlaybooks, plan.options.config_info.post_service_id);
     return (
       <InProgressWithDetailCard plan={plan} failedOverlay={failedOverlay} handleClick={handleClick}>
-        {emptyStateSpinner(sprintf(__('Running playbook service %s. This might take a few minutes.'), playbookName))}
+        <CardEmptyState
+          emptyStateInfo={sprintf(__('Running playbook service %s. This might take a few minutes.'), playbookName)}
+          showSpinner
+          spinnerStyles={{ marginBottom: '15px' }}
+        />
       </InProgressWithDetailCard>
     );
   }
