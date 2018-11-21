@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import numeral from 'numeral';
-import { Icon, OverlayTrigger, Popover, Tooltip, UtilizationBar, Card, Button } from 'patternfly-react';
+import { Icon, OverlayTrigger, Popover, Tooltip, UtilizationBar } from 'patternfly-react';
 
 import InProgressCard from './InProgressCard';
 import InProgressWithDetailCard from './InProgressWithDetailCard';
@@ -13,6 +13,7 @@ import { PLAN_JOB_STATES } from '../../../../../../data/models/plans';
 import { DOCS_URL_CONFIGURE_CONVERSION_HOSTS } from '../../../Plan/PlanConstants';
 import { MIGRATIONS_FILTERS } from '../../OverviewConstants';
 import CardEmptyState from './CardEmptyState';
+import CardFooter from './CardFooter';
 
 const MigrationsInProgressCard = ({
   plan,
@@ -42,24 +43,23 @@ const MigrationsInProgressCard = ({
   }
 
   if (mostRecentRequest.approval_state === 'denied') {
-    const cardFooter = (
-      <Card.Footer style={{ position: 'relative', top: '-2px' }}>
-        <Button
-          style={{ position: 'relative', top: '-5px' }}
-          onClick={() =>
-            acknowledgeDeniedPlanRequestAction({
-              plansUrl: fetchTransformationPlansUrl,
-              planRequest: mostRecentRequest
-            }).then(() => setMigrationsFilterAction(MIGRATIONS_FILTERS.completed))
-          }
-          disabled={isEditingPlanRequest}
-        >
-          {__('Cancel Migration')}
-        </Button>
-      </Card.Footer>
-    );
+    const onButtonClick = () =>
+      acknowledgeDeniedPlanRequestAction({
+        plansUrl: fetchTransformationPlansUrl,
+        planRequest: mostRecentRequest
+      }).then(() => setMigrationsFilterAction(MIGRATIONS_FILTERS.completed));
+
     return (
-      <InProgressCard title={<h3 className="card-pf-title">{plan.name}</h3>} footer={cardFooter}>
+      <InProgressCard
+        title={<h3 className="card-pf-title">{plan.name}</h3>}
+        footer={
+          <CardFooter
+            disabled={isEditingPlanRequest}
+            buttonText={__('Cancel Migration')}
+            onButtonClick={onButtonClick}
+          />
+        }
+      >
         <CardEmptyState
           iconType="pf"
           iconName="error-circle-o"
