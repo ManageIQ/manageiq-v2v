@@ -28,6 +28,11 @@ const MigrationsInProgressCard = ({
 }) => {
   const requestsOfAssociatedPlan = allRequestsWithTasks.filter(request => request.source_id === plan.id);
   const mostRecentRequest = requestsOfAssociatedPlan.length > 0 && getMostRecentRequest(requestsOfAssociatedPlan);
+  const waitingForConversionHost =
+    mostRecentRequest &&
+    mostRecentRequest.approval_state === 'approved' &&
+    mostRecentRequest.miq_request_tasks.length > 0 &&
+    mostRecentRequest.miq_request_tasks.every(task => !task.conversion_host_id);
 
   // if most recent request is still pending, show loading card
   if (reloadCard || !mostRecentRequest || mostRecentRequest.request_state === 'pending') {
@@ -37,6 +42,23 @@ const MigrationsInProgressCard = ({
           emptyStateInfo={__('Initiating migration. This might take a few minutes.')}
           showSpinner
           spinnerStyles={{ marginBottom: '15px' }}
+        />
+      </InProgressCard>
+    );
+  }
+
+  if (waitingForConversionHost) {
+    return (
+      <InProgressCard
+        title={<h3 className="card-pf-title">{plan.name}</h3>}
+        footer={
+          <CardFooter disabled={isEditingPlanRequest} buttonText={__('Cancel Migration')} onButtonClick={() => {}} />
+        }
+      >
+        <CardEmptyState
+          showSpinner
+          emptyStateInfo={__('Waiting for an available conversion host. You can continue waiting or go to the Migration Settings page to increase the number of migrations per host')} // prettier-ignore
+          emptyStateInfoStyles={{ marginTop: 10 }}
         />
       </InProgressCard>
     );
