@@ -1,5 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`cancelPlanRequestAction dispatches PENDING and FULFILLED actions 1`] = `
+Array [
+  Object {
+    "payload": "/api/requests/1",
+    "type": "V2V_CANCEL_PLAN_REQUEST_PENDING",
+  },
+  Object {
+    "type": "V2V_CANCEL_PLAN_REQUEST_FULFILLED",
+  },
+]
+`;
+
 exports[`fetchTransformationPlansAction dispatches PENDING and FULFILLED actions 1`] = `
 Array [
   Object {

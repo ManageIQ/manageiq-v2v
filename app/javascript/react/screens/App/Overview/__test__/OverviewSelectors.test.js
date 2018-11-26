@@ -1,10 +1,13 @@
 import {
   notStartedTransformationPlansFilter,
   activeTransformationPlansFilter,
-  finishedTransformationPlansFilter
+  finishedTransformationPlansFilter,
+  requestsProcessingCancellationFilter
 } from '../OverviewSelectors';
+import { urlBuilder } from '../components/Migrations/helpers';
 
 import { transformationPlans } from '../overview.transformationPlans.fixtures';
+import { TRANSFORMATION_PLAN_REQUESTS_URL } from '../OverviewConstants';
 
 const { resources: plans } = transformationPlans;
 
@@ -19,10 +22,10 @@ describe('notStartedTransformationPlansFilter', () => {
 
 describe('activeTransformationPlansFilter', () => {
   test('returns all active transformation plans', () => {
-    const [, activePlanOne, activePlanTwo, , , activePlanThree] = plans;
+    const [, activePlanOne, activePlanTwo, , , activePlanThree, activePlanFour] = plans;
     const result = activeTransformationPlansFilter(plans);
 
-    expect(result).toEqual([activePlanOne, activePlanTwo, activePlanThree]);
+    expect(result).toEqual([activePlanOne, activePlanTwo, activePlanThree, activePlanFour]);
   });
 });
 
@@ -32,5 +35,16 @@ describe('finishedTransformationPlansFilter', () => {
     const result = finishedTransformationPlansFilter(plans);
 
     expect(result).toEqual([finishedPlanOne, finishedPlanTwo]);
+  });
+});
+
+describe('requestsProcessingCancellationFilter', () => {
+  test('returns all requests processing cancellation', () => {
+    const plan = plans[6];
+    const [requestProcessingCancellation] = plan.miq_requests;
+    const url = urlBuilder(TRANSFORMATION_PLAN_REQUESTS_URL, requestProcessingCancellation.id);
+    const result = requestsProcessingCancellationFilter(plans);
+
+    expect(result).toEqual([url]);
   });
 });
