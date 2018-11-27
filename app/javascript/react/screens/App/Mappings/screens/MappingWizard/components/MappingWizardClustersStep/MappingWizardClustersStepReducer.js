@@ -3,7 +3,9 @@ import Immutable from 'seamless-immutable';
 import {
   FETCH_V2V_SOURCE_CLUSTERS,
   FETCH_V2V_TARGET_CLUSTERS,
-  QUERY_V2V_HOSTS
+  QUERY_V2V_HOSTS,
+  FETCH_V2V_CONVERSION_HOSTS,
+  CLEAR_V2V_CONVERSION_HOSTS
 } from './MappingWizardClustersStepConstants';
 import { V2V_MAPPING_WIZARD_EXITED } from '../../../../screens/MappingWizard/MappingWizardConstants';
 import { getHostsByClusterID } from './helpers';
@@ -20,7 +22,11 @@ const initialState = Immutable({
   hostsByClusterID: {},
   isFetchingHostsQuery: false,
   isRejectedHostsQuery: false,
-  errorHostsQuery: null
+  errorHostsQuery: null,
+  conversionHosts: null,
+  isFetchingConversionHosts: false,
+  isRejectedConversionHosts: false,
+  errorFetchingConversionHosts: null
 });
 
 export default (state = initialState, action) => {
@@ -73,6 +79,24 @@ export default (state = initialState, action) => {
         .set('errorHostsQuery', action.payload)
         .set('isFetchingHostsQuery', false)
         .set('isRejectedHostsQuery', true);
+    case `${FETCH_V2V_CONVERSION_HOSTS}_PENDING`:
+      return state
+        .set('isFetchingConversionHosts', true)
+        .set('isRejectedConversionHosts', false)
+        .set('errorFetchingConversionHosts', null);
+    case `${FETCH_V2V_CONVERSION_HOSTS}_FULFILLED`:
+      return state
+        .set('conversionHosts', action.payload.data.resources)
+        .set('isFetchingConversionHosts', false)
+        .set('isRejectedConversionHosts', false)
+        .set('errorFetchingConversionHosts', null);
+    case `${FETCH_V2V_CONVERSION_HOSTS}_REJECTED`:
+      return state
+        .set('isFetchingConversionHosts', false)
+        .set('isRejectedConversionHosts', true)
+        .set('errorFetchingConversionHosts', action.payload);
+    case CLEAR_V2V_CONVERSION_HOSTS:
+      return state.set('conversionHosts', null);
     case V2V_MAPPING_WIZARD_EXITED:
       return initialState;
     default:

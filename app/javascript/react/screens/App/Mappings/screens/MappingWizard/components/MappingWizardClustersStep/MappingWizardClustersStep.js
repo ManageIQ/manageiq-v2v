@@ -6,9 +6,31 @@ import { length } from 'redux-form-validators';
 
 import ClustersStepForm from './components/ClustersStepForm/ClustersStepForm';
 
+import { OPENSTACK_CONVERSION_HOST_TYPE } from './MappingWizardClustersStepConstants';
+
 class MappingWizardClustersStep extends React.Component {
   componentDidMount() {
     this.fetchClusters();
+  }
+
+  componentDidUpdate(prevProps) {
+    const { targetProvider, conversionHosts, showAlertAction } = this.props;
+    if (targetProvider === 'openstack' && !prevProps.conversionHosts && conversionHosts) {
+      const openstackConversionHosts = conversionHosts.filter(
+        host => host.resource.type === OPENSTACK_CONVERSION_HOST_TYPE
+      );
+      if (openstackConversionHosts.length === 0) {
+        showAlertAction(
+          __('At least one host must be enabled as a conversion host. You can continue to create an infrastructure mapping, but you must configure a conversion host before migration execution.'), // prettier-ignore
+          'warning'
+        );
+      }
+    }
+  }
+
+  componentWillUnmount() {
+    this.props.hideAlertAction();
+    this.props.clearConversionHostsAction();
   }
 
   fetchClusters = () => {
@@ -17,6 +39,8 @@ class MappingWizardClustersStep extends React.Component {
       fetchSourceClustersAction,
       fetchTargetComputeUrls,
       fetchTargetClustersAction,
+      fetchConversionHostsUrl,
+      fetchConversionHostsAction,
       targetProvider,
       queryHostsUrl,
       queryHostsAction
@@ -40,6 +64,10 @@ class MappingWizardClustersStep extends React.Component {
         queryHostsAction(queryHostsUrl, hostIDsByClusterID);
       }
     });
+
+    if (targetProvider === 'openstack') {
+      fetchConversionHostsAction(fetchConversionHostsUrl);
+    }
   };
 
   render() {
@@ -95,8 +123,13 @@ MappingWizardClustersStep.propTypes = {
   fetchSourceClustersAction: PropTypes.func,
   fetchTargetComputeUrls: PropTypes.object,
   fetchTargetClustersAction: PropTypes.func,
+  fetchConversionHostsAction: PropTypes.func,
+  fetchConversionHostsUrl: PropTypes.string,
+  clearConversionHostsAction: PropTypes.func,
   queryHostsUrl: PropTypes.string,
   queryHostsAction: PropTypes.func,
+  showAlertAction: PropTypes.func,
+  hideAlertAction: PropTypes.func,
   sourceClusters: PropTypes.arrayOf(PropTypes.object),
   targetClusters: PropTypes.arrayOf(PropTypes.object),
   isFetchingSourceClusters: PropTypes.bool,
@@ -106,7 +139,8 @@ MappingWizardClustersStep.propTypes = {
   targetProvider: PropTypes.string,
   isFetchingHostsQuery: PropTypes.bool,
   isRejectedHostsQuery: PropTypes.bool,
-  hostsByClusterID: PropTypes.object
+  hostsByClusterID: PropTypes.object,
+  conversionHosts: PropTypes.array
 };
 MappingWizardClustersStep.defaultProps = {
   fetchSourceClustersAction: noop,
@@ -121,6 +155,7 @@ MappingWizardClustersStep.defaultProps = {
   isFetchingHostsQuery: false,
   isRejectedHostsQuery: false,
   hostsByClusterID: {},
+  conversionHosts: null,
   fetchSourceClustersUrl:
     '/api/clusters?expand=resources' +
     '&attributes=ext_management_system.emstype,v_parent_datacenter,ext_management_system.name' +
@@ -131,7 +166,8 @@ MappingWizardClustersStep.defaultProps = {
       '&attributes=ext_management_system.emstype,v_parent_datacenter,ext_management_system.name,hosts' +
       '&filter[]=ext_management_system.emstype=rhevm',
     openstack: '/api/cloud_tenants?expand=resources&attributes=ext_management_system.name,ext_management_system.id'
-  }
+  },
+  fetchConversionHostsUrl: '/api/conversion_hosts?attributes=resource&expand=resources'
 };
 
 export default reduxForm({

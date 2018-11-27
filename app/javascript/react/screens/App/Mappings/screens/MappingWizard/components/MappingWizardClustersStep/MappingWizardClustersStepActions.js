@@ -3,8 +3,12 @@ import API from '../../../../../../../../common/API';
 import {
   FETCH_V2V_SOURCE_CLUSTERS,
   FETCH_V2V_TARGET_CLUSTERS,
-  QUERY_V2V_HOSTS
+  QUERY_V2V_HOSTS,
+  FETCH_V2V_CONVERSION_HOSTS,
+  CLEAR_V2V_CONVERSION_HOSTS
 } from './MappingWizardClustersStepConstants';
+
+export { showAlertAction, hideAlertAction } from '../../MappingWizardActions';
 
 const _getSourceClustersActionCreator = url => dispatch =>
   dispatch({
@@ -47,3 +51,16 @@ export const queryHostsAction = (url, hostIDsByClusterID) => {
   const uri = new URI(url);
   return _getQueryHostsActionCreator(uri.toString(), hostIDsByClusterID);
 };
+
+const _getConversionHostsActionCreator = url => dispatch =>
+  dispatch({
+    type: FETCH_V2V_CONVERSION_HOSTS,
+    payload: API.get(url)
+  });
+
+export const fetchConversionHostsAction = url => {
+  const uri = new URI(url);
+  return _getConversionHostsActionCreator(uri.toString());
+};
+
+export const clearConversionHostsAction = () => dispatch => dispatch({ type: CLEAR_V2V_CONVERSION_HOSTS });
