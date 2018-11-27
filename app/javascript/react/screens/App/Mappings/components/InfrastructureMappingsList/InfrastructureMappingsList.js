@@ -337,7 +337,9 @@ class InfrastructureMappingsList extends React.Component {
                             <div>
                               <Button
                                 bsStyle="link"
-                                disabled={!!associatedPlansCount}
+                                disabled={
+                                  !!associatedPlansCount || !targetClusters || !targetDatastores || !targetNetworks
+                                }
                                 onClick={e => {
                                   e.stopPropagation();
                                   showMappingWizardEditModeAction(mapping);
