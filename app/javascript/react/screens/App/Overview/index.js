@@ -8,18 +8,28 @@ import reducer from './OverviewReducer';
 import {
   notStartedTransformationPlansFilter,
   activeTransformationPlansFilter,
-  finishedTransformationPlansFilter
+  finishedTransformationPlansFilter,
+  requestsProcessingCancellationFilter,
+  combineRequestsProcessingCancellation
 } from './OverviewSelectors';
 
 export const reducers = { overview: reducer, form: {} };
 
-const mapStateToProps = ({ overview, overview: { transformationPlans, allRequestsWithTasks, planId } }, ownProps) => ({
-  ...overview,
-  ...ownProps.data,
-  notStartedTransformationPlans: notStartedTransformationPlansFilter(transformationPlans),
-  activeTransformationPlans: activeTransformationPlansFilter(transformationPlans, planId),
-  finishedTransformationPlans: finishedTransformationPlansFilter(transformationPlans)
-});
+const mapStateToProps = ({ overview, overview: { transformationPlans, allRequestsWithTasks, planId } }, ownProps) => {
+  const { requestsProcessingCancellation, ...overviewRest } = overview;
+
+  return {
+    ...overviewRest,
+    ...ownProps.data,
+    notStartedTransformationPlans: notStartedTransformationPlansFilter(transformationPlans),
+    activeTransformationPlans: activeTransformationPlansFilter(transformationPlans, planId),
+    finishedTransformationPlans: finishedTransformationPlansFilter(transformationPlans),
+    requestsProcessingCancellation: combineRequestsProcessingCancellation(
+      requestsProcessingCancellation,
+      requestsProcessingCancellationFilter(transformationPlans)
+    )
+  };
+};
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => Object.assign(stateProps, ownProps.data, dispatchProps);
 

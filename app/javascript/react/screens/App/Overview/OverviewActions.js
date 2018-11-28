@@ -25,7 +25,8 @@ import {
   V2V_SET_MIGRATIONS_FILTER,
   V2V_TOGGLE_SCHEDULE_MIGRATION_MODAL,
   SHOW_PLAN_WIZARD_EDIT_MODE,
-  V2V_EDIT_PLAN_REQUEST
+  V2V_EDIT_PLAN_REQUEST,
+  V2V_CANCEL_PLAN_REQUEST
 } from './OverviewConstants';
 
 import { OPEN_V2V_MAPPING_WIZARD_ON_MOUNT } from '../Mappings/MappingsConstants';
@@ -288,3 +289,19 @@ export const acknowledgeDeniedPlanRequestAction = ({ plansUrl, planRequest }) =>
       }
     }
   });
+
+const _cancelPlanRequestActionCreator = url => dispatch =>
+  dispatch({
+    type: V2V_CANCEL_PLAN_REQUEST,
+    payload: {
+      promise: new Promise((resolve, reject) => {
+        API.post(url, { action: 'cancel' })
+          .then(response => resolve(response))
+          .catch(e => reject(e));
+      }),
+      data: url,
+      meta: { url }
+    }
+  });
+
+export const cancelPlanRequestAction = (url, id) => _cancelPlanRequestActionCreator(new URI(`${url}/${id}`).toString());

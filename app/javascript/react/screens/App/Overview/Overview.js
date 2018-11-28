@@ -272,7 +272,10 @@ class Overview extends React.Component {
       setMigrationsFilterAction,
       initialMigrationsFilterSet,
       acknowledgeDeniedPlanRequestAction,
-      isEditingPlanRequest
+      isEditingPlanRequest,
+      cancelPlanRequestAction,
+      isCancellingPlanRequest,
+      requestsProcessingCancellation
     } = this.props;
 
     const mainContent = (
@@ -313,7 +316,9 @@ class Overview extends React.Component {
                 fetchTransformationPlansAction={fetchTransformationPlansAction}
                 fetchTransformationPlansUrl={fetchTransformationPlansUrl}
                 fetchArchivedTransformationPlansUrl={fetchArchivedTransformationPlansUrl}
+                isFetchingTransformationPlans={isFetchingTransformationPlans}
                 isFetchingArchivedTransformationPlans={isFetchingArchivedTransformationPlans}
+                isFetchingAllRequestsWithTasks={isFetchingAllRequestsWithTasks}
                 archiveTransformationPlanAction={archiveTransformationPlanAction}
                 archiveTransformationPlanUrl={archiveTransformationPlanUrl}
                 deleteTransformationPlanAction={deleteTransformationPlanAction}
@@ -329,6 +334,9 @@ class Overview extends React.Component {
                 showEditPlanNameModalAction={showEditPlanNameModalAction}
                 acknowledgeDeniedPlanRequestAction={acknowledgeDeniedPlanRequestAction}
                 isEditingPlanRequest={isEditingPlanRequest}
+                cancelPlanRequestAction={cancelPlanRequestAction}
+                isCancellingPlanRequest={isCancellingPlanRequest}
+                requestsProcessingCancellation={requestsProcessingCancellation}
               />
             ) : (
               <ShowWizardEmptyState
@@ -477,7 +485,10 @@ Overview.propTypes = {
   openMappingWizardOnTransitionAction: PropTypes.func,
   initialMigrationsFilterSet: PropTypes.bool,
   acknowledgeDeniedPlanRequestAction: PropTypes.func,
-  isEditingPlanRequest: PropTypes.bool
+  isEditingPlanRequest: PropTypes.bool,
+  cancelPlanRequestAction: PropTypes.func,
+  isCancellingPlanRequest: PropTypes.bool,
+  requestsProcessingCancellation: PropTypes.array
 };
 
 Overview.defaultProps = {
