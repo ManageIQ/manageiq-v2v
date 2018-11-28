@@ -192,7 +192,7 @@ const MigrationsCompletedList = ({
                         onClick={e => {
                           e.stopPropagation();
 
-                          redirectTo(`/migration/plan/${plan.id}`);
+                          redirectTo(`/plan/${plan.id}`);
                         }}
                         key={plan.id}
                         leftContent={
@@ -236,7 +236,7 @@ const MigrationsCompletedList = ({
                           ),
                           !isMissingMapping && (
                             <ListView.InfoItem key={`${plan.id}-infraMappingName`}>
-                              <a href="/migration/mappings#">{plan.infraMappingName}</a>
+                              <a href="/migration#/mappings">{plan.infraMappingName}</a>
                             </ListView.InfoItem>
                           ),
                           !denied ? (

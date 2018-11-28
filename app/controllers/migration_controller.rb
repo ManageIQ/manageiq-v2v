@@ -1,18 +1,13 @@
 # Migration controller - mostly service to initialize the react top level component
 # and to handle the initial routing endpoint.
 class MigrationController < ApplicationController
+  include Mixins::MenuUpdateMixin
+
   before_action :check_privileges
   after_action :cleanup_action
 
   def index
-    @layout = case request.path
-              when '/migration/plans', /^\/migration\/plan\/.*/
-                'plans'
-              when '/migration/mappings'
-                'mappings'
-              when '/migration/settings'
-                'settings'
-              end
+    @layout = 'migration'
     @page_title = _('Migration')
   end
 

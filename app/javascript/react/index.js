@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { ConnectedRouter } from 'connected-react-router';
 import { connect } from 'react-redux';
 import { Spinner } from 'patternfly-react';
 import PropTypes from 'prop-types';
@@ -21,12 +21,12 @@ class App extends React.Component {
         </div>
       );
     return (
-      <BrowserRouter>
+      <ConnectedRouter history={ManageIQ.redux.history}>
         <React.Fragment>
           <NotificationList />
           <Routes store={ManageIQ.redux.store} />
         </React.Fragment>
-      </BrowserRouter>
+      </ConnectedRouter>
     );
   }
 }
