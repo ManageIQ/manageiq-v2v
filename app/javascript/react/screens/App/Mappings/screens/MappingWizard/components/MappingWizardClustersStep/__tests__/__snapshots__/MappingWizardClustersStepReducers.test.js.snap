@@ -237,13 +237,17 @@ Object {
 
 exports[`sets default state 1`] = `
 Object {
+  "conversionHosts": null,
+  "errorFetchingConversionHosts": null,
   "errorHostsQuery": null,
   "errorSourceClusters": null,
   "errorTargetClusters": null,
   "hostsByClusterID": Object {},
+  "isFetchingConversionHosts": false,
   "isFetchingHostsQuery": false,
   "isFetchingSourceClusters": false,
   "isFetchingTargetClusters": false,
+  "isRejectedConversionHosts": false,
   "isRejectedHostsQuery": false,
   "isRejectedSourceClusters": false,
   "isRejectedTargetClusters": false,

@@ -2,7 +2,9 @@
 
 exports[`Mapping Wizard integration test should mount the MappingWizardClusterStep with mapStateToProps reduced 1`] = `
 Object {
+  "clearConversionHostsAction": [Function],
   "enableReinitialize": true,
+  "fetchConversionHostsAction": [Function],
   "fetchSourceClustersAction": [Function],
   "fetchSourceClustersUrl": "/api/dummyProviders",
   "fetchTargetClustersAction": [Function],
@@ -10,6 +12,7 @@ Object {
     "openstack": "/api/dummy",
     "rhevm": "/api/dummy",
   },
+  "hideAlertAction": [Function],
   "initialValues": Object {
     "clusterMappings": Array [],
   },
@@ -19,6 +22,7 @@ Object {
   "isRejectedTargetClusters": false,
   "keepDirtyOnReinitialize": true,
   "queryHostsAction": [Function],
+  "showAlertAction": [Function],
   "sourceClusters": Array [],
   "targetClusters": Array [],
   "targetProvider": "rhevm",
