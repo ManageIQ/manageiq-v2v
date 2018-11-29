@@ -10,7 +10,6 @@ import getMostRecentRequest from '../../../common/getMostRecentRequest';
 import getMostRecentVMTasksFromRequests from './helpers/getMostRecentVMTasksFromRequests';
 import getPlaybookName from './helpers/getPlaybookName';
 import { PLAN_JOB_STATES } from '../../../../../../data/models/plans';
-import { DOCS_URL_CONFIGURE_CONVERSION_HOSTS } from '../../../Plan/PlanConstants';
 import { MIGRATIONS_FILTERS, TRANSFORMATION_PLAN_REQUESTS_URL } from '../../OverviewConstants';
 import CardEmptyState from './CardEmptyState';
 import CardFooter from './CardFooter';
@@ -115,9 +114,7 @@ const MigrationsInProgressCard = ({
           emptyStateInfo={
             <React.Fragment>
               {__('Unable to migrate VMs because no conversion host was configured at the time of the attempted migration.') /* prettier-ignore */}{' '}
-              <a href={DOCS_URL_CONFIGURE_CONVERSION_HOSTS} target="_blank" rel="noopener noreferrer">
-                {__('See the product documentation for information on configuring conversion hosts.')}
-              </a>
+              {__('See the product documentation for information on configuring conversion hosts.')}
             </React.Fragment>
           }
           emptyStateInfoStyles={{ marginTop: 10 }}

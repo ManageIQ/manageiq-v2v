@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { reduxForm, Field } from 'redux-form';
-import { Breadcrumb, Form, Button, Spinner, Icon } from 'patternfly-react';
+import { Breadcrumb, Form, Button, Spinner } from 'patternfly-react';
 import Toolbar from '../../../config/Toolbar';
 import NumberInput from '../common/forms/NumberInput';
 
@@ -36,12 +36,7 @@ class Settings extends React.Component {
     const settingsContent = (
       <Spinner loading={isFetchingServers || isFetchingSettings} style={{ marginTop: 15 }}>
         <div className="migration-settings">
-          <h2>
-            {__('Concurrent Migrations')}{' '}
-            <a href="https://access.redhat.com/documentation/en-us/red_hat_infrastructure_migration_solution/1.0/html/infrastructure_migration_solution_guide/installation#rhv_conversion_hosts">
-              <Icon type="pf" name="info" />
-            </a>
-          </h2>
+          <h2>{__('Concurrent Migrations')}</h2>
           <Form style={{ padding: '0 20px' }}>
             <Form.FormGroup>
               <Form.ControlLabel>{__('Maximum concurrent migrations per conversion host')}</Form.ControlLabel>
