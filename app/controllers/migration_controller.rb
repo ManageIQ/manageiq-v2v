@@ -6,8 +6,8 @@ class MigrationController < ApplicationController
 
   def index
     @layout = case request.path
-              when '/migration/overview', /^\/migration\/plan\/.*/
-                'overview'
+              when '/migration/plans', /^\/migration\/plan\/.*/
+                'plans'
               when '/migration/mappings'
                 'mappings'
               when '/migration/settings'
