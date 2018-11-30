@@ -49,7 +49,7 @@ class MappingWizardNetworksStep extends React.Component {
 
     if (editingMapping && !initialized) {
       this.setState({ preLoadingMappings: true }); // eslint-disable-line react/no-did-mount-set-state
-      createNetworksMappings(editingMapping, targetProvider).then(networksMappings => {
+      createNetworksMappings(editingMapping, targetProvider, clusterMappings).then(networksMappings => {
         initialize({ networksMappings: updateMappings(networksMappings, clusterMappings) });
         this.setState({ preLoadingMappings: false });
       });
