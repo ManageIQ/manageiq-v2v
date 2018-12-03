@@ -5,7 +5,7 @@ import MappingsContainer from '../screens/App/Mappings';
 
 export const links = [
   {
-    path: '/migration/overview',
+    path: '/migration/plans',
     component: OverviewContainer
   },
   {

@@ -94,7 +94,7 @@ class PlanWizardResultsStep extends React.Component {
       return this.renderError(__('Error Saving Migration Plan'), errorMessage, hidePlanWizardAction);
     } else if (planSchedule === 'migration_plan_later' && migrationPlansResult) {
       const migrationPlanSaved = sprintf(__(" Migration Plan: '%s' has been saved"), plansBody.name);
-      const migrationPlanFollowupMessage = __('Select Migrate on the Overview page to begin migration');
+      const migrationPlanFollowupMessage = __('Select Migrate on the Migration Plans page to begin migration');
       const showVmPowerWarning = targetProvider === 'openstack';
       return this.renderResult(
         migrationPlanSaved,
