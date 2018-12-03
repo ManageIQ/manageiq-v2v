@@ -51,7 +51,7 @@ describe('fetching conversion hosts', () => {
         payload
       };
       const state = generalStepReducer(prevState, action);
-      expect(state).toMatchSnapshot();
+      expect(state.conversionHosts).toHaveLength(3);
     });
 
     test('and there is no data', () => {
