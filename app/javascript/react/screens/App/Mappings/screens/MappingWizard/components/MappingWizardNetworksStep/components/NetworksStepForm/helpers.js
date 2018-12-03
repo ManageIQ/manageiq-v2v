@@ -9,8 +9,13 @@ import {
   TRANSFORMATION_MAPPING_ITEM_SOURCE_TYPES,
   TRANSFORMATION_MAPPING_ITEM_DESTINATION_TYPES
 } from '../../../../MappingWizardConstants';
-import { QUERY_ATTRIBUTES, FETCH_NETWORK_URLS, NETWORK_ATTRIBUTES } from '../../MappingWizardNetworksStepConstants';
-import { uniqueNetworks } from '../../MappingWizardNetworksStepSelectors';
+import {
+  QUERY_ATTRIBUTES,
+  FETCH_NETWORK_URLS,
+  NETWORK_ATTRIBUTES,
+  HAS_CLOUD_NETWORKS
+} from '../../MappingWizardNetworksStepConstants';
+import { uniqueNetworks, combineNetworks } from '../../MappingWizardNetworksStepSelectors';
 import { networkKey } from '../../../../../../../common/networkKey';
 
 export const getRepresentatives = (groupedNetworks = {}) => {
@@ -181,7 +186,33 @@ const sourceNetworkPromises = sourceClusterIds =>
       })
   );
 
-export const createNetworksMappings = (transformation, targetProvider) =>
+const publicNetworksUrl = targetProviderId => {
+  const uri = new URI(`${FETCH_NETWORK_URLS.public}/${targetProviderId}/cloud_networks`);
+  uri.addSearch({ expand: 'resources' });
+  return uri.toString();
+};
+
+const publicNetworksPromises = (clusterMappings, targetProvider) => {
+  if (!HAS_CLOUD_NETWORKS[targetProvider]) return [Promise.resolve([])];
+  return clusterMappings.map(
+    mapping =>
+      new Promise((resolve, reject) => {
+        API.get(publicNetworksUrl(mapping.ext_management_system.id))
+          .then(res =>
+            resolve(
+              res.data.resources.map(network => ({
+                ...network,
+                providerName: mapping.ext_management_system.name,
+                clusterId: mapping.id
+              }))
+            )
+          )
+          .catch(e => reject(e));
+      })
+  );
+};
+
+export const createNetworksMappings = (transformation, targetProvider, clusterMappings) =>
   new Promise((resolve, reject) => {
     const targetClusterIds = getTransformationMappingItemsByDestinationType(
       TRANSFORMATION_MAPPING_ITEM_DESTINATION_TYPES[targetProvider].cluster,
@@ -197,20 +228,24 @@ export const createNetworksMappings = (transformation, targetProvider) =>
     ).map(item => item.destination_id);
 
     Promise.all([
-      ...targetNetworkPromises(targetClusterIds, targetProvider),
-      ...sourceNetworkPromises(sourceClusterIds)
+      Promise.all(targetNetworkPromises(targetClusterIds, targetProvider)),
+      Promise.all(sourceNetworkPromises(sourceClusterIds)),
+      Promise.all(publicNetworksPromises(clusterMappings, targetProvider))
     ])
       .then(res => {
         const networksMappings = [];
-        const targetClustersWithNetworks = res.filter(resolvedPromise => !resolvedPromise.length);
-        const sourceNetworks = res.reduce((networks, resolvedPromise) => {
-          if (resolvedPromise.length) {
-            return [...networks, ...resolvedPromise];
-          }
-          return networks;
-        }, []);
+        const [targetClustersWithNetworks, sourceNetworkResults, publicNetworksResults] = res;
+        const sourceNetworks = sourceNetworkResults.reduce(
+          (networks, resolvedPromise) => [...networks, ...resolvedPromise],
+          []
+        );
+        const publicNetworks = publicNetworksResults.reduce(
+          (networks, resolvedPromise) => [...networks, ...resolvedPromise],
+          []
+        );
         targetClustersWithNetworks.forEach(mapping => {
-          const nodes = getMappedTargetNetworks(mapping[NETWORK_ATTRIBUTES[targetProvider]], targetNetworkIds).map(
+          const privateNetworks = mapping[NETWORK_ATTRIBUTES[targetProvider]];
+          const nodes = getMappedTargetNetworks(combineNetworks(privateNetworks, publicNetworks), targetNetworkIds).map(
             targetNetwork => ({
               ...targetNetworkWithTreeViewAttrs(targetNetwork),
               nodes: getMappedSourceNetworks(targetNetwork, sourceNetworks, transformation).map(network =>
