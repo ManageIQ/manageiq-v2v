@@ -9,11 +9,12 @@ import reducer from './MappingWizardGeneralStepReducer';
 export const reducers = { mappingWizardGeneralStep: reducer };
 
 const mapStateToProps = ({
-  mappingWizardGeneralStep: { editingMapping },
+  mappingWizardGeneralStep: { editingMapping, conversionHosts },
   overview: { transformationMappings },
   form: { mappingWizardGeneralStep }
 }) => ({
   editingMapping,
+  conversionHosts,
   transformationMappings,
   targetProvider:
     mappingWizardGeneralStep && mappingWizardGeneralStep.values && mappingWizardGeneralStep.values.targetProvider

@@ -8,7 +8,18 @@ import ClustersStepForm from './components/ClustersStepForm/ClustersStepForm';
 
 class MappingWizardClustersStep extends React.Component {
   componentDidMount() {
+    const { targetProvider, ospConversionHosts, showAlertAction } = this.props;
     this.fetchClusters();
+    if (targetProvider === 'openstack' && ospConversionHosts.length === 0) {
+      showAlertAction(
+        __('At least one host must be enabled as a conversion host. You can continue to create an infrastructure mapping, but you must configure a conversion host before migration execution.'), // prettier-ignore
+        'warning'
+      );
+    }
+  }
+
+  componentWillUnmount() {
+    this.props.hideAlertAction();
   }
 
   fetchClusters = () => {
@@ -97,6 +108,8 @@ MappingWizardClustersStep.propTypes = {
   fetchTargetClustersAction: PropTypes.func,
   queryHostsUrl: PropTypes.string,
   queryHostsAction: PropTypes.func,
+  showAlertAction: PropTypes.func,
+  hideAlertAction: PropTypes.func,
   sourceClusters: PropTypes.arrayOf(PropTypes.object),
   targetClusters: PropTypes.arrayOf(PropTypes.object),
   isFetchingSourceClusters: PropTypes.bool,
@@ -106,7 +119,8 @@ MappingWizardClustersStep.propTypes = {
   targetProvider: PropTypes.string,
   isFetchingHostsQuery: PropTypes.bool,
   isRejectedHostsQuery: PropTypes.bool,
-  hostsByClusterID: PropTypes.object
+  hostsByClusterID: PropTypes.object,
+  ospConversionHosts: PropTypes.array
 };
 MappingWizardClustersStep.defaultProps = {
   fetchSourceClustersAction: noop,
@@ -121,6 +135,7 @@ MappingWizardClustersStep.defaultProps = {
   isFetchingHostsQuery: false,
   isRejectedHostsQuery: false,
   hostsByClusterID: {},
+  ospConversionHosts: [],
   fetchSourceClustersUrl:
     '/api/clusters?expand=resources' +
     '&attributes=ext_management_system.emstype,v_parent_datacenter,ext_management_system.name' +

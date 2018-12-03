@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mappingWizard general step actions should dispatch correct action on setEditingMappingAction 1`] = `
+Array [
+  Object {
+    "payload": null,
+    "type": "SET_V2V_EDITING_MAPPING",
+  },
+]
+`;
+
+exports[`mappingWizard general step actions should fetch conversion hosts and return PENDING and FULFILLED action 1`] = `
+Array [
+  Object {
+    "type": "FETCH_V2V_CONVERSION_HOSTS_PENDING",
+  },
+  Object {
+    "type": "FETCH_V2V_CONVERSION_HOSTS_FULFILLED",
+  },
+]
+`;
