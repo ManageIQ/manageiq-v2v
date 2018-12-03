@@ -14,7 +14,7 @@ import {
   ACTIVE_PLAN_SORT_FIELDS,
   FINISHED_PLAN_SORT_FIELDS
 } from './components/PlanRequestDetailList/PlanRequestDetailListConstants';
-import { REQUEST_TASKS_URL, DOCS_URL_CONFIGURE_CONVERSION_HOSTS } from './PlanConstants';
+import { REQUEST_TASKS_URL } from './PlanConstants';
 
 class Plan extends React.Component {
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -251,9 +251,7 @@ class Plan extends React.Component {
                 description={
                   <React.Fragment>
                     {__('Unable to migrate VMs because no conversion host was configured at the time of the attempted migration.') /* prettier-ignore */}{' '}
-                    <a href={DOCS_URL_CONFIGURE_CONVERSION_HOSTS} target="_blank" rel="noopener noreferrer">
-                      {__('See the product documentation for information on configuring conversion hosts.')}
-                    </a>
+                    {__('See the product documentation for information on configuring conversion hosts.')}
                   </React.Fragment>
                 }
                 descriptionIsNode
