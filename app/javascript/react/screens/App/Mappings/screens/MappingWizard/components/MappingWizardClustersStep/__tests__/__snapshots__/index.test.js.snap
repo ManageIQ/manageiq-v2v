@@ -10,6 +10,7 @@ Object {
     "openstack": "/api/dummy",
     "rhevm": "/api/dummy",
   },
+  "hideAlertAction": [Function],
   "initialValues": Object {
     "clusterMappings": Array [],
   },
@@ -18,7 +19,9 @@ Object {
   "isRejectedSourceClusters": false,
   "isRejectedTargetClusters": false,
   "keepDirtyOnReinitialize": true,
+  "ospConversionHosts": Array [],
   "queryHostsAction": [Function],
+  "showAlertAction": [Function],
   "sourceClusters": Array [],
   "targetClusters": Array [],
   "targetProvider": "rhevm",

@@ -6,6 +6,8 @@ import {
   QUERY_V2V_HOSTS
 } from './MappingWizardClustersStepConstants';
 
+export { showAlertAction, hideAlertAction } from '../../MappingWizardActions';
+
 const _getSourceClustersActionCreator = url => dispatch =>
   dispatch({
     type: FETCH_V2V_SOURCE_CLUSTERS,

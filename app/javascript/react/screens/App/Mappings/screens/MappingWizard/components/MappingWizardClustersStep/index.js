@@ -5,18 +5,20 @@ import * as MappingWizardClustersStepActions from './MappingWizardClustersStepAc
 import { createClusterMappings } from './components/ClustersStepForm/helpers';
 import { getTransformationMappingItemsBySourceType } from '../../helpers';
 import { TRANSFORMATION_MAPPING_ITEM_SOURCE_TYPES } from '../../MappingWizardConstants';
+import { ospConversionHostsFilter } from './MappingWizardClustersStepSelectors';
 
 import reducer from './MappingWizardClustersStepReducer';
 
 export const reducers = { mappingWizardClustersStep: reducer };
 
 const mapStateToProps = (
-  { mappingWizardClustersStep, mappingWizardGeneralStep: { editingMapping }, form },
+  { mappingWizardClustersStep, mappingWizardGeneralStep: { editingMapping, conversionHosts }, form },
   ownProps
 ) => ({
   ...mappingWizardClustersStep,
   ...ownProps.data,
   targetProvider: form.mappingWizardGeneralStep.values.targetProvider,
+  ospConversionHosts: ospConversionHostsFilter(conversionHosts),
   initialValues: {
     clusterMappings: editingMapping
       ? createClusterMappings(

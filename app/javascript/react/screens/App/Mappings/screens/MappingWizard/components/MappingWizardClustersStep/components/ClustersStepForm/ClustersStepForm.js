@@ -189,7 +189,8 @@ class ClustersStepForm extends React.Component {
                 const someConversionHostEnabled =
                   hosts &&
                   hosts.some(host => host.tags.some(tag => tag.name === '/managed/v2v_transformation_host/true'));
-                const showWarning = hosts && !isFetchingHostsQuery && !someConversionHostEnabled;
+                const showWarning =
+                  targetProvider === 'rhevm' && hosts && !isFetchingHostsQuery && !someConversionHostEnabled;
                 return (
                   <DualPaneMapperListItem
                     item={item}

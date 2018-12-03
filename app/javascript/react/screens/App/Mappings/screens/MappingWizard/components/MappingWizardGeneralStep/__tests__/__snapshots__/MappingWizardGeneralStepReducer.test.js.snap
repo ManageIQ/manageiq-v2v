@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`fetching conversion hosts is pending 1`] = `
+Object {
+  "conversionHosts": Array [],
+  "editingMapping": null,
+  "errorFetchingConversionHosts": null,
+  "isFetchingConversionHosts": true,
+  "isRejectedConversionHosts": false,
+}
+`;
+
+exports[`fetching conversion hosts is rejected 1`] = `
+Object {
+  "conversionHosts": Array [],
+  "editingMapping": null,
+  "errorFetchingConversionHosts": "error",
+  "isFetchingConversionHosts": false,
+  "isRejectedConversionHosts": true,
+}
+`;
+
+exports[`fetching conversion hosts is successful and there is no data 1`] = `
+Object {
+  "conversionHosts": Array [],
+  "editingMapping": null,
+  "errorFetchingConversionHosts": null,
+  "isFetchingConversionHosts": false,
+  "isRejectedConversionHosts": false,
+}
+`;
+
+exports[`sets default state 1`] = `
+Object {
+  "conversionHosts": Array [],
+  "editingMapping": null,
+  "errorFetchingConversionHosts": null,
+  "isFetchingConversionHosts": false,
+  "isRejectedConversionHosts": false,
+}
+`;
+
+exports[`sets editingMapping 1`] = `
+Object {
+  "conversionHosts": Array [],
+  "editingMapping": "1",
+  "errorFetchingConversionHosts": null,
+  "isFetchingConversionHosts": false,
+  "isRejectedConversionHosts": false,
+}
+`;

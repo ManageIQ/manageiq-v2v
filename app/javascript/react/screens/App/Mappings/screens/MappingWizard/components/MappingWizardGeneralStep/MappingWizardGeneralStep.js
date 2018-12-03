@@ -13,7 +13,14 @@ import { determineTargetProvider } from '../../helpers';
 
 class MappingWizardGeneralStep extends React.Component {
   componentDidMount = () => {
-    const { editingMapping, initialize, initialized } = this.props;
+    const {
+      editingMapping,
+      initialize,
+      initialized,
+      conversionHosts,
+      fetchConversionHostsAction,
+      fetchConversionHostsUrl
+    } = this.props;
 
     if (editingMapping && !initialized) {
       initialize({
@@ -21,6 +28,10 @@ class MappingWizardGeneralStep extends React.Component {
         description: editingMapping.description,
         targetProvider: determineTargetProvider(editingMapping)
       });
+    }
+
+    if (conversionHosts.length === 0) {
+      fetchConversionHostsAction(fetchConversionHostsUrl);
     }
   };
 
@@ -88,11 +99,16 @@ MappingWizardGeneralStep.propTypes = {
   editingMapping: PropTypes.object,
   initialize: PropTypes.func,
   initialized: PropTypes.bool,
-  setEditingMappingAction: PropTypes.func
+  setEditingMappingAction: PropTypes.func,
+  fetchConversionHostsAction: PropTypes.func,
+  fetchConversionHostsUrl: PropTypes.string,
+  conversionHosts: PropTypes.array
 };
 
 MappingWizardGeneralStep.defaultProps = {
   targetProvider: '',
+  conversionHosts: [],
+  fetchConversionHostsUrl: '/api/conversion_hosts?attributes=resource&expand=resources',
   dispatch: noop
 };
 
