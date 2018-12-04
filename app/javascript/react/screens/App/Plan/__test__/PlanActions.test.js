@@ -20,7 +20,7 @@ describe('FETCH_V2V_PLAN', () => {
   const id = '1';
   const { fetchPlanUrl } = requestPlanData(id);
   const request = {
-    fetchPlanUrl,
+    url: fetchPlanUrl,
     status: 200
   };
 

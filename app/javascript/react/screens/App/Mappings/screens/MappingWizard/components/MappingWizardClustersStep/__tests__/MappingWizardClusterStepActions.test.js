@@ -22,7 +22,7 @@ describe('mappingWizard actions', () => {
   it('should fetch source clusters and return PENDING and FULFILLED action', () => {
     const { fetchSourceClustersUrl } = requestSourceClustersData;
     mockRequest({
-      fetchSourceClustersUrl,
+      url: fetchSourceClustersUrl,
       status: 200
     });
     return store.dispatch(actions.fetchSourceClustersAction(fetchSourceClustersUrl)).then(() => {
@@ -32,7 +32,7 @@ describe('mappingWizard actions', () => {
   it('should fetch source clusters and return PENDING and REJECTED action', () => {
     const { fetchSourceClustersUrl } = requestSourceClustersData;
     mockRequest({
-      fetchSourceClustersUrl,
+      url: fetchSourceClustersUrl,
       status: 404
     });
     return store.dispatch(actions.fetchSourceClustersAction(fetchSourceClustersUrl)).catch(() => {
@@ -43,7 +43,7 @@ describe('mappingWizard actions', () => {
   it('should fetch target clusters and return PENDING and FULFILLED action', () => {
     const { fetchTargetClustersUrl } = requestTargetClustersData;
     mockRequest({
-      fetchTargetClustersUrl,
+      url: fetchTargetClustersUrl,
       status: 200
     });
     return store.dispatch(actions.fetchTargetClustersAction(fetchTargetClustersUrl)).then(() => {
@@ -53,7 +53,7 @@ describe('mappingWizard actions', () => {
   it('should fetch target clusters and return PENDING and REJECTED action', () => {
     const { fetchTargetClustersUrl } = requestTargetClustersData;
     mockRequest({
-      fetchTargetClustersUrl,
+      url: fetchTargetClustersUrl,
       status: 404
     });
     return store.dispatch(actions.fetchTargetClustersAction(fetchTargetClustersUrl)).catch(() => {
