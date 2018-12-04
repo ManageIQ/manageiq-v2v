@@ -24,9 +24,8 @@ describe('fetchTransformationPlansAction', () => {
     mockRequest({
       method: 'GET',
       url: fetchTransformationPlansUrl,
-      params: null,
       status: 200,
-      ...response
+      response
     });
 
     return store
@@ -37,7 +36,12 @@ describe('fetchTransformationPlansAction', () => {
         })
       )
       .then(() => {
-        expect(store.getActions()).toMatchSnapshot();
+        const actions = store.getActions();
+        expect(actions).toHaveLength(3);
+        expect(actions[0].type).toBe('FETCH_V2V_TRANSFORMATION_PLANS_PENDING');
+        expect(actions[1].type).toBe('FETCH_V2V_ALL_REQUESTS_WITH_TASKS_PENDING');
+        expect(actions[2].type).toBe('FETCH_V2V_TRANSFORMATION_PLANS_FULFILLED');
+        expect(actions[2].payload.data.resources).toHaveLength(7);
       });
   });
 
@@ -45,9 +49,8 @@ describe('fetchTransformationPlansAction', () => {
     mockRequest({
       method: 'GET',
       url: fetchTransformationPlansUrl,
-      params: null,
       status: 404,
-      ...response
+      response
     });
 
     return store
@@ -84,6 +87,7 @@ describe('setMigrationsFilterAction', () => {
 describe('cancelPlanRequestAction', () => {
   const request = {
     method: 'POST',
+    url: TRANSFORMATION_PLAN_REQUESTS_URL,
     data: { action: 'cancel' }
   };
 

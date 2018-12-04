@@ -1,5 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`cancelPlanRequestAction dispatched PENDING and REJECTED actions 1`] = `
+Array [
+  Object {
+    "payload": "/api/requests/1",
+    "type": "V2V_CANCEL_PLAN_REQUEST_PENDING",
+  },
+  Object {
+    "error": true,
+    "payload": [Error: <mocked error>],
+    "type": "V2V_CANCEL_PLAN_REQUEST_REJECTED",
+  },
+]
+`;
+
 exports[`cancelPlanRequestAction dispatches PENDING and FULFILLED actions 1`] = `
 Array [
   Object {
@@ -7,18 +21,27 @@ Array [
     "type": "V2V_CANCEL_PLAN_REQUEST_PENDING",
   },
   Object {
+    "payload": Object {
+      "data": Object {
+        "href": "http://0.0.0.0:8080/api/requests/28",
+        "message": "MiqRequest 28 canceled",
+        "success": true,
+      },
+    },
     "type": "V2V_CANCEL_PLAN_REQUEST_FULFILLED",
   },
 ]
 `;
 
-exports[`fetchTransformationPlansAction dispatches PENDING and FULFILLED actions 1`] = `
+exports[`fetchTransformationPlansAction dispatches PENDING and REJECTED actions 1`] = `
 Array [
   Object {
     "type": "FETCH_V2V_TRANSFORMATION_PLANS_PENDING",
   },
   Object {
-    "type": "FETCH_V2V_TRANSFORMATION_PLANS_FULFILLED",
+    "error": true,
+    "payload": [Error: <mocked error>],
+    "type": "FETCH_V2V_TRANSFORMATION_PLANS_REJECTED",
   },
 ]
 `;
