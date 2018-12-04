@@ -24,7 +24,7 @@ describe('mappingWizard general step actions', () => {
   it('should fetch conversion hosts and return PENDING and FULFILLED action', () => {
     const { fetchConversionHostsUrl } = requestConversionHostsData;
     mockRequest({
-      fetchConversionHostsUrl,
+      url: fetchConversionHostsUrl,
       status: 200
     });
     return store.dispatch(actions.fetchConversionHostsAction(fetchConversionHostsUrl)).then(() => {

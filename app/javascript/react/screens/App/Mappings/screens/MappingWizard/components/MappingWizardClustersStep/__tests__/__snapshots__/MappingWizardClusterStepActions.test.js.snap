@@ -11,6 +11,19 @@ Array [
 ]
 `;
 
+exports[`mappingWizard actions should fetch source clusters and return PENDING and REJECTED action 1`] = `
+Array [
+  Object {
+    "type": "FETCH_V2V_SOURCE_CLUSTERS_PENDING",
+  },
+  Object {
+    "error": true,
+    "payload": [Error: <mocked error>],
+    "type": "FETCH_V2V_SOURCE_CLUSTERS_REJECTED",
+  },
+]
+`;
+
 exports[`mappingWizard actions should fetch target clusters and return PENDING and FULFILLED action 1`] = `
 Array [
   Object {
@@ -18,6 +31,19 @@ Array [
   },
   Object {
     "type": "FETCH_V2V_TARGET_CLUSTERS_FULFILLED",
+  },
+]
+`;
+
+exports[`mappingWizard actions should fetch target clusters and return PENDING and REJECTED action 1`] = `
+Array [
+  Object {
+    "type": "FETCH_V2V_TARGET_CLUSTERS_PENDING",
+  },
+  Object {
+    "error": true,
+    "payload": [Error: <mocked error>],
+    "type": "FETCH_V2V_TARGET_CLUSTERS_REJECTED",
   },
 ]
 `;

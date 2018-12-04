@@ -1,15 +1,27 @@
-import axios from 'axios';
-import MockAdapter from 'axios-mock-adapter';
+let mockedRequests;
 
-const mock = new MockAdapter(axios);
-const methods = {
-  GET: 'onGet',
-  POST: 'onPost',
-  PUT: 'onPut',
-  DELETE: 'onDelete'
+export const APImock = {
+  reset: () => {
+    mockedRequests = { GET: {}, POST: {}, PUT: {}, DELETE: {} };
+  },
+  mock: (method, url, status, response) => {
+    mockedRequests[method][url] = { status, response };
+  },
+  respond: (method, url) => {
+    const mockMatchingUrl = mockedRequests[method][url];
+    const mocksMatchingMethod = Object.values(mockedRequests[method]);
+    const mocked = mockMatchingUrl || (mocksMatchingMethod.length > 0 && mocksMatchingMethod[0]);
+    if (mocked) {
+      if (mocked.status === 200) {
+        return Promise.resolve(mocked.response);
+      }
+      return Promise.reject(new Error('<mocked error>'));
+    }
+    return Promise.reject(new Error(`<no such mocked request ${method} ${url}>`));
+  }
 };
 
-export const mockRequest = ({ method = 'GET', url, data = null, status = 200, response = null }) =>
-  mock[methods[method]](url, data).reply(status, response);
+export const mockRequest = ({ method = 'GET', url, status = 200, response = null }) =>
+  APImock.mock(method, url, status, response);
 
-export const mockReset = () => mock.reset();
+export const mockReset = () => APImock.reset();
