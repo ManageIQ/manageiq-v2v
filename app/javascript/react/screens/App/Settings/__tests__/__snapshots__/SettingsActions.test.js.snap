@@ -1,0 +1,113 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`settings actions should fetch servers and return PENDING and FULFILLED action 1`] = `
+Array [
+  Object {
+    "type": "V2V_FETCH_SERVERS_PENDING",
+  },
+  Object {
+    "payload": Object {
+      "data": Object {
+        "count": 2,
+        "name": "servers",
+        "pages": 1,
+        "resources": Array [
+          Object {
+            "href": "http://0.0.0.0:8080/api/servers/42000000000001",
+          },
+          Object {
+            "href": "http://0.0.0.0:8080/api/servers/42000000000002",
+          },
+        ],
+        "subcount": 2,
+      },
+    },
+    "type": "V2V_FETCH_SERVERS_FULFILLED",
+  },
+]
+`;
+
+exports[`settings actions should fetch servers and return PENDING and REJECTED action 1`] = `
+Array [
+  Object {
+    "type": "V2V_FETCH_SERVERS_PENDING",
+  },
+  Object {
+    "error": true,
+    "payload": [Error: <mocked error>],
+    "type": "V2V_FETCH_SERVERS_REJECTED",
+  },
+]
+`;
+
+exports[`settings actions should fetch settings and return PENDING and FULFILLED action 1`] = `
+Array [
+  Object {
+    "type": "V2V_FETCH_SETTINGS_PENDING",
+  },
+  Object {
+    "payload": Object {
+      "data": Object {
+        "otherSettings": Object {
+          "mock": "data",
+        },
+        "transformation": Object {
+          "limits": Object {
+            "max_concurrent_tasks_per_host": 10,
+          },
+        },
+      },
+    },
+    "type": "V2V_FETCH_SETTINGS_FULFILLED",
+  },
+]
+`;
+
+exports[`settings actions should fetch settings and return PENDING and REJECTED action 1`] = `
+Array [
+  Object {
+    "type": "V2V_FETCH_SETTINGS_PENDING",
+  },
+  Object {
+    "error": true,
+    "payload": [Error: <mocked error>],
+    "type": "V2V_FETCH_SETTINGS_REJECTED",
+  },
+]
+`;
+
+exports[`settings actions should patch settings and return PENDING and FULFILLED actions 1`] = `
+Array [
+  Object {
+    "type": "V2V_PATCH_SETTINGS_PENDING",
+  },
+  Object {
+    "payload": Object {
+      "data": Object {
+        "otherSettings": Object {
+          "mock": "data",
+        },
+        "transformation": Object {
+          "limits": Object {
+            "max_concurrent_tasks_per_host": 10,
+          },
+        },
+      },
+    },
+    "type": "V2V_PATCH_SETTINGS_FULFILLED",
+  },
+]
+`;
+
+exports[`settings actions should patch settings and return PENDING and REJECTED action 1`] = `
+Array [
+  Object {
+    "type": "V2V_PATCH_SETTINGS_PENDING",
+  },
+  Object {
+    "error": true,
+    "payload": [Error: <mocked error>],
+    "type": "V2V_PATCH_SETTINGS_REJECTED",
+  },
+]
+`;
