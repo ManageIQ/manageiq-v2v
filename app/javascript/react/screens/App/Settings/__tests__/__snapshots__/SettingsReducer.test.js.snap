@@ -1,0 +1,149 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`fetching servers is pending 1`] = `
+Object {
+  "errorFetchingServers": null,
+  "errorFetchingSettings": null,
+  "errorSavingSettings": null,
+  "fetchingServersRejected": false,
+  "fetchingSettingsRejected": false,
+  "isFetchingServers": true,
+  "isFetchingSettings": false,
+  "isSavingSettings": false,
+  "savedSettings": Object {},
+  "savingSettingsRejected": false,
+  "servers": Array [],
+}
+`;
+
+exports[`fetching servers is rejected 1`] = `
+Object {
+  "errorFetchingServers": "error",
+  "errorFetchingSettings": null,
+  "errorSavingSettings": null,
+  "fetchingServersRejected": true,
+  "fetchingSettingsRejected": false,
+  "isFetchingServers": false,
+  "isFetchingSettings": false,
+  "isSavingSettings": false,
+  "savedSettings": Object {},
+  "savingSettingsRejected": false,
+  "servers": Array [],
+}
+`;
+
+exports[`fetching settings is pending 1`] = `
+Object {
+  "errorFetchingServers": null,
+  "errorFetchingSettings": null,
+  "errorSavingSettings": null,
+  "fetchingServersRejected": false,
+  "fetchingSettingsRejected": false,
+  "isFetchingServers": false,
+  "isFetchingSettings": true,
+  "isSavingSettings": false,
+  "savedSettings": Object {},
+  "savingSettingsRejected": false,
+  "servers": Array [],
+}
+`;
+
+exports[`fetching settings is rejected 1`] = `
+Object {
+  "errorFetchingServers": null,
+  "errorFetchingSettings": "error",
+  "errorSavingSettings": null,
+  "fetchingServersRejected": false,
+  "fetchingSettingsRejected": true,
+  "isFetchingServers": false,
+  "isFetchingSettings": false,
+  "isSavingSettings": false,
+  "savedSettings": Object {},
+  "savingSettingsRejected": false,
+  "servers": Array [],
+}
+`;
+
+exports[`fetching settings is successful 1`] = `
+Object {
+  "errorFetchingServers": null,
+  "errorFetchingSettings": null,
+  "errorSavingSettings": null,
+  "fetchingServersRejected": false,
+  "fetchingSettingsRejected": false,
+  "isFetchingServers": false,
+  "isFetchingSettings": false,
+  "isSavingSettings": false,
+  "savedSettings": Object {
+    "max_concurrent_tasks_per_host": 10,
+  },
+  "savingSettingsRejected": false,
+  "servers": Array [],
+}
+`;
+
+exports[`saving settings is pending 1`] = `
+Object {
+  "errorFetchingServers": null,
+  "errorFetchingSettings": null,
+  "errorSavingSettings": null,
+  "fetchingServersRejected": false,
+  "fetchingSettingsRejected": false,
+  "isFetchingServers": false,
+  "isFetchingSettings": false,
+  "isSavingSettings": true,
+  "savedSettings": Object {},
+  "savingSettingsRejected": false,
+  "servers": Array [],
+}
+`;
+
+exports[`saving settings is rejected 1`] = `
+Object {
+  "errorFetchingServers": null,
+  "errorFetchingSettings": null,
+  "errorSavingSettings": "error",
+  "fetchingServersRejected": false,
+  "fetchingSettingsRejected": false,
+  "isFetchingServers": false,
+  "isFetchingSettings": false,
+  "isSavingSettings": false,
+  "savedSettings": Object {},
+  "savingSettingsRejected": true,
+  "servers": Array [],
+}
+`;
+
+exports[`saving settings is successful 1`] = `
+Object {
+  "errorFetchingServers": null,
+  "errorFetchingSettings": null,
+  "errorSavingSettings": null,
+  "fetchingServersRejected": false,
+  "fetchingSettingsRejected": false,
+  "isFetchingServers": false,
+  "isFetchingSettings": false,
+  "isSavingSettings": false,
+  "savedSettings": Object {
+    "max_concurrent_tasks_per_host": 10,
+  },
+  "savingSettingsRejected": false,
+  "servers": Array [],
+}
+`;
+
+exports[`sets default state 1`] = `
+Object {
+  "errorFetchingServers": null,
+  "errorFetchingSettings": null,
+  "errorSavingSettings": null,
+  "fetchingServersRejected": false,
+  "fetchingSettingsRejected": false,
+  "isFetchingServers": false,
+  "isFetchingSettings": false,
+  "isSavingSettings": false,
+  "savedSettings": Object {},
+  "savingSettingsRejected": false,
+  "servers": Array [],
+}
+`;
