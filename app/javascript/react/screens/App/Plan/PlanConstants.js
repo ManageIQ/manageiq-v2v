@@ -80,18 +80,12 @@ DOWNLOAD_LOG_STATUS_MESSAGES.DOWNLOAD_LOG_ERROR_SCP_ISSUE = __('Log file was not
 DOWNLOAD_LOG_STATUS_MESSAGES.DOWNLOAD_LOG_ERROR_UNKNOWN_ISSUE = __('Unknown error');
 
 const BACKEND_ERROR_MESSAGES = {};
-BACKEND_ERROR_MESSAGES.DOWNLOAD_LOG_ERROR_NO_HOST = RegExp(
-  'Conversion host was not found. Download of transformation log aborted.',
-  'g'
-);
-BACKEND_ERROR_MESSAGES.DOWNLOAD_LOG_ERROR_NO_CREDS_SET = RegExp(
-  'Credential was not found for host [^]*. Download of transformation log aborted.',
-  'g'
-);
-BACKEND_ERROR_MESSAGES.DOWNLOAD_LOG_ERROR_SCP_ISSUE = RegExp(
-  'Download of transformation log for [^]* with ID [^]* failed with error: [^]*',
-  'g'
-);
+BACKEND_ERROR_MESSAGES.DOWNLOAD_LOG_ERROR_NO_HOST =
+  'Conversion host was not found. Download of transformation log aborted.';
+BACKEND_ERROR_MESSAGES.DOWNLOAD_LOG_ERROR_NO_CREDS_SET =
+  'Credential was not found for host [^]*. Download of transformation log aborted.';
+BACKEND_ERROR_MESSAGES.DOWNLOAD_LOG_ERROR_SCP_ISSUE =
+  'Download of transformation log for [^]* with ID [^]* failed with error: [^]*';
 
 export { STATUS_MESSAGES as V2V_MIGRATION_STATUS_MESSAGES };
 

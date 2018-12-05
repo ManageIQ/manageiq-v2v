@@ -122,16 +122,13 @@ export const incompleteCancellationTasks = (requestWithTasks, actions, tasksForC
 };
 
 export const parseComplexErrorMessages = complexErrorMessage => {
-  if (V2V_BACKEND_ERROR_MESSAGES.DOWNLOAD_LOG_ERROR_NO_HOST.exec(complexErrorMessage) !== null) {
-    return V2V_DOWNLOAD_LOG_STATUS_MESSAGES.DOWNLOAD_LOG_ERROR_NO_HOST;
-  }
-
-  if (V2V_BACKEND_ERROR_MESSAGES.DOWNLOAD_LOG_ERROR_NO_CREDS_SET.exec(complexErrorMessage) !== null) {
-    return V2V_DOWNLOAD_LOG_STATUS_MESSAGES.DOWNLOAD_LOG_ERROR_NO_CREDS_SET;
-  }
-
-  if (V2V_BACKEND_ERROR_MESSAGES.DOWNLOAD_LOG_ERROR_SCP_ISSUE.exec(complexErrorMessage) !== null) {
-    return V2V_DOWNLOAD_LOG_STATUS_MESSAGES.DOWNLOAD_LOG_ERROR_SCP_ISSUE;
+  for (const property in V2V_BACKEND_ERROR_MESSAGES) {
+    if ({}.hasOwnProperty.call(V2V_BACKEND_ERROR_MESSAGES, property)) {
+      const regExp = RegExp(V2V_BACKEND_ERROR_MESSAGES[property], 'g');
+      if (regExp.exec(complexErrorMessage) !== null) {
+        return V2V_DOWNLOAD_LOG_STATUS_MESSAGES[property];
+      }
+    }
   }
 
   return complexErrorMessage;
