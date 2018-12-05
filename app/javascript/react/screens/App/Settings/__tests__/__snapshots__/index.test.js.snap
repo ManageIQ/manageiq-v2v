@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Settings integration test should mount the Settings page with mapStateToProps reduced 1`] = `
+Object {
+  "addNotificationAction": [Function],
+  "enableReinitialize": true,
+  "errorFetchingServers": null,
+  "errorFetchingSettings": null,
+  "errorSavingSettings": null,
+  "fetchServersAction": [Function],
+  "fetchSettingsAction": [Function],
+  "fetchingServersRejected": false,
+  "fetchingSettingsRejected": false,
+  "initialValues": Object {},
+  "isFetchingServers": true,
+  "isFetchingSettings": true,
+  "isSavingSettings": false,
+  "patchSettingsAction": [Function],
+  "removeNotificationAction": [Function],
+  "savedSettings": Object {},
+  "savingSettingsRejected": false,
+  "servers": Array [],
+  "settingsForm": Object {
+    "initial": Object {},
+    "values": Object {},
+  },
+}
+`;

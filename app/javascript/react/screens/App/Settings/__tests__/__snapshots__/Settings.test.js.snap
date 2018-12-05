@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Settings component renders the settings page 1`] = `
+<Connect(Form(Settings))
+  destroyOnUnmount={true}
+  enableReinitialize={false}
+  fetchServersAction={[MockFunction]}
+  fetchSettingsAction={[MockFunction]}
+  forceUnregisterOnUnmount={false}
+  form="settings"
+  getFormState={[Function]}
+  keepDirtyOnReinitialize={false}
+  patchSettingsAction={[MockFunction]}
+  persistentSubmitErrors={false}
+  pure={true}
+  savedSettings={
+    Object {
+      "max_concurrent_tasks_per_host": 10,
+    }
+  }
+  settingsForm={
+    Object {
+      "values": Object {
+        "max_concurrent_tasks_per_host": 10,
+      },
+    }
+  }
+  shouldAsyncValidate={[Function]}
+  shouldError={[Function]}
+  shouldValidate={[Function]}
+  shouldWarn={[Function]}
+  touchOnBlur={true}
+  touchOnChange={false}
+  updateUnregisteredFields={false}
+/>
+`;

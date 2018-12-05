@@ -2,7 +2,13 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import promiseMiddleware from 'redux-promise-middleware';
 import * as actions from '../SettingsActions';
-import { fetchServersData, servers, settingsFormValues, fetchSettingsData, patchSettingsData } from '../settings.fixures';
+import {
+  fetchServersData,
+  servers,
+  settingsFormValues,
+  fetchSettingsData,
+  patchSettingsData
+} from '../settings.fixures';
 import { initialState } from '../SettingsReducer';
 import { mockRequest, mockReset } from '../../../../../common/mockRequests';
 
@@ -68,7 +74,7 @@ describe('settings actions', () => {
 
   it('should patch settings and return PENDING and FULFILLED actions', () => {
     const { method, response } = patchSettingsData;
-    servers.resources.forEach(server => { 
+    servers.resources.forEach(server => {
       mockRequest({
         method,
         url: `${server.href}/settings`,
