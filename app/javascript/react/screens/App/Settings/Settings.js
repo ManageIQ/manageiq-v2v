@@ -5,7 +5,7 @@ import { Breadcrumb, Form, Button, Spinner } from 'patternfly-react';
 import Toolbar from '../../../config/Toolbar';
 import NumberInput from '../common/forms/NumberInput';
 
-class Settings extends React.Component {
+export class Settings extends React.Component {
   componentDidMount() {
     const { fetchServersAction, fetchServersUrl, fetchSettingsAction, fetchSettingsUrl } = this.props;
     fetchServersAction(fetchServersUrl);
