@@ -448,6 +448,33 @@ export const targetClusterNetworks = [
   }
 ];
 
+export const publicCloudNetworks = [
+  {
+    href: 'http://0.0.0.0:8080/api/cloud_networks/42000000000001',
+    id: '42000000000001',
+    name: 'external',
+    ems_ref: '1b39625c-221e-4aad-ace3-a09685ac2634',
+    ems_id: '42000000000005',
+    cidr: null,
+    status: 'active',
+    enabled: true,
+    external_facing: true,
+    cloud_tenant_id: '42000000000002',
+    orchestration_stack_id: null,
+    shared: true,
+    provider_physical_network: 'datacentre',
+    provider_network_type: 'flat',
+    provider_segmentation_id: null,
+    vlan_transparent: null,
+    extra_attributes: {
+      port_security_enabled: true,
+      qos_policy_id: null,
+      maximum_transmission_unit: 1500
+    },
+    type: 'ManageIQ::Providers::Openstack::NetworkManager::CloudNetwork::Public'
+  }
+];
+
 export const requestSourceNetworksData = id => ({
   method: 'GET',
   response: { data: sourceClusterNetworks[id - 1] }

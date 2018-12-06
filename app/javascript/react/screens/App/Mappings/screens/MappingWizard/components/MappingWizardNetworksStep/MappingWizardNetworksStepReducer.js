@@ -7,7 +7,7 @@ import {
 } from './MappingWizardNetworksStepConstants';
 import { V2V_MAPPING_WIZARD_EXITED } from '../../../../screens/MappingWizard/MappingWizardConstants';
 
-const initialState = Immutable({
+export const initialState = Immutable({
   isFetchingSourceNetworks: false,
   isRejectedSourceNetworks: false,
   errorSourceNetworks: null,

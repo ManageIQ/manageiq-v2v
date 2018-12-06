@@ -1,13 +1,93 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`fetching source networks is fulfilled 1`] = `
+exports[`fetching public cloud networks is fulfilled 1`] = `
 Object {
+  "errorPublicCloudNetworks": null,
   "errorSourceNetworks": null,
   "errorTargetNetworks": null,
+  "isFetchingPublicCloudNetworks": false,
   "isFetchingSourceNetworks": false,
   "isFetchingTargetNetworks": false,
+  "isRejectedPublicCloudNetworks": true,
   "isRejectedSourceNetworks": false,
   "isRejectedTargetNetworks": false,
+  "publicCloudNetworks": Array [
+    Object {
+      "cidr": null,
+      "cloud_tenant_id": "42000000000002",
+      "ems_id": "42000000000005",
+      "ems_ref": "1b39625c-221e-4aad-ace3-a09685ac2634",
+      "enabled": true,
+      "external_facing": true,
+      "extra_attributes": Object {
+        "maximum_transmission_unit": 1500,
+        "port_security_enabled": true,
+        "qos_policy_id": null,
+      },
+      "href": "http://0.0.0.0:8080/api/cloud_networks/42000000000001",
+      "id": "42000000000001",
+      "name": "external",
+      "orchestration_stack_id": null,
+      "provider_network_type": "flat",
+      "provider_physical_network": "datacentre",
+      "provider_segmentation_id": null,
+      "shared": true,
+      "status": "active",
+      "type": "ManageIQ::Providers::Openstack::NetworkManager::CloudNetwork::Public",
+      "vlan_transparent": null,
+    },
+  ],
+  "sourceNetworks": Array [],
+  "targetNetworks": Array [],
+}
+`;
+
+exports[`fetching public cloud networks is pending 1`] = `
+Object {
+  "errorPublicCloudNetworks": null,
+  "errorSourceNetworks": null,
+  "errorTargetNetworks": null,
+  "isFetchingPublicCloudNetworks": true,
+  "isFetchingSourceNetworks": false,
+  "isFetchingTargetNetworks": false,
+  "isRejectedPublicCloudNetworks": false,
+  "isRejectedSourceNetworks": false,
+  "isRejectedTargetNetworks": false,
+  "publicCloudNetworks": Array [],
+  "sourceNetworks": Array [],
+  "targetNetworks": Array [],
+}
+`;
+
+exports[`fetching public cloud networks is rejected 1`] = `
+Object {
+  "errorPublicCloudNetworks": "error",
+  "errorSourceNetworks": null,
+  "errorTargetNetworks": null,
+  "isFetchingPublicCloudNetworks": false,
+  "isFetchingSourceNetworks": false,
+  "isFetchingTargetNetworks": false,
+  "isRejectedPublicCloudNetworks": true,
+  "isRejectedSourceNetworks": false,
+  "isRejectedTargetNetworks": false,
+  "publicCloudNetworks": Array [],
+  "sourceNetworks": Array [],
+  "targetNetworks": Array [],
+}
+`;
+
+exports[`fetching source networks is fulfilled 1`] = `
+Object {
+  "errorPublicCloudNetworks": null,
+  "errorSourceNetworks": null,
+  "errorTargetNetworks": null,
+  "isFetchingPublicCloudNetworks": false,
+  "isFetchingSourceNetworks": false,
+  "isFetchingTargetNetworks": false,
+  "isRejectedPublicCloudNetworks": false,
+  "isRejectedSourceNetworks": false,
+  "isRejectedTargetNetworks": false,
+  "publicCloudNetworks": Array [],
   "sourceNetworks": Array [
     Object {
       "allow_promiscuous": null,
@@ -34,12 +114,16 @@ Object {
 
 exports[`fetching source networks is pending 1`] = `
 Object {
+  "errorPublicCloudNetworks": null,
   "errorSourceNetworks": null,
   "errorTargetNetworks": null,
+  "isFetchingPublicCloudNetworks": false,
   "isFetchingSourceNetworks": true,
   "isFetchingTargetNetworks": false,
+  "isRejectedPublicCloudNetworks": false,
   "isRejectedSourceNetworks": false,
   "isRejectedTargetNetworks": false,
+  "publicCloudNetworks": Array [],
   "sourceNetworks": Array [],
   "targetNetworks": Array [],
 }
@@ -47,12 +131,16 @@ Object {
 
 exports[`fetching source networks is rejected 1`] = `
 Object {
+  "errorPublicCloudNetworks": null,
   "errorSourceNetworks": "error",
   "errorTargetNetworks": null,
+  "isFetchingPublicCloudNetworks": false,
   "isFetchingSourceNetworks": false,
   "isFetchingTargetNetworks": false,
+  "isRejectedPublicCloudNetworks": false,
   "isRejectedSourceNetworks": true,
   "isRejectedTargetNetworks": false,
+  "publicCloudNetworks": Array [],
   "sourceNetworks": Array [],
   "targetNetworks": Array [],
 }
@@ -60,12 +148,16 @@ Object {
 
 exports[`fetching target networks is fulfilled 1`] = `
 Object {
+  "errorPublicCloudNetworks": null,
   "errorSourceNetworks": null,
   "errorTargetNetworks": null,
+  "isFetchingPublicCloudNetworks": false,
   "isFetchingSourceNetworks": false,
   "isFetchingTargetNetworks": false,
+  "isRejectedPublicCloudNetworks": false,
   "isRejectedSourceNetworks": false,
   "isRejectedTargetNetworks": false,
+  "publicCloudNetworks": Array [],
   "sourceNetworks": Array [],
   "targetNetworks": Array [
     Object {
@@ -92,12 +184,16 @@ Object {
 
 exports[`fetching target networks is pending 1`] = `
 Object {
+  "errorPublicCloudNetworks": null,
   "errorSourceNetworks": null,
   "errorTargetNetworks": null,
+  "isFetchingPublicCloudNetworks": false,
   "isFetchingSourceNetworks": false,
   "isFetchingTargetNetworks": true,
+  "isRejectedPublicCloudNetworks": false,
   "isRejectedSourceNetworks": false,
   "isRejectedTargetNetworks": false,
+  "publicCloudNetworks": Array [],
   "sourceNetworks": Array [],
   "targetNetworks": Array [],
 }
@@ -105,12 +201,16 @@ Object {
 
 exports[`fetching target networks is rejected 1`] = `
 Object {
+  "errorPublicCloudNetworks": null,
   "errorSourceNetworks": null,
   "errorTargetNetworks": "error",
+  "isFetchingPublicCloudNetworks": false,
   "isFetchingSourceNetworks": false,
   "isFetchingTargetNetworks": false,
+  "isRejectedPublicCloudNetworks": false,
   "isRejectedSourceNetworks": false,
   "isRejectedTargetNetworks": true,
+  "publicCloudNetworks": Array [],
   "sourceNetworks": Array [],
   "targetNetworks": Array [],
 }
