@@ -121,15 +121,17 @@ export const incompleteCancellationTasks = (requestWithTasks, actions, tasksForC
   return removeCancelledTasksFromSelection(tasksForCancel, completedTasksOfPlan);
 };
 
+const processRegExp = (property, complexErrorMessage) =>
+  RegExp(V2V_BACKEND_ERROR_MESSAGES[property], 'g').exec(complexErrorMessage);
+
 export const parseComplexErrorMessages = complexErrorMessage => {
   for (const property in V2V_BACKEND_ERROR_MESSAGES) {
-    if ({}.hasOwnProperty.call(V2V_BACKEND_ERROR_MESSAGES, property)) {
-      const regExp = RegExp(V2V_BACKEND_ERROR_MESSAGES[property], 'g');
-      if (regExp.exec(complexErrorMessage) !== null) {
-        return V2V_DOWNLOAD_LOG_STATUS_MESSAGES[property];
-      }
+    if (
+      {}.hasOwnProperty.call(V2V_BACKEND_ERROR_MESSAGES, property) &&
+      processRegExp(property, complexErrorMessage) !== null
+    ) {
+      return V2V_DOWNLOAD_LOG_STATUS_MESSAGES[property];
     }
   }
-
   return complexErrorMessage;
 };
