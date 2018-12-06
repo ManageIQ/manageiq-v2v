@@ -6,12 +6,14 @@ class NumberInput extends React.Component {
   componentDidMount() {
     const {
       id,
-      input: { onChange }
+      input: { onChange },
+      min
     } = this.props;
     const input = $(`#${id}`);
     input.TouchSpin({
       buttondown_class: 'btn btn-default',
-      buttonup_class: 'btn btn-default'
+      buttonup_class: 'btn btn-default',
+      min
     });
     // bootstrap-touchspin's change event doesn't trigger the rendered input's onChange.
     input.on('change', event => {
@@ -37,7 +39,12 @@ NumberInput.propTypes = {
   input: PropTypes.shape({
     value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     onChange: PropTypes.func
-  })
+  }),
+  min: PropTypes.number
+};
+
+NumberInput.defaultProps = {
+  min: 0
 };
 
 NumberInput.normalizeStringToInt = str => (str && parseInt(str.replace(/\D/g, ''), 10)) || 0;
