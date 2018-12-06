@@ -2,7 +2,7 @@ let mockedRequests;
 
 export const APImock = {
   reset: () => {
-    mockedRequests = { GET: {}, POST: {}, PUT: {}, DELETE: {} };
+    mockedRequests = { GET: {}, POST: {}, PUT: {}, PATCH: {}, DELETE: {} };
   },
   mock: (method, url, status, response) => {
     mockedRequests[method][url] = { status, response };

@@ -1,6 +1,5 @@
 import { configure, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import toJson from 'enzyme-to-json';
 import React from 'react';
 import ShortDateTime from './ShortDateTime';
 import { i18nProviderWrapperFactory } from '../../common/i18nProviderWrapperFactory';
@@ -15,7 +14,7 @@ describe('ShortDateTime', () => {
   it('formats date', () => {
     const wrapper = mount(<IntlDate data={{ date, defaultValue: 'Default value' }} />);
 
-    expect(toJson(wrapper.find('ShortDateTime'))).toMatchSnapshot();
+    expect(wrapper.find('ShortDateTime')).toMatchSnapshot();
   });
 
   it('formats date with seconds', () => {
@@ -29,12 +28,12 @@ describe('ShortDateTime', () => {
       />
     );
 
-    expect(toJson(wrapper.find('ShortDateTime'))).toMatchSnapshot();
+    expect(wrapper.find('ShortDateTime')).toMatchSnapshot();
   });
 
   it('renders default value', () => {
     const wrapper = mount(<IntlDate data={{ date: null, defaultValue: 'Default value' }} />);
 
-    expect(toJson(wrapper.find('ShortDateTime'))).toMatchSnapshot();
+    expect(wrapper.find('ShortDateTime')).toMatchSnapshot();
   });
 });
