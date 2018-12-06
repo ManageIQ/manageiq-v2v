@@ -1,6 +1,11 @@
 import numeral from 'numeral';
 
-import { STATUS_MESSAGE_KEYS, V2V_MIGRATION_STATUS_MESSAGES } from './PlanConstants';
+import {
+  STATUS_MESSAGE_KEYS,
+  V2V_MIGRATION_STATUS_MESSAGES,
+  V2V_DOWNLOAD_LOG_STATUS_MESSAGES,
+  V2V_BACKEND_ERROR_MESSAGES
+} from './PlanConstants';
 import { IsoElapsedTime } from '../../../../components/dates/IsoElapsedTime';
 import getMostRecentVMTasksFromRequests from '../Overview/components/Migrations/helpers/getMostRecentVMTasksFromRequests';
 
@@ -114,4 +119,19 @@ export const incompleteCancellationTasks = (requestWithTasks, actions, tasksForC
   const tasksOfPlan = getMostRecentVMTasksFromRequests(requestWithTasks, actions);
   const completedTasksOfPlan = tasksOfPlan.filter(task => task.state === 'finished');
   return removeCancelledTasksFromSelection(tasksForCancel, completedTasksOfPlan);
+};
+
+const processRegExp = (property, complexErrorMessage) =>
+  RegExp(V2V_BACKEND_ERROR_MESSAGES[property], 'g').exec(complexErrorMessage);
+
+export const parseComplexErrorMessages = complexErrorMessage => {
+  for (const property in V2V_BACKEND_ERROR_MESSAGES) {
+    if (
+      {}.hasOwnProperty.call(V2V_BACKEND_ERROR_MESSAGES, property) &&
+      processRegExp(property, complexErrorMessage) !== null
+    ) {
+      return V2V_DOWNLOAD_LOG_STATUS_MESSAGES[property];
+    }
+  }
+  return complexErrorMessage;
 };

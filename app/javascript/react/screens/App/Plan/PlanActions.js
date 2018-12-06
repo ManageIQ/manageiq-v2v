@@ -24,6 +24,7 @@ import {
 } from './PlanConstants';
 
 import { V2V_NOTIFICATION_ADD } from '../common/NotificationList/NotificationConstants';
+import { parseComplexErrorMessages } from './helpers';
 
 // *****************************************************************************
 // * FETCH_V2FETCH_V2V_ORCHESTRATION_STACK
@@ -191,7 +192,7 @@ export const downloadLogAction = task => dispatch => {
             const failureMsg = sprintf(
               __('Failed to download "%s". Reason - "%s"'),
               `${task.vmName}.log`,
-              response.data.status_message
+              parseComplexErrorMessages(response.data.status_message)
             );
             dispatch({
               type: V2V_NOTIFICATION_ADD,

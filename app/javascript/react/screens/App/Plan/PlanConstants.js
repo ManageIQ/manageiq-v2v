@@ -73,4 +73,20 @@ STATUS_MESSAGES[STATUS_MESSAGE_KEYS.VM_MIGRATED] = __('Virtual machine migrated'
 STATUS_MESSAGES[STATUS_MESSAGE_KEYS.VM_TRANSFORMATIONS_FAILED] = __('VM migrations failed');
 STATUS_MESSAGES[STATUS_MESSAGE_KEYS.CANCELLED] = __('VM cancelled');
 
+const DOWNLOAD_LOG_STATUS_MESSAGES = {};
+DOWNLOAD_LOG_STATUS_MESSAGES.DOWNLOAD_LOG_ERROR_NO_HOST = __('Conversion host was not found');
+DOWNLOAD_LOG_STATUS_MESSAGES.DOWNLOAD_LOG_ERROR_NO_CREDS_SET = __('Credentials not set on conversion host');
+DOWNLOAD_LOG_STATUS_MESSAGES.DOWNLOAD_LOG_ERROR_SCP_ISSUE = __('Log file was not found on conversion host');
+
+const BACKEND_ERROR_MESSAGES = {};
+BACKEND_ERROR_MESSAGES.DOWNLOAD_LOG_ERROR_NO_HOST =
+  'Conversion host was not found. Download of transformation log aborted.';
+BACKEND_ERROR_MESSAGES.DOWNLOAD_LOG_ERROR_NO_CREDS_SET =
+  'Credential was not found for host [^]*. Download of transformation log aborted.';
+BACKEND_ERROR_MESSAGES.DOWNLOAD_LOG_ERROR_SCP_ISSUE =
+  'Download of transformation log for [^]* with ID [^]* failed with error: [^]*';
+
 export { STATUS_MESSAGES as V2V_MIGRATION_STATUS_MESSAGES };
+
+export { DOWNLOAD_LOG_STATUS_MESSAGES as V2V_DOWNLOAD_LOG_STATUS_MESSAGES };
+export { BACKEND_ERROR_MESSAGES as V2V_BACKEND_ERROR_MESSAGES };
