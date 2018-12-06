@@ -4,3 +4,10 @@ export const constructClusterMappings = (targetCluster, sourceClusters = []) => 
     nodes: sourceClusters
   }
 ];
+
+export const constructDatastoreOrNetworkMappings = (targetCluster, target, sources) => [
+  {
+    ...targetCluster,
+    nodes: [{ ...target, nodes: sources }]
+  }
+];
