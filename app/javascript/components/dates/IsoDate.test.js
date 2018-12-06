@@ -1,7 +1,6 @@
 import React from 'react';
 import { configure, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import toJson from 'enzyme-to-json';
 import IsoDate from './IsoDate';
 import { i18nProviderWrapperFactory } from '../../common/i18nProviderWrapperFactory';
 
@@ -14,12 +13,12 @@ describe('Date', () => {
 
   it('formats date', () => {
     const wrapper = mount(<IntlDate data={{ date, defaultValue: 'Default value' }} />);
-    expect(toJson(wrapper.find('IsoDate'))).toMatchSnapshot();
+    expect(wrapper.find('IsoDate')).toMatchSnapshot();
   });
 
   it('renders default value', () => {
     const wrapper = mount(<IntlDate data={{ date: null, defaultValue: 'Default value' }} />);
 
-    expect(toJson(wrapper.find('IsoDate'))).toMatchSnapshot();
+    expect(wrapper.find('IsoDate')).toMatchSnapshot();
   });
 });

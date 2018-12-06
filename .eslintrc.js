@@ -34,6 +34,7 @@ module.exports = {
       }
     ],
     'import/prefer-default-export': 'off',
+    'import/no-named-as-default': 'off',
     'no-underscore-dangle': 'off',
     'no-param-reassign': 'off',
     'no-restricted-syntax': 'off',

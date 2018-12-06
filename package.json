@@ -101,7 +101,10 @@
     "globals": {
       "API": {}
     },
-    "testURL": "http://localhost"
+    "testURL": "http://localhost",
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ]
   },
   "prettier": {
     "singleQuote": true,

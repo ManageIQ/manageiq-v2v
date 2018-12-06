@@ -1,6 +1,5 @@
 import { configure, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import toJson from 'enzyme-to-json';
 import React from 'react';
 import RelativeDateTime from './RelativeDateTime';
 import { i18nProviderWrapperFactory } from '../../common/i18nProviderWrapperFactory';
@@ -22,12 +21,12 @@ describe('RelativeDateTime', () => {
       />
     );
 
-    expect(toJson(wrapper.find('RelativeDateTime'))).toMatchSnapshot();
+    expect(wrapper.find('RelativeDateTime')).toMatchSnapshot();
   });
 
   it('renders default value', () => {
     const wrapper = mount(<IntlDate data={{ date: null, defaultValue: 'Default value' }} />);
 
-    expect(toJson(wrapper.find('RelativeDateTime'))).toMatchSnapshot();
+    expect(wrapper.find('RelativeDateTime')).toMatchSnapshot();
   });
 });
