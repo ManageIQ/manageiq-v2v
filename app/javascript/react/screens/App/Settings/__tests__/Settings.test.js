@@ -1,7 +1,6 @@
 import React from 'react';
 import { Spinner } from 'patternfly-react';
 import { shallow } from 'enzyme';
-import toJson from 'enzyme-to-json';
 import { Settings } from '../Settings';
 import { servers, settings } from '../settings.fixures';
 import { getFormValuesFromApiSettings } from '../helpers';
@@ -19,7 +18,7 @@ describe('Settings component', () => {
 
   it('renders the settings page', () => {
     const component = shallow(<Settings {...baseProps} />);
-    expect(toJson(component)).toMatchSnapshot();
+    expect(component).toMatchSnapshot();
   });
 
   it('renders the settings page with Applying spinner when saving', () => {

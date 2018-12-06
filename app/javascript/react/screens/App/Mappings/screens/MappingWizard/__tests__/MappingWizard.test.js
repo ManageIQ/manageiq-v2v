@@ -1,6 +1,5 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import toJson from 'enzyme-to-json';
 import MappingWizard from '../MappingWizard';
 
 import { coreComponents } from '../../../../../../../components/';
@@ -18,6 +17,6 @@ describe('MappingWizard component', () => {
 
   it('renders the mapping wizard', () => {
     const component = shallow(<MappingWizard {...getBaseProps()} />);
-    expect(toJson(component)).toMatchSnapshot();
+    expect(component).toMatchSnapshot();
   });
 });
