@@ -1,10 +1,9 @@
 import React from 'react';
-import thunk from 'redux-thunk';
-import promiseMiddleware from 'redux-promise-middleware';
 import { reducer as formReducer } from 'redux-form';
-import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
+
+import { generateStore } from '../../../../../../common/testReduxHelpers';
 import { initialState } from '../mappingWizardClustersStep.fixtures';
 import { initialState as generalStepInitialState } from '../../MappingWizardGeneralStep/MappingWizardGeneralStepReducer';
 import { reducers as generalStepReducers } from '../../MappingWizardGeneralStep/index';
@@ -12,19 +11,16 @@ import MappingWizardClustersStep from '../MappingWizardClustersStep';
 import MappingWizardClustersStepContainer, { reducers } from '../index';
 
 describe('Mapping Wizard integration test', () => {
-  const middlewares = [thunk, promiseMiddleware()];
-  const generateStore = () =>
-    createStore(
-      combineReducers({ ...reducers, ...generalStepReducers, form: formReducer }),
-      {
-        mappingWizardClustersStep: initialState,
-        mappingWizardGeneralStep: generalStepInitialState,
-        form: { mappingWizardGeneralStep: { values: { targetProvider: 'rhevm' } } }
-      },
-      applyMiddleware(...middlewares)
-    );
+  const store = generateStore(
+    { ...reducers, ...generalStepReducers, form: formReducer },
+    {
+      mappingWizardClustersStep: initialState,
+      mappingWizardGeneralStep: generalStepInitialState,
+      form: { mappingWizardGeneralStep: { values: { targetProvider: 'rhevm' } } }
+    }
+  );
 
-  const mountComponent = store =>
+  const mountComponent = () =>
     mount(
       <Provider store={store}>
         <MappingWizardClustersStepContainer />
@@ -32,8 +28,7 @@ describe('Mapping Wizard integration test', () => {
     );
 
   it('should mount the MappingWizardClusterStep with mapStateToProps reduced', () => {
-    const store = generateStore();
-    const wrapper = mountComponent(store);
+    const wrapper = mountComponent();
 
     // query the unconnected component to assert reduced props
     const component = wrapper.find(MappingWizardClustersStep);
