@@ -1,0 +1,64 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Plan wizard results step renders with a warning if migrating an OSP plan later 1`] = `
+<div
+  className="wizard-pf-complete blank-slate-pf"
+>
+  <div
+    className="plan-wizard-results-step-icon"
+  >
+    <span
+      className="pficon pficon-ok"
+    />
+  </div>
+  <h3
+    className="blank-slate-pf-main-action"
+    id="migration-plan-results-message"
+  >
+     Migration Plan: '%s' has been saved
+  </h3>
+  <p
+    className="blank-slate-pf-secondary-action"
+  >
+    Select Migrate on the Migration Plans page to begin migration
+  </p>
+  <div
+    className="plan-wizard-vm-power-warning"
+  >
+    <Icon
+      name="warning-triangle-o"
+      type="pf"
+    />
+    <p>
+      VMs must be powered on in order to migrate.
+      <br />
+      Ensure that all VMs in the Migration Plan are powered on before starting migration.
+    </p>
+  </div>
+</div>
+`;
+
+exports[`Plan wizard results step renders with no warning if migrating an OSP plan immediately 1`] = `
+<div
+  className="wizard-pf-complete blank-slate-pf"
+>
+  <div
+    className="plan-wizard-results-step-icon"
+  >
+    <span
+      className="fa fa-clock-o"
+    />
+  </div>
+  <h3
+    className="blank-slate-pf-main-action"
+    id="migration-plan-results-message"
+  >
+     Migration Plan: '%s' is in progress
+  </h3>
+  <p
+    className="blank-slate-pf-secondary-action"
+  >
+    This may take a long time. Progress of the plan will be shown in the Migration area
+  </p>
+</div>
+`;
