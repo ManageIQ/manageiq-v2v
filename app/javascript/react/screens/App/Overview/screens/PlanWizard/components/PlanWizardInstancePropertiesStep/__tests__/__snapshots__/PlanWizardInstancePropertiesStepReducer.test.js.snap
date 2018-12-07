@@ -1,0 +1,116 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`querying best fit flavors is pending 1`] = `
+Object {
+  "bestFitFlavors": Array [],
+  "errorBestFitFlavor": null,
+  "errorTenantsWithAttributes": null,
+  "instancePropertiesRows": Array [],
+  "isFetchingBestFitFlavor": true,
+  "isFetchingTenantsWithAttributes": false,
+  "isRejectedBestFitFlavor": false,
+  "isRejectedTenantsWithAttributes": false,
+  "isSettingSecurityGroupsAndBestFitFlavors": true,
+  "recalculateBestFitFlavorAndSecurityGroup": true,
+  "tenantsWithAttributes": Array [],
+}
+`;
+
+exports[`querying best fit flavors is rejected 1`] = `
+Object {
+  "bestFitFlavors": Array [],
+  "errorBestFitFlavor": "error",
+  "errorTenantsWithAttributes": null,
+  "instancePropertiesRows": Array [],
+  "isFetchingBestFitFlavor": false,
+  "isFetchingTenantsWithAttributes": false,
+  "isRejectedBestFitFlavor": true,
+  "isRejectedTenantsWithAttributes": false,
+  "isSettingSecurityGroupsAndBestFitFlavors": true,
+  "recalculateBestFitFlavorAndSecurityGroup": true,
+  "tenantsWithAttributes": Array [],
+}
+`;
+
+exports[`querying best fit flavors is successful 1`] = `
+Object {
+  "bestFitFlavors": Array [
+    Object {
+      "all_fit": Array [
+        "flavors/42000000000005",
+        "flavors/42000000000006",
+        "flavors/42000000000002",
+        "flavors/42000000000004",
+      ],
+      "best_fit": "flavors/42000000000005",
+      "source_href_slug": "vms/42000000000017",
+    },
+    Object {
+      "all_fit": Array [
+        "flavors/42000000000002",
+        "flavors/42000000000004",
+      ],
+      "best_fit": "flavors/42000000000002",
+      "source_href_slug": "vms/42000000000006",
+    },
+  ],
+  "errorBestFitFlavor": null,
+  "errorTenantsWithAttributes": null,
+  "instancePropertiesRows": Array [],
+  "isFetchingBestFitFlavor": false,
+  "isFetchingTenantsWithAttributes": false,
+  "isRejectedBestFitFlavor": false,
+  "isRejectedTenantsWithAttributes": false,
+  "isSettingSecurityGroupsAndBestFitFlavors": true,
+  "recalculateBestFitFlavorAndSecurityGroup": true,
+  "tenantsWithAttributes": Array [],
+}
+`;
+
+exports[`querying tenants with attributes is pending 1`] = `
+Object {
+  "bestFitFlavors": Array [],
+  "errorBestFitFlavor": null,
+  "errorTenantsWithAttributes": null,
+  "instancePropertiesRows": Array [],
+  "isFetchingBestFitFlavor": false,
+  "isFetchingTenantsWithAttributes": true,
+  "isRejectedBestFitFlavor": false,
+  "isRejectedTenantsWithAttributes": false,
+  "isSettingSecurityGroupsAndBestFitFlavors": true,
+  "recalculateBestFitFlavorAndSecurityGroup": true,
+  "tenantsWithAttributes": Array [],
+}
+`;
+
+exports[`querying tenants with attributes is rejected 1`] = `
+Object {
+  "bestFitFlavors": Array [],
+  "errorBestFitFlavor": null,
+  "errorTenantsWithAttributes": "error",
+  "instancePropertiesRows": Array [],
+  "isFetchingBestFitFlavor": false,
+  "isFetchingTenantsWithAttributes": false,
+  "isRejectedBestFitFlavor": false,
+  "isRejectedTenantsWithAttributes": true,
+  "isSettingSecurityGroupsAndBestFitFlavors": true,
+  "recalculateBestFitFlavorAndSecurityGroup": true,
+  "tenantsWithAttributes": Array [],
+}
+`;
+
+exports[`sets default state 1`] = `
+Object {
+  "bestFitFlavors": Array [],
+  "errorBestFitFlavor": null,
+  "errorTenantsWithAttributes": null,
+  "instancePropertiesRows": Array [],
+  "isFetchingBestFitFlavor": false,
+  "isFetchingTenantsWithAttributes": false,
+  "isRejectedBestFitFlavor": false,
+  "isRejectedTenantsWithAttributes": false,
+  "isSettingSecurityGroupsAndBestFitFlavors": true,
+  "recalculateBestFitFlavorAndSecurityGroup": true,
+  "tenantsWithAttributes": Array [],
+}
+`;

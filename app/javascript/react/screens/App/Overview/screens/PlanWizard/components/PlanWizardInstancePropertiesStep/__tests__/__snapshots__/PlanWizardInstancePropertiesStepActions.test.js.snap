@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PlanWizard instance properties step actions should dispatch the correct action on instancePropertiesRowsAction 1`] = `
+Array [
+  Object {
+    "payload": Array [
+      Object {
+        "mock": "row1",
+      },
+      Object {
+        "mock": "row2",
+      },
+    ],
+    "type": "SET_V2V_INSTANCE_PROPERTIES_ROWS",
+  },
+]
+`;
