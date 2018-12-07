@@ -46,6 +46,7 @@ export class Settings extends React.Component {
                   name="max_concurrent_tasks_per_host"
                   component={NumberInput}
                   normalize={NumberInput.normalizeStringToInt}
+                  min={1}
                 />
               </div>
             </Form.FormGroup>
