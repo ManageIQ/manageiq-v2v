@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`createMigrationPlans with a RHV target and playbooks 1`] = `
+Object {
+  "config_info": Object {
+    "actions": Array [
+      Object {
+        "osp_flavor_id": undefined,
+        "osp_security_group_id": undefined,
+        "post_service": false,
+        "pre_service": true,
+        "vm_id": "28",
+      },
+      Object {
+        "osp_flavor_id": undefined,
+        "osp_security_group_id": undefined,
+        "post_service": true,
+        "pre_service": false,
+        "vm_id": "36",
+      },
+    ],
+    "post_service_id": "2",
+    "pre_service_id": "1",
+    "transformation_mapping_id": "1",
+  },
+  "description": "",
+  "name": "test RHV w/ playbooks",
+  "prov_type": "generic_transformation_plan",
+}
+`;
+
+exports[`createMigrationPlans with an OSP target 1`] = `
+Object {
+  "config_info": Object {
+    "actions": Array [
+      Object {
+        "osp_flavor_id": "42000000000004",
+        "osp_security_group_id": "42000000000016",
+        "post_service": false,
+        "pre_service": false,
+        "vm_id": "42000000000017",
+      },
+      Object {
+        "osp_flavor_id": "42000000000002",
+        "osp_security_group_id": "42000000000022",
+        "post_service": false,
+        "pre_service": false,
+        "vm_id": "42000000000006",
+      },
+    ],
+    "post_service_id": "",
+    "pre_service_id": "",
+    "transformation_mapping_id": "42000000000002",
+  },
+  "description": "",
+  "name": "test OSP plan",
+  "prov_type": "generic_transformation_plan",
+}
+`;
