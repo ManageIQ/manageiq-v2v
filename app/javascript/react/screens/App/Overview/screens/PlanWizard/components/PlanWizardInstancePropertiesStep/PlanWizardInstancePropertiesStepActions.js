@@ -50,7 +50,7 @@ export const _bestFitFlavorActionCreator = (url, flavor_mappings, editingPlan) =
     action: 'vm_flavor_fit',
     mappings: flavor_mappings
   };
-  dispatch({
+  return dispatch({
     type: QUERY_V2V_OSP_BEST_FIT_FLAVOR,
     payload: new Promise((resolve, reject) => {
       API.post(url, postBody)

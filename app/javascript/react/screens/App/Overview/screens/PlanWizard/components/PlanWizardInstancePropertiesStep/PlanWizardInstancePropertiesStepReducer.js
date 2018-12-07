@@ -10,7 +10,7 @@ import {
 
 import { stepIDs } from '../../PlanWizardConstants';
 
-const initialState = Immutable({
+export const initialState = Immutable({
   tenantsWithAttributes: [],
   isFetchingTenantsWithAttributes: false,
   isRejectedTenantsWithAttributes: false,
