@@ -1,0 +1,82 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`fetchPublicCloudNetworksAction dispatches PENDING and FULFILLED actions and sets the clusterId and providerName 1`] = `
+Array [
+  Object {
+    "type": "FETCH_V2V_PUBLIC_CLOUD_NETWORKS_PENDING",
+  },
+  Object {
+    "payload": Array [
+      Object {
+        "clusterId": "42000000000003",
+        "providerName": "Brilliant OpenStack",
+      },
+    ],
+    "type": "FETCH_V2V_PUBLIC_CLOUD_NETWORKS_FULFILLED",
+  },
+]
+`;
+
+exports[`fetchPublicCloudNetworksAction dispatches PENDING and REJECTED actions 1`] = `
+Array [
+  Object {
+    "type": "FETCH_V2V_PUBLIC_CLOUD_NETWORKS_PENDING",
+  },
+  Object {
+    "error": true,
+    "payload": [Error: <mocked error>],
+    "type": "FETCH_V2V_PUBLIC_CLOUD_NETWORKS_REJECTED",
+  },
+]
+`;
+
+exports[`fetchTargetNetworksAction dispatches PENDING and REJECTED actions 1`] = `
+Array [
+  Object {
+    "type": "FETCH_V2V_TARGET_NETWORKS_PENDING",
+  },
+  Object {
+    "error": true,
+    "payload": [Error: <mocked error>],
+    "type": "FETCH_V2V_TARGET_NETWORKS_REJECTED",
+  },
+]
+`;
+
+exports[`fetchTargetNetworksAction if the target provider is OSP, dispatches PENDING and FULFILLED actions and sets the clusterId and providerName 1`] = `
+Array [
+  Object {
+    "type": "FETCH_V2V_TARGET_NETWORKS_PENDING",
+  },
+  Object {
+    "payload": Object {
+      "targetNetworks": Array [
+        Object {
+          "clusterId": "42000000000003",
+          "providerName": "some provider",
+        },
+      ],
+    },
+    "type": "FETCH_V2V_TARGET_NETWORKS_FULFILLED",
+  },
+]
+`;
+
+exports[`fetchTargetNetworksAction if the target provider is RHV, dispatches PENDING and FULFILLED actions and sets the clusterId and providerName 1`] = `
+Array [
+  Object {
+    "type": "FETCH_V2V_TARGET_NETWORKS_PENDING",
+  },
+  Object {
+    "payload": Object {
+      "targetNetworks": Array [
+        Object {
+          "clusterId": "1",
+          "providerName": "some provider",
+        },
+      ],
+    },
+    "type": "FETCH_V2V_TARGET_NETWORKS_FULFILLED",
+  },
+]
+`;

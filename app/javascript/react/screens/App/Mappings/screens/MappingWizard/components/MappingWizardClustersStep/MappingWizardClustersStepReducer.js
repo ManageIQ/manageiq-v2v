@@ -8,7 +8,7 @@ import {
 import { V2V_MAPPING_WIZARD_EXITED } from '../../../../screens/MappingWizard/MappingWizardConstants';
 import { getHostsByClusterID } from './helpers';
 
-const initialState = Immutable({
+export const initialState = Immutable({
   sourceClusters: [],
   isFetchingSourceClusters: false,
   isRejectedSourceClusters: false,

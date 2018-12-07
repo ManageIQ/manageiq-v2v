@@ -135,6 +135,95 @@ export const targetClusters = Immutable({
   ]
 });
 
+export const cloudTenants = Immutable({
+  resources: [
+    {
+      href: 'http://0.0.0.0:8080/api/cloud_tenants/42000000000003',
+      id: '42000000000003',
+      name: 'HR Intranet',
+      description: '',
+      enabled: true,
+      ems_ref: '39f6ca6e7cdd40278d67394d8144c2e7',
+      ems_id: '42000000000004',
+      created_at: '2018-11-06T04:05:55Z',
+      updated_at: '2018-11-06T04:05:55Z',
+      type: 'ManageIQ::Providers::Openstack::CloudManager::CloudTenant',
+      parent_id: null,
+      ext_management_system: {
+        id: '42000000000004',
+        name: 'Brilliant OpenStack',
+        created_on: '2018-11-06T02:03:55Z',
+        updated_on: '2018-11-09T21:33:18Z',
+        guid: 'e8dda556-c667-42fa-80ea-5b5d4bda02de',
+        zone_id: '42000000000001',
+        type: 'ManageIQ::Providers::Openstack::CloudManager',
+        api_version: 'v3',
+        uid_ems: 'default',
+        host_default_vnc_port_start: null,
+        host_default_vnc_port_end: null,
+        provider_region: 'regionOne',
+        last_refresh_error: null,
+        last_refresh_date: '2018-11-09T21:33:18Z',
+        provider_id: null,
+        realm: null,
+        tenant_id: '42000000000001',
+        project: null,
+        parent_ems_id: null,
+        subscription: null,
+        last_metrics_error: null,
+        last_metrics_update_date: null,
+        last_metrics_success_date: null,
+        tenant_mapping_enabled: false,
+        enabled: true,
+        options: {},
+        zone_before_pause_id: null
+      }
+    },
+    {
+      href: 'http://0.0.0.0:8080/api/cloud_tenants/42000000000002',
+      id: '42000000000002',
+      name: 'admin',
+      description: 'admin tenant',
+      enabled: true,
+      ems_ref: '641a64a1a42d429f9606b345f328d306',
+      ems_id: '42000000000004',
+      created_at: '2018-11-06T02:04:54Z',
+      updated_at: '2018-11-06T02:04:54Z',
+      type: 'ManageIQ::Providers::Openstack::CloudManager::CloudTenant',
+      parent_id: null,
+      ext_management_system: {
+        id: '42000000000004',
+        name: 'Brilliant OpenStack',
+        created_on: '2018-11-06T02:03:55Z',
+        updated_on: '2018-11-09T21:33:18Z',
+        guid: 'e8dda556-c667-42fa-80ea-5b5d4bda02de',
+        zone_id: '42000000000001',
+        type: 'ManageIQ::Providers::Openstack::CloudManager',
+        api_version: 'v3',
+        uid_ems: 'default',
+        host_default_vnc_port_start: null,
+        host_default_vnc_port_end: null,
+        provider_region: 'regionOne',
+        last_refresh_error: null,
+        last_refresh_date: '2018-11-09T21:33:18Z',
+        provider_id: null,
+        realm: null,
+        tenant_id: '42000000000001',
+        project: null,
+        parent_ems_id: null,
+        subscription: null,
+        last_metrics_error: null,
+        last_metrics_update_date: null,
+        last_metrics_success_date: null,
+        tenant_mapping_enabled: false,
+        enabled: true,
+        options: {},
+        zone_before_pause_id: null
+      }
+    }
+  ]
+});
+
 export const requestSourceClustersData = {
   method: 'GET',
   fetchSourceClustersUrl: '/api/dummyProviders',

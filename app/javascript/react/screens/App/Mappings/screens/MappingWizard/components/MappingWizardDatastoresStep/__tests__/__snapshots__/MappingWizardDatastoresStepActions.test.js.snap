@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`fetchTargetDatastoresAction dispatches PENDING and REJECTED actions 1`] = `
+Array [
+  Object {
+    "type": "FETCH_V2V_TARGET_DATASTORES_PENDING",
+  },
+  Object {
+    "error": true,
+    "payload": [Error: <mocked error>],
+    "type": "FETCH_V2V_TARGET_DATASTORES_REJECTED",
+  },
+]
+`;
+
+exports[`fetchTargetDatastoresAction if the target provider is OSP dispatches PENDING and FULFILLED actions and adds the provider name 1`] = `
+Array [
+  Object {
+    "type": "FETCH_V2V_TARGET_DATASTORES_PENDING",
+  },
+  Object {
+    "payload": Object {
+      "targetDatastores": Array [
+        Object {
+          "providerName": "some provider",
+        },
+      ],
+    },
+    "type": "FETCH_V2V_TARGET_DATASTORES_FULFILLED",
+  },
+]
+`;
+
+exports[`fetchTargetDatastoresAction if the target provider is RHV dispatches PENDING and FULFILLED actions and adds the provider name 1`] = `
+Array [
+  Object {
+    "type": "FETCH_V2V_TARGET_DATASTORES_PENDING",
+  },
+  Object {
+    "payload": Object {
+      "targetDatastores": Array [
+        Object {
+          "providerName": "some provider",
+        },
+      ],
+    },
+    "type": "FETCH_V2V_TARGET_DATASTORES_FULFILLED",
+  },
+]
+`;

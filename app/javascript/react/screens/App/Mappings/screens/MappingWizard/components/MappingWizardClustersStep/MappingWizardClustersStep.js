@@ -5,6 +5,7 @@ import { Field, reduxForm } from 'redux-form';
 import { length } from 'redux-form-validators';
 
 import ClustersStepForm from './components/ClustersStepForm/ClustersStepForm';
+import { FETCH_TARGET_COMPUTE_URLS } from './MappingWizardClustersStepConstants';
 
 class MappingWizardClustersStep extends React.Component {
   componentDidMount() {
@@ -140,13 +141,7 @@ MappingWizardClustersStep.defaultProps = {
     '/api/clusters?expand=resources' +
     '&attributes=ext_management_system.emstype,v_parent_datacenter,ext_management_system.name' +
     '&filter[]=ext_management_system.emstype=vmwarews',
-  fetchTargetComputeUrls: {
-    rhevm:
-      '/api/clusters?expand=resources' +
-      '&attributes=ext_management_system.emstype,v_parent_datacenter,ext_management_system.name,hosts' +
-      '&filter[]=ext_management_system.emstype=rhevm',
-    openstack: '/api/cloud_tenants?expand=resources&attributes=ext_management_system.name,ext_management_system.id'
-  }
+  fetchTargetComputeUrls: FETCH_TARGET_COMPUTE_URLS
 };
 
 export default reduxForm({
