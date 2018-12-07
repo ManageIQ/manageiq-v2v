@@ -69,6 +69,7 @@ exports[`Settings component renders the settings page 1`] = `
             <Field
               component={[Function]}
               id="max_concurrent_tasks_per_host"
+              min={1}
               name="max_concurrent_tasks_per_host"
               normalize={[Function]}
             />
