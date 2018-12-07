@@ -380,6 +380,60 @@ export const transformationPlans = Immutable({
       configVmLength: 2,
       scheduleTime: null,
       status: 'Ok'
+    },
+    // PLAN H-0 DENIED
+    // |-- Request 1: denied
+    {
+      href: 'http://localhost:3000/api/service_templates/80',
+      name: 'Migration Plan H-0',
+      options: {
+        config_info: {
+          transformation_mapping_id: '1',
+          actions: [{ vm_id: '1' }, { vm_id: '3' }]
+        }
+      },
+      created_on: '2018-05-01T12:13:50Z',
+      id: '80',
+      miq_requests: [
+        {
+          href: 'http://localhost:3000/api/service_requests/8000',
+          id: '8000',
+          description: 'Migration Plan H-0',
+          approval_state: 'denied',
+          created_on: '2018-04-06T12:31:30Z',
+          updated_on: '2018-04-06T12:31:30Z',
+          fulfilled_on: '2018-04-06T12:31:30Z',
+          requester_id: '1',
+          requester_name: 'Administrator',
+          request_type: 'transformation_plan',
+          request_state: 'active',
+          message: 'VM Transformations <SOMETHING>',
+          status: 'Ok',
+          options: {
+            dialog: null,
+            workflow_settings: {
+              resource_action_id: '2507'
+            },
+            initiator: null,
+            src_id: '60',
+            cart_state: 'ordered',
+            requester_group: 'EvmGroup-super_administrator',
+            delivered_on: '2018-04-06T12:49:30Z'
+          },
+          userid: 'admin',
+          source_id: '80',
+          source_type: 'ServiceTemplate',
+          destination_id: null,
+          destination_type: null,
+          tenant_id: '1',
+          service_order_id: '91',
+          process: true,
+          cancelation_status: null
+        }
+      ],
+      configVmLength: 2,
+      scheduleTime: null,
+      status: 'Ok'
     }
   ]
 });
