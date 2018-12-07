@@ -1,6 +1,4 @@
-import configureMockStore from 'redux-mock-store';
-import thunk from 'redux-thunk';
-import promiseMiddleware from 'redux-promise-middleware';
+import { mockStore } from '../../../../../../common/testReduxHelpers';
 import * as actions from '../MappingWizardClustersStepActions';
 import {
   initialState,
@@ -9,8 +7,6 @@ import {
 } from '../mappingWizardClustersStep.fixtures';
 import { mockRequest, mockReset } from '../../../../../../../../../common/mockRequests';
 
-const middlewares = [thunk, promiseMiddleware()];
-const mockStore = configureMockStore(middlewares);
 const store = mockStore(initialState);
 
 afterEach(() => {

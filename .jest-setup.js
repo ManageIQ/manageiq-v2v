@@ -17,3 +17,8 @@ global.API.put = jest.fn(url => APImock.respond('PUT', url));
 global.API.post = jest.fn(url => APImock.respond('POST', url));
 global.API.patch = jest.fn(url => APImock.respond('PATCH', url));
 global.API.delete = jest.fn(url => APImock.respond('DELETE', url));
+
+global.$ = jest.fn(() => ({
+  on: jest.fn(),
+  selectpicker: jest.fn()
+}));

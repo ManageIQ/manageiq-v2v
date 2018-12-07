@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`createTransformationMappings creates the POST body 1`] = `
+Object {
+  "description": "some description",
+  "name": "name of mapping",
+  "state": "draft",
+  "transformation_mapping_items": Array [
+    Object {
+      "destination": "/api/clusters/10000000000006",
+      "source": "/api/clusters/10000000000001",
+    },
+    Object {
+      "destination": "/api/data_stores/13",
+      "source": "/api/data_stores/1",
+    },
+    Object {
+      "destination": "/api/lans/10000000000019",
+      "source": "/api/lans/10000000000007",
+    },
+  ],
+}
+`;
