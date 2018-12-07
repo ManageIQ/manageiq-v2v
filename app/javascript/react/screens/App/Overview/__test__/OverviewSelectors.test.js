@@ -22,10 +22,10 @@ describe('notStartedTransformationPlansFilter', () => {
 
 describe('activeTransformationPlansFilter', () => {
   test('returns all active transformation plans', () => {
-    const [, activePlanOne, activePlanTwo, , , activePlanThree, activePlanFour] = plans;
+    const [, activePlanOne, activePlanTwo, , , activePlanThree, activePlanFour, activePlan5] = plans;
     const result = activeTransformationPlansFilter(plans);
 
-    expect(result).toEqual([activePlanOne, activePlanTwo, activePlanThree, activePlanFour]);
+    expect(result).toEqual([activePlanOne, activePlanTwo, activePlanThree, activePlanFour, activePlan5]);
   });
 });
 
