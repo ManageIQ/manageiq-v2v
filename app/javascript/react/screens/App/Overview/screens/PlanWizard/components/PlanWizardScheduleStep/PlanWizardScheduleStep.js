@@ -4,7 +4,7 @@ import { Field, reduxForm } from 'redux-form';
 import { Form, Icon } from 'patternfly-react';
 import { FormField } from '../../../../../common/forms/FormField';
 
-const PlanWizardScheduleStep = ({ targetProvider, migration_plan_choice_radio }) => (
+export const PlanWizardScheduleStep = ({ targetProvider, migration_plan_choice_radio }) => (
   <Form className="form-horizontal">
     <Field
       name="migration_plan_choice_radio"
