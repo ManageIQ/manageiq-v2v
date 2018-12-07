@@ -27,7 +27,7 @@ describe('target provider is OSP', () => {
     hideAlertAction = jest.fn();
   });
 
-  test('cloud tenants are fetched', () => {
+  test('cloud tenants are fetched and a conversion host alert is triggered', () => {
     fetchTargetClustersAction.mockReturnValue(Promise.resolve());
 
     const wrapper = mount(
@@ -39,11 +39,35 @@ describe('target provider is OSP', () => {
           showAlertAction={showAlertAction}
           sourceClusters={[]}
           targetProvider={targetProvider}
+          ospConversionHosts={[]}
         />
       </Provider>
     );
 
     expect(fetchTargetClustersAction).toHaveBeenCalledWith(FETCH_TARGET_COMPUTE_URLS[targetProvider]);
+    expect(showAlertAction).toHaveBeenCalled();
+
+    wrapper.unmount();
+  });
+
+  test('no alert is triggered when there are conversion hosts', () => {
+    fetchTargetClustersAction.mockReturnValue(Promise.resolve());
+
+    const wrapper = mount(
+      <Provider store={store}>
+        <MappingWizardClustersStep
+          fetchTargetClustersAction={fetchTargetClustersAction}
+          fetchTargetComputeUrls={FETCH_TARGET_COMPUTE_URLS}
+          hideAlertAction={hideAlertAction}
+          showAlertAction={showAlertAction}
+          sourceClusters={[]}
+          targetProvider={targetProvider}
+          ospConversionHosts={[{ mock: 'data' }]}
+        />
+      </Provider>
+    );
+
+    expect(showAlertAction).toHaveBeenCalledTimes(0);
 
     wrapper.unmount();
   });
