@@ -13,7 +13,7 @@ class MappingWizardClustersStep extends React.Component {
     this.fetchClusters();
     if (targetProvider === 'openstack' && ospConversionHosts.length === 0) {
       showAlertAction(
-        __('At least one host must be enabled as a conversion host. You can continue to create an infrastructure mapping, but you must configure a conversion host before migration execution.'), // prettier-ignore
+        __('No OpenStack conversion hosts are configured. You can continue to create an infrastructure mapping, but you must configure a conversion host before migration execution.'), // prettier-ignore
         'warning'
       );
     }
