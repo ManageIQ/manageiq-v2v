@@ -6,11 +6,13 @@ import PropTypes from 'prop-types';
 import Routes from './config/Routes';
 import NotificationList from './screens/App/common/NotificationList';
 import createReducers from '../redux/reducers';
+import { updateVerticalMenu } from '../common/menu';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     ManageIQ.redux.addReducer(createReducers());
+    updateVerticalMenu(ManageIQ.redux.store.getState().router.location.pathname);
   }
 
   render() {
@@ -28,6 +30,16 @@ class App extends React.Component {
         </React.Fragment>
       </ConnectedRouter>
     );
+  }
+
+  componentDidMount() {
+    this.unlisten = ManageIQ.redux.history.listen(location => {
+      updateVerticalMenu(location.pathname);
+    });
+  }
+
+  componentWillUnmount() {
+    this.unlisten();
   }
 }
 
