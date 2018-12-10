@@ -137,7 +137,7 @@ class ClustersStepForm extends React.Component {
     const targetCounter = <DualPaneMapperCount selectedItems={selectedTargetCluster ? 1 : 0} totalItems={1} />;
 
     const targetConversionHostWarning =
-      __('At least one host in the target cluster must be enabled as a conversion host. You can continue to create an infrastructure mapping that includes the target cluster, but conversion host enablement must be completed prior to migration execution.'); // prettier-ignore
+      __('You must enable at least one conversion host in the cluster. You can continue to create an infrastructure mapping that includes the target cluster, but you must enable a conversion host before running the migration plan.'); // prettier-ignore
 
     return (
       <div className="dual-pane-mapper-form">
