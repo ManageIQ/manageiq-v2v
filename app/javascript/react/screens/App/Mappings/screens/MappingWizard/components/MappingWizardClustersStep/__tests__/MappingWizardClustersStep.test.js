@@ -8,7 +8,7 @@ import { reducers } from '../index';
 import { initialState } from '../MappingWizardClustersStepReducer';
 import MappingWizardClustersStep from '../MappingWizardClustersStep';
 import { FETCH_TARGET_COMPUTE_URLS } from '../MappingWizardClustersStepConstants';
-import { V2V_TARGET_PROVIDERS } from '../../../MappingWizardConstants';
+import { OPENSTACK } from '../../../MappingWizardConstants';
 
 const store = generateStore(
   { ...reducers, form: formReducer },
@@ -16,58 +16,59 @@ const store = generateStore(
 );
 
 describe('target provider is OSP', () => {
-  const targetProvider = V2V_TARGET_PROVIDERS[1].id;
-
-  let fetchTargetClustersAction;
-  let showAlertAction;
-  let hideAlertAction;
-  beforeEach(() => {
-    fetchTargetClustersAction = jest.fn();
-    showAlertAction = jest.fn();
-    hideAlertAction = jest.fn();
+  const getBaseProps = () => ({
+    fetchTargetClustersAction: jest
+      .fn()
+      .mockReturnValue(Promise.resolve({ value: { data: { resources: [{ mock: 'data' }] } } })),
+    fetchTargetComputeUrls: FETCH_TARGET_COMPUTE_URLS,
+    hideAlertAction: jest.fn(),
+    showAlertAction: jest.fn(),
+    sourceClusters: [],
+    targetProvider: OPENSTACK,
+    queryProvidersAction: jest.fn()
   });
 
   test('cloud tenants are fetched and a conversion host alert is triggered', () => {
-    fetchTargetClustersAction.mockReturnValue(Promise.resolve());
-
+    const baseProps = getBaseProps();
     const wrapper = mount(
       <Provider store={store}>
-        <MappingWizardClustersStep
-          fetchTargetClustersAction={fetchTargetClustersAction}
-          fetchTargetComputeUrls={FETCH_TARGET_COMPUTE_URLS}
-          hideAlertAction={hideAlertAction}
-          showAlertAction={showAlertAction}
-          sourceClusters={[]}
-          targetProvider={targetProvider}
-          ospConversionHosts={[]}
-        />
+        <MappingWizardClustersStep {...baseProps} ospConversionHosts={[]} />
       </Provider>
     );
 
-    expect(fetchTargetClustersAction).toHaveBeenCalledWith(FETCH_TARGET_COMPUTE_URLS[targetProvider]);
-    expect(showAlertAction).toHaveBeenCalled();
+    expect(baseProps.fetchTargetClustersAction).toHaveBeenCalledWith(
+      FETCH_TARGET_COMPUTE_URLS[baseProps.targetProvider]
+    );
+    expect(baseProps.showAlertAction).toHaveBeenCalled();
 
     wrapper.unmount();
   });
 
   test('no alert is triggered when there are conversion hosts', () => {
-    fetchTargetClustersAction.mockReturnValue(Promise.resolve());
-
+    const baseProps = getBaseProps();
     const wrapper = mount(
       <Provider store={store}>
-        <MappingWizardClustersStep
-          fetchTargetClustersAction={fetchTargetClustersAction}
-          fetchTargetComputeUrls={FETCH_TARGET_COMPUTE_URLS}
-          hideAlertAction={hideAlertAction}
-          showAlertAction={showAlertAction}
-          sourceClusters={[]}
-          targetProvider={targetProvider}
-          ospConversionHosts={[{ mock: 'data' }]}
-        />
+        <MappingWizardClustersStep {...baseProps} ospConversionHosts={[{ mock: 'data' }]} />
       </Provider>
     );
 
-    expect(showAlertAction).toHaveBeenCalledTimes(0);
+    expect(baseProps.showAlertAction).toHaveBeenCalledTimes(0);
+
+    wrapper.unmount();
+  });
+
+  test('providers are queried', async () => {
+    const baseProps = getBaseProps();
+    const wrapper = mount(
+      <Provider store={store}>
+        <MappingWizardClustersStep {...baseProps} />
+      </Provider>
+    );
+
+    await expect(baseProps.fetchTargetClustersAction).toHaveBeenCalledWith(
+      FETCH_TARGET_COMPUTE_URLS[baseProps.targetProvider]
+    );
+    expect(baseProps.queryProvidersAction).toHaveBeenCalled();
 
     wrapper.unmount();
   });
