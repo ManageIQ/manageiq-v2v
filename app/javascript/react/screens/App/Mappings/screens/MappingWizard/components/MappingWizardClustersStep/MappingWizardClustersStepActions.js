@@ -3,7 +3,8 @@ import API from '../../../../../../../../common/API';
 import {
   FETCH_V2V_SOURCE_CLUSTERS,
   FETCH_V2V_TARGET_CLUSTERS,
-  QUERY_V2V_HOSTS
+  QUERY_V2V_HOSTS,
+  QUERY_V2V_PROVIDERS
 } from './MappingWizardClustersStepConstants';
 
 export { showAlertAction, hideAlertAction } from '../../MappingWizardActions';
@@ -48,4 +49,23 @@ const _getQueryHostsActionCreator = (url, hostIDsByClusterID) => dispatch => {
 export const queryHostsAction = (url, hostIDsByClusterID) => {
   const uri = new URI(url);
   return _getQueryHostsActionCreator(uri.toString(), hostIDsByClusterID);
+};
+
+// ****************************************************************************
+// QUERY_V2V_PROVIDERS
+// ****************************************************************************
+const _queryProvidersActionCreator = (url, providerIds) => dispatch =>
+  dispatch({
+    type: QUERY_V2V_PROVIDERS,
+    payload: API.post(url, {
+      action: 'query',
+      resources: providerIds.map(id => ({ id }))
+    })
+  });
+
+export const queryProvidersAction = (url, providerIds) => {
+  const uri = new URI(url);
+  uri.addSearch({ attributes: 'authentications' });
+
+  return _queryProvidersActionCreator(uri.toString(), providerIds);
 };
