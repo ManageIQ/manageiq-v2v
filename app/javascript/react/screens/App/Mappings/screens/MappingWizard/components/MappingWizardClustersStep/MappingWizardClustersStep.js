@@ -5,13 +5,15 @@ import { Field, reduxForm } from 'redux-form';
 import { length } from 'redux-form-validators';
 
 import ClustersStepForm from './components/ClustersStepForm/ClustersStepForm';
-import { FETCH_TARGET_COMPUTE_URLS } from './MappingWizardClustersStepConstants';
+import { FETCH_TARGET_COMPUTE_URLS, QUERY_PROVIDERS_URL } from './MappingWizardClustersStepConstants';
+import { getProviderIds } from './helpers';
+import { OPENSTACK, RHV } from '../../MappingWizardConstants';
 
 class MappingWizardClustersStep extends React.Component {
   componentDidMount() {
     const { targetProvider, ospConversionHosts, showAlertAction } = this.props;
     this.fetchClusters();
-    if (targetProvider === 'openstack' && ospConversionHosts.length === 0) {
+    if (targetProvider === OPENSTACK && ospConversionHosts.length === 0) {
       showAlertAction(
         __('No OpenStack conversion hosts are configured. You can continue to create an infrastructure mapping, but you must configure a conversion host before migration execution.'), // prettier-ignore
         'warning'
@@ -31,17 +33,16 @@ class MappingWizardClustersStep extends React.Component {
       fetchTargetClustersAction,
       targetProvider,
       queryHostsUrl,
-      queryHostsAction
+      queryHostsAction,
+      queryProvidersAction,
+      queryProvidersUrl
     } = this.props;
 
     fetchSourceClustersAction(fetchSourceClustersUrl);
     fetchTargetClustersAction(fetchTargetComputeUrls[targetProvider]).then(result => {
-      if (
-        targetProvider !== 'openstack' &&
-        result.value &&
-        result.value.data &&
-        result.value.data.resources.length > 0
-      ) {
+      const safeToProceed = result.value && result.value.data && result.value.data.resources.length > 0;
+
+      if (targetProvider === RHV && safeToProceed) {
         const hostIDsByClusterID = result.value.data.resources.reduce(
           (newObject, cluster) => ({
             ...newObject,
@@ -50,6 +51,8 @@ class MappingWizardClustersStep extends React.Component {
           {}
         );
         queryHostsAction(queryHostsUrl, hostIDsByClusterID);
+      } else if (targetProvider === OPENSTACK && safeToProceed) {
+        queryProvidersAction(queryProvidersUrl, getProviderIds(result.value.data.resources));
       }
     });
   };
@@ -64,8 +67,9 @@ class MappingWizardClustersStep extends React.Component {
       isRejectedTargetClusters,
       targetProvider,
       isFetchingHostsQuery,
-      isRejectedHostsQuery,
-      hostsByClusterID
+      hostsByClusterID,
+      providers,
+      isQueryingProviders
     } = this.props;
 
     if (isRejectedSourceClusters || isRejectedTargetClusters) {
@@ -95,8 +99,9 @@ class MappingWizardClustersStep extends React.Component {
         isFetchingTargetClusters={isFetchingTargetClusters}
         targetProvider={targetProvider}
         isFetchingHostsQuery={isFetchingHostsQuery}
-        isRejectedHostsQuery={isRejectedHostsQuery}
         hostsByClusterID={hostsByClusterID}
+        providers={providers}
+        isQueryingProviders={isQueryingProviders}
       />
     );
   }
@@ -119,9 +124,12 @@ MappingWizardClustersStep.propTypes = {
   isRejectedTargetClusters: PropTypes.bool,
   targetProvider: PropTypes.string,
   isFetchingHostsQuery: PropTypes.bool,
-  isRejectedHostsQuery: PropTypes.bool,
   hostsByClusterID: PropTypes.object,
-  ospConversionHosts: PropTypes.array
+  ospConversionHosts: PropTypes.array,
+  providers: PropTypes.array,
+  isQueryingProviders: PropTypes.bool,
+  queryProvidersAction: PropTypes.func,
+  queryProvidersUrl: PropTypes.string
 };
 MappingWizardClustersStep.defaultProps = {
   fetchSourceClustersAction: noop,
@@ -134,14 +142,14 @@ MappingWizardClustersStep.defaultProps = {
   isRejectedTargetClusters: false,
   targetProvider: '',
   isFetchingHostsQuery: false,
-  isRejectedHostsQuery: false,
   hostsByClusterID: {},
   ospConversionHosts: [],
   fetchSourceClustersUrl:
     '/api/clusters?expand=resources' +
     '&attributes=ext_management_system.emstype,v_parent_datacenter,ext_management_system.name' +
     '&filter[]=ext_management_system.emstype=vmwarews',
-  fetchTargetComputeUrls: FETCH_TARGET_COMPUTE_URLS
+  fetchTargetComputeUrls: FETCH_TARGET_COMPUTE_URLS,
+  queryProvidersUrl: QUERY_PROVIDERS_URL
 };
 
 export default reduxForm({

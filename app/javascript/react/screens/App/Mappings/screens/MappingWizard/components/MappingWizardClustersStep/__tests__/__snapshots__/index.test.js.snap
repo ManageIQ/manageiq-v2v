@@ -21,6 +21,7 @@ Object {
   "keepDirtyOnReinitialize": true,
   "ospConversionHosts": Array [],
   "queryHostsAction": [Function],
+  "queryProvidersAction": [Function],
   "showAlertAction": [Function],
   "sourceClusters": Array [],
   "targetClusters": Array [],

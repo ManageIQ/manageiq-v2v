@@ -1,15 +1,15 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
+import ClustersStepForm from '../ClustersStepForm';
 import { srcClusters, tgtClusters } from '../clustersStepForm.fixtures';
 import { targetClusterWithExtendedData, sourceClusterWithExtendedData } from '../helpers';
-
-import ClustersStepForm from '../ClustersStepForm';
+import { OPENSTACK } from '../../../../../MappingWizardConstants';
 
 let onChange;
-let props;
+let baseProps;
 beforeEach(() => {
-  props = { isFetchingSourceClusters: false, isFetchingTargetClusters: false };
+  baseProps = { isFetchingSourceClusters: false, isFetchingTargetClusters: false };
   onChange = jest.fn();
 });
 
@@ -20,7 +20,7 @@ describe('#addMapping', () => {
     const [targetClusterToMap] = tgtClusters;
     const wrapper = shallow(
       <ClustersStepForm
-        {...props}
+        {...baseProps}
         input={input}
         sourceClusters={[sourceClusterToMap]}
         targetClusters={[targetClusterToMap]}
@@ -63,7 +63,7 @@ describe('#addMapping', () => {
     };
     const wrapper = shallow(
       <ClustersStepForm
-        {...props}
+        {...baseProps}
         input={input}
         sourceClusters={[sourceClusterToMap, mappedSourceCluster]}
         targetClusters={[targetClusterToAddTo]}
@@ -89,5 +89,28 @@ describe('#addMapping', () => {
 
     expect(wrapper.state('selectedTargetCluster')).toBe(null);
     expect(wrapper.state('selectedSourceClusters')).toEqual([]);
+  });
+});
+
+describe('OSP RSA key pairs', () => {
+  const input = { value: [], onChange };
+  const props = {
+    ...baseProps,
+    sourceClusters: [],
+    targetClusters: [{ id: '1', name: 'target project', ems_id: '1', ext_management_system: { name: 'OSP' } }],
+    targetProvider: OPENSTACK
+  };
+  test('displays a warning icon if the provider does not have a RSA key', () => {
+    const providers = [{ name: 'OSP', id: '1', authentications: [] }];
+    const wrapper = shallow(<ClustersStepForm {...props} input={input} providers={providers} />);
+    const listItem = wrapper.find('DualPaneMapperListItem');
+    expect(listItem.prop('warningMessage')).toBeTruthy();
+  });
+
+  test('does not display a warning icon if the provider has a RSA key', () => {
+    const providers = [{ name: 'OSP', id: '1', authentications: [{ authtype: 'ssh_keypair' }] }];
+    const wrapper = shallow(<ClustersStepForm {...props} input={input} providers={providers} />);
+    const listItem = wrapper.find('DualPaneMapperListItem');
+    expect(listItem.prop('warningMessage')).toBeFalsy();
   });
 });
