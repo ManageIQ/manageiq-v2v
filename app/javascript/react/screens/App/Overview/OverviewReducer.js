@@ -63,7 +63,7 @@ export const initialState = Immutable({
   requestsWithTasksPreviouslyFetched: false,
   archivedTransformationPlans: [],
   isRejectedArchivedTransformationPlans: false,
-  isFetchingArchivedTransformationPlans: '',
+  isFetchingArchivedTransformationPlans: false,
   errorArchivedTransformationPlans: null,
   allArchivedPlanRequestsWithTasks: [],
   isRejectedAllArchivedPlanRequestsWithTasks: false,
@@ -146,7 +146,8 @@ export default (state = initialState, action) => {
         const insufficient = state
           .set('hasSufficientProviders', false)
           .set('isFetchingProviders', false)
-          .set('isRejectedProviders', false);
+          .set('isRejectedProviders', false)
+          .set('errorProviders', null);
         if (!action.payload.data || !action.payload.data.resources) {
           return insufficient;
         }
@@ -200,7 +201,7 @@ export default (state = initialState, action) => {
         .set('isFetchingTransformationPlans', false);
     case `${FETCH_V2V_ARCHIVED_TRANSFORMATION_PLANS}_PENDING`:
       return state
-        .set('isFetchingArchivedTransformationPlans', 'true')
+        .set('isFetchingArchivedTransformationPlans', true)
         .set('isRejectedArchivedTransformationPlans', false);
     case `${FETCH_V2V_ARCHIVED_TRANSFORMATION_PLANS}_FULFILLED`:
       validateOverviewPlans(action.payload.data.resources);
@@ -209,14 +210,14 @@ export default (state = initialState, action) => {
           'archivedTransformationPlans',
           planTransmutation(action.payload.data.resources, state.transformationMappings)
         )
-        .set('isFetchingArchivedTransformationPlans', '')
+        .set('isFetchingArchivedTransformationPlans', false)
         .set('isRejectedArchivedTransformationPlans', false)
         .set('errorArchivedTransformationPlans', null);
     case `${FETCH_V2V_ARCHIVED_TRANSFORMATION_PLANS}_REJECTED`:
       return state
         .set('errorArchivedTransformationPlans', action.payload)
         .set('isRejectedArchivedTransformationPlans', true)
-        .set('isFetchingArchivedTransformationPlans', '');
+        .set('isFetchingArchivedTransformationPlans', false);
     case `${FETCH_V2V_SERVICE_TEMPLATE_ANSIBLE_PLAYBOOKS}_PENDING`:
       return state.set('isFetchingServiceTemplatePlaybooks', true);
     case `${FETCH_V2V_SERVICE_TEMPLATE_ANSIBLE_PLAYBOOKS}_FULFILLED`:

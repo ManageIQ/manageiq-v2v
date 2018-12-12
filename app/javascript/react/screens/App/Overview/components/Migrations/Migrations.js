@@ -233,7 +233,7 @@ Migrations.propTypes = {
   archivedTransformationPlans: PropTypes.array,
   allArchivedPlanRequestsWithTasks: PropTypes.array,
   isFetchingTransformationPlans: PropTypes.bool,
-  isFetchingArchivedTransformationPlans: PropTypes.string,
+  isFetchingArchivedTransformationPlans: PropTypes.bool,
   isFetchingAllRequestsWithTasks: PropTypes.bool,
   archiveTransformationPlanAction: PropTypes.func,
   archiveTransformationPlanUrl: PropTypes.string,
