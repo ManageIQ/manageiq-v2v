@@ -10,7 +10,7 @@ import {
 } from '../../../OverviewConstants';
 
 describe('when the request is denied', () => {
-  const plan = transformationPlans.resources[7];
+  const plan = { ...transformationPlans.resources[7], transformation_mapping: { transformation_mapping_items: [] } };
   const [deniedRequest] = plan.miq_requests;
   const allRequestsWithTasks = [{ ...deniedRequest, miq_request_tasks: [] }];
   const baseProps = {
@@ -45,7 +45,7 @@ describe('when the request is denied', () => {
 });
 
 describe('if there are no conversion hosts available', () => {
-  const plan = transformationPlans.resources[5];
+  const plan = { ...transformationPlans.resources[5], transformation_mapping: { transformation_mapping_items: [] } };
   const [request] = plan.miq_requests;
   const allRequestsWithTasks = [{ ...request, miq_request_tasks: [{ conversion_host_id: null }] }];
   const baseProps = {

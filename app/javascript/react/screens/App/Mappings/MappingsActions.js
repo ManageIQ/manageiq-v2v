@@ -62,8 +62,11 @@ const _getCloudTenantsActionCreator = url => dispatch =>
     payload: API.get(url)
   });
 
-export const fetchCloudTenantsAction = url => {
+export const fetchCloudTenantsAction = (url, options = {}) => {
   const uri = new URI(url);
+  if (options.addSearch) {
+    uri.addSearch(options.addSearch);
+  }
   return _getCloudTenantsActionCreator(uri.toString());
 };
 

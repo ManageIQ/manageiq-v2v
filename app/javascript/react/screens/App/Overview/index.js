@@ -10,19 +10,27 @@ import {
   activeTransformationPlansFilter,
   finishedTransformationPlansFilter,
   requestsProcessingCancellationFilter,
-  combineRequestsProcessingCancellation
+  combineRequestsProcessingCancellation,
+  attachTargetProviderToOspPlans
 } from './OverviewSelectors';
 
 export const reducers = { overview: reducer, form: {} };
 
-const mapStateToProps = ({ overview, overview: { transformationPlans, allRequestsWithTasks, planId } }, ownProps) => {
+const mapStateToProps = (
+  { overview, overview: { transformationPlans, allRequestsWithTasks, planId, providers, cloudTenants } },
+  ownProps
+) => {
   const { requestsProcessingCancellation, ...overviewRest } = overview;
 
   return {
     ...overviewRest,
     ...ownProps.data,
     notStartedTransformationPlans: notStartedTransformationPlansFilter(transformationPlans),
-    activeTransformationPlans: activeTransformationPlansFilter(transformationPlans, planId),
+    activeTransformationPlans: attachTargetProviderToOspPlans(
+      activeTransformationPlansFilter(transformationPlans, planId),
+      providers,
+      cloudTenants
+    ),
     finishedTransformationPlans: finishedTransformationPlansFilter(transformationPlans),
     requestsProcessingCancellation: combineRequestsProcessingCancellation(
       requestsProcessingCancellation,

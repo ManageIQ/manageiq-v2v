@@ -5,7 +5,8 @@ export const providersSchema = array()
     object().shape({
       href: string().required(),
       type: string().required(),
-      id: string().required()
+      id: string().required(),
+      authentications: array().nullable()
     })
   )
   .nullable();

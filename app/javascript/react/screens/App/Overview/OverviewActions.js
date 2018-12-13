@@ -1,8 +1,8 @@
 import URI from 'urijs';
+
 import API from '../../../../common/API';
 import { V2V_NOTIFICATION_ADD } from '../common/NotificationList/NotificationConstants';
 import { formatDateTime } from '../../../../components/dates/MomentDate';
-
 import {
   ARCHIVE_TRANSFORMATION_PLAN,
   DELETE_TRANSFORMATION_PLAN,
@@ -28,8 +28,9 @@ import {
   V2V_EDIT_PLAN_REQUEST,
   V2V_CANCEL_PLAN_REQUEST
 } from './OverviewConstants';
-
 import { OPEN_V2V_MAPPING_WIZARD_ON_MOUNT } from '../Mappings/MappingsConstants';
+
+export { fetchCloudTenantsAction } from '../Mappings/MappingsActions';
 
 export const showConfirmModalAction = modalOptions => ({
   type: SHOW_CONFIRM_MODAL,
