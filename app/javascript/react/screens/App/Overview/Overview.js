@@ -14,7 +14,7 @@ import {
   FETCH_TRANSFORMATION_PLANS_URL,
   FETCH_ARCHIVED_TRANSFORMATION_PLANS_URL
 } from './OverviewConstants';
-import { FETCH_TRANSFORMATION_MAPPINGS_URL } from '../Mappings/MappingsConstants';
+import { FETCH_TRANSFORMATION_MAPPINGS_URL, FETCH_CLOUD_TENANTS_URL } from '../Mappings/MappingsConstants';
 
 class Overview extends React.Component {
   constructor(props) {
@@ -28,6 +28,8 @@ class Overview extends React.Component {
 
   componentDidMount() {
     const {
+      fetchCloudTenantsAction,
+      fetchCloudTenantsUrl,
       fetchProvidersAction,
       fetchTransformationMappingsUrl,
       fetchTransformationMappingsAction,
@@ -49,8 +51,9 @@ class Overview extends React.Component {
     const p3 = fetchServiceTemplateAnsiblePlaybooksAction(fetchServiceTemplateAnsiblePlaybooksUrl);
     const p4 = fetchTransformationMappingsAction(fetchTransformationMappingsUrl);
     const p5 = fetchProvidersAction();
+    const p6 = fetchCloudTenantsAction(fetchCloudTenantsUrl);
 
-    Promise.all([p1, p2, p3, p4, p5]).then(() => {
+    Promise.all([p1, p2, p3, p4, p5, p6]).then(() => {
       this.hasMadeInitialPlansFetch = true;
 
       if (!this.pollingInterval && !this.willUnmount) {
@@ -488,12 +491,15 @@ Overview.propTypes = {
   isEditingPlanRequest: PropTypes.bool,
   cancelPlanRequestAction: PropTypes.func,
   isCancellingPlanRequest: PropTypes.bool,
-  requestsProcessingCancellation: PropTypes.array
+  requestsProcessingCancellation: PropTypes.array,
+  fetchCloudTenantsAction: PropTypes.func,
+  fetchCloudTenantsUrl: PropTypes.string
 };
 
 Overview.defaultProps = {
   archiveTransformationPlanUrl: '/api/service_templates',
   deleteTransformationPlanUrl: '/api/service_templates',
+  fetchCloudTenantsUrl: FETCH_CLOUD_TENANTS_URL,
   fetchTransformationMappingsUrl: FETCH_TRANSFORMATION_MAPPINGS_URL,
   fetchTransformationPlansUrl: FETCH_TRANSFORMATION_PLANS_URL,
   fetchServiceTemplateAnsiblePlaybooksUrl:

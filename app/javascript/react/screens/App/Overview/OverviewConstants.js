@@ -21,7 +21,7 @@ export const ARCHIVE_TRANSFORMATION_PLAN = 'ARCHIVE_TRANSFORMATION_PLAN';
 export const DELETE_TRANSFORMATION_PLAN = 'DELETE_TRANSFORMATION_PLAN';
 
 export const FETCH_PROVIDERS = 'FETCH_PROVIDERS';
-export const FETCH_PROVIDERS_URL = '/api/providers?expand=resources';
+export const FETCH_PROVIDERS_URL = '/api/providers?expand=resources&attributes=authentications';
 
 export const FETCH_V2V_TRANSFORMATION_MAPPINGS = 'FETCH_V2V_TRANSFORMATION_MAPPINGS';
 
@@ -56,7 +56,7 @@ export const FETCH_TRANSFORMATION_PLANS_URL =
   "filter[]=type='ServiceTemplateTransformationPlan'" +
   '&filter[]=active=true' +
   '&expand=resources,schedules' +
-  '&attributes=name,description,miq_requests,options,created_at,transformation_mapping' +
+  '&attributes=name,description,miq_requests,options,created_at,transformation_mapping,transformation_mapping.transformation_mapping_items' +
   '&sort_by=updated_at' +
   '&sort_order=desc';
 
@@ -70,3 +70,8 @@ export const FETCH_ARCHIVED_TRANSFORMATION_PLANS_URL =
   '&sort_order=desc';
 
 export const TRANSFORMATION_PLAN_REQUESTS_URL = '/api/requests';
+
+export const WAITING_FOR_CONVERSION_HOST_MESSAGES = {
+  notAvailable: __('Waiting for an available conversion host. You can continue waiting or go to the Migration Settings page to increase the number of migrations per host'), // prettier-ignore
+  noRsaKey: __('No RSA key pair exists on the OpenStack provider. Cancel the migration, add the key, and retry.')
+};

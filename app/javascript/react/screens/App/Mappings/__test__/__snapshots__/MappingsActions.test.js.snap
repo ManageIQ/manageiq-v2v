@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`fetchCloudTenantsAction dispatches PENDING and FULFILLED actions 1`] = `
+Array [
+  Object {
+    "type": "FETCH_CLOUD_TENANTS_PENDING",
+  },
+  Object {
+    "payload": Object {
+      "mock": "data",
+    },
+    "type": "FETCH_CLOUD_TENANTS_FULFILLED",
+  },
+]
+`;
+
+exports[`fetchCloudTenantsAction dispatches PENDING and REJECTED actions 1`] = `
+Array [
+  Object {
+    "type": "FETCH_CLOUD_TENANTS_PENDING",
+  },
+  Object {
+    "error": true,
+    "payload": [Error: <mocked error>],
+    "type": "FETCH_CLOUD_TENANTS_REJECTED",
+  },
+]
+`;
