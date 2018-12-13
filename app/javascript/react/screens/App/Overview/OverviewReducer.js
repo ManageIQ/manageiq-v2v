@@ -7,7 +7,6 @@ import {
   validateOverviewMappings,
   validateServiceTemplatePlaybooks
 } from './OverviewValidators';
-
 import {
   SHOW_PLAN_WIZARD,
   HIDE_PLAN_WIZARD,
@@ -36,8 +35,8 @@ import {
   V2V_EDIT_PLAN_REQUEST,
   V2V_CANCEL_PLAN_REQUEST
 } from './OverviewConstants';
-
-import { planTransmutation, sufficientProviders } from './helpers';
+import { FETCH_V2V_CLOUD_TENANTS } from '../Mappings/MappingsConstants';
+import { planTransmutation, sufficientProviders, hasRsaKey } from './helpers';
 
 export const initialState = Immutable({
   planWizardVisible: false,
@@ -45,6 +44,7 @@ export const initialState = Immutable({
   planWizardId: null, // id of infrastructure mapping to use for new plan
   editingPlanId: null, // id of migration plan to edit
   editPlanNameModalVisible: false,
+  providers: [],
   hasSufficientProviders: false,
   isRejectedProviders: false,
   isFetchingProviders: false,
@@ -97,7 +97,11 @@ export const initialState = Immutable({
   requestsProcessingCancellation: [],
   isCancellingPlanRequest: false,
   isRejectedCancelPlanRequest: false,
-  errorCancelPlanRequest: null
+  errorCancelPlanRequest: null,
+  cloudTenants: [],
+  isFetchingCloudTenants: false,
+  isRejectedCloudTenants: false,
+  errorCloudTenants: null
 });
 
 export default (state = initialState, action) => {
@@ -147,7 +151,12 @@ export default (state = initialState, action) => {
           return insufficient;
         }
         validateOverviewProviders(action.payload.data.resources);
-        return insufficient.set('hasSufficientProviders', sufficientProviders(action.payload.data.resources));
+        return insufficient
+          .set('hasSufficientProviders', sufficientProviders(action.payload.data.resources))
+          .set(
+            'providers',
+            action.payload.data.resources.map(provider => ({ ...provider, hasRsaKey: hasRsaKey(provider) }))
+          );
       })();
     case `${FETCH_PROVIDERS}_REJECTED`:
       return state
@@ -349,6 +358,20 @@ export default (state = initialState, action) => {
         .set('isCancellingPlanRequest', false)
         .set('isRejectedCancelPlanRequest', true)
         .set('errorCancelPlanRequest', action.payload);
+
+    case `${FETCH_V2V_CLOUD_TENANTS}_PENDING`:
+      return state.set('isFetchingCloudTenants', true).set('isRejectedCloudTenants', false);
+    case `${FETCH_V2V_CLOUD_TENANTS}_FULFILLED`:
+      return state
+        .set('cloudTenants', action.payload.data.resources)
+        .set('isFetchingCloudTenants', false)
+        .set('isRejectedCloudTenants', false)
+        .set('errorCloudTenanta', null);
+    case `${FETCH_V2V_CLOUD_TENANTS}_REJECTED`:
+      return state
+        .set('errorCloudTenants', action.payload)
+        .set('isRejectedCloudTenants', true)
+        .set('isFetchingCloudTenants', false);
 
     default:
       return state;

@@ -10,10 +10,16 @@ import getMostRecentRequest from '../../../common/getMostRecentRequest';
 import getMostRecentVMTasksFromRequests from './helpers/getMostRecentVMTasksFromRequests';
 import getPlaybookName from './helpers/getPlaybookName';
 import { PLAN_JOB_STATES } from '../../../../../../data/models/plans';
-import { MIGRATIONS_FILTERS, TRANSFORMATION_PLAN_REQUESTS_URL } from '../../OverviewConstants';
+import {
+  MIGRATIONS_FILTERS,
+  TRANSFORMATION_PLAN_REQUESTS_URL,
+  WAITING_FOR_CONVERSION_HOST_MESSAGES
+} from '../../OverviewConstants';
 import CardEmptyState from './CardEmptyState';
 import CardFooter from './CardFooter';
 import { urlBuilder } from './helpers';
+import { getMappingType } from '../../../Mappings/components/InfrastructureMappingsList/helpers';
+import { OPENSTACK } from '../../../Mappings/screens/MappingWizard/MappingWizardConstants';
 
 const MigrationsInProgressCard = ({
   plan,
@@ -64,6 +70,9 @@ const MigrationsInProgressCard = ({
       urlBuilder(TRANSFORMATION_PLAN_REQUESTS_URL, mostRecentRequest.id)
     );
 
+    const targetIsOsp = getMappingType(plan.transformation_mapping.transformation_mapping_items) === OPENSTACK;
+    const cardMessage = targetIsOsp && !plan.targetProvider.hasRsaKey ? 'noRsaKey' : 'notAvailable';
+
     return (
       <InProgressCard
         title={<h3 className="card-pf-title">{plan.name}</h3>}
@@ -83,7 +92,7 @@ const MigrationsInProgressCard = ({
       >
         <CardEmptyState
           showSpinner
-          emptyStateInfo={__('Waiting for an available conversion host. You can continue waiting or go to the Migration Settings page to increase the number of migrations per host')} // prettier-ignore
+          emptyStateInfo={WAITING_FOR_CONVERSION_HOST_MESSAGES[cardMessage]}
           emptyStateInfoStyles={{ marginTop: 10 }}
         />
       </InProgressCard>

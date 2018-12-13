@@ -6,7 +6,7 @@ import Toolbar from '../../../config/Toolbar';
 import componentRegistry from '../../../../components/componentRegistry';
 import InfrastructureMappingsList from './components/InfrastructureMappingsList/InfrastructureMappingsList';
 import { FETCH_TRANSFORMATION_PLANS_URL, FETCH_ARCHIVED_TRANSFORMATION_PLANS_URL } from '../Overview/OverviewConstants';
-import { FETCH_TRANSFORMATION_MAPPINGS_URL } from './MappingsConstants';
+import { FETCH_TRANSFORMATION_MAPPINGS_URL, FETCH_CLOUD_TENANTS_URL } from './MappingsConstants';
 import ShowWizardEmptyState from '../common/ShowWizardEmptyState/ShowWizardEmptyState';
 
 class Mappings extends Component {
@@ -46,7 +46,9 @@ class Mappings extends Component {
     }
 
     fetchCloudNetworksAction(fetchCloudNetworksUrl);
-    fetchCloudTenantsAction(fetchCloudTenantsUrl);
+    fetchCloudTenantsAction(fetchCloudTenantsUrl, {
+      addSearch: { attributes: 'ext_management_system.name,cloud_networks,cloud_volume_types' }
+    });
     fetchCloudVolumeTypesAction(fetchCloudVolumeTypesUrl);
     fetchClustersAction(fetchClustersUrl);
     fetchDatastoresAction(fetchDatastoresUrl);
@@ -300,8 +302,7 @@ Mappings.propTypes = {
 
 Mappings.defaultProps = {
   fetchCloudNetworksUrl: '/api/cloud_networks?expand=resources',
-  fetchCloudTenantsUrl:
-    '/api/cloud_tenants?expand=resources&attributes=ext_management_system.name,cloud_networks,cloud_volume_types',
+  fetchCloudTenantsUrl: FETCH_CLOUD_TENANTS_URL,
   fetchCloudVolumeTypesUrl: '/api/cloud_volume_types?expand=resources',
   fetchClustersUrl:
     '/api/clusters/' +

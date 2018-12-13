@@ -1,6 +1,9 @@
 import getMostRecentRequest from '../common/getMostRecentRequest';
 import { urlBuilder } from './components/Migrations/helpers';
 import { TRANSFORMATION_PLAN_REQUESTS_URL } from './OverviewConstants';
+import { getMappingType } from '../Mappings/components/InfrastructureMappingsList/helpers';
+import { OPENSTACK } from '../Mappings/screens/MappingWizard/MappingWizardConstants';
+import { attachTargetProvider } from './helpers';
 
 export const notStartedTransformationPlansFilter = transformationPlans =>
   transformationPlans.filter(transformationPlan => transformationPlan.miq_requests.length === 0);
@@ -61,3 +64,16 @@ export const requestsProcessingCancellationFilter = transformationPlans =>
 export const combineRequestsProcessingCancellation = (requestsFromMemory, requestsFromDb) => [
   ...new Set([...requestsFromMemory, ...requestsFromDb])
 ];
+
+export const attachTargetProviderToOspPlans = (plans, providers, cloudTenants) =>
+  plans.map(plan => {
+    if (!plan.transformation_mapping) {
+      return plan;
+    }
+
+    if (getMappingType(plan.transformation_mapping.transformation_mapping_items) === OPENSTACK) {
+      return attachTargetProvider(plan, providers, cloudTenants, OPENSTACK);
+    }
+
+    return plan;
+  });

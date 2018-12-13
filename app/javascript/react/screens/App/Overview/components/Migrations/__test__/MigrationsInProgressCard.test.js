@@ -8,9 +8,10 @@ import {
   TRANSFORMATION_PLAN_REQUESTS_URL,
   FETCH_TRANSFORMATION_PLANS_URL
 } from '../../../OverviewConstants';
+import { TRANSFORMATION_MAPPING_ITEM_DESTINATION_TYPES } from '../../../../Mappings/screens/MappingWizard/MappingWizardConstants';
 
 describe('when the request is denied', () => {
-  const plan = transformationPlans.resources[7];
+  const plan = { ...transformationPlans.resources[7], transformation_mapping: { transformation_mapping_items: [] } };
   const [deniedRequest] = plan.miq_requests;
   const allRequestsWithTasks = [{ ...deniedRequest, miq_request_tasks: [] }];
   const baseProps = {
@@ -45,7 +46,7 @@ describe('when the request is denied', () => {
 });
 
 describe('if there are no conversion hosts available', () => {
-  const plan = transformationPlans.resources[5];
+  const plan = { ...transformationPlans.resources[5], transformation_mapping: { transformation_mapping_items: [] } };
   const [request] = plan.miq_requests;
   const allRequestsWithTasks = [{ ...request, miq_request_tasks: [{ conversion_host_id: null }] }];
   const baseProps = {
@@ -79,5 +80,27 @@ describe('if there are no conversion hosts available', () => {
       url: FETCH_TRANSFORMATION_PLANS_URL,
       archived: false
     });
+  });
+
+  test('and the OSP provider does not have a RSA key, display an alternate message', () => {
+    const { openstack } = TRANSFORMATION_MAPPING_ITEM_DESTINATION_TYPES;
+    const ospPlan = {
+      ...plan,
+      transformation_mapping: {
+        transformation_mapping_items: [
+          { destination_type: openstack.cluster, destination_id: '1' },
+          { destination_type: openstack.datastore },
+          { destination_type: openstack.network }
+        ]
+      },
+      targetProvider: {
+        hasRsaKey: false
+      }
+    };
+    const wrapper = mount(<MigrationsInProgressCard {...baseProps} plan={ospPlan} />);
+
+    expect(wrapper.text()).toMatchSnapshot();
+
+    wrapper.unmount();
   });
 });

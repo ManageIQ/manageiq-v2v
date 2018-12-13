@@ -12,6 +12,8 @@ export const SET_V2V_MAPPING_TO_DELETE = 'SET_V2V_MAPPING_TO_DELETE';
 export const SHOW_V2V_DELETE_CONFIRMATION_MODAL = 'SHOW_V2V_DELETE_CONFIRMATION_MODAL';
 export const YES_TO_DELETE_AND_HIDE_DELETE_CONFIRMATION_MODAL = 'YES_TO_DELETE_AND_HIDE_DELETE_CONFIRMATION_MODAL';
 
+export const FETCH_CLOUD_TENANTS_URL = '/api/cloud_tenants?expand=resources';
+
 export const FETCH_TRANSFORMATION_MAPPINGS_URL =
   '/api/transformation_mappings?expand=resources' +
   '&attributes=transformation_mapping_items,service_templates' +
