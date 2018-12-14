@@ -1,13 +1,14 @@
 # Joy Cai <joy.sh@linguitronics.com>, 2018. #zanata
 # Milan Zázrivec <mzazrivec@redhat.com>, 2018. #zanata
+# Tony Fu <tfu@redhat.com>, 2018. #zanata
 # puger dog <ella.cheng.sh@linguitronics.com>, 2018. #zanata
 msgid ""
 msgstr ""
 "Project-Id-Version: ManageIQ_V2V 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-03 16:24+0200\n"
-"PO-Revision-Date: 2018-10-23 08:53+0000\n"
-"Last-Translator: puger dog <ella.cheng.sh@linguitronics.com>\n"
+"POT-Creation-Date: 2018-11-27 14:55+0100\n"
+"PO-Revision-Date: 2018-11-28 06:14+0000\n"
+"Last-Translator: Tony Fu <tfu@redhat.com>\n"
 "Language-Team: Chinese (Simplified, China)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -16,16 +17,20 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0\n"
 "X-Generator: Zanata 4.6.2\n"
 
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardResultsStep/PlanWizardResultsStep.js:84
+#: ../app/javascript/react/screens/App/Settings/Settings.js:65
+msgid " Applying..."
+msgstr "正在应用......"
+
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardResultsStep/PlanWizardResultsStep.js:96
 msgid " Migration Plan: '%s' has been saved"
 msgstr "迁移计划：“%s”已保存"
 
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardResultsStep/PlanWizardResultsStep.js:88
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardResultsStep/PlanWizardResultsStep.js:106
 msgid " Migration Plan: '%s' is in progress"
 msgstr "迁移计划：“%s”正在进行中"
 
-#: ../app/javascript/react/screens/App/Plan/PlanActions.js:48
-#: ../app/javascript/react/screens/App/Plan/PlanActions.js:181
+#: ../app/javascript/react/screens/App/Plan/PlanActions.js:50
+#: ../app/javascript/react/screens/App/Plan/PlanActions.js:183
 msgid "\"%s\" download successful"
 msgstr "“%s” 下载成功"
 
@@ -33,112 +38,102 @@ msgstr "“%s” 下载成功"
 msgid "%02s:%02s:%02s"
 msgstr "%02s:%02s:%02s"
 
-#: ../app/javascript/react/screens/App/Overview/components/InfrastructureMappingsList/InfrastructureMappingsList.js:292
+#: ../app/javascript/react/screens/App/Mappings/components/InfrastructureMappingsList/InfrastructureMappingsList.js:329
 msgid "%d Associated Plan"
 msgid_plural "%d Associated Plans"
 msgstr[0] "%d 关联计划"
 
-#: ../app/javascript/react/screens/App/Overview/components/InfrastructureMappingsList/InfrastructureMappingsList.js:268
+#: ../app/javascript/react/screens/App/Mappings/components/InfrastructureMappingsList/InfrastructureMappingsList.js:305
 msgid "%d Source Cluster"
 msgid_plural "%d Source Clusters"
 msgstr[0] "%d 源集群"
 
-#: ../app/javascript/react/screens/App/Overview/components/InfrastructureMappingsList/InfrastructureMappingsList.js:237
+#: ../app/javascript/react/screens/App/Mappings/components/InfrastructureMappingsList/InfrastructureMappingsList.js:274
 msgid "%d Source Datastore"
 msgid_plural "%d Source Datastores"
 msgstr[0] "%d 源数据存储区"
 
-#: ../app/javascript/react/screens/App/Overview/components/InfrastructureMappingsList/InfrastructureMappingsList.js:206
+#: ../app/javascript/react/screens/App/Mappings/components/InfrastructureMappingsList/InfrastructureMappingsList.js:243
 msgid "%d Source Network"
 msgid_plural "%d Source Networks"
 msgstr[0] "%d 源网络"
 
-#: ../app/javascript/react/screens/App/Overview/components/InfrastructureMappingsList/InfrastructureMappingsList.js:274
+#: ../app/javascript/react/screens/App/Mappings/components/InfrastructureMappingsList/InfrastructureMappingsList.js:311
 msgid "%d Target Cluster"
 msgid_plural "%d Target Clusters"
 msgstr[0] "%d 目标集群"
 
-#: ../app/javascript/react/screens/App/Overview/components/InfrastructureMappingsList/InfrastructureMappingsList.js:243
+#: ../app/javascript/react/screens/App/Mappings/components/InfrastructureMappingsList/InfrastructureMappingsList.js:280
 msgid "%d Target Datastore"
 msgid_plural "%d Target Datastores"
 msgstr[0] "%d 目标数据存储区"
 
-#: ../app/javascript/react/screens/App/Overview/components/InfrastructureMappingsList/InfrastructureMappingsList.js:212
+#: ../app/javascript/react/screens/App/Mappings/components/InfrastructureMappingsList/InfrastructureMappingsList.js:249
 msgid "%d Target Network"
 msgid_plural "%d Target Networks"
 msgstr[0] "%d 目标网络"
 
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/Migrations.js:92
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/Migrations.js:98
-#: ../app/javascript/react/screens/App/Overview/components/OverviewEmptyState/OverviewEmptyState.js:22
+#: ../app/javascript/react/screens/App/common/ShowWizardEmptyState/ShowWizardEmptyState.js:22
 #: ../app/javascript/react/screens/App/Plan/components/PlanEmptyState.js:10
 #: ../app/javascript/react/screens/App/Plan/components/PlanEmptyState.js:11
 msgid "%s"
 msgstr "%s"
 
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/components/PlanWizardVMStepTable.js:588
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/components/PlanWizardVMStepTable.js:590
 msgid "%s VMs selected."
 msgstr "已选择 %s 个虚拟机。"
 
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardDatastoresStep/components/DatastoresStepForm/helpers.js:39
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/MappingWizardDatastoresStep/components/DatastoresStepForm/helpers.js:39
 msgid "%s \\\\ %s"
 msgstr "%s \\\\ %s"
 
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardDatastoresStep/components/DatastoresStepForm/helpers.js:36
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/MappingWizardDatastoresStep/components/DatastoresStepForm/helpers.js:36
 msgid "%s \\\\ %s \\\\ %s"
 msgstr "%s \\\\ %s \\\\ %s"
-
-#: ../app/javascript/react/screens/App/Overview/Overview.js:123
-msgid "%s completed successfully"
-msgstr "%s 已成功完成"
-
-#: ../app/javascript/react/screens/App/Overview/Overview.js:120
-msgid "%s completed with errors"
-msgstr "%s 已完成，存在错误"
 
 #: ../app/javascript/components/dates/IsoElapsedTime.js:12
 msgid "%s days %02s:%02s:%02s"
 msgstr "%s 天 %02s:%02s:%02s"
 
-#: ../app/javascript/react/screens/App/Plan/PlanActions.js:309
+#: ../app/javascript/react/screens/App/Plan/PlanActions.js:311
 msgid "%s failed to migrate"
 msgstr "%s 迁移失败"
 
-#: ../app/javascript/react/screens/App/Plan/PlanActions.js:326
+#: ../app/javascript/react/screens/App/Plan/PlanActions.js:328
 msgid "%s migrated successfully"
 msgstr "%s 迁移成功"
 
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCard.js:183
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCard.js:234
 msgid "%s of %s"
 msgstr "%s/%s"
 
-#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:525
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:277
 msgid "%s of %s Migrated"
 msgstr "已迁移 %s，总计 %s"
 
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCard.js:107
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCard.js:158
 msgid "%s of %s VM migrations failed."
 msgstr "%s 个虚拟机迁移失败，总计 %s 个虚拟机迁移。"
 
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCard.js:174
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCard.js:225
 msgid "%s of %s VMs"
 msgstr "%s 个虚拟机，总计 %s 个"
 
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/DualPaneMapper/DualPaneMapperCount.js:5
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/DualPaneMapper/DualPaneMapperCount.js:5
 msgid "%s of %s item selected"
 msgstr "已选择 %s 个项目，总计 %s 个项目"
 
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/DualPaneMapper/DualPaneMapperCount.js:5
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/DualPaneMapper/DualPaneMapperCount.js:5
 msgid "%s of %s items selected"
 msgstr "已选择 %s 项，总计 %s 项"
 
 #: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardAdvancedOptionsStep/components/PlanWizardAdvancedOptionsStepTable/PlanWizardAdvancedOptionsStepTable.js:383
 #: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardAdvancedOptionsStep/components/PlanWizardAdvancedOptionsStepTable/PlanWizardAdvancedOptionsStepTable.js:386
-#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:465
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:204
 msgid "%s of %s selected"
 msgstr "已选择 %s，总计 %s"
 
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:173
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:146
 msgid "%s successfully archived"
 msgstr "%s 已成功存档"
 
@@ -146,15 +141,15 @@ msgstr "%s 已成功存档"
 msgid "%s successfully deleted"
 msgstr "%s 被成功删除"
 
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCard.js:197
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCard.js:248
 msgid "%s%% Complete"
 msgstr "完成 %s%%"
 
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCard.js:191
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCard.js:242
 msgid "%s%% Remaining"
 msgstr "剩余 %s%%"
 
-#: ../app/javascript/react/screens/App/Plan/components/PlanVmsList.js:277
+#: ../app/javascript/react/screens/App/Plan/components/PlanVmsList.js:43
 msgid "0 GBs Migrated"
 msgstr "已迁移 0 GB"
 
@@ -169,18 +164,21 @@ msgid ""
 "problems when the VM is migrated."
 msgstr "类别名称带有 * 表示该类别的 CPU 或内存容量小于源虚拟机的容量。选择这些类别可能导致在迁移虚拟机时出现问题。"
 
-#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:43
+#: ../app/javascript/react/screens/App/Overview/Overview.js:123
+msgid "A migration plan must include an infrastructure mapping."
+msgstr "迁移计划必须包括一个基础设施映射。"
+
+#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:50
 msgid "Acquire Transformation Host"
 msgstr "获取转换主机"
 
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/components/PlanWizardVMStepTable.js:528
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardAdvancedOptionsStep/components/PlanWizardAdvancedOptionsStepTable/PlanWizardAdvancedOptionsStepTable.js:426
-#: ../app/javascript/react/screens/App/Plan/components/PlanVmsList.js:235
-#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:442
+#: ../app/javascript/react/screens/App/common/ListViewToolbar/ListViewToolbar.js:258
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/components/PlanWizardVMStepTable.js:530
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardAdvancedOptionsStep/components/PlanWizardAdvancedOptionsStepTable/PlanWizardAdvancedOptionsStepTable.js:427
 msgid "Active Filters"
 msgstr "活动筛选器"
 
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/DualPaneMapper/DualPaneMapper.js:10
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/DualPaneMapper/DualPaneMapper.js:10
 msgid "Add Mapping"
 msgstr "添加映射"
 
@@ -188,33 +186,52 @@ msgstr "添加映射"
 msgid "Advanced Options"
 msgstr "高级选项"
 
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardResultsStep/MappingWizardResultsStep.js:78
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/MappingWizardResultsStep/MappingWizardResultsStep.js:89
 msgid "All mappings in %s have been mapped."
 msgstr "已完成 %s 中的所有映射。"
+
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/MappingWizardClustersStep/components/ClustersStepForm/ClustersStepForm.js:113
+msgid "All source clusters have been mapped."
+msgstr "所有源集群都已被映射。"
+
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/MappingWizardDatastoresStep/components/DatastoresStepForm/DatastoresStepForm.js:249
+msgid "All source datastores have been mapped."
+msgstr "所有源数据存储区都已被映射。"
+
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/MappingWizardNetworksStep/components/NetworksStepForm/NetworksStepForm.js:275
+msgid "All source networks have been mapped."
+msgstr "所有源网络都已被映射。"
 
 #: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/components/PlanWizardVMStepTable.js:239
 #: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardInstancePropertiesStep/components/PlanWizardInstancePropertiesStepTable.js:289
 msgid "Allocated Size"
 msgstr "已分配大小"
 
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:161
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:310
+#: ../app/javascript/react/screens/App/Settings/Settings.js:59
+msgid "Apply"
+msgstr "应用"
+
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:134
 msgid "Archive"
 msgstr "存档"
 
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:158
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:131
 msgid "Archive Migration Plan"
 msgstr "存档迁移计划"
 
-#: ../app/javascript/react/screens/App/Overview/OverviewConstants.js:50
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:288
+msgid "Archive plan"
+msgstr "存档计划"
+
+#: ../app/javascript/react/screens/App/Overview/OverviewConstants.js:40
 msgid "Archived Plans"
 msgstr "已存档计划"
 
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:145
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:118
 msgid "Are you sure you want to archive migration plan "
 msgstr "您确定要存档迁移计划吗"
 
-#: ../app/javascript/react/screens/App/Overview/components/DeleteInfrastructureMappingConfirmationModal/DeleteInfrastructureMappingConfirmationModal.js:50
+#: ../app/javascript/react/screens/App/Mappings/components/DeleteInfrastructureMappingConfirmationModal/DeleteInfrastructureMappingConfirmationModal.js:50
 msgid "Are you sure you want to delete the infrastructure mapping %s ?"
 msgstr "您确定要删除基础设施映射 %s 吗？"
 
@@ -226,27 +243,27 @@ msgstr "您确定要删除迁移计划吗"
 msgid "Are you sure you want to import a new file?"
 msgstr "您确定要导入新文件吗？"
 
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/ScheduleMigrationButton.js:23
-msgid "Are you sure you want to unschedule plan %s  targted to run on %s ?"
-msgstr "您确定要取消原定在 %s 上运行的计划 %s 吗？"
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/ScheduleMigrationButtons.js:24
+msgid "Are you sure you want to unschedule plan %s  targeted to run on %s ?"
+msgstr "您确定要取消 %s 计划在 %s 上运行 吗？"
 
-#: ../app/javascript/react/screens/App/common/ConfirmModal.js:70
+#: ../app/javascript/react/screens/App/common/ConfirmModal.js:72
 msgid "Are you sure?"
 msgstr "您确定吗？"
 
-#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:44
+#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:51
 msgid "Assess Migration"
 msgstr "评估迁移"
 
-#: ../app/javascript/react/screens/App/Overview/components/InfrastructureMappingsList/InfrastructureMappingsList.js:449
+#: ../app/javascript/react/screens/App/Mappings/components/InfrastructureMappingsList/InfrastructureMappingsList.js:486
 msgid "Associated Plans"
 msgstr "关联计划"
 
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/PlanWizardVMStep.js:157
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/PlanWizardVMStep.js:177
 msgid "At least one VM needs to be selected to create the Migration Plan."
 msgstr "至少需要选择一个虚拟机来创建迁移计划。"
 
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardClustersStep/components/ClustersStepForm/ClustersStepForm.js:132
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/MappingWizardClustersStep/components/ClustersStepForm/ClustersStepForm.js:140
 msgid ""
 "At least one host in the target cluster must be enabled as a conversion "
 "host. You can continue to create an infrastructure mapping that includes the"
@@ -254,40 +271,54 @@ msgid ""
 "migration execution."
 msgstr "目标集群中至少有一个主机应启用为转换主机。您可以继续创建包括该目标集群的基础设施映射，但必须在开始迁移之前完成转换主机启用。"
 
-#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:45
+#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:52
 msgid "Automation Starting"
 msgstr "正在开始自动化"
 
-#: ../app/javascript/react/screens/App/Overview/components/ModalWizard/ModalWizard.js:60
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizard.js:264
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/MappingWizard.js:187
+#: ../app/javascript/react/screens/App/common/ModalWizard/ModalWizard.js:60
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/MappingWizard.js:187
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizard.js:258
 msgid "Back"
 msgstr "返回"
 
-#: ../app/javascript/react/screens/App/common/ConfirmModal.js:71
-#: ../app/javascript/react/screens/App/Overview/components/ScheduleMigrationModal/ScheduleMigrationModal.js:39
-#: ../app/javascript/react/screens/App/Overview/components/DeleteInfrastructureMappingConfirmationModal/DeleteInfrastructureMappingConfirmationModal.js:83
-#: ../app/javascript/react/screens/App/Overview/components/ModalWizard/ModalWizard.js:56
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizard.js:260
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/WarningModal/WarningModal.js:47
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/MappingWizard.js:182
+#: ../app/javascript/react/screens/App/common/ConfirmModal.js:73
+#: ../app/javascript/react/screens/App/common/ModalWizard/ModalWizard.js:56
+#: ../app/javascript/react/screens/App/Mappings/components/DeleteInfrastructureMappingConfirmationModal/DeleteInfrastructureMappingConfirmationModal.js:83
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/WarningModal/WarningModal.js:47
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/MappingWizard.js:182
+#: ../app/javascript/react/screens/App/Overview/components/ScheduleMigrationModal/ScheduleMigrationModal.js:42
+#: ../app/javascript/react/screens/App/Overview/components/EditPlanNameModal/EditPlanNameModal.js:89
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizard.js:254
 msgid "Cancel"
 msgstr "取消"
 
-#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:432
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCard.js:79
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:196
 msgid "Cancel Migration"
 msgstr "取消迁移"
 
-#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:702
-#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:717
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:438
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:453
 msgid "Cancel Migrations"
 msgstr "取消迁移"
 
-#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:482
-msgid "Cancelling migration"
-msgstr "取消迁移"
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:216
+msgid "Cancel request sent"
+msgstr "取消请求已发送"
 
-#: ../app/javascript/react/screens/App/Plan/PlanActions.js:236
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:221
+msgid "Cancel requested"
+msgstr "请求的取消"
+
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:229
+msgid "Canceled"
+msgstr "已取消"
+
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:225
+msgid "Canceling"
+msgstr "正取消"
+
+#: ../app/javascript/react/screens/App/Plan/PlanActions.js:238
 msgid "Cannot cancel completed VM Migrations"
 msgstr "不能取消已完成的虚拟机迁移"
 
@@ -296,121 +327,126 @@ msgstr "不能取消已完成的虚拟机迁移"
 msgid "Choose"
 msgstr "选择"
 
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardGeneralStep/PlanWizardGeneralStep.js:60
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardGeneralStep/PlanWizardGeneralStep.js:75
 msgid ""
 "Choose from a list of VMs discovered in the selected infrastructure mapping"
 msgstr "从所选基础设施映射中发现的虚拟机列表中选择"
 
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/components/PlanWizardVMStepTable.js:543
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardAdvancedOptionsStep/components/PlanWizardAdvancedOptionsStepTable/PlanWizardAdvancedOptionsStepTable.js:441
-#: ../app/javascript/react/screens/App/Plan/components/PlanVmsList.js:251
-#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:457
+#: ../app/javascript/react/screens/App/common/ListViewToolbar/ListViewToolbar.js:273
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/components/PlanWizardVMStepTable.js:545
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardAdvancedOptionsStep/components/PlanWizardAdvancedOptionsStepTable/PlanWizardAdvancedOptionsStepTable.js:442
 msgid "Clear All Filters"
 msgstr "清除所有筛选器"
 
-#: ../app/javascript/react/screens/App/Overview/components/ModalWizard/ModalWizard.js:63
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardResultsStep/PlanWizardResultsStep.js:37
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizard.js:271
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/WarningModal/WarningModal.js:50
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/MappingWizard.js:195
+#: ../app/javascript/react/screens/App/common/ModalWizard/ModalWizard.js:63
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/WarningModal/WarningModal.js:50
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/MappingWizard.js:195
+#: ../app/javascript/react/screens/App/Overview/Overview.js:129
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardResultsStep/PlanWizardResultsStep.js:38
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizard.js:265
 msgid "Close"
 msgstr "关闭"
 
-#: ../app/javascript/react/screens/App/Overview/components/InfrastructureMappingsList/InfrastructureMappingsList.js:255
+#: ../app/javascript/react/screens/App/Mappings/components/InfrastructureMappingsList/InfrastructureMappingsList.js:292
 msgid "Clusters missing"
 msgstr "集群缺失"
 
-#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:46
+#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:53
 msgid "Collapse Snapshots"
 msgstr "Collapse 快照"
 
-#: ../app/javascript/react/screens/App/Overview/OverviewConstants.js:49
+#: ../app/javascript/react/screens/App/Overview/OverviewConstants.js:39
 msgid "Completed Plans"
 msgstr "已完成计划"
 
+#: ../app/javascript/react/screens/App/Mappings/Mappings.js:173
 #: ../app/javascript/react/screens/App/Overview/Overview.js:400
-#: ../app/javascript/react/screens/App/Plan/Plan.js:156
+#: ../app/javascript/react/screens/App/Settings/Settings.js:25
+#: ../app/javascript/react/screens/App/Plan/Plan.js:168
 msgid "Compute"
 msgstr "计算"
 
-#: ../app/javascript/react/screens/App/Overview/Overview.js:388
+#: ../app/javascript/react/screens/App/Settings/Settings.js:40
+msgid "Concurrent Migrations"
+msgstr "并行迁移"
+
+#: ../app/javascript/react/screens/App/Mappings/Mappings.js:227
+#: ../app/javascript/react/screens/App/Overview/Overview.js:349
 msgid "Configure Providers"
 msgstr "配置提供程序"
 
-#: ../app/javascript/react/screens/App/common/ConfirmModal.js:68
+#: ../app/javascript/react/screens/App/common/ConfirmModal.js:70
 msgid "Confirm"
 msgstr "确认"
 
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizard.js:159
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/WarningModal/WarningModal.js:50
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/WarningModal/WarningModal.js:50
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizard.js:157
 msgid "Continue"
 msgstr "继续"
 
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardResultsStep/MappingWizardResultsStep.js:82
-msgid "Continue to the plan wizard"
-msgstr "继续计划向导"
-
-#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:539
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:291
 msgid "Conversion Host"
 msgstr "转换主机"
 
-#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:47
+#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:54
 msgid "Convert disks"
 msgstr "转换磁盘"
 
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizard.js:231
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/WarningModal/WarningModal.js:50
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/MappingWizard.js:199
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/WarningModal/WarningModal.js:50
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/MappingWizard.js:199
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizard.js:229
 msgid "Create"
 msgstr "创建"
 
-#: ../app/javascript/react/screens/App/Overview/components/InfrastructureMappingsList/InfrastructureMappingsList.js:62
-#: ../app/javascript/react/screens/App/Overview/components/InfrastructureMappingsList/InfrastructureMappingsList.js:83
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/MappingWizard.js:153
+#: ../app/javascript/react/screens/App/Mappings/components/InfrastructureMappingsList/InfrastructureMappingsList.js:66
+#: ../app/javascript/react/screens/App/Mappings/components/InfrastructureMappingsList/InfrastructureMappingsList.js:87
+#: ../app/javascript/react/screens/App/Mappings/components/InfrastructureMappingsList/InfrastructureMappingsList.js:161
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/MappingWizard.js:153
+#: ../app/javascript/react/screens/App/Overview/Overview.js:336
 msgid "Create Infrastructure Mapping"
 msgstr "创建基础设施映射"
 
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/Migrations.js:83
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/Migrations.js:107
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizard.js:233
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/Migrations.js:95
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/Migrations.js:105
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizard.js:231
 msgid "Create Migration Plan"
 msgstr "创建迁移计划"
 
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/Migrations.js:106
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/Migrations.js:104
 msgid "Create a migration plan to select VMs for migration."
 msgstr "创建迁移计划以选择待迁移虚拟机。"
 
-#: ../app/javascript/react/screens/App/Overview/components/InfrastructureMappingsList/InfrastructureMappingsList.js:61
+#: ../app/javascript/react/screens/App/Mappings/components/InfrastructureMappingsList/InfrastructureMappingsList.js:65
+#: ../app/javascript/react/screens/App/Overview/Overview.js:335
 msgid "Create an infrastructure mapping to later be used by a migration plan"
 msgstr "创建基础设施映射用于后续迁移计划"
 
-#: ../app/javascript/react/screens/App/Overview/components/InfrastructureMappingsList/InfrastructureMappingsList.js:441
+#: ../app/javascript/react/screens/App/Mappings/components/InfrastructureMappingsList/InfrastructureMappingsList.js:478
 msgid "Created:"
 msgstr "已创建："
 
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardResultsStep/MappingWizardResultsStep.js:58
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/MappingWizardResultsStep/MappingWizardResultsStep.js:69
 msgid "Creating Infrastructure Mapping..."
 msgstr "正在创建基础设施映射..."
 
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardResultsStep/PlanWizardResultsStep.js:70
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardResultsStep/PlanWizardResultsStep.js:82
 msgid "Creating Migration Plan..."
 msgstr "创建迁移计划..."
 
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCard.js:214
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCard.js:266
 msgid "Datastores"
 msgstr "数据存储区"
 
-#: ../app/javascript/react/screens/App/Overview/components/InfrastructureMappingsList/InfrastructureMappingsList.js:224
+#: ../app/javascript/react/screens/App/Mappings/components/InfrastructureMappingsList/InfrastructureMappingsList.js:261
 msgid "Datastores missing"
 msgstr "数据存储区缺失"
 
-#: ../app/javascript/react/screens/App/Overview/components/DeleteInfrastructureMappingConfirmationModal/DeleteInfrastructureMappingConfirmationModal.js:86
+#: ../app/javascript/react/screens/App/Mappings/components/DeleteInfrastructureMappingConfirmationModal/DeleteInfrastructureMappingConfirmationModal.js:86
 #: ../app/javascript/react/screens/App/Overview/components/Migrations/DeleteMigrationMenuItem.js:28
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/DeleteMigrationMenuItem.js:64
 msgid "Delete"
 msgstr "删除"
 
-#: ../app/javascript/react/screens/App/Overview/components/DeleteInfrastructureMappingConfirmationModal/DeleteInfrastructureMappingConfirmationModal.js:67
+#: ../app/javascript/react/screens/App/Mappings/components/DeleteInfrastructureMappingConfirmationModal/DeleteInfrastructureMappingConfirmationModal.js:67
 msgid "Delete Infrastructure Mapping"
 msgstr "删除基础设施映射"
 
@@ -418,24 +454,35 @@ msgstr "删除基础设施映射"
 msgid "Delete Migration Plan"
 msgstr "删除迁移计划"
 
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardGeneralStep/PlanWizardGeneralStep.js:46
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardGeneralStep/MappingWizardGeneralStep.js:59
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/DeleteMigrationMenuItem.js:64
+msgid "Delete plan"
+msgstr "删除计划"
+
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/ScheduleMigrationButtons.js:94
+msgid "Delete schedule"
+msgstr "删除调度"
+
+#: ../app/javascript/react/screens/App/Mappings/components/InfrastructureMappingsList/InfrastructureMappingsListConstants.js:10
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/MappingWizardGeneralStep/MappingWizardGeneralStep.js:59
+#: ../app/javascript/react/screens/App/Overview/components/EditPlanNameModal/EditPlanNameModal.js:63
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsConstants.js:32
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardGeneralStep/PlanWizardGeneralStep.js:61
 msgid "Description"
 msgstr "描述"
 
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/PlanWizardVMStep.js:105
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/PlanWizardVMStep.js:115
 msgid "Discovering VMs"
 msgstr "正在发现虚拟机"
 
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/PlanWizardVMStep.js:107
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/PlanWizardVMStep.js:117
 msgid "Discovering VMs associated with the Infrastructure Mapping selected."
 msgstr "正在发现与所选基础设施映射相关联的虚拟机。"
 
-#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:713
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:449
 msgid "Do you want to cancel?"
 msgstr "是否取消？"
 
-#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:644
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:394
 msgid "Download Log"
 msgstr "下载日志"
 
@@ -443,17 +490,23 @@ msgstr "下载日志"
 msgid "Duplicate VM"
 msgstr "复制虚拟机"
 
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsNotStartedList.js:139
-msgid "Edit"
-msgstr "编辑"
-
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/MappingWizard.js:153
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/MappingWizard.js:153
 msgid "Edit Infrastructure Mapping"
 msgstr "编辑基础设施映射"
 
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizard.js:233
+#: ../app/javascript/react/screens/App/Overview/components/EditPlanNameModal/EditPlanNameModal.js:84
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizard.js:231
 msgid "Edit Migration Plan"
 msgstr "编辑迁移计划"
+
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsNotStartedList.js:116
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:297
+msgid "Edit plan"
+msgstr "编辑计划"
+
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/ScheduleMigrationButtons.js:79
+msgid "Edit schedule"
+msgstr "编辑调度"
 
 #: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailListConstants.js:51
 #: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailListConstants.js:61
@@ -464,41 +517,53 @@ msgstr "已用时间"
 msgid "Empty name specified"
 msgstr "指定了空名称"
 
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardScheduleStep/PlanWizardScheduleStep.js:32
+msgid ""
+"Ensure that all VMs in the Migration Plan are powered on before selecting "
+"Create."
+msgstr "在选择创建前，确保迁移计划中的所有虚拟机都已开机。"
+
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardResultsStep/PlanWizardResultsStep.js:57
+msgid ""
+"Ensure that all VMs in the Migration Plan are powered on before starting "
+"migration."
+msgstr "在开始迁移前，确保迁移计划中的所有虚拟机都已开机。"
+
 #: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailListConstants.js:15
 msgid "Error"
 msgstr "错误"
 
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardResultsStep/MappingWizardResultsStep.js:63
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/MappingWizardResultsStep/MappingWizardResultsStep.js:74
 msgid "Error Creating Infrastructure Mapping"
 msgstr "创建基础设施映射时出现错误"
 
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardResultsStep/PlanWizardResultsStep.js:76
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardResultsStep/PlanWizardResultsStep.js:88
 msgid "Error Creating Migration Plan"
 msgstr "创建迁移计划时出错"
 
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardClustersStep/MappingWizardClustersStep.js:65
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/MappingWizardClustersStep/MappingWizardClustersStep.js:65
 msgid "Error Retrieving Clusters"
 msgstr "检索集群时出现错误"
 
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardResultsStep/PlanWizardResultsStep.js:82
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardResultsStep/PlanWizardResultsStep.js:94
 msgid "Error Saving Migration Plan"
 msgstr "保存迁移计划时出错"
 
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/PlanWizardVMStep.js:77
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/PlanWizardVMStep.js:87
 msgid "Error Validating VMs"
 msgstr "验证虚拟机时出现错误"
 
-#: ../app/javascript/react/screens/App/Overview/components/InfrastructureMappingsList/InfrastructureMappingsList.js:124
+#: ../app/javascript/react/screens/App/Mappings/components/InfrastructureMappingsList/InfrastructureMappingsList.js:132
 msgid "Error loading mappings."
 msgstr "载入映射时出现错误。"
 
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardDatastoresStep/MappingWizardDatastoresStep.js:67
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardDatastoresStep/MappingWizardDatastoresStep.js:78
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/MappingWizardDatastoresStep/MappingWizardDatastoresStep.js:73
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/MappingWizardDatastoresStep/MappingWizardDatastoresStep.js:84
 msgid "Error retrieving cluster datastores: %s, ID: %s"
 msgstr "检索集群数据存储区时出现错误：%s，ID：%s"
 
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardNetworksStep/MappingWizardNetworksStep.js:68
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardNetworksStep/MappingWizardNetworksStep.js:79
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/MappingWizardNetworksStep/MappingWizardNetworksStep.js:74
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/MappingWizardNetworksStep/MappingWizardNetworksStep.js:85
 msgid "Error retrieving cluster networks: %s, ID: %s"
 msgstr "检索集群网络时出现错误：%s, ID：%s"
 
@@ -510,15 +575,26 @@ msgstr "错误：可能存在空白 .CSV 文件"
 msgid "Error: Required column 'Name' does not exist in the .CSV file"
 msgstr "错误：.CSV 文件中不存在必需的列“名”"
 
-#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:48
+#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:55
 msgid "Failed"
 msgstr "失败"
 
-#: ../app/javascript/react/screens/App/Plan/PlanActions.js:190
+#: ../app/javascript/react/screens/App/Plan/PlanActions.js:192
 msgid "Failed to download \"%s\". Reason - \"%s\""
 msgstr "“%s”下载失败。原因 -“%s”"
 
-#: ../app/javascript/react/screens/App/Plan/components/PlanVmsList.js:328
+#: ../app/javascript/react/screens/App/Mappings/components/InfrastructureMappingsList/InfrastructureMappingsListConstants.js:11
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsConstants.js:33
+msgid "Filter by Description"
+msgstr "按描述过滤"
+
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsConstants.js:39
+msgid "Filter by Mapping"
+msgstr "按映射过滤"
+
+#: ../app/javascript/react/screens/App/Mappings/components/InfrastructureMappingsList/InfrastructureMappingsListConstants.js:5
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsConstants.js:27
+#: ../app/javascript/react/screens/App/Plan/components/PlanVmsList.js:79
 msgid "Filter by Name"
 msgstr "按名称筛选"
 
@@ -543,29 +619,33 @@ msgstr "按状态筛选"
 msgid "Filter by VM Name"
 msgstr "按虚拟机名称筛选"
 
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/components/PlanWizardVMStepTable.js:516
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardAdvancedOptionsStep/components/PlanWizardAdvancedOptionsStepTable/PlanWizardAdvancedOptionsStepTable.js:414
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/components/PlanWizardVMStepTable.js:518
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardAdvancedOptionsStep/components/PlanWizardAdvancedOptionsStepTable/PlanWizardAdvancedOptionsStepTable.js:415
 msgid "Find By Keyword..."
 msgstr "按关键词筛选..."
 
-#: ../app/javascript/react/screens/App/Overview/components/ModalWizard/ModalWizardBody.js:125
+#: ../app/javascript/react/screens/App/common/ModalWizard/ModalWizardBody.js:125
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/MappingWizardBody.js:33
 #: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizard.js:27
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/MappingWizardBody.js:33
 msgid "General"
 msgstr "常规"
+
+#: ../app/javascript/react/screens/App/Overview/Overview.js:124
+msgid "Go to the Infrastructure Mappings page to create one."
+msgstr "前往基础设施映射页进行创建。"
 
 #: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/components/CSVDropzoneField.js:58
 msgid "Host"
 msgstr "主机"
 
-#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:706
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:442
 msgid ""
 "If you cancel, these VMs will not be migrated and will be fully restored in "
 "the source provider."
 msgstr "如果您选择取消，这些虚拟机将无法迁移，并且可在源提供程序中完整恢复。"
 
 #: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/components/CSVDropzoneField.js:89
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/PlanWizardVMStep.js:96
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/PlanWizardVMStep.js:106
 #: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizardConstants.js:27
 msgid "Import"
 msgstr "导入"
@@ -574,7 +654,7 @@ msgstr "导入"
 msgid "Import File"
 msgstr "导入文件"
 
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardGeneralStep/PlanWizardGeneralStep.js:64
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardGeneralStep/PlanWizardGeneralStep.js:79
 msgid "Import a CSV file with a list of VMs to be migrated"
 msgstr "导入含有待迁移虚拟机列表的 CSV 文件"
 
@@ -594,36 +674,37 @@ msgid ""
 "nova computing instances."
 msgstr "在 OpenStack 中，类别可以定义 nova 计算实例的计算、内存和存储容量。"
 
-#: ../app/javascript/react/screens/App/Overview/OverviewConstants.js:48
+#: ../app/javascript/react/screens/App/Overview/OverviewConstants.js:38
 msgid "In Progress Plans"
 msgstr "进行中计划"
 
 #: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsConstants.js:5
-#: ../app/javascript/react/screens/App/Overview/components/AggregateCards/InfrastructureMappings/InfrastructureMappings.js:15
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardGeneralStep/PlanWizardGeneralStep.js:15
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsConstants.js:38
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardGeneralStep/PlanWizardGeneralStep.js:21
 msgid "Infrastructure Mapping"
 msgstr "基础设施映射"
 
-#: ../app/javascript/react/screens/App/Overview/components/ModalWizard/ModalWizard.js:8
+#: ../app/javascript/react/screens/App/common/ModalWizard/ModalWizard.js:8
 msgid "Infrastructure Mapping Wizard"
 msgstr "基础设施映射向导"
 
-#: ../app/javascript/react/screens/App/Overview/components/AggregateCards/InfrastructureMappings/InfrastructureMappings.js:15
-#: ../app/javascript/react/screens/App/Overview/components/InfrastructureMappingsList/InfrastructureMappingsList.js:70
+#: ../app/javascript/react/screens/App/Mappings/components/InfrastructureMappingsList/InfrastructureMappingsList.js:74
+#: ../app/javascript/react/screens/App/Mappings/Mappings.js:175
+#: ../lib/manageiq/v2v/engine.rb:17
 msgid "Infrastructure Mappings"
 msgstr "基础设施映射"
 
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardGeneralStep/helpers.js:15
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/MappingWizard.js:41
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/MappingWizardGeneralStep/helpers.js:15
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/MappingWizard.js:41
 msgid "Infrastructure mapping %s already exists"
 msgstr "基础设施映射 %s 已存在"
 
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsNotStartedList.js:174
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:246
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsNotStartedList.js:150
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:234
 msgid "Infrastucture mapping does not exist."
 msgstr "基础设施映射不存在。"
 
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCard.js:34
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCard.js:50
 msgid "Initiating migration. This might take a few minutes."
 msgstr "正在启动迁移。可能需要几分钟时间。"
 
@@ -635,12 +716,7 @@ msgstr "实例属性"
 msgid "Invalid file extension. Only .csv files are accepted."
 msgstr "无效文件扩展名。仅接受 .csv 文件。"
 
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsNotStartedList.js:185
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:257
-msgid "Loading Infrastructure Mapping info..."
-msgstr "正在加载基础设施映射信息..."
-
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/MappingWizardBody.js:28
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/MappingWizardBody.js:28
 msgid "Loading Infrastructure Mappings..."
 msgstr "正在加载基础设施映射..."
 
@@ -648,226 +724,265 @@ msgstr "正在加载基础设施映射..."
 msgid "Loading Migration Plans..."
 msgstr "正在加载迁移计划..."
 
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardInstancePropertiesStep/PlanWizardInstancePropertiesStep.js:67
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardInstancePropertiesStep/PlanWizardInstancePropertiesStep.js:72
 msgid "Loading OpenStack Properties..."
 msgstr "正在加载 OpenStack 属性..."
 
-#: ../app/javascript/react/screens/App/Overview/components/ModalWizard/ModalWizardBody.js:122
+#: ../app/javascript/react/screens/App/common/ModalWizard/ModalWizardBody.js:122
 msgid "Loading Wizard..."
 msgstr "正在加载向导..."
 
-#: ../app/javascript/react/screens/App/Overview/components/ModalWizard/ModalWizardBody.js:123
+#: ../app/javascript/react/screens/App/common/ModalWizard/ModalWizardBody.js:123
 msgid "Loading..."
 msgstr "正在加载..."
 
-#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:547
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:297
 msgid "Log:"
 msgstr "日志："
 
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCards.js:39
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsNotStartedList.js:211
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:347
-msgid "Make a selection in the dropdown to view plans in other states."
-msgstr "在下拉列表中选择以查看其他状态的计划。"
-
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/MappingWizardBody.js:38
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/MappingWizardBody.js:38
 msgid "Map Compute"
 msgstr "映射计算"
 
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/MappingWizardBody.js:48
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/MappingWizardBody.js:48
 msgid "Map Networks"
 msgstr "映射网络"
 
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/MappingWizardBody.js:43
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/MappingWizardBody.js:43
 msgid "Map Storage"
 msgstr "映射存储"
 
-#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:49
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/MappingWizardGeneralStep/helpers.js:16
+msgid "Mapping name already exists. Enter a unique name."
+msgstr "映射名已经存在。请输入不同的名称。"
+
+#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:56
 msgid "Mark source as migrated"
 msgstr "将源标记为已迁移"
+
+#: ../app/javascript/react/screens/App/Settings/Settings.js:47
+msgid "Maximum concurrent migrations per conversion host"
+msgstr "每个转换主机的最大并行迁移数量"
 
 #: ../app/javascript/common/constants.js:4
 msgid "Maximum length is %s characters."
 msgstr "最大长度为 ％s 个字符。"
 
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsNotStartedList.js:128
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsNotStartedList.js:105
 msgid "Migrate"
 msgstr "迁移"
 
-#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:58
+#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:68
 msgid "Migrate VM"
 msgstr "迁移虚拟机"
 
-#: ../app/javascript/react/screens/App/Plan/components/PlanVmsList.js:281
-#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:629
+#: ../app/javascript/react/screens/App/Plan/components/PlanVmsList.js:47
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:379
 msgid "Migrated"
 msgstr "已迁移"
 
-#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:50
+#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:57
 msgid "Migrating"
 msgstr "正在迁移"
 
-#: ../app/controllers/migration_controller.rb:10
+#: ../app/controllers/migration_controller.rb:16
+#: ../app/javascript/react/screens/App/Mappings/Mappings.js:174
 #: ../app/javascript/react/screens/App/Overview/Overview.js:401
-#: ../app/javascript/react/screens/App/Plan/Plan.js:158
+#: ../app/javascript/react/screens/App/Settings/Settings.js:26
+#: ../app/javascript/react/screens/App/Plan/Plan.js:170
 #: ../lib/manageiq/v2v/engine.rb:15
 msgid "Migration"
 msgstr "迁移"
 
-#: ../app/javascript/react/screens/App/Overview/components/AggregateCards/FinishedTransformationPlans/FinishedTransformationPlans.js:16
+#: ../app/javascript/react/screens/App/Plan/Plan.js:248
+msgid "Migration Failed"
+msgstr "迁移失败"
+
+#: ../app/javascript/react/screens/App/Overview/components/AggregateCards/ArchivedTransformationPlans/ArchivedTransformationPlans.js:16
+msgid "Migration Plan Archived"
+msgstr "迁移计划已归档"
+
+#: ../app/javascript/react/screens/App/Overview/components/AggregateCards/FinishedTransformationPlans/FinishedTransformationPlans.js:17
 msgid "Migration Plan Complete"
 msgstr "完成的迁移计划"
 
-#: ../app/javascript/react/screens/App/Overview/components/AggregateCards/ActiveTransformationPlans/ActiveTransformationPlans.js:18
+#: ../app/javascript/react/screens/App/Overview/components/AggregateCards/ActiveTransformationPlans/ActiveTransformationPlans.js:26
 msgid "Migration Plan In Progress"
 msgstr "进行中的迁移计划"
 
-#: ../app/javascript/react/screens/App/Overview/components/AggregateCards/NotStartedTransformationPlans/NotStartedTransformationPlans.js:16
+#: ../app/javascript/react/screens/App/Overview/components/AggregateCards/NotStartedTransformationPlans/NotStartedTransformationPlans.js:17
 msgid "Migration Plan Not Started"
 msgstr "未开始的迁移计划"
 
-#: ../app/javascript/react/screens/App/Overview/components/ModalWizard/ModalWizard.js:9
+#: ../app/javascript/react/screens/App/common/ModalWizard/ModalWizard.js:9
 msgid "Migration Plan Wizard"
 msgstr "迁移计划向导"
 
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/Migrations.js:70
-msgid "Migration Plans"
-msgstr "迁移计划"
+#: ../app/javascript/react/screens/App/Overview/components/AggregateCards/ArchivedTransformationPlans/ArchivedTransformationPlans.js:16
+msgid "Migration Plans Archived"
+msgstr "迁移计划已归档"
 
-#: ../app/javascript/react/screens/App/Overview/components/AggregateCards/FinishedTransformationPlans/FinishedTransformationPlans.js:16
+#: ../app/javascript/react/screens/App/Overview/components/AggregateCards/FinishedTransformationPlans/FinishedTransformationPlans.js:17
 msgid "Migration Plans Complete"
 msgstr "完成的迁移计划"
 
-#: ../app/javascript/react/screens/App/Overview/components/AggregateCards/ActiveTransformationPlans/ActiveTransformationPlans.js:18
+#: ../app/javascript/react/screens/App/Overview/components/AggregateCards/ActiveTransformationPlans/ActiveTransformationPlans.js:26
 msgid "Migration Plans In Progress"
 msgstr "进行中的迁移计划"
 
-#: ../app/javascript/react/screens/App/Overview/components/AggregateCards/NotStartedTransformationPlans/NotStartedTransformationPlans.js:16
+#: ../app/javascript/react/screens/App/Overview/components/AggregateCards/NotStartedTransformationPlans/NotStartedTransformationPlans.js:17
 msgid "Migration Plans Not Started"
 msgstr "未开始的迁移计划"
 
-#: ../app/javascript/react/screens/App/Plan/PlanActions.js:254
+#: ../app/javascript/react/screens/App/Settings/Settings.js:27
+#: ../lib/manageiq/v2v/engine.rb:18
+msgid "Migration Settings"
+msgstr "迁移设置"
+
+#: ../app/javascript/react/screens/App/Plan/PlanActions.js:256
 msgid "Migration cancel request submitted for VMs: "
 msgstr "已提交取消虚拟机迁移的请求："
 
-#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:495
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:247
 msgid "Migration cancelled"
 msgstr "迁移已取消"
 
-#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:51
+#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:58
 msgid "Migration complete"
 msgstr "完成迁移"
 
-#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:666
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsNotStartedList.js:168
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:258
+msgid "Migration in progress"
+msgstr "迁移进行中"
+
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:417
 msgid "Migration log"
 msgstr "迁移日志"
 
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsNotStartedList.js:191
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:268
+#: ../app/javascript/react/screens/App/Overview/Overview.js:117
+msgid "Migration plan error"
+msgstr "迁移计划错误"
+
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsNotStartedList.js:161
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:251
 msgid "Migration scheduled"
 msgstr "已安排迁移"
 
-#: ../app/javascript/react/screens/App/Overview/OverviewActions.js:317
+#: ../app/javascript/react/screens/App/Overview/OverviewActions.js:240
 msgid "Migration successfully scheduled for %s"
 msgstr "已经成功安排 %s 迁移"
 
-#: ../app/javascript/react/screens/App/Overview/OverviewActions.js:314
+#: ../app/javascript/react/screens/App/Overview/OverviewActions.js:237
 msgid "Migration successfully unscheduled"
 msgstr "已经成功取消迁移安排"
 
+#: ../app/javascript/react/screens/App/Mappings/components/InfrastructureMappingsList/InfrastructureMappingsListConstants.js:4
+#: ../app/javascript/react/screens/App/Mappings/components/InfrastructureMappingsList/InfrastructureMappingsListConstants.js:19
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/MappingWizardGeneralStep/MappingWizardGeneralStep.js:44
+#: ../app/javascript/react/screens/App/Overview/components/EditPlanNameModal/EditPlanNameModal.js:48
 #: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsConstants.js:2
 #: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsConstants.js:17
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsConstants.js:21
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsConstants.js:26
 #: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/components/CSVDropzoneField.js:57
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardGeneralStep/PlanWizardGeneralStep.js:31
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardGeneralStep/MappingWizardGeneralStep.js:44
-#: ../app/javascript/react/screens/App/Plan/components/PlanVmsList.js:322
-#: ../app/javascript/react/screens/App/Plan/components/PlanVmsList.js:327
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardGeneralStep/PlanWizardGeneralStep.js:46
+#: ../app/javascript/react/screens/App/Plan/components/PlanVmsList.js:73
+#: ../app/javascript/react/screens/App/Plan/components/PlanVmsList.js:78
 msgid "Name"
 msgstr "名称"
 
 #: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardGeneralStep/helpers.js:19
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizard.js:126
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizard.js:124
 msgid "Name %s already exists"
 msgstr "名称 %s 已存在"
 
-#: ../app/javascript/react/screens/App/Overview/components/InfrastructureMappingsList/InfrastructureMappingsList.js:193
+#: ../app/javascript/react/screens/App/Mappings/components/InfrastructureMappingsList/InfrastructureMappingsList.js:230
 msgid "Networks missing"
 msgstr "网络缺失"
 
-#: ../app/javascript/react/screens/App/Overview/components/ModalWizard/ModalWizard.js:63
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizard.js:271
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/MappingWizard.js:200
+#: ../app/javascript/react/screens/App/common/ModalWizard/ModalWizard.js:63
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/MappingWizard.js:200
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizard.js:265
 msgid "Next"
 msgstr "下一步"
 
-#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:716
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:452
 msgid "No"
 msgstr "无"
 
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:339
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:329
 msgid "No Archived Migration Plans"
 msgstr "不存在已存档迁移计划"
 
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:339
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:329
 msgid "No Completed Migration Plans"
 msgstr "不存在已完成的迁移计划"
 
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCard.js:193
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCard.js:199
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCard.js:244
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCard.js:250
 msgid "No Data"
 msgstr "无数据"
 
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCards.js:33
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCards.js:44
 msgid "No Migration Plans In Progress"
 msgstr "不存在进行中的迁移计划"
 
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsNotStartedList.js:205
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsNotStartedList.js:183
 msgid "No Migration Plans Not Started"
 msgstr "不存在未开始的迁移计划"
 
-#: ../app/javascript/react/screens/App/Plan/Plan.js:202
+#: ../app/javascript/react/screens/App/Plan/Plan.js:238
 msgid "No Migration Tasks."
 msgstr "无迁移任务。"
 
-#: ../app/javascript/react/screens/App/Plan/Plan.js:205
+#: ../app/javascript/react/screens/App/Plan/Plan.js:241
 msgid ""
 "No VM migration tasks have been started for this plan. Please refresh and "
 "try again."
 msgstr "尚未针对此计划开始虚拟机迁移任务。请刷新并重试。"
 
-#: ../app/javascript/react/screens/App/Plan/Plan.js:212
+#: ../app/javascript/react/screens/App/Plan/Plan.js:266
 msgid "No VMs"
 msgstr "无虚拟机"
 
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizard.js:156
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizard.js:154
 msgid "No VMs Selected"
 msgstr "未选择虚拟机"
 
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/PlanWizardVMStep.js:170
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/PlanWizardVMStep.js:190
 msgid "No VMs were found."
 msgstr "未找到虚拟机。"
 
-#: ../app/javascript/react/screens/App/Plan/Plan.js:215
+#: ../app/javascript/react/screens/App/Plan/Plan.js:269
 msgid ""
 "No VMs were returned for this migration plan. Please refresh and try again."
 msgstr "尚未针对该迁移计划返回虚拟机。请刷新并重试。"
 
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardClustersStep/components/ClustersStepForm/ClustersStepForm.js:104
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/MappingWizardClustersStep/components/ClustersStepForm/ClustersStepForm.js:104
 msgid "No clusters found."
 msgstr "未找到集群。"
 
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardTreeView/MappingWizardTreeView.js:15
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardClustersStep/components/ClustersStepTreeView.js:15
+#: ../app/javascript/react/screens/App/Overview/Overview.js:121
+msgid "No infrastructure mapping exists"
+msgstr "没有基础设施存在"
+
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/MappingWizardTreeView/MappingWizardTreeView.js:15
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/MappingWizardClustersStep/components/ClustersStepTreeView.js:15
 msgid "No mappings have been added yet"
 msgstr "尚未添加映射"
 
-#: ../app/javascript/react/screens/App/Overview/OverviewConstants.js:47
+#: ../app/javascript/react/screens/App/Overview/OverviewConstants.js:37
 msgid "Not Started Plans"
 msgstr "未开始的计划"
 
-#: ../app/javascript/react/screens/App/Plan/components/PlanVmsList.js:269
+#: ../app/javascript/react/screens/App/Plan/components/PlanVmsList.js:35
 msgid "Not started"
 msgstr "未开始"
+
+#: ../app/javascript/react/screens/App/Mappings/components/InfrastructureMappingsList/InfrastructureMappingsListConstants.js:24
+msgid "Number of Associated Plans"
+msgstr "关联计划的数量"
 
 #: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsConstants.js:10
 msgid "Number of VMs"
@@ -885,6 +1000,10 @@ msgstr "OpenStack 类型"
 msgid "OpenStack Security Group"
 msgstr "OpenStack 安全组"
 
+#: ../lib/manageiq/v2v/engine.rb:16
+msgid "Overview"
+msgstr "概况"
+
 #: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizardConstants.js:19
 msgid "Overwrite Import File"
 msgstr "覆盖导入文件"
@@ -894,27 +1013,27 @@ msgstr "覆盖导入文件"
 msgid "Path"
 msgstr "路径"
 
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardGeneralStep/helpers.js:16
-msgid "Please enter a unique name"
-msgstr "请输入唯一名称"
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardGeneralStep/helpers.js:20
+msgid "Plan name already exists. Enter a unique name."
+msgstr "计划名已经存在。请输入不同的名称。"
 
-#: ../app/javascript/react/screens/App/Overview/components/InfrastructureMappingsList/InfrastructureMappingsList.js:131
+#: ../app/javascript/react/screens/App/Mappings/components/InfrastructureMappingsList/InfrastructureMappingsList.js:140
 msgid "Please refresh and try again."
 msgstr "请刷新并重试。"
 
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardResultsStep/MappingWizardResultsStep.js:59
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/MappingWizardResultsStep/MappingWizardResultsStep.js:70
 msgid "Please wait while infrastructure mapping is created."
 msgstr "正在创建基础设施映射，请稍候。"
 
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardResultsStep/MappingWizardResultsStep.js:69
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/MappingWizardResultsStep/MappingWizardResultsStep.js:80
 msgid "Please wait while infrastructure mapping is saved."
 msgstr "正在保存基础设施映射，请稍候。"
 
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardResultsStep/PlanWizardResultsStep.js:71
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardResultsStep/PlanWizardResultsStep.js:83
 msgid "Please wait while the migration plan is created."
 msgstr "正在创建迁移计划，请稍候。"
 
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardResultsStep/PlanWizardResultsStep.js:78
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardResultsStep/PlanWizardResultsStep.js:90
 msgid "Please wait while the migration plan is saved."
 msgstr "正在保存迁移计划，请稍候。"
 
@@ -926,19 +1045,19 @@ msgstr "后迁移选择 %s"
 msgid "Post-Migration Service"
 msgstr "后迁移服务"
 
-#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:52
+#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:59
 msgid "Post-migration"
 msgstr "后迁移"
 
-#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:673
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:424
 msgid "Post-migration log"
 msgstr "后迁移日志"
 
-#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:53
+#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:60
 msgid "Power off"
 msgstr "断电"
 
-#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:54
+#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:61
 msgid "Power-on VM"
 msgstr "打开虚拟机"
 
@@ -950,11 +1069,15 @@ msgstr "预迁移选择 %s"
 msgid "Pre-Migration Service"
 msgstr "预迁移服务"
 
-#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:55
+#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:63
+msgid "Pre-migrate VM"
+msgstr "迁移前的虚拟机"
+
+#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:62
 msgid "Pre-migration"
 msgstr "预迁移"
 
-#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:659
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:410
 msgid "Pre-migration log"
 msgstr "预迁移日志"
 
@@ -962,37 +1085,37 @@ msgstr "预迁移日志"
 msgid "Provider"
 msgstr "提供程序"
 
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/MappingWizardConstants.js:9
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/MappingWizardConstants.js:12
 msgid "Red Hat OpenStack Platform"
 msgstr "红帽 OpenStack 平台"
 
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/MappingWizardConstants.js:8
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/MappingWizardConstants.js:11
 msgid "Red Hat Virtualization"
 msgstr "红帽虚拟化"
 
-#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:56
+#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:64
 msgid "Refresh inventory"
 msgstr "刷新库存"
 
-#: ../app/javascript/react/screens/App/Plan/components/PlanVmsList.js:286
-#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:634
+#: ../app/javascript/react/screens/App/Plan/components/PlanVmsList.js:52
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:384
 msgid "Remaining"
 msgstr "剩余"
 
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardTreeView/MappingWizardTreeView.js:25
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardClustersStep/components/ClustersStepTreeView.js:25
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/MappingWizardTreeView/MappingWizardTreeView.js:25
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/MappingWizardClustersStep/components/ClustersStepTreeView.js:25
 msgid "Remove All"
 msgstr "全部删除"
 
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardClustersStep/components/ClustersStepTreeView.js:22
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/MappingWizardClustersStep/components/ClustersStepTreeView.js:22
 msgid "Remove Mapping"
 msgstr "删除映射"
 
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardTreeView/MappingWizardTreeView.js:22
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/MappingWizardTreeView/MappingWizardTreeView.js:22
 msgid "Remove Selected"
 msgstr "删除所选内容"
 
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardGeneralStep/PlanWizardGeneralStep.js:19
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardGeneralStep/PlanWizardGeneralStep.js:25
 msgid "Required"
 msgstr "必填"
 
@@ -1000,68 +1123,79 @@ msgstr "必填"
 msgid "Required. Maximum length is %s characters."
 msgstr "必填。最大长度 %s 个字符。"
 
-#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:57
+#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:65
 msgid "Restore VM Attributes"
 msgstr "恢复虚拟机属性"
 
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/components/PlanWizardVMStepTable.js:526
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardAdvancedOptionsStep/components/PlanWizardAdvancedOptionsStepTable/PlanWizardAdvancedOptionsStepTable.js:424
-#: ../app/javascript/react/screens/App/Plan/components/PlanVmsList.js:233
-#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:440
+#: ../app/javascript/react/screens/App/common/ListViewToolbar/ListViewToolbar.js:256
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/components/PlanWizardVMStepTable.js:528
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardAdvancedOptionsStep/components/PlanWizardAdvancedOptionsStepTable/PlanWizardAdvancedOptionsStepTable.js:425
 msgid "Result"
 msgstr "结果"
 
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/components/PlanWizardVMStepTable.js:526
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardAdvancedOptionsStep/components/PlanWizardAdvancedOptionsStepTable/PlanWizardAdvancedOptionsStepTable.js:424
+#: ../app/javascript/react/screens/App/common/ListViewToolbar/ListViewToolbar.js:256
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/MappingWizardBody.js:53
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/components/PlanWizardVMStepTable.js:528
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardAdvancedOptionsStep/components/PlanWizardAdvancedOptionsStepTable/PlanWizardAdvancedOptionsStepTable.js:425
 #: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizard.js:57
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/MappingWizardBody.js:53
-#: ../app/javascript/react/screens/App/Plan/components/PlanVmsList.js:233
-#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:440
 msgid "Results"
 msgstr "结果"
 
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:297
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardClustersStep/MappingWizardClustersStep.js:70
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/MappingWizardClustersStep/MappingWizardClustersStep.js:70
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:275
 msgid "Retry"
 msgstr "重试"
 
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardScheduleStep/PlanWizardScheduleStep.js:10
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardScheduleStep/PlanWizardScheduleStep.js:11
 msgid "Run migration plan"
 msgstr "运行迁移计划"
 
-#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:559
+#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:67
+msgid "Run post-migration playbook"
+msgstr "运行迁移后的 playbook"
+
+#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:66
+msgid "Run pre-migration playbook"
+msgstr "运行迁移前的 playbook"
+
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:309
 msgid "Running playbook service"
 msgstr "正在运行 playbook 服务"
 
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCard.js:134
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCard.js:162
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCard.js:185
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCard.js:213
 msgid "Running playbook service %s. This might take a few minutes."
 msgstr "正在运行 playbook 服务 %s。这可能需要几分钟。"
 
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizard.js:231
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/MappingWizard.js:198
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/MappingWizard.js:198
+#: ../app/javascript/react/screens/App/Overview/components/EditPlanNameModal/EditPlanNameModal.js:92
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizard.js:229
 msgid "Save"
 msgstr "保存"
 
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardScheduleStep/PlanWizardScheduleStep.js:16
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardScheduleStep/PlanWizardScheduleStep.js:17
 msgid "Save migration plan to run later"
 msgstr "保存迁移计划以便稍后运行"
 
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardResultsStep/MappingWizardResultsStep.js:68
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/MappingWizardResultsStep/MappingWizardResultsStep.js:79
 msgid "Saving Infrastructure Mapping..."
 msgstr "正在保存基础设施映射..."
 
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardResultsStep/PlanWizardResultsStep.js:78
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardResultsStep/PlanWizardResultsStep.js:90
 msgid "Saving Migration Plan..."
 msgstr "正在保存迁移计划..."
 
-#: ../app/javascript/react/screens/App/Overview/components/ScheduleMigrationModal/ScheduleMigrationModal.js:57
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/ScheduleMigrationButton.js:61
+#: ../app/javascript/react/screens/App/Overview/components/EditPlanNameModal/EditPlanNameModal.js:76
+msgid "Saving..."
+msgstr "正在保存..."
+
+#: ../app/javascript/react/screens/App/Overview/components/ScheduleMigrationModal/ScheduleMigrationModal.js:60
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/ScheduleMigrationButtons.js:64
 #: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizard.js:51
 msgid "Schedule"
 msgstr "安排"
 
-#: ../app/javascript/react/screens/App/Overview/components/ScheduleMigrationModal/ScheduleMigrationModal.js:32
+#: ../app/javascript/react/screens/App/Overview/components/ScheduleMigrationModal/ScheduleMigrationModal.js:35
 msgid "Schedule Migration Plan"
 msgstr "安排迁移计划"
 
@@ -1069,27 +1203,34 @@ msgstr "安排迁移计划"
 msgid "Scheduled Time"
 msgstr "已安排时间"
 
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/PlanWizardVMStep.js:92
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/PlanWizardVMStep.js:102
 msgid "See product documentation for the correct format of the .csv file"
 msgstr "查看产品文档，以了解 .csv 文件的正确格式"
+
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCard.js:62
+#: ../app/javascript/react/screens/App/Plan/Plan.js:255
+msgid ""
+"See the product documentation for information on configuring conversion "
+"hosts."
+msgstr "查看文档来了解配置转换主机的信息。"
 
 #: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/components/PlanWizardVMStepTable.js:114
 msgid "Select"
 msgstr "选择"
 
-#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:403
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:185
 msgid "Select All"
 msgstr "全选"
 
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardResultsStep/PlanWizardResultsStep.js:85
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardResultsStep/PlanWizardResultsStep.js:97
 msgid "Select Migrate on the Overview page to begin migration"
 msgstr "在“概况”页面选择“迁移”以开始迁移"
 
-#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:406
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:188
 msgid "Select None"
 msgstr "不选择"
 
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardGeneralStep/PlanWizardGeneralStep.js:55
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardGeneralStep/PlanWizardGeneralStep.js:70
 msgid "Select VMs"
 msgstr "选择虚拟机"
 
@@ -1097,24 +1238,28 @@ msgstr "选择虚拟机"
 msgid "Select VMs on which to run the playbook services"
 msgstr "选择运行 playbook 服务的虚拟机"
 
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardDatastoresStep/MappingWizardDatastoresStep.js:143
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardNetworksStep/MappingWizardNetworksStep.js:140
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/components/PlanWizardVMStepTable.js:491
+msgid "Select VMs to be Migrated"
+msgstr "选择要迁移的虚拟机"
+
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/MappingWizardDatastoresStep/MappingWizardDatastoresStep.js:149
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/MappingWizardNetworksStep/MappingWizardNetworksStep.js:151
 msgid "Select a source cluster"
 msgstr "选择一个源集群"
 
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardDatastoresStep/MappingWizardDatastoresStep.js:135
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/MappingWizardDatastoresStep/MappingWizardDatastoresStep.js:141
 msgid "Select a source cluster whose datastores you want to map"
 msgstr "选择您想要映射其数据存储区的源集群"
 
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardNetworksStep/MappingWizardNetworksStep.js:132
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/MappingWizardNetworksStep/MappingWizardNetworksStep.js:143
 msgid "Select a source cluster whose networks you want to map"
 msgstr "选择您想要映射其网络的源集群"
 
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardAdvancedOptionsStep/PlanWizardAdvancedOptionsStep.js:60
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardAdvancedOptionsStep/PlanWizardAdvancedOptionsStep.js:69
 msgid "Select post-migration playbook service (optional)"
 msgstr "选择后迁移 playbook 服务（可选）"
 
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardAdvancedOptionsStep/PlanWizardAdvancedOptionsStep.js:48
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardAdvancedOptionsStep/PlanWizardAdvancedOptionsStep.js:57
 msgid "Select pre-migration playbook service (optional)"
 msgstr "选择预迁移 playbook 服务（可选）"
 
@@ -1123,17 +1268,23 @@ msgstr "选择预迁移 playbook 服务（可选）"
 msgid "Select row %s"
 msgstr "选择第 %s 行"
 
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/PlanWizardVMStep.js:172
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardGeneralStep/PlanWizardGeneralStep.js:36
+msgid ""
+"Selecting a different infrastructure mapping will cause all VM and option "
+"selections to be cleared."
+msgstr "选择不同的基础设施映射将会使所有虚拟机和选项选择都被清除。"
+
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/PlanWizardVMStep.js:192
 msgid ""
 "Sorry, no VMs were associated with this Infrastructure Mapping. Please try "
 "again."
 msgstr "抱歉，没有与该基础设施映射相关联的虚拟机。请重试。"
 
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/PlanWizardVMStep.js:79
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/PlanWizardVMStep.js:89
 msgid "Sorry, there was an error validating VMs. Please try again."
-msgstr "抱歉，验证虚拟机时出现错误。请重试。"
+msgstr "抱歉，验证 虚拟机时出现错误。请重试。"
 
-#: ../app/javascript/react/screens/App/Plan/Plan.js:225
+#: ../app/javascript/react/screens/App/Plan/Plan.js:279
 msgid ""
 "Sorry, we were unable to retrieve migration details at this time. Please "
 "refresh and try again."
@@ -1147,35 +1298,44 @@ msgstr "抱歉，现在无法检索迁移详细信息。请刷新并重试。"
 msgid "Source Cluster"
 msgstr "源集群"
 
-#: ../app/javascript/react/screens/App/Overview/components/InfrastructureMappingsList/InfrastructureMappingsList.js:411
+#: ../app/javascript/react/screens/App/Mappings/components/InfrastructureMappingsList/helpers.js:32
 msgid "Source Clusters"
 msgstr "源集群"
 
-#: ../app/javascript/react/screens/App/Overview/components/InfrastructureMappingsList/InfrastructureMappingsList.js:375
+#: ../app/javascript/react/screens/App/Mappings/components/InfrastructureMappingsList/helpers.js:30
 msgid "Source Datastores"
 msgstr "源数据存储区"
 
-#: ../app/javascript/react/screens/App/Overview/components/InfrastructureMappingsList/InfrastructureMappingsList.js:339
+#: ../app/javascript/react/screens/App/Mappings/components/InfrastructureMappingsList/helpers.js:28
 msgid "Source Networks"
 msgstr "源网络"
 
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardClustersStep/components/ClustersStepForm/ClustersStepForm.js:148
+#: ../app/javascript/react/screens/App/Mappings/components/InfrastructureMappingsList/helpers.js:23
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/MappingWizardClustersStep/components/ClustersStepForm/ClustersStepForm.js:156
 msgid "Source Provider \\\\ Datacenter \\\\ Cluster"
 msgstr "源供应商 \\\\ 数据中心 \\\\ 集群"
 
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardDatastoresStep/components/DatastoresStepForm/DatastoresStepForm.js:284
+#: ../app/javascript/react/screens/App/Mappings/components/InfrastructureMappingsList/helpers.js:21
+msgid "Source Provider \\\\ Datacenter \\\\ Cluster \\\\ Datastore"
+msgstr "源供应商 \\\\ 数据中心 \\\\ 集群 \\\\ 数据存储区"
+
+#: ../app/javascript/react/screens/App/Mappings/components/InfrastructureMappingsList/helpers.js:19
+msgid "Source Provider \\\\ Datacenter \\\\ Cluster \\\\ Network"
+msgstr "源供应商 \\\\ 数据中心 \\\\ 集群 \\\\ 网络"
+
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/MappingWizardDatastoresStep/components/DatastoresStepForm/DatastoresStepForm.js:292
 msgid "Source Provider \\\\ Datacenter \\\\ Datastore"
 msgstr "源供应商 \\\\ 数据中心 \\\\ 数据存储区"
 
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardNetworksStep/components/NetworksStepForm/NetworksStepForm.js:310
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/MappingWizardNetworksStep/components/NetworksStepForm/NetworksStepForm.js:318
 msgid "Source Provider \\\\ Datacenter \\\\ Network"
 msgstr "源供应商 \\\\ 数据中心 \\\\ 网络"
 
-#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:535
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:287
 msgid "Start Time"
 msgstr "起始时间"
 
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardScheduleStep/PlanWizardScheduleStep.js:20
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardScheduleStep/PlanWizardScheduleStep.js:21
 msgid "Start migration immediately"
 msgstr "立即开始迁移"
 
@@ -1184,107 +1344,117 @@ msgstr "立即开始迁移"
 #: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailListConstants.js:28
 #: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailListConstants.js:57
 #: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailListConstants.js:67
-#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:564
+#: ../app/javascript/react/screens/App/Plan/components/PlanRequestDetailList/PlanRequestDetailList.js:314
 msgid "Status"
 msgstr "状态"
 
-#: ../app/javascript/react/screens/App/Overview/components/InfrastructureMappingsList/InfrastructureMappingsList.js:414
+#: ../app/javascript/react/screens/App/Mappings/components/InfrastructureMappingsList/helpers.js:33
 msgid "Target Clusters"
 msgstr "目标集群"
 
-#: ../app/javascript/react/screens/App/Overview/components/InfrastructureMappingsList/InfrastructureMappingsList.js:378
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/helpers.js:43
+#: ../app/javascript/react/screens/App/Mappings/components/InfrastructureMappingsList/helpers.js:31
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/helpers.js:43
 msgid "Target Datastores"
 msgstr "目标数据存储区"
 
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/helpers.js:45
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/helpers.js:45
 msgid "Target Network"
 msgstr "目标网络"
 
-#: ../app/javascript/react/screens/App/Overview/components/InfrastructureMappingsList/InfrastructureMappingsList.js:342
+#: ../app/javascript/react/screens/App/Mappings/components/InfrastructureMappingsList/helpers.js:29
 msgid "Target Networks"
 msgstr "目标网络"
 
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/helpers.js:34
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/helpers.js:34
 msgid "Target Project \\\\ Network"
 msgstr "目标项目 \\\\ 网络"
 
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/MappingWizardGeneralStep/MappingWizardGeneralStep.js:68
 #: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardInstancePropertiesStep/components/PlanWizardInstancePropertiesStepTable.js:269
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardGeneralStep/MappingWizardGeneralStep.js:68
 msgid "Target Provider"
 msgstr "目标供应商"
 
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/helpers.js:41
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/helpers.js:41
 msgid "Target Provider \\\\ Datacenter \\\\ Cluster"
 msgstr "目标供应商 \\\\ 数据中心 \\\\ 集群"
 
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/helpers.js:30
+#: ../app/javascript/react/screens/App/Mappings/components/InfrastructureMappingsList/helpers.js:24
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/helpers.js:30
 msgid "Target Provider \\\\ Project"
 msgstr "目标供应商 \\\\ 项目"
 
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/helpers.js:32
+#: ../app/javascript/react/screens/App/Mappings/components/InfrastructureMappingsList/helpers.js:20
+msgid "Target Provider \\\\ Project \\\\ Network"
+msgstr "目标供应商 \\\\ 项目 \\\\ 网络"
+
+#: ../app/javascript/react/screens/App/Mappings/components/InfrastructureMappingsList/helpers.js:22
+msgid "Target Provider \\\\ Project \\\\ Volume Type"
+msgstr "目标供应商 \\\\ 项目 \\\\ 卷类型"
+
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/helpers.js:32
 msgid "Target Provider \\\\ Volume Type"
 msgstr "目标供应商 \\\\ 卷类型"
 
-#: ../app/javascript/react/screens/App/Overview/Overview.js:386
-msgid ""
-"The VMWare and Red Hat Virtualization providers must be configured before "
-"attempting a migration."
-msgstr "尝试迁移之前，必须配置 VMWare 和红帽虚拟化提供程序。"
-
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/WarningModal/WarningModal.js:38
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/WarningModal/WarningModal.js:38
 msgid "The following source clusters have no mapped %s"
 msgstr "以下源集群没有已映射的 %s"
 
-#: ../app/javascript/react/screens/App/Overview/components/DeleteInfrastructureMappingConfirmationModal/DeleteInfrastructureMappingConfirmationModal.js:22
+#: ../app/javascript/react/screens/App/Mappings/components/DeleteInfrastructureMappingConfirmationModal/DeleteInfrastructureMappingConfirmationModal.js:22
 msgid ""
 "The infrastructure mapping is associated with migration plans that include "
 "unmigrated VMs. Deleting the mapping will prevent you from migrating the VMs"
 " in these plans:"
 msgstr "与基础设施映射相关联的迁移计划包含未迁移的虚拟机。如果删除该映射，将无法迁移这些计划中的虚拟机："
 
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/PlanWizardVMStep.js:89
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/PlanWizardVMStep.js:99
 msgid "The selected file does not have the expected format."
 msgstr "选定文件不具有预期各式。"
 
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardDatastoresStep/components/DatastoresStepForm/helpers.js:61
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/MappingWizardDatastoresStep/components/DatastoresStepForm/helpers.js:61
 msgid ""
 "The size of the selected source datastores exceeds the available space in "
 "the target datastore"
 msgstr "选定源数据存储区大小超过目标数据存储区中的可用空间"
 
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:345
+#: ../app/javascript/react/screens/App/Mappings/Mappings.js:225
+#: ../app/javascript/react/screens/App/Overview/Overview.js:347
+msgid ""
+"The source and target providers must be configured before attempting a "
+"migration"
+msgstr "在尝试进行迁移前，源和目标供应商需要被配置"
+
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:335
 msgid "There are no exisitng migration plans in an Archived state."
 msgstr "不存在处于“已归档”状态的现有迁移计划。"
 
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:346
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:336
 msgid "There are no existing migration plans in a Completed state."
 msgstr "不存在处于“已完成”状态的现有迁移计划。"
 
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsNotStartedList.js:210
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsNotStartedList.js:186
 msgid "There are no existing migration plans in a Not Started state."
 msgstr "不存在处于“未开始”状态的现有迁移计划。"
 
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCards.js:38
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCards.js:47
 msgid "There are no existing migration plans in an In Progress state."
 msgstr "不存在处于“进行中”状态的现有迁移计划。"
 
-#: ../app/javascript/react/screens/App/Overview/components/InfrastructureMappingsList/InfrastructureMappingsList.js:129
+#: ../app/javascript/react/screens/App/Mappings/components/InfrastructureMappingsList/InfrastructureMappingsList.js:138
 msgid "There was an error loading Infrastructure Mappings."
 msgstr "加载基础设施映射时出现错误。"
 
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardResultsStep/PlanWizardResultsStep.js:89
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardResultsStep/PlanWizardResultsStep.js:107
 msgid ""
 "This may take a long time. Progress of the plan will be shown in the "
 "Migration area"
 msgstr "该过程可能需要较长时间。迁移区将显示计划进度"
 
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/MappingWizardBody.js:29
 #: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizardBody.js:20
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/MappingWizardBody.js:29
 msgid "This may take a minute."
 msgstr "可能需要一分钟时间。"
 
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:150
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:123
 msgid ""
 "This plan includes VMs that failed to migrate. If you archive the plan, you "
 "will not be able to retry the failed migrations."
@@ -1294,7 +1464,14 @@ msgstr "该计划包含迁移失败的虚拟机。如果存档该计划，将无
 msgid "UID"
 msgstr "UID"
 
-#: ../app/javascript/react/screens/App/Plan/Plan.js:221
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCard.js:60
+#: ../app/javascript/react/screens/App/Plan/Plan.js:253
+msgid ""
+"Unable to migrate VMs because no conversion host was configured at the time "
+"of the attempted migration."
+msgstr "无法迁移虚拟机，因为在试图进行迁移时转换主机还没有配置。"
+
+#: ../app/javascript/react/screens/App/Plan/Plan.js:275
 msgid "Unable to retrieve migration details."
 msgstr "无法检索迁移详细信息。"
 
@@ -1302,24 +1479,23 @@ msgstr "无法检索迁移详细信息。"
 msgid "Unknown"
 msgstr "未知"
 
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/WarningModal/WarningModal.js:31
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/WarningModal/WarningModal.js:31
 msgid "Unmapped %s"
 msgstr "未映射 %s"
 
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/ScheduleMigrationButton.js:35
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/ScheduleMigrationButton.js:77
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/ScheduleMigrationButtons.js:36
 msgid "Unschedule"
 msgstr "取消安排"
 
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/ScheduleMigrationButton.js:32
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/ScheduleMigrationButtons.js:33
 msgid "Unschedule Migration Plan"
 msgstr "取消迁移计划安排"
 
-#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:59
+#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:69
 msgid "Update description of VM"
 msgstr "更新虚拟机描述"
 
-#: ../lib/manageiq/v2v/engine.rb:20
+#: ../lib/manageiq/v2v/engine.rb:24
 msgid "V2V"
 msgstr "V2V"
 
@@ -1339,7 +1515,7 @@ msgstr "虚拟机名称"
 msgid "VM available for migration"
 msgstr "可迁移的虚拟机"
 
-#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:64
+#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:74
 msgid "VM cancelled"
 msgstr "已取消的虚拟机"
 
@@ -1363,11 +1539,11 @@ msgstr "虚拟机存在冲突"
 msgid "VM is inactive"
 msgstr "虚拟机不活跃"
 
-#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:61
+#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:71
 msgid "VM migrations completed"
 msgstr "虚拟机迁移已完成"
 
-#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:63
+#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:73
 msgid "VM migrations failed"
 msgstr "虚拟机迁移失败"
 
@@ -1379,8 +1555,8 @@ msgstr "虚拟机迁移停滞"
 msgid "VM unavailable for migration, no information available"
 msgstr "虚拟机不可迁移，无可用信息"
 
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsNotStartedList.js:168
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCard.js:223
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsNotStartedList.js:146
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCard.js:277
 #: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizard.js:33
 msgid "VMs"
 msgstr "虚拟机"
@@ -1389,41 +1565,42 @@ msgstr "虚拟机"
 msgid "VMs Selected for Migration"
 msgstr "选定要迁移的虚拟机"
 
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:240
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardResultsStep/PlanWizardResultsStep.js:55
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardScheduleStep/PlanWizardScheduleStep.js:30
+msgid "VMs must be powered on in order to migrate."
+msgstr "为了迁移虚拟机必须已开机。"
+
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:230
 msgid "VMs successfully migrated."
 msgstr "虚拟机已成功迁移。"
 
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/components/PlanWizardVMStepTable.js:491
-msgid "VMs to be Migrated"
-msgstr "待迁移虚拟机"
-
-#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:60
+#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:70
 msgid "Validating"
 msgstr "正在验证"
 
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/PlanWizardVMStep.js:115
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/PlanWizardVMStep.js:125
 msgid "Validating CSV Import"
 msgstr "正在验证 CSV 导入"
 
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/PlanWizardVMStep.js:117
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/components/PlanWizardVMStep/PlanWizardVMStep.js:127
 msgid ""
 "Validating CSV VMs are associated with the Infrastructure Mapping selected."
 msgstr "正在验证与所选基础设施映射相关联的 CSV 虚拟机。"
 
-#: ../app/javascript/react/screens/App/common/NotificationList/NotificationList.js:28
+#: ../app/javascript/react/screens/App/common/NotificationList/NotificationList.js:27
 msgid "View Details"
 msgstr "查看详细信息"
 
-#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:62
+#: ../app/javascript/react/screens/App/Plan/PlanConstants.js:72
 msgid "Virtual machine migrated"
 msgstr "虚拟机器已迁移"
 
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardResultsStep/MappingWizardResultsStep.js:64
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardClustersStep/MappingWizardClustersStep.js:67
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/MappingWizardResultsStep/MappingWizardResultsStep.js:75
+#: ../app/javascript/react/screens/App/Mappings/screens/MappingWizard/components/MappingWizardClustersStep/MappingWizardClustersStep.js:67
 msgid "We're sorry, something went wrong. Please try again."
 msgstr "抱歉，出现问题。请重试。"
 
-#: ../app/javascript/react/screens/App/common/ConfirmModal.js:72
+#: ../app/javascript/react/screens/App/common/ConfirmModal.js:74
 msgid "Yes"
 msgstr "是"
 
@@ -1431,25 +1608,17 @@ msgstr "是"
 msgid "You have reached the maximum length of %s characters."
 msgstr "您输入的字符数已达到上限 %s。"
 
-#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizard.js:157
+#: ../app/javascript/react/screens/App/Overview/screens/PlanWizard/PlanWizard.js:155
 msgid ""
 "You've selected a pre-migration or post-migration playbook service but no "
 "VMs on which to run the playbook service. Are you sure you want to continue?"
 msgstr "您已选择预迁移或后迁移 playbook 服务，但未选择运行 playbook 服务的虚拟机。您确定要继续吗？"
 
-#: ../app/javascript/react/screens/App/Plan/components/PlanVmsList.js:239
-msgid "label="
-msgstr "标签="
-
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCard.js:176
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCard.js:185
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCard.js:227
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsInProgressCard.js:236
 msgid "migrated"
 msgstr "已迁移"
 
-#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:238
+#: ../app/javascript/react/screens/App/Overview/components/Migrations/MigrationsCompletedList.js:228
 msgid "of"
 msgstr "的"
-
-#: ../app/javascript/react/screens/App/Overview/screens/MappingWizard/components/MappingWizardResultsStep/MappingWizardResultsStep.js:84
-msgid "to create a migration plan using the infrastructure mapping."
-msgstr "以使用基础设施映射来创建迁移计划。"
