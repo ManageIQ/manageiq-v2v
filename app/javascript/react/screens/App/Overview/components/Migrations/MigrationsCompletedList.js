@@ -355,7 +355,7 @@ MigrationsCompletedList.propTypes = {
   finishedTransformationPlans: PropTypes.array,
   allRequestsWithTasks: PropTypes.array,
   retryClick: PropTypes.func,
-  loading: PropTypes.string,
+  loading: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   redirectTo: PropTypes.func,
   showConfirmModalAction: PropTypes.func,
   hideConfirmModalAction: PropTypes.func,
@@ -379,7 +379,7 @@ MigrationsCompletedList.propTypes = {
 MigrationsCompletedList.defaultProps = {
   finishedTransformationPlans: [],
   retryClick: noop,
-  loading: ''
+  loading: false
 };
 
 export default MigrationsCompletedList;

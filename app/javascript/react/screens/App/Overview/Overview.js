@@ -472,7 +472,7 @@ Overview.propTypes = {
   archivedTransformationPlans: PropTypes.array,
   allArchivedPlanRequestsWithTasks: PropTypes.array,
   isFetchingTransformationPlans: PropTypes.bool,
-  isFetchingArchivedTransformationPlans: PropTypes.string,
+  isFetchingArchivedTransformationPlans: PropTypes.bool,
   archiveTransformationPlanAction: PropTypes.func,
   archiveTransformationPlanUrl: PropTypes.string,
   deleteTransformationPlanAction: PropTypes.func,

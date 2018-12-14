@@ -33,7 +33,7 @@ Object {
   "hideEditPlanNameModalAction": [Function],
   "hideMappingWizard": false,
   "hidePlanWizard": false,
-  "isFetchingArchivedTransformationPlans": "true",
+  "isFetchingArchivedTransformationPlans": true,
   "isFetchingCloudTenants": true,
   "isFetchingClusters": false,
   "isFetchingDatastores": false,
