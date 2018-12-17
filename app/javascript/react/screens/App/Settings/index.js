@@ -13,7 +13,8 @@ const mapStateToProps = ({ settings, form }, ownProps) => ({
   ...ownProps.data,
   settingsForm: form.settings,
   initialValues: settings.savedSettings,
-  enableReinitialize: true
+  enableReinitialize: true,
+  destroyOnUnmount: false
 });
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => Object.assign(stateProps, ownProps.data, dispatchProps);
