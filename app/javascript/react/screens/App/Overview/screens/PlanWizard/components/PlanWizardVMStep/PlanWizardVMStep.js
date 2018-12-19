@@ -139,7 +139,6 @@ class PlanWizardVMStep extends React.Component {
         validVms.filter(vm => vm.valid === false)
       );
       const conflictVms = Immutable.asMutable(conflict_vms, { deep: true });
-      // TODO handle removal of everything related to preselected_vms and isQueryingVms?
       const combined = [...inValidsVms, ...conflictVms, ...validVms];
       if (combined.length) {
         let initialSelectedRows = formSelectedVms || [];

@@ -26,10 +26,7 @@ const mapStateToProps = (
   ownProps
 ) => {
   const editingPlan = findEditingPlan(transformationPlans, editingPlanId);
-  const allVms =
-    vm_choice_radio === 'vms_via_csv'
-      ? [...planWizardVMStep.valid_vms, ...planWizardVMStep.invalid_vms, ...planWizardVMStep.conflict_vms]
-      : [...planWizardVMStep.preselected_vms, ...planWizardVMStep.valid_vms];
+  const allVms = [...planWizardVMStep.valid_vms, ...planWizardVMStep.invalid_vms, ...planWizardVMStep.conflict_vms];
   const selectedMapping =
     transformationMappings &&
     infrastructure_mapping &&
