@@ -1,7 +1,7 @@
 # ManageIQ V2V plugin
 
 [![Gem Version](https://badge.fury.io/rb/manageiq-v2v.svg)](http://badge.fury.io/rb/manageiq-v2v)
-[![Build Status](https://travis-ci.org/ManageIQ/manageiq-v2v.svg)](https://travis-ci.org/ManageIQ/manageiq-v2v)
+[![Build Status](https://travis-ci.org/ManageIQ/manageiq-v2v.svg?branch=master)](https://travis-ci.org/ManageIQ/manageiq-v2v)
 [![Code Climate](https://codeclimate.com/github/ManageIQ/manageiq-v2v.svg)](https://codeclimate.com/github/ManageIQ/manageiq-v2v)
 [![Test Coverage](https://codeclimate.com/github/ManageIQ/manageiq-v2v/badges/coverage.svg)](https://codeclimate.com/github/ManageIQ/manageiq-v2v/coverage)
 [![Security](https://hakiri.io/github/ManageIQ/manageiq-v2v/master.svg)](https://hakiri.io/github/ManageIQ/manageiq-v2v/master)
