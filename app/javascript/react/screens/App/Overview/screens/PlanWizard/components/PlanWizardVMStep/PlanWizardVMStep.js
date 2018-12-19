@@ -12,13 +12,14 @@ import { overwriteCsvConfirmModalProps } from '../../PlanWizardConstants';
 class PlanWizardVMStep extends React.Component {
   componentDidMount() {
     const { vm_choice_radio, editingPlan, shouldPrefillForEditing, queryPreselectedVmsAction, pristine } = this.props;
-    if (pristine) {
-      if (vm_choice_radio === 'vms_via_discovery') {
-        this.validateVms();
-      }
+    if (pristine && vm_choice_radio === 'vms_via_discovery') {
+      this.validateVms([], null, { combineRequests: !!shouldPrefillForEditing });
       if (shouldPrefillForEditing) {
         const vmIds = getVmIds(editingPlan);
-        queryPreselectedVmsAction(vmIds);
+        queryPreselectedVmsAction(vmIds).then(({ value: { data: { results } } }) => {
+          const vmNames = results.map(result => ({ name: result.name }));
+          this.validateVms(vmNames, editingPlan.id, { combineRequests: true });
+        });
       }
     }
   }
@@ -44,9 +45,9 @@ class PlanWizardVMStep extends React.Component {
     const { csvParseErrorAction } = this.props;
     csvParseErrorAction(errMsg);
   };
-  validateVms = () => {
+  validateVms = (vms = [], planId = null, meta = {}) => {
     const { infrastructure_mapping_id, validateVmsUrl, validateVmsAction } = this.props;
-    validateVmsAction(validateVmsUrl, infrastructure_mapping_id, []);
+    validateVmsAction(validateVmsUrl, infrastructure_mapping_id, vms, planId, meta);
   };
   showOverwriteCsvConfirmModal = () => {
     const { csvImportAction, showConfirmModalAction, hideConfirmModalAction } = this.props;
@@ -68,15 +69,16 @@ class PlanWizardVMStep extends React.Component {
       valid_vms,
       invalid_vms,
       conflict_vms,
-      preselected_vms,
       validationServiceCalled,
       csvImportAction,
       shouldPrefillForEditing,
+      editingPlan,
       isQueryingVms,
       formSelectedVms,
       pristine
     } = this.props;
     const discoveryMode = vm_choice_radio === 'vms_via_discovery';
+    const preselectedVmIds = shouldPrefillForEditing ? getVmIds(editingPlan) : [];
 
     if (isRejectedValidatingVms && !isCSVParseError) {
       return (
@@ -137,31 +139,19 @@ class PlanWizardVMStep extends React.Component {
         validVms.filter(vm => vm.valid === false)
       );
       const conflictVms = Immutable.asMutable(conflict_vms, { deep: true });
-      const validVmsWithSelections = discoveryMode
-        ? validVms
-        : validVms.filter(vm => vm.valid === true).map(vm => ({ ...vm, selected: true }));
-      // In case the discovery service returns some of the VMs we pre-selected:
-      const validVmsDeduped = !shouldPrefillForEditing
-        ? validVmsWithSelections
-        : validVmsWithSelections.filter(
-            validVm => !preselected_vms.some(preselectedVm => validVm.id === preselectedVm.id)
-          );
-      const combined = discoveryMode
-        ? [...preselected_vms, ...inValidsVms, ...conflictVms, ...validVmsDeduped]
-        : [...inValidsVms, ...conflictVms, ...validVmsWithSelections];
+      // TODO handle removal of everything related to preselected_vms and isQueryingVms?
+      const combined = [...inValidsVms, ...conflictVms, ...validVms];
       if (combined.length) {
-        let initialSelectedRows;
-        let rowsWithSelections;
+        let initialSelectedRows = formSelectedVms || [];
         if (pristine) {
-          initialSelectedRows = discoveryMode ? preselected_vms.map(r => r.id) : validVmsWithSelections.map(r => r.id);
-          rowsWithSelections = combined;
-        } else {
-          initialSelectedRows = formSelectedVms || [];
-          rowsWithSelections = combined.map(vm => ({
-            ...vm,
-            selected: initialSelectedRows.some(id => vm.id === id)
-          }));
+          initialSelectedRows = discoveryMode
+            ? preselectedVmIds
+            : validVms.filter(vm => vm.valid === true).map(vm => vm.id);
         }
+        const rowsWithSelections = combined.map(vm => ({
+          ...vm,
+          selected: initialSelectedRows.some(id => vm.id === id)
+        }));
         return (
           <React.Fragment>
             <Field
@@ -216,7 +206,6 @@ PlanWizardVMStep.propTypes = {
   valid_vms: PropTypes.array,
   invalid_vms: PropTypes.array,
   conflict_vms: PropTypes.array,
-  preselected_vms: PropTypes.array,
   editingPlan: PropTypes.object,
   shouldPrefillForEditing: PropTypes.bool,
   queryPreselectedVmsAction: PropTypes.func,
@@ -236,8 +225,7 @@ PlanWizardVMStep.defaultProps = {
   errorValidatingVms: null,
   valid_vms: [],
   invalid_vms: [],
-  conflict_vms: [],
-  preselected_vms: []
+  conflict_vms: []
 };
 
 export default reduxForm({
