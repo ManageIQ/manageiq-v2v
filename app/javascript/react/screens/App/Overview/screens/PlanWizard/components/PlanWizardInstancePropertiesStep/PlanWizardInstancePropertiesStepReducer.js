@@ -92,6 +92,13 @@ export default (state = initialState, action) => {
         let preselectedFlavor;
         let preselectedGroup;
 
+        /*
+        if (csv specified flavors and groups) {
+          preselectedFlavor = what's in the csv
+          preselectedGroup = what's in the csv
+        } else if (editingPlan) { ... }
+        */
+
         if (editingPlan) {
           const existingVm = editingPlan.options.config_info.actions.find(
             vm => vm.vm_id === existingInstancePropertiesRow.id
