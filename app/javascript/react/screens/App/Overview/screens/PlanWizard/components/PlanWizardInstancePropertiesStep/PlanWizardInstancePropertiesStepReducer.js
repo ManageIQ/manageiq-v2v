@@ -92,14 +92,20 @@ export default (state = initialState, action) => {
         let preselectedFlavor;
         let preselectedGroup;
 
-        /*
-        if (csv specified flavors and groups) {
-          preselectedFlavor = what's in the csv
-          preselectedGroup = what's in the csv
-        } else if (editingPlan) { ... }
-        */
+        if (existingInstancePropertiesRow.csvFields) {
+          const { osp_flavor, osp_security_group } = existingInstancePropertiesRow.csvFields;
+          if (osp_flavor) {
+            const matchingFlavor = tenantFlavors && tenantFlavors.find(flavor => flavor.name === osp_flavor);
+            preselectedFlavor = matchingFlavor && { name: matchingFlavor.name, id: matchingFlavor.id };
+          }
+          if (osp_security_group) {
+            const matchingGroup =
+              tenantSecurityGroups && tenantSecurityGroups.find(group => group.name === osp_security_group);
+            preselectedGroup = matchingGroup && { name: matchingGroup.name, id: matchingGroup.id };
+          }
+        }
 
-        if (editingPlan) {
+        if (editingPlan && !preselectedFlavor && !preselectedGroup) {
           const existingVm = editingPlan.options.config_info.actions.find(
             vm => vm.vm_id === existingInstancePropertiesRow.id
           );
