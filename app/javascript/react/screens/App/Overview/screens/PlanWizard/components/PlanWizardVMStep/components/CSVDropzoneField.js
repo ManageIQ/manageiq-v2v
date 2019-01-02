@@ -58,6 +58,8 @@ class CSVDropzoneField extends React.Component {
     headerRow[headerRow.findIndex(k => k === __('Host'))] = 'host';
     headerRow[headerRow.findIndex(k => k === __('Provider'))] = 'provider';
     headerRow[headerRow.findIndex(k => k === __('UID'))] = 'uid_ems';
+    headerRow[headerRow.findIndex(k => k === __('Security Group'))] = 'osp_security_group';
+    headerRow[headerRow.findIndex(k => k === __('Flavor'))] = 'osp_flavor';
     return headerRow;
   };
 
