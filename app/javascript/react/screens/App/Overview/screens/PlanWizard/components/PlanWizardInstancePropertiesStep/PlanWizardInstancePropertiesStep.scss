@@ -113,3 +113,15 @@ table.pf-table-inline-edit tbody {
 .popover-with-max-width {
   max-width: 400px;
 }
+
+/**
+  Hover state for popover icons
+*/
+
+.instance-properties-step-table .clickable-icon {
+  margin-left: 5px;
+  opacity: 0.5;
+}
+.instance-properties-step-table .clickable-icon:hover {
+  opacity: 1;
+}

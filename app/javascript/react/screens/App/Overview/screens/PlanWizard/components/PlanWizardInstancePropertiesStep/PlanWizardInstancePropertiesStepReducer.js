@@ -90,18 +90,22 @@ export default (state = initialState, action) => {
         const bestGroup = { name: defaultSecurityGroupName, id: defaultSecurityGroupId };
 
         let preselectedFlavor;
+        let csvInvalidFlavorWarning = false;
         let preselectedGroup;
+        let csvInvalidGroupWarning = false;
 
         if (existingInstancePropertiesRow.csvFields) {
           const { osp_flavor, osp_security_group } = existingInstancePropertiesRow.csvFields;
           if (osp_flavor) {
             const matchingFlavor = tenantFlavors && tenantFlavors.find(flavor => flavor.name === osp_flavor);
             preselectedFlavor = matchingFlavor && { name: matchingFlavor.name, id: matchingFlavor.id };
+            csvInvalidFlavorWarning = !matchingFlavor;
           }
           if (osp_security_group) {
             const matchingGroup =
               tenantSecurityGroups && tenantSecurityGroups.find(group => group.name === osp_security_group);
             preselectedGroup = matchingGroup && { name: matchingGroup.name, id: matchingGroup.id };
+            csvInvalidGroupWarning = !matchingGroup;
           }
         }
 
@@ -122,7 +126,9 @@ export default (state = initialState, action) => {
         const rowUpdatedWithBestFlavor = {
           ...existingInstancePropertiesRow,
           osp_flavor: preselectedFlavor || bestFlavor,
+          csvInvalidFlavorWarning,
           osp_security_group: preselectedGroup || bestGroup,
+          csvInvalidGroupWarning,
           target_cluster_name: tenant.name
         };
         instancePropertiesRowsUpdatedWithBestFlavor.push(rowUpdatedWithBestFlavor);
