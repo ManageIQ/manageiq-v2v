@@ -76,7 +76,14 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
         this.setState({ editing: false });
 
         const updatedRows = rows.map(
-          row => (row.id === rowData.id ? input.value.updatedInstancePropertiesRowOnStandby : row)
+          row =>
+            row.id === rowData.id
+              ? {
+                  ...input.value.updatedInstancePropertiesRowOnStandby,
+                  csvInvalidFlavorWarning: false,
+                  csvInvalidGroupWarning: false
+                }
+              : row
         );
         instancePropertiesRowsAction(updatedRows);
         input.onChange({ updatedInstancePropertiesRowOnStandby: {} });
