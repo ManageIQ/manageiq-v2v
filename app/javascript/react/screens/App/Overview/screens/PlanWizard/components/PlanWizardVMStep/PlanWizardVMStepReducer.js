@@ -3,7 +3,7 @@ import Immutable from 'seamless-immutable';
 import { V2V_VALIDATE_VMS, V2V_VM_STEP_RESET, QUERY_V2V_PLAN_VMS } from './PlanWizardVMStepConstants';
 import { _formatConflictVms, _formatInvalidVms, _formatValidVms } from './helpers';
 
-const initialState = Immutable({
+export const initialState = Immutable({
   isValidatingVms: false,
   numPendingValidationRequests: 0,
   isRejectedValidatingVms: false,

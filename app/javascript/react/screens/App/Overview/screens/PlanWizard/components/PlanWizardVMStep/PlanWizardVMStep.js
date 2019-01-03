@@ -9,7 +9,7 @@ import CSVDropzoneField from './components/CSVDropzoneField';
 import { getVmIds } from './helpers';
 import { overwriteCsvConfirmModalProps } from '../../PlanWizardConstants';
 
-class PlanWizardVMStep extends React.Component {
+export class PlanWizardVMStep extends React.Component {
   componentDidMount() {
     const { vm_choice_radio, editingPlan, shouldPrefillForEditing, queryPreselectedVmsAction, pristine } = this.props;
     if (pristine && vm_choice_radio === 'vms_via_discovery') {
