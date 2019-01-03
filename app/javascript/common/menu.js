@@ -1,16 +1,8 @@
 import http from './http';
+import { links } from '../react/config/config';
 
 const updateUrl = '/migration/menu_section_url?section=migration&url=/migration%23';
 const activeMenuItemSelector = '[data-target="#menu-migration"] > div > ul > li[class="list-group-item active"]';
-const plansMenuItemId = 'menu_item_plans';
-const mappingsMenuItemId = 'menu_item_mappings';
-const settingsMenuItemId = 'menu_item_settings';
-const pathToMenuItem = {
-  plan: plansMenuItemId,
-  plans: plansMenuItemId,
-  mappings: mappingsMenuItemId,
-  settings: settingsMenuItemId
-};
 
 export const updateVerticalMenu = path => {
   // POST /migration/menu_section_url to update session[:tab_url] on server
@@ -23,10 +15,12 @@ export const updateVerticalMenu = path => {
   }
 
   // Based on location.pathname, set menu item id
-  const menu_item_id = pathToMenuItem[path.split('/')[1]];
+  const link_item = links.find(element => {
+    return element['path'].split('/')[0] === path.split('/')[1];
+  });
 
-  // Add 'active' class to menu_item_id
-  const newActiveMenuItem = document.querySelector(`[id="${menu_item_id}"]`);
+  // Add 'active' class to correct menu item
+  const newActiveMenuItem = document.querySelector(`[id="${link_item['menu_item_id']}"]`);
   if (newActiveMenuItem !== null) {
     newActiveMenuItem.classList.add('active');
   }

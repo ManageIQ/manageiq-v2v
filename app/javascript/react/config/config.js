@@ -6,18 +6,22 @@ import MappingsContainer from '../screens/App/Mappings';
 export const links = [
   {
     path: 'plans',
-    component: OverviewContainer
+    component: OverviewContainer,
+    menu_item_id: 'menu_item_plans'
   },
   {
     path: 'settings',
-    component: Settings
+    component: Settings,
+    menu_item_id: 'menu_item_settings'
   },
   {
     path: 'plan/:id',
-    component: PlanContainer
+    component: PlanContainer,
+    menu_item_id: 'menu_item_plans'
   },
   {
     path: 'mappings',
-    component: MappingsContainer
+    component: MappingsContainer,
+    menu_item_id: 'menu_item_mappings'
   }
 ];
