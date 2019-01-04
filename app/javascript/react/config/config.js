@@ -23,5 +23,9 @@ export const links = [
     path: 'mappings',
     component: MappingsContainer,
     menu_item_id: 'menu_item_mappings'
+  },
+  {
+    path: '',
+    redirect: 'plans'
   }
 ];
