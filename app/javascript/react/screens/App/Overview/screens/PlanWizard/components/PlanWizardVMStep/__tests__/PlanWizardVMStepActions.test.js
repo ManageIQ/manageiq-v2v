@@ -21,9 +21,9 @@ describe('validate VMs action creator', () => {
     const { method, response } = validateVMsData;
     const url = '/dummy/api/validateVms';
     const id = '1';
-    const meta = { some: 'metadata' };
+    const meta = { some: 'metadata', csvRows: [] };
     mockRequest({ method, url: `${url}/${id}`, response });
-    return store.dispatch(actions.validateVmsAction(url, id, [], '1', meta)).then(() => {
+    return store.dispatch(actions.validateVmsAction(url, id, [], '1', { some: 'metadata' })).then(() => {
       const storeActions = store.getActions();
       expect(storeActions[0]).toEqual({ type: `${V2V_VALIDATE_VMS}_PENDING`, meta });
       expect(storeActions[1]).toEqual({ type: `${V2V_VALIDATE_VMS}_FULFILLED`, meta, payload: response });
@@ -34,9 +34,9 @@ describe('validate VMs action creator', () => {
     const { method, response } = validateVMsData;
     const url = '/dummy/api/validateVms';
     const id = '1';
-    const meta = { some: 'metadata' };
+    const meta = { some: 'metadata', csvRows: [] };
     mockRequest({ method, url: `${url}/${id}`, response, status: 500 });
-    return store.dispatch(actions.validateVmsAction(url, id, [], '1', meta)).catch(() => {
+    return store.dispatch(actions.validateVmsAction(url, id, [], '1', { some: 'metadata' })).catch(() => {
       const storeActions = store.getActions();
       expect(storeActions[0]).toEqual({ type: `${V2V_VALIDATE_VMS}_PENDING`, meta });
       expect(storeActions[1].type).toEqual(`${V2V_VALIDATE_VMS}_REJECTED`);
