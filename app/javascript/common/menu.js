@@ -15,12 +15,10 @@ export const updateVerticalMenu = path => {
   }
 
   // Based on location.pathname, set menu item id
-  const link_item = links.find(element => {
-    return element['path'].split('/')[0] === path.split('/')[1];
-  });
+  const link_item = links.find(element => element.path.split('/')[0] === path.split('/')[1]);
 
   // Add 'active' class to correct menu item
-  const newActiveMenuItem = document.querySelector(`[id="${link_item['menu_item_id']}"]`);
+  const newActiveMenuItem = document.querySelector(`[id="${link_item.menu_item_id}"]`);
   if (newActiveMenuItem !== null) {
     newActiveMenuItem.classList.add('active');
   }
