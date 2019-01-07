@@ -19,7 +19,7 @@ const ConfirmModal = props => {
     ...otherProps
   } = props;
   return (
-    <Modal {...otherProps} onHide={onCancel}>
+    <Modal {...otherProps} onHide={onCancel} backdrop="static">
       <Modal.Header>
         <Modal.CloseButton onClick={onCancel} />
         <Modal.Title>{title}</Modal.Title>

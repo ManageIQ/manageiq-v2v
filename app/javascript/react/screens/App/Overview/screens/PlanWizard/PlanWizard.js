@@ -231,7 +231,7 @@ class PlanWizard extends React.Component {
     const wizardTitle = editingPlan ? __('Edit Migration Plan') : __('Create Migration Plan');
 
     return (
-      <Wizard show={!hidePlanWizard} onClose={hidePlanWizardAction} onExited={planWizardExitedAction}>
+      <Wizard show={!hidePlanWizard} onClose={hidePlanWizardAction} onExited={planWizardExitedAction} backdrop="static">
         <Wizard.Header onClose={hidePlanWizardAction} title={wizardTitle} />
 
         <Wizard.Body>

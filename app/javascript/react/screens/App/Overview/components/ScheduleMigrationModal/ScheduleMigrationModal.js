@@ -29,7 +29,7 @@ class ScheduleMigrationModal extends React.Component {
     };
 
     return (
-      <Modal show={scheduleMigrationModal} onHide={modalClose}>
+      <Modal show={scheduleMigrationModal} onHide={modalClose} backdrop="static">
         <Modal.Header>
           <Modal.CloseButton onClick={modalClose} />
           <Modal.Title>{__('Schedule Migration Plan')}</Modal.Title>

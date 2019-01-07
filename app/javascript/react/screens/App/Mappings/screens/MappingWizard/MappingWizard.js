@@ -145,6 +145,7 @@ class MappingWizard extends React.Component {
           hideMappingWizardAction(onFinalStep);
         }}
         onExited={mappingWizardExitedAction}
+        backdrop="static"
       >
         <Wizard.Header
           onClose={() => {
