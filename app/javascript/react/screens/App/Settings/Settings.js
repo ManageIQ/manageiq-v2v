@@ -23,7 +23,7 @@ export class Settings extends React.Component {
     const toolbarContent = (
       <Toolbar>
         <Breadcrumb.Item href="/dashboard/maintab?tab=compute">{__('Compute')}</Breadcrumb.Item>
-        <Breadcrumb.Item href="/migration">{__('Migration')}</Breadcrumb.Item>
+        <Breadcrumb.Item href="#/plans">{__('Migration')}</Breadcrumb.Item>
         <Breadcrumb.Item active>{__('Migration Settings')}</Breadcrumb.Item>
       </Toolbar>
     );

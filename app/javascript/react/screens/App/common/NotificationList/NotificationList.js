@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { TimedToastNotification, ToastNotificationList } from 'patternfly-react';
+import { Link } from 'react-router-dom';
 
 class NotificationList extends React.Component {
   render() {
@@ -24,7 +25,7 @@ class NotificationList extends React.Component {
               </span>
               {notification.actionEnabled && (
                 <div className="pull-right toast-pf-action">
-                  <a href={`/migration/plan/${notification.data.id}`}>{__('View Details')}</a>
+                  <Link to={`/plan/${notification.data.id}`}>{__('View Details')}</Link>
                 </div>
               )}
             </TimedToastNotification>

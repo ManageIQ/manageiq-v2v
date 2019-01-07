@@ -87,7 +87,7 @@ const MigrationsNotStartedList = ({
                         stacked
                         className="plans-not-started-list__list-item"
                         onClick={() => {
-                          redirectTo(`/migration/plan/${plan.id}`);
+                          redirectTo(`/plan/${plan.id}`);
                         }}
                         actions={
                           <div>
@@ -152,7 +152,7 @@ const MigrationsNotStartedList = ({
                           ),
                           !isMissingMapping && (
                             <ListView.InfoItem key={`${plan.id}-infraMappingName`}>
-                              <a href="/migration/mappings#">{plan.infraMappingName}</a>
+                              <a href="/migration#/mappings">{plan.infraMappingName}</a>
                             </ListView.InfoItem>
                           ),
                           migrationScheduled && !migrationStarting ? (

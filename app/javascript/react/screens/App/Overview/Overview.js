@@ -127,7 +127,7 @@ class Overview extends React.Component {
           <h3 style={{ marginTop: 0 }}>{__('No infrastructure mapping exists')}</h3>
           <p>
             {__('A migration plan must include an infrastructure mapping.')}{' '}
-            <a href="/migration/mappings#">{__('Go to the Infrastructure Mappings page to create one.')}</a>
+            <a href="/migration#/mappings">{__('Go to the Infrastructure Mappings page to create one.')}</a>
           </p>
         </React.Fragment>
       ),
@@ -349,7 +349,7 @@ class Overview extends React.Component {
                 description={__('Create an infrastructure mapping to later be used by a migration plan')}
                 buttonText={__('Create Infrastructure Mapping')}
                 showWizardAction={() => {
-                  this.redirectTo('/migration/mappings');
+                  this.redirectTo('/mappings');
                   openMappingWizardOnTransitionAction();
                 }}
                 className="full-page-empty"
