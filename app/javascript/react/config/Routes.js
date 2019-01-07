@@ -1,12 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Route } from 'react-router-dom';
+import { Redirect, Route } from 'react-router-dom';
 import { links } from './config';
 import { componentSettings } from '../../components';
 import componentRegistry from '../../components/componentRegistry';
 
 const Routes = ({ store }) =>
-  links.map(({ path, component }) => {
+  links.map(({ path, component, redirect }) => {
+    if (typeof redirect !== 'undefined') {
+      return <Route exact key={path} path={path} render={() => <Redirect to={redirect} />} />;
+    }
     const coreComponent = componentSettings(component);
     if (coreComponent) {
       const markup = componentRegistry.markup(coreComponent.name, coreComponent.data, store);
@@ -14,7 +17,7 @@ const Routes = ({ store }) =>
         <Route
           exact
           key={path}
-          path={path}
+          path={`/${path}`}
           render={props => {
             if (props.match.isExact) {
               return (
@@ -28,7 +31,7 @@ const Routes = ({ store }) =>
         />
       );
     }
-    return <Route exact key={path} path={path} />;
+    return <Route exact key={path} path={`/${path}`} />;
   });
 
 Routes.propTypes = {
