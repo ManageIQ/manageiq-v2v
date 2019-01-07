@@ -61,7 +61,7 @@ const DeleteInfrastructureMappingConfirmationModal = ({
   notStartedTransformationPlans,
   finishedWithErrorTransformationPlans
 }) => (
-  <Modal show={showDeleteConfirmationModal} onHide={hideDeleteConfirmationModalAction}>
+  <Modal show={showDeleteConfirmationModal} onHide={hideDeleteConfirmationModalAction} backdrop="static">
     <Modal.Header>
       <Modal.CloseButton onClick={hideDeleteConfirmationModalAction} />
       <Modal.Title>{__('Delete Infrastructure Mapping')}</Modal.Title>

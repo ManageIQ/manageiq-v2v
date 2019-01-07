@@ -2,6 +2,7 @@
 
 exports[`MappingWizard component renders the mapping wizard 1`] = `
 <Wizard
+  backdrop="static"
   className=""
   dialogClassName=""
   onClose={[Function]}

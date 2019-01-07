@@ -78,7 +78,7 @@ class EditPlanNameModal extends React.Component {
     );
 
     return (
-      <Modal show={editPlanNameModalVisible} onHide={hideEditPlanNameModalAction}>
+      <Modal show={editPlanNameModalVisible} onHide={hideEditPlanNameModalAction} backdrop="static">
         <Modal.Header>
           <Modal.CloseButton onClick={hideEditPlanNameModalAction} />
           <Modal.Title>{__('Edit Migration Plan')}</Modal.Title>

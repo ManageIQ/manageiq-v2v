@@ -23,6 +23,7 @@ const WarningModal = ({
       onExited={hideWarningModalAction}
       dialogClassName="warning-modal"
       backdropClassName="warning-modal"
+      backdrop="static"
     >
       <Modal.Header>
         <button className="close" onClick={hideWarningModalAction} aria-hidden="true" aria-label="Close">
