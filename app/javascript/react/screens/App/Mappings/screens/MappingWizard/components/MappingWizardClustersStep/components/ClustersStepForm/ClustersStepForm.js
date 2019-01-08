@@ -126,6 +126,7 @@ class ClustersStepForm extends React.Component {
       targetProvider,
       isFetchingHostsQuery,
       hostsByClusterID,
+      rhvConversionHosts,
       providers,
       isQueryingProviders
     } = this.props;
@@ -188,11 +189,10 @@ class ClustersStepForm extends React.Component {
               {targetClusters.map(item => {
                 let showWarning;
                 if (targetProvider === RHV) {
-                  const hosts = hostsByClusterID && hostsByClusterID[item.id];
-                  const someConversionHostEnabled =
-                    hosts &&
-                    hosts.some(host => host.tags.some(tag => tag.name === '/managed/v2v_transformation_host/true'));
-                  showWarning = hosts && !isFetchingHostsQuery && !someConversionHostEnabled;
+                  const conversionHostsInCluster = rhvConversionHosts.filter(
+                    ch => ch.resource.ems_cluster_id === item.id
+                  );
+                  showWarning = conversionHostsInCluster.length === 0;
                 } else if (targetProvider === OPENSTACK) {
                   showWarning = providers.length && !isQueryingProviders && !providerHasSshKeyPair(item, providers);
                 }
@@ -241,6 +241,7 @@ ClustersStepForm.propTypes = {
   targetProvider: PropTypes.string,
   isFetchingHostsQuery: PropTypes.bool,
   hostsByClusterID: PropTypes.object,
+  rhvConversionHosts: PropTypes.array,
   providers: PropTypes.array,
   isQueryingProviders: PropTypes.bool
 };

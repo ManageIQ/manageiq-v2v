@@ -4,8 +4,8 @@ import MappingWizardClustersStep from './MappingWizardClustersStep';
 import * as MappingWizardClustersStepActions from './MappingWizardClustersStepActions';
 import { createClusterMappings } from './components/ClustersStepForm/helpers';
 import { getTransformationMappingItemsBySourceType } from '../../helpers';
-import { TRANSFORMATION_MAPPING_ITEM_SOURCE_TYPES } from '../../MappingWizardConstants';
-import { ospConversionHostsFilter } from './MappingWizardClustersStepSelectors';
+import { TRANSFORMATION_MAPPING_ITEM_SOURCE_TYPES, OPENSTACK, RHV } from '../../MappingWizardConstants';
+import { conversionHostsFilter } from './MappingWizardClustersStepSelectors';
 
 import reducer from './MappingWizardClustersStepReducer';
 
@@ -18,7 +18,8 @@ const mapStateToProps = (
   ...mappingWizardClustersStep,
   ...ownProps.data,
   targetProvider: form.mappingWizardGeneralStep.values.targetProvider,
-  ospConversionHosts: ospConversionHostsFilter(conversionHosts),
+  rhvConversionHosts: conversionHostsFilter(conversionHosts, RHV),
+  ospConversionHosts: conversionHostsFilter(conversionHosts, OPENSTACK),
   initialValues: {
     clusterMappings: editingMapping
       ? createClusterMappings(

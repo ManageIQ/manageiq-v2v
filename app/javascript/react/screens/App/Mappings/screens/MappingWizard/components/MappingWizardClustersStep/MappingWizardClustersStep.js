@@ -68,6 +68,7 @@ class MappingWizardClustersStep extends React.Component {
       targetProvider,
       isFetchingHostsQuery,
       hostsByClusterID,
+      rhvConversionHosts,
       providers,
       isQueryingProviders
     } = this.props;
@@ -99,7 +100,8 @@ class MappingWizardClustersStep extends React.Component {
         isFetchingTargetClusters={isFetchingTargetClusters}
         targetProvider={targetProvider}
         isFetchingHostsQuery={isFetchingHostsQuery}
-        hostsByClusterID={hostsByClusterID}
+        hostsByClusterID={hostsByClusterID} // TODO maybe remove?
+        rhvConversionHosts={rhvConversionHosts}
         providers={providers}
         isQueryingProviders={isQueryingProviders}
       />
@@ -125,6 +127,7 @@ MappingWizardClustersStep.propTypes = {
   targetProvider: PropTypes.string,
   isFetchingHostsQuery: PropTypes.bool,
   hostsByClusterID: PropTypes.object,
+  rhvConversionHosts: PropTypes.array,
   ospConversionHosts: PropTypes.array,
   providers: PropTypes.array,
   isQueryingProviders: PropTypes.bool,
@@ -143,6 +146,7 @@ MappingWizardClustersStep.defaultProps = {
   targetProvider: '',
   isFetchingHostsQuery: false,
   hostsByClusterID: {},
+  rhvConversionHosts: [],
   ospConversionHosts: [],
   fetchSourceClustersUrl:
     '/api/clusters?expand=resources' +

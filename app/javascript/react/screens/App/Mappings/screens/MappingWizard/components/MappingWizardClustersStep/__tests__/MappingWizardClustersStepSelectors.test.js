@@ -1,7 +1,8 @@
-import { ospConversionHostsFilter } from '../MappingWizardClustersStepSelectors';
+import { conversionHostsFilter } from '../MappingWizardClustersStepSelectors';
+import { RHV, OPENSTACK } from '../../../MappingWizardConstants';
 
 describe('mapping wizard clusters step selectors', () => {
-  it('filters OSP conversion hosts', () => {
+  it('filters conversion hosts by type', () => {
     const conversionHosts = [
       {
         some: 'mockData',
@@ -21,11 +22,13 @@ describe('mapping wizard clusters step selectors', () => {
         yetAnother: 'mockData',
         resource: {
           soMuch: 'mockData',
-          type: 'SomeOtherType'
+          type: 'ManageIQ::Providers::Redhat::InfraManager::Host'
         }
       }
     ];
-    const filteredHosts = ospConversionHostsFilter(conversionHosts);
-    expect(filteredHosts).toHaveLength(2);
+    const ospHosts = conversionHostsFilter(conversionHosts, OPENSTACK);
+    expect(ospHosts).toHaveLength(2);
+    const rhvHosts = conversionHostsFilter(conversionHosts, RHV);
+    expect(rhvHosts).toHaveLength(1);
   });
 });
