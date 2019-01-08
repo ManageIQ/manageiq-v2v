@@ -30,15 +30,7 @@ const mapStateToProps = (
     editingPlan &&
     editingPlan.transformation_mapping &&
     editingPlan.transformation_mapping.id === infrastructure_mapping;
-  const validVmsDeduped = !shouldPrefillForEditing
-    ? planWizardVMStep.valid_vms
-    : planWizardVMStep.valid_vms.filter(
-        validVm => !planWizardVMStep.preselected_vms.some(preselectedVm => preselectedVm.id === validVm.id)
-      );
-  const allVms =
-    vm_choice_radio === 'vms_via_csv'
-      ? [...planWizardVMStep.valid_vms, ...planWizardVMStep.invalid_vms, ...planWizardVMStep.conflict_vms]
-      : [...planWizardVMStep.preselected_vms, ...validVmsDeduped];
+  const allVms = [...planWizardVMStep.valid_vms, ...planWizardVMStep.invalid_vms, ...planWizardVMStep.conflict_vms];
 
   const configInfo = editingPlan && editingPlan.options && editingPlan.options.config_info;
   const vmStepSelectedVms = getVMStepSelectedVms(allVms, selectedVms);
