@@ -21,9 +21,10 @@ describe('validate VMs action creator', () => {
     const { method, response } = validateVMsData;
     const url = '/dummy/api/validateVms';
     const id = '1';
-    const meta = { some: 'metadata', csvRows: [] };
+    const csvRows = [{ some: 'row' }];
+    const meta = { some: 'metadata', csvRows };
     mockRequest({ method, url: `${url}/${id}`, response });
-    return store.dispatch(actions.validateVmsAction(url, id, [], '1', { some: 'metadata' })).then(() => {
+    return store.dispatch(actions.validateVmsAction(url, id, csvRows, '1', { some: 'metadata' })).then(() => {
       const storeActions = store.getActions();
       expect(storeActions[0]).toEqual({ type: `${V2V_VALIDATE_VMS}_PENDING`, meta });
       expect(storeActions[1]).toEqual({ type: `${V2V_VALIDATE_VMS}_FULFILLED`, meta, payload: response });
