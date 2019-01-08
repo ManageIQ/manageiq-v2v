@@ -99,18 +99,3 @@ export const getVmIds = editingPlan =>
   editingPlan.options.config_info &&
   editingPlan.options.config_info.actions &&
   editingPlan.options.config_info.actions.map(action => action.vm_id);
-
-export const _formatPreselectedVms = vmsQueryResults =>
-  vmsQueryResults.map(result => ({
-    id: result.id,
-    name: result.name,
-    cluster: result.ems_cluster ? result.ems_cluster.name : '',
-    ems_cluster_id: result.ems_cluster ? result.ems_cluster.id : '',
-    path: result.ext_management_system
-      ? `${result.ext_management_system.name}/${result.v_parent_blue_folder_display_path}`
-      : '',
-    allocated_size: numeral(result.allocated_disk_storage).format('0.00b'),
-    selected: true,
-    valid: true,
-    reason: V2V_VM_POST_VALIDATION_REASONS.ok
-  }));

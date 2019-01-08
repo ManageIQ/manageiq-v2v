@@ -1,0 +1,77 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`table rows render correctly with nothing pre-selected 1`] = `
+<React.Fragment>
+  <Field
+    component={[Function]}
+    discoveryMode={true}
+    initialSelectedRows={Array []}
+    name="selectedVms"
+    onCsvImportAction={[Function]}
+    rows={
+      Array [
+        Object {
+          "id": "3",
+          "name": "vm_3",
+          "selected": false,
+        },
+        Object {
+          "id": "1",
+          "name": "vm_1",
+          "selected": false,
+        },
+        Object {
+          "id": "2",
+          "name": "vm_2",
+          "selected": false,
+        },
+      ]
+    }
+    validate={
+      Array [
+        [Function],
+      ]
+    }
+  />
+</React.Fragment>
+`;
+
+exports[`table rows render correctly with some VMs pre-selected for editing 1`] = `
+<React.Fragment>
+  <Field
+    component={[Function]}
+    discoveryMode={true}
+    initialSelectedRows={
+      Array [
+        "1",
+      ]
+    }
+    name="selectedVms"
+    onCsvImportAction={[Function]}
+    rows={
+      Array [
+        Object {
+          "id": "3",
+          "name": "vm_3",
+          "selected": false,
+        },
+        Object {
+          "id": "1",
+          "name": "vm_1",
+          "selected": true,
+        },
+        Object {
+          "id": "2",
+          "name": "vm_2",
+          "selected": false,
+        },
+      ]
+    }
+    validate={
+      Array [
+        [Function],
+      ]
+    }
+  />
+</React.Fragment>
+`;
