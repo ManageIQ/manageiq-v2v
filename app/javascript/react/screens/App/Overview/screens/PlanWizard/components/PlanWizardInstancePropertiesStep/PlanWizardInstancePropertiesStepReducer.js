@@ -109,17 +109,23 @@ export default (state = initialState, action) => {
           }
         }
 
-        if (editingPlan && !preselectedFlavor && !preselectedGroup) {
+        if (editingPlan) {
           const existingVm = editingPlan.options.config_info.actions.find(
             vm => vm.vm_id === existingInstancePropertiesRow.id
           );
           if (existingVm) {
-            const existingFlavor =
-              tenantFlavors && tenantFlavors.find(flavor => flavor.id === existingVm.osp_flavor_id);
-            const existingGroup =
-              tenantSecurityGroups && tenantSecurityGroups.find(group => group.id === existingVm.osp_security_group_id);
-            preselectedFlavor = existingFlavor && { name: existingFlavor.name, id: existingFlavor.id };
-            preselectedGroup = existingGroup && { name: existingGroup.name, id: existingGroup.id };
+            const { csvFields } = existingInstancePropertiesRow;
+            if (!csvFields || !csvFields.osp_flavor) {
+              const existingFlavor =
+                tenantFlavors && tenantFlavors.find(flavor => flavor.id === existingVm.osp_flavor_id);
+              preselectedFlavor = existingFlavor && { name: existingFlavor.name, id: existingFlavor.id };
+            }
+            if (!csvFields || !csvFields.osp_security_group) {
+              const existingGroup =
+                tenantSecurityGroups &&
+                tenantSecurityGroups.find(group => group.id === existingVm.osp_security_group_id);
+              preselectedGroup = existingGroup && { name: existingGroup.name, id: existingGroup.id };
+            }
           }
         }
 
