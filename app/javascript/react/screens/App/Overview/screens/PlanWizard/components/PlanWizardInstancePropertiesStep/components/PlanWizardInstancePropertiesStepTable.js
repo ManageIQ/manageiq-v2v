@@ -76,7 +76,14 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
         this.setState({ editing: false });
 
         const updatedRows = rows.map(
-          row => (row.id === rowData.id ? input.value.updatedInstancePropertiesRowOnStandby : row)
+          row =>
+            row.id === rowData.id
+              ? {
+                  ...input.value.updatedInstancePropertiesRowOnStandby,
+                  csvInvalidFlavorWarning: false,
+                  csvInvalidGroupWarning: false
+                }
+              : row
         );
         instancePropertiesRowsAction(updatedRows);
         input.onChange({ updatedInstancePropertiesRowOnStandby: {} });
@@ -109,6 +116,34 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
     return needsAsterisk ? `${flavorName} *` : flavorName;
   };
 
+  renderCsvWarning = (property, rowData) => {
+    let warningMessage;
+    if (property === 'osp_security_group' && rowData.csvInvalidGroupWarning) {
+      warningMessage = __('The security group specified in the CSV file is invalid and has been replaced with the default security group. Edit the CSV file to include a valid security group or edit the table row to choose a different value.'); // prettier-ignore
+    }
+    if (property === 'osp_flavor' && rowData.csvInvalidFlavorWarning) {
+      warningMessage = __('The flavor specified in the CSV file is invalid and has been replaced with the best fit flavor. Edit the CSV file to include a valid flavor or edit the table row to choose a different value.'); // prettier-ignore
+    }
+    if (warningMessage) {
+      return (
+        <OverlayTrigger
+          overlay={
+            <Popover id="osp-csv-flavor-warning">
+              <div style={{ maxWidth: 400 }}>{warningMessage}</div>
+            </Popover>
+          }
+          placement="top"
+          trigger={['click']}
+          delay={500}
+          rootClose
+        >
+          <Icon type="pf" name="warning-triangle-o" className="clickable-icon" />
+        </OverlayTrigger>
+      );
+    }
+    return null;
+  };
+
   inlineEditFormatter = Table.inlineEditFormatterFactory({
     isEditing: additionalData => this.inlineEditController().isEditing(additionalData),
     renderValue: (value, additionalData) => {
@@ -122,7 +157,10 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
             );
       return (
         <td className="editable">
-          <span className="static">{renderedValue}</span>
+          <span className="static">
+            {renderedValue}
+            {this.renderCsvWarning(additionalData.property, additionalData.rowData)}
+          </span>
         </td>
       );
     },
@@ -470,6 +508,7 @@ class PlanWizardInstancePropertiesStepTable extends React.Component {
         >
           <Table.Header headerRows={resolve.headerRows({ columns: this.getColumns() })} />
           <Table.Body
+            className="instance-properties-step-table"
             rows={sortedPaginatedRows.rows || []}
             rowKey="id"
             onRow={(rowData, { rowIndex }) => ({

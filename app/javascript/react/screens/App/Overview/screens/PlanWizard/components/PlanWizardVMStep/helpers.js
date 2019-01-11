@@ -29,7 +29,25 @@ const manageOddCSVImportErrors = (vm, vmIndex, uniqueIds) => {
   manageBlankReason(vm);
 };
 
-export const _formatValidVms = vms => {
+const attachMetadata = (vms, meta) => {
+  if (meta.csvRows && meta.csvRows.length > 0) {
+    const csvFieldsByVmName = meta.csvRows.reduce(
+      (newObject, row) => ({
+        ...newObject,
+        [row.name]: row
+      }),
+      {}
+    );
+    return vms.map(vm => ({
+      ...vm,
+      csvFields: csvFieldsByVmName[vm.name]
+    }));
+  }
+  return vms;
+};
+
+export const _formatValidVms = (payloadVms, meta) => {
+  const vms = attachMetadata(payloadVms, meta);
   const uniqueIds = vms && [...new Set(vms.map(value => value.id))];
   return (
     vms &&
@@ -43,7 +61,8 @@ export const _formatValidVms = vms => {
   );
 };
 
-export const _formatInvalidVms = vms => {
+export const _formatInvalidVms = (payloadVms, meta) => {
+  const vms = attachMetadata(payloadVms, meta);
   const backfilledVms = fillMissingIds(vms);
   const uniqueIds = backfilledVms && [...new Set(backfilledVms.map(vm => vm.id))];
   return (
@@ -65,7 +84,8 @@ export const _formatInvalidVms = vms => {
   );
 };
 
-export const _formatConflictVms = vms => {
+export const _formatConflictVms = (payloadVms, meta) => {
+  const vms = attachMetadata(payloadVms, meta);
   const inactiveVMCount = (vms && vms.filter(vm => vm.cluster === '' || vm.path === '').length) || 0;
   const allVMCount = (vms && vms.length) || 0;
   const vmCount = inactiveVMCount > 0 ? allVMCount - inactiveVMCount : allVMCount;

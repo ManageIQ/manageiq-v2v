@@ -24,7 +24,10 @@ const _validateVmsActionCreator = (url, vms, planId, meta) => dispatch => {
           reject(e);
         });
     }),
-    meta
+    meta: {
+      ...meta,
+      csvRows: vms
+    }
   });
 };
 

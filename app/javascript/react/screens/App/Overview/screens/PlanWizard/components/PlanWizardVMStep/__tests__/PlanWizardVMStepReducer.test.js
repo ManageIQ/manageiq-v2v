@@ -44,6 +44,25 @@ describe('VM validation', () => {
     expect(state.conflict_vms.map(vm => vm.id)).toEqual(['3']);
   });
 
+  it('is fulfilled with attached CSV metadata', () => {
+    const meta = {
+      csvRows: [
+        { name: 'vm_1', someArbitraryField: 'value_1' },
+        { name: 'vm_2', someArbitraryField: 'value_2' },
+        { name: 'vm_3', someArbitraryField: 'value_3' }
+      ]
+    };
+    const action = { type: `${V2V_VALIDATE_VMS}_FULFILLED`, payload: payload1, meta };
+    const prevState = initialState
+      .set('isRejectedValidatingVms', true)
+      .set('isValidatingVms', true)
+      .set('numPendingValidationRequests', 1);
+    const state = planWizardVMStepReducer(prevState, action);
+    expect(state.valid_vms.map(vm => vm.csvFields.someArbitraryField)).toEqual(['value_1']);
+    expect(state.invalid_vms.map(vm => vm.csvFields.someArbitraryField)).toEqual(['value_2']);
+    expect(state.conflict_vms.map(vm => vm.csvFields.someArbitraryField)).toEqual(['value_3']);
+  });
+
   it('is fulfilled combining two concurrent requests', () => {
     const meta = { combineRequests: true };
     const action1 = { type: `${V2V_VALIDATE_VMS}_FULFILLED`, payload: payload1, meta };

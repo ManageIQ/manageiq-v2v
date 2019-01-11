@@ -28,9 +28,9 @@ export default (state = initialState, action) => {
       const { payload, meta } = action;
       const numPendingRequests = state.numPendingValidationRequests - 1;
       if (payload && payload.data) {
-        const newValidVms = _formatValidVms(payload.data.valid) || [];
-        const newInvalidVms = _formatInvalidVms(payload.data.invalid) || [];
-        const newConflictedVms = _formatConflictVms(payload.data.conflicted) || [];
+        const newValidVms = _formatValidVms(payload.data.valid, meta) || [];
+        const newInvalidVms = _formatInvalidVms(payload.data.invalid, meta) || [];
+        const newConflictedVms = _formatConflictVms(payload.data.conflicted, meta) || [];
         return state
           .set('valid_vms', meta.combineRequests ? [...state.valid_vms, ...newValidVms] : newValidVms)
           .set('invalid_vms', meta.combineRequests ? [...state.invalid_vms, ...newInvalidVms] : newInvalidVms)
