@@ -7,7 +7,7 @@ import { length } from 'redux-form-validators';
 import ClustersStepForm from './components/ClustersStepForm/ClustersStepForm';
 import { FETCH_TARGET_COMPUTE_URLS, QUERY_PROVIDERS_URL } from './MappingWizardClustersStepConstants';
 import { getProviderIds } from './helpers';
-import { OPENSTACK, RHV } from '../../MappingWizardConstants';
+import { OPENSTACK } from '../../MappingWizardConstants';
 
 class MappingWizardClustersStep extends React.Component {
   componentDidMount() {
@@ -32,8 +32,6 @@ class MappingWizardClustersStep extends React.Component {
       fetchTargetComputeUrls,
       fetchTargetClustersAction,
       targetProvider,
-      queryHostsUrl,
-      queryHostsAction,
       queryProvidersAction,
       queryProvidersUrl
     } = this.props;
@@ -41,17 +39,7 @@ class MappingWizardClustersStep extends React.Component {
     fetchSourceClustersAction(fetchSourceClustersUrl);
     fetchTargetClustersAction(fetchTargetComputeUrls[targetProvider]).then(result => {
       const safeToProceed = result.value && result.value.data && result.value.data.resources.length > 0;
-
-      if (targetProvider === RHV && safeToProceed) {
-        const hostIDsByClusterID = result.value.data.resources.reduce(
-          (newObject, cluster) => ({
-            ...newObject,
-            [cluster.id]: cluster.hosts.map(host => host.id)
-          }),
-          {}
-        );
-        queryHostsAction(queryHostsUrl, hostIDsByClusterID);
-      } else if (targetProvider === OPENSTACK && safeToProceed) {
+      if (targetProvider === OPENSTACK && safeToProceed) {
         queryProvidersAction(queryProvidersUrl, getProviderIds(result.value.data.resources));
       }
     });
@@ -66,8 +54,7 @@ class MappingWizardClustersStep extends React.Component {
       isRejectedSourceClusters,
       isRejectedTargetClusters,
       targetProvider,
-      isFetchingHostsQuery,
-      hostsByClusterID,
+      rhvConversionHosts,
       providers,
       isQueryingProviders
     } = this.props;
@@ -98,8 +85,7 @@ class MappingWizardClustersStep extends React.Component {
         isFetchingSourceClusters={isFetchingSourceClusters}
         isFetchingTargetClusters={isFetchingTargetClusters}
         targetProvider={targetProvider}
-        isFetchingHostsQuery={isFetchingHostsQuery}
-        hostsByClusterID={hostsByClusterID}
+        rhvConversionHosts={rhvConversionHosts}
         providers={providers}
         isQueryingProviders={isQueryingProviders}
       />
@@ -112,8 +98,6 @@ MappingWizardClustersStep.propTypes = {
   fetchSourceClustersAction: PropTypes.func,
   fetchTargetComputeUrls: PropTypes.object,
   fetchTargetClustersAction: PropTypes.func,
-  queryHostsUrl: PropTypes.string,
-  queryHostsAction: PropTypes.func,
   showAlertAction: PropTypes.func,
   hideAlertAction: PropTypes.func,
   sourceClusters: PropTypes.arrayOf(PropTypes.object),
@@ -123,8 +107,7 @@ MappingWizardClustersStep.propTypes = {
   isRejectedSourceClusters: PropTypes.bool,
   isRejectedTargetClusters: PropTypes.bool,
   targetProvider: PropTypes.string,
-  isFetchingHostsQuery: PropTypes.bool,
-  hostsByClusterID: PropTypes.object,
+  rhvConversionHosts: PropTypes.array,
   ospConversionHosts: PropTypes.array,
   providers: PropTypes.array,
   isQueryingProviders: PropTypes.bool,
@@ -134,15 +117,12 @@ MappingWizardClustersStep.propTypes = {
 MappingWizardClustersStep.defaultProps = {
   fetchSourceClustersAction: noop,
   fetchTargetClustersAction: noop,
-  queryHostsUrl: '/api/hosts?attributes=tags',
-  queryHostsAction: noop,
   isFetchingSourceClusters: true,
   isFetchingTargetClusters: true,
   isRejectedSourceClusters: false,
   isRejectedTargetClusters: false,
   targetProvider: '',
-  isFetchingHostsQuery: false,
-  hostsByClusterID: {},
+  rhvConversionHosts: [],
   ospConversionHosts: [],
   fetchSourceClustersUrl:
     '/api/clusters?expand=resources' +

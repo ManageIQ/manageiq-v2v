@@ -16,11 +16,11 @@ export const V2V_TARGET_PROVIDERS = [
 ];
 
 export const V2V_TARGET_PROVIDER_STORAGE_KEYS = {
-  rhevm: 'storages',
-  openstack: 'cloud_volume_types'
+  [RHV]: 'storages',
+  [OPENSTACK]: 'cloud_volume_types'
 };
 
-export const V2V_TARGET_PROVIDER_NETWORK_KEYS = { rhevm: 'lans', openstack: 'cloud_networks' };
+export const V2V_TARGET_PROVIDER_NETWORK_KEYS = { [RHV]: 'lans', [OPENSTACK]: 'cloud_networks' };
 
 export const TRANSFORMATION_MAPPING_ITEM_SOURCE_TYPES = {
   cluster: 'EmsCluster',
@@ -29,12 +29,12 @@ export const TRANSFORMATION_MAPPING_ITEM_SOURCE_TYPES = {
 };
 
 export const TRANSFORMATION_MAPPING_ITEM_DESTINATION_TYPES = {
-  openstack: {
+  [OPENSTACK]: {
     cluster: 'CloudTenant',
     datastore: 'CloudVolumeType',
     network: 'CloudNetwork'
   },
-  rhevm: {
+  [RHV]: {
     cluster: 'EmsCluster',
     datastore: 'Storage',
     network: 'Lan'

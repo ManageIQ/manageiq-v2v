@@ -2,16 +2,12 @@
 
 exports[`fetching source clusters is pending 1`] = `
 Object {
-  "errorHostsQuery": null,
   "errorQueryProviders": null,
   "errorSourceClusters": null,
   "errorTargetClusters": null,
-  "hostsByClusterID": Object {},
-  "isFetchingHostsQuery": false,
   "isFetchingSourceClusters": true,
   "isFetchingTargetClusters": false,
   "isQueryingProviders": false,
-  "isRejectedHostsQuery": false,
   "isRejectedQueryProviders": false,
   "isRejectedSourceClusters": false,
   "isRejectedTargetClusters": false,
@@ -23,16 +19,12 @@ Object {
 
 exports[`fetching source clusters is rejected 1`] = `
 Object {
-  "errorHostsQuery": null,
   "errorQueryProviders": null,
   "errorSourceClusters": "error",
   "errorTargetClusters": null,
-  "hostsByClusterID": Object {},
-  "isFetchingHostsQuery": false,
   "isFetchingSourceClusters": false,
   "isFetchingTargetClusters": false,
   "isQueryingProviders": false,
-  "isRejectedHostsQuery": false,
   "isRejectedQueryProviders": false,
   "isRejectedSourceClusters": true,
   "isRejectedTargetClusters": false,
@@ -44,16 +36,12 @@ Object {
 
 exports[`fetching source clusters is successful, and there is data 1`] = `
 Object {
-  "errorHostsQuery": null,
   "errorQueryProviders": null,
   "errorSourceClusters": null,
   "errorTargetClusters": null,
-  "hostsByClusterID": Object {},
-  "isFetchingHostsQuery": false,
   "isFetchingSourceClusters": false,
   "isFetchingTargetClusters": false,
   "isQueryingProviders": false,
-  "isRejectedHostsQuery": false,
   "isRejectedQueryProviders": false,
   "isRejectedSourceClusters": false,
   "isRejectedTargetClusters": false,
@@ -143,16 +131,12 @@ Object {
 
 exports[`fetching source clusters is successful, and there is no data 1`] = `
 Object {
-  "errorHostsQuery": null,
   "errorQueryProviders": null,
   "errorSourceClusters": null,
   "errorTargetClusters": null,
-  "hostsByClusterID": Object {},
-  "isFetchingHostsQuery": false,
   "isFetchingSourceClusters": false,
   "isFetchingTargetClusters": false,
   "isQueryingProviders": false,
-  "isRejectedHostsQuery": false,
   "isRejectedQueryProviders": false,
   "isRejectedSourceClusters": false,
   "isRejectedTargetClusters": false,
@@ -164,16 +148,12 @@ Object {
 
 exports[`fetching target clusters is pending 1`] = `
 Object {
-  "errorHostsQuery": null,
   "errorQueryProviders": null,
   "errorSourceClusters": null,
   "errorTargetClusters": null,
-  "hostsByClusterID": Object {},
-  "isFetchingHostsQuery": false,
   "isFetchingSourceClusters": false,
   "isFetchingTargetClusters": true,
   "isQueryingProviders": false,
-  "isRejectedHostsQuery": false,
   "isRejectedQueryProviders": false,
   "isRejectedSourceClusters": false,
   "isRejectedTargetClusters": false,
@@ -185,16 +165,12 @@ Object {
 
 exports[`fetching target clusters is rejected 1`] = `
 Object {
-  "errorHostsQuery": null,
   "errorQueryProviders": null,
   "errorSourceClusters": null,
   "errorTargetClusters": "error",
-  "hostsByClusterID": Object {},
-  "isFetchingHostsQuery": false,
   "isFetchingSourceClusters": false,
   "isFetchingTargetClusters": false,
   "isQueryingProviders": false,
-  "isRejectedHostsQuery": false,
   "isRejectedQueryProviders": false,
   "isRejectedSourceClusters": false,
   "isRejectedTargetClusters": true,
@@ -206,16 +182,12 @@ Object {
 
 exports[`fetching target clusters is successful, and there is data 1`] = `
 Object {
-  "errorHostsQuery": null,
   "errorQueryProviders": null,
   "errorSourceClusters": null,
   "errorTargetClusters": null,
-  "hostsByClusterID": Object {},
-  "isFetchingHostsQuery": false,
   "isFetchingSourceClusters": false,
   "isFetchingTargetClusters": false,
   "isQueryingProviders": false,
-  "isRejectedHostsQuery": false,
   "isRejectedQueryProviders": false,
   "isRejectedSourceClusters": false,
   "isRejectedTargetClusters": false,
@@ -280,16 +252,12 @@ Object {
 
 exports[`fetching target clusters is successful, and there is no data 1`] = `
 Object {
-  "errorHostsQuery": null,
   "errorQueryProviders": null,
   "errorSourceClusters": null,
   "errorTargetClusters": null,
-  "hostsByClusterID": Object {},
-  "isFetchingHostsQuery": false,
   "isFetchingSourceClusters": false,
   "isFetchingTargetClusters": false,
   "isQueryingProviders": false,
-  "isRejectedHostsQuery": false,
   "isRejectedQueryProviders": false,
   "isRejectedSourceClusters": false,
   "isRejectedTargetClusters": false,
@@ -301,16 +269,12 @@ Object {
 
 exports[`sets default state 1`] = `
 Object {
-  "errorHostsQuery": null,
   "errorQueryProviders": null,
   "errorSourceClusters": null,
   "errorTargetClusters": null,
-  "hostsByClusterID": Object {},
-  "isFetchingHostsQuery": false,
   "isFetchingSourceClusters": false,
   "isFetchingTargetClusters": false,
   "isQueryingProviders": false,
-  "isRejectedHostsQuery": false,
   "isRejectedQueryProviders": false,
   "isRejectedSourceClusters": false,
   "isRejectedTargetClusters": false,

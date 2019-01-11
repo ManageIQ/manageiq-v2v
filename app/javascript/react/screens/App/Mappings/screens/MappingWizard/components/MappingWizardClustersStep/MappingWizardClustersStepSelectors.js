@@ -1,4 +1,4 @@
-import { OPENSTACK_CONVERSION_HOST_TYPE } from './MappingWizardClustersStepConstants';
+import { CONVERSION_HOST_TYPES } from './MappingWizardClustersStepConstants';
 
 export const sourceClustersFilter = (sourceClustersToFilter, clustersStepMappings) => {
   const mappedSourceClusters = clustersStepMappings.reduce(
@@ -11,5 +11,5 @@ export const sourceClustersFilter = (sourceClustersToFilter, clustersStepMapping
   );
 };
 
-export const ospConversionHostsFilter = conversionHosts =>
-  conversionHosts.filter(host => host.resource && host.resource.type === OPENSTACK_CONVERSION_HOST_TYPE);
+export const conversionHostsFilter = (conversionHosts, providerType) =>
+  conversionHosts.filter(host => host.resource && host.resource.type === CONVERSION_HOST_TYPES[providerType]);
