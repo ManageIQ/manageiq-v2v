@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import ClustersStepForm from '../ClustersStepForm';
 import { srcClusters, tgtClusters } from '../clustersStepForm.fixtures';
 import { targetClusterWithExtendedData, sourceClusterWithExtendedData } from '../helpers';
-import { OPENSTACK } from '../../../../../MappingWizardConstants';
+import { RHV, OPENSTACK } from '../../../../../MappingWizardConstants';
 
 let onChange;
 let baseProps;
@@ -110,6 +110,29 @@ describe('OSP RSA key pairs', () => {
   test('does not display a warning icon if the provider has a RSA key', () => {
     const providers = [{ name: 'OSP', id: '1', authentications: [{ authtype: 'ssh_keypair' }] }];
     const wrapper = shallow(<ClustersStepForm {...props} input={input} providers={providers} />);
+    const listItem = wrapper.find('DualPaneMapperListItem');
+    expect(listItem.prop('warningMessage')).toBeFalsy();
+  });
+});
+
+describe('RHV conversion hosts', () => {
+  const props = {
+    ...baseProps,
+    input: { value: [], onChange },
+    sourceClusters: [],
+    targetClusters: [{ id: '1', name: 'target cluster', ems_id: '1', ext_management_system: { name: 'RHV' } }],
+    targetProvider: RHV
+  };
+
+  test('displays a warning icon if the target cluster does not have a configured conversion host', () => {
+    const wrapper = shallow(<ClustersStepForm {...props} rhvConversionHosts={[]} />);
+    const listItem = wrapper.find('DualPaneMapperListItem');
+    expect(listItem.prop('warningMessage')).toBeTruthy();
+  });
+
+  test('does not display a warning icon if the target cluster has a configured conversion host', () => {
+    const rhvConversionHosts = [{ resource: { ems_cluster_id: '1' } }];
+    const wrapper = shallow(<ClustersStepForm {...props} rhvConversionHosts={rhvConversionHosts} />);
     const listItem = wrapper.find('DualPaneMapperListItem');
     expect(listItem.prop('warningMessage')).toBeFalsy();
   });
