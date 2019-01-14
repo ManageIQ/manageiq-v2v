@@ -40,26 +40,29 @@ class Overview extends React.Component {
       fetchServiceTemplateAnsiblePlaybooksUrl
     } = this.props;
 
-    const p1 = fetchTransformationPlansAction({
-      url: fetchTransformationPlansUrl,
-      archived: false
-    });
-    const p2 = fetchTransformationPlansAction({
-      url: fetchArchivedTransformationPlansUrl,
-      archived: true
-    });
-    const p3 = fetchServiceTemplateAnsiblePlaybooksAction(fetchServiceTemplateAnsiblePlaybooksUrl);
-    const p4 = fetchTransformationMappingsAction(fetchTransformationMappingsUrl);
-    const p5 = fetchProvidersAction();
-    const p6 = fetchCloudTenantsAction(fetchCloudTenantsUrl);
+    fetchProvidersAction()
+      .then(() => {
+        const p1 = fetchTransformationPlansAction({
+          url: fetchTransformationPlansUrl,
+          archived: false
+        });
+        const p2 = fetchTransformationPlansAction({
+          url: fetchArchivedTransformationPlansUrl,
+          archived: true
+        });
+        const p3 = fetchServiceTemplateAnsiblePlaybooksAction(fetchServiceTemplateAnsiblePlaybooksUrl);
+        const p4 = fetchTransformationMappingsAction(fetchTransformationMappingsUrl);
+        const p5 = fetchCloudTenantsAction(fetchCloudTenantsUrl);
 
-    Promise.all([p1, p2, p3, p4, p5, p6]).then(() => {
-      this.hasMadeInitialPlansFetch = true;
+        return Promise.all([p1, p2, p3, p4, p5]);
+      })
+      .then(() => {
+        this.hasMadeInitialPlansFetch = true;
 
-      if (!this.pollingInterval && !this.willUnmount) {
-        this.startPolling();
-      }
-    });
+        if (!this.pollingInterval && !this.willUnmount) {
+          this.startPolling();
+        }
+      });
   }
 
   componentWillReceiveProps(nextProps) {
