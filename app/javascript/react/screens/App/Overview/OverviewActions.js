@@ -68,12 +68,11 @@ export const hideEditPlanNameModalAction = () => dispatch => {
   });
 };
 
-export const fetchProvidersAction = () => dispatch => {
+export const fetchProvidersAction = () => dispatch =>
   dispatch({
     type: FETCH_PROVIDERS,
     payload: API.get(FETCH_PROVIDERS_URL)
   });
-};
 
 const _createTransformationPlanRequestActionCreator = url => dispatch =>
   dispatch({
