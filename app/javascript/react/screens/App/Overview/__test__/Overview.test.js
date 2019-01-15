@@ -22,7 +22,7 @@ describe('Overview component', () => {
     fetchServiceTemplateAnsiblePlaybooksUrl: '',
     archivedTransformationPlans: [],
     showPlanWizardAction: jest.fn(),
-    fetchProvidersAction: jest.fn(),
+    fetchProvidersAction: jest.fn().mockReturnValue(Promise.resolve()),
     fetchTransformationMappingsAction: jest.fn(),
     fetchTransformationPlansAction: jest.fn().mockReturnValue(Promise.resolve()),
     fetchServiceTemplateAnsiblePlaybooksAction: jest.fn().mockReturnValue(Promise.resolve()),
@@ -31,15 +31,15 @@ describe('Overview component', () => {
   });
 
   describe('polling', () => {
-    test('starts when the component is mounted', () => {
+    test('starts when the component is mounted', async () => {
       const props = getBaseProps();
-      const wrapper = shallow(<Overview {...props} />); // eslint-disable-line no-unused-vars
+      const wrapper = await shallow(<Overview {...props} />); // eslint-disable-line no-unused-vars
       expect(props.fetchTransformationPlansAction).toHaveBeenCalled();
     });
 
-    test('fetches transformation plan requests every 15 seconds', () => {
+    test('fetches transformation plan requests every 15 seconds', async () => {
       const props = getBaseProps();
-      const wrapper = shallow(<Overview {...props} />); // eslint-disable-line no-unused-vars
+      const wrapper = await shallow(<Overview {...props} />); // eslint-disable-line no-unused-vars
       jest.advanceTimersByTime(15000);
       expect(props.fetchTransformationPlansAction).toHaveBeenCalledTimes(2);
     });
