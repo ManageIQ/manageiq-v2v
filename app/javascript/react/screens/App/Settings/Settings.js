@@ -59,7 +59,7 @@ const Settings = props => {
   );
 
   // TODO remove this when we are ready to release ConversionHostsSettings
-  const hideConversionHostSettings = false;
+  const hideConversionHostSettings = true;
 
   return (
     <React.Fragment>
