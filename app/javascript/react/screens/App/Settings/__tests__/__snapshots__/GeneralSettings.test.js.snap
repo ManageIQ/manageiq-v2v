@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GeneralSettings component renders the general settings page 1`] = `
+<Spinner
+  className=""
+  inline={false}
+  inverse={false}
+  loading={false}
+  size="md"
+  style={
+    Object {
+      "marginTop": 15,
+    }
+  }
+>
+  <div
+    className="migration-settings"
+  >
+    <Form
+      bsClass="form"
+      componentClass="form"
+      horizontal={false}
+      inline={false}
+      style={
+        Object {
+          "padding": "0 20px",
+        }
+      }
+    >
+      <FormGroup
+        bsClass="form-group"
+      >
+        <ControlLabel
+          bsClass="control-label"
+          srOnly={false}
+        >
+          Maximum concurrent migrations per conversion host
+        </ControlLabel>
+        <div
+          style={
+            Object {
+              "width": 100,
+            }
+          }
+        >
+          <Field
+            component={[Function]}
+            id="max_concurrent_tasks_per_host"
+            min={1}
+            name="max_concurrent_tasks_per_host"
+            normalize={[Function]}
+          />
+        </div>
+      </FormGroup>
+      <FormGroup
+        bsClass="form-group"
+      >
+        <Button
+          active={false}
+          block={false}
+          bsClass="btn"
+          bsStyle="primary"
+          disabled={true}
+          onClick={[Function]}
+        >
+          Apply
+        </Button>
+        <br />
+      </FormGroup>
+    </Form>
+  </div>
+</Spinner>
+`;
