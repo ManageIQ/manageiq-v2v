@@ -27,7 +27,6 @@ export class GeneralSettings extends React.Component {
     return (
       <Spinner loading={isFetchingServers || isFetchingSettings} style={{ marginTop: 15 }}>
         <div className="migration-settings">
-          <h2>{__('Concurrent Migrations')}</h2>
           <Form style={{ padding: '0 20px' }}>
             <Form.FormGroup>
               <Form.ControlLabel>{__('Maximum concurrent migrations per conversion host')}</Form.ControlLabel>
