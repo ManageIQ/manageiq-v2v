@@ -12,4 +12,4 @@ export const sourceClustersFilter = (sourceClustersToFilter, clustersStepMapping
 };
 
 export const ospConversionHostsFilter = conversionHosts =>
-  conversionHosts.filter(host => host.resource.type === OPENSTACK_CONVERSION_HOST_TYPE);
+  conversionHosts.filter(host => host.resource && host.resource.type === OPENSTACK_CONVERSION_HOST_TYPE);
