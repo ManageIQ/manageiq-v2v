@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Breadcrumb, Tabs } from 'patternfly-react';
+import { Breadcrumb, Tabs, Tab } from 'patternfly-react';
 import Toolbar from '../../../config/Toolbar';
 import GeneralSettings from './GeneralSettings';
 import ConversionHostsSettings from './ConversionHostsSettings';
@@ -48,12 +48,12 @@ const Settings = props => {
   const tabs = (
     <div style={{ marginTop: 10 }}>
       <Tabs id="settings-tabs" activeKey={match.path} onSelect={key => redirectTo(key)}>
-        <Tabs.Tab eventKey="/settings" title={__('Concurrent Migrations')}>
+        <Tab eventKey="/settings" title={__('Concurrent Migrations')}>
           {generalSettings}
-        </Tabs.Tab>
-        <Tabs.Tab eventKey="/settings/conversion_hosts" title={__('Conversion Hosts')}>
+        </Tab>
+        <Tab eventKey="/settings/conversion_hosts" title={__('Conversion Hosts')}>
           <ConversionHostsSettings />
-        </Tabs.Tab>
+        </Tab>
       </Tabs>
     </div>
   );
