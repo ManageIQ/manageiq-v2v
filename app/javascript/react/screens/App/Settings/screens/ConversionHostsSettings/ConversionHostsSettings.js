@@ -1,6 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Spinner } from 'patternfly-react';
+import { Spinner, Icon } from 'patternfly-react';
+import ConversionHostsEmptyState from './components/ConversionHostsEmptyState';
+import ConversionHostsList from './components/ConversionHostsList';
+import ConversionHostWizard from './components/ConversionHostWizard';
+
 class ConversionHostsSettings extends React.Component {
   componentDidMount() {
     const { fetchConversionHostsAction, fetchConversionHostsUrl } = this.props;
@@ -8,15 +12,39 @@ class ConversionHostsSettings extends React.Component {
   }
 
   render() {
-    const { isFetchingConversionHosts, conversionHosts } = this.props;
-
-    const emptyState = <h2>TODO: empty state here</h2>;
-
-    const listView = <h2>TODO: list view here</h2>;
+    const {
+      isFetchingConversionHosts,
+      conversionHosts,
+      showConversionHostWizard,
+      hideConversionHostWizard,
+      conversionHostWizardVisible
+    } = this.props;
 
     return (
       <Spinner loading={isFetchingConversionHosts} style={{ marginTop: 15 }}>
-        {conversionHosts.length < 0 ? emptyState : listView}
+        <React.Fragment>
+          <div className="heading-with-link-container">
+            <div className="pull-right">
+              <a
+                href="#"
+                onClick={e => {
+                  e.preventDefault();
+                  showConversionHostWizard();
+                }}
+              >
+                <Icon type="pf" name="add-circle-o" />
+                &nbsp;
+                {__('Configure Conversion Host')}
+              </a>
+            </div>
+          </div>
+          {conversionHosts.length < 0 ? (
+            <ConversionHostsEmptyState showConversionHostWizard={showConversionHostWizard} />
+          ) : (
+            <ConversionHostsList conversionHosts={conversionHosts} />
+          )}
+          {conversionHostWizardVisible && <ConversionHostWizard hideConversionHostWizard={hideConversionHostWizard} />}
+        </React.Fragment>
       </Spinner>
     );
   }
@@ -25,7 +53,9 @@ class ConversionHostsSettings extends React.Component {
 ConversionHostsSettings.propTypes = {
   fetchConversionHostsUrl: PropTypes.string,
   fetchConversionHostsAction: PropTypes.func,
-  conversionHosts: PropTypes.arrayOf(PropTypes.object)
+  conversionHosts: PropTypes.arrayOf(PropTypes.object),
+  showConversionHostWizard: PropTypes.func,
+  hideConversionHostWizard: PropTypes.func
 };
 
 ConversionHostsSettings.defaultProps = {

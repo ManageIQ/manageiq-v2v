@@ -5,7 +5,9 @@ import {
   V2V_FETCH_SERVERS,
   V2V_FETCH_SETTINGS,
   V2V_PATCH_SETTINGS,
-  FETCH_V2V_CONVERSION_HOSTS
+  FETCH_V2V_CONVERSION_HOSTS,
+  SHOW_V2V_CONVERSION_HOST_WIZARD,
+  HIDE_V2V_CONVERSION_HOST_WIZARD
 } from './SettingsConstants';
 import { getApiSettingsFromFormValues } from './helpers';
 
@@ -58,3 +60,7 @@ export const fetchConversionHostsAction = url => {
   const uri = new URI(url);
   return _getConversionHostsActionCreator(uri.toString());
 };
+
+export const showConversionHostWizard = () => dispatch => dispatch({ type: SHOW_V2V_CONVERSION_HOST_WIZARD });
+
+export const hideConversionHostWizard = () => dispatch => dispatch({ type: HIDE_V2V_CONVERSION_HOST_WIZARD });

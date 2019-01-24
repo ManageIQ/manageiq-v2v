@@ -4,8 +4,11 @@ import {
   V2V_FETCH_SERVERS,
   V2V_FETCH_SETTINGS,
   V2V_PATCH_SETTINGS,
-  FETCH_V2V_CONVERSION_HOSTS
+  FETCH_V2V_CONVERSION_HOSTS,
+  SHOW_V2V_CONVERSION_HOST_WIZARD,
+  HIDE_V2V_CONVERSION_HOST_WIZARD
 } from './SettingsConstants';
+
 import { getFormValuesFromApiSettings } from './helpers';
 
 export const initialState = Immutable({
@@ -23,7 +26,8 @@ export const initialState = Immutable({
   isFetchingConversionHosts: false,
   isRejectedConversionHosts: false,
   errorFetchingConversionHosts: null,
-  conversionHosts: []
+  conversionHosts: [],
+  conversionHostWizardVisible: false
 });
 
 export default (state = initialState, action) => {
@@ -95,6 +99,11 @@ export default (state = initialState, action) => {
         .set('isFetchingConversionHosts', false)
         .set('isRejectedConversionHosts', true)
         .set('errorFetchingConversionHosts', action.payload);
+
+    case SHOW_V2V_CONVERSION_HOST_WIZARD:
+      return state.set('conversionHostWizardVisible', true);
+    case HIDE_V2V_CONVERSION_HOST_WIZARD:
+      return state.set('conversionHostWizardVisible', false);
 
     default:
       return state;
