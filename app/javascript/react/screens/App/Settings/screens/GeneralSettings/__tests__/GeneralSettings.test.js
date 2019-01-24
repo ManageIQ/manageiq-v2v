@@ -2,8 +2,8 @@ import React from 'react';
 import { Spinner } from 'patternfly-react';
 import { shallow } from 'enzyme';
 import { GeneralSettings } from '../GeneralSettings';
-import { servers, settings } from '../settings.fixures';
-import { getFormValuesFromApiSettings } from '../helpers';
+import { servers, settings } from '../../../settings.fixures';
+import { getFormValuesFromApiSettings } from '../../../helpers';
 
 describe('GeneralSettings component', () => {
   const defaultFormValues = getFormValuesFromApiSettings(settings);

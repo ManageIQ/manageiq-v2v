@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { reduxForm, Field } from 'redux-form';
 import { Form, Button, Spinner } from 'patternfly-react';
-import NumberInput from '../common/forms/NumberInput';
+import NumberInput from '../../../common/forms/NumberInput';
 
 export class GeneralSettings extends React.Component {
   componentDidMount() {
