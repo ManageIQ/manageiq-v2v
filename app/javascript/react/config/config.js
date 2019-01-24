@@ -15,6 +15,11 @@ export const links = [
     menu_item_id: 'menu_item_settings'
   },
   {
+    path: 'settings/conversion_hosts',
+    component: Settings,
+    menu_item_id: 'menu_item_settings'
+  },
+  {
     path: 'plan/:id',
     component: PlanContainer,
     menu_item_id: 'menu_item_plans'
