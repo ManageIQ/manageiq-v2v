@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Button } from 'patternfly-react';
 
 const ConversionHostsEmptyState = ({ showConversionHostWizard }) => (
@@ -7,5 +8,9 @@ const ConversionHostsEmptyState = ({ showConversionHostWizard }) => (
     <Button onClick={showConversionHostWizard}>{__('Configure Conversion Host')}</Button>
   </React.Fragment>
 );
+
+ConversionHostsEmptyState.propTypes = {
+  showConversionHostWizard: PropTypes.func
+};
 
 export default ConversionHostsEmptyState;

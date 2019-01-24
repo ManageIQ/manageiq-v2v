@@ -53,9 +53,11 @@ class ConversionHostsSettings extends React.Component {
 ConversionHostsSettings.propTypes = {
   fetchConversionHostsUrl: PropTypes.string,
   fetchConversionHostsAction: PropTypes.func,
+  isFetchingConversionHosts: PropTypes.bool,
   conversionHosts: PropTypes.arrayOf(PropTypes.object),
   showConversionHostWizard: PropTypes.func,
-  hideConversionHostWizard: PropTypes.func
+  hideConversionHostWizard: PropTypes.func,
+  conversionHostWizardVisible: PropTypes.bool
 };
 
 ConversionHostsSettings.defaultProps = {

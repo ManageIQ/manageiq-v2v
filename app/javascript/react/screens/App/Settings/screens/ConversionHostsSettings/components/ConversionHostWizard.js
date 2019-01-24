@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Button } from 'patternfly-react';
 
 const ConversionHostWizard = ({ hideConversionHostWizard }) => (
@@ -7,5 +8,9 @@ const ConversionHostWizard = ({ hideConversionHostWizard }) => (
     <Button onClick={hideConversionHostWizard}>Close</Button>
   </React.Fragment>
 );
+
+ConversionHostWizard.propTypes = {
+  hideConversionHostWizard: PropTypes.func
+};
 
 export default ConversionHostWizard;
