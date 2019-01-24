@@ -1,7 +1,12 @@
 import URI from 'urijs';
 import API from '../../../../common/API';
 
-import { V2V_FETCH_SERVERS, V2V_FETCH_SETTINGS, V2V_PATCH_SETTINGS } from './SettingsConstants';
+import {
+  V2V_FETCH_SERVERS,
+  V2V_FETCH_SETTINGS,
+  V2V_PATCH_SETTINGS,
+  FETCH_V2V_CONVERSION_HOSTS
+} from './SettingsConstants';
 import { getApiSettingsFromFormValues } from './helpers';
 
 const _getServersActionCreator = url => dispatch =>
@@ -41,4 +46,15 @@ const _patchSettingsActionCreator = (urls, settingsFormValues) => dispatch => {
 export const patchSettingsAction = (servers, newSettings) => {
   const settingsUrls = servers.map(server => new URI(`${server.href}/settings`).toString());
   return _patchSettingsActionCreator(settingsUrls, newSettings);
+};
+
+const _getConversionHostsActionCreator = url => dispatch =>
+  dispatch({
+    type: FETCH_V2V_CONVERSION_HOSTS,
+    payload: API.get(url)
+  });
+
+export const fetchConversionHostsAction = url => {
+  const uri = new URI(url);
+  return _getConversionHostsActionCreator(uri.toString());
 };

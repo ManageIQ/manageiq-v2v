@@ -1,6 +1,11 @@
 import Immutable from 'seamless-immutable';
 
-import { V2V_FETCH_SERVERS, V2V_FETCH_SETTINGS, V2V_PATCH_SETTINGS } from './SettingsConstants';
+import {
+  V2V_FETCH_SERVERS,
+  V2V_FETCH_SETTINGS,
+  V2V_PATCH_SETTINGS,
+  FETCH_V2V_CONVERSION_HOSTS
+} from './SettingsConstants';
 import { getFormValuesFromApiSettings } from './helpers';
 
 export const initialState = Immutable({
@@ -14,7 +19,11 @@ export const initialState = Immutable({
   savedSettings: {},
   isSavingSettings: false,
   savingSettingsRejected: false,
-  errorSavingSettings: null
+  errorSavingSettings: null,
+  isFetchingConversionHosts: false,
+  isRejectedConversionHosts: false,
+  errorFetchingConversionHosts: null,
+  conversionHosts: []
 });
 
 export default (state = initialState, action) => {
@@ -69,6 +78,23 @@ export default (state = initialState, action) => {
         .set('savingSettingsRejected', false)
         .set('errorSavingSettings', null)
         .set('savedSettings', getFormValuesFromApiSettings(action.payload));
+
+    case `${FETCH_V2V_CONVERSION_HOSTS}_PENDING`:
+      return state
+        .set('isFetchingConversionHosts', true)
+        .set('isRejectedConversionHosts', false)
+        .set('errorFetchingConversionHosts', null);
+    case `${FETCH_V2V_CONVERSION_HOSTS}_FULFILLED`:
+      return state
+        .set('conversionHosts', action.payload.data.resources)
+        .set('isFetchingConversionHosts', false)
+        .set('isRejectedConversionHosts', false)
+        .set('errorFetchingConversionHosts', null);
+    case `${FETCH_V2V_CONVERSION_HOSTS}_REJECTED`:
+      return state
+        .set('isFetchingConversionHosts', false)
+        .set('isRejectedConversionHosts', true)
+        .set('errorFetchingConversionHosts', action.payload);
 
     default:
       return state;
