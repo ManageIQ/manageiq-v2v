@@ -1,5 +1,29 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`settings actions should fetch conversion hosts and return PENDING and FULFILLED action 1`] = `
+Array [
+  Object {
+    "type": "FETCH_V2V_CONVERSION_HOSTS_PENDING",
+  },
+  Object {
+    "type": "FETCH_V2V_CONVERSION_HOSTS_FULFILLED",
+  },
+]
+`;
+
+exports[`settings actions should fetch conversion hosts and return PENDING and REJECTED action 1`] = `
+Array [
+  Object {
+    "type": "FETCH_V2V_CONVERSION_HOSTS_PENDING",
+  },
+  Object {
+    "error": true,
+    "payload": [Error: <mocked error>],
+    "type": "FETCH_V2V_CONVERSION_HOSTS_REJECTED",
+  },
+]
+`;
+
 exports[`settings actions should fetch servers and return PENDING and FULFILLED action 1`] = `
 Array [
   Object {
