@@ -38,7 +38,7 @@ class ConversionHostsSettings extends React.Component {
               </a>
             </div>
           </div>
-          {conversionHosts.length < 0 ? (
+          {conversionHosts.length === 0 ? (
             <ConversionHostsEmptyState showConversionHostWizard={showConversionHostWizard} />
           ) : (
             <ConversionHostsList conversionHosts={conversionHosts} />

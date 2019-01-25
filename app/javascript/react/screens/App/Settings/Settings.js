@@ -8,9 +8,6 @@ import ConversionHostsSettings from './screens/ConversionHostsSettings';
 const Settings = props => {
   const { match, redirectTo } = props;
 
-  // TODO remove this when we are ready to release ConversionHostsSettings
-  const hideConversionHostSettings = true;
-
   return (
     <React.Fragment>
       <Toolbar>
@@ -18,7 +15,7 @@ const Settings = props => {
         <Breadcrumb.Item href="#/plans">{__('Migration')}</Breadcrumb.Item>
         <Breadcrumb.Item active>{__('Migration Settings')}</Breadcrumb.Item>
       </Toolbar>
-      {hideConversionHostSettings ? (
+      {props.hideConversionHostSettings ? (
         <React.Fragment>
           <h2>{__('Concurrent Migrations')}</h2>
           <GeneralSettings />
@@ -41,7 +38,8 @@ const Settings = props => {
 
 Settings.propTypes = {
   match: PropTypes.object,
-  redirectTo: PropTypes.func
+  redirectTo: PropTypes.func,
+  hideConversionHostSettings: PropTypes.bool // TODO remove this when we are ready to release ConversionHostsSettings
 };
 
 export default Settings;
