@@ -1,14 +1,86 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`fetching servers is pending 1`] = `
+exports[`fetching conversion hosts is pending 1`] = `
 Object {
+  "conversionHostWizardVisible": false,
+  "conversionHosts": Array [],
+  "errorFetchingConversionHosts": null,
   "errorFetchingServers": null,
   "errorFetchingSettings": null,
   "errorSavingSettings": null,
   "fetchingServersRejected": false,
   "fetchingSettingsRejected": false,
+  "isFetchingConversionHosts": true,
+  "isFetchingServers": false,
+  "isFetchingSettings": false,
+  "isRejectedConversionHosts": false,
+  "isSavingSettings": false,
+  "savedSettings": Object {},
+  "savingSettingsRejected": false,
+  "servers": Array [],
+}
+`;
+
+exports[`fetching conversion hosts is rejected 1`] = `
+Object {
+  "conversionHostWizardVisible": false,
+  "conversionHosts": Array [],
+  "errorFetchingConversionHosts": "error",
+  "errorFetchingServers": null,
+  "errorFetchingSettings": null,
+  "errorSavingSettings": null,
+  "fetchingServersRejected": false,
+  "fetchingSettingsRejected": false,
+  "isFetchingConversionHosts": false,
+  "isFetchingServers": false,
+  "isFetchingSettings": false,
+  "isRejectedConversionHosts": true,
+  "isSavingSettings": false,
+  "savedSettings": Object {},
+  "savingSettingsRejected": false,
+  "servers": Array [],
+}
+`;
+
+exports[`fetching conversion hosts is successful 1`] = `
+Object {
+  "conversionHostWizardVisible": false,
+  "conversionHosts": Array [
+    Object {
+      "mock": "conversionHost",
+    },
+  ],
+  "errorFetchingConversionHosts": null,
+  "errorFetchingServers": null,
+  "errorFetchingSettings": null,
+  "errorSavingSettings": null,
+  "fetchingServersRejected": false,
+  "fetchingSettingsRejected": false,
+  "isFetchingConversionHosts": false,
+  "isFetchingServers": false,
+  "isFetchingSettings": false,
+  "isRejectedConversionHosts": false,
+  "isSavingSettings": false,
+  "savedSettings": Object {},
+  "savingSettingsRejected": false,
+  "servers": Array [],
+}
+`;
+
+exports[`fetching servers is pending 1`] = `
+Object {
+  "conversionHostWizardVisible": false,
+  "conversionHosts": Array [],
+  "errorFetchingConversionHosts": null,
+  "errorFetchingServers": null,
+  "errorFetchingSettings": null,
+  "errorSavingSettings": null,
+  "fetchingServersRejected": false,
+  "fetchingSettingsRejected": false,
+  "isFetchingConversionHosts": false,
   "isFetchingServers": true,
   "isFetchingSettings": false,
+  "isRejectedConversionHosts": false,
   "isSavingSettings": false,
   "savedSettings": Object {},
   "savingSettingsRejected": false,
@@ -18,13 +90,18 @@ Object {
 
 exports[`fetching servers is rejected 1`] = `
 Object {
+  "conversionHostWizardVisible": false,
+  "conversionHosts": Array [],
+  "errorFetchingConversionHosts": null,
   "errorFetchingServers": "error",
   "errorFetchingSettings": null,
   "errorSavingSettings": null,
   "fetchingServersRejected": true,
   "fetchingSettingsRejected": false,
+  "isFetchingConversionHosts": false,
   "isFetchingServers": false,
   "isFetchingSettings": false,
+  "isRejectedConversionHosts": false,
   "isSavingSettings": false,
   "savedSettings": Object {},
   "savingSettingsRejected": false,
@@ -34,13 +111,18 @@ Object {
 
 exports[`fetching settings is pending 1`] = `
 Object {
+  "conversionHostWizardVisible": false,
+  "conversionHosts": Array [],
+  "errorFetchingConversionHosts": null,
   "errorFetchingServers": null,
   "errorFetchingSettings": null,
   "errorSavingSettings": null,
   "fetchingServersRejected": false,
   "fetchingSettingsRejected": false,
+  "isFetchingConversionHosts": false,
   "isFetchingServers": false,
   "isFetchingSettings": true,
+  "isRejectedConversionHosts": false,
   "isSavingSettings": false,
   "savedSettings": Object {},
   "savingSettingsRejected": false,
@@ -50,13 +132,18 @@ Object {
 
 exports[`fetching settings is rejected 1`] = `
 Object {
+  "conversionHostWizardVisible": false,
+  "conversionHosts": Array [],
+  "errorFetchingConversionHosts": null,
   "errorFetchingServers": null,
   "errorFetchingSettings": "error",
   "errorSavingSettings": null,
   "fetchingServersRejected": false,
   "fetchingSettingsRejected": true,
+  "isFetchingConversionHosts": false,
   "isFetchingServers": false,
   "isFetchingSettings": false,
+  "isRejectedConversionHosts": false,
   "isSavingSettings": false,
   "savedSettings": Object {},
   "savingSettingsRejected": false,
@@ -66,13 +153,18 @@ Object {
 
 exports[`fetching settings is successful 1`] = `
 Object {
+  "conversionHostWizardVisible": false,
+  "conversionHosts": Array [],
+  "errorFetchingConversionHosts": null,
   "errorFetchingServers": null,
   "errorFetchingSettings": null,
   "errorSavingSettings": null,
   "fetchingServersRejected": false,
   "fetchingSettingsRejected": false,
+  "isFetchingConversionHosts": false,
   "isFetchingServers": false,
   "isFetchingSettings": false,
+  "isRejectedConversionHosts": false,
   "isSavingSettings": false,
   "savedSettings": Object {
     "max_concurrent_tasks_per_host": 10,
@@ -84,13 +176,18 @@ Object {
 
 exports[`saving settings is pending 1`] = `
 Object {
+  "conversionHostWizardVisible": false,
+  "conversionHosts": Array [],
+  "errorFetchingConversionHosts": null,
   "errorFetchingServers": null,
   "errorFetchingSettings": null,
   "errorSavingSettings": null,
   "fetchingServersRejected": false,
   "fetchingSettingsRejected": false,
+  "isFetchingConversionHosts": false,
   "isFetchingServers": false,
   "isFetchingSettings": false,
+  "isRejectedConversionHosts": false,
   "isSavingSettings": true,
   "savedSettings": Object {},
   "savingSettingsRejected": false,
@@ -100,13 +197,18 @@ Object {
 
 exports[`saving settings is rejected 1`] = `
 Object {
+  "conversionHostWizardVisible": false,
+  "conversionHosts": Array [],
+  "errorFetchingConversionHosts": null,
   "errorFetchingServers": null,
   "errorFetchingSettings": null,
   "errorSavingSettings": "error",
   "fetchingServersRejected": false,
   "fetchingSettingsRejected": false,
+  "isFetchingConversionHosts": false,
   "isFetchingServers": false,
   "isFetchingSettings": false,
+  "isRejectedConversionHosts": false,
   "isSavingSettings": false,
   "savedSettings": Object {},
   "savingSettingsRejected": true,
@@ -116,13 +218,18 @@ Object {
 
 exports[`saving settings is successful 1`] = `
 Object {
+  "conversionHostWizardVisible": false,
+  "conversionHosts": Array [],
+  "errorFetchingConversionHosts": null,
   "errorFetchingServers": null,
   "errorFetchingSettings": null,
   "errorSavingSettings": null,
   "fetchingServersRejected": false,
   "fetchingSettingsRejected": false,
+  "isFetchingConversionHosts": false,
   "isFetchingServers": false,
   "isFetchingSettings": false,
+  "isRejectedConversionHosts": false,
   "isSavingSettings": false,
   "savedSettings": Object {
     "max_concurrent_tasks_per_host": 10,
@@ -134,13 +241,18 @@ Object {
 
 exports[`sets default state 1`] = `
 Object {
+  "conversionHostWizardVisible": false,
+  "conversionHosts": Array [],
+  "errorFetchingConversionHosts": null,
   "errorFetchingServers": null,
   "errorFetchingSettings": null,
   "errorSavingSettings": null,
   "fetchingServersRejected": false,
   "fetchingSettingsRejected": false,
+  "isFetchingConversionHosts": false,
   "isFetchingServers": false,
   "isFetchingSettings": false,
+  "isRejectedConversionHosts": false,
   "isSavingSettings": false,
   "savedSettings": Object {},
   "savingSettingsRejected": false,
