@@ -4,6 +4,10 @@ import { Wizard, Button, Icon } from 'patternfly-react';
 
 import { stepIDs } from './ConversionHostWizardConstants';
 import ConversionHostWizardBody from './ConversionHostWizardBody';
+import ConversionHostWizardTargetProviderStep from './ConversionHostWizardTargetProviderStep';
+import ConversionHostWizardHostsStep from './ConversionHostWizardHostsStep';
+import ConversionHostWizardAuthConfigStep from './ConversionHostWizardAuthConfigStep';
+import ConversionHostWizardResultsStep from './ConversionHostWizardResultsStep';
 
 class ConversionHostWizard extends React.Component {
   state = { activeStepIndex: 0 };
@@ -12,22 +16,22 @@ class ConversionHostWizard extends React.Component {
     {
       id: stepIDs.targetProviderStep,
       title: __('Target Provider'),
-      render: () => <div>Step 1!</div>
+      render: () => <ConversionHostWizardTargetProviderStep />
     },
     {
       id: stepIDs.hostsStep,
       title: __('Host(s)'),
-      render: () => <div>Step 2!</div>
+      render: () => <ConversionHostWizardHostsStep />
     },
     {
       id: stepIDs.authConfigStep,
       title: __('Auth Config'),
-      render: () => <div>Step 3!</div>
+      render: () => <ConversionHostWizardAuthConfigStep />
     },
     {
       id: stepIDs.resultsStep,
       title: __('Results'),
-      render: () => <div>Step 4!</div>
+      render: () => <ConversionHostWizardResultsStep />
     }
   ];
 
