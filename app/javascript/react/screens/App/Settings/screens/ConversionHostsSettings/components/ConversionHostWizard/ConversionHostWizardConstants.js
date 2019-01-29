@@ -1,6 +1,6 @@
 export const stepIDs = {
-  targetProviderStep: 'conversionHostWizardTargetProviderStep',
+  locationStep: 'conversionHostWizardLocationStep',
   hostsStep: 'conversionHostWizardHostsStep',
-  authConfigStep: 'conversionHostWizardAuthConfigStep',
+  authenticationStep: 'conversionHostWizardAuthenticationStep',
   resultsStep: 'conversionHostWizardResultsStep'
 };

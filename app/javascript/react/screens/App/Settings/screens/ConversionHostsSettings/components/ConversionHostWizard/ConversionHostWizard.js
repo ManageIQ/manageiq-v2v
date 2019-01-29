@@ -4,9 +4,9 @@ import { Wizard, Button, Icon } from 'patternfly-react';
 
 import { stepIDs } from './ConversionHostWizardConstants';
 import ConversionHostWizardBody from './ConversionHostWizardBody';
-import ConversionHostWizardTargetProviderStep from './ConversionHostWizardTargetProviderStep';
+import ConversionHostWizardLocationStep from './ConversionHostWizardLocationStep';
 import ConversionHostWizardHostsStep from './ConversionHostWizardHostsStep';
-import ConversionHostWizardAuthConfigStep from './ConversionHostWizardAuthConfigStep';
+import ConversionHostWizardAuthenticationStep from './ConversionHostWizardAuthenticationStep';
 import ConversionHostWizardResultsStep from './ConversionHostWizardResultsStep';
 
 class ConversionHostWizard extends React.Component {
@@ -14,9 +14,9 @@ class ConversionHostWizard extends React.Component {
 
   getWizardSteps = () => [
     {
-      id: stepIDs.targetProviderStep,
-      title: __('Target Provider'),
-      render: () => <ConversionHostWizardTargetProviderStep />
+      id: stepIDs.locationStep,
+      title: __('Location'),
+      render: () => <ConversionHostWizardLocationStep />
     },
     {
       id: stepIDs.hostsStep,
@@ -24,9 +24,9 @@ class ConversionHostWizard extends React.Component {
       render: () => <ConversionHostWizardHostsStep />
     },
     {
-      id: stepIDs.authConfigStep,
-      title: __('Auth Config'),
-      render: () => <ConversionHostWizardAuthConfigStep />
+      id: stepIDs.authenticationStep,
+      title: __('Authentication'),
+      render: () => <ConversionHostWizardAuthenticationStep />
     },
     {
       id: stepIDs.resultsStep,
