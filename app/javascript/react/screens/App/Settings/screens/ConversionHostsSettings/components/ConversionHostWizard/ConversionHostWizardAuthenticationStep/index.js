@@ -1,0 +1,3 @@
+import ConversionHostWizardAuthenticationStep from './ConversionHostWizardAuthenticationStep';
+
+export default ConversionHostWizardAuthenticationStep;
