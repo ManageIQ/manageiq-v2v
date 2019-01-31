@@ -63,7 +63,11 @@ class ConversionHostWizard extends React.Component {
   };
 
   render() {
-    const { hideConversionHostWizard } = this.props;
+    const {
+      conversionHostWizardVisible,
+      hideConversionHostWizardAction,
+      conversionHostWizardExitedAction
+    } = this.props;
     const { activeStepIndex } = this.state;
     const activeStepNumber = (activeStepIndex + 1).toString();
 
@@ -76,8 +80,13 @@ class ConversionHostWizard extends React.Component {
     const disableNextStep = false; // TODO
 
     return (
-      <Wizard show onClose={hideConversionHostWizard} onExited={hideConversionHostWizard} backdrop="static">
-        <Wizard.Header onClose={hideConversionHostWizard} title={__('Configure Conversion Host')} />
+      <Wizard
+        show={conversionHostWizardVisible}
+        onClose={hideConversionHostWizardAction}
+        onExited={conversionHostWizardExitedAction}
+        backdrop="static"
+      >
+        <Wizard.Header onClose={hideConversionHostWizardAction} title={__('Configure Conversion Host')} />
         <Wizard.Body>
           <ConversionHostWizardBody
             wizardSteps={wizardSteps}
@@ -89,7 +98,12 @@ class ConversionHostWizard extends React.Component {
           />
         </Wizard.Body>
         <Wizard.Footer className="wizard-pf-footer">
-          <Button bsStyle="default" className="btn-cancel" onClick={hideConversionHostWizard} disabled={onFinalStep}>
+          <Button
+            bsStyle="default"
+            className="btn-cancel"
+            onClick={hideConversionHostWizardAction}
+            disabled={onFinalStep}
+          >
             {__('Cancel')}
           </Button>
           <Button bsStyle="default" onClick={this.prevStep} disabled={onFirstStep || onFinalStep}>
@@ -98,11 +112,11 @@ class ConversionHostWizard extends React.Component {
           </Button>
           <Button
             bsStyle="primary"
-            onClick={onFinalStep ? hideConversionHostWizard : this.nextStep}
+            onClick={onFinalStep ? hideConversionHostWizardAction : this.nextStep}
             disabled={disableNextStep}
           >
             {onFinalStep ? __('Close') : activeStep.id === stepIDs.authConfigStep ? __('Configure') : __('Next')}
-            <Icon type="fa" name="angle-right" />
+            {!onFinalStep && <Icon type="fa" name="angle-right" />}
           </Button>
         </Wizard.Footer>
       </Wizard>
@@ -111,7 +125,8 @@ class ConversionHostWizard extends React.Component {
 }
 
 ConversionHostWizard.propTypes = {
-  hideConversionHostWizard: PropTypes.func
+  hideConversionHostWizardAction: PropTypes.func,
+  conversionHostWizardVisible: PropTypes.bool
 };
 
 export default ConversionHostWizard;

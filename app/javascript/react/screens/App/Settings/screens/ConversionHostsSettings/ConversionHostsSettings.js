@@ -15,9 +15,8 @@ class ConversionHostsSettings extends React.Component {
     const {
       isFetchingConversionHosts,
       conversionHosts,
-      showConversionHostWizard,
-      hideConversionHostWizard,
-      conversionHostWizardVisible
+      showConversionHostWizardAction,
+      conversionHostWizardMounted
     } = this.props;
 
     return (
@@ -29,7 +28,7 @@ class ConversionHostsSettings extends React.Component {
                 href="#"
                 onClick={e => {
                   e.preventDefault();
-                  showConversionHostWizard();
+                  showConversionHostWizardAction();
                 }}
               >
                 <Icon type="pf" name="add-circle-o" />
@@ -39,11 +38,11 @@ class ConversionHostsSettings extends React.Component {
             </div>
           </div>
           {conversionHosts.length === 0 ? (
-            <ConversionHostsEmptyState showConversionHostWizard={showConversionHostWizard} />
+            <ConversionHostsEmptyState showConversionHostWizardAction={showConversionHostWizardAction} />
           ) : (
             <ConversionHostsList conversionHosts={conversionHosts} />
           )}
-          {conversionHostWizardVisible && <ConversionHostWizard hideConversionHostWizard={hideConversionHostWizard} />}
+          {conversionHostWizardMounted && <ConversionHostWizard />}
         </React.Fragment>
       </Spinner>
     );
@@ -55,9 +54,8 @@ ConversionHostsSettings.propTypes = {
   fetchConversionHostsAction: PropTypes.func,
   isFetchingConversionHosts: PropTypes.bool,
   conversionHosts: PropTypes.arrayOf(PropTypes.object),
-  showConversionHostWizard: PropTypes.func,
-  hideConversionHostWizard: PropTypes.func,
-  conversionHostWizardVisible: PropTypes.bool
+  showConversionHostWizardAction: PropTypes.func,
+  conversionHostWizardMounted: PropTypes.bool
 };
 
 ConversionHostsSettings.defaultProps = {

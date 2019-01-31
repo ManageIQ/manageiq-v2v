@@ -10,8 +10,8 @@ describe('ConversionHostsSettings component', () => {
     fetchConversionHostsAction: jest.fn(),
     conversionHosts: [],
     isFetchingConversionHosts: false,
-    showConversionHostWizard: jest.fn(),
-    hideConversionHostWizard: jest.fn(),
+    showConversionHostWizardAction: jest.fn(),
+    hideConversionHostWizardAction: jest.fn(),
     conversionHostWizardVisible: false
   });
 

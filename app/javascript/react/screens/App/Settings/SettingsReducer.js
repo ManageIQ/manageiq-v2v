@@ -6,7 +6,8 @@ import {
   V2V_PATCH_SETTINGS,
   FETCH_V2V_CONVERSION_HOSTS,
   SHOW_V2V_CONVERSION_HOST_WIZARD,
-  HIDE_V2V_CONVERSION_HOST_WIZARD
+  HIDE_V2V_CONVERSION_HOST_WIZARD,
+  V2V_CONVERSION_HOST_WIZARD_EXITED
 } from './SettingsConstants';
 
 import { getFormValuesFromApiSettings } from './helpers';
@@ -27,6 +28,7 @@ export const initialState = Immutable({
   isRejectedConversionHosts: false,
   errorFetchingConversionHosts: null,
   conversionHosts: [],
+  conversionHostWizardMounted: false,
   conversionHostWizardVisible: false
 });
 
@@ -101,9 +103,11 @@ export default (state = initialState, action) => {
         .set('errorFetchingConversionHosts', action.payload);
 
     case SHOW_V2V_CONVERSION_HOST_WIZARD:
-      return state.set('conversionHostWizardVisible', true);
+      return state.set('conversionHostWizardMounted', true).set('conversionHostWizardVisible', true);
     case HIDE_V2V_CONVERSION_HOST_WIZARD:
       return state.set('conversionHostWizardVisible', false);
+    case V2V_CONVERSION_HOST_WIZARD_EXITED:
+      return state.set('conversionHostWizardMounted', false);
 
     default:
       return state;
