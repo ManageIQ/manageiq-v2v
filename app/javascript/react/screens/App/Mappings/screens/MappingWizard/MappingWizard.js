@@ -198,7 +198,7 @@ class MappingWizard extends React.Component {
                   ? __('Save')
                   : __('Create')
                 : __('Next')}
-            <Icon type="fa" name="angle-right" />
+            {!onFinalStep && <Icon type="fa" name="angle-right" />}
           </Button>
         </Wizard.Footer>
         <WarningModal
