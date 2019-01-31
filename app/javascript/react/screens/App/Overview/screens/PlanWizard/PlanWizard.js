@@ -250,7 +250,7 @@ class PlanWizard extends React.Component {
         </Wizard.Body>
 
         <Wizard.Footer className="wizard-pf-footer">
-          <Button bsStyle="default" className="btn-cancel" onClick={hidePlanWizardAction}>
+          <Button bsStyle="default" className="btn-cancel" onClick={hidePlanWizardAction} disabled={onFinalStep}>
             {__('Cancel')}
           </Button>
           <Button bsStyle="default" onClick={this.prevStep} disabled={onFirstStep || onFinalStep}>
@@ -263,7 +263,7 @@ class PlanWizard extends React.Component {
             disabled={disableNextStep}
           >
             {onFinalStep ? __('Close') : currentStepProp === stepIDs.scheduleStep ? saveButtonLabel : __('Next')}
-            <Icon type="fa" name="angle-right" />
+            {!onFinalStep && <Icon type="fa" name="angle-right" />}
           </Button>
         </Wizard.Footer>
       </Wizard>
