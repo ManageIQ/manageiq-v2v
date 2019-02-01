@@ -5,9 +5,15 @@ import * as SettingsActions from '../../../../../SettingsActions';
 
 import { stepIDs } from '../ConversionHostWizardConstants';
 
-const mapStateToProps = ({ form, settings: { providers } }) => ({
+const mapStateToProps = ({
+  form,
+  settings: { isFetchingProviders, providers, isFetchingTargetComputeResources, targetComputeResources }
+}) => ({
   locationStepForm: form[stepIDs.locationStep],
-  providers
+  isFetchingProviders,
+  providers,
+  isFetchingTargetComputeResources,
+  targetComputeResources
 });
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => Object.assign(stateProps, ownProps.data, dispatchProps);

@@ -10,7 +10,8 @@ import {
   SHOW_V2V_CONVERSION_HOST_WIZARD,
   HIDE_V2V_CONVERSION_HOST_WIZARD,
   V2V_CONVERSION_HOST_WIZARD_EXITED,
-  FETCH_V2V_PROVIDERS
+  FETCH_V2V_PROVIDERS,
+  FETCH_V2V_TARGET_COMPUTE_RESOURCES
 } from './SettingsConstants';
 import { getApiSettingsFromFormValues } from './helpers';
 import { stepIDs } from './screens/ConversionHostsSettings/components/ConversionHostWizard/ConversionHostWizardConstants';
@@ -86,4 +87,15 @@ const _getProvidersActionCreator = url => dispatch =>
 export const fetchProvidersAction = url => {
   const uri = new URI(url);
   return _getProvidersActionCreator(uri.toString());
+};
+
+const _getTargetComputeResourcesActionCreator = url => dispatch =>
+  dispatch({
+    type: FETCH_V2V_TARGET_COMPUTE_RESOURCES,
+    payload: API.get(url)
+  });
+
+export const fetchTargetComputeResourcesAction = url => {
+  const uri = new URI(url);
+  return _getTargetComputeResourcesActionCreator(uri.toString());
 };

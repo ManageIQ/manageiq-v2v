@@ -5,7 +5,12 @@ import { required } from 'redux-form-validators';
 import { Form, Spinner } from 'patternfly-react';
 
 import { BootstrapSelect } from '../../../../../../common/forms/BootstrapSelect';
-import { V2V_TARGET_PROVIDERS, RHV, OPENSTACK } from '../../../../../../../../../common/constants';
+import {
+  V2V_TARGET_PROVIDERS,
+  RHV,
+  OPENSTACK,
+  FETCH_TARGET_COMPUTE_URLS
+} from '../../../../../../../../../common/constants';
 
 import { stepIDs, PROVIDER_TYPES } from '../ConversionHostWizardConstants';
 
@@ -16,10 +21,11 @@ class ConversionHostWizardLocationStep extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
+    const { fetchTargetComputeResourcesAction, fetchTargetComputeUrls } = this.props;
     const prevDerivedProps = this.getDerivedProps(prevProps);
     const newDerivedProps = this.getDerivedProps();
     if (prevDerivedProps.selectedProviderType !== newDerivedProps.selectedProviderType) {
-      // TODO fetch clusters or projects
+      fetchTargetComputeResourcesAction(fetchTargetComputeUrls[newDerivedProps.selectedProviderType]);
     }
   }
 
@@ -27,26 +33,29 @@ class ConversionHostWizardLocationStep extends React.Component {
     const { locationStepForm } = props;
     return {
       selectedProviderType: locationStepForm.values && locationStepForm.values.providerType,
-      selectedProvider: locationStepForm.values && locationStepForm.values.provider
+      selectedProviderId: locationStepForm.values && locationStepForm.values.provider
     };
   };
 
   render() {
-    const { isFetchingProviders, providers } = this.props;
-    const { selectedProviderType, selectedProvider } = this.getDerivedProps();
+    const { isFetchingProviders, providers, isFetchingTargetComputeResources, targetComputeResources } = this.props;
+    const { selectedProviderType, selectedProviderId } = this.getDerivedProps();
 
-    const providersFilteredByType = providers.filter(
+    const providersFilteredBySelectedType = providers.filter(
       provider => provider.type === PROVIDER_TYPES[selectedProviderType]
     );
 
-    const rhvClusters = []; // TODO
-    const ospProjects = []; // TODO  --- CloudTenant === project?
+    const targetComputeFilteredBySelectedProvider = targetComputeResources.filter(
+      computeResource => computeResource.ems_id === selectedProviderId
+    );
 
     const selectFieldBaseProps = {
       component: BootstrapSelect,
       labelWidth: 2,
       controlWidth: 9,
       inline_label: true,
+      option_key: 'id',
+      option_value: 'name',
       required: true
     };
 
@@ -58,40 +67,34 @@ class ConversionHostWizardLocationStep extends React.Component {
             name="providerType"
             label={__('Provider Type')}
             options={V2V_TARGET_PROVIDERS}
-            option_key="id"
-            option_value="name"
           />
           {selectedProviderType && (
-            <Field
-              {...selectFieldBaseProps}
-              name="provider"
-              label={__('Provider')}
-              options={providersFilteredByType}
-              option_key="id"
-              option_value="name"
-            />
-          )}
-          {selectedProviderType === RHV && (
-            <Field
-              {...selectFieldBaseProps}
-              name="cluster"
-              label={__('Cluster')}
-              options={rhvClusters}
-              option_key="id"
-              option_value="name"
-              disabled={!selectedProvider}
-            />
-          )}
-          {selectedProviderType === OPENSTACK && (
-            <Field
-              {...selectFieldBaseProps}
-              name="project"
-              label={__('Project')}
-              options={ospProjects}
-              option_key="id"
-              option_value="name"
-              disabled={!selectedProvider}
-            />
+            <Spinner loading={isFetchingTargetComputeResources}>
+              <Field
+                {...selectFieldBaseProps}
+                name="provider"
+                label={__('Provider')}
+                options={providersFilteredBySelectedType}
+              />
+              {selectedProviderType === RHV && (
+                <Field
+                  {...selectFieldBaseProps}
+                  name="cluster"
+                  label={__('Cluster')}
+                  options={targetComputeFilteredBySelectedProvider}
+                  disabled={!selectedProviderId}
+                />
+              )}
+              {selectedProviderType === OPENSTACK && (
+                <Field
+                  {...selectFieldBaseProps}
+                  name="project"
+                  label={__('Project')}
+                  options={targetComputeFilteredBySelectedProvider}
+                  disabled={!selectedProviderId}
+                />
+              )}
+            </Spinner>
           )}
         </Spinner>
       </Form>
@@ -101,12 +104,20 @@ class ConversionHostWizardLocationStep extends React.Component {
 
 ConversionHostWizardLocationStep.propTypes = {
   locationStepForm: PropTypes.object,
-  fetchProvidersUrl: PropTypes.string
+  fetchProvidersAction: PropTypes.func,
+  fetchProvidersUrl: PropTypes.string,
+  isFetchingProviders: PropTypes.bool,
+  providers: PropTypes.arrayOf(PropTypes.object),
+  fetchTargetComputeResourcesAction: PropTypes.func,
+  fetchTargetComputeUrls: PropTypes.object,
+  isFetchingTargetComputeResources: PropTypes.bool,
+  targetComputeResources: PropTypes.arrayOf(PropTypes.object)
 };
 
 ConversionHostWizardLocationStep.defaultProps = {
   locationStepForm: {},
-  fetchProvidersUrl: '/api/providers?expand=resources'
+  fetchProvidersUrl: '/api/providers?expand=resources',
+  fetchTargetComputeUrls: FETCH_TARGET_COMPUTE_URLS
 };
 
 export default reduxForm({
