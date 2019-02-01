@@ -128,6 +128,7 @@ class ConversionHostWizard extends React.Component {
 
 ConversionHostWizard.propTypes = {
   hideConversionHostWizardAction: PropTypes.func,
+  conversionHostWizardExitedAction: PropTypes.func,
   conversionHostWizardVisible: PropTypes.bool,
   forms: PropTypes.object
 };
