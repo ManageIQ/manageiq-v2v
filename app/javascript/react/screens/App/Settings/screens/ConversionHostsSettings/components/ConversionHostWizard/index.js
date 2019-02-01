@@ -1,10 +1,12 @@
 import { connect } from 'react-redux';
 import ConversionHostWizard from './ConversionHostWizard';
+import { conversionHostWizardFormFilter } from './ConversionHostWizardSelectors';
 
 import * as SettingsActions from '../../../../SettingsActions';
 
-const mapStateToProps = ({ settings: { conversionHostWizardVisible } }, ownProps) => ({
+const mapStateToProps = ({ form, settings: { conversionHostWizardVisible } }, ownProps) => ({
   ...ownProps.data,
+  forms: conversionHostWizardFormFilter(form),
   conversionHostWizardVisible
 });
 

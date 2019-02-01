@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { reduxForm, Field, reset } from 'redux-form';
+import { reduxForm, Field } from 'redux-form';
 import { required } from 'redux-form-validators';
 import { Form, Spinner } from 'patternfly-react';
 
@@ -56,7 +56,8 @@ class ConversionHostWizardLocationStep extends React.Component {
       inline_label: true,
       option_key: 'id',
       option_value: 'name',
-      required: true
+      required: true,
+      validate: [required()]
     };
 
     return (
