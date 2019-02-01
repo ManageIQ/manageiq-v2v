@@ -9,7 +9,8 @@ import {
   FETCH_V2V_CONVERSION_HOSTS,
   SHOW_V2V_CONVERSION_HOST_WIZARD,
   HIDE_V2V_CONVERSION_HOST_WIZARD,
-  V2V_CONVERSION_HOST_WIZARD_EXITED
+  V2V_CONVERSION_HOST_WIZARD_EXITED,
+  FETCH_V2V_PROVIDERS
 } from './SettingsConstants';
 import { getApiSettingsFromFormValues } from './helpers';
 import { stepIDs } from './screens/ConversionHostsSettings/components/ConversionHostWizard/ConversionHostWizardConstants';
@@ -74,4 +75,15 @@ export const conversionHostWizardExitedAction = () => dispatch => {
   Object.values(stepIDs).forEach(formName => {
     dispatch(reset(formName));
   });
+};
+
+const _getProvidersActionCreator = url => dispatch =>
+  dispatch({
+    type: FETCH_V2V_PROVIDERS,
+    payload: API.get(url)
+  });
+
+export const fetchProvidersAction = url => {
+  const uri = new URI(url);
+  return _getProvidersActionCreator(uri.toString());
 };

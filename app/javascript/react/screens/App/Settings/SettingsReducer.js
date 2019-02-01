@@ -7,7 +7,8 @@ import {
   FETCH_V2V_CONVERSION_HOSTS,
   SHOW_V2V_CONVERSION_HOST_WIZARD,
   HIDE_V2V_CONVERSION_HOST_WIZARD,
-  V2V_CONVERSION_HOST_WIZARD_EXITED
+  V2V_CONVERSION_HOST_WIZARD_EXITED,
+  FETCH_V2V_PROVIDERS
 } from './SettingsConstants';
 
 import { getFormValuesFromApiSettings } from './helpers';
@@ -29,7 +30,11 @@ export const initialState = Immutable({
   errorFetchingConversionHosts: null,
   conversionHosts: [],
   conversionHostWizardMounted: false,
-  conversionHostWizardVisible: false
+  conversionHostWizardVisible: false,
+  isFetchingProviders: false,
+  isRejectedProviders: false,
+  errorFetchingProviders: null,
+  providers: []
 });
 
 export default (state = initialState, action) => {
@@ -108,6 +113,23 @@ export default (state = initialState, action) => {
       return state.set('conversionHostWizardVisible', false);
     case V2V_CONVERSION_HOST_WIZARD_EXITED:
       return state.set('conversionHostWizardMounted', false);
+
+    case `${FETCH_V2V_PROVIDERS}_PENDING`:
+      return state
+        .set('isFetchingProviders', true)
+        .set('isRejectedProviders', false)
+        .set('errorFetchingProviders', null);
+    case `${FETCH_V2V_PROVIDERS}_FULFILLED`:
+      return state
+        .set('providers', action.payload.data.resources)
+        .set('isFetchingProviders', false)
+        .set('isRejectedProviders', false)
+        .set('errorFetchingProviders', null);
+    case `${FETCH_V2V_PROVIDERS}_REJECTED`:
+      return state
+        .set('isFetchingProviders', false)
+        .set('isRejectedProviders', true)
+        .set('errorFetchingProviders', action.payload);
 
     default:
       return state;
