@@ -1,18 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Spinner, Icon } from 'patternfly-react';
+import ShowWizardEmptyState from '../../../common/ShowWizardEmptyState/ShowWizardEmptyState';
 import ConversionHostsEmptyState from './components/ConversionHostsEmptyState';
 import ConversionHostsList from './components/ConversionHostsList';
 import ConversionHostWizard from './components/ConversionHostWizard';
 
 class ConversionHostsSettings extends React.Component {
   componentDidMount() {
-    const { fetchConversionHostsAction, fetchConversionHostsUrl } = this.props;
+    const { fetchProvidersAction, fetchProvidersUrl, fetchConversionHostsAction, fetchConversionHostsUrl } = this.props;
+    fetchProvidersAction(fetchProvidersUrl);
     fetchConversionHostsAction(fetchConversionHostsUrl);
   }
 
   render() {
     const {
+      isFetchingProviders,
+      hasSufficientProviders,
       isFetchingConversionHosts,
       conversionHosts,
       showConversionHostWizardAction,
@@ -20,36 +24,51 @@ class ConversionHostsSettings extends React.Component {
     } = this.props;
 
     return (
-      <Spinner loading={isFetchingConversionHosts} style={{ marginTop: 15 }}>
-        <React.Fragment>
-          <div className="heading-with-link-container">
-            <div className="pull-right">
-              <a
-                href="#"
-                onClick={e => {
-                  e.preventDefault();
-                  showConversionHostWizardAction();
-                }}
-              >
-                <Icon type="pf" name="add-circle-o" />
-                &nbsp;
-                {__('Configure Conversion Host')}
-              </a>
+      <Spinner loading={isFetchingConversionHosts || isFetchingProviders} style={{ marginTop: 15 }}>
+        {!hasSufficientProviders ? (
+          <ShowWizardEmptyState
+            description={
+              __('The source and target providers must be configured before attempting a migration') // prettier-ignore
+            }
+            buttonText={__('Configure Providers')}
+            buttonHref="/ems_infra/show_list"
+            className="full-page-empty"
+          />
+        ) : (
+          <React.Fragment>
+            <div className="heading-with-link-container">
+              <div className="pull-right">
+                <a
+                  href="#"
+                  onClick={e => {
+                    e.preventDefault();
+                    showConversionHostWizardAction();
+                  }}
+                >
+                  <Icon type="pf" name="add-circle-o" />
+                  &nbsp;
+                  {__('Configure Conversion Host')}
+                </a>
+              </div>
             </div>
-          </div>
-          {conversionHosts.length === 0 ? (
-            <ConversionHostsEmptyState showConversionHostWizardAction={showConversionHostWizardAction} />
-          ) : (
-            <ConversionHostsList conversionHosts={conversionHosts} />
-          )}
-          {conversionHostWizardMounted && <ConversionHostWizard />}
-        </React.Fragment>
+            {conversionHosts.length === 0 ? (
+              <ConversionHostsEmptyState showConversionHostWizardAction={showConversionHostWizardAction} />
+            ) : (
+              <ConversionHostsList conversionHosts={conversionHosts} />
+            )}
+            {conversionHostWizardMounted && <ConversionHostWizard />}
+          </React.Fragment>
+        )}
       </Spinner>
     );
   }
 }
 
 ConversionHostsSettings.propTypes = {
+  fetchProvidersUrl: PropTypes.string,
+  fetchProvidersAction: PropTypes.func,
+  isFetchingProviders: PropTypes.bool,
+  hasSufficientProviders: PropTypes.bool,
   fetchConversionHostsUrl: PropTypes.string,
   fetchConversionHostsAction: PropTypes.func,
   isFetchingConversionHosts: PropTypes.bool,
@@ -59,6 +78,7 @@ ConversionHostsSettings.propTypes = {
 };
 
 ConversionHostsSettings.defaultProps = {
+  fetchProvidersUrl: '/api/providers?expand=resources',
   fetchConversionHostsUrl: '/api/conversion_hosts?attributes=resource&expand=resources'
 };
 

@@ -15,11 +15,6 @@ import {
 import { stepIDs, PROVIDER_TYPES } from '../ConversionHostWizardConstants';
 
 class ConversionHostWizardLocationStep extends React.Component {
-  componentDidMount() {
-    const { fetchProvidersAction, fetchProvidersUrl } = this.props;
-    fetchProvidersAction(fetchProvidersUrl);
-  }
-
   componentDidUpdate(prevProps) {
     const { fetchTargetComputeResourcesAction, fetchTargetComputeUrls } = this.props;
     const prevDerivedProps = this.getDerivedProps(prevProps);
@@ -38,7 +33,7 @@ class ConversionHostWizardLocationStep extends React.Component {
   };
 
   render() {
-    const { isFetchingProviders, providers, isFetchingTargetComputeResources, targetComputeResources } = this.props;
+    const { providers, isFetchingTargetComputeResources, targetComputeResources } = this.props;
     const { selectedProviderType, selectedProviderId } = this.getDerivedProps();
 
     const providersFilteredBySelectedType = providers.filter(
@@ -62,42 +57,40 @@ class ConversionHostWizardLocationStep extends React.Component {
 
     return (
       <Form className="form-horizontal">
-        <Spinner loading={isFetchingProviders}>
-          <Field
-            {...selectFieldBaseProps}
-            name="providerType"
-            label={__('Provider Type')}
-            options={V2V_TARGET_PROVIDERS}
-          />
-          {selectedProviderType && (
-            <Spinner loading={isFetchingTargetComputeResources}>
+        <Field
+          {...selectFieldBaseProps}
+          name="providerType"
+          label={__('Provider Type')}
+          options={V2V_TARGET_PROVIDERS}
+        />
+        {selectedProviderType && (
+          <Spinner loading={isFetchingTargetComputeResources}>
+            <Field
+              {...selectFieldBaseProps}
+              name="provider"
+              label={__('Provider')}
+              options={providersFilteredBySelectedType}
+            />
+            {selectedProviderType === RHV && (
               <Field
                 {...selectFieldBaseProps}
-                name="provider"
-                label={__('Provider')}
-                options={providersFilteredBySelectedType}
+                name="cluster"
+                label={__('Cluster')}
+                options={targetComputeFilteredBySelectedProvider}
+                disabled={!selectedProviderId}
               />
-              {selectedProviderType === RHV && (
-                <Field
-                  {...selectFieldBaseProps}
-                  name="cluster"
-                  label={__('Cluster')}
-                  options={targetComputeFilteredBySelectedProvider}
-                  disabled={!selectedProviderId}
-                />
-              )}
-              {selectedProviderType === OPENSTACK && (
-                <Field
-                  {...selectFieldBaseProps}
-                  name="project"
-                  label={__('Project')}
-                  options={targetComputeFilteredBySelectedProvider}
-                  disabled={!selectedProviderId}
-                />
-              )}
-            </Spinner>
-          )}
-        </Spinner>
+            )}
+            {selectedProviderType === OPENSTACK && (
+              <Field
+                {...selectFieldBaseProps}
+                name="project"
+                label={__('Project')}
+                options={targetComputeFilteredBySelectedProvider}
+                disabled={!selectedProviderId}
+              />
+            )}
+          </Spinner>
+        )}
       </Form>
     );
   }
@@ -105,9 +98,6 @@ class ConversionHostWizardLocationStep extends React.Component {
 
 ConversionHostWizardLocationStep.propTypes = {
   locationStepForm: PropTypes.object,
-  fetchProvidersAction: PropTypes.func,
-  fetchProvidersUrl: PropTypes.string,
-  isFetchingProviders: PropTypes.bool,
   providers: PropTypes.arrayOf(PropTypes.object),
   fetchTargetComputeResourcesAction: PropTypes.func,
   fetchTargetComputeUrls: PropTypes.object,
@@ -117,7 +107,6 @@ ConversionHostWizardLocationStep.propTypes = {
 
 ConversionHostWizardLocationStep.defaultProps = {
   locationStepForm: {},
-  fetchProvidersUrl: '/api/providers?expand=resources',
   fetchTargetComputeUrls: FETCH_TARGET_COMPUTE_URLS
 };
 
