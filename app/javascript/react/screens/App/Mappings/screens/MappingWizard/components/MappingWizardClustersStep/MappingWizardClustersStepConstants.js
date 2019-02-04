@@ -9,8 +9,6 @@ export const CONVERSION_HOST_TYPES = {
   [OPENSTACK]: 'ManageIQ::Providers::Openstack::CloudManager::Vm'
 };
 
-export { FETCH_TARGET_COMPUTE_URLS } from '../../../../../../../../common/constants';
-
 export const QUERY_PROVIDERS_URL = '/api/providers';
 
 export const TARGET_WARNING_MESSAGES = {

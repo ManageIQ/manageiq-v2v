@@ -7,8 +7,7 @@ import {
   FETCH_V2V_CONVERSION_HOSTS,
   SHOW_V2V_CONVERSION_HOST_WIZARD,
   HIDE_V2V_CONVERSION_HOST_WIZARD,
-  V2V_CONVERSION_HOST_WIZARD_EXITED,
-  FETCH_V2V_TARGET_COMPUTE_RESOURCES
+  V2V_CONVERSION_HOST_WIZARD_EXITED
 } from './SettingsConstants';
 
 import { getFormValuesFromApiSettings } from './helpers';
@@ -30,11 +29,7 @@ export const initialState = Immutable({
   errorFetchingConversionHosts: null,
   conversionHosts: [],
   conversionHostWizardMounted: false,
-  conversionHostWizardVisible: false,
-  isFetchingTargetComputeResources: false,
-  isRejectedTargetComputeResources: false,
-  errorFetchingTargetComputeResources: null,
-  targetComputeResources: []
+  conversionHostWizardVisible: false
 });
 
 export default (state = initialState, action) => {
@@ -113,23 +108,6 @@ export default (state = initialState, action) => {
       return state.set('conversionHostWizardVisible', false);
     case V2V_CONVERSION_HOST_WIZARD_EXITED:
       return state.set('conversionHostWizardMounted', false);
-
-    case `${FETCH_V2V_TARGET_COMPUTE_RESOURCES}_PENDING`:
-      return state
-        .set('isFetchingTargetComputeResources', true)
-        .set('isRejectedTargetComputeResources', false)
-        .set('errorFetchingTargetComputeResources', null);
-    case `${FETCH_V2V_TARGET_COMPUTE_RESOURCES}_FULFILLED`:
-      return state
-        .set('targetComputeResources', action.payload.data.resources)
-        .set('isFetchingTargetComputeResources', false)
-        .set('isRejectedTargetComputeResources', false)
-        .set('errorFetchingTargetComputeResources', null);
-    case `${FETCH_V2V_TARGET_COMPUTE_RESOURCES}_REJECTED`:
-      return state
-        .set('isFetchingTargetComputeResources', false)
-        .set('isRejectedTargetComputeResources', true)
-        .set('errorFetchingTargetComputeResources', action.payload);
 
     default:
       return state;

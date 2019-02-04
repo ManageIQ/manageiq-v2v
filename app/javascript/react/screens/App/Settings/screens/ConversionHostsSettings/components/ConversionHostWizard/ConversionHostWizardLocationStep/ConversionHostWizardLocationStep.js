@@ -5,22 +5,18 @@ import { required } from 'redux-form-validators';
 import { Form, Spinner } from 'patternfly-react';
 
 import { BootstrapSelect } from '../../../../../../common/forms/BootstrapSelect';
-import {
-  V2V_TARGET_PROVIDERS,
-  RHV,
-  OPENSTACK,
-  FETCH_TARGET_COMPUTE_URLS
-} from '../../../../../../../../../common/constants';
+import { V2V_TARGET_PROVIDERS, RHV, OPENSTACK } from '../../../../../../../../../common/constants';
+import { FETCH_TARGET_COMPUTE_URLS } from '../../../../../../../../../redux/common/targetResources/targetResourcesConstants';
 
 import { stepIDs } from '../ConversionHostWizardConstants';
 
 class ConversionHostWizardLocationStep extends React.Component {
   componentDidUpdate(prevProps) {
-    const { fetchTargetComputeResourcesAction, fetchTargetComputeUrls } = this.props;
+    const { fetchTargetClustersAction, fetchTargetComputeUrls } = this.props;
     const prevDerivedProps = this.getDerivedProps(prevProps);
     const newDerivedProps = this.getDerivedProps();
     if (prevDerivedProps.selectedProviderType !== newDerivedProps.selectedProviderType) {
-      fetchTargetComputeResourcesAction(fetchTargetComputeUrls[newDerivedProps.selectedProviderType]);
+      fetchTargetClustersAction(fetchTargetComputeUrls[newDerivedProps.selectedProviderType]);
     }
   }
 
@@ -33,7 +29,7 @@ class ConversionHostWizardLocationStep extends React.Component {
   };
 
   render() {
-    const { providers, isFetchingTargetComputeResources, targetComputeResources } = this.props;
+    const { providers, isFetchingTargetClusters, targetClusters } = this.props;
     const { selectedProviderType, selectedProviderId } = this.getDerivedProps();
 
     const availableProviderOptions = V2V_TARGET_PROVIDERS.filter(option =>
@@ -43,7 +39,7 @@ class ConversionHostWizardLocationStep extends React.Component {
     const providersFilteredBySelectedType =
       selectedProviderOption && providers.filter(provider => provider.type === selectedProviderOption.type);
 
-    const targetComputeFilteredBySelectedProvider = targetComputeResources.filter(
+    const targetComputeFilteredBySelectedProvider = targetClusters.filter(
       computeResource => computeResource.ems_id === selectedProviderId
     );
 
@@ -67,7 +63,7 @@ class ConversionHostWizardLocationStep extends React.Component {
           options={availableProviderOptions}
         />
         {selectedProviderType && (
-          <Spinner loading={isFetchingTargetComputeResources}>
+          <Spinner loading={isFetchingTargetClusters}>
             <Field
               {...selectFieldBaseProps}
               name="provider"
@@ -102,10 +98,10 @@ class ConversionHostWizardLocationStep extends React.Component {
 ConversionHostWizardLocationStep.propTypes = {
   locationStepForm: PropTypes.object,
   providers: PropTypes.arrayOf(PropTypes.object),
-  fetchTargetComputeResourcesAction: PropTypes.func,
+  fetchTargetClustersAction: PropTypes.func,
   fetchTargetComputeUrls: PropTypes.object,
-  isFetchingTargetComputeResources: PropTypes.bool,
-  targetComputeResources: PropTypes.arrayOf(PropTypes.object)
+  isFetchingTargetClusters: PropTypes.bool,
+  targetClusters: PropTypes.arrayOf(PropTypes.object)
 };
 
 ConversionHostWizardLocationStep.defaultProps = {

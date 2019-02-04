@@ -1,9 +1,7 @@
 import { createTransformationMappings } from '../helpers';
 import { constructClusterMappings, constructDatastoreOrNetworkMappings } from '../mappingWizardTestHelpers';
-import {
-  targetClusters,
-  sourceClusters
-} from '../components/MappingWizardClustersStep/mappingWizardClustersStep.fixtures';
+import { sourceClusters } from '../components/MappingWizardClustersStep/mappingWizardClustersStep.fixtures';
+import { targetClusters } from '../../../../../../../redux/common/targetResources/targetResources.fixtures';
 import {
   sourceClusterDatastores,
   targetClusterDatastores

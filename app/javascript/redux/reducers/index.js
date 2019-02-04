@@ -17,6 +17,7 @@ import { reducers as planWizardAdvancedOptionsStepReducers } from '../../react/s
 import { reducers as planWizardInstancePropertiesStepReducers } from '../../react/screens/App/Overview/screens/PlanWizard/components/PlanWizardInstancePropertiesStep';
 import { reducers as editPlanNameReducers } from '../../react/screens/App/Overview/components/EditPlanNameModal';
 import providers from '../common/providers/providersReducer';
+import targetResources from '../common/targetResources/targetResourcesReducer';
 
 export default () => ({
   ...notificationListReducers,
@@ -37,5 +38,6 @@ export default () => ({
   ...planWizardInstancePropertiesStepReducers,
   ...editPlanNameReducers,
   form: formReducer,
-  providers
+  providers,
+  targetResources
 });

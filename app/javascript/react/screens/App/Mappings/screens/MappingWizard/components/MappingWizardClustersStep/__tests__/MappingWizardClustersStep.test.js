@@ -7,7 +7,7 @@ import { generateStore } from '../../../../../../common/testReduxHelpers';
 import { reducers } from '../index';
 import { initialState } from '../MappingWizardClustersStepReducer';
 import MappingWizardClustersStep from '../MappingWizardClustersStep';
-import { FETCH_TARGET_COMPUTE_URLS } from '../MappingWizardClustersStepConstants';
+import { FETCH_TARGET_COMPUTE_URLS } from '../../../../../../../../../redux/common/targetResources/targetResourcesConstants';
 import { OPENSTACK } from '../../../MappingWizardConstants';
 
 const store = generateStore(
