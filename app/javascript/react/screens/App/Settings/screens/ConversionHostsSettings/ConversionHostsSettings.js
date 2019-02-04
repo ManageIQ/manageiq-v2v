@@ -28,7 +28,7 @@ class ConversionHostsSettings extends React.Component {
         {!hasSufficientProviders ? (
           <ShowWizardEmptyState
             description={
-              __('The source and target providers must be configured before attempting a migration') // prettier-ignore
+              __('There are no providers available from which to configure a conversion host. You must configure a target provider before configuring conversion hosts.') // prettier-ignore
             }
             buttonText={__('Configure Providers')}
             buttonHref="/ems_infra/show_list"

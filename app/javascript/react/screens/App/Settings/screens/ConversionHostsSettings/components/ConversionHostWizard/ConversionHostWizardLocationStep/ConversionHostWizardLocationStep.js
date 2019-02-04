@@ -12,7 +12,7 @@ import {
   FETCH_TARGET_COMPUTE_URLS
 } from '../../../../../../../../../common/constants';
 
-import { stepIDs, PROVIDER_TYPES } from '../ConversionHostWizardConstants';
+import { stepIDs } from '../ConversionHostWizardConstants';
 
 class ConversionHostWizardLocationStep extends React.Component {
   componentDidUpdate(prevProps) {
@@ -36,9 +36,12 @@ class ConversionHostWizardLocationStep extends React.Component {
     const { providers, isFetchingTargetComputeResources, targetComputeResources } = this.props;
     const { selectedProviderType, selectedProviderId } = this.getDerivedProps();
 
-    const providersFilteredBySelectedType = providers.filter(
-      provider => provider.type === PROVIDER_TYPES[selectedProviderType]
+    const availableProviderOptions = V2V_TARGET_PROVIDERS.filter(option =>
+      providers.some(provider => provider.type === option.type)
     );
+    const selectedProviderOption = availableProviderOptions.find(option => option.id === selectedProviderType);
+    const providersFilteredBySelectedType =
+      selectedProviderOption && providers.filter(provider => provider.type === selectedProviderOption.type);
 
     const targetComputeFilteredBySelectedProvider = targetComputeResources.filter(
       computeResource => computeResource.ems_id === selectedProviderId
@@ -61,7 +64,7 @@ class ConversionHostWizardLocationStep extends React.Component {
           {...selectFieldBaseProps}
           name="providerType"
           label={__('Provider Type')}
-          options={V2V_TARGET_PROVIDERS}
+          options={availableProviderOptions}
         />
         {selectedProviderType && (
           <Spinner loading={isFetchingTargetComputeResources}>
