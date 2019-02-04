@@ -5,6 +5,7 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import { initialState } from '../overview.fixtures';
+import { initialState as providersInitialState } from '../../../../../redux/common/providers/providersReducer';
 import Overview from '../Overview';
 import OverviewContainer, { reducers } from '../index';
 
@@ -20,7 +21,8 @@ describe('Overview integration test', () => {
     createStore(
       combineReducers({ ...reducers }),
       {
-        overview: initialState
+        overview: initialState,
+        providers: providersInitialState
       },
       applyMiddleware(...middlewares)
     );

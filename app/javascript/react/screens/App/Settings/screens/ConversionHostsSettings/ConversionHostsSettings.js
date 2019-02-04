@@ -5,6 +5,7 @@ import ShowWizardEmptyState from '../../../common/ShowWizardEmptyState/ShowWizar
 import ConversionHostsEmptyState from './components/ConversionHostsEmptyState';
 import ConversionHostsList from './components/ConversionHostsList';
 import ConversionHostWizard from './components/ConversionHostWizard';
+import { FETCH_V2V_PROVIDERS_URL } from '../../../../../../redux/common/providers/providersConstants';
 
 class ConversionHostsSettings extends React.Component {
   componentDidMount() {
@@ -78,7 +79,7 @@ ConversionHostsSettings.propTypes = {
 };
 
 ConversionHostsSettings.defaultProps = {
-  fetchProvidersUrl: '/api/providers?expand=resources',
+  fetchProvidersUrl: FETCH_V2V_PROVIDERS_URL,
   fetchConversionHostsUrl: '/api/conversion_hosts?attributes=resource&expand=resources'
 };
 

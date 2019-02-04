@@ -8,15 +8,10 @@ import {
   SHOW_V2V_CONVERSION_HOST_WIZARD,
   HIDE_V2V_CONVERSION_HOST_WIZARD,
   V2V_CONVERSION_HOST_WIZARD_EXITED,
-  FETCH_V2V_PROVIDERS,
   FETCH_V2V_TARGET_COMPUTE_RESOURCES
 } from './SettingsConstants';
 
 import { getFormValuesFromApiSettings } from './helpers';
-
-// TODO move this to common stuff
-import { validateOverviewProviders } from '../Overview/OverviewValidators';
-import { sufficientProviders, hasRsaKey } from '../Overview/helpers';
 
 export const initialState = Immutable({
   isFetchingServers: false,
@@ -36,11 +31,6 @@ export const initialState = Immutable({
   conversionHosts: [],
   conversionHostWizardMounted: false,
   conversionHostWizardVisible: false,
-  isFetchingProviders: false,
-  isRejectedProviders: false,
-  errorFetchingProviders: null,
-  providers: [],
-  hasSufficientProviders: false,
   isFetchingTargetComputeResources: false,
   isRejectedTargetComputeResources: false,
   errorFetchingTargetComputeResources: null,
@@ -123,36 +113,6 @@ export default (state = initialState, action) => {
       return state.set('conversionHostWizardVisible', false);
     case V2V_CONVERSION_HOST_WIZARD_EXITED:
       return state.set('conversionHostWizardMounted', false);
-
-    case `${FETCH_V2V_PROVIDERS}_PENDING`:
-      return state
-        .set('isFetchingProviders', true)
-        .set('isRejectedProviders', false)
-        .set('errorFetchingProviders', null);
-    case `${FETCH_V2V_PROVIDERS}_FULFILLED`:
-      // TODO deduplicate from overview and mappings
-      return (() => {
-        const insufficient = state
-          .set('hasSufficientProviders', false)
-          .set('isFetchingProviders', false)
-          .set('isRejectedProviders', false)
-          .set('errorFetchingProviders', null);
-        if (!action.payload.data || !action.payload.data.resources) {
-          return insufficient;
-        }
-        validateOverviewProviders(action.payload.data.resources);
-        return insufficient
-          .set('hasSufficientProviders', sufficientProviders(action.payload.data.resources))
-          .set(
-            'providers',
-            action.payload.data.resources.map(provider => ({ ...provider, hasRsaKey: hasRsaKey(provider) }))
-          );
-      })();
-    case `${FETCH_V2V_PROVIDERS}_REJECTED`:
-      return state
-        .set('isFetchingProviders', false)
-        .set('isRejectedProviders', true)
-        .set('errorFetchingProviders', action.payload);
 
     case `${FETCH_V2V_TARGET_COMPUTE_RESOURCES}_PENDING`:
       return state

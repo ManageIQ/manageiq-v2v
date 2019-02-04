@@ -7,10 +7,10 @@ import { stepIDs } from '../ConversionHostWizardConstants';
 
 const mapStateToProps = ({
   form,
-  settings: { isFetchingProviders, providers, isFetchingTargetComputeResources, targetComputeResources }
+  providers: { providers },
+  settings: { isFetchingTargetComputeResources, targetComputeResources }
 }) => ({
   locationStepForm: form[stepIDs.locationStep],
-  isFetchingProviders,
   providers,
   isFetchingTargetComputeResources,
   targetComputeResources

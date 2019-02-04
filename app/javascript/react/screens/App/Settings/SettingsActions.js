@@ -10,7 +10,6 @@ import {
   SHOW_V2V_CONVERSION_HOST_WIZARD,
   HIDE_V2V_CONVERSION_HOST_WIZARD,
   V2V_CONVERSION_HOST_WIZARD_EXITED,
-  FETCH_V2V_PROVIDERS,
   FETCH_V2V_TARGET_COMPUTE_RESOURCES
 } from './SettingsConstants';
 import { getApiSettingsFromFormValues } from './helpers';
@@ -76,17 +75,6 @@ export const conversionHostWizardExitedAction = () => dispatch => {
   Object.values(stepIDs).forEach(formName => {
     dispatch(reset(formName));
   });
-};
-
-const _getProvidersActionCreator = url => dispatch =>
-  dispatch({
-    type: FETCH_V2V_PROVIDERS,
-    payload: API.get(url)
-  });
-
-export const fetchProvidersAction = url => {
-  const uri = new URI(url);
-  return _getProvidersActionCreator(uri.toString());
 };
 
 const _getTargetComputeResourcesActionCreator = url => dispatch =>
