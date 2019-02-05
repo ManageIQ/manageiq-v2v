@@ -18,3 +18,19 @@ export const validation = {
     maxLengthWarning: sprintf(youHaveReachedMax, MAX_LENGTH_DESCRIPTIONS)
   }
 };
+
+export const OPENSTACK = 'openstack';
+export const RHV = 'rhevm';
+
+export const V2V_TARGET_PROVIDERS = [
+  {
+    name: __('Red Hat Virtualization'),
+    id: RHV,
+    type: 'ManageIQ::Providers::Redhat::InfraManager'
+  },
+  {
+    name: __('Red Hat OpenStack Platform'),
+    id: OPENSTACK,
+    type: 'ManageIQ::Providers::Openstack::CloudManager'
+  }
+];

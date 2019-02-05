@@ -6,17 +6,21 @@ import { Provider } from 'react-redux';
 import { generateStore } from '../../../../../../common/testReduxHelpers';
 import { initialState } from '../mappingWizardClustersStep.fixtures';
 import { initialState as generalStepInitialState } from '../../MappingWizardGeneralStep/MappingWizardGeneralStepReducer';
+import targetResourcesReducer, {
+  initialState as targetResourcesInitialState
+} from '../../../../../../../../../redux/common/targetResources/targetResourcesReducer';
 import { reducers as generalStepReducers } from '../../MappingWizardGeneralStep/index';
 import MappingWizardClustersStep from '../MappingWizardClustersStep';
 import MappingWizardClustersStepContainer, { reducers } from '../index';
 
 describe('Mapping Wizard integration test', () => {
   const store = generateStore(
-    { ...reducers, ...generalStepReducers, form: formReducer },
+    { ...reducers, ...generalStepReducers, form: formReducer, targetResources: targetResourcesReducer },
     {
       mappingWizardClustersStep: initialState,
       mappingWizardGeneralStep: generalStepInitialState,
-      form: { mappingWizardGeneralStep: { values: { targetProvider: 'rhevm' } } }
+      form: { mappingWizardGeneralStep: { values: { targetProvider: 'rhevm' } } },
+      targetResources: targetResourcesInitialState
     }
   );
 

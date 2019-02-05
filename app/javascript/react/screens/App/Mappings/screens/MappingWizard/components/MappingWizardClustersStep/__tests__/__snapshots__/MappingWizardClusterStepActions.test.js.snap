@@ -24,30 +24,6 @@ Array [
 ]
 `;
 
-exports[`mappingWizard actions should fetch target clusters and return PENDING and FULFILLED action 1`] = `
-Array [
-  Object {
-    "type": "FETCH_V2V_TARGET_CLUSTERS_PENDING",
-  },
-  Object {
-    "type": "FETCH_V2V_TARGET_CLUSTERS_FULFILLED",
-  },
-]
-`;
-
-exports[`mappingWizard actions should fetch target clusters and return PENDING and REJECTED action 1`] = `
-Array [
-  Object {
-    "type": "FETCH_V2V_TARGET_CLUSTERS_PENDING",
-  },
-  Object {
-    "error": true,
-    "payload": [Error: <mocked error>],
-    "type": "FETCH_V2V_TARGET_CLUSTERS_REJECTED",
-  },
-]
-`;
-
 exports[`queryProvidersAction dispatches PENDING and FULFILLED actions 1`] = `
 Array [
   Object {

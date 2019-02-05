@@ -5,7 +5,8 @@ import { Field, reduxForm } from 'redux-form';
 import { length } from 'redux-form-validators';
 
 import ClustersStepForm from './components/ClustersStepForm/ClustersStepForm';
-import { FETCH_TARGET_COMPUTE_URLS, QUERY_PROVIDERS_URL } from './MappingWizardClustersStepConstants';
+import { QUERY_PROVIDERS_URL } from './MappingWizardClustersStepConstants';
+import { FETCH_TARGET_COMPUTE_URLS } from '../../../../../../../../redux/common/targetResources/targetResourcesConstants';
 import { getProviderIds } from './helpers';
 import { OPENSTACK } from '../../MappingWizardConstants';
 

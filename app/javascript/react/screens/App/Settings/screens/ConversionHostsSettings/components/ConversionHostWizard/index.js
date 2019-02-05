@@ -1,3 +1,19 @@
+import { connect } from 'react-redux';
 import ConversionHostWizard from './ConversionHostWizard';
+import { conversionHostWizardFormFilter } from './ConversionHostWizardSelectors';
 
-export default ConversionHostWizard;
+import * as SettingsActions from '../../../../SettingsActions';
+
+const mapStateToProps = ({ form, settings: { conversionHostWizardVisible } }, ownProps) => ({
+  ...ownProps.data,
+  forms: conversionHostWizardFormFilter(form),
+  conversionHostWizardVisible
+});
+
+const mergeProps = (stateProps, dispatchProps, ownProps) => Object.assign(stateProps, ownProps.data, dispatchProps);
+
+export default connect(
+  mapStateToProps,
+  SettingsActions,
+  mergeProps
+)(ConversionHostWizard);

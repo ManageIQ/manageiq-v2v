@@ -2,6 +2,7 @@
 
 exports[`fetching conversion hosts is pending 1`] = `
 Object {
+  "conversionHostWizardMounted": false,
   "conversionHostWizardVisible": false,
   "conversionHosts": Array [],
   "errorFetchingConversionHosts": null,
@@ -23,6 +24,7 @@ Object {
 
 exports[`fetching conversion hosts is rejected 1`] = `
 Object {
+  "conversionHostWizardMounted": false,
   "conversionHostWizardVisible": false,
   "conversionHosts": Array [],
   "errorFetchingConversionHosts": "error",
@@ -44,6 +46,7 @@ Object {
 
 exports[`fetching conversion hosts is successful 1`] = `
 Object {
+  "conversionHostWizardMounted": false,
   "conversionHostWizardVisible": false,
   "conversionHosts": Array [
     Object {
@@ -69,6 +72,7 @@ Object {
 
 exports[`fetching servers is pending 1`] = `
 Object {
+  "conversionHostWizardMounted": false,
   "conversionHostWizardVisible": false,
   "conversionHosts": Array [],
   "errorFetchingConversionHosts": null,
@@ -90,6 +94,7 @@ Object {
 
 exports[`fetching servers is rejected 1`] = `
 Object {
+  "conversionHostWizardMounted": false,
   "conversionHostWizardVisible": false,
   "conversionHosts": Array [],
   "errorFetchingConversionHosts": null,
@@ -111,6 +116,7 @@ Object {
 
 exports[`fetching settings is pending 1`] = `
 Object {
+  "conversionHostWizardMounted": false,
   "conversionHostWizardVisible": false,
   "conversionHosts": Array [],
   "errorFetchingConversionHosts": null,
@@ -132,6 +138,7 @@ Object {
 
 exports[`fetching settings is rejected 1`] = `
 Object {
+  "conversionHostWizardMounted": false,
   "conversionHostWizardVisible": false,
   "conversionHosts": Array [],
   "errorFetchingConversionHosts": null,
@@ -153,6 +160,7 @@ Object {
 
 exports[`fetching settings is successful 1`] = `
 Object {
+  "conversionHostWizardMounted": false,
   "conversionHostWizardVisible": false,
   "conversionHosts": Array [],
   "errorFetchingConversionHosts": null,
@@ -176,6 +184,7 @@ Object {
 
 exports[`saving settings is pending 1`] = `
 Object {
+  "conversionHostWizardMounted": false,
   "conversionHostWizardVisible": false,
   "conversionHosts": Array [],
   "errorFetchingConversionHosts": null,
@@ -197,6 +206,7 @@ Object {
 
 exports[`saving settings is rejected 1`] = `
 Object {
+  "conversionHostWizardMounted": false,
   "conversionHostWizardVisible": false,
   "conversionHosts": Array [],
   "errorFetchingConversionHosts": null,
@@ -218,6 +228,7 @@ Object {
 
 exports[`saving settings is successful 1`] = `
 Object {
+  "conversionHostWizardMounted": false,
   "conversionHostWizardVisible": false,
   "conversionHosts": Array [],
   "errorFetchingConversionHosts": null,
@@ -241,6 +252,7 @@ Object {
 
 exports[`sets default state 1`] = `
 Object {
+  "conversionHostWizardMounted": false,
   "conversionHostWizardVisible": false,
   "conversionHosts": Array [],
   "errorFetchingConversionHosts": null,

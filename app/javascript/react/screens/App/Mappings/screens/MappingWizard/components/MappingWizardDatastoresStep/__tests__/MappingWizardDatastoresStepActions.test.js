@@ -1,7 +1,10 @@
 import { mockStore } from '../../../../../../common/testReduxHelpers';
 import { mockRequest, mockReset } from '../../../../../../../../../common/mockRequests';
 import { fetchTargetDatastoresAction } from '../MappingWizardDatastoresStepActions';
-import { cloudTenants, targetClusters } from '../../MappingWizardClustersStep/mappingWizardClustersStep.fixtures';
+import {
+  targetClusters,
+  cloudTenants
+} from '../../../../../../../../../redux/common/targetResources/targetResources.fixtures';
 import { V2V_TARGET_PROVIDER_STORAGE_KEYS, V2V_TARGET_PROVIDERS } from '../../../MappingWizardConstants';
 
 const store = mockStore({});

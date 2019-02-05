@@ -5,7 +5,26 @@ import { focus } from 'redux-form';
 
 export class BootstrapSelect extends React.Component {
   componentDidUpdate(prevProps) {
-    const { input } = this.props;
+    const { input, options, option_key, option_value } = this.props;
+
+    const optionsChanged = options.some((option, index) => {
+      const prevOption = prevProps.options[index];
+      return (
+        !prevOption ||
+        prevOption[option_key] !== option[option_key] ||
+        prevOption[option_value] !== option[option_value]
+      );
+    });
+
+    // 'refresh' is necessary when removing or adding options, or when disabling/enabling
+    // https://developer.snapappointments.com/bootstrap-select/methods/#selectpickerrefresh
+    if (optionsChanged || prevProps.disabled !== this.props.disabled) {
+      $(`#${input.name}`).selectpicker('refresh');
+    }
+    if (optionsChanged) {
+      $(`#${input.name}`).selectpicker('val', null);
+      input.onChange(null);
+    }
 
     if (prevProps.pre_selected_value !== this.props.pre_selected_value) {
       $(`#${input.name}`).selectpicker('val', this.props.pre_selected_value);

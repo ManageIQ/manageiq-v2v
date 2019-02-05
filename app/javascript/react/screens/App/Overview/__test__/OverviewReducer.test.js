@@ -12,7 +12,6 @@ import {
   SHOW_EDIT_PLAN_TITLE_MODAL,
   HIDE_EDIT_PLAN_TITLE_MODAL,
   PLAN_WIZARD_EXITED,
-  FETCH_PROVIDERS,
   FETCH_V2V_TRANSFORMATION_MAPPINGS,
   FETCH_V2V_ARCHIVED_TRANSFORMATION_PLANS,
   FETCH_V2V_SERVICE_TEMPLATE_ANSIBLE_PLAYBOOKS,
@@ -30,7 +29,6 @@ import {
 import overviewReducer, { initialState } from '../OverviewReducer';
 import { transformationPlans } from '../overview.transformationPlans.fixtures';
 import { cancelRequestResponse } from '../overview.cancelRequest.fixtures';
-import { providers } from '../overview.providers.fixtures';
 import { transformationMappings } from '../overview.transformationMappings.fixtures';
 import { playbooks } from '../overview.playbooks.fixtures';
 import { allRequestsWithTasks } from '../overview.requestWithTasks.fixtures';
@@ -151,83 +149,6 @@ describe('edit plan title modal', () => {
       ...initialState,
       editingPlanId: null,
       editPlanNameModalVisible: false
-    });
-  });
-});
-
-describe('fetching providers', () => {
-  test('is pending', () => {
-    const action = { type: `${FETCH_PROVIDERS}_PENDING` };
-    const state = overviewReducer(initialState, action);
-    expect(state).toEqual({
-      ...initialState,
-      isFetchingProviders: true
-    });
-  });
-
-  test('is successful with sufficient providers', () => {
-    const payload = { data: providers };
-    const action = {
-      type: `${FETCH_PROVIDERS}_FULFILLED`,
-      payload
-    };
-    const prevState = Immutable({
-      ...initialState,
-      isFetchingProviders: true,
-      isRejectedProviders: true,
-      errorProviders: 'error'
-    });
-    const state = overviewReducer(prevState, action);
-
-    expect(state).toEqual({
-      ...prevState,
-      isFetchingProviders: false,
-      isRejectedProviders: false,
-      errorProviders: null,
-      hasSufficientProviders: true,
-      providers: providers.resources.map(provider => ({
-        ...provider,
-        hasRsaKey: false
-      }))
-    });
-  });
-
-  test('is successful with insufficient providers', () => {
-    const payload = { data: [{ type: 'unrelated' }, { type: 'stuff' }] };
-    const action = {
-      type: `${FETCH_PROVIDERS}_FULFILLED`,
-      payload
-    };
-    const prevState = Immutable({
-      ...initialState,
-      isFetchingProviders: true,
-      isRejectedProviders: true
-    });
-    const state = overviewReducer(prevState, action);
-
-    expect(state).toEqual({
-      ...prevState,
-      isFetchingProviders: false,
-      isRejectedProviders: false,
-      hasSufficientProviders: false
-    });
-  });
-
-  test('is rejected', () => {
-    const action = {
-      type: `${FETCH_PROVIDERS}_REJECTED`,
-      payload: 'error'
-    };
-    const prevState = Immutable({
-      ...initialState,
-      isFetchingProviders: true
-    });
-    const state = overviewReducer(prevState, action);
-
-    expect(state).toEqual({
-      ...initialState,
-      isRejectedProviders: true,
-      errorProviders: 'error'
     });
   });
 });

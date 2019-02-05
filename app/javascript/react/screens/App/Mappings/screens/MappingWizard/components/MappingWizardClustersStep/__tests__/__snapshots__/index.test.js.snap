@@ -6,10 +6,6 @@ Object {
   "fetchSourceClustersAction": [Function],
   "fetchSourceClustersUrl": "/api/dummyProviders",
   "fetchTargetClustersAction": [Function],
-  "fetchTargetComputeUrls": Object {
-    "openstack": "/api/dummy",
-    "rhevm": "/api/dummy",
-  },
   "hideAlertAction": [Function],
   "initialValues": Object {
     "clusterMappings": Array [],
