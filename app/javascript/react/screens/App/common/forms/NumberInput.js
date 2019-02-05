@@ -30,7 +30,9 @@ class NumberInput extends React.Component {
       id,
       input: { value, onChange }
     } = this.props;
-    return <input id={id} value={value} onChange={event => onChange(event.target.value)} />;
+    return (
+      <input id={id} className="bootstrap-touchspin" value={value} onChange={event => onChange(event.target.value)} />
+    );
   }
 }
 
