@@ -1,5 +1,4 @@
 import getMostRecentRequest from '../common/getMostRecentRequest';
-import { PROVIDERS } from './OverviewConstants';
 import { TRANSFORMATION_MAPPING_ITEM_DESTINATION_TYPES } from '../Mappings/screens/MappingWizard/MappingWizardConstants';
 
 export const planTransmutation = (plans = [], mappings = []) =>
@@ -13,10 +12,6 @@ export const planTransmutation = (plans = [], mappings = []) =>
       scheduleTime: plan.schedules ? new Date(plan.schedules[0].run_at.start_time).getTime() : null
     };
   });
-
-export const sufficientProviders = (providers = []) =>
-  providers.some(provider => PROVIDERS.source.includes(provider.type)) &&
-  providers.some(provider => PROVIDERS.target.includes(provider.type));
 
 export const attachTargetProvider = (plan, providers, clusters, targetProviderType) => {
   if (!plan.transformation_mapping) {
@@ -33,14 +28,4 @@ export const attachTargetProvider = (plan, providers, clusters, targetProviderTy
   const targetProvider = providers.find(provider => provider.id === targetCluster.ems_id);
 
   return { ...plan, targetProvider };
-};
-
-export const hasRsaKey = provider => {
-  const { authentications } = provider;
-
-  if (!authentications) {
-    return false;
-  }
-
-  return authentications.some(auth => auth.authtype === 'ssh_keypair');
 };

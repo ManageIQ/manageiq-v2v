@@ -1,3 +1,4 @@
+import { reset } from 'redux-form';
 import URI from 'urijs';
 import API from '../../../../common/API';
 
@@ -7,9 +8,11 @@ import {
   V2V_PATCH_SETTINGS,
   FETCH_V2V_CONVERSION_HOSTS,
   SHOW_V2V_CONVERSION_HOST_WIZARD,
-  HIDE_V2V_CONVERSION_HOST_WIZARD
+  HIDE_V2V_CONVERSION_HOST_WIZARD,
+  V2V_CONVERSION_HOST_WIZARD_EXITED
 } from './SettingsConstants';
 import { getApiSettingsFromFormValues } from './helpers';
+import { stepIDs } from './screens/ConversionHostsSettings/components/ConversionHostWizard/ConversionHostWizardConstants';
 
 const _getServersActionCreator = url => dispatch =>
   dispatch({
@@ -61,6 +64,14 @@ export const fetchConversionHostsAction = url => {
   return _getConversionHostsActionCreator(uri.toString());
 };
 
-export const showConversionHostWizard = () => dispatch => dispatch({ type: SHOW_V2V_CONVERSION_HOST_WIZARD });
+export const showConversionHostWizardAction = () => dispatch => dispatch({ type: SHOW_V2V_CONVERSION_HOST_WIZARD });
 
-export const hideConversionHostWizard = () => dispatch => dispatch({ type: HIDE_V2V_CONVERSION_HOST_WIZARD });
+export const hideConversionHostWizardAction = () => dispatch => dispatch({ type: HIDE_V2V_CONVERSION_HOST_WIZARD });
+
+export const conversionHostWizardExitedAction = () => dispatch => {
+  dispatch({ type: V2V_CONVERSION_HOST_WIZARD_EXITED });
+  // Dispatch reset for all the wizard step forms here
+  Object.values(stepIDs).forEach(formName => {
+    dispatch(reset(formName));
+  });
+};

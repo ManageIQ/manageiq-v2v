@@ -7,6 +7,7 @@ import componentRegistry from '../../../../components/componentRegistry';
 import InfrastructureMappingsList from './components/InfrastructureMappingsList/InfrastructureMappingsList';
 import { FETCH_TRANSFORMATION_PLANS_URL, FETCH_ARCHIVED_TRANSFORMATION_PLANS_URL } from '../Overview/OverviewConstants';
 import { FETCH_TRANSFORMATION_MAPPINGS_URL, FETCH_CLOUD_TENANTS_URL } from './MappingsConstants';
+import { FETCH_V2V_PROVIDERS_URL } from '../../../../redux/common/providers/providersConstants';
 import ShowWizardEmptyState from '../common/ShowWizardEmptyState/ShowWizardEmptyState';
 
 class Mappings extends Component {
@@ -33,6 +34,7 @@ class Mappings extends Component {
       fetchNetworksAction,
       fetchNetworksUrl,
       fetchProvidersAction,
+      fetchProvidersUrl,
       fetchTransformationMappingsAction,
       fetchTransformationMappingsUrl,
       fetchTransformationPlansAction,
@@ -53,7 +55,7 @@ class Mappings extends Component {
     fetchClustersAction(fetchClustersUrl);
     fetchDatastoresAction(fetchDatastoresUrl);
     fetchNetworksAction(fetchNetworksUrl);
-    fetchProvidersAction();
+    fetchProvidersAction(fetchProvidersUrl);
     fetchTransformationMappingsAction(fetchTransformationMappingsUrl);
 
     Promise.all([
@@ -263,6 +265,7 @@ Mappings.propTypes = {
   fetchNetworksAction: PropTypes.func,
   fetchNetworksUrl: PropTypes.string,
   fetchProvidersAction: PropTypes.func,
+  fetchProvidersUrl: PropTypes.string,
   fetchTransformationMappingsAction: PropTypes.func,
   fetchTransformationMappingsUrl: PropTypes.string,
   fetchTransformationPlansAction: PropTypes.func,
@@ -312,7 +315,8 @@ Mappings.defaultProps = {
   fetchNetworksUrl: '/api/lans/?expand=resources',
   fetchTransformationMappingsUrl: FETCH_TRANSFORMATION_MAPPINGS_URL,
   fetchArchivedTransformationPlansUrl: FETCH_ARCHIVED_TRANSFORMATION_PLANS_URL,
-  fetchTransformationPlansUrl: FETCH_TRANSFORMATION_PLANS_URL
+  fetchTransformationPlansUrl: FETCH_TRANSFORMATION_PLANS_URL,
+  fetchProvidersUrl: FETCH_V2V_PROVIDERS_URL
 };
 
 export default Mappings;

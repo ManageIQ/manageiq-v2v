@@ -1,3 +1,5 @@
+import { OPENSTACK, RHV, V2V_TARGET_PROVIDERS } from '../../../../../../common/constants';
+
 export const V2V_SET_TRANSFORMATIONS_BODY = 'V2V_SET_TRANSFORMATIONS_BODY';
 export const V2V_SHOW_WARNING_MODAL = 'V2V_SHOW_WARNING_MODAL';
 export const V2V_HIDE_WARNING_MODAL = 'V2V_HIDE_WARNING_MODAL';
@@ -6,14 +8,7 @@ export const V2V_HIDE_ALERT = 'V2V_HIDE_ALERT';
 export const V2V_MAPPING_WIZARD_EXITED = 'V2V_MAPPING_WIZARD_EXITED';
 export const V2V_SHOW_MAPPING_WIZARD = 'V2V_SHOW_MAPPING_WIZARD';
 export const V2V_HIDE_MAPPING_WIZARD = 'V2V_HIDE_MAPPING_WIZARD';
-
-export const OPENSTACK = 'openstack';
-export const RHV = 'rhevm';
-
-export const V2V_TARGET_PROVIDERS = [
-  { name: __('Red Hat Virtualization'), id: RHV },
-  { name: __('Red Hat OpenStack Platform'), id: OPENSTACK }
-];
+export { OPENSTACK, RHV, V2V_TARGET_PROVIDERS };
 
 export const V2V_TARGET_PROVIDER_STORAGE_KEYS = {
   [RHV]: 'storages',

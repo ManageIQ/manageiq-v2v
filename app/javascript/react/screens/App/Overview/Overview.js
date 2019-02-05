@@ -15,6 +15,7 @@ import {
   FETCH_ARCHIVED_TRANSFORMATION_PLANS_URL
 } from './OverviewConstants';
 import { FETCH_TRANSFORMATION_MAPPINGS_URL, FETCH_CLOUD_TENANTS_URL } from '../Mappings/MappingsConstants';
+import { FETCH_V2V_PROVIDERS_URL } from '../../../../redux/common/providers/providersConstants';
 
 class Overview extends React.Component {
   constructor(props) {
@@ -31,6 +32,7 @@ class Overview extends React.Component {
       fetchCloudTenantsAction,
       fetchCloudTenantsUrl,
       fetchProvidersAction,
+      fetchProvidersUrl,
       fetchTransformationMappingsUrl,
       fetchTransformationMappingsAction,
       fetchTransformationPlansUrl,
@@ -40,7 +42,7 @@ class Overview extends React.Component {
       fetchServiceTemplateAnsiblePlaybooksUrl
     } = this.props;
 
-    fetchProvidersAction()
+    fetchProvidersAction(fetchProvidersUrl)
       .then(() => {
         const p1 = fetchTransformationPlansAction({
           url: fetchTransformationPlansUrl,
@@ -465,6 +467,7 @@ Overview.propTypes = {
   deleteInfrastructureMappingAction: PropTypes.func,
   yesToDeleteInfrastructureMapping: PropTypes.bool,
   fetchProvidersAction: PropTypes.func,
+  fetchProvidersUrl: PropTypes.string,
   isFetchingProviders: PropTypes.bool,
   hasSufficientProviders: PropTypes.bool,
   confirmModalVisible: PropTypes.bool,
@@ -510,7 +513,8 @@ Overview.defaultProps = {
     "filter[]=type='ServiceTemplateAnsiblePlaybook'" +
     '&expand=resources' +
     '&attributes=name,description,created_at',
-  fetchArchivedTransformationPlansUrl: FETCH_ARCHIVED_TRANSFORMATION_PLANS_URL
+  fetchArchivedTransformationPlansUrl: FETCH_ARCHIVED_TRANSFORMATION_PLANS_URL,
+  fetchProvidersUrl: FETCH_V2V_PROVIDERS_URL
 };
 
 export default Overview;

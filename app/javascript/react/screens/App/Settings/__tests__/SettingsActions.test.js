@@ -126,12 +126,12 @@ describe('settings actions', () => {
   });
 
   it('should dispatch show wizard action', () => {
-    store.dispatch(actions.showConversionHostWizard());
+    store.dispatch(actions.showConversionHostWizardAction());
     expect(store.getActions()).toEqual([{ type: SHOW_V2V_CONVERSION_HOST_WIZARD }]);
   });
 
   it('should dispatch hide wizard action', () => {
-    store.dispatch(actions.hideConversionHostWizard());
+    store.dispatch(actions.hideConversionHostWizardAction());
     expect(store.getActions()).toEqual([{ type: HIDE_V2V_CONVERSION_HOST_WIZARD }]);
   });
 });

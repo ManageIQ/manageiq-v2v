@@ -7,8 +7,6 @@ import {
   ARCHIVE_TRANSFORMATION_PLAN,
   DELETE_TRANSFORMATION_PLAN,
   CREATE_V2V_TRANSFORMATION_PLAN_REQUEST,
-  FETCH_PROVIDERS,
-  FETCH_PROVIDERS_URL,
   FETCH_V2V_ALL_ARCHIVED_PLAN_REQUESTS_WITH_TASKS,
   FETCH_V2V_SERVICE_TEMPLATE_ANSIBLE_PLAYBOOKS,
   FETCH_V2V_ALL_REQUESTS_WITH_TASKS,
@@ -67,12 +65,6 @@ export const hideEditPlanNameModalAction = () => dispatch => {
     type: HIDE_EDIT_PLAN_TITLE_MODAL
   });
 };
-
-export const fetchProvidersAction = () => dispatch =>
-  dispatch({
-    type: FETCH_PROVIDERS,
-    payload: API.get(FETCH_PROVIDERS_URL)
-  });
 
 const _createTransformationPlanRequestActionCreator = url => dispatch =>
   dispatch({

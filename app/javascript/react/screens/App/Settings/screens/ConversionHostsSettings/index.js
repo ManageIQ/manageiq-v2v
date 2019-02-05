@@ -2,9 +2,11 @@ import { connect } from 'react-redux';
 import ConversionHostsSettings from './ConversionHostsSettings';
 
 import * as SettingsActions from '../../SettingsActions';
+import * as ProvidersActions from '../../../../../../redux/common/providers/providersActions';
 
-const mapStateToProps = ({ settings }, ownProps) => ({
+const mapStateToProps = ({ settings, providers }, ownProps) => ({
   ...settings,
+  ...providers,
   ...ownProps.data
 });
 
@@ -12,6 +14,6 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => Object.assign(stateP
 
 export default connect(
   mapStateToProps,
-  SettingsActions,
+  { ...SettingsActions, ...ProvidersActions },
   mergeProps
 )(ConversionHostsSettings);

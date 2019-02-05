@@ -2,7 +2,6 @@ import Immutable from 'seamless-immutable';
 
 import {
   validateOverviewPlans,
-  validateOverviewProviders,
   validateOverviewRequests,
   validateOverviewMappings,
   validateServiceTemplatePlaybooks
@@ -13,7 +12,6 @@ import {
   PLAN_WIZARD_EXITED,
   SHOW_EDIT_PLAN_TITLE_MODAL,
   HIDE_EDIT_PLAN_TITLE_MODAL,
-  FETCH_PROVIDERS,
   FETCH_V2V_TRANSFORMATION_MAPPINGS,
   FETCH_V2V_TRANSFORMATION_PLANS,
   FETCH_V2V_SERVICE_TEMPLATE_ANSIBLE_PLAYBOOKS,
@@ -36,7 +34,7 @@ import {
   V2V_CANCEL_PLAN_REQUEST
 } from './OverviewConstants';
 import { FETCH_V2V_CLOUD_TENANTS } from '../Mappings/MappingsConstants';
-import { planTransmutation, sufficientProviders, hasRsaKey } from './helpers';
+import { planTransmutation } from './helpers';
 
 export const initialState = Immutable({
   planWizardVisible: false,
@@ -44,11 +42,6 @@ export const initialState = Immutable({
   planWizardId: null, // id of infrastructure mapping to use for new plan
   editingPlanId: null, // id of migration plan to edit
   editPlanNameModalVisible: false,
-  providers: [],
-  hasSufficientProviders: false,
-  isRejectedProviders: false,
-  isFetchingProviders: false,
-  errorProviders: null,
   transformationMappings: [],
   isRejectedTransformationMappings: false,
   isFetchingTransformationMappings: false,
@@ -139,30 +132,7 @@ export default (state = initialState, action) => {
       return state.set('editingPlanId', null).set('editPlanNameModalVisible', false);
     case PLAN_WIZARD_EXITED:
       return state.set('planWizardVisible', false);
-    case `${FETCH_PROVIDERS}_PENDING`:
-      return state.set('isFetchingProviders', true);
-    case `${FETCH_PROVIDERS}_FULFILLED`:
-      return (() => {
-        const insufficient = state
-          .set('hasSufficientProviders', false)
-          .set('isFetchingProviders', false)
-          .set('isRejectedProviders', false);
-        if (!action.payload.data || !action.payload.data.resources) {
-          return insufficient;
-        }
-        validateOverviewProviders(action.payload.data.resources);
-        return insufficient
-          .set('hasSufficientProviders', sufficientProviders(action.payload.data.resources))
-          .set(
-            'providers',
-            action.payload.data.resources.map(provider => ({ ...provider, hasRsaKey: hasRsaKey(provider) }))
-          );
-      })();
-    case `${FETCH_PROVIDERS}_REJECTED`:
-      return state
-        .set('errorProviders', action.payload)
-        .set('isFetchingProviders', false)
-        .set('isRejectedProviders', true);
+
     case `${FETCH_V2V_TRANSFORMATION_MAPPINGS}_PENDING`:
       return state.set('isFetchingTransformationMappings', true);
     case `${FETCH_V2V_TRANSFORMATION_MAPPINGS}_FULFILLED`:

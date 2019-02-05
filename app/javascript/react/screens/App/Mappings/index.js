@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Mappings from './Mappings';
 import * as MappingsActions from './MappingsActions';
 import * as RouterActions from '../../../../redux/actions/routerActions';
+import * as ProvidersActions from '../../../../redux/common/providers/providersActions';
 import reducer from './MappingsReducer';
 
 import {
@@ -16,15 +17,8 @@ export const reducers = { mappings: reducer, form: {} };
 const mapStateToProps = (
   {
     mappings,
-    overview: {
-      archivedTransformationPlans,
-      transformationPlans,
-      planId,
-      hasSufficientProviders,
-      isRejectedProviders,
-      isFetchingProviders,
-      errorProviders
-    }
+    overview: { archivedTransformationPlans, transformationPlans, planId },
+    providers: { hasSufficientProviders, isRejectedProviders, isFetchingProviders }
   },
   ownProps
 ) => ({
@@ -35,7 +29,6 @@ const mapStateToProps = (
   hasSufficientProviders,
   isRejectedProviders,
   isFetchingProviders,
-  errorProviders,
   activeTransformationPlans: activeTransformationPlansFilter(transformationPlans, planId),
   finishedWithErrorTransformationPlans: finishedWithErrorTransformationPlansFilter(transformationPlans),
   notStartedTransformationPlans: notStartedTransformationPlansFilter(transformationPlans)
@@ -49,6 +42,6 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => ({
 
 export default connect(
   mapStateToProps,
-  { ...MappingsActions, ...RouterActions },
+  { ...MappingsActions, ...RouterActions, ...ProvidersActions },
   mergeProps
 )(Mappings);

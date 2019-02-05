@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ShowWizardEmptyState from '../../../../common/ShowWizardEmptyState/ShowWizardEmptyState';
 
-const ConversionHostsEmptyState = ({ showConversionHostWizard }) => (
+const ConversionHostsEmptyState = ({ showConversionHostWizardAction }) => (
   <React.Fragment>
     <ShowWizardEmptyState
       description={
         __('Select one or more hosts to be configured as IMS conversion hosts.') // prettier-ignore
       }
-      showWizardAction={showConversionHostWizard}
+      showWizardAction={showConversionHostWizardAction}
       buttonText={__('Configure Conversion Host')}
       buttonHref=""
       className="mappings"
@@ -17,7 +17,7 @@ const ConversionHostsEmptyState = ({ showConversionHostWizard }) => (
 );
 
 ConversionHostsEmptyState.propTypes = {
-  showConversionHostWizard: PropTypes.func
+  showConversionHostWizardAction: PropTypes.func
 };
 
 export default ConversionHostsEmptyState;
