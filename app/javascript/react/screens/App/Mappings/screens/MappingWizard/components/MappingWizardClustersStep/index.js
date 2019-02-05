@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 
 import MappingWizardClustersStep from './MappingWizardClustersStep';
 import * as MappingWizardClustersStepActions from './MappingWizardClustersStepActions';
-import * as TargetResourcesActions from '../../../../../../../../redux/common/targetResources/targetResourcesActions';
+import { fetchTargetClustersAction } from '../../../../../../../../redux/common/targetResources/targetResourcesActions';
 import { createClusterMappings } from './components/ClustersStepForm/helpers';
 import { getTransformationMappingItemsBySourceType } from '../../helpers';
 import { TRANSFORMATION_MAPPING_ITEM_SOURCE_TYPES, OPENSTACK, RHV } from '../../MappingWizardConstants';
@@ -13,12 +13,19 @@ import reducer from './MappingWizardClustersStepReducer';
 export const reducers = { mappingWizardClustersStep: reducer };
 
 const mapStateToProps = (
-  { mappingWizardClustersStep, mappingWizardGeneralStep: { editingMapping, conversionHosts }, form, targetResources },
+  {
+    mappingWizardClustersStep,
+    mappingWizardGeneralStep: { editingMapping, conversionHosts },
+    form,
+    targetResources: { isFetchingTargetClusters, isRejectedTargetClusters, targetClusters }
+  },
   ownProps
 ) => ({
   ...mappingWizardClustersStep,
-  ...targetResources,
   ...ownProps.data,
+  isFetchingTargetClusters,
+  isRejectedTargetClusters,
+  targetClusters,
   targetProvider: form.mappingWizardGeneralStep.values.targetProvider,
   rhvConversionHosts: conversionHostsFilter(conversionHosts, RHV),
   ospConversionHosts: conversionHostsFilter(conversionHosts, OPENSTACK),
@@ -26,7 +33,7 @@ const mapStateToProps = (
     clusterMappings: editingMapping
       ? createClusterMappings(
           getTransformationMappingItemsBySourceType(TRANSFORMATION_MAPPING_ITEM_SOURCE_TYPES.cluster, editingMapping),
-          targetResources.targetClusters,
+          targetClusters,
           mappingWizardClustersStep.sourceClusters
         )
       : []
@@ -39,6 +46,6 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => Object.assign(stateP
 
 export default connect(
   mapStateToProps,
-  { ...MappingWizardClustersStepActions, ...TargetResourcesActions },
+  { ...MappingWizardClustersStepActions, fetchTargetClustersAction },
   mergeProps
 )(MappingWizardClustersStep);

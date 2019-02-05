@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import ConversionHostWizardLocationStep from './ConversionHostWizardLocationStep';
 
-import * as TargetResourceActions from '../../../../../../../../../redux/common/targetResources/targetResourcesActions';
+import { fetchTargetClustersAction } from '../../../../../../../../../redux/common/targetResources/targetResourcesActions';
 
 import { stepIDs } from '../ConversionHostWizardConstants';
 
@@ -20,6 +20,6 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => Object.assign(stateP
 
 export default connect(
   mapStateToProps,
-  TargetResourceActions,
+  { fetchTargetClustersAction },
   mergeProps
 )(ConversionHostWizardLocationStep);
