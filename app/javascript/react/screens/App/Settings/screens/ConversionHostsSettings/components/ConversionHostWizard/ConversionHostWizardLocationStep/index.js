@@ -9,12 +9,17 @@ const mapStateToProps = ({
   form,
   providers: { providers },
   targetResources: { isFetchingTargetClusters, targetClusters }
-}) => ({
-  locationStepForm: form[stepIDs.locationStep],
-  providers,
-  isFetchingTargetClusters,
-  targetClusters
-});
+}) => {
+  const locationStepForm = form[stepIDs.locationStep];
+  const locationStepValues = locationStepForm && locationStepForm.values;
+  return {
+    selectedProviderType: locationStepValues && locationStepValues.providerType,
+    selectedProviderId: locationStepValues && locationStepValues.provider,
+    providers,
+    isFetchingTargetClusters,
+    targetClusters
+  };
+};
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => Object.assign(stateProps, ownProps.data, dispatchProps);
 

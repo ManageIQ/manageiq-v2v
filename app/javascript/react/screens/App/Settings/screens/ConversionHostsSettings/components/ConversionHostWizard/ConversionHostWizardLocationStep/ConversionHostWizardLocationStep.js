@@ -12,25 +12,20 @@ import { stepIDs } from '../ConversionHostWizardConstants';
 
 class ConversionHostWizardLocationStep extends React.Component {
   componentDidUpdate(prevProps) {
-    const { fetchTargetClustersAction, fetchTargetComputeUrls } = this.props;
-    const prevDerivedProps = this.getDerivedProps(prevProps);
-    const newDerivedProps = this.getDerivedProps();
-    if (prevDerivedProps.selectedProviderType !== newDerivedProps.selectedProviderType) {
-      fetchTargetClustersAction(fetchTargetComputeUrls[newDerivedProps.selectedProviderType]);
+    const { fetchTargetClustersAction, fetchTargetComputeUrls, selectedProviderType } = this.props;
+    if (prevProps.selectedProviderType !== selectedProviderType) {
+      fetchTargetClustersAction(fetchTargetComputeUrls[selectedProviderType]);
     }
   }
 
-  getDerivedProps = (props = this.props) => {
-    const { locationStepForm } = props;
-    return {
-      selectedProviderType: locationStepForm.values && locationStepForm.values.providerType,
-      selectedProviderId: locationStepForm.values && locationStepForm.values.provider
-    };
-  };
-
   render() {
-    const { providers, isFetchingTargetClusters, targetClusters } = this.props;
-    const { selectedProviderType, selectedProviderId } = this.getDerivedProps();
+    const {
+      providers,
+      isFetchingTargetClusters,
+      targetClusters,
+      selectedProviderType,
+      selectedProviderId
+    } = this.props;
 
     const availableProviderOptions = V2V_TARGET_PROVIDERS.filter(option =>
       providers.some(provider => provider.type === option.type)
@@ -39,8 +34,8 @@ class ConversionHostWizardLocationStep extends React.Component {
     const providersFilteredBySelectedType =
       selectedProviderOption && providers.filter(provider => provider.type === selectedProviderOption.type);
 
-    const targetComputeFilteredBySelectedProvider = targetClusters.filter(
-      computeResource => computeResource.ems_id === selectedProviderId
+    const targetClustersFilteredBySelectedProvider = targetClusters.filter(
+      cluster => cluster.ems_id === selectedProviderId
     );
 
     const selectFieldBaseProps = {
@@ -53,6 +48,10 @@ class ConversionHostWizardLocationStep extends React.Component {
       required: true,
       validate: [required()]
     };
+
+    let clusterLabel = '';
+    if (selectedProviderType === RHV) clusterLabel = __('Cluster');
+    if (selectedProviderType === OPENSTACK) clusterLabel = __('Project');
 
     return (
       <Form className="form-horizontal">
@@ -70,24 +69,13 @@ class ConversionHostWizardLocationStep extends React.Component {
               label={__('Provider')}
               options={providersFilteredBySelectedType}
             />
-            {selectedProviderType === RHV && (
-              <Field
-                {...selectFieldBaseProps}
-                name="cluster"
-                label={__('Cluster')}
-                options={targetComputeFilteredBySelectedProvider}
-                disabled={!selectedProviderId}
-              />
-            )}
-            {selectedProviderType === OPENSTACK && (
-              <Field
-                {...selectFieldBaseProps}
-                name="project"
-                label={__('Project')}
-                options={targetComputeFilteredBySelectedProvider}
-                disabled={!selectedProviderId}
-              />
-            )}
+            <Field
+              {...selectFieldBaseProps}
+              name="cluster"
+              label={clusterLabel}
+              options={targetClustersFilteredBySelectedProvider}
+              disabled={!selectedProviderId}
+            />
           </Spinner>
         )}
       </Form>
@@ -96,7 +84,8 @@ class ConversionHostWizardLocationStep extends React.Component {
 }
 
 ConversionHostWizardLocationStep.propTypes = {
-  locationStepForm: PropTypes.object,
+  selectedProviderType: PropTypes.string,
+  selectedProviderId: PropTypes.string,
   providers: PropTypes.arrayOf(PropTypes.object),
   fetchTargetClustersAction: PropTypes.func,
   fetchTargetComputeUrls: PropTypes.object,
@@ -105,7 +94,6 @@ ConversionHostWizardLocationStep.propTypes = {
 };
 
 ConversionHostWizardLocationStep.defaultProps = {
-  locationStepForm: {},
   fetchTargetComputeUrls: FETCH_TARGET_COMPUTE_URLS
 };
 
