@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { reset } from 'redux-form';
 import ConversionHostWizardLocationStep from './ConversionHostWizardLocationStep';
 
 import { fetchTargetClustersAction } from '../../../../../../../../../redux/common/targetResources/targetResourcesActions';
@@ -25,6 +26,6 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => Object.assign(stateP
 
 export default connect(
   mapStateToProps,
-  { fetchTargetClustersAction },
+  { fetchTargetClustersAction, resetFormAction: reset },
   mergeProps
 )(ConversionHostWizardLocationStep);

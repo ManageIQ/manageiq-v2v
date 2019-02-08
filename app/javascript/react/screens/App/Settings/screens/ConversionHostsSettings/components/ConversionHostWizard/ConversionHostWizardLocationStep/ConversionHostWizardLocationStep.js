@@ -24,7 +24,8 @@ class ConversionHostWizardLocationStep extends React.Component {
       isFetchingTargetClusters,
       targetClusters,
       selectedProviderType,
-      selectedProviderId
+      selectedProviderId,
+      resetFormAction
     } = this.props;
 
     const availableProviderOptions = V2V_TARGET_PROVIDERS.filter(option =>
@@ -75,6 +76,7 @@ class ConversionHostWizardLocationStep extends React.Component {
               label={clusterLabel}
               options={targetClustersFilteredBySelectedProvider}
               disabled={!selectedProviderId}
+              onChange={() => resetFormAction(stepIDs.hostsStep)}
             />
           </Spinner>
         )}
@@ -90,7 +92,8 @@ ConversionHostWizardLocationStep.propTypes = {
   fetchTargetClustersAction: PropTypes.func,
   fetchTargetComputeUrls: PropTypes.object,
   isFetchingTargetClusters: PropTypes.bool,
-  targetClusters: PropTypes.arrayOf(PropTypes.object)
+  targetClusters: PropTypes.arrayOf(PropTypes.object),
+  resetFormAction: PropTypes.func
 };
 
 ConversionHostWizardLocationStep.defaultProps = {
