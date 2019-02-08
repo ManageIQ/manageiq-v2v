@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { reduxForm, Field } from 'redux-form';
+import { length } from 'redux-form-validators';
 import { Form } from 'patternfly-react';
 import { RHV, OPENSTACK } from '../../../../../../../../../common/constants';
 import TypeAheadSelectField from '../../../../../../common/forms/TypeAheadSelectField';
@@ -25,6 +26,7 @@ const ConversionHostWizardHostsStep = ({ selectedProviderType, selectedCluster }
           placeholder={__('Select one or more hosts...')}
           highlightOnlyResult
           selectHintOnEnter
+          validate={[length({ min: 1 })]}
         />
       </Form.FormGroup>
     </Form>
