@@ -1,19 +1,23 @@
 import React from 'react';
-import { Form, Grid, TypeAheadSelect } from 'patternfly-react';
+import PropTypes from 'prop-types';
+import { reduxForm, Field } from 'redux-form';
+import { Form } from 'patternfly-react';
 import { RHV, OPENSTACK } from '../../../../../../../../../common/constants';
+import TypeAheadSelectField from '../../../../../../common/forms/TypeAheadSelectField';
+import { stepIDs } from '../ConversionHostWizardConstants';
 
 const ConversionHostWizardHostsStep = ({ selectedProviderType, selectedCluster }) => {
   let hostOptions = [];
   if (selectedProviderType === RHV) hostOptions = selectedCluster.hosts;
   if (selectedProviderType === OPENSTACK) hostOptions = selectedCluster.vms;
-
-  console.log('HOST OPTIONS?', hostOptions);
-
   return (
     <Form className="form-vertical">
       <Form.FormGroup controlId="host-selection">
         <Form.ControlLabel>{__('Hosts to configure as conversion hosts')}</Form.ControlLabel>
-        <TypeAheadSelect
+        <Field
+          component={TypeAheadSelectField}
+          name="hosts"
+          controlId="host-selection"
           multiple
           clearButton
           options={hostOptions}
@@ -27,4 +31,13 @@ const ConversionHostWizardHostsStep = ({ selectedProviderType, selectedCluster }
   );
 };
 
-export default ConversionHostWizardHostsStep;
+ConversionHostWizardHostsStep.propTypes = {
+  selectedProviderType: PropTypes.string,
+  selectedCluster: PropTypes.object
+};
+
+export default reduxForm({
+  form: stepIDs.hostsStep,
+  destroyOnUnmount: false,
+  initialValues: { hosts: [] }
+})(ConversionHostWizardHostsStep);
