@@ -9,8 +9,15 @@ import { stepIDs } from '../ConversionHostWizardConstants';
 
 const ConversionHostWizardHostsStep = ({ selectedProviderType, selectedCluster }) => {
   let hostOptions = [];
-  if (selectedProviderType === RHV) hostOptions = selectedCluster.hosts;
-  if (selectedProviderType === OPENSTACK) hostOptions = selectedCluster.vms;
+  let emptyLabel = '';
+  if (selectedProviderType === RHV) {
+    hostOptions = selectedCluster.hosts;
+    emptyLabel = __('No hosts available for the selected cluster.');
+  }
+  if (selectedProviderType === OPENSTACK) {
+    hostOptions = selectedCluster.vms;
+    emptyLabel = __('No hosts available for the selected project.');
+  }
   return (
     <Form className="form-vertical">
       <Form.FormGroup controlId="host-selection">
@@ -24,6 +31,7 @@ const ConversionHostWizardHostsStep = ({ selectedProviderType, selectedCluster }
           options={hostOptions}
           labelKey="name"
           placeholder={__('Select one or more hosts...')}
+          emptyLabel={hostOptions.length === 0 ? emptyLabel : __('No matches found.')}
           highlightOnlyResult
           selectHintOnEnter
           validate={[length({ min: 1 })]}
