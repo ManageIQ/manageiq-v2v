@@ -1,9 +1,6 @@
 /*
-  Until we can properly import patternfly-react CSS extensions
-  (which will probably require changes to manageiq-ui-classic's webpack config)
-  we need to include the styles for react-bootstrap-typeahead manually.
-
-  This can probably be removed after https://github.com/patternfly/patternfly-react/issues/673 is fixed.
+  Until we can properly import patternfly-react CSS extensions, we need to include the styles for react-bootstrap-typeahead manually.
+  This can be replaced with a proper import after https://github.com/patternfly/patternfly-react/issues/673 is fixed.
   This is a copy of https://github.com/patternfly/patternfly-react/blob/master/packages/patternfly-3/patternfly-react/sass/patternfly-react/_type-ahead-select.scss
 */
 
@@ -11,10 +8,6 @@
 
 .rbt-input-main {
   padding: 2px 6px;
-}
-
-.rbt-input-multi {
-  height: fit-content;
 }
 
 .rbt-menu.dropdown-menu {
