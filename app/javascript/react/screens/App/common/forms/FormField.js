@@ -13,10 +13,12 @@ export const FormField = ({
   optionKey,
   optionValue,
   labelWidth,
+  controlWidth,
   meta: { touched, error },
   help,
   maxLength,
   maxLengthWarning,
+  children,
   ...props
 }) => {
   const warning = maxLength && input.value.length >= maxLength && maxLengthWarning;
@@ -35,6 +37,8 @@ export const FormField = ({
   };
 
   const renderField = () => {
+    if (children) return children({ input });
+
     let field;
     switch (type) {
       case 'textarea':
@@ -74,10 +78,11 @@ export const FormField = ({
   return (
     <Form.FormGroup {...formGroupProps}>
       <Grid.Col componentClass={Form.ControlLabel} sm={Number.parseInt(labelWidth, 10) || 2}>
+        {required && '* '}
         {label}
-        {required && ' *'}
+        {/* TODO info icon */}
       </Grid.Col>
-      <Grid.Col sm={9} id={input.name}>
+      <Grid.Col sm={Number.parseInt(controlWidth, 10) || 9} id={input.name}>
         {renderField()}
         {(help || error || warning) && (
           <Form.HelpBlock>
@@ -99,9 +104,11 @@ FormField.propTypes = {
   options: PropTypes.array,
   optionKey: PropTypes.string,
   optionValue: PropTypes.string,
-  labelWidth: PropTypes.string,
+  labelWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  controlWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   meta: PropTypes.object,
   help: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   maxLength: PropTypes.number,
-  maxLengthWarning: PropTypes.string
+  maxLengthWarning: PropTypes.string,
+  children: PropTypes.func
 };

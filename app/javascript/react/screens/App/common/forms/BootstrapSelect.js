@@ -79,8 +79,8 @@ export class BootstrapSelect extends React.Component {
       <FormGroup {...formGroupProps}>
         {inline_label && (
           <Grid.Col componentClass={ControlLabel} sm={labelWidth}>
+            {required && '* '}
             {label}
-            {required && ' *'}
           </Grid.Col>
         )}
         <Grid.Col sm={controlWidth}>
