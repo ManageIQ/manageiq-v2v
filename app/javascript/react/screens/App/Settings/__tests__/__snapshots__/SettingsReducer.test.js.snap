@@ -2,9 +2,11 @@
 
 exports[`fetching conversion hosts is pending 1`] = `
 Object {
+  "conversionHostToDelete": null,
   "conversionHostWizardMounted": false,
   "conversionHostWizardVisible": false,
   "conversionHosts": Array [],
+  "errorDeleteConversionHost": false,
   "errorFetchingConversionHosts": null,
   "errorFetchingServers": null,
   "errorFetchingSettings": null,
@@ -12,10 +14,12 @@ Object {
   "errorSavingSettings": null,
   "fetchingServersRejected": false,
   "fetchingSettingsRejected": false,
+  "isDeletingConversionHost": false,
   "isFetchingConversionHosts": true,
   "isFetchingServers": false,
   "isFetchingSettings": false,
   "isPostingConversionHosts": false,
+  "isRejectedConversionHost": false,
   "isRejectedConversionHosts": false,
   "isRejectedPostingConversionHosts": false,
   "isSavingSettings": false,
@@ -23,14 +27,17 @@ Object {
   "savedSettings": Object {},
   "savingSettingsRejected": false,
   "servers": Array [],
+  "showConversionHostDeleteModal": false,
 }
 `;
 
 exports[`fetching conversion hosts is rejected 1`] = `
 Object {
+  "conversionHostToDelete": null,
   "conversionHostWizardMounted": false,
   "conversionHostWizardVisible": false,
   "conversionHosts": Array [],
+  "errorDeleteConversionHost": false,
   "errorFetchingConversionHosts": "error",
   "errorFetchingServers": null,
   "errorFetchingSettings": null,
@@ -38,10 +45,12 @@ Object {
   "errorSavingSettings": null,
   "fetchingServersRejected": false,
   "fetchingSettingsRejected": false,
+  "isDeletingConversionHost": false,
   "isFetchingConversionHosts": false,
   "isFetchingServers": false,
   "isFetchingSettings": false,
   "isPostingConversionHosts": false,
+  "isRejectedConversionHost": false,
   "isRejectedConversionHosts": true,
   "isRejectedPostingConversionHosts": false,
   "isSavingSettings": false,
@@ -49,11 +58,13 @@ Object {
   "savedSettings": Object {},
   "savingSettingsRejected": false,
   "servers": Array [],
+  "showConversionHostDeleteModal": false,
 }
 `;
 
 exports[`fetching conversion hosts is successful 1`] = `
 Object {
+  "conversionHostToDelete": null,
   "conversionHostWizardMounted": false,
   "conversionHostWizardVisible": false,
   "conversionHosts": Array [
@@ -61,6 +72,7 @@ Object {
       "mock": "conversionHost",
     },
   ],
+  "errorDeleteConversionHost": false,
   "errorFetchingConversionHosts": null,
   "errorFetchingServers": null,
   "errorFetchingSettings": null,
@@ -68,10 +80,12 @@ Object {
   "errorSavingSettings": null,
   "fetchingServersRejected": false,
   "fetchingSettingsRejected": false,
+  "isDeletingConversionHost": false,
   "isFetchingConversionHosts": false,
   "isFetchingServers": false,
   "isFetchingSettings": false,
   "isPostingConversionHosts": false,
+  "isRejectedConversionHost": false,
   "isRejectedConversionHosts": false,
   "isRejectedPostingConversionHosts": false,
   "isSavingSettings": false,
@@ -79,14 +93,17 @@ Object {
   "savedSettings": Object {},
   "savingSettingsRejected": false,
   "servers": Array [],
+  "showConversionHostDeleteModal": false,
 }
 `;
 
 exports[`fetching servers is pending 1`] = `
 Object {
+  "conversionHostToDelete": null,
   "conversionHostWizardMounted": false,
   "conversionHostWizardVisible": false,
   "conversionHosts": Array [],
+  "errorDeleteConversionHost": false,
   "errorFetchingConversionHosts": null,
   "errorFetchingServers": null,
   "errorFetchingSettings": null,
@@ -94,10 +111,12 @@ Object {
   "errorSavingSettings": null,
   "fetchingServersRejected": false,
   "fetchingSettingsRejected": false,
+  "isDeletingConversionHost": false,
   "isFetchingConversionHosts": false,
   "isFetchingServers": true,
   "isFetchingSettings": false,
   "isPostingConversionHosts": false,
+  "isRejectedConversionHost": false,
   "isRejectedConversionHosts": false,
   "isRejectedPostingConversionHosts": false,
   "isSavingSettings": false,
@@ -105,14 +124,17 @@ Object {
   "savedSettings": Object {},
   "savingSettingsRejected": false,
   "servers": Array [],
+  "showConversionHostDeleteModal": false,
 }
 `;
 
 exports[`fetching servers is rejected 1`] = `
 Object {
+  "conversionHostToDelete": null,
   "conversionHostWizardMounted": false,
   "conversionHostWizardVisible": false,
   "conversionHosts": Array [],
+  "errorDeleteConversionHost": false,
   "errorFetchingConversionHosts": null,
   "errorFetchingServers": "error",
   "errorFetchingSettings": null,
@@ -120,10 +142,12 @@ Object {
   "errorSavingSettings": null,
   "fetchingServersRejected": true,
   "fetchingSettingsRejected": false,
+  "isDeletingConversionHost": false,
   "isFetchingConversionHosts": false,
   "isFetchingServers": false,
   "isFetchingSettings": false,
   "isPostingConversionHosts": false,
+  "isRejectedConversionHost": false,
   "isRejectedConversionHosts": false,
   "isRejectedPostingConversionHosts": false,
   "isSavingSettings": false,
@@ -131,14 +155,17 @@ Object {
   "savedSettings": Object {},
   "savingSettingsRejected": false,
   "servers": Array [],
+  "showConversionHostDeleteModal": false,
 }
 `;
 
 exports[`fetching settings is pending 1`] = `
 Object {
+  "conversionHostToDelete": null,
   "conversionHostWizardMounted": false,
   "conversionHostWizardVisible": false,
   "conversionHosts": Array [],
+  "errorDeleteConversionHost": false,
   "errorFetchingConversionHosts": null,
   "errorFetchingServers": null,
   "errorFetchingSettings": null,
@@ -146,10 +173,12 @@ Object {
   "errorSavingSettings": null,
   "fetchingServersRejected": false,
   "fetchingSettingsRejected": false,
+  "isDeletingConversionHost": false,
   "isFetchingConversionHosts": false,
   "isFetchingServers": false,
   "isFetchingSettings": true,
   "isPostingConversionHosts": false,
+  "isRejectedConversionHost": false,
   "isRejectedConversionHosts": false,
   "isRejectedPostingConversionHosts": false,
   "isSavingSettings": false,
@@ -157,14 +186,17 @@ Object {
   "savedSettings": Object {},
   "savingSettingsRejected": false,
   "servers": Array [],
+  "showConversionHostDeleteModal": false,
 }
 `;
 
 exports[`fetching settings is rejected 1`] = `
 Object {
+  "conversionHostToDelete": null,
   "conversionHostWizardMounted": false,
   "conversionHostWizardVisible": false,
   "conversionHosts": Array [],
+  "errorDeleteConversionHost": false,
   "errorFetchingConversionHosts": null,
   "errorFetchingServers": null,
   "errorFetchingSettings": "error",
@@ -172,10 +204,12 @@ Object {
   "errorSavingSettings": null,
   "fetchingServersRejected": false,
   "fetchingSettingsRejected": true,
+  "isDeletingConversionHost": false,
   "isFetchingConversionHosts": false,
   "isFetchingServers": false,
   "isFetchingSettings": false,
   "isPostingConversionHosts": false,
+  "isRejectedConversionHost": false,
   "isRejectedConversionHosts": false,
   "isRejectedPostingConversionHosts": false,
   "isSavingSettings": false,
@@ -183,14 +217,17 @@ Object {
   "savedSettings": Object {},
   "savingSettingsRejected": false,
   "servers": Array [],
+  "showConversionHostDeleteModal": false,
 }
 `;
 
 exports[`fetching settings is successful 1`] = `
 Object {
+  "conversionHostToDelete": null,
   "conversionHostWizardMounted": false,
   "conversionHostWizardVisible": false,
   "conversionHosts": Array [],
+  "errorDeleteConversionHost": false,
   "errorFetchingConversionHosts": null,
   "errorFetchingServers": null,
   "errorFetchingSettings": null,
@@ -198,10 +235,12 @@ Object {
   "errorSavingSettings": null,
   "fetchingServersRejected": false,
   "fetchingSettingsRejected": false,
+  "isDeletingConversionHost": false,
   "isFetchingConversionHosts": false,
   "isFetchingServers": false,
   "isFetchingSettings": false,
   "isPostingConversionHosts": false,
+  "isRejectedConversionHost": false,
   "isRejectedConversionHosts": false,
   "isRejectedPostingConversionHosts": false,
   "isSavingSettings": false,
@@ -211,14 +250,17 @@ Object {
   },
   "savingSettingsRejected": false,
   "servers": Array [],
+  "showConversionHostDeleteModal": false,
 }
 `;
 
 exports[`saving settings is pending 1`] = `
 Object {
+  "conversionHostToDelete": null,
   "conversionHostWizardMounted": false,
   "conversionHostWizardVisible": false,
   "conversionHosts": Array [],
+  "errorDeleteConversionHost": false,
   "errorFetchingConversionHosts": null,
   "errorFetchingServers": null,
   "errorFetchingSettings": null,
@@ -226,10 +268,12 @@ Object {
   "errorSavingSettings": null,
   "fetchingServersRejected": false,
   "fetchingSettingsRejected": false,
+  "isDeletingConversionHost": false,
   "isFetchingConversionHosts": false,
   "isFetchingServers": false,
   "isFetchingSettings": false,
   "isPostingConversionHosts": false,
+  "isRejectedConversionHost": false,
   "isRejectedConversionHosts": false,
   "isRejectedPostingConversionHosts": false,
   "isSavingSettings": true,
@@ -237,14 +281,17 @@ Object {
   "savedSettings": Object {},
   "savingSettingsRejected": false,
   "servers": Array [],
+  "showConversionHostDeleteModal": false,
 }
 `;
 
 exports[`saving settings is rejected 1`] = `
 Object {
+  "conversionHostToDelete": null,
   "conversionHostWizardMounted": false,
   "conversionHostWizardVisible": false,
   "conversionHosts": Array [],
+  "errorDeleteConversionHost": false,
   "errorFetchingConversionHosts": null,
   "errorFetchingServers": null,
   "errorFetchingSettings": null,
@@ -252,10 +299,12 @@ Object {
   "errorSavingSettings": "error",
   "fetchingServersRejected": false,
   "fetchingSettingsRejected": false,
+  "isDeletingConversionHost": false,
   "isFetchingConversionHosts": false,
   "isFetchingServers": false,
   "isFetchingSettings": false,
   "isPostingConversionHosts": false,
+  "isRejectedConversionHost": false,
   "isRejectedConversionHosts": false,
   "isRejectedPostingConversionHosts": false,
   "isSavingSettings": false,
@@ -263,14 +312,17 @@ Object {
   "savedSettings": Object {},
   "savingSettingsRejected": true,
   "servers": Array [],
+  "showConversionHostDeleteModal": false,
 }
 `;
 
 exports[`saving settings is successful 1`] = `
 Object {
+  "conversionHostToDelete": null,
   "conversionHostWizardMounted": false,
   "conversionHostWizardVisible": false,
   "conversionHosts": Array [],
+  "errorDeleteConversionHost": false,
   "errorFetchingConversionHosts": null,
   "errorFetchingServers": null,
   "errorFetchingSettings": null,
@@ -278,10 +330,12 @@ Object {
   "errorSavingSettings": null,
   "fetchingServersRejected": false,
   "fetchingSettingsRejected": false,
+  "isDeletingConversionHost": false,
   "isFetchingConversionHosts": false,
   "isFetchingServers": false,
   "isFetchingSettings": false,
   "isPostingConversionHosts": false,
+  "isRejectedConversionHost": false,
   "isRejectedConversionHosts": false,
   "isRejectedPostingConversionHosts": false,
   "isSavingSettings": false,
@@ -291,14 +345,17 @@ Object {
   },
   "savingSettingsRejected": false,
   "servers": Array [],
+  "showConversionHostDeleteModal": false,
 }
 `;
 
 exports[`sets default state 1`] = `
 Object {
+  "conversionHostToDelete": null,
   "conversionHostWizardMounted": false,
   "conversionHostWizardVisible": false,
   "conversionHosts": Array [],
+  "errorDeleteConversionHost": false,
   "errorFetchingConversionHosts": null,
   "errorFetchingServers": null,
   "errorFetchingSettings": null,
@@ -306,10 +363,12 @@ Object {
   "errorSavingSettings": null,
   "fetchingServersRejected": false,
   "fetchingSettingsRejected": false,
+  "isDeletingConversionHost": false,
   "isFetchingConversionHosts": false,
   "isFetchingServers": false,
   "isFetchingSettings": false,
   "isPostingConversionHosts": false,
+  "isRejectedConversionHost": false,
   "isRejectedConversionHosts": false,
   "isRejectedPostingConversionHosts": false,
   "isSavingSettings": false,
@@ -317,5 +376,6 @@ Object {
   "savedSettings": Object {},
   "savingSettingsRejected": false,
   "servers": Array [],
+  "showConversionHostDeleteModal": false,
 }
 `;
