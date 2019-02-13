@@ -1,12 +1,8 @@
-.text-file-input__dropzone {
-  border: 3px solid $color-pf-white;
-}
-
-.text-file-input__dropzone.active {
+.text-file-input__dropzone.active textarea {
   border: 3px dashed $color-pf-black-500;
 }
 
 .text-file-input__textarea {
-  min-height: 300px;
+  min-height: 200px;
   width: 100%;
 }
