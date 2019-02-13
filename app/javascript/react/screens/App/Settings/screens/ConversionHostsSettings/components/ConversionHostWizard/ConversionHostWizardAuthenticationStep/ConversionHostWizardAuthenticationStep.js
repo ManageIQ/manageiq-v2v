@@ -5,6 +5,13 @@ import TextFileInput from '../../../../../../common/forms/TextFileInput';
 import { stepIDs } from '../ConversionHostWizardConstants';
 import { FormField } from '../../../../../../common/forms/FormField';
 
+// TODO validation on non-empty textarea
+// TODO info icon in the formfield thing
+// TODO OSP-specific user field
+// TODO transformation method field
+// TODO second SSH key for SSH transformation method
+// TODO vddk path for that thing?
+
 const ConversionHostWizardAuthenticationStep = () => (
   <Form className="form-horizontal">
     <Field
