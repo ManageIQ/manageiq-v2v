@@ -1,5 +1,6 @@
 import React from 'react';
 import { reduxForm, Field } from 'redux-form';
+import { required } from 'redux-form-validators';
 import { Form } from 'patternfly-react';
 import TextFileInput from '../../../../../../common/forms/TextFileInput';
 import { stepIDs } from '../ConversionHostWizardConstants';
@@ -22,7 +23,7 @@ const ConversionHostWizardAuthenticationStep = () => (
       name="sshKey"
       controlId="host-ssh-key-input"
       required
-      validate={[]} // TODO
+      validate={[value => required()(value.body)]}
     >
       {({ input: { value, onChange } }) => (
         <TextFileInput
