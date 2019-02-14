@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form, Grid } from 'patternfly-react';
+import { Form, Grid, OverlayTrigger, Popover, Button, Icon } from 'patternfly-react';
 import { Field } from 'redux-form';
 
 export const FormField = ({
@@ -18,6 +18,7 @@ export const FormField = ({
   help,
   maxLength,
   maxLengthWarning,
+  info,
   children,
   ...props
 }) => {
@@ -75,12 +76,32 @@ export const FormField = ({
     return field;
   };
 
+  const renderInfoPopover = () => {
+    if (!info) return null;
+    return (
+      <OverlayTrigger
+        rootClose
+        trigger="click"
+        placement="top"
+        overlay={
+          <Popover id={`info-popover-${input.name}`} style={{ width: 400 }}>
+            {info}
+          </Popover>
+        }
+      >
+        <Button bsStyle="link">
+          <Icon type="pf" name="info" />
+        </Button>
+      </OverlayTrigger>
+    );
+  };
+
   return (
     <Form.FormGroup {...formGroupProps}>
       <Grid.Col componentClass={Form.ControlLabel} sm={Number.parseInt(labelWidth, 10) || 2}>
         {required && '* '}
         {label}
-        {/* TODO info icon */}
+        {renderInfoPopover()}
       </Grid.Col>
       <Grid.Col sm={Number.parseInt(controlWidth, 10) || 9} id={input.name}>
         {renderField()}
@@ -110,5 +131,6 @@ FormField.propTypes = {
   help: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   maxLength: PropTypes.number,
   maxLengthWarning: PropTypes.string,
+  info: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   children: PropTypes.func
 };
