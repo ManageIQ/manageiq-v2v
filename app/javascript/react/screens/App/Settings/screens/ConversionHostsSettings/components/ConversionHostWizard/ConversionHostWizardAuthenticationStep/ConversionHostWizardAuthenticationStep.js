@@ -37,5 +37,8 @@ const ConversionHostWizardAuthenticationStep = () => (
 
 export default reduxForm({
   form: stepIDs.authenticationStep,
-  destroyOnUnmount: false
+  destroyOnUnmount: false,
+  initialValues: {
+    sshKey: { filename: '', body: '' }
+  }
 })(ConversionHostWizardAuthenticationStep);

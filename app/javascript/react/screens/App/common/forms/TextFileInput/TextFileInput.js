@@ -4,12 +4,7 @@ import { Form, Button } from 'patternfly-react';
 import Dropzone from 'react-dropzone';
 import classNames from 'classnames';
 
-// TODO dropzone, browse button, callback on file loaded
-// TODO fill in file path, fill in file contents
-
 class TextFileInput extends React.Component {
-  state = { filename: '' };
-
   onFileDrop = files => {
     if (files && files.length > 0) {
       this.handleFile(files[0]);
@@ -19,23 +14,21 @@ class TextFileInput extends React.Component {
   handleFile = fileHandle => {
     if (fileHandle) {
       const { onChange } = this.props;
-      this.setState({ filename: fileHandle.name });
       const reader = new FileReader();
-      reader.onload = () => onChange(reader.result);
+      reader.onload = () => onChange({ filename: fileHandle.name, body: reader.result });
       reader.readAsBinaryString(fileHandle);
     }
   };
 
   render() {
     const { help, value, onChange } = this.props;
-    const { filename } = this.state;
     return (
       <Dropzone onDrop={this.onFileDrop} onClick={event => event.preventDefault()}>
         {({ getRootProps, getInputProps, isDragActive, open }) => (
           <div {...getRootProps()} className={classNames('text-file-input__dropzone', { active: isDragActive })}>
             <input {...getInputProps()} />
             <Form.InputGroup>
-              <Form.FormControl type="text" disabled value={filename} />
+              <Form.FormControl type="text" disabled value={value.filename} />
               <Form.InputGroup.Button>
                 <Button onClick={open}>
                   {__('Browse')}
@@ -47,8 +40,8 @@ class TextFileInput extends React.Component {
             <Form.FormControl
               className="text-file-input__textarea"
               componentClass="textarea"
-              value={value}
-              onChange={onChange}
+              value={value.body}
+              onChange={event => onChange({ filename: '', body: event.target.value })}
             />
           </div>
         )}
@@ -59,7 +52,10 @@ class TextFileInput extends React.Component {
 
 TextFileInput.propTypes = {
   help: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-  value: PropTypes.string,
+  value: PropTypes.shape({
+    filename: PropTypes.string,
+    body: PropTypes.string
+  }),
   onChange: PropTypes.func
 };
 
