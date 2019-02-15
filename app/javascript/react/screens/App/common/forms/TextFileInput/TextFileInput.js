@@ -4,6 +4,9 @@ import { Form, Button } from 'patternfly-react';
 import Dropzone from 'react-dropzone';
 import classNames from 'classnames';
 
+// TODO clear button
+// TODO when filename is non empty, textarea is read only
+
 const TextFileInput = ({ value: { filename, body }, onChange, help }) => {
   const readFile = fileHandle => {
     const reader = new FileReader();
