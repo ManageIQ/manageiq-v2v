@@ -9,10 +9,6 @@ import { FormField } from '../../../../../../common/forms/FormField';
 import { RHV, OPENSTACK } from '../../../../../../../../../common/constants';
 import { BootstrapSelect } from '../../../../../../common/forms/BootstrapSelect';
 
-// TODO OSP-specific user field
-// TODO transformation method field
-// TODO second SSH key for SSH transformation method
-// TODO vddk path for that thing?
 // TODO double check validation
 // TODO double check clearing the form on provider changes?
 // TODO next button text "Configure..."
@@ -23,7 +19,7 @@ const ConversionHostWizardAuthenticationStep = ({ selectedProviderType, selected
     sshKeyInfo = __('RHV-M deploys a common SSH public key on all hosts when configuring them. This allows commands and playbooks to be run from RHV-M. The associated private key is in the file /etc/pki/ovirt-engine/keys/engine_id_rsa on RHV-M.'); // prettier-ignore
   }
   if (selectedProviderType === OPENSTACK) {
-    sshKeyInfo = __('This is the private key file used to connect to the conversion host instance for cloud_user.'); // TODO do we want to use the actual entered username here?
+    sshKeyInfo = __('This is the private key file used to connect to the conversion host instance for the OpenStack User.'); // prettier-ignore
   }
 
   const fieldBaseProps = { labelWidth: 4, controlWidth: 7 };
@@ -44,7 +40,7 @@ const ConversionHostWizardAuthenticationStep = ({ selectedProviderType, selected
       )}
       <Field
         {...fieldBaseProps}
-        name="sshKey"
+        name="conversionHostSshKey"
         label={__('Conversion Host SSH key')}
         component={FormField}
         info={sshKeyInfo}
@@ -72,7 +68,25 @@ const ConversionHostWizardAuthenticationStep = ({ selectedProviderType, selected
         required
         validate={[required()]}
       />
-      {selectedTransformationMethod === SSH && <h2>TODO: SSH stuff</h2>}
+      {selectedTransformationMethod === SSH && (
+        <Field
+          {...fieldBaseProps}
+          name="vmwareSshKey"
+          label={__('VMware hypervisors SSH key')}
+          component={FormField}
+          controlId="host-ssh-key-input"
+          required
+          validate={[value => required()(value.body)]}
+        >
+          {({ input: { value, onChange } }) => (
+            <TextFileInput
+              help={__('Upload your SSH key file or paste its contents below.')}
+              value={value}
+              onChange={onChange}
+            />
+          )}
+        </Field>
+      )}
       {selectedTransformationMethod === VDDK && (
         <Field
           {...fieldBaseProps}
@@ -112,6 +126,7 @@ export default reduxForm({
   destroyOnUnmount: false,
   initialValues: {
     openstackUser: 'cloud_user',
-    sshKey: { filename: '', body: '' }
+    conversionHostSshKey: { filename: '', body: '' },
+    vmwareSshKey: { filename: '', body: '' }
   }
 })(ConversionHostWizardAuthenticationStep);
