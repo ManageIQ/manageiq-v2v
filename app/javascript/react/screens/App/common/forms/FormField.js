@@ -105,7 +105,7 @@ export const FormField = ({
       </Grid.Col>
       <Grid.Col sm={Number.parseInt(controlWidth, 10) || 9} id={input.name}>
         {renderField()}
-        {(help || error || warning) && (
+        {(help || (touched && error) || warning) && (
           <Form.HelpBlock>
             {(touched && error) || warning || help // If we have any of these, render one of them, in priority order.
             }

@@ -4,9 +4,6 @@ import { Form, Button } from 'patternfly-react';
 import Dropzone from 'react-dropzone';
 import classNames from 'classnames';
 
-// TODO clear button
-// TODO when filename is non empty, textarea is read only
-
 const TextFileInput = ({ value: { filename, body }, onChange, help }) => {
   const readFile = fileHandle => {
     const reader = new FileReader();
@@ -20,6 +17,8 @@ const TextFileInput = ({ value: { filename, body }, onChange, help }) => {
     }
   };
 
+  const clear = () => onChange({ filename: '', body: '' });
+
   return (
     <Dropzone onDrop={onFileDrop} onClick={event => event.preventDefault()}>
       {({ getRootProps, getInputProps, isDragActive, open }) => (
@@ -32,6 +31,9 @@ const TextFileInput = ({ value: { filename, body }, onChange, help }) => {
                 {__('Browse')}
                 &hellip;
               </Button>
+              <Button onClick={clear} disabled={body === ''}>
+                {__('Clear')}
+              </Button>
             </Form.InputGroup.Button>
           </Form.InputGroup>
           {help && <Form.HelpBlock>{help}</Form.HelpBlock>}
@@ -40,6 +42,7 @@ const TextFileInput = ({ value: { filename, body }, onChange, help }) => {
             componentClass="textarea"
             value={body}
             onChange={event => onChange({ filename: '', body: event.target.value })}
+            disabled={filename !== ''}
           />
         </div>
       )}
