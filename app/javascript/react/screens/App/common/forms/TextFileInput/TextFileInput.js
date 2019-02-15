@@ -4,7 +4,7 @@ import { Form, Button } from 'patternfly-react';
 import Dropzone from 'react-dropzone';
 import classNames from 'classnames';
 
-const TextFileInput = ({ value: { filename, body }, onChange, help }) => {
+const TextFileInput = ({ value: { filename, body }, onChange, onBlur, help }) => {
   const readFile = fileHandle => {
     const reader = new FileReader();
     reader.onload = () => onChange({ filename: fileHandle.name, body: reader.result });
@@ -42,6 +42,7 @@ const TextFileInput = ({ value: { filename, body }, onChange, help }) => {
             componentClass="textarea"
             value={body}
             onChange={event => onChange({ filename: '', body: event.target.value })}
+            onBlur={() => onBlur()}
             disabled={filename !== ''}
           />
         </div>
@@ -56,7 +57,8 @@ TextFileInput.propTypes = {
     filename: PropTypes.string,
     body: PropTypes.string
   }),
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
+  onBlur: PropTypes.func
 };
 
 export default TextFileInput;

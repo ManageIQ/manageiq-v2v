@@ -9,9 +9,7 @@ import { FormField } from '../../../../../../common/forms/FormField';
 import { RHV, OPENSTACK } from '../../../../../../../../../common/constants';
 import { BootstrapSelect } from '../../../../../../common/forms/BootstrapSelect';
 
-// TODO double check validation
-// TODO double check clearing the form on provider changes?
-// TODO next button text "Configure..."
+const requiredWithMessage = required({ msg: __('This field is required') });
 
 const ConversionHostWizardAuthenticationStep = ({ selectedProviderType, selectedTransformationMethod }) => {
   let sshKeyInfo = '';
@@ -35,7 +33,7 @@ const ConversionHostWizardAuthenticationStep = ({ selectedProviderType, selected
           type="text"
           controlId="openstack-user-input"
           required
-          validate={[required()]}
+          validate={[requiredWithMessage]}
         />
       )}
       <Field
@@ -46,13 +44,14 @@ const ConversionHostWizardAuthenticationStep = ({ selectedProviderType, selected
         info={sshKeyInfo}
         controlId="host-ssh-key-input"
         required
-        validate={[value => required()(value.body)]}
+        validate={[value => requiredWithMessage(value.body)]}
       >
-        {({ input: { value, onChange } }) => (
+        {({ input: { value, onChange, onBlur } }) => (
           <TextFileInput
             help={__('Upload your SSH key file or paste its contents below.')}
             value={value}
             onChange={onChange}
+            onBlur={onBlur}
           />
         )}
       </Field>
@@ -66,7 +65,7 @@ const ConversionHostWizardAuthenticationStep = ({ selectedProviderType, selected
         option_value="name"
         inline_label
         required
-        validate={[required()]}
+        validate={[requiredWithMessage]}
       />
       {selectedTransformationMethod === SSH && (
         <Field
@@ -74,15 +73,16 @@ const ConversionHostWizardAuthenticationStep = ({ selectedProviderType, selected
           name="vmwareSshKey"
           label={__('VMware hypervisors SSH key')}
           component={FormField}
-          controlId="host-ssh-key-input"
+          controlId="vmware-ssh-key-input"
           required
-          validate={[value => required()(value.body)]}
+          validate={[value => requiredWithMessage(value.body)]}
         >
-          {({ input: { value, onChange } }) => (
+          {({ input: { value, onChange, onBlur } }) => (
             <TextFileInput
               help={__('Upload your SSH key file or paste its contents below.')}
               value={value}
               onChange={onChange}
+              onBlur={onBlur}
             />
           )}
         </Field>
@@ -95,15 +95,15 @@ const ConversionHostWizardAuthenticationStep = ({ selectedProviderType, selected
           component={FormField}
           controlId="vddk-library-path"
           required
-          validate={[required()]}
+          validate={[requiredWithMessage]}
         >
-          {({ input: { value, onChange } }) => (
-            <Form.FormControl type="text" value={value} onChange={onChange} />
+          {({ input }) => (
+            <Form.FormControl {...input} type="text" />
             /*
             // TODO replace the above FormControl with this InputGroup
             // when API support for the Validate button is ready.
             <Form.InputGroup>
-              <Form.FormControl type="text" value={value} onChange={onChange} />
+              <Form.FormControl {...input} type="text" />
               <Form.InputGroup.Button>
                 <Button onClick={() => {}}>{__('Validate')}</Button>
               </Form.InputGroup.Button>
@@ -118,12 +118,14 @@ const ConversionHostWizardAuthenticationStep = ({ selectedProviderType, selected
 
 ConversionHostWizardAuthenticationStep.propTypes = {
   selectedProviderType: PropTypes.string,
-  selectedTransformationMethod: PropTypes.string
+  selectedTransformationMethod: PropTypes.string,
+  unregisterFieldAction: PropTypes.func
 };
 
 export default reduxForm({
   form: stepIDs.authenticationStep,
   destroyOnUnmount: false,
+  forceUnregisterOnUnmount: true,
   initialValues: {
     openstackUser: 'cloud_user',
     conversionHostSshKey: { filename: '', body: '' },
