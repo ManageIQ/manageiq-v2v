@@ -99,7 +99,7 @@ export const FormField = ({
   return (
     <Form.FormGroup {...formGroupProps}>
       <Grid.Col componentClass={Form.ControlLabel} sm={Number.parseInt(labelWidth, 10) || 2}>
-        {required && '* '}
+        {required && <span className="required-asterisk">* </span>}
         {label}
         {renderInfoPopover()}
       </Grid.Col>

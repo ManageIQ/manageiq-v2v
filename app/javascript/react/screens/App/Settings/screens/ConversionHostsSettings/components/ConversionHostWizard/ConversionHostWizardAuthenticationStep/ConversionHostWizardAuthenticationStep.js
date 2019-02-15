@@ -66,6 +66,7 @@ const ConversionHostWizardAuthenticationStep = ({ selectedProviderType, selected
         inline_label
         required
         validate={[requiredWithMessage]}
+        style={{ marginTop: 25 }}
       />
       {selectedTransformationMethod === SSH && (
         <Field
