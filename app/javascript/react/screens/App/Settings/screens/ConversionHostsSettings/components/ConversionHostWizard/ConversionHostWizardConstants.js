@@ -4,3 +4,6 @@ export const stepIDs = {
   authenticationStep: 'conversionHostWizardAuthenticationStep',
   resultsStep: 'conversionHostWizardResultsStep'
 };
+
+export const VDDK = 'VDDK';
+export const SSH = 'SSH';

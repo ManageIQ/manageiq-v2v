@@ -4,10 +4,7 @@ import csv from 'csv';
 import utf8 from 'utf8';
 import { Button, EmptyState } from 'patternfly-react';
 import Dropzone from 'react-dropzone';
-
-// Unfortunately, this is the recommended way to trigger the file dialog programmatically.
-// https://github.com/react-dropzone/react-dropzone/tree/master/examples/File%20Dialog
-let dropzoneRef;
+import classNames from 'classnames';
 
 class CSVDropzoneField extends React.Component {
   onFileDrop = (acceptedFiles, rejectedFiles) => {
@@ -65,35 +62,23 @@ class CSVDropzoneField extends React.Component {
 
   render() {
     return (
-      <React.Fragment>
-        <Dropzone
-          accept=".csv"
-          className="csv-upload-dropzone"
-          activeClassName="active"
-          onDrop={this.onFileDrop}
-          disableClick
-          disablePreview
-          ref={node => {
-            dropzoneRef = node; // See comment at top, this is so we can call dropzoneRef.open below
-          }}
-        >
-          <EmptyState>
-            <EmptyState.Icon type="pf" name="import" />
-            <EmptyState.Title>{__('Import File')}</EmptyState.Title>
-            <EmptyState.Info>{__('Import a file including a list of VMs to be migrated.')}</EmptyState.Info>
-            <EmptyState.Action>
-              <Button
-                bsStyle="primary"
-                onClick={() => {
-                  dropzoneRef.open();
-                }}
-              >
-                {__('Import')}
-              </Button>
-            </EmptyState.Action>
-          </EmptyState>
-        </Dropzone>
-      </React.Fragment>
+      <Dropzone accept=".csv" onDrop={this.onFileDrop} onClick={event => event.preventDefault()}>
+        {({ getRootProps, getInputProps, isDragActive, open }) => (
+          <div {...getRootProps()} className={classNames('csv-upload-dropzone', { active: isDragActive })}>
+            <input {...getInputProps()} />
+            <EmptyState>
+              <EmptyState.Icon type="pf" name="import" />
+              <EmptyState.Title>{__('Import File')}</EmptyState.Title>
+              <EmptyState.Info>{__('Import a file including a list of VMs to be migrated.')}</EmptyState.Info>
+              <EmptyState.Action>
+                <Button bsStyle="primary" onClick={open}>
+                  {__('Import')}
+                </Button>
+              </EmptyState.Action>
+            </EmptyState>
+          </div>
+        )}
+      </Dropzone>
     );
   }
 }

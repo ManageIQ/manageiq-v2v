@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form, Grid } from 'patternfly-react';
+import { Form, Grid, OverlayTrigger, Popover, Button, Icon } from 'patternfly-react';
 import { Field } from 'redux-form';
 
 export const FormField = ({
@@ -13,10 +13,13 @@ export const FormField = ({
   optionKey,
   optionValue,
   labelWidth,
+  controlWidth,
   meta: { touched, error },
   help,
   maxLength,
   maxLengthWarning,
+  info,
+  children,
   ...props
 }) => {
   const warning = maxLength && input.value.length >= maxLength && maxLengthWarning;
@@ -35,6 +38,8 @@ export const FormField = ({
   };
 
   const renderField = () => {
+    if (children) return children({ input });
+
     let field;
     switch (type) {
       case 'textarea':
@@ -71,15 +76,36 @@ export const FormField = ({
     return field;
   };
 
+  const renderInfoPopover = () => {
+    if (!info) return null;
+    return (
+      <OverlayTrigger
+        rootClose
+        trigger="click"
+        placement="top"
+        overlay={
+          <Popover id={`info-popover-${input.name}`} style={{ width: 400 }}>
+            {info}
+          </Popover>
+        }
+      >
+        <Button bsStyle="link">
+          <Icon type="pf" name="info" />
+        </Button>
+      </OverlayTrigger>
+    );
+  };
+
   return (
     <Form.FormGroup {...formGroupProps}>
       <Grid.Col componentClass={Form.ControlLabel} sm={Number.parseInt(labelWidth, 10) || 2}>
+        {required && <span className="required-asterisk">* </span>}
         {label}
-        {required && ' *'}
+        {renderInfoPopover()}
       </Grid.Col>
-      <Grid.Col sm={9} id={input.name}>
+      <Grid.Col sm={Number.parseInt(controlWidth, 10) || 9} id={input.name}>
         {renderField()}
-        {(help || error || warning) && (
+        {(help || (touched && error) || warning) && (
           <Form.HelpBlock>
             {(touched && error) || warning || help // If we have any of these, render one of them, in priority order.
             }
@@ -99,9 +125,12 @@ FormField.propTypes = {
   options: PropTypes.array,
   optionKey: PropTypes.string,
   optionValue: PropTypes.string,
-  labelWidth: PropTypes.string,
+  labelWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  controlWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   meta: PropTypes.object,
   help: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   maxLength: PropTypes.number,
-  maxLengthWarning: PropTypes.string
+  maxLengthWarning: PropTypes.string,
+  info: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  children: PropTypes.func
 };
