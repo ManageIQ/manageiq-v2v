@@ -117,7 +117,7 @@ class ConversionHostWizard extends React.Component {
             onClick={onFinalStep ? hideConversionHostWizardAction : this.nextStep}
             disabled={disableNextStep}
           >
-            {onFinalStep ? __('Close') : activeStep.id === stepIDs.authConfigStep ? __('Configure') : __('Next')}
+            {onFinalStep ? __('Close') : activeStep.id === stepIDs.authenticationStep ? __('Configure') : __('Next')}
             {!onFinalStep && <Icon type="fa" name="angle-right" />}
           </Button>
         </Wizard.Footer>

@@ -36,11 +36,11 @@ hr {
 }
 
 .csv-upload-dropzone {
-  border: 3px solid #fff;
+  border: 3px solid $color-pf-white;
 }
 
 .csv-upload-dropzone.active {
-  border: 3px dashed #9b9b9b; // Matches upload icon color
+  border: 3px dashed $color-pf-black-500; // Matches upload icon color
 }
 
 .cards-pf .blank-slate-pf {
