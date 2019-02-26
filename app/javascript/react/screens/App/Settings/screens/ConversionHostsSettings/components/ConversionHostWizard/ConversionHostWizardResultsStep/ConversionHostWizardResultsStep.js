@@ -4,21 +4,36 @@ import { Form } from 'patternfly-react';
 
 class ConversionHostWizardResultsStep extends React.Component {
   componentDidMount() {
-    const { postBody } = this.props;
-    console.log('TODO: submit POST /api/conversion_hosts', postBody); // TODO move stuff to conversion hosts common reducer?
+    const { postBody, postConversionHostsAction, postConversionHostsUrl } = this.props;
+    postConversionHostsAction(postConversionHostsUrl, postBody);
   }
 
   render() {
+    const { isPostingConversionHosts, isRejectedPostingConversionHosts, postConversionHostsResult } = this.props;
     return (
       <Form className="form-horizontal">
         <h2>TODO: Results Step Contents</h2>
+        <ul>
+          <li>Posting? {isPostingConversionHosts}</li>
+          <li>Rejected? {isRejectedPostingConversionHosts}</li>
+          <li>Result: {JSON.stringify(postConversionHostsResult, 4)}</li>
+        </ul>
       </Form>
     );
   }
 }
 
 ConversionHostWizardResultsStep.propTypes = {
-  postBody: PropTypes.object
+  postBody: PropTypes.object,
+  postConversionHostsAction: PropTypes.func,
+  postConversionHostsUrl: PropTypes.string,
+  isPostingConversionHosts: PropTypes.bool,
+  isRejectedPostingConversionHosts: PropTypes.bool,
+  postConversionHostsResult: PropTypes.object
+};
+
+ConversionHostWizardResultsStep.defaultProps = {
+  postConversionHostsUrl: '/api/conversion_hosts'
 };
 
 export default ConversionHostWizardResultsStep;
