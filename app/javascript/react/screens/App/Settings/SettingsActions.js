@@ -77,11 +77,11 @@ export const conversionHostWizardExitedAction = () => dispatch => {
   });
 };
 
-const _postConversionHostsActionCreator = (url, postBody) => dispatch =>
+const _postConversionHostsActionCreator = (url, postBodies) => dispatch =>
   dispatch({
     type: POST_V2V_CONVERSION_HOSTS,
-    payload: API.post(url, postBody)
+    payload: Promise.all(postBodies.map(body => API.post(url, body)))
   });
 
-export const postConversionHostsAction = (url, postBody) =>
-  _postConversionHostsActionCreator(new URI(url).toString(), postBody);
+export const postConversionHostsAction = (url, postBodies) =>
+  _postConversionHostsActionCreator(new URI(url).toString(), postBodies);

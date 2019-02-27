@@ -34,7 +34,7 @@ export const initialState = Immutable({
   isPostingConversionHosts: false,
   isRejectedPostingConversionHosts: false,
   errorPostingConversionHosts: null,
-  postConversionHostsResult: {}
+  postConversionHostsResults: []
 });
 
 export default (state = initialState, action) => {
@@ -124,7 +124,7 @@ export default (state = initialState, action) => {
         .set('isPostingConversionHosts', false)
         .set('isRejectedPostingConversionHosts', false)
         .set('errorPostingConversionHosts', null)
-        .set('postConversionHostsResult', action.payload);
+        .set('postConversionHostsResults', action.payload);
     case `${POST_V2V_CONVERSION_HOSTS}_REJECTED`:
       return state
         .set('isPostingConversionHosts', false)

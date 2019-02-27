@@ -4,19 +4,19 @@ import { Form } from 'patternfly-react';
 
 class ConversionHostWizardResultsStep extends React.Component {
   componentDidMount() {
-    const { postBody, postConversionHostsAction, postConversionHostsUrl } = this.props;
-    postConversionHostsAction(postConversionHostsUrl, postBody);
+    const { postBodies, postConversionHostsAction, postConversionHostsUrl } = this.props;
+    postConversionHostsAction(postConversionHostsUrl, postBodies);
   }
 
   render() {
-    const { isPostingConversionHosts, isRejectedPostingConversionHosts, postConversionHostsResult } = this.props;
+    const { isPostingConversionHosts, isRejectedPostingConversionHosts, postConversionHostsResults } = this.props;
     return (
       <Form className="form-horizontal">
         <h2>TODO: Results Step Contents</h2>
         <ul>
           <li>Posting? {isPostingConversionHosts}</li>
           <li>Rejected? {isRejectedPostingConversionHosts}</li>
-          <li>Result: {JSON.stringify(postConversionHostsResult, 4)}</li>
+          <li>Results: {JSON.stringify(postConversionHostsResults, 4)}</li>
         </ul>
       </Form>
     );
@@ -24,12 +24,12 @@ class ConversionHostWizardResultsStep extends React.Component {
 }
 
 ConversionHostWizardResultsStep.propTypes = {
-  postBody: PropTypes.object,
+  postBodies: PropTypes.arrayOf(PropTypes.object),
   postConversionHostsAction: PropTypes.func,
   postConversionHostsUrl: PropTypes.string,
   isPostingConversionHosts: PropTypes.bool,
   isRejectedPostingConversionHosts: PropTypes.bool,
-  postConversionHostsResult: PropTypes.object
+  postConversionHostsResults: PropTypes.arrayOf(PropTypes.object)
 };
 
 ConversionHostWizardResultsStep.defaultProps = {

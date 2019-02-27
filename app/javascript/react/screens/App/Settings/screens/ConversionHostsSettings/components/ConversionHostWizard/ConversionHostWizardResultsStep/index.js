@@ -2,22 +2,22 @@ import { connect } from 'react-redux';
 import ConversionHostWizardResultsStep from './ConversionHostWizardResultsStep';
 
 import { stepIDs } from '../ConversionHostWizardConstants';
-import { getConfigureConversionHostPostBody } from './helpers';
+import { getConfigureConversionHostPostBodies } from './helpers';
 import { postConversionHostsAction } from '../../../../../SettingsActions';
 
 const mapStateToProps = ({
   form,
-  settings: { isPostingConversionHosts, isRejectedPostingConversionHosts, postConversionHostsResult }
+  settings: { isPostingConversionHosts, isRejectedPostingConversionHosts, postConversionHostsResults }
 }) => {
   const locationStepValues = form[stepIDs.locationStep] && form[stepIDs.locationStep].values;
   const hostsStepValues = form[stepIDs.hostsStep] && form[stepIDs.hostsStep].values;
   const authStepValues = form[stepIDs.authenticationStep] && form[stepIDs.authenticationStep].values;
-  const postBody = getConfigureConversionHostPostBody(locationStepValues, hostsStepValues, authStepValues);
+  const postBodies = getConfigureConversionHostPostBodies(locationStepValues, hostsStepValues, authStepValues);
   return {
-    postBody,
+    postBodies,
     isPostingConversionHosts,
     isRejectedPostingConversionHosts,
-    postConversionHostsResult
+    postConversionHostsResults
   };
 };
 
