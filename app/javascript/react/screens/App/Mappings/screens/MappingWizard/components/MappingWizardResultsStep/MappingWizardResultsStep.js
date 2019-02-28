@@ -5,6 +5,7 @@ import { noop, Button } from 'patternfly-react';
 import { transformationHasBeenEdited } from './helpers';
 import { FETCH_TRANSFORMATION_MAPPINGS_URL } from '../../../../../Mappings/MappingsConstants';
 import WizardLoadingState from '../../../../../common/WizardLoadingState';
+import WizardErrorState from '../../../../../common/WizardErrorState';
 
 class MappingWizardResultsStep extends React.Component {
   componentDidMount() {
@@ -32,16 +33,6 @@ class MappingWizardResultsStep extends React.Component {
     }
   }
 
-  renderErrorState = (title, message) => (
-    <div className="wizard-pf-complete blank-slate-pf">
-      <div className="wizard-pf-success-icon">
-        <span className="pficon pficon-error-circle-o" />
-      </div>
-      <h3 className="blank-slate-pf-main-action">{title}</h3>
-      <p className="blank-slate-pf-secondary-action">{message}</p>
-    </div>
-  );
-
   onContinueToPlanWizard = id => {
     this.props.continueToPlanAction(id);
     this.props.redirectTo('/plans');
@@ -65,9 +56,11 @@ class MappingWizardResultsStep extends React.Component {
         />
       );
     } else if (isRejectedPostingMappings) {
-      return this.renderErrorState(
-        __('Error Creating Infrastructure Mapping'),
-        __("We're sorry, something went wrong. Please try again.")
+      return (
+        <WizardErrorState
+          title={__('Error Creating Infrastructure Mapping')}
+          message={__("We're sorry, something went wrong. Please try again.")}
+        />
       );
     } else if (isUpdatingMapping) {
       return (
