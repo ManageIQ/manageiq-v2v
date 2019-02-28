@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { noop, Spinner, Button } from 'patternfly-react';
+import { noop, Button } from 'patternfly-react';
 
 import { transformationHasBeenEdited } from './helpers';
 import { FETCH_TRANSFORMATION_MAPPINGS_URL } from '../../../../../Mappings/MappingsConstants';
+import WizardLoadingState from '../../../../../common/WizardLoadingState';
 
 class MappingWizardResultsStep extends React.Component {
   componentDidMount() {
@@ -31,14 +32,6 @@ class MappingWizardResultsStep extends React.Component {
     }
   }
 
-  renderLoadingState = (title, message) => (
-    <div className="wizard-pf-process blank-slate-pf">
-      <Spinner loading size="lg" className="blank-slate-pf-icon" />
-      <h3 className="blank-slate-pf-main-action">{title}</h3>
-      <p className="blank-slate-pf-secondary-action">{message}</p>
-    </div>
-  );
-
   renderErrorState = (title, message) => (
     <div className="wizard-pf-complete blank-slate-pf">
       <div className="wizard-pf-success-icon">
@@ -65,9 +58,11 @@ class MappingWizardResultsStep extends React.Component {
     } = this.props;
 
     if (isPostingMappings) {
-      return this.renderLoadingState(
-        __('Creating Infrastructure Mapping...'),
-        __('Please wait while infrastructure mapping is created.')
+      return (
+        <WizardLoadingState
+          title={__('Creating Infrastructure Mapping...')}
+          message={__('Please wait while the infrastructure mapping is created.')}
+        />
       );
     } else if (isRejectedPostingMappings) {
       return this.renderErrorState(
@@ -75,9 +70,11 @@ class MappingWizardResultsStep extends React.Component {
         __("We're sorry, something went wrong. Please try again.")
       );
     } else if (isUpdatingMapping) {
-      return this.renderLoadingState(
-        __('Saving Infrastructure Mapping...'),
-        __('Please wait while infrastructure mapping is saved.')
+      return (
+        <WizardLoadingState
+          title={__('Saving Infrastructure Mapping...')}
+          message={__('Please wait while the infrastructure mapping is saved.')}
+        />
       );
     } else if (transformationMappingsResult) {
       return (

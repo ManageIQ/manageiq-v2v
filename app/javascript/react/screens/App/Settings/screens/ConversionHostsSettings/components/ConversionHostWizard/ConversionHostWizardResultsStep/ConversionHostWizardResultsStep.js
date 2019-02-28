@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Form } from 'patternfly-react';
+import WizardLoadingState from '../../../../../../common/WizardLoadingState';
 
 class ConversionHostWizardResultsStep extends React.Component {
   componentDidMount() {
@@ -8,8 +9,15 @@ class ConversionHostWizardResultsStep extends React.Component {
     postConversionHostsAction(postConversionHostsUrl, postBodies);
   }
 
+  // TODO use WizardLoadingState
+
   render() {
     const { isPostingConversionHosts, isRejectedPostingConversionHosts, postConversionHostsResults } = this.props;
+
+    if (isPostingConversionHosts) {
+      return <WizardLoadingState title={__('Starting Conversion Host Configuration...')} />;
+    }
+
     return (
       <Form className="form-horizontal">
         <h2>TODO: Results Step Contents</h2>

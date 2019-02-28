@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { noop, Spinner, Icon } from 'patternfly-react';
+import { noop, Icon } from 'patternfly-react';
 import { planHasBeenEdited } from './helpers';
+import WizardLoadingState from '../../../../../common/WizardLoadingState';
 
 class PlanWizardResultsStep extends React.Component {
   componentDidMount() {
@@ -20,13 +21,6 @@ class PlanWizardResultsStep extends React.Component {
       editMigrationPlansAction(editPlansUrl, editingPlan.id, plansBody, planSchedule);
     }
   }
-  renderSpinner = (title, message) => (
-    <div className="wizard-pf-process blank-slate-pf">
-      <Spinner loading size="lg" className="blank-slate-pf-icon" />
-      <h3 className="blank-slate-pf-main-action">{title}</h3>
-      <p className="blank-slate-pf-secondary-action">{message}</p>
-    </div>
-  );
   renderError = (title, message, closeAction) => (
     <div className="wizard-pf-complete blank-slate-pf">
       <div className="wizard-pf-success-icon">
@@ -78,16 +72,23 @@ class PlanWizardResultsStep extends React.Component {
     } = this.props;
 
     if (isPostingPlans) {
-      return this.renderSpinner(
-        __('Creating Migration Plan...'),
-        __('Please wait while the migration plan is created.')
+      return (
+        <WizardLoadingState
+          title={__('Creating Migration Plan...')}
+          message={__('Please wait while the migration plan is created.')}
+        />
       );
     } else if (isRejectedPostingPlans) {
       const errorData = errorPostingPlans && errorPostingPlans.data;
       const errorMessage = errorData && errorData.error && errorData.error.message;
       return this.renderError(__('Error Creating Migration Plan'), errorMessage, hidePlanWizardAction);
     } else if (isPuttingPlans) {
-      return this.renderSpinner(__('Saving Migration Plan...'), __('Please wait while the migration plan is saved.'));
+      return (
+        <WizardLoadingState
+          title={__('Saving Migration Plan...')}
+          message={__('Please wait while the migration plan is saved.')}
+        />
+      );
     } else if (isRejectedPuttingPlans) {
       const errorData = errorPuttingPlans && errorPuttingPlans.data;
       const errorMessage = errorData && errorData.error && errorData.error.message;
