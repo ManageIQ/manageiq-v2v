@@ -24,7 +24,7 @@ class PlanWizardResultsStep extends React.Component {
   }
   renderResult = (migrationPlanMessage, migrationPlanFollowupMessage, migrationPlanIcon, showVmPowerWarning) => (
     <div className="wizard-pf-complete blank-slate-pf">
-      <div className="plan-wizard-results-step-icon">
+      <div className="modal-wizard-results-grey-icon">
         <span className={migrationPlanIcon} />
       </div>
       <h3 className="blank-slate-pf-main-action" id="migration-plan-results-message">

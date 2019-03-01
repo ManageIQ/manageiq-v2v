@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form } from 'patternfly-react';
 import WizardLoadingState from '../../../../../../common/WizardLoadingState';
 import WizardErrorState from '../../../../../../common/WizardErrorState';
 
@@ -26,16 +25,21 @@ class ConversionHostWizardResultsStep extends React.Component {
       );
     }
 
-    return (
-      <Form className="form-horizontal">
-        <h2>TODO: Results Step Contents</h2>
-        <ul>
-          <li>Posting? {isPostingConversionHosts}</li>
-          <li>Rejected? {isRejectedPostingConversionHosts}</li>
-          <li>Results: {JSON.stringify(postConversionHostsResults, 4)}</li>
-        </ul>
-      </Form>
-    );
+    if (postConversionHostsResults) {
+      return (
+        <div className="wizard-pf-complete blank-slate-pf">
+          <div className="modal-wizard-results-grey-icon">
+            <span className="fa fa-clock-o" />
+          </div>
+          <h3 className="blank-slate-pf-main-action">{__('Conversion host configuration is in progress.')}</h3>
+          <p className="blank-slate-pf-secondary-action">
+            {__('This may take a few minutes. Progress of the configuration will be shown on the Conversion Hosts page.') /* prettier-ignore */}
+          </p>
+        </div>
+      );
+    }
+
+    return null;
   }
 }
 
