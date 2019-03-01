@@ -8,18 +8,63 @@ import ConversionHostWizard from './components/ConversionHostWizard';
 import { FETCH_V2V_PROVIDERS_URL } from '../../../../../../redux/common/providers/providersConstants';
 
 class ConversionHostsSettings extends React.Component {
+  pollingInterval = null;
+  state = { hasMadeInitialFetch: false };
+
   componentDidMount() {
-    const { fetchProvidersAction, fetchProvidersUrl, fetchConversionHostsAction, fetchConversionHostsUrl } = this.props;
+    const { fetchProvidersAction, fetchProvidersUrl } = this.props;
     fetchProvidersAction(fetchProvidersUrl);
-    fetchConversionHostsAction(fetchConversionHostsUrl);
+    this.startPolling();
   }
+
+  componentWillUnmount() {
+    this.stopPolling();
+  }
+
+  componentDidUpdate(prevProps) {
+    // When a modal closes, reset the polling interval to see results immediately
+    if (this.pollingInterval && prevProps.conversionHostWizardMounted && !this.props.conversionHostWizardMounted) {
+      this.startPolling();
+    }
+  }
+
+  startPolling = () => {
+    this.stopPolling(); // Allow startPolling to be called more than once to reset the interval
+    this.fetchConversionHostsAndTasks().then(() => {
+      this.setState({ hasMadeInitialFetch: true });
+      this.pollingInterval = setInterval(this.fetchConversionHostsAndTasks, 15000);
+    });
+  };
+
+  stopPolling = () => {
+    if (this.pollingInterval) {
+      clearInterval(this.pollingInterval);
+      this.pollingInterval = null;
+    }
+  };
+
+  fetchConversionHostsAndTasks = () => {
+    const {
+      fetchConversionHostsAction,
+      fetchConversionHostsUrl,
+      fetchConversionHostTasksAction,
+      fetchConversionHostTasksUrl,
+      conversionHostWizardMounted
+    } = this.props;
+    // Don't make polling requests while a modal is visible
+    if (conversionHostWizardMounted) return Promise.resolve();
+    return Promise.all([
+      fetchConversionHostsAction(fetchConversionHostsUrl),
+      fetchConversionHostTasksAction(fetchConversionHostTasksUrl)
+    ]);
+  };
 
   render() {
     const {
       isFetchingProviders,
       hasSufficientProviders,
-      isFetchingConversionHosts,
       conversionHosts,
+      conversionHostTasks,
       setHostToDeleteAction,
       showConversionHostDeleteModalAction,
       showConversionHostDeleteModal,
@@ -33,8 +78,12 @@ class ConversionHostsSettings extends React.Component {
       fetchConversionHostsUrl
     } = this.props;
 
+    const { hasMadeInitialFetch } = this.state;
+
+    console.log('CONVERSION HOST TASKS?', conversionHostTasks); // TODO remove me
+
     return (
-      <Spinner loading={isFetchingConversionHosts || isFetchingProviders} style={{ marginTop: 15 }}>
+      <Spinner loading={isFetchingProviders || !hasMadeInitialFetch} style={{ marginTop: 15 }}>
         {!hasSufficientProviders ? (
           <ShowWizardEmptyState
             description={
@@ -96,6 +145,10 @@ ConversionHostsSettings.propTypes = {
   fetchConversionHostsAction: PropTypes.func,
   isFetchingConversionHosts: PropTypes.bool,
   conversionHosts: PropTypes.arrayOf(PropTypes.object),
+  fetchConversionHostTasksAction: PropTypes.func,
+  fetchConversionHostTasksUrl: PropTypes.string,
+  isFetchingConversionHostTasks: PropTypes.bool,
+  conversionHostTasks: PropTypes.arrayOf(PropTypes.object),
   showConversionHostWizardAction: PropTypes.func,
   conversionHostWizardMounted: PropTypes.bool,
   setHostToDeleteAction: PropTypes.func,
@@ -108,7 +161,11 @@ ConversionHostsSettings.propTypes = {
 ConversionHostsSettings.defaultProps = {
   deleteConversionHostActionUrl: '/api/conversion_hosts',
   fetchProvidersUrl: FETCH_V2V_PROVIDERS_URL,
-  fetchConversionHostsUrl: '/api/conversion_hosts?attributes=resource&expand=resources'
+  fetchConversionHostsUrl: '/api/conversion_hosts?attributes=resource&expand=resources',
+  fetchConversionHostTasksAction: () => Promise.resolve(), // TODO replace with a real action, remove default
+  fetchConversionHostTasksUrl: '/api/tasks', // TODO figure out filters
+  isFetchingConversionHostTasks: false, // TODO replace with real property, remove default
+  conversionHostTasks: [] // TODO replace with real array, remove default
 };
 
 export default ConversionHostsSettings;
