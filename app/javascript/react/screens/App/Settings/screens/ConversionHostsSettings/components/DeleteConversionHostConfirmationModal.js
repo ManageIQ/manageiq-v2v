@@ -2,20 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Modal, Icon } from 'patternfly-react';
 
-const onClickHandler = (host, deleteHostAction, deleteHostActionUrl, fetchHostsAction, fetchHostsUrl) => {
-  deleteHostAction(deleteHostActionUrl, host).then(() => fetchHostsAction(fetchHostsUrl));
-};
-
 const DeleteConversionHostConfirmationModal = ({
   conversionHostToDelete,
   deleteConversionHostAction,
   deleteConversionHostActionUrl,
-  fetchConversionHostsAction,
-  fetchConversionHostsUrl,
   hideConversionHostDeleteModalAction,
-  showConversionHostDeleteModal
+  conversionHostDeleteModalVisible
 }) => (
-  <Modal show={showConversionHostDeleteModal} onHide={hideConversionHostDeleteModalAction} backdrop="static">
+  <Modal show={conversionHostDeleteModalVisible} onHide={hideConversionHostDeleteModalAction} backdrop="static">
     <Modal.Header>
       <Modal.CloseButton onClick={hideConversionHostDeleteModalAction} />
       <Modal.Title>{__('Delete Conversion Host')}</Modal.Title>
@@ -38,13 +32,7 @@ const DeleteConversionHostConfirmationModal = ({
       <Button
         bsStyle="primary"
         onClick={() => {
-          onClickHandler(
-            conversionHostToDelete,
-            deleteConversionHostAction,
-            deleteConversionHostActionUrl,
-            fetchConversionHostsAction,
-            fetchConversionHostsUrl
-          );
+          deleteConversionHostAction(deleteConversionHostActionUrl, conversionHostToDelete);
         }}
       >
         {__('Delete')}
@@ -57,10 +45,8 @@ DeleteConversionHostConfirmationModal.propTypes = {
   conversionHostToDelete: PropTypes.object,
   deleteConversionHostAction: PropTypes.func,
   deleteConversionHostActionUrl: PropTypes.string,
-  fetchConversionHostsAction: PropTypes.func,
-  fetchConversionHostsUrl: PropTypes.string,
   hideConversionHostDeleteModalAction: PropTypes.func,
-  showConversionHostDeleteModal: PropTypes.bool
+  conversionHostDeleteModalVisible: PropTypes.bool
 };
 
 export default DeleteConversionHostConfirmationModal;

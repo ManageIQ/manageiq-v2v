@@ -11,11 +11,9 @@ const ConversionHostsList = ({
   conversionHostToDelete,
   deleteConversionHostAction,
   deleteConversionHostActionUrl,
-  fetchConversionHostsAction,
-  fetchConversionHostsUrl,
   hideConversionHostDeleteModalAction,
   setHostToDeleteAction,
-  showConversionHostDeleteModal,
+  conversionHostDeleteModalVisible,
   showConversionHostDeleteModalAction
 }) => (
   <React.Fragment>
@@ -73,10 +71,8 @@ const ConversionHostsList = ({
       conversionHostToDelete={conversionHostToDelete}
       deleteConversionHostAction={deleteConversionHostAction}
       deleteConversionHostActionUrl={deleteConversionHostActionUrl}
-      fetchConversionHostsAction={fetchConversionHostsAction}
-      fetchConversionHostsUrl={fetchConversionHostsUrl}
       hideConversionHostDeleteModalAction={hideConversionHostDeleteModalAction}
-      showConversionHostDeleteModal={showConversionHostDeleteModal}
+      conversionHostDeleteModalVisible={conversionHostDeleteModalVisible}
     />
   </React.Fragment>
 );
@@ -86,11 +82,9 @@ ConversionHostsList.propTypes = {
   conversionHostToDelete: PropTypes.object,
   deleteConversionHostAction: PropTypes.func,
   deleteConversionHostActionUrl: PropTypes.string,
-  fetchConversionHostsAction: PropTypes.func,
-  fetchConversionHostsUrl: PropTypes.string,
   hideConversionHostDeleteModalAction: PropTypes.func,
   setHostToDeleteAction: PropTypes.func,
-  showConversionHostDeleteModal: PropTypes.bool,
+  conversionHostDeleteModalVisible: PropTypes.bool,
   showConversionHostDeleteModalAction: PropTypes.func
 };
 

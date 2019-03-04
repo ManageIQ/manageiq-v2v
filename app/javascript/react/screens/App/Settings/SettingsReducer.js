@@ -22,6 +22,7 @@ export const initialState = Immutable({
   conversionHosts: [],
   conversionHostTasks: [],
   conversionHostToDelete: null,
+  conversionHostDeleteModalVisible: false,
   conversionHostWizardMounted: false,
   conversionHostWizardVisible: false,
   errorDeleteConversionHost: false,
@@ -47,8 +48,7 @@ export const initialState = Immutable({
   postConversionHostsResults: [],
   savedSettings: {},
   savingSettingsRejected: false,
-  servers: [],
-  showConversionHostDeleteModal: false
+  servers: []
 });
 
 export default (state = initialState, action) => {
@@ -114,13 +114,11 @@ export default (state = initialState, action) => {
         .set('conversionHosts', action.payload.data.resources)
         .set('isFetchingConversionHosts', false)
         .set('isRejectedFetchingConversionHosts', false)
-        .set('showConversionHostDeleteModal', false) // TODO can we do this in the delete handler?
         .set('errorFetchingConversionHosts', null);
     case `${FETCH_V2V_CONVERSION_HOSTS}_REJECTED`:
       return state
         .set('isFetchingConversionHosts', false)
         .set('isRejectedFetchingConversionHosts', true)
-        .set('showConversionHostDeleteModal', false)
         .set('errorFetchingConversionHosts', action.payload);
 
     case `${FETCH_V2V_CONVERSION_HOST_TASKS}_PENDING`:
@@ -166,9 +164,9 @@ export default (state = initialState, action) => {
     case SET_V2V_CONVERSION_HOST_TO_DELETE:
       return state.set('conversionHostToDelete', action.payload);
     case SHOW_V2V_CONVERSION_HOST_DELETE_MODAL:
-      return state.set('showConversionHostDeleteModal', true);
+      return state.set('conversionHostDeleteModalVisible', true);
     case HIDE_V2V_CONVERSION_HOST_DELETE_MODAL:
-      return state.set('showConversionHostDeleteModal', false);
+      return state.set('conversionHostDeleteModalVisible', false);
 
     case `${DELETE_V2V_CONVERSION_HOST}_PENDING`:
       return state.set('isDeletingConversionHost', action.payload);
@@ -177,12 +175,14 @@ export default (state = initialState, action) => {
         .set('deleteConversionHostResponse', action.payload.data)
         .set('isDeletingConversionHost', null)
         .set('isRejectedDeletingConversionHost', false)
-        .set('errorDeleteConversionHost', null);
+        .set('errorDeleteConversionHost', null)
+        .set('conversionHostDeleteModalVisible', false);
     case `${DELETE_V2V_CONVERSION_HOST}_REJECTED`:
       return state
         .set('errorDeleteConversionHost', action.payload)
         .set('isRejectedDeletingConversionHost', true)
-        .set('isDeletingConversionHost', null);
+        .set('isDeletingConversionHost', null)
+        .set('conversionHostDeleteModalVisible', false);
 
     default:
       return state;

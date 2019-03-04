@@ -23,10 +23,13 @@ class ConversionHostsSettings extends React.Component {
 
   componentDidUpdate(prevProps) {
     // When a modal closes, reset the polling interval to see results immediately
-    if (this.pollingInterval && prevProps.conversionHostWizardMounted && !this.props.conversionHostWizardMounted) {
+    if (this.pollingInterval && this.hasSomeModalOpen(prevProps) && !this.hasSomeModalOpen()) {
       this.startPolling();
     }
   }
+
+  hasSomeModalOpen = (props = this.props) =>
+    props.conversionHostWizardMounted || props.conversionHostDeleteModalVisible;
 
   startPolling = () => {
     this.stopPolling(); // Allow startPolling to be called more than once to reset the interval
@@ -48,11 +51,9 @@ class ConversionHostsSettings extends React.Component {
       fetchConversionHostsAction,
       fetchConversionHostsUrl,
       fetchConversionHostTasksAction,
-      fetchConversionHostTasksUrl,
-      conversionHostWizardMounted
+      fetchConversionHostTasksUrl
     } = this.props;
-    // Don't make polling requests while a modal is visible
-    if (conversionHostWizardMounted) return Promise.resolve();
+    if (this.hasSomeModalOpen()) return Promise.resolve();
     return Promise.all([
       fetchConversionHostsAction(fetchConversionHostsUrl),
       fetchConversionHostTasksAction(fetchConversionHostTasksUrl)
@@ -67,7 +68,7 @@ class ConversionHostsSettings extends React.Component {
       conversionHostTasks,
       setHostToDeleteAction,
       showConversionHostDeleteModalAction,
-      showConversionHostDeleteModal,
+      conversionHostDeleteModalVisible,
       conversionHostToDelete,
       showConversionHostWizardAction,
       conversionHostWizardMounted,
@@ -121,7 +122,7 @@ class ConversionHostsSettings extends React.Component {
                 fetchConversionHostsUrl={fetchConversionHostsUrl}
                 setHostToDeleteAction={setHostToDeleteAction}
                 showConversionHostDeleteModalAction={showConversionHostDeleteModalAction}
-                showConversionHostDeleteModal={showConversionHostDeleteModal}
+                conversionHostDeleteModalVisible={conversionHostDeleteModalVisible}
                 conversionHostToDelete={conversionHostToDelete}
                 hideConversionHostDeleteModalAction={hideConversionHostDeleteModalAction}
               />
@@ -153,7 +154,7 @@ ConversionHostsSettings.propTypes = {
   conversionHostWizardMounted: PropTypes.bool,
   setHostToDeleteAction: PropTypes.func,
   showConversionHostDeleteModalAction: PropTypes.func,
-  showConversionHostDeleteModal: PropTypes.bool,
+  conversionHostDeleteModalVisible: PropTypes.bool,
   conversionHostToDelete: PropTypes.object,
   hideConversionHostDeleteModalAction: PropTypes.func
 };
