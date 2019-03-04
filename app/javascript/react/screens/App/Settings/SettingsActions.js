@@ -10,7 +10,11 @@ import {
   SHOW_V2V_CONVERSION_HOST_WIZARD,
   HIDE_V2V_CONVERSION_HOST_WIZARD,
   V2V_CONVERSION_HOST_WIZARD_EXITED,
-  POST_V2V_CONVERSION_HOSTS
+  POST_V2V_CONVERSION_HOSTS,
+  SET_V2V_CONVERSION_HOST_TO_DELETE,
+  SHOW_V2V_CONVERSION_HOST_DELETE_MODAL,
+  HIDE_V2V_CONVERSION_HOST_DELETE_MODAL,
+  DELETE_V2V_CONVERSION_HOST
 } from './SettingsConstants';
 import { getApiSettingsFromFormValues } from './helpers';
 import { stepIDs } from './screens/ConversionHostsSettings/components/ConversionHostWizard/ConversionHostWizardConstants';
@@ -85,3 +89,33 @@ const _postConversionHostsActionCreator = (url, postBodies) => dispatch =>
 
 export const postConversionHostsAction = (url, postBodies) =>
   _postConversionHostsActionCreator(new URI(url).toString(), postBodies);
+
+export const setHostToDeleteAction = host => ({
+  type: SET_V2V_CONVERSION_HOST_TO_DELETE,
+  payload: host
+});
+
+export const showConversionHostDeleteModalAction = () => ({
+  type: SHOW_V2V_CONVERSION_HOST_DELETE_MODAL
+});
+
+export const hideConversionHostDeleteModalAction = () => ({
+  type: HIDE_V2V_CONVERSION_HOST_DELETE_MODAL
+});
+
+export const _deleteConversionHostActionCreator = (url, host) => dispatch =>
+  dispatch({
+    type: DELETE_V2V_CONVERSION_HOST,
+    payload: new Promise((resolve, reject) => {
+      API.post(`${url}/${host.id}`, {
+        action: 'delete'
+      })
+        .then(response => {
+          resolve(response);
+        })
+        .catch(e => reject(e));
+    })
+  });
+
+export const deleteConversionHostAction = (url, host) =>
+  _deleteConversionHostActionCreator(new URI(url).toString(), host);
