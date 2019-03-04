@@ -1,12 +1,41 @@
 import { connect } from 'react-redux';
 import ConversionHostsSettings from './ConversionHostsSettings';
 
-import * as SettingsActions from '../../SettingsActions';
-import * as ProvidersActions from '../../../../../../redux/common/providers/providersActions';
+import { fetchProvidersAction } from '../../../../../../redux/common/providers/providersActions';
+import {
+  fetchConversionHostsAction,
+  fetchConversionHostTasksAction,
+  showConversionHostWizardAction,
+  setHostToDeleteAction,
+  deleteConversionHostAction,
+  showConversionHostDeleteModalAction,
+  hideConversionHostDeleteModalAction
+} from '../../SettingsActions';
 
-const mapStateToProps = ({ settings, providers }, ownProps) => ({
-  ...settings,
-  ...providers,
+const mapStateToProps = (
+  {
+    providers: { isFetchingProviders, hasSufficientProviders },
+    settings: {
+      isFetchingConversionHosts,
+      conversionHosts,
+      isFetchingConversionHostTasks,
+      conversionHostTasks,
+      conversionHostWizardMounted,
+      showConversionHostDeleteModal,
+      conversionHostToDelete
+    }
+  },
+  ownProps
+) => ({
+  isFetchingProviders,
+  hasSufficientProviders,
+  isFetchingConversionHosts,
+  conversionHosts,
+  isFetchingConversionHostTasks,
+  conversionHostTasks,
+  conversionHostWizardMounted,
+  showConversionHostDeleteModal,
+  conversionHostToDelete,
   ...ownProps.data
 });
 
@@ -14,6 +43,16 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => Object.assign(stateP
 
 export default connect(
   mapStateToProps,
-  { ...SettingsActions, ...ProvidersActions },
+  {
+    fetchProvidersAction,
+    fetchConversionHostsAction,
+    fetchConversionHostTasksAction,
+    showConversionHostWizardAction,
+    setHostToDeleteAction,
+    deleteConversionHostAction,
+    showConversionHostDeleteModalAction,
+    hideConversionHostDeleteModalAction,
+    fetchProvidersAction
+  },
   mergeProps
 )(ConversionHostsSettings);
