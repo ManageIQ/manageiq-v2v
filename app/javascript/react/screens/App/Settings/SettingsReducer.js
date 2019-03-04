@@ -8,33 +8,42 @@ import {
   SHOW_V2V_CONVERSION_HOST_WIZARD,
   HIDE_V2V_CONVERSION_HOST_WIZARD,
   V2V_CONVERSION_HOST_WIZARD_EXITED,
-  POST_V2V_CONVERSION_HOSTS
+  POST_V2V_CONVERSION_HOSTS,
+  SET_V2V_CONVERSION_HOST_TO_DELETE,
+  SHOW_V2V_CONVERSION_HOST_DELETE_MODAL,
+  HIDE_V2V_CONVERSION_HOST_DELETE_MODAL,
+  DELETE_V2V_CONVERSION_HOST
 } from './SettingsConstants';
 
 import { getFormValuesFromApiSettings } from './helpers';
 
 export const initialState = Immutable({
-  isFetchingServers: false,
-  fetchingServersRejected: false,
-  errorFetchingServers: null,
-  servers: [],
-  isFetchingSettings: false,
-  fetchingSettingsRejected: false,
-  errorFetchingSettings: null,
-  savedSettings: {},
-  isSavingSettings: false,
-  savingSettingsRejected: false,
-  errorSavingSettings: null,
-  isFetchingConversionHosts: false,
-  isRejectedConversionHosts: false,
-  errorFetchingConversionHosts: null,
   conversionHosts: [],
+  conversionHostToDelete: null,
   conversionHostWizardMounted: false,
   conversionHostWizardVisible: false,
+  errorDeleteConversionHost: false,
+  errorFetchingConversionHosts: null,
+  errorFetchingServers: null,
+  errorFetchingSettings: null,
+  errorPostingConversionHosts: null,
+  errorSavingSettings: null,
+  fetchingServersRejected: false,
+  fetchingSettingsRejected: false,
+  isDeletingConversionHost: false,
+  isFetchingConversionHosts: false,
+  isFetchingServers: false,
+  isFetchingSettings: false,
+  isRejectedConversionHost: false,
+  isRejectedConversionHosts: false,
   isPostingConversionHosts: false,
   isRejectedPostingConversionHosts: false,
-  errorPostingConversionHosts: null,
-  postConversionHostsResults: []
+  isSavingSettings: false,
+  postConversionHostsResults: [],
+  savedSettings: {},
+  savingSettingsRejected: false,
+  servers: [],
+  showConversionHostDeleteModal: false
 });
 
 export default (state = initialState, action) => {
@@ -100,11 +109,13 @@ export default (state = initialState, action) => {
         .set('conversionHosts', action.payload.data.resources)
         .set('isFetchingConversionHosts', false)
         .set('isRejectedConversionHosts', false)
+        .set('showConversionHostDeleteModal', false)
         .set('errorFetchingConversionHosts', null);
     case `${FETCH_V2V_CONVERSION_HOSTS}_REJECTED`:
       return state
         .set('isFetchingConversionHosts', false)
         .set('isRejectedConversionHosts', true)
+        .set('showConversionHostDeleteModal', false)
         .set('errorFetchingConversionHosts', action.payload);
 
     case SHOW_V2V_CONVERSION_HOST_WIZARD:
@@ -130,6 +141,26 @@ export default (state = initialState, action) => {
         .set('isPostingConversionHosts', false)
         .set('isRejectedPostingConversionHosts', true)
         .set('errorPostingConversionHosts', action.payload);
+    case SET_V2V_CONVERSION_HOST_TO_DELETE:
+      return state.set('conversionHostToDelete', action.payload);
+    case SHOW_V2V_CONVERSION_HOST_DELETE_MODAL:
+      return state.set('showConversionHostDeleteModal', true);
+    case HIDE_V2V_CONVERSION_HOST_DELETE_MODAL:
+      return state.set('showConversionHostDeleteModal', false);
+
+    case `${DELETE_V2V_CONVERSION_HOST}_PENDING`:
+      return state.set('isDeletingConversionHost', action.payload);
+    case `${DELETE_V2V_CONVERSION_HOST}_FULFILLED`:
+      return state
+        .set('deleteConversionHostResponse', action.payload.data)
+        .set('isDeletingConversionHost', null)
+        .set('isRejectedConversionHost', false)
+        .set('errorDeleteConversionHost', null);
+    case `${DELETE_V2V_CONVERSION_HOST}_REJECTED`:
+      return state
+        .set('errorDeleteConversionHost', action.payload)
+        .set('isRejectedConversionHost', true)
+        .set('isDeletingConversionHost', null);
 
     default:
       return state;

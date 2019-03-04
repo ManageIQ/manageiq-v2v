@@ -20,8 +20,17 @@ class ConversionHostsSettings extends React.Component {
       hasSufficientProviders,
       isFetchingConversionHosts,
       conversionHosts,
+      setHostToDeleteAction,
+      showConversionHostDeleteModalAction,
+      showConversionHostDeleteModal,
+      conversionHostToDelete,
       showConversionHostWizardAction,
-      conversionHostWizardMounted
+      conversionHostWizardMounted,
+      hideConversionHostDeleteModalAction,
+      deleteConversionHostAction,
+      deleteConversionHostActionUrl,
+      fetchConversionHostsAction,
+      fetchConversionHostsUrl
     } = this.props;
 
     return (
@@ -55,7 +64,18 @@ class ConversionHostsSettings extends React.Component {
             {conversionHosts.length === 0 ? (
               <ConversionHostsEmptyState showConversionHostWizardAction={showConversionHostWizardAction} />
             ) : (
-              <ConversionHostsList conversionHosts={conversionHosts} />
+              <ConversionHostsList
+                conversionHosts={conversionHosts}
+                deleteConversionHostAction={deleteConversionHostAction}
+                deleteConversionHostActionUrl={deleteConversionHostActionUrl}
+                fetchConversionHostsAction={fetchConversionHostsAction}
+                fetchConversionHostsUrl={fetchConversionHostsUrl}
+                setHostToDeleteAction={setHostToDeleteAction}
+                showConversionHostDeleteModalAction={showConversionHostDeleteModalAction}
+                showConversionHostDeleteModal={showConversionHostDeleteModal}
+                conversionHostToDelete={conversionHostToDelete}
+                hideConversionHostDeleteModalAction={hideConversionHostDeleteModalAction}
+              />
             )}
             {conversionHostWizardMounted && <ConversionHostWizard />}
           </React.Fragment>
@@ -66,6 +86,8 @@ class ConversionHostsSettings extends React.Component {
 }
 
 ConversionHostsSettings.propTypes = {
+  deleteConversionHostAction: PropTypes.func,
+  deleteConversionHostActionUrl: PropTypes.string,
   fetchProvidersUrl: PropTypes.string,
   fetchProvidersAction: PropTypes.func,
   isFetchingProviders: PropTypes.bool,
@@ -75,10 +97,16 @@ ConversionHostsSettings.propTypes = {
   isFetchingConversionHosts: PropTypes.bool,
   conversionHosts: PropTypes.arrayOf(PropTypes.object),
   showConversionHostWizardAction: PropTypes.func,
-  conversionHostWizardMounted: PropTypes.bool
+  conversionHostWizardMounted: PropTypes.bool,
+  setHostToDeleteAction: PropTypes.func,
+  showConversionHostDeleteModalAction: PropTypes.func,
+  showConversionHostDeleteModal: PropTypes.bool,
+  conversionHostToDelete: PropTypes.object,
+  hideConversionHostDeleteModalAction: PropTypes.func
 };
 
 ConversionHostsSettings.defaultProps = {
+  deleteConversionHostActionUrl: '/api/conversion_hosts',
   fetchProvidersUrl: FETCH_V2V_PROVIDERS_URL,
   fetchConversionHostsUrl: '/api/conversion_hosts?attributes=resource&expand=resources'
 };
