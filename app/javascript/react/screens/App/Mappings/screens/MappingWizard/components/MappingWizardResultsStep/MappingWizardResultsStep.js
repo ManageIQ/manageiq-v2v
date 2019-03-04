@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { noop, Spinner } from 'patternfly-react';
+import { noop } from 'patternfly-react';
 
 import { transformationHasBeenEdited } from './helpers';
 import { FETCH_TRANSFORMATION_MAPPINGS_URL } from '../../../../../Mappings/MappingsConstants';
+import WizardLoadingState from '../../../../../common/WizardLoadingState';
+import WizardErrorState from '../../../../../common/WizardErrorState';
 
 class MappingWizardResultsStep extends React.Component {
   componentDidMount() {
@@ -31,24 +33,6 @@ class MappingWizardResultsStep extends React.Component {
     }
   }
 
-  renderLoadingState = (title, message) => (
-    <div className="wizard-pf-process blank-slate-pf">
-      <Spinner loading size="lg" className="blank-slate-pf-icon" />
-      <h3 className="blank-slate-pf-main-action">{title}</h3>
-      <p className="blank-slate-pf-secondary-action">{message}</p>
-    </div>
-  );
-
-  renderErrorState = (title, message) => (
-    <div className="wizard-pf-complete blank-slate-pf">
-      <div className="wizard-pf-success-icon">
-        <span className="pficon pficon-error-circle-o" />
-      </div>
-      <h3 className="blank-slate-pf-main-action">{title}</h3>
-      <p className="blank-slate-pf-secondary-action">{message}</p>
-    </div>
-  );
-
   onContinueToPlanWizard = id => {
     this.props.continueToPlanAction(id);
     this.props.redirectTo('/plans');
@@ -65,19 +49,25 @@ class MappingWizardResultsStep extends React.Component {
     } = this.props;
 
     if (isPostingMappings) {
-      return this.renderLoadingState(
-        __('Creating Infrastructure Mapping...'),
-        __('Please wait while infrastructure mapping is created.')
+      return (
+        <WizardLoadingState
+          title={__('Creating Infrastructure Mapping...')}
+          message={__('Please wait while the infrastructure mapping is created.')}
+        />
       );
     } else if (isRejectedPostingMappings) {
-      return this.renderErrorState(
-        __('Error Creating Infrastructure Mapping'),
-        __("We're sorry, something went wrong. Please try again.")
+      return (
+        <WizardErrorState
+          title={__('Error Creating Infrastructure Mapping')}
+          message={__("We're sorry, something went wrong. Please try again.")}
+        />
       );
     } else if (isUpdatingMapping) {
-      return this.renderLoadingState(
-        __('Saving Infrastructure Mapping...'),
-        __('Please wait while infrastructure mapping is saved.')
+      return (
+        <WizardLoadingState
+          title={__('Saving Infrastructure Mapping...')}
+          message={__('Please wait while the infrastructure mapping is saved.')}
+        />
       );
     } else if (transformationMappingsResult) {
       return (

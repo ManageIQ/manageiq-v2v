@@ -67,6 +67,7 @@ class ConversionHostWizard extends React.Component {
       conversionHostWizardVisible,
       hideConversionHostWizardAction,
       conversionHostWizardExitedAction,
+      isPostingConversionHosts,
       forms
     } = this.props;
     const { activeStepIndex } = this.state;
@@ -79,7 +80,9 @@ class ConversionHostWizard extends React.Component {
     const activeStep = this.getActiveWizardStep();
     const activeStepForm = !onFinalStep && forms[activeStep.id];
 
-    const disableNextStep = activeStepForm && (!!activeStepForm.syncErrors || !!activeStepForm.asyncErrors);
+    const disableNextStep =
+      (activeStepForm && (!!activeStepForm.syncErrors || !!activeStepForm.asyncErrors)) ||
+      (onFinalStep && isPostingConversionHosts);
 
     return (
       <Wizard
@@ -130,6 +133,7 @@ ConversionHostWizard.propTypes = {
   hideConversionHostWizardAction: PropTypes.func,
   conversionHostWizardExitedAction: PropTypes.func,
   conversionHostWizardVisible: PropTypes.bool,
+  isPostingConversionHosts: PropTypes.bool,
   forms: PropTypes.object
 };
 
