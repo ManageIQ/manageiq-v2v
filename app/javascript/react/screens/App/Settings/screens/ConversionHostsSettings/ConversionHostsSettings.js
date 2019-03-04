@@ -163,7 +163,8 @@ ConversionHostsSettings.defaultProps = {
   fetchProvidersUrl: FETCH_V2V_PROVIDERS_URL,
   fetchConversionHostsUrl: '/api/conversion_hosts?attributes=resource&expand=resources',
   fetchConversionHostTasksAction: () => Promise.resolve(), // TODO replace with a real action, remove default
-  fetchConversionHostTasksUrl: '/api/tasks', // TODO figure out filters
+  fetchConversionHostTasksUrl:
+    '/api/tasks?expand=resources&attributes=id,name&filter[]=name="%25Configuring a conversion_host%25"',
   isFetchingConversionHostTasks: false, // TODO replace with real property, remove default
   conversionHostTasks: [] // TODO replace with real array, remove default
 };
