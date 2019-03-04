@@ -115,7 +115,7 @@ describe('fetching conversion hosts', () => {
     const action = {
       type: `${FETCH_V2V_CONVERSION_HOSTS}_PENDING`
     };
-    const prevState = initialState.set('isRejectedConversionHosts', true);
+    const prevState = initialState.set('isRejectedFetchingConversionHosts', true);
     const state = settingsReducer(prevState, action);
     expect(state).toMatchSnapshot();
   });
@@ -135,7 +135,9 @@ describe('fetching conversion hosts', () => {
       type: `${FETCH_V2V_CONVERSION_HOSTS}_FULFILLED`,
       payload: { data: { resources: [{ mock: 'conversionHost' }] } }
     };
-    const prevState = initialState.set('isRejectedConversionHosts', true).set('isFetchingConversionHosts', true);
+    const prevState = initialState
+      .set('isRejectedFetchingConversionHosts', true)
+      .set('isFetchingConversionHosts', true);
     const state = settingsReducer(prevState, action);
     expect(state).toMatchSnapshot();
   });

@@ -34,9 +34,9 @@ export const initialState = Immutable({
   isFetchingConversionHosts: false,
   isFetchingServers: false,
   isFetchingSettings: false,
-  isRejectedConversionHost: false,
-  isRejectedConversionHosts: false,
   isPostingConversionHosts: false,
+  isRejectedDeletingConversionHost: false,
+  isRejectedFetchingConversionHosts: false,
   isRejectedPostingConversionHosts: false,
   isSavingSettings: false,
   postConversionHostsResults: [],
@@ -102,19 +102,19 @@ export default (state = initialState, action) => {
     case `${FETCH_V2V_CONVERSION_HOSTS}_PENDING`:
       return state
         .set('isFetchingConversionHosts', true)
-        .set('isRejectedConversionHosts', false)
+        .set('isRejectedFetchingConversionHosts', false)
         .set('errorFetchingConversionHosts', null);
     case `${FETCH_V2V_CONVERSION_HOSTS}_FULFILLED`:
       return state
         .set('conversionHosts', action.payload.data.resources)
         .set('isFetchingConversionHosts', false)
-        .set('isRejectedConversionHosts', false)
+        .set('isRejectedFetchingConversionHosts', false)
         .set('showConversionHostDeleteModal', false)
         .set('errorFetchingConversionHosts', null);
     case `${FETCH_V2V_CONVERSION_HOSTS}_REJECTED`:
       return state
         .set('isFetchingConversionHosts', false)
-        .set('isRejectedConversionHosts', true)
+        .set('isRejectedFetchingConversionHosts', true)
         .set('showConversionHostDeleteModal', false)
         .set('errorFetchingConversionHosts', action.payload);
 
@@ -154,12 +154,12 @@ export default (state = initialState, action) => {
       return state
         .set('deleteConversionHostResponse', action.payload.data)
         .set('isDeletingConversionHost', null)
-        .set('isRejectedConversionHost', false)
+        .set('isRejectedDeletingConversionHost', false)
         .set('errorDeleteConversionHost', null);
     case `${DELETE_V2V_CONVERSION_HOST}_REJECTED`:
       return state
         .set('errorDeleteConversionHost', action.payload)
-        .set('isRejectedConversionHost', true)
+        .set('isRejectedDeletingConversionHost', true)
         .set('isDeletingConversionHost', null);
 
     default:
