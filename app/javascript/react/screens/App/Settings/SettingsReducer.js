@@ -7,7 +7,8 @@ import {
   FETCH_V2V_CONVERSION_HOSTS,
   SHOW_V2V_CONVERSION_HOST_WIZARD,
   HIDE_V2V_CONVERSION_HOST_WIZARD,
-  V2V_CONVERSION_HOST_WIZARD_EXITED
+  V2V_CONVERSION_HOST_WIZARD_EXITED,
+  POST_V2V_CONVERSION_HOSTS
 } from './SettingsConstants';
 
 import { getFormValuesFromApiSettings } from './helpers';
@@ -29,7 +30,11 @@ export const initialState = Immutable({
   errorFetchingConversionHosts: null,
   conversionHosts: [],
   conversionHostWizardMounted: false,
-  conversionHostWizardVisible: false
+  conversionHostWizardVisible: false,
+  isPostingConversionHosts: false,
+  isRejectedPostingConversionHosts: false,
+  errorPostingConversionHosts: null,
+  postConversionHostsResults: []
 });
 
 export default (state = initialState, action) => {
@@ -108,6 +113,23 @@ export default (state = initialState, action) => {
       return state.set('conversionHostWizardVisible', false);
     case V2V_CONVERSION_HOST_WIZARD_EXITED:
       return state.set('conversionHostWizardMounted', false);
+
+    case `${POST_V2V_CONVERSION_HOSTS}_PENDING`:
+      return state
+        .set('isPostingConversionHosts', true)
+        .set('isRejectedPostingConversionHosts', false)
+        .set('errorPostingConversionHosts', false);
+    case `${POST_V2V_CONVERSION_HOSTS}_FULFILLED`:
+      return state
+        .set('isPostingConversionHosts', false)
+        .set('isRejectedPostingConversionHosts', false)
+        .set('errorPostingConversionHosts', null)
+        .set('postConversionHostsResults', action.payload);
+    case `${POST_V2V_CONVERSION_HOSTS}_REJECTED`:
+      return state
+        .set('isPostingConversionHosts', false)
+        .set('isRejectedPostingConversionHosts', true)
+        .set('errorPostingConversionHosts', action.payload);
 
     default:
       return state;

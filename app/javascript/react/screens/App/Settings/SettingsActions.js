@@ -9,7 +9,8 @@ import {
   FETCH_V2V_CONVERSION_HOSTS,
   SHOW_V2V_CONVERSION_HOST_WIZARD,
   HIDE_V2V_CONVERSION_HOST_WIZARD,
-  V2V_CONVERSION_HOST_WIZARD_EXITED
+  V2V_CONVERSION_HOST_WIZARD_EXITED,
+  POST_V2V_CONVERSION_HOSTS
 } from './SettingsConstants';
 import { getApiSettingsFromFormValues } from './helpers';
 import { stepIDs } from './screens/ConversionHostsSettings/components/ConversionHostWizard/ConversionHostWizardConstants';
@@ -75,3 +76,12 @@ export const conversionHostWizardExitedAction = () => dispatch => {
     dispatch(reset(formName));
   });
 };
+
+const _postConversionHostsActionCreator = (url, postBodies) => dispatch =>
+  dispatch({
+    type: POST_V2V_CONVERSION_HOSTS,
+    payload: Promise.all(postBodies.map(body => API.post(url, body)))
+  });
+
+export const postConversionHostsAction = (url, postBodies) =>
+  _postConversionHostsActionCreator(new URI(url).toString(), postBodies);

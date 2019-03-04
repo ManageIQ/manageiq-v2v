@@ -5,7 +5,7 @@ exports[`Plan wizard results step renders with a warning if migrating an OSP pla
   className="wizard-pf-complete blank-slate-pf"
 >
   <div
-    className="plan-wizard-results-step-icon"
+    className="modal-wizard-results-grey-icon"
   >
     <span
       className="pficon pficon-ok"
@@ -43,7 +43,7 @@ exports[`Plan wizard results step renders with no warning if migrating an OSP pl
   className="wizard-pf-complete blank-slate-pf"
 >
   <div
-    className="plan-wizard-results-step-icon"
+    className="modal-wizard-results-grey-icon"
   >
     <span
       className="fa fa-clock-o"
