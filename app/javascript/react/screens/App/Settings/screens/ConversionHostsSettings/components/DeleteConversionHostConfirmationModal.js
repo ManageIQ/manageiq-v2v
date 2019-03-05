@@ -13,7 +13,7 @@ const DeleteConversionHostConfirmationModal = ({
   <Modal show={conversionHostDeleteModalVisible} onHide={hideConversionHostDeleteModalAction} backdrop="static">
     <Modal.Header>
       <Modal.CloseButton onClick={hideConversionHostDeleteModalAction} />
-      <Modal.Title>{__('Delete Conversion Host')}</Modal.Title>
+      <Modal.Title>{__('Remove Conversion Host')}</Modal.Title>
     </Modal.Header>
     <Modal.Body className="warning-modal-body">
       <div className="warning-modal-body--icon">
@@ -22,7 +22,7 @@ const DeleteConversionHostConfirmationModal = ({
       <div className="warning-modal-body--list">
         <h4>
           {conversionHostToDelete &&
-            sprintf(__('Are you sure you want to delete conversion host %s ?'), conversionHostToDelete.name)}
+            sprintf(__('Are you sure you want to remove conversion host %s ?'), conversionHostToDelete.name)}
         </h4>
       </div>
     </Modal.Body>
@@ -37,7 +37,7 @@ const DeleteConversionHostConfirmationModal = ({
           deleteConversionHostAction(deleteConversionHostActionUrl, conversionHostToDelete);
         }}
       >
-        {__('Delete')}
+        {__('Remove')}
       </Button>
     </Modal.Footer>
   </Modal>
