@@ -40,7 +40,9 @@ class PlanRequestDetailList extends React.Component {
   onSelect = (eventKey, task) => {
     const { downloadLogAction, fetchOrchestrationStackUrl, fetchOrchestrationStackAction } = this.props;
     if (eventKey === 'migration') {
-      downloadLogAction(task);
+      downloadLogAction(task, 'v2v');
+    } else if (eventKey === 'wrapper') {
+      downloadLogAction(task, 'wrapper');
     } else {
       fetchOrchestrationStackAction(fetchOrchestrationStackUrl, eventKey, task);
     }
@@ -415,6 +417,12 @@ class PlanRequestDetailList extends React.Component {
                         disabled={downloadLogInProgressTaskIds && downloadLogInProgressTaskIds.indexOf(task.id) > -1}
                       >
                         {__('Migration log')}
+                      </MenuItem>
+                      <MenuItem
+                        eventKey="wrapper"
+                        disabled={downloadLogInProgressTaskIds && downloadLogInProgressTaskIds.indexOf(task.id) > -1}
+                      >
+                        {__('Virt-v2v-wrapper log')}
                       </MenuItem>
                       {task.options.postPlaybookComplete && (
                         <MenuItem
