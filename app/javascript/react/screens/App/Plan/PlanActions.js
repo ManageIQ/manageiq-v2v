@@ -160,7 +160,7 @@ export const resetPlanStateAction = () => ({
   type: RESET_PLAN_STATE
 });
 
-export const downloadLogAction = task => dispatch => {
+export const downloadLogAction = (task, logType = 'v2v') => dispatch => {
   dispatch({
     type: DOWNLOAD_LOG_CLICKED,
     payload: task.id
@@ -169,18 +169,21 @@ export const downloadLogAction = task => dispatch => {
     type: FETCH_V2V_MIGRATION_TASK_LOG,
     payload: new Promise((resolve, reject) => {
       http
-        .get(`/migration_log/download_migration_log/${task.id}`)
+        .get(`/migration_log/download_migration_log/${task.id}?log_type=${logType}`)
         .then(response => {
           resolve(response);
           dispatch({
             type: DOWNLOAD_LOG_COMPLETED,
             payload: task.id
           });
-          const v2vLogFileName = `${task.vmName}.log`;
+          let filenameSuffix = '';
+          if (logType === 'v2v') filenameSuffix = 'virt-v2v';
+          if (logType === 'wrapper') filenameSuffix = 'virt-v2v-wrapper';
+          const v2vLogFileName = `${task.vmName}-${filenameSuffix}.log`;
           if (response.data.status === 'Ok') {
             const file = new File([response.data.log_contents], v2vLogFileName, { type: 'text/plain;charset=utf-8' });
             saveAs(file);
-            const successMsg = sprintf(__('"%s" download successful'), `${task.vmName}.log`);
+            const successMsg = sprintf(__('"%s" download successful'), v2vLogFileName);
             dispatch({
               type: V2V_NOTIFICATION_ADD,
               message: successMsg,
@@ -190,7 +193,7 @@ export const downloadLogAction = task => dispatch => {
           } else {
             const failureMsg = sprintf(
               __('Failed to download "%s". Reason - "%s"'),
-              `${task.vmName}.log`,
+              v2vLogFileName,
               response.data.status_message
             );
             dispatch({
