@@ -27,11 +27,13 @@ const unUsedMappingInPlans = (mappingToDelete, notStartedTransformationPlans, fi
 
     const deleteMessageAboutPlansUsingMapping = (
       <div className="warning-modal-body-enable-scrollbar">
-        <strong>
-          {planNames.map(plan => (
-            <ul key={plan.id}>{plan.name}</ul>
-          ))}
-        </strong>
+        <h4>
+          <strong>
+            {planNames.map(plan => (
+              <ul key={plan.id}>{plan.name}</ul>
+            ))}
+          </strong>
+        </h4>
       </div>
     );
     return (
@@ -42,15 +44,6 @@ const unUsedMappingInPlans = (mappingToDelete, notStartedTransformationPlans, fi
     );
   }
   return '';
-};
-
-const displayDeleteMessage = mappingToDelete => {
-  const mappingNameStyled = `<strong>${mappingToDelete.name}</strong>`;
-  const regularDeleteMessage = sprintf(
-    __('Are you sure you want to delete the infrastructure mapping %s ?'),
-    mappingNameStyled
-  );
-  return <div dangerouslySetInnerHTML={{ __html: regularDeleteMessage }} />;
 };
 
 const DeleteInfrastructureMappingConfirmationModal = ({
@@ -71,11 +64,14 @@ const DeleteInfrastructureMappingConfirmationModal = ({
         <Icon type="pf" name="delete" />
       </div>
       <div className="warning-modal-body--list">
-        <h4>
-          {mappingToDelete &&
-            unUsedMappingInPlans(mappingToDelete, notStartedTransformationPlans, finishedWithErrorTransformationPlans)}
-        </h4>
-        <h4>{mappingToDelete && displayDeleteMessage(mappingToDelete)}</h4>
+        {mappingToDelete &&
+          unUsedMappingInPlans(mappingToDelete, notStartedTransformationPlans, finishedWithErrorTransformationPlans)}
+        <h4>{__('Are you sure you want to delete the following infrastructure mapping?')}</h4>
+        <ul>
+          <h4>
+            <strong>{mappingToDelete && mappingToDelete.name}</strong>
+          </h4>
+        </ul>
       </div>
     </Modal.Body>
     <Modal.Footer>
