@@ -16,11 +16,16 @@ import {
   DELETE_V2V_CONVERSION_HOST
 } from './SettingsConstants';
 
-import { getFormValuesFromApiSettings, parseConversionHostTasksMetadata } from './helpers';
+import {
+  getFormValuesFromApiSettings,
+  parseConversionHostTasksMetadata,
+  indexConversionHostTasksByResource
+} from './helpers';
 
 export const initialState = Immutable({
   conversionHosts: [],
   conversionHostTasks: [],
+  conversionHostTasksByResource: {},
   conversionHostToDelete: null,
   conversionHostDeleteModalVisible: false,
   conversionHostWizardMounted: false,
@@ -126,12 +131,16 @@ export default (state = initialState, action) => {
         .set('isFetchingConversionHostTasks', true)
         .set('isRejectedFetchingConversionHostTasks', false)
         .set('errorFetchingConversionHostTasks', null);
-    case `${FETCH_V2V_CONVERSION_HOST_TASKS}_FULFILLED`:
+    case `${FETCH_V2V_CONVERSION_HOST_TASKS}_FULFILLED`: {
+      const tasksWithMetadata = parseConversionHostTasksMetadata(action.payload.data.resources);
+      const tasksByResource = indexConversionHostTasksByResource(tasksWithMetadata);
       return state
-        .set('conversionHostTasks', parseConversionHostTasksMetadata(action.payload.data.resources))
+        .set('conversionHostTasks', tasksWithMetadata)
+        .set('conversionHostTasksByResource', tasksByResource)
         .set('isFetchingConversionHostTasks', false)
         .set('isRejectedFetchingConversionHostTasks', false)
         .set('errorFetchingConversionHostTasks', null);
+    }
     case `${FETCH_V2V_CONVERSION_HOST_TASKS}_REJECTED`:
       return state
         .set('isFetchingConversionHostTasks', false)

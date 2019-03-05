@@ -11,11 +11,11 @@ export const getApiSettingsFromFormValues = values => ({
 });
 
 // Example task name: "Configuring a conversion_host: operation=enable resource=(type: ManageIQ::Providers::Openstack::CloudManager::Vm id:42000000000113)"
-const conversionHostTaskNameRegex = /operation=(\w+)\s+resource=\(type:\s+([\w:]+)\s+id:(\d+)\)/;
+const conversionHostTaskNameRegex = /operation=(\w+)\s+resource=\(type:\s+([\w:]+)\s+id:(.+)\)/;
 
-export const parseConversionHostTasksMetadata = tasks =>
-  tasks &&
-  tasks.map(task => {
+export const parseConversionHostTasksMetadata = tasks => {
+  if (!tasks) return [];
+  return tasks.map(task => {
     const result = conversionHostTaskNameRegex.exec(task.name);
     return {
       ...task,
@@ -26,3 +26,15 @@ export const parseConversionHostTasksMetadata = tasks =>
       }
     };
   });
+};
+
+export const indexConversionHostTasksByResource = tasksWithMetadata => {
+  const tasksByResource = {};
+  tasksWithMetadata.forEach(task => {
+    const { resourceType, resourceId } = task.nameMeta;
+    if (!tasksByResource[resourceType]) tasksByResource[resourceType] = {};
+    if (!tasksByResource[resourceType][resourceId]) tasksByResource[resourceType][resourceId] = [];
+    tasksByResource[resourceType][resourceId].push(task);
+  });
+  return tasksByResource;
+};

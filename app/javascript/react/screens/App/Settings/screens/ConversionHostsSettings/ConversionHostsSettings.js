@@ -167,7 +167,7 @@ ConversionHostsSettings.defaultProps = {
   fetchProvidersUrl: FETCH_V2V_PROVIDERS_URL,
   fetchConversionHostsUrl: '/api/conversion_hosts?attributes=resource&expand=resources',
   fetchConversionHostTasksUrl:
-    '/api/tasks?expand=resources&attributes=id,name&filter[]=name="%25Configuring a conversion_host%25"'
+    '/api/tasks?expand=resources&attributes=id,name,state,status,message,started_on,updated_on,pct_complete&filter[]=name="%25Configuring a conversion_host%25"&sort_by=updated_on&sort_order=descending'
 };
 
 // TODO handle above ^, metadata processing with regex, array of pre-associated hosts/tasks into list view? do that in redux or render?
