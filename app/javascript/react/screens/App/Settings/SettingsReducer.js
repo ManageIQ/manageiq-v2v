@@ -16,7 +16,7 @@ import {
   DELETE_V2V_CONVERSION_HOST
 } from './SettingsConstants';
 
-import { getFormValuesFromApiSettings } from './helpers';
+import { getFormValuesFromApiSettings, parseConversionHostTasksMetadata } from './helpers';
 
 export const initialState = Immutable({
   conversionHosts: [],
@@ -128,7 +128,7 @@ export default (state = initialState, action) => {
         .set('errorFetchingConversionHostTasks', null);
     case `${FETCH_V2V_CONVERSION_HOST_TASKS}_FULFILLED`:
       return state
-        .set('conversionHostTasks', action.payload.data.resources) // TODO process with regex? operation, type and id? index by [type][id]?
+        .set('conversionHostTasks', parseConversionHostTasksMetadata(action.payload.data.resources))
         .set('isFetchingConversionHostTasks', false)
         .set('isRejectedFetchingConversionHostTasks', false)
         .set('errorFetchingConversionHostTasks', null);

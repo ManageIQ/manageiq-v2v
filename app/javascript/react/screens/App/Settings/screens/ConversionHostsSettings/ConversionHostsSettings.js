@@ -166,11 +166,10 @@ ConversionHostsSettings.defaultProps = {
   deleteConversionHostActionUrl: '/api/conversion_hosts',
   fetchProvidersUrl: FETCH_V2V_PROVIDERS_URL,
   fetchConversionHostsUrl: '/api/conversion_hosts?attributes=resource&expand=resources',
-  fetchConversionHostTasksAction: () => Promise.resolve(), // TODO replace with a real action, remove default
   fetchConversionHostTasksUrl:
-    '/api/tasks?expand=resources&attributes=id,name&filter[]=name="%25Configuring a conversion_host%25"',
-  isFetchingConversionHostTasks: false, // TODO replace with real property, remove default
-  conversionHostTasks: [] // TODO replace with real array, remove default
+    '/api/tasks?expand=resources&attributes=id,name&filter[]=name="%25Configuring a conversion_host%25"'
 };
+
+// TODO handle above ^, metadata processing with regex, array of pre-associated hosts/tasks into list view? do that in redux or render?
 
 export default ConversionHostsSettings;
