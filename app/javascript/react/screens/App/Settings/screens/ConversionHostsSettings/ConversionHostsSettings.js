@@ -66,6 +66,7 @@ class ConversionHostsSettings extends React.Component {
       hasSufficientProviders,
       conversionHosts,
       conversionHostTasks,
+      conversionHostTasksByResource,
       setHostToDeleteAction,
       showConversionHostDeleteModalAction,
       conversionHostDeleteModalVisible,
@@ -82,7 +83,20 @@ class ConversionHostsSettings extends React.Component {
 
     const { hasMadeInitialFetch } = this.state;
 
-    console.log('CONVERSION HOST TASKS?', conversionHostTasks); // TODO remove me
+    const unfinishedEnablementTasks = conversionHostTasks
+      .filter(task => task.state !== 'Finished' && task.nameMeta.operation === 'enable')
+      .map(task => ({
+        ...task,
+        isEnablementTask: true,
+        name: 'TODO get resource name here' // TODO we're going to need to load vms and hosts by id from the tasks :(
+      }));
+    const conversionHostsWithTasks = conversionHosts.map(conversionHost => {
+      if (!conversionHost.resource) return conversionHost;
+      const { type, id } = conversionHost.resource;
+      const tasksByOperation = conversionHostTasksByResource[type][id];
+      return { ...conversionHost, tasksMeta: tasksByOperation };
+    });
+    const listItems = [...unfinishedEnablementTasks, ...conversionHostsWithTasks];
 
     return (
       <Spinner loading={isFetchingProviders || !hasMadeInitialFetch} style={{ marginTop: 15 }}>
@@ -116,7 +130,7 @@ class ConversionHostsSettings extends React.Component {
               <ConversionHostsEmptyState showConversionHostWizardAction={showConversionHostWizardAction} />
             ) : (
               <ConversionHostsList
-                conversionHosts={conversionHosts}
+                listItems={listItems}
                 deleteConversionHostAction={deleteConversionHostAction}
                 deleteConversionHostActionUrl={deleteConversionHostActionUrl}
                 fetchConversionHostsAction={fetchConversionHostsAction}
@@ -152,6 +166,9 @@ ConversionHostsSettings.propTypes = {
   fetchConversionHostTasksUrl: PropTypes.string,
   isFetchingConversionHostTasks: PropTypes.bool,
   conversionHostTasks: PropTypes.arrayOf(PropTypes.object),
+  conversionHostTasksByResource: PropTypes.objectOf(
+    PropTypes.objectOf(PropTypes.objectOf(PropTypes.arrayOf(PropTypes.object)))
+  ),
   showConversionHostWizardAction: PropTypes.func,
   conversionHostWizardMounted: PropTypes.bool,
   setHostToDeleteAction: PropTypes.func,
@@ -169,7 +186,5 @@ ConversionHostsSettings.defaultProps = {
   fetchConversionHostTasksUrl:
     '/api/tasks?expand=resources&attributes=id,name,state,status,message,started_on,updated_on,pct_complete&filter[]=name="%25Configuring a conversion_host%25"&sort_by=updated_on&sort_order=descending'
 };
-
-// TODO handle above ^, metadata processing with regex, array of pre-associated hosts/tasks into list view? do that in redux or render?
 
 export default ConversionHostsSettings;

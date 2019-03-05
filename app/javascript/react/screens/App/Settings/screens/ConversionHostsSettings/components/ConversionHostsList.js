@@ -7,7 +7,7 @@ import DeleteConversionHostConfirmationModal from './DeleteConversionHostConfirm
 import StopPropagationOnClick from '../../../../common/StopPropagationOnClick';
 
 const ConversionHostsList = ({
-  conversionHosts,
+  listItems,
   conversionHostToDelete,
   deleteConversionHostAction,
   deleteConversionHostActionUrl,
@@ -21,7 +21,7 @@ const ConversionHostsList = ({
     <ListViewToolbar
       filterTypes={ConversionHostsList.filterTypes}
       sortFields={ConversionHostsList.sortFields}
-      listItems={conversionHosts}
+      listItems={listItems}
     >
       {({
         filteredSortedPaginatedListItems,
@@ -80,7 +80,7 @@ const ConversionHostsList = ({
 );
 
 ConversionHostsList.propTypes = {
-  conversionHosts: PropTypes.arrayOf(PropTypes.object),
+  listItems: PropTypes.arrayOf(PropTypes.object),
   conversionHostToDelete: PropTypes.object,
   deleteConversionHostAction: PropTypes.func,
   deleteConversionHostActionUrl: PropTypes.string,

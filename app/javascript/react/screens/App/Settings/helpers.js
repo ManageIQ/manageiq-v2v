@@ -31,10 +31,11 @@ export const parseConversionHostTasksMetadata = tasks => {
 export const indexConversionHostTasksByResource = tasksWithMetadata => {
   const tasksByResource = {};
   tasksWithMetadata.forEach(task => {
-    const { resourceType, resourceId } = task.nameMeta;
-    if (!tasksByResource[resourceType]) tasksByResource[resourceType] = {};
-    if (!tasksByResource[resourceType][resourceId]) tasksByResource[resourceType][resourceId] = [];
-    tasksByResource[resourceType][resourceId].push(task);
+    const { resourceType: type, resourceId: id, operation } = task.nameMeta;
+    if (!tasksByResource[type]) tasksByResource[type] = {};
+    if (!tasksByResource[type][id]) tasksByResource[type][id] = {};
+    if (!tasksByResource[type][id][operation]) tasksByResource[type][id][operation] = [];
+    tasksByResource[type][id][operation].push(task);
   });
   return tasksByResource;
 };
