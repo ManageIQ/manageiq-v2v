@@ -128,7 +128,7 @@ export default reduxForm({
   destroyOnUnmount: false,
   forceUnregisterOnUnmount: true,
   initialValues: {
-    openstackUser: 'cloud_user',
+    openstackUser: 'cloud-user',
     conversionHostSshKey: { filename: '', body: '' },
     vmwareSshKey: { filename: '', body: '' }
   }
