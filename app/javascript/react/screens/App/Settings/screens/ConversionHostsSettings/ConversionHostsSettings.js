@@ -70,6 +70,7 @@ class ConversionHostsSettings extends React.Component {
       showConversionHostDeleteModalAction,
       conversionHostDeleteModalVisible,
       conversionHostToDelete,
+      isDeletingConversionHost,
       showConversionHostWizardAction,
       conversionHostWizardMounted,
       hideConversionHostDeleteModalAction,
@@ -124,6 +125,7 @@ class ConversionHostsSettings extends React.Component {
                 showConversionHostDeleteModalAction={showConversionHostDeleteModalAction}
                 conversionHostDeleteModalVisible={conversionHostDeleteModalVisible}
                 conversionHostToDelete={conversionHostToDelete}
+                isDeletingConversionHost={isDeletingConversionHost}
                 hideConversionHostDeleteModalAction={hideConversionHostDeleteModalAction}
               />
             )}
@@ -156,6 +158,7 @@ ConversionHostsSettings.propTypes = {
   showConversionHostDeleteModalAction: PropTypes.func,
   conversionHostDeleteModalVisible: PropTypes.bool,
   conversionHostToDelete: PropTypes.object,
+  isDeletingConversionHost: PropTypes.bool,
   hideConversionHostDeleteModalAction: PropTypes.func
 };
 

@@ -22,7 +22,8 @@ const mapStateToProps = (
       conversionHostTasks,
       conversionHostWizardMounted,
       conversionHostDeleteModalVisible,
-      conversionHostToDelete
+      conversionHostToDelete,
+      isDeletingConversionHost
     }
   },
   ownProps
@@ -36,6 +37,7 @@ const mapStateToProps = (
   conversionHostWizardMounted,
   conversionHostDeleteModalVisible,
   conversionHostToDelete,
+  isDeletingConversionHost,
   ...ownProps.data
 });
 

@@ -14,7 +14,8 @@ const ConversionHostsList = ({
   hideConversionHostDeleteModalAction,
   setHostToDeleteAction,
   conversionHostDeleteModalVisible,
-  showConversionHostDeleteModalAction
+  showConversionHostDeleteModalAction,
+  isDeletingConversionHost
 }) => (
   <React.Fragment>
     <ListViewToolbar
@@ -73,6 +74,7 @@ const ConversionHostsList = ({
       deleteConversionHostActionUrl={deleteConversionHostActionUrl}
       hideConversionHostDeleteModalAction={hideConversionHostDeleteModalAction}
       conversionHostDeleteModalVisible={conversionHostDeleteModalVisible}
+      isDeletingConversionHost={isDeletingConversionHost}
     />
   </React.Fragment>
 );
@@ -85,7 +87,8 @@ ConversionHostsList.propTypes = {
   hideConversionHostDeleteModalAction: PropTypes.func,
   setHostToDeleteAction: PropTypes.func,
   conversionHostDeleteModalVisible: PropTypes.bool,
-  showConversionHostDeleteModalAction: PropTypes.func
+  showConversionHostDeleteModalAction: PropTypes.func,
+  isDeletingConversionHost: PropTypes.bool
 };
 
 ConversionHostsList.sortFields = [

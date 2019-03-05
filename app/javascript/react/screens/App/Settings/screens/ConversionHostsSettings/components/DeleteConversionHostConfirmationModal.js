@@ -7,7 +7,8 @@ const DeleteConversionHostConfirmationModal = ({
   deleteConversionHostAction,
   deleteConversionHostActionUrl,
   hideConversionHostDeleteModalAction,
-  conversionHostDeleteModalVisible
+  conversionHostDeleteModalVisible,
+  isDeletingConversionHost
 }) => (
   <Modal show={conversionHostDeleteModalVisible} onHide={hideConversionHostDeleteModalAction} backdrop="static">
     <Modal.Header>
@@ -31,6 +32,7 @@ const DeleteConversionHostConfirmationModal = ({
       </Button>
       <Button
         bsStyle="primary"
+        disabled={isDeletingConversionHost}
         onClick={() => {
           deleteConversionHostAction(deleteConversionHostActionUrl, conversionHostToDelete);
         }}
@@ -46,7 +48,8 @@ DeleteConversionHostConfirmationModal.propTypes = {
   deleteConversionHostAction: PropTypes.func,
   deleteConversionHostActionUrl: PropTypes.string,
   hideConversionHostDeleteModalAction: PropTypes.func,
-  conversionHostDeleteModalVisible: PropTypes.bool
+  conversionHostDeleteModalVisible: PropTypes.bool,
+  isDeletingConversionHost: PropTypes.bool
 };
 
 export default DeleteConversionHostConfirmationModal;
