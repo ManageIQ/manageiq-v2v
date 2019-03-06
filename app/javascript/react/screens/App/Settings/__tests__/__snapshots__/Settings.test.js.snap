@@ -35,7 +35,7 @@ exports[`Settings component renders correctly 1`] = `
     >
       <Tab
         eventKey="/settings"
-        title="Concurrent Migrations"
+        title="Migration Throttling"
       >
         <Connect(ReduxForm) />
       </Tab>
