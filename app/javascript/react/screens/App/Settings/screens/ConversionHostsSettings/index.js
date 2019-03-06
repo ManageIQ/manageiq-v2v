@@ -12,13 +12,13 @@ import {
   hideConversionHostDeleteModalAction
 } from '../../SettingsActions';
 
+import { getCombinedConversionHostListItems } from '../../helpers';
+
 const mapStateToProps = (
   {
     providers: { isFetchingProviders, hasSufficientProviders },
     settings: {
-      isFetchingConversionHosts,
       conversionHosts,
-      isFetchingConversionHostTasks,
       conversionHostTasks,
       conversionHostTasksByResource,
       conversionHostWizardMounted,
@@ -31,11 +31,11 @@ const mapStateToProps = (
 ) => ({
   isFetchingProviders,
   hasSufficientProviders,
-  isFetchingConversionHosts,
-  conversionHosts,
-  isFetchingConversionHostTasks,
-  conversionHostTasks,
-  conversionHostTasksByResource,
+  combinedListItems: getCombinedConversionHostListItems(
+    conversionHosts,
+    conversionHostTasks,
+    conversionHostTasksByResource
+  ),
   conversionHostWizardMounted,
   conversionHostDeleteModalVisible,
   conversionHostToDelete,

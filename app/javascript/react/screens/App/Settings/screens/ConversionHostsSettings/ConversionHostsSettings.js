@@ -64,9 +64,7 @@ class ConversionHostsSettings extends React.Component {
     const {
       isFetchingProviders,
       hasSufficientProviders,
-      conversionHosts,
-      conversionHostTasks,
-      conversionHostTasksByResource,
+      combinedListItems,
       setHostToDeleteAction,
       showConversionHostDeleteModalAction,
       conversionHostDeleteModalVisible,
@@ -82,21 +80,6 @@ class ConversionHostsSettings extends React.Component {
     } = this.props;
 
     const { hasMadeInitialFetch } = this.state;
-
-    const unfinishedEnablementTasks = conversionHostTasks
-      .filter(task => task.state !== 'Finished' && task.nameMeta.operation === 'enable')
-      .map(task => ({
-        ...task,
-        isEnablementTask: true,
-        name: 'TODO get resource name here' // TODO we're going to need to load vms and hosts by id from the tasks :(
-      }));
-    const conversionHostsWithTasks = conversionHosts.map(conversionHost => {
-      if (!conversionHost.resource) return conversionHost;
-      const { type, id } = conversionHost.resource;
-      const tasksByOperation = conversionHostTasksByResource[type][id];
-      return { ...conversionHost, tasksMeta: tasksByOperation };
-    });
-    const listItems = [...unfinishedEnablementTasks, ...conversionHostsWithTasks];
 
     return (
       <Spinner loading={isFetchingProviders || !hasMadeInitialFetch} style={{ marginTop: 15 }}>
@@ -126,11 +109,11 @@ class ConversionHostsSettings extends React.Component {
                 </a>
               </div>
             </div>
-            {conversionHosts.length === 0 ? (
+            {combinedListItems.length === 0 ? (
               <ConversionHostsEmptyState showConversionHostWizardAction={showConversionHostWizardAction} />
             ) : (
               <ConversionHostsList
-                listItems={listItems}
+                combinedListItems={combinedListItems}
                 deleteConversionHostAction={deleteConversionHostAction}
                 deleteConversionHostActionUrl={deleteConversionHostActionUrl}
                 fetchConversionHostsAction={fetchConversionHostsAction}
@@ -160,15 +143,9 @@ ConversionHostsSettings.propTypes = {
   hasSufficientProviders: PropTypes.bool,
   fetchConversionHostsUrl: PropTypes.string,
   fetchConversionHostsAction: PropTypes.func,
-  isFetchingConversionHosts: PropTypes.bool,
-  conversionHosts: PropTypes.arrayOf(PropTypes.object),
   fetchConversionHostTasksAction: PropTypes.func,
   fetchConversionHostTasksUrl: PropTypes.string,
-  isFetchingConversionHostTasks: PropTypes.bool,
-  conversionHostTasks: PropTypes.arrayOf(PropTypes.object),
-  conversionHostTasksByResource: PropTypes.objectOf(
-    PropTypes.objectOf(PropTypes.objectOf(PropTypes.arrayOf(PropTypes.object)))
-  ),
+  combinedListItems: PropTypes.arrayOf(PropTypes.object),
   showConversionHostWizardAction: PropTypes.func,
   conversionHostWizardMounted: PropTypes.bool,
   setHostToDeleteAction: PropTypes.func,
