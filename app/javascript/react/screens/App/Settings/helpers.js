@@ -57,7 +57,7 @@ const attachTasksToConversionHosts = (conversionHosts, tasksByResource) =>
     return {
       ...conversionHost,
       meta: {
-        tasksByOperation: tasksByResource[type] && tasksByResource[type][id]
+        tasksByOperation: (tasksByResource[type] && tasksByResource[type][id]) || {}
       }
     };
   });

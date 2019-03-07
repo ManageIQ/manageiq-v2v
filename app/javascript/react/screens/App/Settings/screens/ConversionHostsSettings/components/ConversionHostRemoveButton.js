@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'patternfly-react';
 
-const ConversionHostRemoveButton = ({ host, setHostToDeleteAction, showConversionHostDeleteModalAction }) => (
+const ConversionHostRemoveButton = ({ host, setHostToDeleteAction, showConversionHostDeleteModalAction, ...props }) => (
   <React.Fragment>
     <Button
       id={`remove_${host.id}`}
@@ -11,6 +11,7 @@ const ConversionHostRemoveButton = ({ host, setHostToDeleteAction, showConversio
         setHostToDeleteAction(host);
         showConversionHostDeleteModalAction();
       }}
+      {...props}
     >
       {__('Remove')}
     </Button>
