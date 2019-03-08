@@ -30,9 +30,6 @@ const ConversionHostsList = ({
   showConversionHostDeleteModalAction,
   isDeletingConversionHost
 }) => {
-  const renderListItem = item =>
-    item.meta && item.meta.isTask ? renderEnablementTaskItem(item) : renderConversionHostItem(item);
-
   const renderTaskInfoPopover = task => (
     <OverlayTrigger
       rootClose
@@ -58,7 +55,17 @@ const ConversionHostsList = ({
     </OverlayTrigger>
   );
 
-  //const infoItemProps = { style: { minWidth: 300 } };
+  const renderKebabMenu = task => {
+    const downloadLogSupported = false; // TODO remove me when the Download Log action works
+    if (!task || !downloadLogSupported) return null;
+    return (
+      <StopPropagationOnClick>
+        <DropdownKebab id={`task-kebab-${task.id}`} pullRight>
+          <MenuItem disabled={task.state !== FINISHED}>{__('Download Log') /* TODO */}</MenuItem>
+        </DropdownKebab>
+      </StopPropagationOnClick>
+    );
+  };
 
   const renderEnablementTaskItem = task => {
     let statusInfo = null;
@@ -78,6 +85,10 @@ const ConversionHostsList = ({
         </React.Fragment>
       );
     }
+    const retryButton = task.status === ERROR ? <Button>{__('Retry') /* TODO */}</Button> : null;
+    const retryFailedTaskSupported = false; // TODO remove me when the Retry button works
+    const removeButton = <Button disabled={task.state !== FINISHED}>{__('Remove') /* TODO */}</Button>;
+    const removeFailedTaskSupported = false; // TODO remove me when the Remove button works
     return (
       <ListView.Item
         key={`conversion-host-task-${task.id}`}
@@ -86,31 +97,25 @@ const ConversionHostsList = ({
         stacked
         actions={
           <div>
-            {task.status === ERROR && <Button>{__('Retry') /* TODO */}</Button>}
-            <Button disabled={task.state !== FINISHED}>{__('Remove') /* TODO */}</Button>
-            <StopPropagationOnClick>
-              <DropdownKebab id={`conversion-list-kebab-${task.name}`} pullRight>
-                <MenuItem disabled={task.state !== FINISHED}>{__('Download Log') /* TODO */}</MenuItem>
-              </DropdownKebab>
-            </StopPropagationOnClick>
+            {retryFailedTaskSupported && retryButton}
+            {task.state !== FINISHED || removeFailedTaskSupported ? removeButton : <div style={{ height: '26px' }} />}
+            {/* TODO remove the above spacer div when there are buttons here */}
+            {renderKebabMenu(task)}
           </div>
         }
       />
     );
   };
 
-  // TODO look for disable tasks in meta.tasksByOperation.disable
-  // TODO look for last completed enable task in meta.tasksByOperation.enable
-  // * has no active disable task? render checkmark, "Configured"
-  //     popover with details of last enable task (or "No configuration task information available")
-  //     disable Download Log if no enable task is present
-  // * has an active disable task? render spinner, "Disabling...", state and message in popover, [remove] (disabled)
-  // * has a failed disable task? render red X, "Disable Failed", state and message in popover, [retry] <--- how does this work?
   const renderConversionHostItem = conversionHost => {
     const { enable, disable } = conversionHost.meta.tasksByOperation;
     const mostRecentFirst = (a, b) => (a.updated_on > b.updated_on ? -1 : a.updated_on < b.updated_on ? 1 : 0);
     const lastEnableTask = enable && Immutable.asMutable(enable).sort(mostRecentFirst)[0];
     const lastDisableTask = disable && Immutable.asMutable(disable).sort(mostRecentFirst)[0];
+    const mostRecentTask =
+      lastEnableTask && (!lastDisableTask || lastDisableTask.updated_on < lastEnableTask.updated_on)
+        ? lastEnableTask
+        : lastDisableTask;
     let statusInfo = null;
     if (lastDisableTask && lastDisableTask.status === ERROR) {
       statusInfo = (
@@ -152,18 +157,15 @@ const ConversionHostsList = ({
               showConversionHostDeleteModalAction={showConversionHostDeleteModalAction}
               disabled={lastDisableTask && lastDisableTask.state !== FINISHED}
             />
-            <StopPropagationOnClick>
-              {lastEnableTask && (
-                <DropdownKebab id={`conversion-list-kebab-${conversionHost.name}`} pullRight>
-                  <MenuItem>{__('Download Log') /* TODO */}</MenuItem>
-                </DropdownKebab>
-              )}
-            </StopPropagationOnClick>
+            {renderKebabMenu(mostRecentTask)}
           </div>
         }
       />
     );
   };
+
+  const renderListItem = item =>
+    item.meta && item.meta.isTask ? renderEnablementTaskItem(item) : renderConversionHostItem(item);
 
   return (
     <React.Fragment>
