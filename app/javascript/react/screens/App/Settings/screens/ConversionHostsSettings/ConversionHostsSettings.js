@@ -95,6 +95,9 @@ class ConversionHostsSettings extends React.Component {
         ) : (
           <React.Fragment>
             <div className="heading-with-link-container">
+              <div className="pull-left">
+                <h3>{__('Configured Conversion Hosts')}</h3>
+              </div>
               <div className="pull-right">
                 <a
                   href="#"
