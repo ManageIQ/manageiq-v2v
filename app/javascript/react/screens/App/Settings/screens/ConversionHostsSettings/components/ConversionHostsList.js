@@ -96,7 +96,7 @@ const ConversionHostsList = ({
         additionalInfo={[<ListView.InfoItem key={`task-${task.id}-status`}>{statusInfo}</ListView.InfoItem>]}
         stacked
         actions={
-          <div>
+          <div className="conversion-hosts-list-actions">
             {retryFailedTaskSupported && retryButton}
             {task.state !== FINISHED || removeFailedTaskSupported ? removeButton : <div style={{ height: '26px' }} />}
             {/* TODO remove the above spacer div when there are buttons here */}
@@ -128,7 +128,8 @@ const ConversionHostsList = ({
     } else if (lastDisableTask && lastDisableTask.state !== FINISHED) {
       statusInfo = (
         <React.Fragment>
-          <Spinner loading size="sm" inline /> {__('Removing...')}
+          <Spinner loading size="sm" inline className="conversion-host-task-spinner" />
+          {__('Removing...')}
           {renderTaskInfoPopover(lastDisableTask)}
         </React.Fragment>
       );
@@ -150,7 +151,7 @@ const ConversionHostsList = ({
         ]}
         stacked
         actions={
-          <div>
+          <div className="conversion-hosts-list-actions">
             <ConversionHostRemoveButton
               host={conversionHost}
               setHostToDeleteAction={setHostToDeleteAction}
