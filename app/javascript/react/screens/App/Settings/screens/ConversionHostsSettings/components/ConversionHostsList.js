@@ -116,14 +116,14 @@ const ConversionHostsList = ({
       statusInfo = (
         <React.Fragment>
           <ListView.Icon type="pf" name="error-circle-o" />
-          {__('Disable Failed')}
+          {__('Removal Failed')}
           {renderTaskInfoPopover(lastDisableTask)}
         </React.Fragment>
       );
     } else if (lastDisableTask && lastDisableTask.state !== FINISHED) {
       statusInfo = (
         <React.Fragment>
-          <Spinner loading size="sm" inline /> {__('Disabling...')}
+          <Spinner loading size="sm" inline /> {__('Removing...')}
           {renderTaskInfoPopover(lastDisableTask)}
         </React.Fragment>
       );
