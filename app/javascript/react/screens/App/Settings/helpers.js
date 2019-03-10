@@ -1,3 +1,5 @@
+import { FINISHED, ERROR } from './screens/ConversionHostsSettings/ConversionHostsSettingsConstants';
+
 export const getFormValuesFromApiSettings = payload => ({
   max_concurrent_tasks_per_host: payload.transformation.limits.max_concurrent_tasks_per_host
 });
@@ -46,10 +48,21 @@ export const indexConversionHostTasksByResource = tasksWithMetadata => {
   return tasksByResource;
 };
 
-const getActiveConversionHostEnableTasks = tasksWithMetadata =>
-  tasksWithMetadata.filter(
-    task => task.meta.operation === 'enable' && (task.state !== 'Finished' || task.status === 'Error')
+const getActiveConversionHostEnableTasks = tasksWithMetadata => {
+  const tasks = tasksWithMetadata.filter(
+    task => task.meta.operation === 'enable' && (task.state !== FINISHED || task.status === ERROR)
   );
+  // Filter to only the latest task for each resource (filter out old failures if a new task exists)
+  return tasks.filter((task, index) =>
+    tasks.every(
+      (otherTask, otherIndex) =>
+        otherIndex === index ||
+        otherTask.meta.resourceType !== task.meta.resourceType ||
+        otherTask.meta.resourceId !== task.meta.resourceId ||
+        otherTask.updated_on <= task.updated_on
+    )
+  );
+};
 
 const attachTasksToConversionHosts = (conversionHosts, tasksByResource) =>
   conversionHosts.filter(conversionHost => !!conversionHost.resource).map(conversionHost => {
