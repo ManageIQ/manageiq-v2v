@@ -23,7 +23,8 @@ const ConversionHostsListItem = ({ listItem, isTask, setHostToDeleteAction, show
         : lastDisableTask;
   }
 
-  let statusIcon, statusMessage;
+  let statusIcon;
+  let statusMessage;
   if (mostRecentTask && mostRecentTask.status === ERROR) {
     statusIcon = <ListView.Icon type="pf" name="error-circle-o" />;
     statusMessage = mostRecentTask.meta.operation === ENABLE ? __('Configuration Failed') : __('Removal Failed');

@@ -55,8 +55,7 @@ export default connect(
     setHostToDeleteAction,
     deleteConversionHostAction,
     showConversionHostDeleteModalAction,
-    hideConversionHostDeleteModalAction,
-    fetchProvidersAction
+    hideConversionHostDeleteModalAction
   },
   mergeProps
 )(ConversionHostsSettings);

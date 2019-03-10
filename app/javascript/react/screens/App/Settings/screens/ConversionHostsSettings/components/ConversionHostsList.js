@@ -40,7 +40,7 @@ const ConversionHostsList = ({
           <div style={{ overflow: 'auto', paddingBottom: 300, height: '100%' }}>
             <ListView className="conversion-hosts-list" id="conversion_hosts">
               {filteredSortedPaginatedListItems.items.map(listItem => {
-                const isTask = listItem.meta.isTask;
+                const { isTask } = listItem.meta;
                 const itemKey = `conversion-host-${isTask ? 'task-' : ''}${listItem.id}`;
                 return (
                   <ConversionHostsListItem
