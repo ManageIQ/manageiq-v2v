@@ -3,13 +3,19 @@ import ConversionHostWizardHostsStep from './ConversionHostWizardHostsStep';
 
 import { stepIDs } from '../ConversionHostWizardConstants';
 
-const mapStateToProps = ({ form, targetResources: { targetClusters } }) => {
+const mapStateToProps = ({
+  form,
+  targetResources: { targetClusters },
+  settings: { conversionHosts, conversionHostTasksByResource }
+}) => {
   const locationStepForm = form[stepIDs.locationStep];
   const locationStepValues = locationStepForm && locationStepForm.values;
   const selectedClusterId = locationStepValues && locationStepValues.cluster;
   return {
     selectedProviderType: locationStepValues && locationStepValues.providerType,
-    selectedCluster: targetClusters.find(cluster => cluster.id === selectedClusterId)
+    selectedCluster: targetClusters.find(cluster => cluster.id === selectedClusterId),
+    conversionHosts,
+    conversionHostTasksByResource
   };
 };
 
