@@ -5,6 +5,8 @@ import { Form, Button, Icon, OverlayTrigger, Popover, Spinner } from 'patternfly
 import NumberInput from '../../../common/forms/NumberInput';
 // import TextInputWithCheckbox from '../../../common/forms/TextInputWithCheckbox'; // FIXME: uncomment once backend is ready
 
+const FORM_NAME = 'settings';
+
 export class GeneralSettings extends React.Component {
   componentDidMount() {
     const { fetchServersAction, fetchServersUrl, fetchSettingsAction, fetchSettingsUrl } = this.props;
@@ -15,6 +17,20 @@ export class GeneralSettings extends React.Component {
   onApplyClick = () => {
     const { patchSettingsAction, servers, settingsForm } = this.props;
     patchSettingsAction(servers, settingsForm.values);
+  };
+
+  enforceConstraintsOnChange = (event, newValue, prevValue, fieldChanging) => {
+    const {
+      settingsForm: {
+        values: { max_concurrent_tasks_per_host, max_concurrent_tasks_per_ems }
+      },
+      formChangeAction
+    } = this.props;
+    if (fieldChanging === 'max_concurrent_tasks_per_host' && newValue > max_concurrent_tasks_per_ems) {
+      formChangeAction(FORM_NAME, 'max_concurrent_tasks_per_ems', newValue);
+    } else if (fieldChanging === 'max_concurrent_tasks_per_ems' && newValue < max_concurrent_tasks_per_host) {
+      formChangeAction(FORM_NAME, 'max_concurrent_tasks_per_host', newValue);
+    }
   };
 
   render() {
@@ -71,6 +87,7 @@ export class GeneralSettings extends React.Component {
                   component={NumberInput}
                   normalize={NumberInput.normalizeStringToInt}
                   min={1}
+                  onChange={this.enforceConstraintsOnChange}
                 />
               </div>
             </Form.FormGroup>
@@ -85,10 +102,11 @@ export class GeneralSettings extends React.Component {
                   component={NumberInput}
                   normalize={NumberInput.normalizeStringToInt}
                   min={1}
+                  onChange={this.enforceConstraintsOnChange}
                 />
               </div>
             </Form.FormGroup>
-{/* FIXME: uncomment once backend is ready
+            {/* FIXME: uncomment once backend is ready
             <Form.FormGroup />
             <div>
               <h3>{__('Resource Utilization Limits for Migrations')}</h3>
@@ -141,7 +159,8 @@ GeneralSettings.propTypes = {
   savedSettings: PropTypes.object,
   settingsForm: PropTypes.object,
   fetchServersUrl: PropTypes.string,
-  fetchSettingsUrl: PropTypes.string
+  fetchSettingsUrl: PropTypes.string,
+  formChangeAction: PropTypes.func
 };
 
 GeneralSettings.defaultProps = {
@@ -150,5 +169,5 @@ GeneralSettings.defaultProps = {
 };
 
 export default reduxForm({
-  form: 'settings'
+  form: FORM_NAME
 })(GeneralSettings);

@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
+import { change } from 'redux-form';
 import GeneralSettings from './GeneralSettings';
 
-import * as SettingsActions from '../../SettingsActions';
-import * as RouterActions from '../../../../../../redux/actions/routerActions';
+import { fetchServersAction, fetchSettingsAction, patchSettingsAction } from '../../SettingsActions';
 
 const mapStateToProps = ({ settings, form }, ownProps) => ({
   ...settings,
@@ -17,6 +17,6 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => Object.assign(stateP
 
 export default connect(
   mapStateToProps,
-  Object.assign(SettingsActions, RouterActions),
+  { fetchServersAction, fetchSettingsAction, patchSettingsAction, formChangeAction: change },
   mergeProps
 )(GeneralSettings);
