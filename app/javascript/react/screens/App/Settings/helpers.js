@@ -48,9 +48,15 @@ export const indexConversionHostTasksByResource = tasksWithMetadata => {
   return tasksByResource;
 };
 
-const getActiveConversionHostEnableTasks = tasksWithMetadata => {
+const getActiveConversionHostEnableTasks = (tasksWithMetadata, conversionHosts) => {
+  // Start with enable tasks that are either unfinished or finished with errors, and don't match any enabled hosts.
   const tasks = tasksWithMetadata.filter(
-    task => task.meta.operation === 'enable' && (task.state !== FINISHED || task.status === ERROR)
+    task =>
+      task.meta.operation === 'enable' &&
+      (task.state !== FINISHED || task.status === ERROR) &&
+      conversionHosts.every(
+        ch => ch.resource.type !== task.meta.resourceType || ch.resource.id !== task.meta.resourceId
+      )
   );
   // Filter to only the latest task for each resource (filter out old failures if a new task exists)
   return tasks.filter((task, index) =>
@@ -76,7 +82,7 @@ const attachTasksToConversionHosts = (conversionHosts, tasksByResource) =>
   });
 
 export const getCombinedConversionHostListItems = (conversionHosts, tasksWithMetadata, tasksByResource) => {
-  const activeEnableTasks = getActiveConversionHostEnableTasks(tasksWithMetadata);
+  const activeEnableTasks = getActiveConversionHostEnableTasks(tasksWithMetadata, conversionHosts);
   const conversionHostsWithTasks = attachTasksToConversionHosts(conversionHosts, tasksByResource);
   return [...activeEnableTasks, ...conversionHostsWithTasks];
 };
