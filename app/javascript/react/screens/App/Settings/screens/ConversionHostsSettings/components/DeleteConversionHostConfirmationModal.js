@@ -2,23 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Modal, Icon } from 'patternfly-react';
 
-const onClickHandler = (host, deleteHostAction, deleteHostActionUrl, fetchHostsAction, fetchHostsUrl) => {
-  deleteHostAction(deleteHostActionUrl, host).then(() => fetchHostsAction(fetchHostsUrl));
-};
-
 const DeleteConversionHostConfirmationModal = ({
   conversionHostToDelete,
   deleteConversionHostAction,
   deleteConversionHostActionUrl,
-  fetchConversionHostsAction,
-  fetchConversionHostsUrl,
   hideConversionHostDeleteModalAction,
-  showConversionHostDeleteModal
+  conversionHostDeleteModalVisible,
+  isDeletingConversionHost
 }) => (
-  <Modal show={showConversionHostDeleteModal} onHide={hideConversionHostDeleteModalAction} backdrop="static">
+  <Modal show={conversionHostDeleteModalVisible} onHide={hideConversionHostDeleteModalAction} backdrop="static">
     <Modal.Header>
       <Modal.CloseButton onClick={hideConversionHostDeleteModalAction} />
-      <Modal.Title>{__('Delete Conversion Host')}</Modal.Title>
+      <Modal.Title>{__('Remove Conversion Host')}</Modal.Title>
     </Modal.Header>
     <Modal.Body className="warning-modal-body">
       <div className="warning-modal-body--icon">
@@ -27,7 +22,7 @@ const DeleteConversionHostConfirmationModal = ({
       <div className="warning-modal-body--list">
         <h4>
           {conversionHostToDelete &&
-            sprintf(__('Are you sure you want to delete conversion host %s ?'), conversionHostToDelete.name)}
+            sprintf(__('Are you sure you want to remove conversion host %s ?'), conversionHostToDelete.name)}
         </h4>
       </div>
     </Modal.Body>
@@ -37,17 +32,12 @@ const DeleteConversionHostConfirmationModal = ({
       </Button>
       <Button
         bsStyle="primary"
+        disabled={isDeletingConversionHost}
         onClick={() => {
-          onClickHandler(
-            conversionHostToDelete,
-            deleteConversionHostAction,
-            deleteConversionHostActionUrl,
-            fetchConversionHostsAction,
-            fetchConversionHostsUrl
-          );
+          deleteConversionHostAction(deleteConversionHostActionUrl, conversionHostToDelete);
         }}
       >
-        {__('Delete')}
+        {__('Remove')}
       </Button>
     </Modal.Footer>
   </Modal>
@@ -57,10 +47,9 @@ DeleteConversionHostConfirmationModal.propTypes = {
   conversionHostToDelete: PropTypes.object,
   deleteConversionHostAction: PropTypes.func,
   deleteConversionHostActionUrl: PropTypes.string,
-  fetchConversionHostsAction: PropTypes.func,
-  fetchConversionHostsUrl: PropTypes.string,
   hideConversionHostDeleteModalAction: PropTypes.func,
-  showConversionHostDeleteModal: PropTypes.bool
+  conversionHostDeleteModalVisible: PropTypes.bool,
+  isDeletingConversionHost: PropTypes.bool
 };
 
 export default DeleteConversionHostConfirmationModal;

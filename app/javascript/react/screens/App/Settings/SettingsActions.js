@@ -7,6 +7,7 @@ import {
   V2V_FETCH_SETTINGS,
   V2V_PATCH_SETTINGS,
   FETCH_V2V_CONVERSION_HOSTS,
+  FETCH_V2V_CONVERSION_HOST_TASKS,
   SHOW_V2V_CONVERSION_HOST_WIZARD,
   HIDE_V2V_CONVERSION_HOST_WIZARD,
   V2V_CONVERSION_HOST_WIZARD_EXITED,
@@ -67,6 +68,17 @@ const _getConversionHostsActionCreator = url => dispatch =>
 export const fetchConversionHostsAction = url => {
   const uri = new URI(url);
   return _getConversionHostsActionCreator(uri.toString());
+};
+
+const _getConversionHostTasksActionCreator = url => dispatch =>
+  dispatch({
+    type: FETCH_V2V_CONVERSION_HOST_TASKS,
+    payload: API.get(url)
+  });
+
+export const fetchConversionHostTasksAction = url => {
+  const uri = new URI(url);
+  return _getConversionHostTasksActionCreator(uri.toString());
 };
 
 export const showConversionHostWizardAction = () => dispatch => dispatch({ type: SHOW_V2V_CONVERSION_HOST_WIZARD });

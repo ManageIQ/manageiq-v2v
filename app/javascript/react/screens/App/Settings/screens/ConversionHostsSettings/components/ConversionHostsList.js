@@ -1,28 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { DropdownKebab, Grid, ListView, MenuItem, Toolbar } from 'patternfly-react';
+import { Grid, ListView, Toolbar } from 'patternfly-react';
 import ListViewToolbar from '../../../../common/ListViewToolbar/ListViewToolbar';
-import ConversionHostRemoveButton from './ConversionHostRemoveButton';
+import ConversionHostsListItem from './ConversionHostsListItem';
 import DeleteConversionHostConfirmationModal from './DeleteConversionHostConfirmationModal';
-import StopPropagationOnClick from '../../../../common/StopPropagationOnClick';
 
 const ConversionHostsList = ({
-  conversionHosts,
+  combinedListItems,
   conversionHostToDelete,
   deleteConversionHostAction,
   deleteConversionHostActionUrl,
-  fetchConversionHostsAction,
-  fetchConversionHostsUrl,
   hideConversionHostDeleteModalAction,
   setHostToDeleteAction,
-  showConversionHostDeleteModal,
-  showConversionHostDeleteModalAction
+  conversionHostDeleteModalVisible,
+  showConversionHostDeleteModalAction,
+  isDeletingConversionHost
 }) => (
   <React.Fragment>
     <ListViewToolbar
       filterTypes={ConversionHostsList.filterTypes}
       sortFields={ConversionHostsList.sortFields}
-      listItems={conversionHosts}
+      listItems={combinedListItems}
     >
       {({
         filteredSortedPaginatedListItems,
@@ -41,27 +39,19 @@ const ConversionHostsList = ({
           </Grid.Row>
           <div style={{ overflow: 'auto', paddingBottom: 300, height: '100%' }}>
             <ListView className="conversion-hosts-list" id="conversion_hosts">
-              {filteredSortedPaginatedListItems.items.map((host, n) => (
-                <ListView.Item
-                  key={host.id}
-                  heading={host.name}
-                  stacked
-                  actions={
-                    <div>
-                      <ConversionHostRemoveButton
-                        host={host}
-                        setHostToDeleteAction={setHostToDeleteAction}
-                        showConversionHostDeleteModalAction={showConversionHostDeleteModalAction}
-                      />
-                      <StopPropagationOnClick>
-                        <DropdownKebab id="conversion-list-kebab" pullRight>
-                          <MenuItem>{__('Download Log')}</MenuItem>
-                        </DropdownKebab>
-                      </StopPropagationOnClick>
-                    </div>
-                  }
-                />
-              ))}
+              {filteredSortedPaginatedListItems.items.map(listItem => {
+                const { isTask } = listItem.meta;
+                const itemKey = `conversion-host-${isTask ? 'task-' : ''}${listItem.id}`;
+                return (
+                  <ConversionHostsListItem
+                    key={itemKey}
+                    listItem={listItem}
+                    isTask={isTask}
+                    setHostToDeleteAction={setHostToDeleteAction}
+                    showConversionHostDeleteModalAction={showConversionHostDeleteModalAction}
+                  />
+                );
+              })}
             </ListView>
             {renderPaginationRow(filteredSortedPaginatedListItems)}
           </div>
@@ -73,25 +63,23 @@ const ConversionHostsList = ({
       conversionHostToDelete={conversionHostToDelete}
       deleteConversionHostAction={deleteConversionHostAction}
       deleteConversionHostActionUrl={deleteConversionHostActionUrl}
-      fetchConversionHostsAction={fetchConversionHostsAction}
-      fetchConversionHostsUrl={fetchConversionHostsUrl}
       hideConversionHostDeleteModalAction={hideConversionHostDeleteModalAction}
-      showConversionHostDeleteModal={showConversionHostDeleteModal}
+      conversionHostDeleteModalVisible={conversionHostDeleteModalVisible}
+      isDeletingConversionHost={isDeletingConversionHost}
     />
   </React.Fragment>
 );
 
 ConversionHostsList.propTypes = {
-  conversionHosts: PropTypes.arrayOf(PropTypes.object),
+  combinedListItems: PropTypes.arrayOf(PropTypes.object),
   conversionHostToDelete: PropTypes.object,
   deleteConversionHostAction: PropTypes.func,
   deleteConversionHostActionUrl: PropTypes.string,
-  fetchConversionHostsAction: PropTypes.func,
-  fetchConversionHostsUrl: PropTypes.string,
   hideConversionHostDeleteModalAction: PropTypes.func,
   setHostToDeleteAction: PropTypes.func,
-  showConversionHostDeleteModal: PropTypes.bool,
-  showConversionHostDeleteModalAction: PropTypes.func
+  conversionHostDeleteModalVisible: PropTypes.bool,
+  showConversionHostDeleteModalAction: PropTypes.func,
+  isDeletingConversionHost: PropTypes.bool
 };
 
 ConversionHostsList.sortFields = [

@@ -8,15 +8,21 @@ import ConversionHostsList from '../components/ConversionHostsList';
 
 describe('ConversionHostsSettings component', () => {
   const getBaseProps = () => ({
+    deleteConversionHostAction: jest.fn(),
     fetchProvidersAction: jest.fn(),
-    fetchConversionHostsAction: jest.fn(),
-    conversionHosts: [],
-    hasSufficientProviders: true,
     isFetchingProviders: false,
-    isFetchingConversionHosts: false,
+    hasSufficientProviders: true,
+    fetchConversionHostsAction: jest.fn(),
+    fetchConversionHostTasksAction: jest.fn(),
+    combinedListItems: [],
     showConversionHostWizardAction: jest.fn(),
-    hideConversionHostWizardAction: jest.fn(),
-    conversionHostWizardVisible: false
+    conversionHostWizardMounted: false,
+    setHostToDeleteAction: jest.fn(),
+    showConversionHostDeleteModalAction: jest.fn(),
+    conversionHostDeleteModalVisible: false,
+    conversionHostToDelete: null,
+    isDeletingConversionHost: false,
+    hideConversionHostDeleteModalAction: jest.fn()
   });
 
   it('renders a spinner when fetching conversion hosts', () => {
@@ -44,7 +50,7 @@ describe('ConversionHostsSettings component', () => {
   });
 
   it('renders the list view when conversion hosts are present', () => {
-    const component = shallow(<ConversionHostsSettings {...getBaseProps()} conversionHosts={[{ foo: 'bar' }]} />);
+    const component = shallow(<ConversionHostsSettings {...getBaseProps()} combinedListItems={[{ foo: 'bar' }]} />);
     expect(component.find(ConversionHostsList)).toHaveLength(1);
     expect(component.find(ShowWizardEmptyState)).toHaveLength(0);
     expect(component.find(ConversionHostsEmptyState)).toHaveLength(0);

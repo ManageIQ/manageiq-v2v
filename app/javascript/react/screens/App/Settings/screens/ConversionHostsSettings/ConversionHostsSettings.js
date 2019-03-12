@@ -8,22 +8,68 @@ import ConversionHostWizard from './components/ConversionHostWizard';
 import { FETCH_V2V_PROVIDERS_URL } from '../../../../../../redux/common/providers/providersConstants';
 
 class ConversionHostsSettings extends React.Component {
+  pollingInterval = null;
+  state = { hasMadeInitialFetch: false };
+
   componentDidMount() {
-    const { fetchProvidersAction, fetchProvidersUrl, fetchConversionHostsAction, fetchConversionHostsUrl } = this.props;
+    const { fetchProvidersAction, fetchProvidersUrl } = this.props;
     fetchProvidersAction(fetchProvidersUrl);
-    fetchConversionHostsAction(fetchConversionHostsUrl);
+    this.startPolling();
   }
+
+  componentWillUnmount() {
+    this.stopPolling();
+  }
+
+  componentDidUpdate(prevProps) {
+    // When a modal closes, reset the polling interval to see results immediately
+    if (this.pollingInterval && this.hasSomeModalOpen(prevProps) && !this.hasSomeModalOpen()) {
+      this.startPolling();
+    }
+  }
+
+  hasSomeModalOpen = (props = this.props) =>
+    props.conversionHostWizardMounted || props.conversionHostDeleteModalVisible;
+
+  startPolling = () => {
+    this.stopPolling(); // Allow startPolling to be called more than once to reset the interval
+    this.fetchConversionHostsAndTasks().then(() => {
+      this.setState({ hasMadeInitialFetch: true });
+      this.pollingInterval = setInterval(this.fetchConversionHostsAndTasks, 15000);
+    });
+  };
+
+  stopPolling = () => {
+    if (this.pollingInterval) {
+      clearInterval(this.pollingInterval);
+      this.pollingInterval = null;
+    }
+  };
+
+  fetchConversionHostsAndTasks = () => {
+    const {
+      fetchConversionHostsAction,
+      fetchConversionHostsUrl,
+      fetchConversionHostTasksAction,
+      fetchConversionHostTasksUrl
+    } = this.props;
+    if (this.hasSomeModalOpen()) return Promise.resolve();
+    return Promise.all([
+      fetchConversionHostsAction(fetchConversionHostsUrl),
+      fetchConversionHostTasksAction(fetchConversionHostTasksUrl)
+    ]);
+  };
 
   render() {
     const {
       isFetchingProviders,
       hasSufficientProviders,
-      isFetchingConversionHosts,
-      conversionHosts,
+      combinedListItems,
       setHostToDeleteAction,
       showConversionHostDeleteModalAction,
-      showConversionHostDeleteModal,
+      conversionHostDeleteModalVisible,
       conversionHostToDelete,
+      isDeletingConversionHost,
       showConversionHostWizardAction,
       conversionHostWizardMounted,
       hideConversionHostDeleteModalAction,
@@ -33,8 +79,10 @@ class ConversionHostsSettings extends React.Component {
       fetchConversionHostsUrl
     } = this.props;
 
+    const { hasMadeInitialFetch } = this.state;
+
     return (
-      <Spinner loading={isFetchingConversionHosts || isFetchingProviders} style={{ marginTop: 15 }}>
+      <Spinner loading={isFetchingProviders || !hasMadeInitialFetch} style={{ marginTop: 15 }}>
         {!hasSufficientProviders ? (
           <ShowWizardEmptyState
             description={
@@ -47,6 +95,9 @@ class ConversionHostsSettings extends React.Component {
         ) : (
           <React.Fragment>
             <div className="heading-with-link-container">
+              <div className="pull-left">
+                <h3>{__('Configured Conversion Hosts')}</h3>
+              </div>
               <div className="pull-right">
                 <a
                   href="#"
@@ -61,19 +112,20 @@ class ConversionHostsSettings extends React.Component {
                 </a>
               </div>
             </div>
-            {conversionHosts.length === 0 ? (
+            {combinedListItems.length === 0 ? (
               <ConversionHostsEmptyState showConversionHostWizardAction={showConversionHostWizardAction} />
             ) : (
               <ConversionHostsList
-                conversionHosts={conversionHosts}
+                combinedListItems={combinedListItems}
                 deleteConversionHostAction={deleteConversionHostAction}
                 deleteConversionHostActionUrl={deleteConversionHostActionUrl}
                 fetchConversionHostsAction={fetchConversionHostsAction}
                 fetchConversionHostsUrl={fetchConversionHostsUrl}
                 setHostToDeleteAction={setHostToDeleteAction}
                 showConversionHostDeleteModalAction={showConversionHostDeleteModalAction}
-                showConversionHostDeleteModal={showConversionHostDeleteModal}
+                conversionHostDeleteModalVisible={conversionHostDeleteModalVisible}
                 conversionHostToDelete={conversionHostToDelete}
+                isDeletingConversionHost={isDeletingConversionHost}
                 hideConversionHostDeleteModalAction={hideConversionHostDeleteModalAction}
               />
             )}
@@ -94,21 +146,25 @@ ConversionHostsSettings.propTypes = {
   hasSufficientProviders: PropTypes.bool,
   fetchConversionHostsUrl: PropTypes.string,
   fetchConversionHostsAction: PropTypes.func,
-  isFetchingConversionHosts: PropTypes.bool,
-  conversionHosts: PropTypes.arrayOf(PropTypes.object),
+  fetchConversionHostTasksAction: PropTypes.func,
+  fetchConversionHostTasksUrl: PropTypes.string,
+  combinedListItems: PropTypes.arrayOf(PropTypes.object),
   showConversionHostWizardAction: PropTypes.func,
   conversionHostWizardMounted: PropTypes.bool,
   setHostToDeleteAction: PropTypes.func,
   showConversionHostDeleteModalAction: PropTypes.func,
-  showConversionHostDeleteModal: PropTypes.bool,
+  conversionHostDeleteModalVisible: PropTypes.bool,
   conversionHostToDelete: PropTypes.object,
+  isDeletingConversionHost: PropTypes.bool,
   hideConversionHostDeleteModalAction: PropTypes.func
 };
 
 ConversionHostsSettings.defaultProps = {
   deleteConversionHostActionUrl: '/api/conversion_hosts',
   fetchProvidersUrl: FETCH_V2V_PROVIDERS_URL,
-  fetchConversionHostsUrl: '/api/conversion_hosts?attributes=resource&expand=resources'
+  fetchConversionHostsUrl: '/api/conversion_hosts?attributes=resource&expand=resources',
+  fetchConversionHostTasksUrl:
+    '/api/tasks?expand=resources&attributes=id,name,state,status,message,started_on,updated_on,pct_complete&filter[]=name="%25Configuring a conversion_host%25"&sort_by=updated_on&sort_order=descending'
 };
 
 export default ConversionHostsSettings;

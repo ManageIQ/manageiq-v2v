@@ -22,7 +22,7 @@ const Settings = props => {
         </React.Fragment>
       ) : (
         <div style={{ marginTop: 10 }}>
-          <Tabs id="settings-tabs" activeKey={match.path} onSelect={key => redirectTo(key)}>
+          <Tabs id="settings-tabs" activeKey={match.path} onSelect={key => redirectTo(key)} unmountOnExit>
             <Tab eventKey="/settings" title={__('Migration Throttling')}>
               <GeneralSettings />
             </Tab>
