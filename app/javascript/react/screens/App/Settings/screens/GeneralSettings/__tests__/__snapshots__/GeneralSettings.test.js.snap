@@ -18,6 +18,7 @@ exports[`GeneralSettings component renders the general settings page 1`] = `
   >
     <Form
       bsClass="form"
+      className="form-horizontal"
       componentClass="form"
       horizontal={false}
       inline={false}
@@ -27,21 +28,60 @@ exports[`GeneralSettings component renders the general settings page 1`] = `
         }
       }
     >
+      <div>
+        <h3>
+          Concurrent Migrations
+        </h3>
+      </div>
       <FormGroup
         bsClass="form-group"
       >
         <ControlLabel
           bsClass="control-label"
+          className="col-md-5"
           srOnly={false}
         >
-          Maximum concurrent migrations per conversion host
+          <span
+            className="pull-left"
+          >
+            Maximum concurrent migrations per conversion host
+            <OverlayTrigger
+              defaultOverlayShown={false}
+              delay={500}
+              overlay={
+                <Popover
+                  bsClass="popover"
+                  id="maximum_concurrect_migrations_per_provider_popover"
+                  placement="right"
+                >
+                  For VDDK transformations the maximum concurrent migrations per conversion host is limited to 20. See the product documentation for more information.
+                </Popover>
+              }
+              placement="top"
+              rootClose={false}
+              trigger={
+                Array [
+                  "hover",
+                ]
+              }
+            >
+              <Icon
+                name="info"
+                size="md"
+                style={
+                  Object {
+                    "backgroundColor": "transparent",
+                    "padding": 10,
+                    "width": "inherit",
+                  }
+                }
+                type="pf"
+              />
+            </OverlayTrigger>
+          </span>
         </ControlLabel>
         <div
-          style={
-            Object {
-              "width": 100,
-            }
-          }
+          className="col-md-2"
         >
           <Field
             component={[Function]}
@@ -49,11 +89,45 @@ exports[`GeneralSettings component renders the general settings page 1`] = `
             min={1}
             name="max_concurrent_tasks_per_host"
             normalize={[Function]}
+            onChange={[Function]}
           />
         </div>
       </FormGroup>
       <FormGroup
         bsClass="form-group"
+      >
+        <ControlLabel
+          bsClass="control-label"
+          className="col-md-5"
+          srOnly={false}
+        >
+          <div
+            className="pull-left"
+          >
+            Maximum concurrent migrations per provider
+          </div>
+        </ControlLabel>
+        <div
+          className="col-md-2"
+        >
+          <Field
+            component={[Function]}
+            id="max_concurrent_tasks_per_ems"
+            min={1}
+            name="max_concurrent_tasks_per_ems"
+            normalize={[Function]}
+            onChange={[Function]}
+          />
+        </div>
+      </FormGroup>
+      <FormGroup
+        bsClass="form-group"
+        className="col-md-1 pull-left"
+        style={
+          Object {
+            "marginTop": "40px",
+          }
+        }
       >
         <Button
           active={false}
@@ -65,7 +139,6 @@ exports[`GeneralSettings component renders the general settings page 1`] = `
         >
           Apply
         </Button>
-        <br />
       </FormGroup>
     </Form>
   </div>
