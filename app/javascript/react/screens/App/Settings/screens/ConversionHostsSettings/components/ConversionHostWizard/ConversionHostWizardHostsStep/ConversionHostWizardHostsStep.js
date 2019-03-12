@@ -6,8 +6,14 @@ import { Form } from 'patternfly-react';
 import { RHV, OPENSTACK } from '../../../../../../../../../common/constants';
 import TypeAheadSelectField from '../../../../../../common/forms/TypeAheadSelectField';
 import { stepIDs } from '../ConversionHostWizardConstants';
+import { FINISHED } from '../../../ConversionHostsSettingsConstants';
 
-const ConversionHostWizardHostsStep = ({ selectedProviderType, selectedCluster }) => {
+const ConversionHostWizardHostsStep = ({
+  selectedProviderType,
+  selectedCluster,
+  conversionHosts,
+  conversionHostTasksByResource
+}) => {
   let hostOptions = [];
   let emptyLabel = '';
   if (selectedProviderType === RHV) {
@@ -18,6 +24,16 @@ const ConversionHostWizardHostsStep = ({ selectedProviderType, selectedCluster }
     hostOptions = selectedCluster.vms;
     emptyLabel = __('No hosts available for the selected project.');
   }
+  const filteredHostOptions = hostOptions.filter(host => {
+    // Don't allow selection of hosts already configured as conversion hosts
+    if (conversionHosts.some(ch => ch.resource.type === host.type && ch.resource.id === host.id)) return false;
+    // Don't allow selection of hosts in progress of being configured as conversion hosts
+    const tasks = conversionHostTasksByResource;
+    const matchingEnableTasks =
+      tasks && tasks[host.type] && tasks[host.type][host.id] && tasks[host.type][host.id].enable;
+    const enableInProgress = matchingEnableTasks && matchingEnableTasks.some(task => task.state !== FINISHED);
+    return !enableInProgress;
+  });
   return (
     <Form className="form-vertical">
       <Form.FormGroup controlId="host-selection">
@@ -28,7 +44,7 @@ const ConversionHostWizardHostsStep = ({ selectedProviderType, selectedCluster }
           controlId="host-selection"
           multiple
           clearButton
-          options={hostOptions}
+          options={filteredHostOptions}
           labelKey="name"
           placeholder={__('Select one or more hosts...')}
           emptyLabel={hostOptions.length === 0 ? emptyLabel : __('No matches found.')}
@@ -43,7 +59,11 @@ const ConversionHostWizardHostsStep = ({ selectedProviderType, selectedCluster }
 
 ConversionHostWizardHostsStep.propTypes = {
   selectedProviderType: PropTypes.string,
-  selectedCluster: PropTypes.object
+  selectedCluster: PropTypes.object,
+  conversionHosts: PropTypes.arrayOf(PropTypes.object),
+  conversionHostTasksByResource: PropTypes.objectOf(
+    PropTypes.objectOf(PropTypes.objectOf(PropTypes.arrayOf(PropTypes.object)))
+  )
 };
 
 export default reduxForm({
