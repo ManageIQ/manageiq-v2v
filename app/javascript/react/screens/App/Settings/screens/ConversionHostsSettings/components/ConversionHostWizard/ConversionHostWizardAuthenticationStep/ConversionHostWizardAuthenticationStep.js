@@ -39,7 +39,7 @@ const ConversionHostWizardAuthenticationStep = ({ selectedProviderType, selected
       <Field
         {...fieldBaseProps}
         name="conversionHostSshKey"
-        label={__('Conversion Host SSH key')}
+        label={__('Conversion Host SSH private key')}
         component={FormField}
         info={sshKeyInfo}
         controlId="host-ssh-key-input"
@@ -72,7 +72,7 @@ const ConversionHostWizardAuthenticationStep = ({ selectedProviderType, selected
         <Field
           {...fieldBaseProps}
           name="vmwareSshKey"
-          label={__('VMware hypervisors SSH key')}
+          label={__('VMware hypervisors SSH private key')}
           component={FormField}
           controlId="vmware-ssh-key-input"
           required
