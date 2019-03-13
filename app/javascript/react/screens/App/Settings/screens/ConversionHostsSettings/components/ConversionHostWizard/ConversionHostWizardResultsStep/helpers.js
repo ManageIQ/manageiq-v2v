@@ -13,8 +13,8 @@ export const getConfigureConversionHostPostBodies = (locationStepValues, hostsSt
       name: host.name,
       resource_type: host.type,
       resource_id: host.id,
+      ssh_key: authStepValues.conversionHostSshKey.body,
       ...openstackSpecificProperties,
       ...vmwareAuthProperties
     };
-    // TODO: handle authStepValues.conversionHostSshKey.body
   });
