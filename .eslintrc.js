@@ -60,7 +60,8 @@ module.exports = {
     'react/forbid-prop-types': 'off',
     'react/require-default-props': 'off',
     'react/sort-comp': 'off',
-    'standard/computed-property-even-spacing': 'off'
+    'standard/computed-property-even-spacing': 'off',
+    'react/no-danger': 'error'
   },
   parser: 'babel-eslint'
 };
