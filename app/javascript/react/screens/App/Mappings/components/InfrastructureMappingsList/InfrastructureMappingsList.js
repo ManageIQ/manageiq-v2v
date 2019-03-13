@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Immutable from 'seamless-immutable';
 import EllipsisWithTooltip from 'react-ellipsis-with-tooltip';
-import { Button, Icon, ListView, Grid, Toolbar } from 'patternfly-react';
+import { Button, Icon, ListView, Grid, Toolbar, OverlayTrigger, Popover } from 'patternfly-react';
 
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
 import ShowWizardEmptyState from '../../../common/ShowWizardEmptyState/ShowWizardEmptyState';
@@ -88,6 +88,21 @@ class InfrastructureMappingsList extends React.Component {
         </a>
       </div>
     </div>
+  );
+
+  renderMappingErrorsPopoverIcon = (mapping, resourceType) => (
+    <OverlayTrigger
+      rootClose
+      trigger="click"
+      placement="top"
+      overlay={
+        <Popover id={`error-popover-${mapping.name}-${resourceType}`} style={{ width: 400 }}>
+          {__('Infrastructure mapping errors are usually caused by a change in your provider configuration. If the source or target provider has changed you will need to delete this mapping and create a new one.') /* prettier-ignore */}
+        </Popover>
+      }
+    >
+      <Icon type="pf" name="error-circle-o" />
+    </OverlayTrigger>
   );
 
   render() {
@@ -226,7 +241,7 @@ class InfrastructureMappingsList extends React.Component {
                             <ListView.InfoItem key={0} id="networks">
                               {targetNetworks === null ? (
                                 <div className="list-view-pf-expand">
-                                  <Icon type="pf" name="error-circle-o" />
+                                  {this.renderMappingErrorsPopoverIcon(mapping, 'networks')}
                                   {__('Networks missing')}
                                 </div>
                               ) : (
@@ -257,7 +272,7 @@ class InfrastructureMappingsList extends React.Component {
                             <ListView.InfoItem key={1} id="datastores">
                               {targetDatastores === null ? (
                                 <div className="list-view-pf-expand">
-                                  <Icon type="pf" name="error-circle-o" />
+                                  {this.renderMappingErrorsPopoverIcon(mapping, 'datastores')}
                                   {__('Datastores missing')}
                                 </div>
                               ) : (
@@ -288,7 +303,7 @@ class InfrastructureMappingsList extends React.Component {
                             <ListView.InfoItem key={2} id="clusters">
                               {targetClusters === null ? (
                                 <div className="list-view-pf-expand">
-                                  <Icon type="pf" name="error-circle-o" />
+                                  {this.renderMappingErrorsPopoverIcon(mapping, 'clusters')}
                                   {__('Clusters missing')}
                                 </div>
                               ) : (
