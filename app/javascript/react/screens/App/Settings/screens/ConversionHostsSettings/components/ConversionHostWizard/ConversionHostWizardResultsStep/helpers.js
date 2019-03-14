@@ -5,18 +5,16 @@ export const getConfigureConversionHostPostBodies = (locationStepValues, hostsSt
   hostsStepValues.hosts.map(host => {
     const openstackSpecificProperties =
       locationStepValues.providerType === OPENSTACK ? { auth_user: authStepValues.openstackUser } : {};
-    const vddkSpecificProperties =
+    const vmwareAuthProperties =
       authStepValues.transformationMethod === VDDK
-        ? { param_v2v_vddk_package_url: authStepValues.vddkLibraryPath }
-        : {};
+        ? { vmware_vddk_package_url: authStepValues.vddkLibraryPath }
+        : { vmware_ssh_private_key: authStepValues.vmwareSshKey.body };
     return {
       name: host.name,
       resource_type: host.type,
       resource_id: host.id,
+      ssh_key: authStepValues.conversionHostSshKey.body,
       ...openstackSpecificProperties,
-      ...vddkSpecificProperties
+      ...vmwareAuthProperties
     };
-    // TODO: handle authStepValues.conversionHostSshKey
-    // TODO: handle authStepValues.transformationMethod (explicitly?)
-    // TODO: handle authStepValues.vmwareSshKey (if transformationMethod === SSH)
   });
