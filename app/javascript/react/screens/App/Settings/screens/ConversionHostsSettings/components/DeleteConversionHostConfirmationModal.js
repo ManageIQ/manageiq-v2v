@@ -20,10 +20,14 @@ const DeleteConversionHostConfirmationModal = ({
         <Icon type="pf" name="delete" />
       </div>
       <div className="warning-modal-body--list">
-        <h4>
-          {conversionHostToDelete &&
-            sprintf(__('Are you sure you want to remove conversion host %s ?'), conversionHostToDelete.name)}
-        </h4>
+        <h4>{__('Are you sure you want to remove the following conversion host?')}</h4>
+        <div>
+          <ul>
+            <h4>
+              <strong>{conversionHostToDelete && conversionHostToDelete.name}</strong>
+            </h4>
+          </ul>
+        </div>
       </div>
     </Modal.Body>
     <Modal.Footer>
