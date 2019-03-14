@@ -28,7 +28,7 @@ export const parseConversionHostTasksMetadata = tasks => {
   if (!tasks) return [];
   return tasks.map(task => {
     const result = taskNameRegex.exec(task.name);
-    if (!result) return task;
+    if (!result) return { ...task, meta: {} };
     const [, operation, resourceName, resourceType, resourceId] = result;
     return {
       ...task,
