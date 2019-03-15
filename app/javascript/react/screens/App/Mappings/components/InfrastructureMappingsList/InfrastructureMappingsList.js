@@ -97,7 +97,7 @@ class InfrastructureMappingsList extends React.Component {
       placement="top"
       overlay={
         <Popover id={`error-popover-${mapping.name}-${resourceType}`} style={{ width: 400 }}>
-          {__('Infrastructure mapping errors are usually caused by a change in your provider configuration. If the source or target provider has changed you will need to delete this mapping and create a new one.') /* prettier-ignore */}
+          {__('Missing elements may indicate a change in your provider configuration. If you change the source or target provider, delete this mapping and create a new one.') /* prettier-ignore */}
         </Popover>
       }
     >

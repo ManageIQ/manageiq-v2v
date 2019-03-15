@@ -409,7 +409,7 @@ class PlanRequestDetailList extends React.Component {
                           eventKey="preMigration"
                           disabled={downloadLogInProgressTaskIds && downloadLogInProgressTaskIds.indexOf(task.id) > -1}
                         >
-                          {__('Pre-migration log')}
+                          {__('Premigration log')}
                         </MenuItem>
                       )}
                       <MenuItem
@@ -429,7 +429,7 @@ class PlanRequestDetailList extends React.Component {
                           eventKey="postMigration"
                           disabled={downloadLogInProgressTaskIds && downloadLogInProgressTaskIds.indexOf(task.id) > -1}
                         >
-                          {__('Post-migration log')}
+                          {__('Postmigration log')}
                         </MenuItem>
                       )}
                     </DropdownButton>
