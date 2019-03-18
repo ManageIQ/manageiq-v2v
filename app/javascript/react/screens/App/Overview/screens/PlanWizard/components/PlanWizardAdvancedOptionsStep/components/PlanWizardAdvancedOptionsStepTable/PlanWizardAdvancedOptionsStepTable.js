@@ -194,7 +194,7 @@ class PlanWizardAdvancedOptionsStepTable extends React.Component {
       {
         property: 'preMigration',
         header: {
-          label: __('Pre-Migration Service'),
+          label: __('Premigration Service'),
           props: {
             index: 0,
             rowSpan: 1,
@@ -223,7 +223,7 @@ class PlanWizardAdvancedOptionsStepTable extends React.Component {
       {
         property: 'postMigration',
         header: {
-          label: __('Post-Migration Service'),
+          label: __('Postmigration Service'),
           props: {
             index: 1,
             rowSpan: 1,

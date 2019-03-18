@@ -54,7 +54,7 @@ class PlanWizardAdvancedOptionsStep extends Component {
             options={playbooks}
             option_key="id"
             option_value="name"
-            label={__('Select pre-migration playbook service (optional)')}
+            label={__('Select premigration playbook service (optional)')}
             stacked_label
             controlWidth={12}
             allowClear
@@ -66,7 +66,7 @@ class PlanWizardAdvancedOptionsStep extends Component {
             options={playbooks}
             option_key="id"
             option_value="name"
-            label={__('Select post-migration playbook service (optional)')}
+            label={__('Select postmigration playbook service (optional)')}
             stacked_label
             controlWidth={12}
             allowClear
