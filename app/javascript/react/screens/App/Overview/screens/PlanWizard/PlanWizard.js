@@ -152,7 +152,7 @@ class PlanWizard extends React.Component {
 
       showConfirmModalAction({
         title: __('No VMs Selected'),
-        body: __("You've selected a pre-migration or post-migration playbook service but no VMs on which to run the playbook service. Are you sure you want to continue?"), // prettier-ignore
+        body: __("You've selected a premigration or postmigration playbook service but no VMs on which to run the playbook service. Are you sure you want to continue?"), // prettier-ignore
         icon: <Icon className="confirm-warning-icon" type="pf" name="warning-triangle-o" />,
         confirmButtonLabel: __('Continue'),
         dialogClassName: 'plan-wizard-confirm-modal',
