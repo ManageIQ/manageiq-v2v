@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form } from 'patternfly-react';
+import { Form, FormControl, HelpBlock, InputGroup } from 'patternfly-react';
 
 class TextInputWithCheckbox extends React.Component {
   constructor(props) {
@@ -11,18 +11,24 @@ class TextInputWithCheckbox extends React.Component {
   }
 
   render() {
-    const {
-      id,
-      label,
-      input: { value, onChange },
-      postfix
-    } = this.props;
+    const { id, label, input, postfix, initialUncheckedValue, meta } = this.props;
 
-    const onCheckboxChange = event => this.setState({ inputEnabled: event.target.checked });
+    const onCheckboxChange = event => {
+      if (event.target.checked) {
+        if (meta.initial === initialUncheckedValue) {
+          input.onChange(0);
+        } else {
+          input.onChange(meta.initial);
+        }
+      } else {
+        input.onChange(initialUncheckedValue);
+      }
+      this.setState({ inputEnabled: event.target.checked });
+    };
 
     return (
-      <Form.FormGroup>
-        <Form.ControlLabel className="col-md-4">
+      <Form.FormGroup validationState={meta.error ? 'error' : undefined}>
+        <Form.ControlLabel className="col-md-5">
           <div className="checkbox-inline pull-left">
             <label>
               <input
@@ -37,18 +43,11 @@ class TextInputWithCheckbox extends React.Component {
           </div>
         </Form.ControlLabel>
         <div className="col-md-2">
-          <div className="input-group">
-            <input
-              type="text"
-              className="form-control"
-              name={id}
-              id={id}
-              defaultValue={value}
-              readOnly={!this.state.inputEnabled}
-              onChange={event => onChange(event.target.value)}
-            />
-            <div className="input-group-addon postfix-label">{postfix}</div>
-          </div>
+          <InputGroup>
+            <FormControl type="text" name={id} id={id} readOnly={!this.state.inputEnabled} {...input} />
+            <InputGroup.Addon>{postfix}</InputGroup.Addon>
+          </InputGroup>
+          {this.state.inputEnabled && meta.error && <HelpBlock>{meta.error}</HelpBlock>}
         </div>
       </Form.FormGroup>
     );
@@ -63,9 +62,9 @@ TextInputWithCheckbox.propTypes = {
   }),
   label: PropTypes.string.isRequired,
   postfix: PropTypes.string,
-  inputEnabledFunction: PropTypes.func.isRequired
+  inputEnabledFunction: PropTypes.func.isRequired,
+  initialUncheckedValue: PropTypes.string,
+  meta: PropTypes.object
 };
-
-TextInputWithCheckbox.normalizeStringToInt = str => (str && parseInt(str.replace(/\D/g, ''), 10)) || 0;
 
 export default TextInputWithCheckbox;
