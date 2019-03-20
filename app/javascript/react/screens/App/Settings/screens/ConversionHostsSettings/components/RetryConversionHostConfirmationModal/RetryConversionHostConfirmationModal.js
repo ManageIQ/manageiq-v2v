@@ -54,8 +54,7 @@ const RetryConversionHostConfirmationModal = ({
         <Form className="form-horizontal">
           <ul>
             <p>
-              {__('For your security, private SSH keys from the configuration wizard were not saved.')} <br />
-              {__('Re-enter the necessary authentication details to retry configuration of the following conversion host:') /* prettier-ignore */}
+              {__('For your security, SSH private keys from the configuration wizard were not saved. Re-enter the necessary authentication details to retry configuration of the following conversion host:') /* prettier-ignore */}
             </p>
           </ul>
           <Form.FormGroup>
@@ -94,6 +93,7 @@ const RetryConversionHostConfirmationModal = ({
               controlId="vmware-ssh-key-input"
               required
               validate={[bodyIsRequired]}
+              style={{ marginTop: 25 }}
             >
               {({ input: { value, onChange, onBlur } }) => (
                 <TextFileInput
