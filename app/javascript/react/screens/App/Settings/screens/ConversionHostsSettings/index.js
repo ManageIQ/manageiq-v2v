@@ -11,9 +11,7 @@ import {
   showConversionHostDeleteModalAction,
   hideConversionHostDeleteModalAction,
   setConversionHostTaskToRetryAction,
-  showConversionHostRetryModalAction,
-  hideConversionHostRetryModalAction,
-  postConversionHostsAction
+  showConversionHostRetryModalAction
 } from '../../SettingsActions';
 
 import { getCombinedConversionHostListItems } from '../../helpers';
@@ -30,8 +28,6 @@ const mapStateToProps = (
       conversionHostToDelete,
       isDeletingConversionHost,
       conversionHostRetryModalMounted,
-      conversionHostRetryModalVisible,
-      conversionHostTaskToRetry,
       isPostingConversionHosts
     }
   },
@@ -49,8 +45,6 @@ const mapStateToProps = (
   conversionHostToDelete,
   isDeletingConversionHost,
   conversionHostRetryModalMounted,
-  conversionHostRetryModalVisible,
-  conversionHostTaskToRetry,
   isPostingConversionHosts,
   ...ownProps.data
 });
@@ -69,9 +63,7 @@ export default connect(
     showConversionHostDeleteModalAction,
     hideConversionHostDeleteModalAction,
     setConversionHostTaskToRetryAction,
-    showConversionHostRetryModalAction,
-    hideConversionHostRetryModalAction,
-    postConversionHostsAction
+    showConversionHostRetryModalAction
   },
   mergeProps
 )(ConversionHostsSettings);

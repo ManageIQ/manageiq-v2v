@@ -78,13 +78,9 @@ class ConversionHostsSettings extends React.Component {
       fetchConversionHostsAction,
       fetchConversionHostsUrl,
       conversionHostRetryModalMounted,
-      conversionHostRetryModalVisible,
-      conversionHostTaskToRetry,
       isPostingConversionHosts,
       setConversionHostTaskToRetryAction,
       showConversionHostRetryModalAction,
-      hideConversionHostRetryModalAction,
-      postConversionHostsAction,
       postConversionHostsUrl
     } = this.props;
 
@@ -137,13 +133,9 @@ class ConversionHostsSettings extends React.Component {
                 isDeletingConversionHost={isDeletingConversionHost}
                 hideConversionHostDeleteModalAction={hideConversionHostDeleteModalAction}
                 conversionHostRetryModalMounted={conversionHostRetryModalMounted}
-                conversionHostRetryModalVisible={conversionHostRetryModalVisible}
-                conversionHostTaskToRetry={conversionHostTaskToRetry}
                 isPostingConversionHosts={isPostingConversionHosts}
                 setConversionHostTaskToRetryAction={setConversionHostTaskToRetryAction}
                 showConversionHostRetryModalAction={showConversionHostRetryModalAction}
-                hideConversionHostRetryModalAction={hideConversionHostRetryModalAction}
-                postConversionHostsAction={postConversionHostsAction}
                 postConversionHostsUrl={postConversionHostsUrl}
               />
             )}
@@ -182,6 +174,7 @@ ConversionHostsSettings.propTypes = {
   setConversionHostTaskToRetryAction: PropTypes.func,
   showConversionHostRetryModalAction: PropTypes.func,
   hideConversionHostRetryModalAction: PropTypes.func,
+  conversionHostRetryModalExitedAction: PropTypes.func,
   postConversionHostsAction: PropTypes.func
 };
 

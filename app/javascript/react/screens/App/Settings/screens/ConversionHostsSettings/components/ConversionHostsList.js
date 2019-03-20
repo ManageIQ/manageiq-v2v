@@ -17,13 +17,9 @@ const ConversionHostsList = ({
   showConversionHostDeleteModalAction,
   isDeletingConversionHost,
   conversionHostRetryModalMounted,
-  conversionHostRetryModalVisible,
-  conversionHostTaskToRetry,
   isPostingConversionHosts,
   setConversionHostTaskToRetryAction,
   showConversionHostRetryModalAction,
-  hideConversionHostRetryModalAction,
-  postConversionHostsAction,
   postConversionHostsUrl
 }) => (
   <React.Fragment>
@@ -81,14 +77,7 @@ const ConversionHostsList = ({
       isDeletingConversionHost={isDeletingConversionHost}
     />
     {conversionHostRetryModalMounted && (
-      <RetryConversionHostConfirmationModal
-        show={conversionHostRetryModalVisible}
-        conversionHostTaskToRetry={conversionHostTaskToRetry}
-        isPostingConversionHosts={isPostingConversionHosts}
-        hideConversionHostRetryModalAction={hideConversionHostRetryModalAction}
-        postConversionHostsAction={postConversionHostsAction}
-        postConversionHostsUrl={postConversionHostsUrl}
-      />
+      <RetryConversionHostConfirmationModal postConversionHostsUrl={postConversionHostsUrl} />
     )}
   </React.Fragment>
 );
@@ -104,13 +93,9 @@ ConversionHostsList.propTypes = {
   showConversionHostDeleteModalAction: PropTypes.func,
   isDeletingConversionHost: PropTypes.bool,
   conversionHostRetryModalMounted: PropTypes.bool,
-  conversionHostRetryModalVisible: PropTypes.bool,
-  conversionHostTaskToRetry: PropTypes.object,
   isPostingConversionHosts: PropTypes.bool,
   setConversionHostTaskToRetryAction: PropTypes.func,
   showConversionHostRetryModalAction: PropTypes.func,
-  hideConversionHostRetryModalAction: PropTypes.func,
-  postConversionHostsAction: PropTypes.func,
   postConversionHostsUrl: PropTypes.string
 };
 
