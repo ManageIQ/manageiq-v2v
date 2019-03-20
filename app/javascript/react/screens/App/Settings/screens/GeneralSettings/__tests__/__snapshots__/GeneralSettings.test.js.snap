@@ -117,6 +117,34 @@ exports[`GeneralSettings component renders the general settings page 1`] = `
       </FormGroup>
       <FormGroup
         bsClass="form-group"
+      />
+      <div>
+        <h3>
+          Resource Utilization Limits for Migrations
+        </h3>
+      </div>
+      <Field
+        component={[Function]}
+        id="cpu_limit_per_host"
+        initialUncheckedValue="unlimited"
+        inputEnabledFunction={[Function]}
+        label="Max CPU utilization per conversion host"
+        name="cpu_limit_per_host"
+        postfix="％"
+        validate={[Function]}
+      />
+      <Field
+        component={[Function]}
+        id="network_limit_per_host"
+        initialUncheckedValue="unlimited"
+        inputEnabledFunction={[Function]}
+        label="Total network throughput"
+        name="network_limit_per_host"
+        postfix="MB/s"
+        validate={[Function]}
+      />
+      <FormGroup
+        bsClass="form-group"
         className="col-md-1 pull-left"
         style={
           Object {

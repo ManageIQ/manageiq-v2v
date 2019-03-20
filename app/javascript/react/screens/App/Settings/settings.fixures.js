@@ -19,7 +19,9 @@ export const settings = Immutable({
   transformation: {
     limits: {
       max_concurrent_tasks_per_host: 10,
-      max_concurrent_tasks_per_ems: 10
+      max_concurrent_tasks_per_ems: 10,
+      cpu_limit_per_host: 10,
+      network_limit_per_host: 10
     }
   },
   otherSettings: {
