@@ -5,7 +5,7 @@ import { required } from 'redux-form-validators';
 import { Button, Modal, Form, Grid } from 'patternfly-react';
 import TextFileInput from '../../../../../common/forms/TextFileInput';
 import { FormField } from '../../../../../common/forms/FormField';
-import { V2V_TARGET_PROVIDERS, OPENSTACK, RHV } from '../../../../../../../../common/constants';
+import { OPENSTACK, RHV, CONVERSION_HOST_TYPES } from '../../../../../../../../common/constants';
 
 const requiredWithMessage = required({ msg: __('This field is required') });
 const bodyIsRequired = value => requiredWithMessage(value.body);
@@ -26,7 +26,11 @@ const RetryConversionHostConfirmationModal = ({
     conversionHostTaskToRetry.context_data &&
     conversionHostTaskToRetry.context_data.request_params;
   const isUsingSshTransformation = !requestParams.vmware_vddk_package_url;
-  const selectedProviderType = V2V_TARGET_PROVIDERS.find(provider => provider.type === requestParams.resource_type).id;
+
+  const selectedProviderType = Object.keys(CONVERSION_HOST_TYPES).find(
+    key => CONVERSION_HOST_TYPES[key] === requestParams.resource_type
+  );
+
   // TODO dedupe this from the auth step of the wizard:
   let sshKeyInfo = '';
   if (selectedProviderType === RHV) {
@@ -115,8 +119,11 @@ const RetryConversionHostConfirmationModal = ({
           bsStyle="primary"
           disabled={formHasErrors || isPostingConversionHosts}
           onClick={() => {
-            const postBody = { ...conversionHostTaskToRetry.context_data.request_params };
-            // TODO also pass the two SSH keys
+            const postBody = {
+              ...conversionHostTaskToRetry.context_data.request_params,
+              conversion_host_ssh_private_key: retryForm.values.conversionHostSshKey.body,
+              ...(isUsingSshTransformation ? { vmware_ssh_private_key: retryForm.values.vmwareSshKey.body } : {})
+            };
             postConversionHostsAction(postConversionHostsUrl, [postBody]);
           }}
         >
@@ -146,7 +153,8 @@ export default reduxForm({
   }
 })(RetryConversionHostConfirmationModal);
 
-// TODO add the keys to the request
+// TODO close the modal when done? in reducer maybe?
+
 // TODO prevent Retry button in the list view from appearing if there is no context_data.request_params
 // TODO dedupe the sshKeyInfo, and maybe even the actual fields, abstracted along with the auth step of the wizard
 // TODO refactor the whole list view to be in its own folder with an index.js
