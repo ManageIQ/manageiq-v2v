@@ -124,7 +124,7 @@ const RetryConversionHostConfirmationModal = ({
               conversion_host_ssh_private_key: retryForm.values.conversionHostSshKey.body,
               ...(isUsingSshTransformation ? { vmware_ssh_private_key: retryForm.values.vmwareSshKey.body } : {})
             };
-            postConversionHostsAction(postConversionHostsUrl, [postBody]);
+            postConversionHostsAction(postConversionHostsUrl, [postBody]).then(hideConversionHostRetryModalAction);
           }}
         >
           {__('Retry')}
