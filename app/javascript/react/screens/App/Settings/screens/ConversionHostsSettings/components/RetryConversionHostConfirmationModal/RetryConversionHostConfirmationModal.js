@@ -153,8 +153,5 @@ export default reduxForm({
   }
 })(RetryConversionHostConfirmationModal);
 
-// TODO close the modal when done? in reducer maybe?
-
-// TODO prevent Retry button in the list view from appearing if there is no context_data.request_params
 // TODO dedupe the sshKeyInfo, and maybe even the actual fields, abstracted along with the auth step of the wizard
 // TODO refactor the whole list view to be in its own folder with an index.js

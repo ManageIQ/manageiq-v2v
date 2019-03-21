@@ -72,16 +72,18 @@ const ConversionHostsListItem = ({
   let actionButtons;
   if (isTask) {
     const removeButton = <Button disabled={mostRecentTask.state !== FINISHED}>{__('Remove') /* TODO */}</Button>;
+    const taskHasRequestParams = mostRecentTask.context_data && mostRecentTask.context_data.request_params;
     actionButtons = (
       <React.Fragment>
-        {mostRecentTask.status === ERROR && (
-          <ConversionHostRetryButton
-            task={listItem}
-            setConversionHostTaskToRetryAction={setConversionHostTaskToRetryAction}
-            showConversionHostRetryModalAction={showConversionHostRetryModalAction}
-            disabled={isPostingConversionHosts}
-          />
-        )}
+        {mostRecentTask.status === ERROR &&
+          taskHasRequestParams && (
+            <ConversionHostRetryButton
+              task={mostRecentTask}
+              setConversionHostTaskToRetryAction={setConversionHostTaskToRetryAction}
+              showConversionHostRetryModalAction={showConversionHostRetryModalAction}
+              disabled={isPostingConversionHosts}
+            />
+          )}
         {(mostRecentTask.state !== FINISHED || removeFailedTaskSupported) &&
           removeButton /* when supported, always render. currently only renders when it will be disabled */}
       </React.Fragment>
