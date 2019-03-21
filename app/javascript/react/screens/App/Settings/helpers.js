@@ -96,3 +96,13 @@ export const getCombinedConversionHostListItems = (conversionHosts, tasksWithMet
   const conversionHostsWithTasks = attachTasksToConversionHosts(conversionHosts, tasksByResource);
   return [...activeEnableTasks, ...conversionHostsWithTasks];
 };
+
+export const getConversionHostSshKeyInfoMessage = selectedProviderType => {
+  if (selectedProviderType === RHV) {
+    return __('RHV-M deploys a common SSH public key on all hosts when configuring them. This allows commands and playbooks to be run from RHV-M. The associated private key is in the file /etc/pki/ovirt-engine/keys/engine_id_rsa on RHV-M.'); // prettier-ignore
+  }
+  if (selectedProviderType === OPENSTACK) {
+    return __('This is the private key file used to connect to the conversion host instance for the OpenStack User.');
+  }
+  return '';
+};

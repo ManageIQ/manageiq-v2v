@@ -3,23 +3,16 @@ import PropTypes from 'prop-types';
 import { reduxForm, Field } from 'redux-form';
 import { required } from 'redux-form-validators';
 import { Form } from 'patternfly-react';
-import TextFileInput from '../../../../../../common/forms/TextFileInput';
 import { stepIDs, VDDK, SSH } from '../ConversionHostWizardConstants';
 import { FormField } from '../../../../../../common/forms/FormField';
-import { RHV, OPENSTACK } from '../../../../../../../../../common/constants';
+import { OPENSTACK } from '../../../../../../../../../common/constants';
 import { BootstrapSelect } from '../../../../../../common/forms/BootstrapSelect';
+import SshKeyField from '../../../../../../common/forms/SshKeyField';
+import { getConversionHostSshKeyInfoMessage } from '../../../../../helpers';
 
 const requiredWithMessage = required({ msg: __('This field is required') });
 
 const ConversionHostWizardAuthenticationStep = ({ selectedProviderType, selectedTransformationMethod }) => {
-  let sshKeyInfo = '';
-  if (selectedProviderType === RHV) {
-    sshKeyInfo = __('RHV-M deploys a common SSH public key on all hosts when configuring them. This allows commands and playbooks to be run from RHV-M. The associated private key is in the file /etc/pki/ovirt-engine/keys/engine_id_rsa on RHV-M.'); // prettier-ignore
-  }
-  if (selectedProviderType === OPENSTACK) {
-    sshKeyInfo = __('This is the private key file used to connect to the conversion host instance for the OpenStack User.'); // prettier-ignore
-  }
-
   const fieldBaseProps = { labelWidth: 4, controlWidth: 7 };
 
   return (
@@ -36,25 +29,13 @@ const ConversionHostWizardAuthenticationStep = ({ selectedProviderType, selected
           validate={[requiredWithMessage]}
         />
       )}
-      <Field
+      <SshKeyField
         {...fieldBaseProps}
         name="conversionHostSshKey"
         label={__('Conversion Host SSH private key')}
-        component={FormField}
-        info={sshKeyInfo}
         controlId="host-ssh-key-input"
-        required
-        validate={[value => requiredWithMessage(value.body)]}
-      >
-        {({ input: { value, onChange, onBlur } }) => (
-          <TextFileInput
-            help={__('Upload your SSH key file or paste its contents below.')}
-            value={value}
-            onChange={onChange}
-            onBlur={onBlur}
-          />
-        )}
-      </Field>
+        info={getConversionHostSshKeyInfoMessage(selectedProviderType)}
+      />
       <Field
         {...fieldBaseProps}
         name="transformationMethod"
@@ -69,24 +50,12 @@ const ConversionHostWizardAuthenticationStep = ({ selectedProviderType, selected
         style={{ marginTop: 25 }}
       />
       {selectedTransformationMethod === SSH && (
-        <Field
+        <SshKeyField
           {...fieldBaseProps}
           name="vmwareSshKey"
           label={__('VMware hypervisors SSH private key')}
-          component={FormField}
           controlId="vmware-ssh-key-input"
-          required
-          validate={[value => requiredWithMessage(value.body)]}
-        >
-          {({ input: { value, onChange, onBlur } }) => (
-            <TextFileInput
-              help={__('Upload your SSH key file or paste its contents below.')}
-              value={value}
-              onChange={onChange}
-              onBlur={onBlur}
-            />
-          )}
-        </Field>
+        />
       )}
       {selectedTransformationMethod === VDDK && (
         <Field

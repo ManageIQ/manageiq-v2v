@@ -1,14 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { reduxForm, Field } from 'redux-form';
-import { required } from 'redux-form-validators';
+import { reduxForm } from 'redux-form';
 import { Button, Modal, Form, Grid } from 'patternfly-react';
-import TextFileInput from '../../../../../common/forms/TextFileInput';
-import { FormField } from '../../../../../common/forms/FormField';
-import { OPENSTACK, RHV, CONVERSION_HOST_TYPES } from '../../../../../../../../common/constants';
+import { CONVERSION_HOST_TYPES } from '../../../../../../../../common/constants';
+import SshKeyField from '../../../../../common/forms/SshKeyField';
+import { getConversionHostSshKeyInfoMessage } from '../../../../helpers';
 
-const requiredWithMessage = required({ msg: __('This field is required') });
-const bodyIsRequired = value => requiredWithMessage(value.body);
 const fieldBaseProps = { labelWidth: 4, controlWidth: 7 };
 
 const RetryConversionHostConfirmationModal = ({
@@ -30,16 +27,6 @@ const RetryConversionHostConfirmationModal = ({
   const selectedProviderType = Object.keys(CONVERSION_HOST_TYPES).find(
     key => CONVERSION_HOST_TYPES[key] === requestParams.resource_type
   );
-
-  // TODO dedupe this from the auth step of the wizard:
-  let sshKeyInfo = '';
-  if (selectedProviderType === RHV) {
-    sshKeyInfo = __('RHV-M deploys a common SSH public key on all hosts when configuring them. This allows commands and playbooks to be run from RHV-M. The associated private key is in the file /etc/pki/ovirt-engine/keys/engine_id_rsa on RHV-M.'); // prettier-ignore
-  }
-  if (selectedProviderType === OPENSTACK) {
-    sshKeyInfo = __('This is the private key file used to connect to the conversion host instance for the OpenStack User.'); // prettier-ignore
-  }
-
   const formHasErrors = retryForm && !!retryForm.syncErrors;
 
   return (
@@ -69,45 +56,21 @@ const RetryConversionHostConfirmationModal = ({
               {conversionHostTaskToRetry.name}
             </Grid.Col>
           </Form.FormGroup>
-          <Field
+          <SshKeyField
             {...fieldBaseProps}
             name="conversionHostSshKey"
             label={__('Conversion Host SSH private key')}
-            component={FormField}
-            info={sshKeyInfo}
             controlId="host-ssh-key-input"
-            required
-            validate={[bodyIsRequired]}
-          >
-            {({ input: { value, onChange, onBlur } }) => (
-              <TextFileInput
-                help={__('Upload your SSH key file or paste its contents below.')}
-                value={value}
-                onChange={onChange}
-                onBlur={onBlur}
-              />
-            )}
-          </Field>
+            info={getConversionHostSshKeyInfoMessage(selectedProviderType)}
+          />
           {isUsingSshTransformation && (
-            <Field
+            <SshKeyField
               {...fieldBaseProps}
               name="vmwareSshKey"
               label={__('VMware hypervisors SSH private key')}
-              component={FormField}
               controlId="vmware-ssh-key-input"
-              required
-              validate={[bodyIsRequired]}
               style={{ marginTop: 25 }}
-            >
-              {({ input: { value, onChange, onBlur } }) => (
-                <TextFileInput
-                  help={__('Upload your SSH key file or paste its contents below.')}
-                  value={value}
-                  onChange={onChange}
-                  onBlur={onBlur}
-                />
-              )}
-            </Field>
+            />
           )}
         </Form>
       </Modal.Body>
@@ -153,5 +116,4 @@ export default reduxForm({
   }
 })(RetryConversionHostConfirmationModal);
 
-// TODO dedupe the sshKeyInfo, and maybe even the actual fields, abstracted along with the auth step of the wizard
 // TODO refactor the whole list view to be in its own folder with an index.js
