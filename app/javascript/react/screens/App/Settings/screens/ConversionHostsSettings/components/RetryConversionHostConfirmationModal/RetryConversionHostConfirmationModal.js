@@ -115,5 +115,3 @@ export default reduxForm({
     vmwareSshKey: { filename: '', body: '' }
   }
 })(RetryConversionHostConfirmationModal);
-
-// TODO refactor the whole list view to be in its own folder with an index.js

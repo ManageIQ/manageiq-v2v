@@ -85,7 +85,7 @@ const ConversionHostsListItem = ({
             />
           )}
         {(mostRecentTask.state !== FINISHED || removeFailedTaskSupported) &&
-          removeButton /* when supported, always render. currently only renders when it will be disabled */}
+          removeButton /* currently only renders when it will be disabled. once removeFailedTaskSupported is true / removed, this button should always render. */}
       </React.Fragment>
     );
   } else {
