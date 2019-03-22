@@ -168,14 +168,10 @@ ConversionHostsSettings.propTypes = {
   isDeletingConversionHost: PropTypes.bool,
   hideConversionHostDeleteModalAction: PropTypes.func,
   conversionHostRetryModalMounted: PropTypes.bool,
-  conversionHostRetryModalVisible: PropTypes.bool,
-  conversionHostTaskToRetry: PropTypes.object,
   isPostingConversionHosts: PropTypes.bool,
   setConversionHostTaskToRetryAction: PropTypes.func,
   showConversionHostRetryModalAction: PropTypes.func,
-  hideConversionHostRetryModalAction: PropTypes.func,
-  conversionHostRetryModalExitedAction: PropTypes.func,
-  postConversionHostsAction: PropTypes.func
+  postConversionHostsUrl: PropTypes.string
 };
 
 ConversionHostsSettings.defaultProps = {
