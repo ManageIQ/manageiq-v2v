@@ -4,16 +4,16 @@ import { V2V_VALIDATE_VMS } from '../PlanWizardVMStepConstants';
 describe('VM validation', () => {
   const payload1 = {
     data: {
-      valid: [{ id: '1', name: 'vm_1' }],
-      invalid: [{ id: '2', name: 'vm_2' }],
-      conflicted: [{ id: '3', name: 'vm_3' }]
+      valid: [{ id: '1', name: 'vm_1', path: 'some/path' }],
+      invalid: [{ id: '2', name: 'vm_2', path: 'some/path' }],
+      conflicted: [{ id: '3', name: 'vm_3', path: 'some/path' }]
     }
   };
   const payload2 = {
     data: {
-      valid: [{ id: '4', name: 'vm_4' }],
-      invalid: [{ id: '5', name: 'vm_5' }],
-      conflicted: [{ id: '6', name: 'vm_6' }]
+      valid: [{ id: '4', name: 'vm_4', path: 'some/path' }],
+      invalid: [{ id: '5', name: 'vm_5', path: 'some/path' }],
+      conflicted: [{ id: '6', name: 'vm_6', path: 'some/path' }]
     }
   };
 
@@ -44,7 +44,7 @@ describe('VM validation', () => {
     expect(state.conflict_vms.map(vm => vm.id)).toEqual(['3']);
   });
 
-  it('is fulfilled with attached CSV metadata', () => {
+  it('is fulfilled with attached CSV and path metadata', () => {
     const meta = {
       csvRows: [
         { name: 'vm_1', someArbitraryField: 'value_1' },
@@ -61,6 +61,9 @@ describe('VM validation', () => {
     expect(state.valid_vms.map(vm => vm.csvFields.someArbitraryField)).toEqual(['value_1']);
     expect(state.invalid_vms.map(vm => vm.csvFields.someArbitraryField)).toEqual(['value_2']);
     expect(state.conflict_vms.map(vm => vm.csvFields.someArbitraryField)).toEqual(['value_3']);
+    expect(state.valid_vms[0].provider).toBe('some');
+    expect(state.valid_vms[0].datacenter).toBe('path');
+    expect(state.valid_vms[0].folder).toBe('/');
   });
 
   it('is fulfilled combining two concurrent requests', () => {
