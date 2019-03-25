@@ -77,15 +77,21 @@ class PlanWizardVMStepTable extends React.Component {
         filterType: 'text'
       },
       {
-        id: 'cluster',
-        title: __('Source Cluster'),
-        placeholder: __('Filter by Source Cluster'),
+        id: 'datacenter',
+        title: __('Datacenter'),
+        placeholder: __('Filter by Datacenter'),
         filterType: 'text'
       },
       {
-        id: 'path',
-        title: __('Path'),
-        placeholder: __('Filter by Path'),
+        id: 'cluster',
+        title: __('Cluster'),
+        placeholder: __('Filter by Cluster'),
+        filterType: 'text'
+      },
+      {
+        id: 'folder',
+        title: __('Folder'),
+        placeholder: __('Filter by Folder'),
         filterType: 'text'
       }
     ];
@@ -173,6 +179,7 @@ class PlanWizardVMStepTable extends React.Component {
             ]
           }
         },
+        // VM Name, Datacenter, Cluster, Folder
         {
           property: 'name',
           header: {
@@ -188,37 +195,17 @@ class PlanWizardVMStepTable extends React.Component {
           },
           cell: {
             props: {
-              index: 1
-            },
-            formatters: [Table.tableCellFormatter]
-          }
-        },
-        {
-          property: 'cluster',
-          header: {
-            label: __('Source Cluster'),
-            props: {
-              index: 3,
-              rowSpan: 1,
-              colSpan: 1
-            },
-            transforms: [sortableTransform],
-            formatters: [sortingFormatter],
-            customFormatters: [Table.sortableHeaderCellFormatter]
-          },
-          cell: {
-            props: {
               index: 2
             },
             formatters: [Table.tableCellFormatter]
           }
         },
         {
-          property: 'path',
+          property: 'datacenter',
           header: {
-            label: __('Path'),
+            label: __('Datacenter'),
             props: {
-              index: 4,
+              index: 3,
               rowSpan: 1,
               colSpan: 1
             },
@@ -234,9 +221,29 @@ class PlanWizardVMStepTable extends React.Component {
           }
         },
         {
-          property: 'allocated_size',
+          property: 'cluster',
           header: {
-            label: __('Allocated Size'),
+            label: __('Cluster'),
+            props: {
+              index: 4,
+              rowSpan: 1,
+              colSpan: 1
+            },
+            transforms: [sortableTransform],
+            formatters: [sortingFormatter],
+            customFormatters: [Table.sortableHeaderCellFormatter]
+          },
+          cell: {
+            props: {
+              index: 4
+            },
+            formatters: [Table.tableCellFormatter]
+          }
+        },
+        {
+          property: 'folder',
+          header: {
+            label: __('Folder'),
             props: {
               index: 5,
               rowSpan: 1,
@@ -248,7 +255,7 @@ class PlanWizardVMStepTable extends React.Component {
           },
           cell: {
             props: {
-              index: 4
+              index: 5
             },
             formatters: [Table.tableCellFormatter]
           }
