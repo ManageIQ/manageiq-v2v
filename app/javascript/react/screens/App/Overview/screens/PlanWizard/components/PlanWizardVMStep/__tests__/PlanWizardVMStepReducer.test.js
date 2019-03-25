@@ -66,6 +66,19 @@ describe('VM validation', () => {
     expect(state.valid_vms[0].folder).toBe('/');
   });
 
+  it('is fulfilled with path metadata even when there is no CSV metadata', () => {
+    const meta = {};
+    const action = { type: `${V2V_VALIDATE_VMS}_FULFILLED`, payload: payload1, meta };
+    const prevState = initialState
+      .set('isRejectedValidatingVms', true)
+      .set('isValidatingVms', true)
+      .set('numPendingValidationRequests', 1);
+    const state = planWizardVMStepReducer(prevState, action);
+    expect(state.valid_vms[0].provider).toBe('some');
+    expect(state.valid_vms[0].datacenter).toBe('path');
+    expect(state.valid_vms[0].folder).toBe('/');
+  });
+
   it('is fulfilled combining two concurrent requests', () => {
     const meta = { combineRequests: true };
     const action1 = { type: `${V2V_VALIDATE_VMS}_FULFILLED`, payload: payload1, meta };
