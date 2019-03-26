@@ -293,6 +293,14 @@ class PlanRequestDetailList extends React.Component {
                       <b>{__('Conversion Host')}: </b>
                       {conversionHosts[task.id] && conversionHosts[task.id].name}
                     </div>
+                    <br />
+                    <div>
+                      <strong>{__('Status Detail')}: </strong>
+                      {task.options.progress &&
+                        task.options.progress.current_state &&
+                        task.options.progress.states &&
+                        task.options.progress.states[task.options.progress.current_state].message}
+                    </div>
                     {task.log_available && (
                       <div>
                         <br />
