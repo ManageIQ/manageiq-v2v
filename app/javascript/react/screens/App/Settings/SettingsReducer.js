@@ -13,7 +13,11 @@ import {
   SET_V2V_CONVERSION_HOST_TO_DELETE,
   SHOW_V2V_CONVERSION_HOST_DELETE_MODAL,
   HIDE_V2V_CONVERSION_HOST_DELETE_MODAL,
-  DELETE_V2V_CONVERSION_HOST
+  DELETE_V2V_CONVERSION_HOST,
+  SET_V2V_CONVERSION_HOST_TASK_TO_RETRY,
+  SHOW_V2V_CONVERSION_HOST_RETRY_MODAL,
+  HIDE_V2V_CONVERSION_HOST_RETRY_MODAL,
+  V2V_CONVERSION_HOST_RETRY_MODAL_EXITED
 } from './SettingsConstants';
 
 import {
@@ -28,6 +32,9 @@ export const initialState = Immutable({
   conversionHostTasksByResource: {},
   conversionHostToDelete: null,
   conversionHostDeleteModalVisible: false,
+  conversionHostRetryModalMounted: false,
+  conversionHostRetryModalVisible: false,
+  conversionHostTaskToRetry: null,
   conversionHostWizardMounted: false,
   conversionHostWizardVisible: false,
   errorDeleteConversionHost: false,
@@ -192,6 +199,15 @@ export default (state = initialState, action) => {
         .set('isRejectedDeletingConversionHost', true)
         .set('isDeletingConversionHost', null)
         .set('conversionHostDeleteModalVisible', false);
+
+    case SET_V2V_CONVERSION_HOST_TASK_TO_RETRY:
+      return state.set('conversionHostTaskToRetry', action.payload);
+    case SHOW_V2V_CONVERSION_HOST_RETRY_MODAL:
+      return state.set('conversionHostRetryModalMounted', true).set('conversionHostRetryModalVisible', true);
+    case HIDE_V2V_CONVERSION_HOST_RETRY_MODAL:
+      return state.set('conversionHostRetryModalVisible', false);
+    case V2V_CONVERSION_HOST_RETRY_MODAL_EXITED:
+      return state.set('conversionHostRetryModalMounted', false);
 
     default:
       return state;
