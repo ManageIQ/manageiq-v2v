@@ -29,21 +29,32 @@ const manageOddCSVImportErrors = (vm, vmIndex, uniqueIds) => {
   manageBlankReason(vm);
 };
 
+export const parseVmPath = vm => {
+  const [provider, datacenter, ...folderParts] = vm.path.split('/');
+  return {
+    provider,
+    datacenter: datacenter || '',
+    folder: `/${folderParts.join('/')}`
+  };
+};
+
 const attachMetadata = (vms, meta) => {
-  if (meta.csvRows && meta.csvRows.length > 0) {
-    const csvFieldsByVmName = meta.csvRows.reduce(
+  if (!vms) return [];
+  const csvFieldsByVmName =
+    meta.csvRows &&
+    meta.csvRows.length > 0 &&
+    meta.csvRows.reduce(
       (newObject, row) => ({
         ...newObject,
         [row.name]: row
       }),
       {}
     );
-    return vms.map(vm => ({
-      ...vm,
-      csvFields: csvFieldsByVmName[vm.name]
-    }));
-  }
-  return vms;
+  return vms.map(vm => ({
+    ...vm,
+    ...parseVmPath(vm),
+    csvFields: csvFieldsByVmName && csvFieldsByVmName[vm.name]
+  }));
 };
 
 export const _formatValidVms = (payloadVms, meta) => {
