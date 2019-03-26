@@ -3,14 +3,22 @@ import PropTypes from 'prop-types';
 import Immutable from 'seamless-immutable';
 import { DropdownKebab, ListView, MenuItem, Button, Spinner, OverlayTrigger, Popover, Icon } from 'patternfly-react';
 import ConversionHostRemoveButton from './ConversionHostRemoveButton';
+import ConversionHostRetryButton from './ConversionHostRetryButton';
 import StopPropagationOnClick from '../../../../common/StopPropagationOnClick';
 import { FINISHED, ERROR, ENABLE, DISABLE } from '../ConversionHostsSettingsConstants';
 
 const downloadLogSupported = false; // TODO remove me when the Download Log action works
-const retryFailedTaskSupported = false; // TODO remove me when the Retry button works
 const removeFailedTaskSupported = false; // TODO remove me when the Remove button works
 
-const ConversionHostsListItem = ({ listItem, isTask, setHostToDeleteAction, showConversionHostDeleteModalAction }) => {
+const ConversionHostsListItem = ({
+  listItem,
+  isTask,
+  setHostToDeleteAction,
+  showConversionHostDeleteModalAction,
+  setConversionHostTaskToRetryAction,
+  showConversionHostRetryModalAction,
+  isPostingConversionHosts
+}) => {
   let mostRecentTask = listItem;
   if (!isTask) {
     const { enable, disable } = listItem.meta.tasksByOperation;
@@ -63,17 +71,21 @@ const ConversionHostsListItem = ({ listItem, isTask, setHostToDeleteAction, show
 
   let actionButtons;
   if (isTask) {
-    const retryButton = mostRecentTask.status === ERROR ? <Button>{__('Retry') /* TODO */}</Button> : null;
     const removeButton = <Button disabled={mostRecentTask.state !== FINISHED}>{__('Remove') /* TODO */}</Button>;
+    const taskHasRequestParams = mostRecentTask.context_data && mostRecentTask.context_data.request_params;
     actionButtons = (
       <React.Fragment>
-        {retryFailedTaskSupported && retryButton}
-        {mostRecentTask.state !== FINISHED || removeFailedTaskSupported ? (
-          removeButton
-        ) : (
-          <div style={{ height: '26px' }} />
-        )}
-        {/* TODO remove the above spacer div when there are buttons here */}
+        {mostRecentTask.status === ERROR &&
+          taskHasRequestParams && (
+            <ConversionHostRetryButton
+              task={mostRecentTask}
+              setConversionHostTaskToRetryAction={setConversionHostTaskToRetryAction}
+              showConversionHostRetryModalAction={showConversionHostRetryModalAction}
+              disabled={isPostingConversionHosts}
+            />
+          )}
+        {(mostRecentTask.state !== FINISHED || removeFailedTaskSupported) &&
+          removeButton /* currently only renders when it will be disabled. once removeFailedTaskSupported is true / removed, this button should always render. */}
       </React.Fragment>
     );
   } else {
@@ -120,7 +132,10 @@ ConversionHostsListItem.propTypes = {
   listItem: PropTypes.object,
   isTask: PropTypes.bool,
   setHostToDeleteAction: PropTypes.func,
-  showConversionHostDeleteModalAction: PropTypes.func
+  showConversionHostDeleteModalAction: PropTypes.func,
+  setConversionHostTaskToRetryAction: PropTypes.func,
+  showConversionHostRetryModalAction: PropTypes.func,
+  isPostingConversionHosts: PropTypes.bool
 };
 
 export default ConversionHostsListItem;

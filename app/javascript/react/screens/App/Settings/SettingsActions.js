@@ -15,7 +15,11 @@ import {
   SET_V2V_CONVERSION_HOST_TO_DELETE,
   SHOW_V2V_CONVERSION_HOST_DELETE_MODAL,
   HIDE_V2V_CONVERSION_HOST_DELETE_MODAL,
-  DELETE_V2V_CONVERSION_HOST
+  DELETE_V2V_CONVERSION_HOST,
+  SET_V2V_CONVERSION_HOST_TASK_TO_RETRY,
+  SHOW_V2V_CONVERSION_HOST_RETRY_MODAL,
+  HIDE_V2V_CONVERSION_HOST_RETRY_MODAL,
+  V2V_CONVERSION_HOST_RETRY_MODAL_EXITED
 } from './SettingsConstants';
 import { getApiSettingsFromFormValues } from './helpers';
 import { stepIDs } from './screens/ConversionHostsSettings/components/ConversionHostWizard/ConversionHostWizardConstants';
@@ -131,3 +135,20 @@ export const _deleteConversionHostActionCreator = (url, host) => dispatch =>
 
 export const deleteConversionHostAction = (url, host) =>
   _deleteConversionHostActionCreator(new URI(url).toString(), host);
+
+export const setConversionHostTaskToRetryAction = task => ({
+  type: SET_V2V_CONVERSION_HOST_TASK_TO_RETRY,
+  payload: task
+});
+
+export const showConversionHostRetryModalAction = () => ({
+  type: SHOW_V2V_CONVERSION_HOST_RETRY_MODAL
+});
+
+export const hideConversionHostRetryModalAction = () => ({
+  type: HIDE_V2V_CONVERSION_HOST_RETRY_MODAL
+});
+
+export const conversionHostRetryModalExitedAction = () => ({
+  type: V2V_CONVERSION_HOST_RETRY_MODAL_EXITED
+});

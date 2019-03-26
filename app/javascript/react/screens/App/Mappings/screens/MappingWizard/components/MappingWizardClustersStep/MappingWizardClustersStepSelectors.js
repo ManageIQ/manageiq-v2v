@@ -1,4 +1,4 @@
-import { CONVERSION_HOST_TYPES } from './MappingWizardClustersStepConstants';
+import { CONVERSION_HOST_TYPES } from '../../../../../../../../common/constants';
 
 export const sourceClustersFilter = (sourceClustersToFilter, clustersStepMappings) => {
   const mappedSourceClusters = clustersStepMappings.reduce(

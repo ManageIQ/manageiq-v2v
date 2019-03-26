@@ -4,6 +4,7 @@ import { Grid, ListView, Toolbar } from 'patternfly-react';
 import ListViewToolbar from '../../../../common/ListViewToolbar/ListViewToolbar';
 import ConversionHostsListItem from './ConversionHostsListItem';
 import DeleteConversionHostConfirmationModal from './DeleteConversionHostConfirmationModal';
+import RetryConversionHostConfirmationModal from './RetryConversionHostConfirmationModal';
 
 const ConversionHostsList = ({
   combinedListItems,
@@ -14,7 +15,12 @@ const ConversionHostsList = ({
   setHostToDeleteAction,
   conversionHostDeleteModalVisible,
   showConversionHostDeleteModalAction,
-  isDeletingConversionHost
+  isDeletingConversionHost,
+  conversionHostRetryModalMounted,
+  isPostingConversionHosts,
+  setConversionHostTaskToRetryAction,
+  showConversionHostRetryModalAction,
+  postConversionHostsUrl
 }) => (
   <React.Fragment>
     <ListViewToolbar
@@ -49,6 +55,9 @@ const ConversionHostsList = ({
                     isTask={isTask}
                     setHostToDeleteAction={setHostToDeleteAction}
                     showConversionHostDeleteModalAction={showConversionHostDeleteModalAction}
+                    setConversionHostTaskToRetryAction={setConversionHostTaskToRetryAction}
+                    showConversionHostRetryModalAction={showConversionHostRetryModalAction}
+                    isPostingConversionHosts={isPostingConversionHosts}
                   />
                 );
               })}
@@ -67,6 +76,9 @@ const ConversionHostsList = ({
       conversionHostDeleteModalVisible={conversionHostDeleteModalVisible}
       isDeletingConversionHost={isDeletingConversionHost}
     />
+    {conversionHostRetryModalMounted && (
+      <RetryConversionHostConfirmationModal postConversionHostsUrl={postConversionHostsUrl} />
+    )}
   </React.Fragment>
 );
 
@@ -79,7 +91,12 @@ ConversionHostsList.propTypes = {
   setHostToDeleteAction: PropTypes.func,
   conversionHostDeleteModalVisible: PropTypes.bool,
   showConversionHostDeleteModalAction: PropTypes.func,
-  isDeletingConversionHost: PropTypes.bool
+  isDeletingConversionHost: PropTypes.bool,
+  conversionHostRetryModalMounted: PropTypes.bool,
+  isPostingConversionHosts: PropTypes.bool,
+  setConversionHostTaskToRetryAction: PropTypes.func,
+  showConversionHostRetryModalAction: PropTypes.func,
+  postConversionHostsUrl: PropTypes.string
 };
 
 ConversionHostsList.sortFields = [

@@ -76,7 +76,12 @@ class ConversionHostsSettings extends React.Component {
       deleteConversionHostAction,
       deleteConversionHostActionUrl,
       fetchConversionHostsAction,
-      fetchConversionHostsUrl
+      fetchConversionHostsUrl,
+      conversionHostRetryModalMounted,
+      isPostingConversionHosts,
+      setConversionHostTaskToRetryAction,
+      showConversionHostRetryModalAction,
+      postConversionHostsUrl
     } = this.props;
 
     const { hasMadeInitialFetch } = this.state;
@@ -127,6 +132,11 @@ class ConversionHostsSettings extends React.Component {
                 conversionHostToDelete={conversionHostToDelete}
                 isDeletingConversionHost={isDeletingConversionHost}
                 hideConversionHostDeleteModalAction={hideConversionHostDeleteModalAction}
+                conversionHostRetryModalMounted={conversionHostRetryModalMounted}
+                isPostingConversionHosts={isPostingConversionHosts}
+                setConversionHostTaskToRetryAction={setConversionHostTaskToRetryAction}
+                showConversionHostRetryModalAction={showConversionHostRetryModalAction}
+                postConversionHostsUrl={postConversionHostsUrl}
               />
             )}
             {conversionHostWizardMounted && <ConversionHostWizard />}
@@ -156,7 +166,12 @@ ConversionHostsSettings.propTypes = {
   conversionHostDeleteModalVisible: PropTypes.bool,
   conversionHostToDelete: PropTypes.object,
   isDeletingConversionHost: PropTypes.bool,
-  hideConversionHostDeleteModalAction: PropTypes.func
+  hideConversionHostDeleteModalAction: PropTypes.func,
+  conversionHostRetryModalMounted: PropTypes.bool,
+  isPostingConversionHosts: PropTypes.bool,
+  setConversionHostTaskToRetryAction: PropTypes.func,
+  showConversionHostRetryModalAction: PropTypes.func,
+  postConversionHostsUrl: PropTypes.string
 };
 
 ConversionHostsSettings.defaultProps = {
@@ -164,7 +179,8 @@ ConversionHostsSettings.defaultProps = {
   fetchProvidersUrl: FETCH_V2V_PROVIDERS_URL,
   fetchConversionHostsUrl: '/api/conversion_hosts?attributes=resource&expand=resources',
   fetchConversionHostTasksUrl:
-    '/api/tasks?expand=resources&attributes=id,name,state,status,message,started_on,updated_on,pct_complete&filter[]=name="%25Configuring a conversion_host%25"&sort_by=updated_on&sort_order=descending'
+    '/api/tasks?expand=resources&attributes=id,name,state,status,message,started_on,updated_on,pct_complete&filter[]=name="%25Configuring a conversion_host%25"&sort_by=updated_on&sort_order=descending',
+  postConversionHostsUrl: '/api/conversion_hosts'
 };
 
 export default ConversionHostsSettings;

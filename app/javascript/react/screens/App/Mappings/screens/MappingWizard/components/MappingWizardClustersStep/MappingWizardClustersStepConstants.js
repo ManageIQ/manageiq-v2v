@@ -4,11 +4,6 @@ export const FETCH_V2V_SOURCE_CLUSTERS = 'FETCH_V2V_SOURCE_CLUSTERS';
 export const FETCH_V2V_TARGET_CLUSTERS = 'FETCH_V2V_TARGET_CLUSTERS';
 export const QUERY_V2V_PROVIDERS = 'QUERY_V2V_PROVIDERS';
 
-export const CONVERSION_HOST_TYPES = {
-  [RHV]: 'ManageIQ::Providers::Redhat::InfraManager::Host',
-  [OPENSTACK]: 'ManageIQ::Providers::Openstack::CloudManager::Vm'
-};
-
 export const QUERY_PROVIDERS_URL = '/api/providers';
 
 export const TARGET_WARNING_MESSAGES = {

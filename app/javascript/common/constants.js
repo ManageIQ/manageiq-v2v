@@ -34,3 +34,8 @@ export const V2V_TARGET_PROVIDERS = [
     type: 'ManageIQ::Providers::Openstack::CloudManager'
   }
 ];
+
+export const CONVERSION_HOST_TYPES = {
+  [RHV]: 'ManageIQ::Providers::Redhat::InfraManager::Host',
+  [OPENSTACK]: 'ManageIQ::Providers::Openstack::CloudManager::Vm'
+};
