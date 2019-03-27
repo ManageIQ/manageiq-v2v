@@ -14,7 +14,8 @@ export const FETCH_TARGET_COMPUTE_URLS = {
     '/api/clusters?expand=resources' +
     '&attributes=ext_management_system.emstype,v_parent_datacenter,ext_management_system.name,hosts' +
     '&filter[]=ext_management_system.emstype=rhevm',
-  [OPENSTACK]: '/api/cloud_tenants?expand=resources&attributes=ext_management_system.name,ext_management_system.id'
+  [OPENSTACK]:
+    '/api/cloud_tenants?expand=resources&filter[]=ext_management_system.type=ManageIQ::Providers::Openstack::CloudManager&attributes=ext_management_system.name,ext_management_system.id'
 };
 
 export const QUERY_PROVIDERS_URL = '/api/providers';
