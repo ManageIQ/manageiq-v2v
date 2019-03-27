@@ -18,7 +18,7 @@ Object {
   "errorFetchingProviders": null,
   "fetchArchivedTransformationPlansUrl": "/api/dummyArchivedTransformationPlans",
   "fetchCloudTenantsAction": [Function],
-  "fetchCloudTenantsUrl": "/api/cloud_tenants?expand=resources",
+  "fetchCloudTenantsUrl": "/api/cloud_tenants?expand=resources&filter[]=ext_management_system.type=ManageIQ::Providers::Openstack::CloudManager",
   "fetchClustersUrl": "/api/dummyClusters",
   "fetchDatastoresUrl": "/api/dummyDatastores",
   "fetchNetworksUrl": "/api/dummyNetworks",
