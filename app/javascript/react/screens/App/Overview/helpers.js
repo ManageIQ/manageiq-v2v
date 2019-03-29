@@ -25,6 +25,9 @@ export const attachTargetProvider = (plan, providers, clusters, targetProviderTy
     item => item.destination_type === TRANSFORMATION_MAPPING_ITEM_DESTINATION_TYPES[targetProviderType].cluster
   );
   const targetCluster = clusters.find(cluster => cluster.id === clusterMapping.destination_id);
+  if (targetCluster === undefined) {
+    return plan;
+  }
   const targetProvider = providers.find(provider => provider.id === targetCluster.ems_id);
 
   return { ...plan, targetProvider };
