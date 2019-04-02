@@ -4,21 +4,21 @@ exports[`Settings component renders correctly 1`] = `
 <React.Fragment>
   <Toolbar>
     <BreadcrumbItem
-      active={false}
-      href="/dashboard/maintab?tab=compute"
+      active={true}
     >
       Compute
     </BreadcrumbItem>
     <BreadcrumbItem
-      active={false}
-      href="#/plans"
+      active={true}
     >
       Migration
     </BreadcrumbItem>
     <BreadcrumbItem
       active={true}
     >
-      Migration Settings
+      <strong>
+        Migration Settings
+      </strong>
     </BreadcrumbItem>
   </Toolbar>
   <div
