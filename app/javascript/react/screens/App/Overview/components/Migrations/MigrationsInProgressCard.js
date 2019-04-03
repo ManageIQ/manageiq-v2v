@@ -71,7 +71,8 @@ const MigrationsInProgressCard = ({
     );
 
     const targetIsOsp = getMappingType(plan.transformation_mapping.transformation_mapping_items) === OPENSTACK;
-    const cardMessage = targetIsOsp && !plan.targetProvider.hasRsaKey ? 'noRsaKey' : 'notAvailable';
+    const cardMessage =
+      targetIsOsp && plan.targetProvider && !plan.targetProvider.hasRsaKey ? 'noRsaKey' : 'notAvailable';
 
     return (
       <InProgressCard
