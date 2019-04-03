@@ -413,8 +413,11 @@ class Overview extends React.Component {
 
     const toolbarContent = (
       <Toolbar>
-        <Breadcrumb.Item href="/dashboard/maintab?tab=compute">{__('Compute')}</Breadcrumb.Item>
+        <Breadcrumb.Item active>{__('Compute')}</Breadcrumb.Item>
         <Breadcrumb.Item active>{__('Migration')}</Breadcrumb.Item>
+        <Breadcrumb.Item active>
+          <strong>{__('Migration Plans')}</strong>
+        </Breadcrumb.Item>
       </Toolbar>
     );
 

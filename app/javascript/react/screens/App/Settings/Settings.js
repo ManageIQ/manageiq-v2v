@@ -11,9 +11,11 @@ const Settings = props => {
   return (
     <React.Fragment>
       <Toolbar>
-        <Breadcrumb.Item href="/dashboard/maintab?tab=compute">{__('Compute')}</Breadcrumb.Item>
-        <Breadcrumb.Item href="#/plans">{__('Migration')}</Breadcrumb.Item>
-        <Breadcrumb.Item active>{__('Migration Settings')}</Breadcrumb.Item>
+        <Breadcrumb.Item active>{__('Compute')}</Breadcrumb.Item>
+        <Breadcrumb.Item active>{__('Migration')}</Breadcrumb.Item>
+        <Breadcrumb.Item active>
+          <strong>{__('Migration Settings')}</strong>
+        </Breadcrumb.Item>
       </Toolbar>
       {props.hideConversionHostSettings ? (
         <React.Fragment>
