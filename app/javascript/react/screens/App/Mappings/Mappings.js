@@ -174,9 +174,11 @@ class Mappings extends Component {
     return (
       <React.Fragment>
         <Toolbar>
-          <Breadcrumb.Item href="/dashboard/maintab?tab=compute">{__('Compute')}</Breadcrumb.Item>
-          <Breadcrumb.Item href="#/plans">{__('Migration')}</Breadcrumb.Item>
-          <Breadcrumb.Item active>{__('Infrastructure Mappings')}</Breadcrumb.Item>
+          <Breadcrumb.Item active>{__('Compute')}</Breadcrumb.Item>
+          <Breadcrumb.Item active>{__('Migration')}</Breadcrumb.Item>
+          <Breadcrumb.Item active>
+            <strong>{__('Infrastructure Mappings')}</strong>
+          </Breadcrumb.Item>
         </Toolbar>
         <Spinner
           loading={
