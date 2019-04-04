@@ -36,7 +36,7 @@ export class Settings extends React.Component {
     const settingsContent = (
       <Spinner loading={isFetchingServers || isFetchingSettings} style={{ marginTop: 15 }}>
         <div className="migration-settings">
-          <h2>{__('Migration Throttling')}</h2>
+          <h2>{__('Concurrent Migrations')}</h2>
           <Form style={{ padding: '0 20px' }}>
             <Form.FormGroup>
               <Form.ControlLabel>{__('Maximum concurrent migrations per conversion host')}</Form.ControlLabel>

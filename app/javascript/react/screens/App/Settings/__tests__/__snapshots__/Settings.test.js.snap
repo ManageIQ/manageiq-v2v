@@ -37,7 +37,7 @@ exports[`Settings component renders the settings page 1`] = `
       className="migration-settings"
     >
       <h2>
-        Migration Throttling
+        Concurrent Migrations
       </h2>
       <Form
         bsClass="form"
