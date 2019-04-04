@@ -59,7 +59,7 @@ export const indexConversionHostTasksByResource = tasksWithMetadata => {
   return tasksByResource;
 };
 
-const getActiveConversionHostEnableTasks = (tasksWithMetadata, conversionHosts) => {
+export const getActiveConversionHostEnableTasks = (tasksWithMetadata, conversionHosts) => {
   // Start with enable tasks that are either unfinished or finished with errors, and don't match any enabled hosts.
   const tasks = tasksWithMetadata.filter(
     task =>
@@ -81,7 +81,7 @@ const getActiveConversionHostEnableTasks = (tasksWithMetadata, conversionHosts) 
   );
 };
 
-const attachTasksToConversionHosts = (conversionHosts, tasksByResource) =>
+export const attachTasksToConversionHosts = (conversionHosts, tasksByResource) =>
   conversionHosts.filter(conversionHost => !!conversionHost.resource).map(conversionHost => {
     const { type, id } = conversionHost.resource;
     return {
