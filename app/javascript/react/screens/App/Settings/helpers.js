@@ -60,24 +60,24 @@ export const indexConversionHostTasksByResource = tasksWithMetadata => {
 };
 
 export const getActiveConversionHostEnableTasks = (tasksWithMetadata, conversionHosts) => {
-  // Start with enable tasks that are either unfinished or finished with errors, and don't match any enabled hosts.
-  const tasks = tasksWithMetadata.filter(
-    task =>
-      task.meta.operation === 'enable' &&
-      (task.state !== FINISHED || task.status === ERROR) &&
-      conversionHosts.every(
-        ch => ch.resource.type !== task.meta.resourceType || ch.resource.id !== task.meta.resourceId
-      )
-  );
-  // Filter to only the latest task for each resource (filter out old failures if a new task exists)
-  return tasks.filter((task, index) =>
-    tasks.every(
+  // Start with the latest task for each resource (filter out old failures if a new task exists)
+  const mostRecentTasks = tasksWithMetadata.filter((task, index) =>
+    tasksWithMetadata.every(
       (otherTask, otherIndex) =>
         otherIndex === index ||
         otherTask.meta.resourceType !== task.meta.resourceType ||
         otherTask.meta.resourceId !== task.meta.resourceId ||
         otherTask.updated_on <= task.updated_on
     )
+  );
+  // Filter to only enable tasks that are either unfinished or finished with errors, and don't match any enabled hosts.
+  return mostRecentTasks.filter(
+    task =>
+      task.meta.operation === 'enable' &&
+      (task.state !== FINISHED || task.status === ERROR) &&
+      conversionHosts.every(
+        ch => ch.resource.type !== task.meta.resourceType || ch.resource.id !== task.meta.resourceId
+      )
   );
 };
 
