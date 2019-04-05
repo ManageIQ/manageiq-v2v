@@ -59,19 +59,10 @@ export const indexConversionHostTasksByResource = tasksWithMetadata => {
   return tasksByResource;
 };
 
-const getActiveConversionHostEnableTasks = (tasksWithMetadata, conversionHosts) => {
-  // Start with enable tasks that are either unfinished or finished with errors, and don't match any enabled hosts.
-  const tasks = tasksWithMetadata.filter(
-    task =>
-      task.meta.operation === 'enable' &&
-      (task.state !== FINISHED || task.status === ERROR) &&
-      conversionHosts.every(
-        ch => ch.resource.type !== task.meta.resourceType || ch.resource.id !== task.meta.resourceId
-      )
-  );
-  // Filter to only the latest task for each resource (filter out old failures if a new task exists)
-  return tasks.filter((task, index) =>
-    tasks.every(
+export const getActiveConversionHostEnableTasks = (tasksWithMetadata, conversionHosts) => {
+  // Start with the latest task for each resource (filter out old failures if a new task exists)
+  const mostRecentTasks = tasksWithMetadata.filter((task, index) =>
+    tasksWithMetadata.every(
       (otherTask, otherIndex) =>
         otherIndex === index ||
         otherTask.meta.resourceType !== task.meta.resourceType ||
@@ -79,9 +70,18 @@ const getActiveConversionHostEnableTasks = (tasksWithMetadata, conversionHosts) 
         otherTask.updated_on <= task.updated_on
     )
   );
+  // Filter to only enable tasks that are either unfinished or finished with errors, and don't match any enabled hosts.
+  return mostRecentTasks.filter(
+    task =>
+      task.meta.operation === 'enable' &&
+      (task.state !== FINISHED || task.status === ERROR) &&
+      conversionHosts.every(
+        ch => ch.resource.type !== task.meta.resourceType || ch.resource.id !== task.meta.resourceId
+      )
+  );
 };
 
-const attachTasksToConversionHosts = (conversionHosts, tasksByResource) =>
+export const attachTasksToConversionHosts = (conversionHosts, tasksByResource) =>
   conversionHosts.filter(conversionHost => !!conversionHost.resource).map(conversionHost => {
     const { type, id } = conversionHost.resource;
     return {
