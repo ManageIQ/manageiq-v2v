@@ -1,7 +1,28 @@
-language: node_js
-node_js:
-  - '8' # current stable
-script: yarn test --runInBand
+dist: xenial
+matrix:
+  include:
+  - name: "Node.js: 8"
+    language: node_js
+    node_js:
+    - '8' # current stable
+    cache: yarn
+    script: yarn test --runInBand
+  - name: "Ruby: 2.4.5"
+    language: ruby
+    rvm:
+    - 2.4.5
+    cache: bundler
+    addons:
+      postgresql: '10'
+    install: bin/setup
+  - name: "Ruby: 2.5.5"
+    language: ruby
+    rvm:
+    - 2.5.5
+    cache: bundler
+    addons:
+      postgresql: '10'
+    install: bin/setup
 notifications:
   webhooks:
     urls:
