@@ -11,7 +11,10 @@ Gem::Specification.new do |s|
   s.homepage    = 'http://www.manageiq.org'
   s.summary     = 'ManageIQ plugin for v2v transformations'
   s.description = 'ManageIQ plugin for v2v transformations'
-  s.license     = 'MIT'
+  s.license     = 'Apache-2.0'
 
   s.files = Dir['{app,config,db,lib}/**/*', 'Rakefile', 'README.md']
+
+  s.add_development_dependency "rake"
+  s.add_development_dependency "rspec"
 end
