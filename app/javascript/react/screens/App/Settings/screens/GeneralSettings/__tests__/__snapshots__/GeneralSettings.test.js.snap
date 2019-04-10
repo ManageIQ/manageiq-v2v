@@ -47,36 +47,31 @@ exports[`GeneralSettings component renders the general settings page 1`] = `
             Maximum concurrent migrations per conversion host
             <OverlayTrigger
               defaultOverlayShown={false}
-              delay={500}
               overlay={
                 <Popover
                   bsClass="popover"
-                  id="maximum_concurrect_migrations_per_provider_popover"
+                  id="maximum_concurrect_migrations_per_host_popover"
                   placement="right"
                 >
-                  For VDDK transformations the maximum concurrent migrations per conversion host is limited to 20. See the product documentation for more information.
+                  For VDDK transformations, the maximum concurrent migrations per conversion host should not exceed 20, to avoid network overload.
                 </Popover>
               }
               placement="top"
-              rootClose={false}
-              trigger={
-                Array [
-                  "hover",
-                ]
-              }
+              rootClose={true}
+              trigger="click"
             >
-              <Icon
-                name="info"
-                size="md"
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "padding": 10,
-                    "width": "inherit",
-                  }
-                }
-                type="pf"
-              />
+              <Button
+                active={false}
+                block={false}
+                bsClass="btn"
+                bsStyle="link"
+                disabled={false}
+              >
+                <Icon
+                  name="info"
+                  type="pf"
+                />
+              </Button>
             </OverlayTrigger>
           </span>
         </ControlLabel>
