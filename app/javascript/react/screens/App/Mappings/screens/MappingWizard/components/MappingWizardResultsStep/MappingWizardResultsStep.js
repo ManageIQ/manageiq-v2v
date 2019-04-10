@@ -49,26 +49,16 @@ class MappingWizardResultsStep extends React.Component {
     } = this.props;
 
     if (isPostingMappings) {
-      return (
-        <WizardLoadingState
-          title={__('Creating Infrastructure Mapping...')}
-          message={__('Please wait while the infrastructure mapping is created.')}
-        />
-      );
+      return <WizardLoadingState title={__('Creating Infrastructure Mapping...')} />;
     } else if (isRejectedPostingMappings) {
       return (
         <WizardErrorState
           title={__('Error Creating Infrastructure Mapping')}
-          message={__("We're sorry, something went wrong. Please try again.")}
+          message={__('The mapping cannot be created. Check your settings and try again.')}
         />
       );
     } else if (isUpdatingMapping) {
-      return (
-        <WizardLoadingState
-          title={__('Saving Infrastructure Mapping...')}
-          message={__('Please wait while the infrastructure mapping is saved.')}
-        />
-      );
+      return <WizardLoadingState title={__('Saving Infrastructure Mapping...')} />;
     } else if (transformationMappingsResult) {
       return (
         <div className="wizard-pf-complete blank-slate-pf">

@@ -61,12 +61,7 @@ class PlanWizardResultsStep extends React.Component {
     } = this.props;
 
     if (isPostingPlans) {
-      return (
-        <WizardLoadingState
-          title={__('Creating Migration Plan...')}
-          message={__('Please wait while the migration plan is created.')}
-        />
-      );
+      return <WizardLoadingState title={__('Creating Migration Plan...')} />;
     } else if (isRejectedPostingPlans) {
       const errorData = errorPostingPlans && errorPostingPlans.data;
       const errorMessage = errorData && errorData.error && errorData.error.message;
@@ -78,12 +73,7 @@ class PlanWizardResultsStep extends React.Component {
         />
       );
     } else if (isPuttingPlans) {
-      return (
-        <WizardLoadingState
-          title={__('Saving Migration Plan...')}
-          message={__('Please wait while the migration plan is saved.')}
-        />
-      );
+      return <WizardLoadingState title={__('Saving Migration Plan...')} />;
     } else if (isRejectedPuttingPlans) {
       const errorData = errorPuttingPlans && errorPuttingPlans.data;
       const errorMessage = errorData && errorData.error && errorData.error.message;
