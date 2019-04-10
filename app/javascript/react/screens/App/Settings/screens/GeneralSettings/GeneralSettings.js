@@ -56,27 +56,17 @@ export class GeneralSettings extends React.Component {
                   {__('Maximum concurrent migrations per conversion host')}
                   <OverlayTrigger
                     overlay={
-                      <Popover id="maximum_concurrect_migrations_per_provider_popover">
-                        {__(
-                          'For VDDK transformations the maximum concurrent migrations per conversion host is limited to 20. See the product documentation for more information.'
-                        )}
+                      <Popover id="maximum_concurrect_migrations_per_host_popover">
+                        {__('For VDDK transformations, the maximum concurrent migrations per conversion host should not exceed 20, to avoid network overload.') /* prettier-ignore */}
                       </Popover>
                     }
                     placement="top"
-                    trigger={['hover']}
-                    delay={500}
-                    rootClose={false}
+                    trigger="click"
+                    rootClose
                   >
-                    <Icon
-                      type="pf"
-                      name="info"
-                      size="md"
-                      style={{
-                        width: 'inherit',
-                        backgroundColor: 'transparent',
-                        padding: 10
-                      }}
-                    />
+                    <Button bsStyle="link">
+                      <Icon type="pf" name="info" />
+                    </Button>
                   </OverlayTrigger>
                 </span>
               </Form.ControlLabel>
