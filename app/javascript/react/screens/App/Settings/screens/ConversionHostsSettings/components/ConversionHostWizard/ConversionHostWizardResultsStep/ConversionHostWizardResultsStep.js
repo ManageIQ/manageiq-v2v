@@ -20,7 +20,7 @@ class ConversionHostWizardResultsStep extends React.Component {
       return (
         <WizardErrorState
           title={__('Error Starting Conversion Host Configuration')}
-          message={__("We're sorry, something went wrong. Please try again.")}
+          message={__('The conversion host cannot be configured. Check your settings and try again.')}
         />
       );
     }
