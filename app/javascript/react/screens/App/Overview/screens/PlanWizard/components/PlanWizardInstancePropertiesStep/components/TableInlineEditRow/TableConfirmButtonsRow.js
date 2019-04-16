@@ -3,76 +3,16 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { createPortal } from 'react-dom';
-import { noop, debounce } from 'patternfly-react';
+import { noop } from 'patternfly-react';
 import './closestPolyfill';
 import ConfirmButton from '../InlineEdit/ConfirmButton';
 import CancelButton from '../InlineEdit/CancelButton';
 
 class TableConfirmButtonsRow extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-
-    this.handleScroll = debounce(this.handleScroll, 100);
-    this.handleResize = debounce(this.handleResize, 100);
-  }
-
-  componentDidMount() {
-    this.fetchClientDimensions();
-    window.addEventListener('scroll', this.handleScroll);
-    window.addEventListener('resize', this.handleResize);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.handleScroll);
-    window.removeEventListener('resize', this.handleResize);
-  }
-
-  saveRowDimensions = element => {
-    if (element) {
-      this.element = element;
-    }
-
-    if (this.element) {
-      this.setState({
-        rowDimensions: this.element.getBoundingClientRect()
-      });
-    }
-  };
-
-  handleScroll = event => {
-    this.saveRowDimensions();
-  };
-
-  handleResize = event => {
-    this.fetchClientDimensions();
-    this.saveRowDimensions();
-  };
-
-  fetchClientDimensions() {
-    const window = this.props.tableRendersInModal
-      ? {
-          width: this.element.closest('.modal-dialog').getBoundingClientRect().width,
-          height: this.element.closest('.modal-dialog').getBoundingClientRect().height
-        }
-      : {
-          width: document.documentElement.clientWidth,
-          height: document.documentElement.clientHeight
-        };
-    this.setState({
-      window
-    });
-  }
-
   renderConfirmButtons() {
-    const divStyle = this.state.rowDimensions
-      ? this.props.buttonsPosition(this.state.window, this.state.rowDimensions)
-      : {};
-
     const buttonsClass = `inline-edit-buttons ${this.props.buttonsClassName}`;
     return (
-      <div style={divStyle} className={buttonsClass} key="confirmButtons">
+      <div className={buttonsClass} key="confirmButtons">
         <ConfirmButton
           bsStyle="primary"
           key="confirm"
@@ -96,18 +36,20 @@ class TableConfirmButtonsRow extends React.Component {
     const elements = [
       <tr ref={this.saveRowDimensions} className={rowClass} key="tableRow">
         {this.props.children}
+        <td
+          style={{
+            borderCollapse: 'collapse',
+            borderSpacing: '0px',
+            maxWidth: '0.01px',
+            padding: '0',
+            visibility: 'hidden',
+            width: '0.01px'
+          }}
+        >
+          <div style={{ position: 'relative' }}>{editing && this.renderConfirmButtons()}</div>
+        </td>
       </tr>
     ];
-
-    if (editing && (this.element || this.props.buttonsMountpoint)) {
-      elements.push(
-        // mount the confirm buttons below the table
-        createPortal(
-          this.renderConfirmButtons(),
-          this.props.buttonsMountpoint || this.element.closest('table').parentNode
-        )
-      );
-    }
 
     return elements;
   }
@@ -119,14 +61,12 @@ TableConfirmButtonsRow.defaultProps = {
   isEditing: noop,
   onConfirm: noop,
   onCancel: noop,
-  buttonsPosition: noop,
   buttonsClassName: '',
   children: [],
   messages: {
     confirmButtonLabel: 'Save',
     cancelButtonLabel: 'Cancel'
-  },
-  buttonsMountpoint: undefined
+  }
 };
 
 TableConfirmButtonsRow.propTypes = {
@@ -136,8 +76,6 @@ TableConfirmButtonsRow.propTypes = {
   onConfirm: PropTypes.func,
   /** Cancel edit callback */
   onCancel: PropTypes.func,
-  /** Inject confirm buttons positions */
-  buttonsPosition: PropTypes.func,
   /** Additional confirm buttons classes */
   buttonsClassName: PropTypes.string,
   /** Row cells */
@@ -146,9 +84,7 @@ TableConfirmButtonsRow.propTypes = {
   messages: PropTypes.shape({
     confirmButtonLabel: PropTypes.string,
     cancelButtonLabel: PropTypes.string
-  }),
-  buttonsMountpoint: PropTypes.any,
-  tableRendersInModal: PropTypes.bool
+  })
 };
 
 export default TableConfirmButtonsRow;
