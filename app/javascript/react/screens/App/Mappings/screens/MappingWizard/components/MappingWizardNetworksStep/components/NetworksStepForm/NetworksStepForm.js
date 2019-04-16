@@ -29,7 +29,7 @@ class NetworksStepForm extends React.Component {
     selectedNode: null
   };
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.props.selectedCluster && nextProps.selectedCluster.id !== this.props.selectedCluster.id) {
       this.setState(() => ({
         selectedSourceNetworks: [],
