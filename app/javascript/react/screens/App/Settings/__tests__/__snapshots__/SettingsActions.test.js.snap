@@ -1,11 +1,103 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`settings actions should delete conversion host and return PENDING and FULFILLED action 1`] = `
+Array [
+  Object {
+    "type": "DELETE_V2V_CONVERSION_HOST_PENDING",
+  },
+  Object {
+    "payload": Object {
+      "mock": "response",
+    },
+    "type": "DELETE_V2V_CONVERSION_HOST_FULFILLED",
+  },
+]
+`;
+
+exports[`settings actions should delete conversion host and return PENDING and REJECTED action 1`] = `
+Array [
+  Object {
+    "type": "DELETE_V2V_CONVERSION_HOST_PENDING",
+  },
+  Object {
+    "error": true,
+    "payload": [Error: <mocked error>],
+    "type": "DELETE_V2V_CONVERSION_HOST_REJECTED",
+  },
+]
+`;
+
+exports[`settings actions should dispatch wizard exited action and reset actions for wizard step forms 1`] = `
+Array [
+  Object {
+    "type": "V2V_CONVERSION_HOST_WIZARD_EXITED",
+  },
+  Object {
+    "meta": Object {
+      "form": "conversionHostWizardLocationStep",
+    },
+    "type": "@@redux-form/RESET",
+  },
+  Object {
+    "meta": Object {
+      "form": "conversionHostWizardHostsStep",
+    },
+    "type": "@@redux-form/RESET",
+  },
+  Object {
+    "meta": Object {
+      "form": "conversionHostWizardAuthenticationStep",
+    },
+    "type": "@@redux-form/RESET",
+  },
+  Object {
+    "meta": Object {
+      "form": "conversionHostWizardResultsStep",
+    },
+    "type": "@@redux-form/RESET",
+  },
+]
+`;
+
+exports[`settings actions should fetch conversion host tasks and return PENDING and FULFILLED action 1`] = `
+Array [
+  Object {
+    "type": "FETCH_V2V_CONVERSION_HOST_TASKS_PENDING",
+  },
+  Object {
+    "payload": Array [
+      "mock",
+      "tasks",
+    ],
+    "type": "FETCH_V2V_CONVERSION_HOST_TASKS_FULFILLED",
+  },
+]
+`;
+
+exports[`settings actions should fetch conversion host tasks and return PENDING and REJECTED action 1`] = `
+Array [
+  Object {
+    "type": "FETCH_V2V_CONVERSION_HOST_TASKS_PENDING",
+  },
+  Object {
+    "error": true,
+    "payload": [Error: <mocked error>],
+    "type": "FETCH_V2V_CONVERSION_HOST_TASKS_REJECTED",
+  },
+]
+`;
+
 exports[`settings actions should fetch conversion hosts and return PENDING and FULFILLED action 1`] = `
 Array [
   Object {
     "type": "FETCH_V2V_CONVERSION_HOSTS_PENDING",
   },
   Object {
+    "payload": Array [
+      "mock",
+      "conversion",
+      "hosts",
+    ],
     "type": "FETCH_V2V_CONVERSION_HOSTS_FULFILLED",
   },
 ]
@@ -136,6 +228,38 @@ Array [
     "error": true,
     "payload": [Error: <mocked error>],
     "type": "V2V_PATCH_SETTINGS_REJECTED",
+  },
+]
+`;
+
+exports[`settings actions should post conversion hosts and return PENDING and FULFILLED action 1`] = `
+Array [
+  Object {
+    "type": "POST_V2V_CONVERSION_HOSTS_PENDING",
+  },
+  Object {
+    "payload": Array [
+      Object {
+        "mock": "response",
+      },
+      Object {
+        "mock": "response",
+      },
+    ],
+    "type": "POST_V2V_CONVERSION_HOSTS_FULFILLED",
+  },
+]
+`;
+
+exports[`settings actions should post conversion hosts and return PENDING and REJECTED action 1`] = `
+Array [
+  Object {
+    "type": "POST_V2V_CONVERSION_HOSTS_PENDING",
+  },
+  Object {
+    "error": true,
+    "payload": [Error: <mocked error>],
+    "type": "POST_V2V_CONVERSION_HOSTS_REJECTED",
   },
 ]
 `;

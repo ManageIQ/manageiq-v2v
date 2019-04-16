@@ -2,7 +2,7 @@ import React from 'react';
 import { Spinner } from 'patternfly-react';
 import { shallow } from 'enzyme';
 import { GeneralSettings } from '../GeneralSettings';
-import { servers, settings } from '../../../settings.fixures';
+import { servers, settings } from '../../../settings.fixtures';
 import { getFormValuesFromApiSettings } from '../../../helpers';
 
 describe('GeneralSettings component', () => {
