@@ -7,6 +7,10 @@ describe('parseVmPath', () => {
     expect(parseVmPath({ path: '' })).toEqual({ provider: '', datacenter: '', folder: '/' });
   });
 
+  it('should handle a vm with no path defined (invalid vm)', () => {
+    expect(parseVmPath({})).toEqual({ provider: '', datacenter: '', folder: '' });
+  });
+
   it('should handle a vm with a provider but no datacenter or folder', () => {
     expect(parseVmPath({ path: 'dummyProvider' })).toEqual({ provider: 'dummyProvider', datacenter: '', folder: '/' });
     expect(parseVmPath({ path: 'dummyProvider/' })).toEqual({ provider: 'dummyProvider', datacenter: '', folder: '/' });
