@@ -30,6 +30,9 @@ const manageOddCSVImportErrors = (vm, vmIndex, uniqueIds) => {
 };
 
 export const parseVmPath = vm => {
+  if (vm.path === undefined) {
+    return { provider: '', datacenter: '', folder: '' };
+  }
   const [provider, datacenter, ...folderParts] = vm.path.split('/');
   return {
     provider,
