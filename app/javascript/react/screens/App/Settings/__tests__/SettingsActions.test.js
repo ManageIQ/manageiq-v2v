@@ -8,7 +8,7 @@ import {
   settingsFormValues,
   fetchSettingsData,
   patchSettingsData
-} from '../settings.fixures';
+} from '../settings.fixtures';
 import { requestConversionHostsData } from '../../Mappings/screens/MappingWizard/components/MappingWizardGeneralStep/mappingWizardGeneralStep.fixtures';
 import { initialState } from '../SettingsReducer';
 import { mockRequest, mockReset } from '../../../../../common/mockRequests';

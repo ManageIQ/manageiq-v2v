@@ -7,7 +7,7 @@ import {
   SHOW_V2V_CONVERSION_HOST_WIZARD,
   HIDE_V2V_CONVERSION_HOST_WIZARD
 } from '../SettingsConstants';
-import { servers, settings } from '../settings.fixures';
+import { servers, settings } from '../settings.fixtures';
 
 it('sets default state', () => {
   const action = { type: '@@INIT' };

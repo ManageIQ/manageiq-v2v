@@ -6,60 +6,12 @@ import {
   getCombinedConversionHostListItems
 } from '../helpers';
 
-const defaultType = 'ManageIQ::Providers::Openstack::CloudManager::Vm';
-const inProgress = { state: 'Active', status: 'Ok', message: 'Example progress message' };
-const failed = { state: 'Finished', status: 'Error', message: 'Example error message' };
-const success = { state: 'Finished', status: 'Ok', message: 'Example success message' };
-
-const exampleTask = (updated_on, operation, id) => ({
-  name: `Configuring a conversion_host: operation=${operation} resource=(name: example-host-${id} type: ${defaultType} id: ${id})`,
-  updated_on
-});
-
-const exampleConversionHost = resourceId => ({
-  id: `ch-${resourceId}`,
-  resource: { id: resourceId, name: `example-host-${resourceId}`, type: defaultType }
-});
-
-// Example tasks to try and show a resource in each possible enablement state
-const exampleTasks = [
-  // VM ID 1: enable in progress (active enable task)
-  { ...exampleTask(1, 'enable', '1'), ...inProgress },
-  // VM ID 2: enable failed (active enable task)
-  { ...exampleTask(2, 'enable', '2'), ...failed },
-  // VM ID 3: enable success (has CH)
-  { ...exampleTask(3, 'enable', '3'), ...success },
-  // VM ID 4: enable success, then disable in progress (has CH)
-  { ...exampleTask(4, 'enable', '4'), ...success },
-  { ...exampleTask(5, 'disable', '4'), ...inProgress },
-  // VM ID 5: enable success, then disable failed (has CH)
-  { ...exampleTask(6, 'enable', '5'), ...success },
-  { ...exampleTask(7, 'disable', '5'), ...failed },
-  // VM ID 6: enable success, then disable success (not shown in list)
-  { ...exampleTask(8, 'enable', '6'), ...success },
-  { ...exampleTask(9, 'disable', '6'), ...success },
-  // VM ID 7: enable failed, then retry enable in progress (active enable task)
-  { ...exampleTask(10, 'enable', '7'), ...failed },
-  { ...exampleTask(11, 'enable', '7'), ...inProgress },
-  // VM ID 8: enable failed, then retry enable success (has CH)
-  { ...exampleTask(12, 'enable', '8'), ...failed },
-  { ...exampleTask(13, 'enable', '8'), ...success },
-  // VM ID 9: enable failed, then retry enable success, then disable in progress (has CH)
-  { ...exampleTask(14, 'enable', '9'), ...failed },
-  { ...exampleTask(15, 'enable', '9'), ...success },
-  { ...exampleTask(16, 'disable', '9'), ...inProgress },
-  // VM ID 10: enable failed, then retry enable success, then disable failed (has CH)
-  { ...exampleTask(17, 'enable', '10'), ...failed },
-  { ...exampleTask(18, 'enable', '10'), ...success },
-  { ...exampleTask(19, 'disable', '10'), ...failed },
-  // VM ID 11: enable failed, then retry enable success, then disable success (not shown in list)
-  { ...exampleTask(20, 'enable', '11'), ...failed },
-  { ...exampleTask(21, 'enable', '11'), ...success },
-  { ...exampleTask(22, 'disable', '11'), ...success }
-];
-
-// Conversion hosts exist for VMs 3, 4, 5, 8, 9, 10, 12 (VM 12 was configured manually and has no tasks)
-const exampleConversionHosts = ['3', '4', '5', '8', '9', '10', '12'].map(exampleConversionHost);
+import {
+  exampleConversionHostTasks as exampleTasks,
+  exampleConversionHostType as exampleType,
+  exampleConversionHosts,
+  inProgress
+} from '../settings.fixtures';
 
 describe('conversion host task parsing and indexing', () => {
   it('parses tasks correctly', () => {
@@ -72,7 +24,7 @@ describe('conversion host task parsing and indexing', () => {
         isTask: true,
         operation: 'enable',
         resourceName: 'example-host-1',
-        resourceType: defaultType,
+        resourceType: exampleType,
         resourceId: '1',
         unparsedTaskName: exampleTasks[0].name
       }
@@ -89,7 +41,7 @@ describe('conversion host task parsing and indexing', () => {
     const tasks = [...parseConversionHostTasksMetadata(exampleTasks), { extraTaskWithNoMeta: 'toBeIgnored' }];
     const tasksByResource = indexConversionHostTasksByResource(tasks);
     expect(tasksByResource).toEqual({
-      [defaultType]: {
+      [exampleType]: {
         '1': { enable: [tasks[0]] },
         '2': { enable: [tasks[1]] },
         '3': { enable: [tasks[2]] },
