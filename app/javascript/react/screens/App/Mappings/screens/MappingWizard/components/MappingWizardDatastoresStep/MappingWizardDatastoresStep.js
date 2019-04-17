@@ -64,7 +64,7 @@ class MappingWizardDatastoresStep extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { showAlertAction, isRejectedSourceDatastores, isRejectedTargetDatastores } = this.props;
 
     const { selectedCluster, selectedClusterMapping } = this.state;

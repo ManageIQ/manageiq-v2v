@@ -64,7 +64,7 @@ class MappingWizardNetworksStep extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { showAlertAction, isRejectedSourceNetworks, isRejectedTargetNetworks } = this.props;
 
     const { selectedCluster, selectedClusterMapping } = this.state;
