@@ -29,25 +29,42 @@ class TableConfirmButtonsRow extends React.Component {
     );
   }
 
+  renderChildren = () => {
+    const editing = this.props.isEditing();
+    if (!editing) return this.props.children;
+    // Render children with the confirm buttons injected as a child of the last cell in the row.
+    const children = React.Children.toArray(this.props.children);
+    const lastCell = children.pop(); // Pop off the <tableCell> to be replaced
+    const lastCellChildren = React.Children.toArray(lastCell.props.children);
+    const inlineEditFormatter = lastCellChildren.pop(); // Pop off the <InlineEdit> to be replaced
+    // To get the actual <td> we need to call the renderEdit prop of the inlineEditButtonsFormatter:
+    const { renderEdit, value, additionalData } = inlineEditFormatter.props;
+    const td = renderEdit(value, additionalData);
+    const tdChildren = React.Children.toArray(td.props.children);
+    // Render the tree using modified clones of the components we popped above.
+    return [
+      ...children,
+      React.cloneElement(
+        lastCell,
+        lastCell.props,
+        ...lastCellChildren,
+        React.cloneElement(
+          td,
+          { ...td.props, className: 'inline-edit-buttons-parent' },
+          ...tdChildren,
+          this.renderConfirmButtons()
+        )
+      )
+    ];
+  };
+
   render() {
     const editing = this.props.isEditing();
     const rowClass = editing ? 'editing' : '';
 
     const elements = [
-      <tr ref={this.saveRowDimensions} className={rowClass} key="tableRow">
-        {this.props.children}
-        <td
-          style={{
-            borderCollapse: 'collapse',
-            borderSpacing: '0px',
-            maxWidth: '0.01px',
-            padding: '0',
-            visibility: 'hidden',
-            width: '0.01px'
-          }}
-        >
-          <div style={{ position: 'relative' }}>{editing && this.renderConfirmButtons()}</div>
-        </td>
+      <tr className={rowClass} key="tableRow">
+        {this.renderChildren()}
       </tr>
     ];
 

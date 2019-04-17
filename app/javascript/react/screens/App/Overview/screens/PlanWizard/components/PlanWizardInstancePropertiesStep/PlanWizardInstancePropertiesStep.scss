@@ -70,6 +70,10 @@ table.pf-table-inline-edit tbody {
   }
 }
 
+.inline-edit-buttons-parent {
+  position: relative;
+}
+
 .inline-edit-buttons {
   background: $color-pf-blue-50;
   border: 1px solid $color-pf-blue-200;
@@ -77,7 +81,7 @@ table.pf-table-inline-edit tbody {
   position: absolute;
   padding: 4px;
   right: 35px;
-  top: 48px;
+  bottom: -35px;
   visibility: visible;
   width: 66px;
   z-index: 1000;
