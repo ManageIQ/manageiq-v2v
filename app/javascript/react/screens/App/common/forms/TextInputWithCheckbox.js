@@ -11,7 +11,7 @@ class TextInputWithCheckbox extends React.Component {
   }
 
   render() {
-    const { id, label, input, postfix, initialUncheckedValue, meta } = this.props;
+    const { id, label, input, postfix, initialUncheckedValue, meta, vertical } = this.props;
 
     const onCheckboxChange = event => {
       if (event.target.checked) {
@@ -28,7 +28,7 @@ class TextInputWithCheckbox extends React.Component {
 
     return (
       <Form.FormGroup validationState={meta.error ? 'error' : undefined}>
-        <Form.ControlLabel className="col-md-5">
+        <Form.ControlLabel className={vertical ? '' : 'col-md-5'}>
           <div className="checkbox-inline pull-left">
             <label>
               <input
@@ -42,7 +42,7 @@ class TextInputWithCheckbox extends React.Component {
             </label>
           </div>
         </Form.ControlLabel>
-        <div className="col-md-2">
+        <div className={vertical ? '' : 'col-md-2'} style={{ width: vertical ? '150px' : 'auto' }}>
           <InputGroup>
             <FormControl type="text" name={id} id={id} readOnly={!this.state.inputEnabled} {...input} />
             <InputGroup.Addon>{postfix}</InputGroup.Addon>
@@ -64,7 +64,8 @@ TextInputWithCheckbox.propTypes = {
   postfix: PropTypes.string,
   inputEnabledFunction: PropTypes.func.isRequired,
   initialUncheckedValue: PropTypes.string,
-  meta: PropTypes.object
+  meta: PropTypes.object,
+  vertical: PropTypes.bool
 };
 
 export default TextInputWithCheckbox;
