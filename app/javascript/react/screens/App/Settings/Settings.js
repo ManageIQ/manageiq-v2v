@@ -17,31 +17,23 @@ const Settings = props => {
           <strong>{__('Migration Settings')}</strong>
         </Breadcrumb.Item>
       </Toolbar>
-      {props.hideConversionHostSettings ? (
-        <React.Fragment>
-          <h2>{__('Migration Throttling')}</h2>
-          <GeneralSettings />
-        </React.Fragment>
-      ) : (
-        <div style={{ marginTop: 10 }}>
-          <Tabs id="settings-tabs" activeKey={match.path} onSelect={key => redirectTo(key)} unmountOnExit>
-            <Tab eventKey="/settings" title={__('Migration Throttling')}>
-              <GeneralSettings />
-            </Tab>
-            <Tab eventKey="/settings/conversion_hosts" title={__('Conversion Hosts')}>
-              <ConversionHostsSettings />
-            </Tab>
-          </Tabs>
-        </div>
-      )}
+      <div style={{ marginTop: 10 }}>
+        <Tabs id="settings-tabs" activeKey={match.path} onSelect={key => redirectTo(key)} unmountOnExit>
+          <Tab eventKey="/settings" title={__('Migration Throttling')}>
+            <GeneralSettings />
+          </Tab>
+          <Tab eventKey="/settings/conversion_hosts" title={__('Conversion Hosts')}>
+            <ConversionHostsSettings />
+          </Tab>
+        </Tabs>
+      </div>
     </React.Fragment>
   );
 };
 
 Settings.propTypes = {
   match: PropTypes.object,
-  redirectTo: PropTypes.func,
-  hideConversionHostSettings: PropTypes.bool // TODO remove this when we are ready to release ConversionHostsSettings
+  redirectTo: PropTypes.func
 };
 
 export default Settings;
