@@ -133,16 +133,6 @@ exports[`GeneralSettings component renders the general settings page 1`] = `
         postfix="％"
         validate={[Function]}
       />
-      <Field
-        component={[Function]}
-        id="network_limit_per_host"
-        initialUncheckedValue="unlimited"
-        inputEnabledFunction={[Function]}
-        label="Total network throughput"
-        name="network_limit_per_host"
-        postfix="MB/s"
-        validate={[Function]}
-      />
       <FormGroup
         bsClass="form-group"
         className="col-md-1 pull-left"

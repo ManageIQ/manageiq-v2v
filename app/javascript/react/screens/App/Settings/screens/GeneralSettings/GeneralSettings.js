@@ -126,16 +126,6 @@ export class GeneralSettings extends React.Component {
               inputEnabledFunction={inputEnabledFunction}
               initialUncheckedValue="unlimited"
             />
-            <Field
-              id="network_limit_per_host"
-              name="network_limit_per_host"
-              component={TextInputWithCheckbox}
-              validate={validatePercentInput}
-              label={__('Total network throughput')}
-              postfix={__('MB/s')}
-              inputEnabledFunction={inputEnabledFunction}
-              initialUncheckedValue="unlimited"
-            />
             <Form.FormGroup className="col-md-1 pull-left" style={{ marginTop: '40px' }}>
               <Button
                 bsStyle="primary"
