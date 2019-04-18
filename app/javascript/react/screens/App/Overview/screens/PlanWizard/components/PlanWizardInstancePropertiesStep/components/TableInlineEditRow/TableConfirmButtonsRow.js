@@ -3,76 +3,16 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { createPortal } from 'react-dom';
-import { noop, debounce } from 'patternfly-react';
+import { noop } from 'patternfly-react';
 import './closestPolyfill';
 import ConfirmButton from '../InlineEdit/ConfirmButton';
 import CancelButton from '../InlineEdit/CancelButton';
 
 class TableConfirmButtonsRow extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-
-    this.handleScroll = debounce(this.handleScroll, 100);
-    this.handleResize = debounce(this.handleResize, 100);
-  }
-
-  componentDidMount() {
-    this.fetchClientDimensions();
-    window.addEventListener('scroll', this.handleScroll);
-    window.addEventListener('resize', this.handleResize);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.handleScroll);
-    window.removeEventListener('resize', this.handleResize);
-  }
-
-  saveRowDimensions = element => {
-    if (element) {
-      this.element = element;
-    }
-
-    if (this.element) {
-      this.setState({
-        rowDimensions: this.element.getBoundingClientRect()
-      });
-    }
-  };
-
-  handleScroll = event => {
-    this.saveRowDimensions();
-  };
-
-  handleResize = event => {
-    this.fetchClientDimensions();
-    this.saveRowDimensions();
-  };
-
-  fetchClientDimensions() {
-    const window = this.props.tableRendersInModal
-      ? {
-          width: this.element.closest('.modal-dialog').getBoundingClientRect().width,
-          height: this.element.closest('.modal-dialog').getBoundingClientRect().height
-        }
-      : {
-          width: document.documentElement.clientWidth,
-          height: document.documentElement.clientHeight
-        };
-    this.setState({
-      window
-    });
-  }
-
   renderConfirmButtons() {
-    const divStyle = this.state.rowDimensions
-      ? this.props.buttonsPosition(this.state.window, this.state.rowDimensions)
-      : {};
-
     const buttonsClass = `inline-edit-buttons ${this.props.buttonsClassName}`;
     return (
-      <div style={divStyle} className={buttonsClass} key="confirmButtons">
+      <div className={buttonsClass} key="confirmButtons">
         <ConfirmButton
           bsStyle="primary"
           key="confirm"
@@ -89,25 +29,44 @@ class TableConfirmButtonsRow extends React.Component {
     );
   }
 
+  renderChildren = () => {
+    const editing = this.props.isEditing();
+    if (!editing) return this.props.children;
+    // Render children with the confirm buttons injected as a child of the last cell in the row.
+    const children = React.Children.toArray(this.props.children);
+    const lastCell = children.pop(); // Pop off the <tableCell> to be replaced
+    const lastCellChildren = React.Children.toArray(lastCell.props.children);
+    const inlineEditFormatter = lastCellChildren.pop(); // Pop off the <InlineEdit> to be replaced
+    // To get the actual <td> we need to call the renderEdit prop of the inlineEditButtonsFormatter:
+    const { renderEdit, value, additionalData } = inlineEditFormatter.props;
+    const td = renderEdit(value, additionalData);
+    const tdChildren = React.Children.toArray(td.props.children);
+    // Render the tree using modified clones of the components we popped above.
+    return [
+      ...children,
+      React.cloneElement(
+        lastCell,
+        lastCell.props,
+        ...lastCellChildren,
+        React.cloneElement(
+          td,
+          { ...td.props, className: 'inline-edit-buttons-parent' },
+          ...tdChildren,
+          this.renderConfirmButtons()
+        )
+      )
+    ];
+  };
+
   render() {
     const editing = this.props.isEditing();
     const rowClass = editing ? 'editing' : '';
 
     const elements = [
-      <tr ref={this.saveRowDimensions} className={rowClass} key="tableRow">
-        {this.props.children}
+      <tr className={rowClass} key="tableRow">
+        {this.renderChildren()}
       </tr>
     ];
-
-    if (editing && (this.element || this.props.buttonsMountpoint)) {
-      elements.push(
-        // mount the confirm buttons below the table
-        createPortal(
-          this.renderConfirmButtons(),
-          this.props.buttonsMountpoint || this.element.closest('table').parentNode
-        )
-      );
-    }
 
     return elements;
   }
@@ -119,14 +78,12 @@ TableConfirmButtonsRow.defaultProps = {
   isEditing: noop,
   onConfirm: noop,
   onCancel: noop,
-  buttonsPosition: noop,
   buttonsClassName: '',
   children: [],
   messages: {
     confirmButtonLabel: 'Save',
     cancelButtonLabel: 'Cancel'
-  },
-  buttonsMountpoint: undefined
+  }
 };
 
 TableConfirmButtonsRow.propTypes = {
@@ -136,8 +93,6 @@ TableConfirmButtonsRow.propTypes = {
   onConfirm: PropTypes.func,
   /** Cancel edit callback */
   onCancel: PropTypes.func,
-  /** Inject confirm buttons positions */
-  buttonsPosition: PropTypes.func,
   /** Additional confirm buttons classes */
   buttonsClassName: PropTypes.string,
   /** Row cells */
@@ -146,9 +101,7 @@ TableConfirmButtonsRow.propTypes = {
   messages: PropTypes.shape({
     confirmButtonLabel: PropTypes.string,
     cancelButtonLabel: PropTypes.string
-  }),
-  buttonsMountpoint: PropTypes.any,
-  tableRendersInModal: PropTypes.bool
+  })
 };
 
 export default TableConfirmButtonsRow;
