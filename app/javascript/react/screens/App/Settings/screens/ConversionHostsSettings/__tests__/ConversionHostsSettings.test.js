@@ -56,3 +56,5 @@ describe('ConversionHostsSettings component', () => {
     expect(component.find(ConversionHostsEmptyState)).toHaveLength(0);
   });
 });
+
+// TODO finish coverage here
