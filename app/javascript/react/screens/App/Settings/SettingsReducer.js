@@ -185,11 +185,11 @@ export default (state = initialState, action) => {
       return state.set('conversionHostDeleteModalVisible', false);
 
     case `${DELETE_V2V_CONVERSION_HOST}_PENDING`:
-      return state.set('isDeletingConversionHost', action.payload);
+      return state.set('isDeletingConversionHost', true);
     case `${DELETE_V2V_CONVERSION_HOST}_FULFILLED`:
       return state
         .set('deleteConversionHostResponse', action.payload.data)
-        .set('isDeletingConversionHost', null)
+        .set('isDeletingConversionHost', false)
         .set('isRejectedDeletingConversionHost', false)
         .set('errorDeleteConversionHost', null)
         .set('conversionHostDeleteModalVisible', false);
@@ -197,7 +197,7 @@ export default (state = initialState, action) => {
       return state
         .set('errorDeleteConversionHost', action.payload)
         .set('isRejectedDeletingConversionHost', true)
-        .set('isDeletingConversionHost', null)
+        .set('isDeletingConversionHost', false)
         .set('conversionHostDeleteModalVisible', false);
 
     case SET_V2V_CONVERSION_HOST_TASK_TO_RETRY:
