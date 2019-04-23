@@ -62,12 +62,12 @@ export class GeneralSettings extends React.Component {
     return (
       <Spinner loading={isFetchingServers || isFetchingSettings} style={{ marginTop: 15 }}>
         <div className="migration-settings">
-          <Form className="form-horizontal" style={{ padding: '0 20px' }}>
+          <Form className="form-vertical" style={{ padding: '0 20px' }}>
             <div>
               <h3>{__('Concurrent Migrations')}</h3>
             </div>
             <Form.FormGroup>
-              <Form.ControlLabel className="col-md-5">
+              <Form.ControlLabel>
                 <span className="pull-left">
                   {__('Maximum concurrent migrations per conversion host')}
                   <OverlayTrigger
@@ -80,13 +80,13 @@ export class GeneralSettings extends React.Component {
                     trigger="click"
                     rootClose
                   >
-                    <Button bsStyle="link">
+                    <Button bsStyle="link" style={{ paddingTop: 0, paddingBottom: 0 }}>
                       <Icon type="pf" name="info" />
                     </Button>
                   </OverlayTrigger>
                 </span>
               </Form.ControlLabel>
-              <div className="col-md-2">
+              <div style={{ width: 150 }}>
                 <Field
                   id="max_concurrent_tasks_per_host"
                   name="max_concurrent_tasks_per_host"
@@ -98,10 +98,10 @@ export class GeneralSettings extends React.Component {
               </div>
             </Form.FormGroup>
             <Form.FormGroup>
-              <Form.ControlLabel className="col-md-5">
+              <Form.ControlLabel>
                 <div className="pull-left">{__('Maximum concurrent migrations per provider')}</div>
               </Form.ControlLabel>
-              <div className="col-md-2">
+              <div style={{ width: 150 }}>
                 <Field
                   id="max_concurrent_tasks_per_ems"
                   name="max_concurrent_tasks_per_ems"
@@ -125,8 +125,9 @@ export class GeneralSettings extends React.Component {
               postfix="％"
               inputEnabledFunction={inputEnabledFunction}
               initialUncheckedValue="unlimited"
+              vertical
             />
-            <Form.FormGroup className="col-md-1 pull-left" style={{ marginTop: '40px' }}>
+            <Form.FormGroup style={{ marginTop: '40px' }}>
               <Button
                 bsStyle="primary"
                 onClick={this.onApplyClick}
