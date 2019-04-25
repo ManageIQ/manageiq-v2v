@@ -18,7 +18,7 @@ exports[`GeneralSettings component renders the general settings page 1`] = `
   >
     <Form
       bsClass="form"
-      className="form-horizontal"
+      className="form-vertical"
       componentClass="form"
       horizontal={false}
       inline={false}
@@ -38,7 +38,6 @@ exports[`GeneralSettings component renders the general settings page 1`] = `
       >
         <ControlLabel
           bsClass="control-label"
-          className="col-md-5"
           srOnly={false}
         >
           <span
@@ -58,30 +57,36 @@ exports[`GeneralSettings component renders the general settings page 1`] = `
                 </Popover>
               }
               placement="top"
-              rootClose={false}
-              trigger={
-                Array [
-                  "hover",
-                ]
-              }
+              rootClose={true}
+              trigger="click"
             >
-              <Icon
-                name="info"
-                size="md"
+              <Button
+                active={false}
+                block={false}
+                bsClass="btn"
+                bsStyle="link"
+                disabled={false}
                 style={
                   Object {
-                    "backgroundColor": "transparent",
-                    "padding": 10,
-                    "width": "inherit",
+                    "paddingBottom": 0,
+                    "paddingTop": 0,
                   }
                 }
-                type="pf"
-              />
+              >
+                <Icon
+                  name="info"
+                  type="pf"
+                />
+              </Button>
             </OverlayTrigger>
           </span>
         </ControlLabel>
         <div
-          className="col-md-2"
+          style={
+            Object {
+              "width": 150,
+            }
+          }
         >
           <Field
             component={[Function]}
@@ -98,7 +103,6 @@ exports[`GeneralSettings component renders the general settings page 1`] = `
       >
         <ControlLabel
           bsClass="control-label"
-          className="col-md-5"
           srOnly={false}
         >
           <div
@@ -108,7 +112,11 @@ exports[`GeneralSettings component renders the general settings page 1`] = `
           </div>
         </ControlLabel>
         <div
-          className="col-md-2"
+          style={
+            Object {
+              "width": 150,
+            }
+          }
         >
           <Field
             component={[Function]}
@@ -137,10 +145,10 @@ exports[`GeneralSettings component renders the general settings page 1`] = `
         name="cpu_limit_per_host"
         postfix="％"
         validate={[Function]}
+        vertical={true}
       />
       <FormGroup
         bsClass="form-group"
-        className="col-md-1 pull-left"
         style={
           Object {
             "marginTop": "40px",
