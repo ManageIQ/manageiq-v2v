@@ -20,7 +20,8 @@ const ConversionHostsList = ({
   isPostingConversionHosts,
   setConversionHostTaskToRetryAction,
   showConversionHostRetryModalAction,
-  postConversionHostsUrl
+  postConversionHostsUrl,
+  saveTextFileAction
 }) => (
   <React.Fragment>
     <ListViewToolbar
@@ -58,6 +59,7 @@ const ConversionHostsList = ({
                     setConversionHostTaskToRetryAction={setConversionHostTaskToRetryAction}
                     showConversionHostRetryModalAction={showConversionHostRetryModalAction}
                     isPostingConversionHosts={isPostingConversionHosts}
+                    saveTextFileAction={saveTextFileAction}
                   />
                 );
               })}
@@ -96,7 +98,8 @@ ConversionHostsList.propTypes = {
   isPostingConversionHosts: PropTypes.bool,
   setConversionHostTaskToRetryAction: PropTypes.func,
   showConversionHostRetryModalAction: PropTypes.func,
-  postConversionHostsUrl: PropTypes.string
+  postConversionHostsUrl: PropTypes.string,
+  saveTextFileAction: PropTypes.func
 };
 
 ConversionHostsList.sortFields = [

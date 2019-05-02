@@ -1,4 +1,5 @@
 import { reset } from 'redux-form';
+import { saveAs } from 'file-saver';
 import URI from 'urijs';
 import API from '../../../../common/API';
 
@@ -23,6 +24,7 @@ import {
 } from './SettingsConstants';
 import { getApiSettingsFromFormValues } from './helpers';
 import { stepIDs } from './screens/ConversionHostsSettings/components/ConversionHostWizard/ConversionHostWizardConstants';
+import { V2V_NOTIFICATION_ADD } from '../common/NotificationList/NotificationConstants';
 
 const _getServersActionCreator = url => dispatch =>
   dispatch({
@@ -152,3 +154,13 @@ export const hideConversionHostRetryModalAction = () => ({
 export const conversionHostRetryModalExitedAction = () => ({
   type: V2V_CONVERSION_HOST_RETRY_MODAL_EXITED
 });
+
+export const saveTextFileAction = ({ fileName, fileBody }) => dispatch => {
+  saveAs(new File([fileBody], fileName, { type: 'text/plain;charset=utf-8' }));
+  dispatch({
+    type: V2V_NOTIFICATION_ADD,
+    message: sprintf(__('"%s" download successful'), fileName),
+    notificationType: 'success',
+    actionEnabled: false
+  });
+};

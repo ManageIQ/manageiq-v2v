@@ -81,7 +81,8 @@ class ConversionHostsSettings extends React.Component {
       isPostingConversionHosts,
       setConversionHostTaskToRetryAction,
       showConversionHostRetryModalAction,
-      postConversionHostsUrl
+      postConversionHostsUrl,
+      saveTextFileAction
     } = this.props;
 
     const { hasMadeInitialFetch } = this.state;
@@ -137,6 +138,7 @@ class ConversionHostsSettings extends React.Component {
                 setConversionHostTaskToRetryAction={setConversionHostTaskToRetryAction}
                 showConversionHostRetryModalAction={showConversionHostRetryModalAction}
                 postConversionHostsUrl={postConversionHostsUrl}
+                saveTextFileAction={saveTextFileAction}
               />
             )}
             {conversionHostWizardMounted && <ConversionHostWizard />}
@@ -171,7 +173,8 @@ ConversionHostsSettings.propTypes = {
   isPostingConversionHosts: PropTypes.bool,
   setConversionHostTaskToRetryAction: PropTypes.func,
   showConversionHostRetryModalAction: PropTypes.func,
-  postConversionHostsUrl: PropTypes.string
+  postConversionHostsUrl: PropTypes.string,
+  saveTextFileAction: PropTypes.func
 };
 
 ConversionHostsSettings.defaultProps = {
@@ -179,7 +182,7 @@ ConversionHostsSettings.defaultProps = {
   fetchProvidersUrl: FETCH_V2V_PROVIDERS_URL,
   fetchConversionHostsUrl: '/api/conversion_hosts?attributes=resource&expand=resources',
   fetchConversionHostTasksUrl:
-    '/api/tasks?expand=resources&attributes=id,name,state,status,message,started_on,updated_on,pct_complete&filter[]=name="%25Configuring a conversion_host%25"&sort_by=updated_on&sort_order=descending',
+    '/api/tasks?expand=resources&attributes=id,name,state,status,message,started_on,updated_on,pct_complete,context_data&filter[]=name="%25Configuring a conversion_host%25"&sort_by=updated_on&sort_order=descending',
   postConversionHostsUrl: '/api/conversion_hosts'
 };
 
