@@ -19,7 +19,7 @@ describe('fetchTargetDatastoresAction', () => {
     const targetProvider = V2V_TARGET_PROVIDERS[1].id;
     const [targetCloudTenant] = cloudTenants.resources;
 
-    test('dispatches PENDING and FULFILLED actions and adds the provider name', () => {
+    test('dispatches PENDING and FULFILLED actions, adds provider name and filters to domain_type of data', () => {
       mockRequest({
         method: 'GET',
         url: '/api',
@@ -28,7 +28,16 @@ describe('fetchTargetDatastoresAction', () => {
           data: {
             ...targetCloudTenant,
             ext_management_system: { name: 'some provider' },
-            [V2V_TARGET_PROVIDER_STORAGE_KEYS[targetProvider]]: [{}]
+            [V2V_TARGET_PROVIDER_STORAGE_KEYS[targetProvider]]: [
+              {
+                mock: 'datastore',
+                storage_domain_type: 'data'
+              },
+              {
+                mock: 'datastore that should NOT be in the snapshot',
+                storage_domain_type: 'export'
+              }
+            ]
           }
         }
       });
@@ -44,7 +53,7 @@ describe('fetchTargetDatastoresAction', () => {
     const targetProvider = V2V_TARGET_PROVIDERS[0].id;
     const [targetCluster] = targetClusters.resources;
 
-    test('dispatches PENDING and FULFILLED actions and adds the provider name', () => {
+    test('dispatches PENDING and FULFILLED actions, adds provider name and filters to domain_type of data', () => {
       mockRequest({
         method: 'GET',
         url: '/api',
@@ -53,7 +62,16 @@ describe('fetchTargetDatastoresAction', () => {
           data: {
             ...targetCluster,
             ext_management_system: { name: 'some provider' },
-            [V2V_TARGET_PROVIDER_STORAGE_KEYS[targetProvider]]: [{}]
+            [V2V_TARGET_PROVIDER_STORAGE_KEYS[targetProvider]]: [
+              {
+                mock: 'datastore',
+                storage_domain_type: 'data'
+              },
+              {
+                mock: 'datastore that should NOT be in the snapshot',
+                storage_domain_type: 'export'
+              }
+            ]
           }
         }
       });

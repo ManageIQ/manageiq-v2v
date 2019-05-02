@@ -13,7 +13,7 @@ Array [
 ]
 `;
 
-exports[`fetchTargetDatastoresAction if the target provider is OSP dispatches PENDING and FULFILLED actions and adds the provider name 1`] = `
+exports[`fetchTargetDatastoresAction if the target provider is OSP dispatches PENDING and FULFILLED actions, adds provider name and filters to domain_type of data 1`] = `
 Array [
   Object {
     "type": "FETCH_V2V_TARGET_DATASTORES_PENDING",
@@ -22,7 +22,9 @@ Array [
     "payload": Object {
       "targetDatastores": Array [
         Object {
+          "mock": "datastore",
           "providerName": "some provider",
+          "storage_domain_type": "data",
         },
       ],
     },
@@ -31,7 +33,7 @@ Array [
 ]
 `;
 
-exports[`fetchTargetDatastoresAction if the target provider is RHV dispatches PENDING and FULFILLED actions and adds the provider name 1`] = `
+exports[`fetchTargetDatastoresAction if the target provider is RHV dispatches PENDING and FULFILLED actions, adds provider name and filters to domain_type of data 1`] = `
 Array [
   Object {
     "type": "FETCH_V2V_TARGET_DATASTORES_PENDING",
@@ -40,7 +42,9 @@ Array [
     "payload": Object {
       "targetDatastores": Array [
         Object {
+          "mock": "datastore",
           "providerName": "some provider",
+          "storage_domain_type": "data",
         },
       ],
     },
