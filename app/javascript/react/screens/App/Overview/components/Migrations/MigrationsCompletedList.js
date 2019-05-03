@@ -245,6 +245,14 @@ const MigrationsCompletedList = ({
                               {elapsedTime}
                             </ListView.InfoItem>
                           ) : null,
+                          !denied && mostRecentRequest.fulfilled_on ? (
+                            <ListView.InfoItem key={`${plan.id}-completed`} style={{ textAlign: 'left' }}>
+                              <Icon type="fa" name="clock-o" />
+                              {__('Completed:')}
+                              <br />
+                              {formatDateTime(mostRecentRequest.fulfilled_on)}
+                            </ListView.InfoItem>
+                          ) : null,
                           migrationScheduled && !staleMigrationSchedule && !migrationStarting ? (
                             <ListView.InfoItem key={`${plan.id}-scheduledTime`} style={{ textAlign: 'left' }}>
                               <Icon type="fa" name="clock-o" />

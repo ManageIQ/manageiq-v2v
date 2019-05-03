@@ -15,7 +15,7 @@ export const MIGRATIONS_NOT_STARTED_SORT_FIELDS = [
 
 export const MIGRATIONS_ARCHIVED_SORT_FIELDS = [
   { id: 'name', title: __('Name'), isNumeric: false },
-  { id: 'requestedOn', title: __('Date Migrated'), isNumeric: false }
+  { id: 'fulfilledOn', title: __('Completed'), isNumeric: false }
 ];
 
 export const MIGRATIONS_COMPLETED_SORT_FIELDS = [
