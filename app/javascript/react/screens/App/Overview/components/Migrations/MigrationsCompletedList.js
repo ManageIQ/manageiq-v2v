@@ -185,6 +185,8 @@ const MigrationsCompletedList = ({
                       />
                     );
 
+                    const showScheduledTime = migrationScheduled && !staleMigrationSchedule && !migrationStarting;
+
                     return (
                       <ListView.Item
                         stacked
@@ -245,7 +247,7 @@ const MigrationsCompletedList = ({
                               {elapsedTime}
                             </ListView.InfoItem>
                           ) : null,
-                          !denied && mostRecentRequest.fulfilled_on ? (
+                          !denied && !showScheduledTime && mostRecentRequest.fulfilled_on ? (
                             <ListView.InfoItem key={`${plan.id}-completed`} style={{ textAlign: 'left' }}>
                               <Icon type="fa" name="clock-o" />
                               {__('Completed:')}
@@ -253,7 +255,7 @@ const MigrationsCompletedList = ({
                               {formatDateTime(mostRecentRequest.fulfilled_on)}
                             </ListView.InfoItem>
                           ) : null,
-                          migrationScheduled && !staleMigrationSchedule && !migrationStarting ? (
+                          showScheduledTime ? (
                             <ListView.InfoItem key={`${plan.id}-scheduledTime`} style={{ textAlign: 'left' }}>
                               <Icon type="fa" name="clock-o" />
                               {__('Migration scheduled')}
