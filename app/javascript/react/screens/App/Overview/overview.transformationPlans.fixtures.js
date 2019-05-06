@@ -72,7 +72,7 @@ export const transformationPlans = Immutable({
           process: true
         }
       ],
-      fulfilledOn: '2018-04-06T12:31:30Z',
+      fulfilledOn: null,
       configVmLength: 2,
       scheduleTime: null,
       status: 'Ok'
