@@ -50,7 +50,7 @@ const MigrationsCompletedList = ({
           <ListViewToolbar
             filterTypes={MIGRATIONS_FILTER_TYPES}
             sortFields={!archived ? MIGRATIONS_COMPLETED_SORT_FIELDS : MIGRATIONS_ARCHIVED_SORT_FIELDS}
-            defaultSortTypeIndex={!archived ? 1 : 0}
+            defaultSortTypeIndex={1}
             listItems={finishedTransformationPlans}
           >
             {({
