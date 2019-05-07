@@ -30,10 +30,7 @@ describe('GeneralSettings component', () => {
   it('properly calls patchSettingsAction on apply click', () => {
     const patchSettingsAction = jest.fn();
     const component = shallow(<GeneralSettings {...getBaseProps()} patchSettingsAction={patchSettingsAction} />);
-    component
-      .find('Button')
-      .find({ bsStyle: 'primary' })
-      .simulate('click');
+    component.find('Button').simulate('click');
     expect(patchSettingsAction).toBeCalledWith(servers.resources, defaultFormValues);
   });
 });

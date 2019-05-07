@@ -62,32 +62,41 @@ export class GeneralSettings extends React.Component {
     return (
       <Spinner loading={isFetchingServers || isFetchingSettings} style={{ marginTop: 15 }}>
         <div className="migration-settings">
-          <Form className="form-vertical" style={{ padding: '0 20px' }}>
+          <Form className="form-horizontal" style={{ padding: '0 20px' }}>
             <div>
               <h3>{__('Concurrent Migrations')}</h3>
             </div>
             <Form.FormGroup>
-              <Form.ControlLabel>
+              <Form.ControlLabel className="col-md-5">
                 <span className="pull-left">
                   {__('Maximum concurrent migrations per conversion host')}
                   <OverlayTrigger
                     overlay={
                       <Popover id="maximum_concurrect_migrations_per_provider_popover">
-                        {__('For VDDK transformations the maximum concurrent migrations per conversion host is limited to 20. See the product documentation for more information.') /* prettier-ignore */}
+                        {__(
+                          'For VDDK transformations the maximum concurrent migrations per conversion host is limited to 20. See the product documentation for more information.'
+                        )}
                       </Popover>
                     }
                     placement="top"
-                    trigger="click"
+                    trigger={['hover']}
                     delay={500}
-                    rootClose
+                    rootClose={false}
                   >
-                    <Button bsStyle="link" style={{ paddingTop: 0, paddingBottom: 0 }}>
-                      <Icon type="pf" name="info" />
-                    </Button>
+                    <Icon
+                      type="pf"
+                      name="info"
+                      size="md"
+                      style={{
+                        width: 'inherit',
+                        backgroundColor: 'transparent',
+                        padding: 10
+                      }}
+                    />
                   </OverlayTrigger>
                 </span>
               </Form.ControlLabel>
-              <div style={{ width: 150 }}>
+              <div className="col-md-2">
                 <Field
                   id="max_concurrent_tasks_per_host"
                   name="max_concurrent_tasks_per_host"
@@ -99,10 +108,10 @@ export class GeneralSettings extends React.Component {
               </div>
             </Form.FormGroup>
             <Form.FormGroup>
-              <Form.ControlLabel>
+              <Form.ControlLabel className="col-md-5">
                 <div className="pull-left">{__('Maximum concurrent migrations per provider')}</div>
               </Form.ControlLabel>
-              <div style={{ width: 150 }}>
+              <div className="col-md-2">
                 <Field
                   id="max_concurrent_tasks_per_ems"
                   name="max_concurrent_tasks_per_ems"
@@ -126,9 +135,8 @@ export class GeneralSettings extends React.Component {
               postfix="％"
               inputEnabledFunction={inputEnabledFunction}
               initialUncheckedValue="unlimited"
-              vertical
             />
-            <Form.FormGroup style={{ marginTop: '40px' }}>
+            <Form.FormGroup className="col-md-1 pull-left" style={{ marginTop: '40px' }}>
               <Button
                 bsStyle="primary"
                 onClick={this.onApplyClick}
