@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { reduxForm, Field } from 'redux-form';
 import { Form, Button, Icon, OverlayTrigger, Popover, Spinner } from 'patternfly-react';
 import NumberInput from '../../../common/forms/NumberInput';
-import TextInputWithCheckbox from '../../../common/forms/TextInputWithCheckbox';
+// import TextInputWithCheckbox from '../../../common/forms/TextInputWithCheckbox'; // FIXME: uncomment once backend is ready
 
 const FORM_NAME = 'settings';
 
@@ -34,30 +34,14 @@ export class GeneralSettings extends React.Component {
   };
 
   render() {
-    const {
-      isFetchingServers,
-      isFetchingSettings,
-      isSavingSettings,
-      savedSettings,
-      settingsForm,
-      invalid,
-      pristine
-    } = this.props;
+    const { isFetchingServers, isFetchingSettings, isSavingSettings, savedSettings, settingsForm } = this.props;
 
     const hasUnsavedChanges =
       settingsForm &&
       settingsForm.values &&
       Object.keys(savedSettings).some(key => savedSettings[key] !== settingsForm.values[key]);
 
-    const inputEnabledFunction = value => value !== 'unlimited';
-
-    const validatePercentInput = value => {
-      const numberRegex = /^\d+$/;
-      if ((inputEnabledFunction(value) && !numberRegex.test(value)) || value < 0 || value > 100) {
-        return __('The entered value must be between 0 and 100');
-      }
-      return null;
-    };
+    // const inputEnabledFunction = value => value !== 'unlimited'; // FIXME: uncomment once backend is ready
 
     return (
       <Spinner loading={isFetchingServers || isFetchingSettings} style={{ marginTop: 15 }}>
@@ -122,6 +106,7 @@ export class GeneralSettings extends React.Component {
                 />
               </div>
             </Form.FormGroup>
+            {/* FIXME: uncomment once backend is ready
             <Form.FormGroup />
             <div>
               <h3>{__('Resource Utilization Limits for Migrations')}</h3>
@@ -130,18 +115,23 @@ export class GeneralSettings extends React.Component {
               id="cpu_limit_per_host"
               name="cpu_limit_per_host"
               component={TextInputWithCheckbox}
-              validate={validatePercentInput}
+              normalize={TextInputWithCheckbox.normalizeStringToInt}
               label={__('Max CPU utilization per conversion host')}
               postfix="％"
               inputEnabledFunction={inputEnabledFunction}
-              initialUncheckedValue="unlimited"
             />
+            <Field
+              id="network_limit_per_host"
+              name="network_limit_per_host"
+              component={TextInputWithCheckbox}
+              normalize={TextInputWithCheckbox.normalizeStringToInt}
+              label={__('Total network throughput')}
+              postfix={__('MB/s')}
+              inputEnabledFunction={inputEnabledFunction}
+            />
+*/}
             <Form.FormGroup className="col-md-1 pull-left" style={{ marginTop: '40px' }}>
-              <Button
-                bsStyle="primary"
-                onClick={this.onApplyClick}
-                disabled={!hasUnsavedChanges || isSavingSettings || invalid || pristine}
-              >
+              <Button bsStyle="primary" onClick={this.onApplyClick} disabled={!hasUnsavedChanges || isSavingSettings}>
                 {__('Apply')}
               </Button>
               {isSavingSettings && (
@@ -170,9 +160,7 @@ GeneralSettings.propTypes = {
   settingsForm: PropTypes.object,
   fetchServersUrl: PropTypes.string,
   fetchSettingsUrl: PropTypes.string,
-  formChangeAction: PropTypes.func,
-  invalid: PropTypes.bool,
-  pristine: PropTypes.bool
+  formChangeAction: PropTypes.func
 };
 
 GeneralSettings.defaultProps = {
