@@ -26,3 +26,14 @@
     margin-right: 5px;
   }
 }
+
+@media (min-width: 992px) {
+  .migrations .list-view-pf-main-info .list-view-pf-body {
+    .list-view-pf-description {
+      width: 25%;
+    }
+    .list-view-pf-additional-info {
+      width: 75%;
+    }
+  }
+}

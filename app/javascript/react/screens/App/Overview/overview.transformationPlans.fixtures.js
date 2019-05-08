@@ -20,6 +20,7 @@ export const transformationPlans = Immutable({
       created_on: '2018-05-01T12:15:00Z',
       id: '10',
       miq_requests: [],
+      fulfilledOn: null,
       configVmLength: 2,
       scheduleTime: null,
       status: null
@@ -71,6 +72,7 @@ export const transformationPlans = Immutable({
           process: true
         }
       ],
+      fulfilledOn: null,
       configVmLength: 2,
       scheduleTime: null,
       status: 'Ok'
@@ -160,6 +162,7 @@ export const transformationPlans = Immutable({
           process: true
         }
       ],
+      fulfilledOn: '2018-04-06T12:31:30Z',
       configVmLength: 2,
       scheduleTime: null,
       status: 'Ok'
@@ -214,6 +217,7 @@ export const transformationPlans = Immutable({
           process: true
         }
       ],
+      fulfilledOn: '2018-04-06T12:31:30Z',
       configVmLength: 2,
       scheduleTime: null,
       status: 'Error'
@@ -268,6 +272,7 @@ export const transformationPlans = Immutable({
           process: true
         }
       ],
+      fulfilledOn: '2018-04-06T12:31:30Z',
       configVmLength: 2,
       scheduleTime: null,
       status: 'Ok'
@@ -322,6 +327,7 @@ export const transformationPlans = Immutable({
           process: true
         }
       ],
+      fulfilledOn: '2018-04-06T12:31:30Z',
       configVmLength: 2,
       scheduleTime: null,
       status: 'Ok'
@@ -377,6 +383,7 @@ export const transformationPlans = Immutable({
           cancelation_status: 'cancel_requested'
         }
       ],
+      fulfilledOn: '2018-04-06T12:31:30Z',
       configVmLength: 2,
       scheduleTime: null,
       status: 'Ok'
@@ -431,6 +438,7 @@ export const transformationPlans = Immutable({
           cancelation_status: null
         }
       ],
+      fulfilledOn: '2018-04-06T12:31:30Z',
       configVmLength: 2,
       scheduleTime: null,
       status: 'Ok'

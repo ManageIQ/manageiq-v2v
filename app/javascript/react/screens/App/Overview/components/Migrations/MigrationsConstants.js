@@ -13,12 +13,15 @@ export const MIGRATIONS_NOT_STARTED_SORT_FIELDS = [
   { id: 'scheduleTime', title: __('Scheduled Time'), isNumeric: true }
 ];
 
-export const MIGRATIONS_COMPLETED_SORT_FIELDS = [
+export const MIGRATIONS_ARCHIVED_SORT_FIELDS = [
   { id: 'name', title: __('Name'), isNumeric: false },
-  { id: 'status', title: __('Status'), isNumeric: false }
+  { id: 'fulfilledOn', title: __('Completed'), isNumeric: false }
 ];
 
-export const MIGRATIONS_ARCHIVED_SORT_FIELDS = [{ id: 'name', title: __('Name'), isNumeric: false }];
+export const MIGRATIONS_COMPLETED_SORT_FIELDS = [
+  ...MIGRATIONS_ARCHIVED_SORT_FIELDS,
+  { id: 'status', title: __('Status'), isNumeric: false }
+];
 
 export const MIGRATIONS_FILTER_TYPES = [
   {

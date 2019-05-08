@@ -6,8 +6,10 @@ import ShowWizardEmptyState from '../../../common/ShowWizardEmptyState/ShowWizar
 import ScheduleMigrationModal from '../ScheduleMigrationModal/ScheduleMigrationModal';
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
 import { MIGRATIONS_NOT_STARTED_SORT_FIELDS, MIGRATIONS_FILTER_TYPES } from './MigrationsConstants';
-import ScheduleMigrationButtons from './ScheduleMigrationButtons';
+import ScheduleMigrationButton from './ScheduleMigrationButton';
+import EditScheduleMenuItems from './EditScheduleMenuItems';
 import StopPropagationOnClick from '../../../common/StopPropagationOnClick';
+import Visibility from '../../../common/Visibility';
 import ListViewToolbar from '../../../common/ListViewToolbar/ListViewToolbar';
 import DeleteMigrationMenuItem from './DeleteMigrationMenuItem';
 import getPlanScheduleInfo from './helpers/getPlanScheduleInfo';
@@ -63,23 +65,6 @@ const MigrationsNotStartedList = ({
                     );
                     const isMissingMapping = !plan.infraMappingName;
 
-                    const scheduleButtons = (
-                      <ScheduleMigrationButtons
-                        showConfirmModalAction={showConfirmModalAction}
-                        hideConfirmModalAction={hideConfirmModalAction}
-                        loading={loading}
-                        toggleScheduleMigrationModal={toggleScheduleMigrationModal}
-                        scheduleMigration={scheduleMigration}
-                        fetchTransformationPlansAction={fetchTransformationPlansAction}
-                        fetchTransformationPlansUrl={fetchTransformationPlansUrl}
-                        plan={plan}
-                        isMissingMapping={isMissingMapping}
-                        migrationScheduled={migrationScheduled}
-                        migrationStarting={migrationStarting}
-                        showInitialScheduleButton={showInitialScheduleButton}
-                      />
-                    );
-
                     const editPlanDisabled = loading === plan.href;
 
                     return (
@@ -90,8 +75,17 @@ const MigrationsNotStartedList = ({
                           redirectTo(`/plan/${plan.id}`);
                         }}
                         actions={
+                          // Visibility helper is used instead of conditional rendering
+                          // so hidden buttons still take up space and the list rows stay aligned
                           <div>
-                            {showInitialScheduleButton && scheduleButtons}
+                            <Visibility hidden={!showInitialScheduleButton}>
+                              <ScheduleMigrationButton
+                                loading={loading}
+                                toggleScheduleMigrationModal={toggleScheduleMigrationModal}
+                                plan={plan}
+                                isMissingMapping={isMissingMapping}
+                              />
+                            </Visibility>
                             <Button
                               id={`migrate_${plan.id}`}
                               onClick={e => {
@@ -128,7 +122,21 @@ const MigrationsNotStartedList = ({
                                   fetchTransformationMappingsAction={fetchTransformationMappingsAction}
                                   fetchTransformationMappingsUrl={fetchTransformationMappingsUrl}
                                 />
-                                {!showInitialScheduleButton && scheduleButtons}
+                                {!showInitialScheduleButton && (
+                                  <EditScheduleMenuItems
+                                    showConfirmModalAction={showConfirmModalAction}
+                                    hideConfirmModalAction={hideConfirmModalAction}
+                                    loading={loading}
+                                    toggleScheduleMigrationModal={toggleScheduleMigrationModal}
+                                    scheduleMigration={scheduleMigration}
+                                    fetchTransformationPlansAction={fetchTransformationPlansAction}
+                                    fetchTransformationPlansUrl={fetchTransformationPlansUrl}
+                                    plan={plan}
+                                    isMissingMapping={isMissingMapping}
+                                    migrationScheduled={migrationScheduled}
+                                    migrationStarting={migrationStarting}
+                                  />
+                                )}
                               </DropdownKebab>
                             </StopPropagationOnClick>
                           </div>

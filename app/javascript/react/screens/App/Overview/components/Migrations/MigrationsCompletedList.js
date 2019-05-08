@@ -11,11 +11,13 @@ import {
   MIGRATIONS_FILTER_TYPES,
   MIGRATIONS_ARCHIVED_SORT_FIELDS
 } from './MigrationsConstants';
-import ScheduleMigrationButtons from './ScheduleMigrationButtons';
+import ScheduleMigrationButton from './ScheduleMigrationButton';
+import EditScheduleMenuItems from './EditScheduleMenuItems';
 import ScheduleMigrationModal from '../ScheduleMigrationModal/ScheduleMigrationModal';
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
 import DeleteMigrationMenuItem from './DeleteMigrationMenuItem';
 import StopPropagationOnClick from '../../../common/StopPropagationOnClick';
+import Visibility from '../../../common/Visibility';
 import getPlanScheduleInfo from './helpers/getPlanScheduleInfo';
 
 const MigrationsCompletedList = ({
@@ -50,7 +52,7 @@ const MigrationsCompletedList = ({
           <ListViewToolbar
             filterTypes={MIGRATIONS_FILTER_TYPES}
             sortFields={!archived ? MIGRATIONS_COMPLETED_SORT_FIELDS : MIGRATIONS_ARCHIVED_SORT_FIELDS}
-            defaultSortTypeIndex={!archived ? 1 : 0}
+            defaultSortTypeIndex={1}
             listItems={finishedTransformationPlans}
           >
             {({
@@ -168,22 +170,7 @@ const MigrationsCompletedList = ({
 
                     const isMissingMapping = !plan.infraMappingName;
 
-                    const scheduleButtons = (
-                      <ScheduleMigrationButtons
-                        showConfirmModalAction={showConfirmModalAction}
-                        hideConfirmModalAction={hideConfirmModalAction}
-                        loading={loading}
-                        toggleScheduleMigrationModal={toggleScheduleMigrationModal}
-                        scheduleMigration={scheduleMigration}
-                        fetchTransformationPlansAction={fetchTransformationPlansAction}
-                        fetchTransformationPlansUrl={fetchTransformationPlansUrl}
-                        plan={plan}
-                        isMissingMapping={isMissingMapping}
-                        migrationScheduled={migrationScheduled}
-                        migrationStarting={migrationStarting}
-                        showInitialScheduleButton={showInitialScheduleButton}
-                      />
-                    );
+                    const showScheduledTime = migrationScheduled && !staleMigrationSchedule && !migrationStarting;
 
                     return (
                       <ListView.Item
@@ -245,7 +232,15 @@ const MigrationsCompletedList = ({
                               {elapsedTime}
                             </ListView.InfoItem>
                           ) : null,
-                          migrationScheduled && !staleMigrationSchedule && !migrationStarting ? (
+                          !denied && !showScheduledTime && mostRecentRequest.fulfilled_on ? (
+                            <ListView.InfoItem key={`${plan.id}-completed`} style={{ textAlign: 'left' }}>
+                              <Icon type="fa" name="clock-o" />
+                              {__('Completed:')}
+                              <br />
+                              {formatDateTime(mostRecentRequest.fulfilled_on)}
+                            </ListView.InfoItem>
+                          ) : null,
+                          showScheduledTime ? (
                             <ListView.InfoItem key={`${plan.id}-scheduledTime`} style={{ textAlign: 'left' }}>
                               <Icon type="fa" name="clock-o" />
                               {__('Migration scheduled')}
@@ -260,22 +255,28 @@ const MigrationsCompletedList = ({
                           )
                         ]}
                         actions={
+                          // Visibility helper is used instead of conditional rendering
+                          // so hidden buttons still take up space and the list rows stay aligned
                           <div>
-                            {!archived &&
-                              (failed || denied) && (
-                                <React.Fragment>
-                                  {showInitialScheduleButton && scheduleButtons}
-                                  <Button
-                                    onClick={e => {
-                                      e.stopPropagation();
-                                      retryClick(plan.href, plan.id);
-                                    }}
-                                    disabled={isMissingMapping || loading === plan.href || migrationStarting}
-                                  >
-                                    {__('Retry')}
-                                  </Button>
-                                </React.Fragment>
-                              )}
+                            <Visibility hidden={archived || !(failed || denied)}>
+                              <Visibility hidden={!showInitialScheduleButton}>
+                                <ScheduleMigrationButton
+                                  loading={loading}
+                                  toggleScheduleMigrationModal={toggleScheduleMigrationModal}
+                                  plan={plan}
+                                  isMissingMapping={isMissingMapping}
+                                />
+                              </Visibility>
+                              <Button
+                                onClick={e => {
+                                  e.stopPropagation();
+                                  retryClick(plan.href, plan.id);
+                                }}
+                                disabled={isMissingMapping || loading === plan.href || migrationStarting}
+                              >
+                                {__('Retry')}
+                              </Button>
+                            </Visibility>
                             <StopPropagationOnClick>
                               <DropdownKebab id={`${plan.id}-kebab`} pullRight>
                                 {!archived && (
@@ -311,7 +312,21 @@ const MigrationsCompletedList = ({
                                   fetchTransformationMappingsAction={fetchTransformationMappingsAction}
                                   fetchTransformationMappingsUrl={fetchTransformationMappingsUrl}
                                 />
-                                {!showInitialScheduleButton && scheduleButtons}
+                                {!showInitialScheduleButton && (
+                                  <EditScheduleMenuItems
+                                    showConfirmModalAction={showConfirmModalAction}
+                                    hideConfirmModalAction={hideConfirmModalAction}
+                                    loading={loading}
+                                    toggleScheduleMigrationModal={toggleScheduleMigrationModal}
+                                    scheduleMigration={scheduleMigration}
+                                    fetchTransformationPlansAction={fetchTransformationPlansAction}
+                                    fetchTransformationPlansUrl={fetchTransformationPlansUrl}
+                                    plan={plan}
+                                    isMissingMapping={isMissingMapping}
+                                    migrationScheduled={migrationScheduled}
+                                    migrationStarting={migrationStarting}
+                                  />
+                                )}
                               </DropdownKebab>
                             </StopPropagationOnClick>
                           </div>
