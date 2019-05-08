@@ -11,7 +11,8 @@ import {
   showConversionHostDeleteModalAction,
   hideConversionHostDeleteModalAction,
   setConversionHostTaskToRetryAction,
-  showConversionHostRetryModalAction
+  showConversionHostRetryModalAction,
+  saveTextFileAction
 } from '../../SettingsActions';
 
 import { getCombinedConversionHostListItems } from '../../helpers';
@@ -63,7 +64,8 @@ export default connect(
     showConversionHostDeleteModalAction,
     hideConversionHostDeleteModalAction,
     setConversionHostTaskToRetryAction,
-    showConversionHostRetryModalAction
+    showConversionHostRetryModalAction,
+    saveTextFileAction
   },
   mergeProps
 )(ConversionHostsSettings);
