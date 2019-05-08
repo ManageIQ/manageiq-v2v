@@ -98,6 +98,21 @@ export const getCombinedConversionHostListItems = (conversionHosts, tasksWithMet
   return [...activeEnableTasks, ...conversionHostsWithTasks];
 };
 
+export const getConversionHostTaskLogFile = task => {
+  const {
+    meta: { resourceName, operation },
+    context_data: { conversion_host_enable, conversion_host_check, conversion_host_disable }
+  } = task;
+  const fileName = `${resourceName}-${operation}.log`;
+  if (task.meta.operation === 'enable') {
+    return { fileName, fileBody: [conversion_host_enable, conversion_host_check].join('\n\n') };
+  }
+  if (task.meta.operation === 'disable') {
+    return { fileName, fileBody: conversion_host_disable };
+  }
+  return null;
+};
+
 export const getConversionHostSshKeyInfoMessage = selectedProviderType => {
   if (selectedProviderType === RHV) {
     return __('RHV-M deploys a common SSH public key on all hosts when configuring them. This allows commands and playbooks to be run from RHV-M. The associated private key is in the file /etc/pki/ovirt-engine/keys/engine_id_rsa on RHV-M.'); // prettier-ignore

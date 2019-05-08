@@ -6,8 +6,8 @@ import ConversionHostRemoveButton from './ConversionHostRemoveButton';
 import ConversionHostRetryButton from './ConversionHostRetryButton';
 import StopPropagationOnClick from '../../../../common/StopPropagationOnClick';
 import { FINISHED, ERROR, ENABLE, DISABLE } from '../ConversionHostsSettingsConstants';
+import { getConversionHostTaskLogFile } from '../../../helpers';
 
-const downloadLogSupported = false; // TODO remove me when the Download Log action works
 const removeFailedTaskSupported = false; // TODO remove me when the Remove button works
 
 const ConversionHostsListItem = ({
@@ -17,7 +17,8 @@ const ConversionHostsListItem = ({
   showConversionHostDeleteModalAction,
   setConversionHostTaskToRetryAction,
   showConversionHostRetryModalAction,
-  isPostingConversionHosts
+  isPostingConversionHosts,
+  saveTextFileAction
 }) => {
   let mostRecentTask = listItem;
   if (!isTask) {
@@ -102,7 +103,15 @@ const ConversionHostsListItem = ({
   const kebabMenu = mostRecentTask ? (
     <StopPropagationOnClick>
       <DropdownKebab id={`task-kebab-${mostRecentTask.id}`} pullRight>
-        <MenuItem disabled={mostRecentTask.state !== FINISHED}>{__('Download Log') /* TODO */}</MenuItem>
+        <MenuItem
+          disabled={mostRecentTask.state !== FINISHED}
+          onClick={() => {
+            const file = getConversionHostTaskLogFile(mostRecentTask);
+            if (file) saveTextFileAction(file);
+          }}
+        >
+          {__('Download Log')}
+        </MenuItem>
       </DropdownKebab>
     </StopPropagationOnClick>
   ) : null;
@@ -121,7 +130,7 @@ const ConversionHostsListItem = ({
       actions={
         <div className="conversion-hosts-list-actions">
           {actionButtons}
-          {downloadLogSupported && kebabMenu}
+          {kebabMenu}
         </div>
       }
     />
@@ -135,7 +144,8 @@ ConversionHostsListItem.propTypes = {
   showConversionHostDeleteModalAction: PropTypes.func,
   setConversionHostTaskToRetryAction: PropTypes.func,
   showConversionHostRetryModalAction: PropTypes.func,
-  isPostingConversionHosts: PropTypes.bool
+  isPostingConversionHosts: PropTypes.bool,
+  saveTextFileAction: PropTypes.func
 };
 
 export default ConversionHostsListItem;
