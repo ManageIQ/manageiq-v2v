@@ -8,6 +8,7 @@ export const planTransmutation = (plans = [], mappings = []) =>
       ...plan,
       infraMappingName: plan.transformation_mapping && plan.transformation_mapping.name,
       status: request ? request.status : null,
+      fulfilledOn: request ? request.fulfilled_on : null,
       configVmLength: plan.options.config_info.actions.length,
       scheduleTime: plan.schedules ? new Date(plan.schedules[0].run_at.start_time).getTime() : null
     };
