@@ -51,17 +51,15 @@ const _filterTargetDatastores = (response, targetProvider) => {
   const { data } = response;
 
   if (data[V2V_TARGET_PROVIDER_STORAGE_KEYS[targetProvider]]) {
-    const targetDatastores = data[V2V_TARGET_PROVIDER_STORAGE_KEYS[targetProvider]].map(storage => ({
-      ...storage,
-      providerName: data.ext_management_system.name
-    }));
-    return {
-      targetDatastores
-    };
+    const targetDatastores = data[V2V_TARGET_PROVIDER_STORAGE_KEYS[targetProvider]]
+      .filter(storage => storage.storage_domain_type === 'data')
+      .map(storage => ({
+        ...storage,
+        providerName: data.ext_management_system.name
+      }));
+    return { targetDatastores };
   }
-  return {
-    targetDatastores: []
-  };
+  return { targetDatastores: [] };
 };
 
 const _getTargetDatastoresActionCreator = (url, targetProvider) => dispatch =>
