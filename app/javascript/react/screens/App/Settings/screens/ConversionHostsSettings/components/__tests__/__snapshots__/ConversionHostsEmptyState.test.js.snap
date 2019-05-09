@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`conversion hosts empty state renders correctly 1`] = `
+<ShowWizardEmptyState
+  buttonHref=""
+  buttonText="Configure Conversion Host"
+  className="white-bg"
+  description="Select one or more hosts to be configured as IMS conversion hosts."
+  iconName="add-circle-o"
+  iconType="pf"
+  showWizardAction={[MockFunction]}
+  title=" "
+/>
+`;

@@ -8,19 +8,17 @@ const ConversionHostRetryButton = ({
   showConversionHostRetryModalAction,
   ...props
 }) => (
-  <React.Fragment>
-    <Button
-      id={`retry_${task.id}`}
-      onClick={e => {
-        e.stopPropagation();
-        setConversionHostTaskToRetryAction(task);
-        showConversionHostRetryModalAction();
-      }}
-      {...props}
-    >
-      {__('Retry')}
-    </Button>
-  </React.Fragment>
+  <Button
+    id={`retry_${task.id}`}
+    onClick={e => {
+      e.stopPropagation();
+      setConversionHostTaskToRetryAction(task);
+      showConversionHostRetryModalAction();
+    }}
+    {...props}
+  >
+    {__('Retry')}
+  </Button>
 );
 
 ConversionHostRetryButton.propTypes = {
