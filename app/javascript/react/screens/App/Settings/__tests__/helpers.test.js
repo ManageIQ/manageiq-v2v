@@ -3,7 +3,9 @@ import {
   indexConversionHostTasksByResource,
   getActiveConversionHostEnableTasks,
   attachTasksToConversionHosts,
-  getCombinedConversionHostListItems
+  getCombinedConversionHostListItems,
+  getConversionHostTaskLogFile,
+  getConversionHostSshKeyInfoMessage
 } from '../helpers';
 
 import {
@@ -12,6 +14,7 @@ import {
   exampleConversionHosts,
   inProgress
 } from '../settings.fixtures';
+import { RHV, OPENSTACK } from '../../../../../common/constants';
 
 describe('conversion host task parsing and indexing', () => {
   it('parses tasks correctly', () => {
@@ -29,6 +32,10 @@ describe('conversion host task parsing and indexing', () => {
         unparsedTaskName: exampleTasks[0].name
       }
     });
+  });
+
+  it('has no errors when tasks are not defined', () => {
+    expect(parseConversionHostTasksMetadata()).toEqual([]);
   });
 
   it('defines a meta object even if the task name is malformed', () => {
@@ -85,5 +92,54 @@ describe('conversion host list item filtering and metadata', () => {
     const combinedListItems = getCombinedConversionHostListItems(exampleConversionHosts, tasks, tasksByResource);
     const resourceIds = combinedListItems.map(item => (item.meta.isTask ? item.meta.resourceId : item.resource.id));
     expect(resourceIds).toEqual(['1', '2', '7', '3', '4', '5', '8', '9', '10', '12']);
+  });
+});
+
+describe('conversion host log file helper', () => {
+  it('generates a file from an enable task', () => {
+    const task = {
+      meta: { resourceName: 'hostname', operation: 'enable' },
+      context_data: {
+        conversion_host_enable: 'MOCK PLAYBOOK LOG CONTENTS: ENABLE',
+        conversion_host_check: 'MOCK PLAYBOOK LOG CONTENTS: CHECK'
+      }
+    };
+    const { fileName, fileBody } = getConversionHostTaskLogFile(task);
+    expect(fileName).toBe('hostname-enable.log');
+    expect(fileBody).toBe('MOCK PLAYBOOK LOG CONTENTS: ENABLE\n\nMOCK PLAYBOOK LOG CONTENTS: CHECK');
+  });
+
+  it('generates a file from a disable task', () => {
+    const task = {
+      meta: { resourceName: 'hostname', operation: 'disable' },
+      context_data: {
+        conversion_host_disable: 'MOCK PLAYBOOK LOG CONTENTS: DISABLE'
+      }
+    };
+    const { fileName, fileBody } = getConversionHostTaskLogFile(task);
+    expect(fileName).toBe('hostname-disable.log');
+    expect(fileBody).toBe('MOCK PLAYBOOK LOG CONTENTS: DISABLE');
+  });
+
+  it('returns null for an unknown task operation', () => {
+    const task = {
+      meta: { resourceName: 'hostname', operation: 'unknown' },
+      context_data: {}
+    };
+    expect(getConversionHostTaskLogFile(task)).toBe(null);
+  });
+});
+
+describe('conversion host ssh key info message', () => {
+  it('has a message for RHV hosts', () => {
+    expect(getConversionHostSshKeyInfoMessage(RHV).length).toBeGreaterThan(0);
+  });
+
+  it('has a message for OSP hosts', () => {
+    expect(getConversionHostSshKeyInfoMessage(OPENSTACK).length).toBeGreaterThan(0);
+  });
+
+  it('returns empty string for unknown hosts', () => {
+    expect(getConversionHostSshKeyInfoMessage('unknown')).toBe('');
   });
 });
