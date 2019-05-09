@@ -1,6 +1,7 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import promiseMiddleware from 'redux-promise-middleware';
+import { saveAs } from 'file-saver';
 import * as actions from '../SettingsActions';
 import {
   fetchServersData,
@@ -23,6 +24,11 @@ import {
   HIDE_V2V_CONVERSION_HOST_RETRY_MODAL,
   V2V_CONVERSION_HOST_RETRY_MODAL_EXITED
 } from '../SettingsConstants';
+import { V2V_NOTIFICATION_ADD } from '../../common/NotificationList/NotificationConstants';
+
+jest.mock('file-saver', () => ({
+  saveAs: jest.fn()
+}));
 
 const middlewares = [thunk, promiseMiddleware()];
 const mockStore = configureMockStore(middlewares);
@@ -271,5 +277,24 @@ describe('settings actions', () => {
   it('should dispatch convhost retry modal exited action', () => {
     store.dispatch(actions.conversionHostRetryModalExitedAction());
     expect(store.getActions()).toEqual([{ type: V2V_CONVERSION_HOST_RETRY_MODAL_EXITED }]);
+  });
+
+  it('should save a file and dispatch notification action', () => {
+    const fileName = 'some-file.txt';
+    const fileBody = 'Hello World';
+    store.dispatch(actions.saveTextFileAction({ fileName, fileBody }));
+    expect(saveAs).toHaveBeenCalledTimes(1);
+    const savedFile = saveAs.mock.calls[0][0];
+    expect(savedFile.name).toBe(fileName);
+    expect(savedFile.type).toBe('text/plain;charset=utf-8');
+    expect(savedFile.size).toBe(fileBody.length);
+    expect(store.getActions()).toEqual([
+      {
+        type: V2V_NOTIFICATION_ADD,
+        message: '"some-file.txt" download successful',
+        notificationType: 'success',
+        actionEnabled: false
+      }
+    ]);
   });
 });
