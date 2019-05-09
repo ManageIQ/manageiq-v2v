@@ -8,7 +8,7 @@ describe('Plan wizard results step', () => {
     editPlansUrl: '/api/bar',
     postMigrationPlansAction: jest.fn(),
     editMigrationPlansAction: jest.fn(),
-    plansBody: { mock: 'data' },
+    plansBody: { name: 'Mock Plan', mock: 'data' },
     planSchedule: 'migration_plan_later',
     isPostingPlans: false,
     isRejectedPostingPlans: false,
