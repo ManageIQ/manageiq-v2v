@@ -1,0 +1,228 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`conversion hosts list renders the inner list view correctly 1`] = `
+<React.Fragment>
+  <Row
+    bsClass="row"
+    componentClass="div"
+  >
+    <withContext(Toolbar)>
+      <getContext(Filter)
+        style={
+          Object {
+            "paddingLeft": 0,
+          }
+        }
+      >
+        <FilterTypeSelector
+          className=""
+          currentFilterType={
+            Object {
+              "filterType": "text",
+              "id": "name",
+              "placeholder": "Filter by Name",
+              "title": "Name",
+            }
+          }
+          filterTypes={
+            Array [
+              Object {
+                "filterType": "text",
+                "id": "name",
+                "placeholder": "Filter by Name",
+                "title": "Name",
+              },
+            ]
+          }
+          id=""
+          onFilterTypeSelected={[Function]}
+          placeholder=""
+        />
+        <FormControl
+          bsClass="form-control"
+          componentClass="input"
+          onChange={[Function]}
+          onKeyPress={[Function]}
+          placeholder="Filter by Name"
+          type="text"
+          value=""
+        />
+      </getContext(Filter)>
+      <Sort
+        className=""
+      >
+        <SortTypeSelector
+          className=""
+          currentSortType={
+            Object {
+              "id": "name",
+              "isNumeric": false,
+              "title": "Name",
+            }
+          }
+          id=""
+          onSortTypeSelected={[Function]}
+          sortTypes={
+            Array [
+              Object {
+                "id": "name",
+                "isNumeric": false,
+                "title": "Name",
+              },
+            ]
+          }
+        />
+        <SortDirectionSelector
+          className=""
+          isAscending={true}
+          isNumeric={false}
+          onClick={[Function]}
+        />
+      </Sort>
+    </withContext(Toolbar)>
+  </Row>
+  <div
+    style={
+      Object {
+        "height": "100%",
+        "overflow": "auto",
+        "paddingBottom": 300,
+      }
+    }
+  >
+    <ListView
+      className="conversion-hosts-list"
+      id="conversion_hosts"
+    >
+      <ConversionHostsListItem
+        isPostingConversionHosts={false}
+        isTask={true}
+        key="conversion-host-task-1"
+        listItem={
+          Object {
+            "id": "1",
+            "meta": Object {
+              "isTask": true,
+            },
+            "mock": "task",
+          }
+        }
+        saveTextFileAction={[MockFunction]}
+        setConversionHostTaskToRetryAction={[MockFunction]}
+        setHostToDeleteAction={[MockFunction]}
+        showConversionHostDeleteModalAction={[MockFunction]}
+        showConversionHostRetryModalAction={[MockFunction]}
+      />
+      <ConversionHostsListItem
+        isPostingConversionHosts={false}
+        key="conversion-host-2"
+        listItem={
+          Object {
+            "id": "2",
+            "meta": Object {},
+            "mock": "host",
+          }
+        }
+        saveTextFileAction={[MockFunction]}
+        setConversionHostTaskToRetryAction={[MockFunction]}
+        setHostToDeleteAction={[MockFunction]}
+        showConversionHostDeleteModalAction={[MockFunction]}
+        showConversionHostRetryModalAction={[MockFunction]}
+      />
+    </ListView>
+    <PaginationRow
+      amountOfPages={1}
+      baseClassName="content-view-pf-pagination"
+      className=""
+      dropdownButtonId="pagination-row-dropdown"
+      itemCount={2}
+      itemsEnd={2}
+      itemsStart={1}
+      messages={
+        Object {
+          "currentPage": "Current Page",
+          "firstPage": "First Page",
+          "lastPage": "Last Page",
+          "nextPage": "Next Page",
+          "of": "of",
+          "perPage": "per page",
+          "previousPage": "Previous Page",
+        }
+      }
+      onFirstPage={[Function]}
+      onLastPage={[Function]}
+      onNextPage={[Function]}
+      onPageInput={[Function]}
+      onPerPageSelect={[Function]}
+      onPreviousPage={[Function]}
+      onSubmit={[Function]}
+      pageInputValue={1}
+      pageSizeDropUp={true}
+      pagination={
+        Object {
+          "page": 1,
+          "perPage": 10,
+          "perPageOptions": Array [
+            5,
+            10,
+            15,
+          ],
+        }
+      }
+      viewType="list"
+    />
+  </div>
+</React.Fragment>
+`;
+
+exports[`conversion hosts list renders the outer components correctly 1`] = `
+<React.Fragment>
+  <ListViewToolbar
+    defaultFilterTypeIndex={0}
+    defaultSortTypeIndex={0}
+    filterTypes={
+      Array [
+        Object {
+          "filterType": "text",
+          "id": "name",
+          "placeholder": "Filter by Name",
+          "title": "Name",
+        },
+      ]
+    }
+    listItems={
+      Array [
+        Object {
+          "id": "1",
+          "meta": Object {
+            "isTask": true,
+          },
+          "mock": "task",
+        },
+        Object {
+          "id": "2",
+          "meta": Object {},
+          "mock": "host",
+        },
+      ]
+    }
+    sortFields={
+      Array [
+        Object {
+          "id": "name",
+          "isNumeric": false,
+          "title": "Name",
+        },
+      ]
+    }
+  />
+  <DeleteConversionHostConfirmationModal
+    conversionHostDeleteModalVisible={false}
+    conversionHostToDelete={null}
+    deleteConversionHostAction={[MockFunction]}
+    deleteConversionHostActionUrl="/mock/delete/url"
+    hideConversionHostDeleteModalAction={[MockFunction]}
+    isDeletingConversionHost={false}
+  />
+</React.Fragment>
+`;
