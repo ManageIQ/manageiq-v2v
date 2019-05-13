@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import ConversionHostWizardHostsStep from './ConversionHostWizardHostsStep';
+import BaseConversionHostWizardHostsStep from './ConversionHostWizardHostsStep';
 
 import { stepIDs } from '../ConversionHostWizardConstants';
 
@@ -21,8 +21,12 @@ const mapStateToProps = ({
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => Object.assign(stateProps, ownProps.data, dispatchProps);
 
-export default connect(
+const ConversionHostWizardHostsStep = connect(
   mapStateToProps,
   {},
   mergeProps
-)(ConversionHostWizardHostsStep);
+)(BaseConversionHostWizardHostsStep);
+
+ConversionHostWizardHostsStep.displayName = 'ConversionHostWizardHostsStep';
+
+export default ConversionHostWizardHostsStep;
