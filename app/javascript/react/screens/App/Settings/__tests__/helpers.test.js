@@ -3,63 +3,18 @@ import {
   indexConversionHostTasksByResource,
   getActiveConversionHostEnableTasks,
   attachTasksToConversionHosts,
-  getCombinedConversionHostListItems
+  getCombinedConversionHostListItems,
+  getConversionHostTaskLogFile,
+  getConversionHostSshKeyInfoMessage
 } from '../helpers';
 
-const defaultType = 'ManageIQ::Providers::Openstack::CloudManager::Vm';
-const inProgress = { state: 'Active', status: 'Ok', message: 'Example progress message' };
-const failed = { state: 'Finished', status: 'Error', message: 'Example error message' };
-const success = { state: 'Finished', status: 'Ok', message: 'Example success message' };
-
-const exampleTask = (updated_on, operation, id) => ({
-  name: `Configuring a conversion_host: operation=${operation} resource=(name: example-host-${id} type: ${defaultType} id: ${id})`,
-  updated_on
-});
-
-const exampleConversionHost = resourceId => ({
-  id: `ch-${resourceId}`,
-  resource: { id: resourceId, name: `example-host-${resourceId}`, type: defaultType }
-});
-
-// Example tasks to try and show a resource in each possible enablement state
-const exampleTasks = [
-  // VM ID 1: enable in progress (active enable task)
-  { ...exampleTask(1, 'enable', '1'), ...inProgress },
-  // VM ID 2: enable failed (active enable task)
-  { ...exampleTask(2, 'enable', '2'), ...failed },
-  // VM ID 3: enable success (has CH)
-  { ...exampleTask(3, 'enable', '3'), ...success },
-  // VM ID 4: enable success, then disable in progress (has CH)
-  { ...exampleTask(4, 'enable', '4'), ...success },
-  { ...exampleTask(5, 'disable', '4'), ...inProgress },
-  // VM ID 5: enable success, then disable failed (has CH)
-  { ...exampleTask(6, 'enable', '5'), ...success },
-  { ...exampleTask(7, 'disable', '5'), ...failed },
-  // VM ID 6: enable success, then disable success (not shown in list)
-  { ...exampleTask(8, 'enable', '6'), ...success },
-  { ...exampleTask(9, 'disable', '6'), ...success },
-  // VM ID 7: enable failed, then retry enable in progress (active enable task)
-  { ...exampleTask(10, 'enable', '7'), ...failed },
-  { ...exampleTask(11, 'enable', '7'), ...inProgress },
-  // VM ID 8: enable failed, then retry enable success (has CH)
-  { ...exampleTask(12, 'enable', '8'), ...failed },
-  { ...exampleTask(13, 'enable', '8'), ...success },
-  // VM ID 9: enable failed, then retry enable success, then disable in progress (has CH)
-  { ...exampleTask(14, 'enable', '9'), ...failed },
-  { ...exampleTask(15, 'enable', '9'), ...success },
-  { ...exampleTask(16, 'disable', '9'), ...inProgress },
-  // VM ID 10: enable failed, then retry enable success, then disable failed (has CH)
-  { ...exampleTask(17, 'enable', '10'), ...failed },
-  { ...exampleTask(18, 'enable', '10'), ...success },
-  { ...exampleTask(19, 'disable', '10'), ...failed },
-  // VM ID 11: enable failed, then retry enable success, then disable success (not shown in list)
-  { ...exampleTask(20, 'enable', '11'), ...failed },
-  { ...exampleTask(21, 'enable', '11'), ...success },
-  { ...exampleTask(22, 'disable', '11'), ...success }
-];
-
-// Conversion hosts exist for VMs 3, 4, 5, 8, 9, 10, 12 (VM 12 was configured manually and has no tasks)
-const exampleConversionHosts = ['3', '4', '5', '8', '9', '10', '12'].map(exampleConversionHost);
+import {
+  exampleConversionHostTasks as exampleTasks,
+  exampleConversionHostType as exampleType,
+  exampleConversionHosts,
+  inProgress
+} from '../settings.fixtures';
+import { RHV, OPENSTACK } from '../../../../../common/constants';
 
 describe('conversion host task parsing and indexing', () => {
   it('parses tasks correctly', () => {
@@ -72,11 +27,15 @@ describe('conversion host task parsing and indexing', () => {
         isTask: true,
         operation: 'enable',
         resourceName: 'example-host-1',
-        resourceType: defaultType,
+        resourceType: exampleType,
         resourceId: '1',
         unparsedTaskName: exampleTasks[0].name
       }
     });
+  });
+
+  it('has no errors when tasks are not defined', () => {
+    expect(parseConversionHostTasksMetadata()).toEqual([]);
   });
 
   it('defines a meta object even if the task name is malformed', () => {
@@ -89,7 +48,7 @@ describe('conversion host task parsing and indexing', () => {
     const tasks = [...parseConversionHostTasksMetadata(exampleTasks), { extraTaskWithNoMeta: 'toBeIgnored' }];
     const tasksByResource = indexConversionHostTasksByResource(tasks);
     expect(tasksByResource).toEqual({
-      [defaultType]: {
+      [exampleType]: {
         '1': { enable: [tasks[0]] },
         '2': { enable: [tasks[1]] },
         '3': { enable: [tasks[2]] },
@@ -133,5 +92,54 @@ describe('conversion host list item filtering and metadata', () => {
     const combinedListItems = getCombinedConversionHostListItems(exampleConversionHosts, tasks, tasksByResource);
     const resourceIds = combinedListItems.map(item => (item.meta.isTask ? item.meta.resourceId : item.resource.id));
     expect(resourceIds).toEqual(['1', '2', '7', '3', '4', '5', '8', '9', '10', '12']);
+  });
+});
+
+describe('conversion host log file helper', () => {
+  it('generates a file from an enable task', () => {
+    const task = {
+      meta: { resourceName: 'hostname', operation: 'enable' },
+      context_data: {
+        conversion_host_enable: 'MOCK PLAYBOOK LOG CONTENTS: ENABLE',
+        conversion_host_check: 'MOCK PLAYBOOK LOG CONTENTS: CHECK'
+      }
+    };
+    const { fileName, fileBody } = getConversionHostTaskLogFile(task);
+    expect(fileName).toBe('hostname-enable.log');
+    expect(fileBody).toBe('MOCK PLAYBOOK LOG CONTENTS: ENABLE\n\nMOCK PLAYBOOK LOG CONTENTS: CHECK');
+  });
+
+  it('generates a file from a disable task', () => {
+    const task = {
+      meta: { resourceName: 'hostname', operation: 'disable' },
+      context_data: {
+        conversion_host_disable: 'MOCK PLAYBOOK LOG CONTENTS: DISABLE'
+      }
+    };
+    const { fileName, fileBody } = getConversionHostTaskLogFile(task);
+    expect(fileName).toBe('hostname-disable.log');
+    expect(fileBody).toBe('MOCK PLAYBOOK LOG CONTENTS: DISABLE');
+  });
+
+  it('returns null for an unknown task operation', () => {
+    const task = {
+      meta: { resourceName: 'hostname', operation: 'unknown' },
+      context_data: {}
+    };
+    expect(getConversionHostTaskLogFile(task)).toBe(null);
+  });
+});
+
+describe('conversion host ssh key info message', () => {
+  it('has a message for RHV hosts', () => {
+    expect(getConversionHostSshKeyInfoMessage(RHV).length).toBeGreaterThan(0);
+  });
+
+  it('has a message for OSP hosts', () => {
+    expect(getConversionHostSshKeyInfoMessage(OPENSTACK).length).toBeGreaterThan(0);
+  });
+
+  it('returns empty string for unknown hosts', () => {
+    expect(getConversionHostSshKeyInfoMessage('unknown')).toBe('');
   });
 });

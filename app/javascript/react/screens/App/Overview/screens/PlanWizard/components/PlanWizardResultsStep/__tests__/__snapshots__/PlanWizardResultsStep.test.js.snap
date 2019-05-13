@@ -15,7 +15,7 @@ exports[`Plan wizard results step renders with a warning if migrating an OSP pla
     className="blank-slate-pf-main-action"
     id="migration-plan-results-message"
   >
-     Migration Plan: '%s' has been saved
+     Migration Plan: 'Mock Plan' has been saved
   </h3>
   <p
     className="blank-slate-pf-secondary-action"
@@ -53,7 +53,7 @@ exports[`Plan wizard results step renders with no warning if migrating an OSP pl
     className="blank-slate-pf-main-action"
     id="migration-plan-results-message"
   >
-     Migration Plan: '%s' is in progress
+     Migration Plan: 'Mock Plan' is in progress
   </h3>
   <p
     className="blank-slate-pf-secondary-action"
