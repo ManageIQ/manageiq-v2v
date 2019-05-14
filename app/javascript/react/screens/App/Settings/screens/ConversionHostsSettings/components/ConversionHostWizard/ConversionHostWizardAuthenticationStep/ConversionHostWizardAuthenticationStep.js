@@ -7,7 +7,7 @@ import { stepIDs, VDDK, SSH } from '../ConversionHostWizardConstants';
 import { FormField } from '../../../../../../common/forms/FormField';
 import { OPENSTACK } from '../../../../../../../../../common/constants';
 import { BootstrapSelect } from '../../../../../../common/forms/BootstrapSelect';
-import SshKeyField from '../../../../../../common/forms/SshKeyField';
+import TextFileField from '../../../../../../common/forms/TextFileField';
 import { getConversionHostSshKeyInfoMessage } from '../../../../../helpers';
 
 const requiredWithMessage = required({ msg: __('This field is required') });
@@ -29,10 +29,11 @@ const ConversionHostWizardAuthenticationStep = ({ selectedProviderType, selected
           validate={[requiredWithMessage]}
         />
       )}
-      <SshKeyField
+      <TextFileField
         {...fieldBaseProps}
         name="conversionHostSshKey"
         label={__('Conversion Host SSH private key')}
+        help={__('Upload your SSH key file or paste its contents below.')}
         controlId="host-ssh-key-input"
         info={getConversionHostSshKeyInfoMessage(selectedProviderType)}
       />
@@ -50,10 +51,11 @@ const ConversionHostWizardAuthenticationStep = ({ selectedProviderType, selected
         style={{ marginTop: 25 }}
       />
       {selectedTransformationMethod === SSH && (
-        <SshKeyField
+        <TextFileField
           {...fieldBaseProps}
           name="vmwareSshKey"
           label={__('VMware hypervisors SSH private key')}
+          help={__('Upload your SSH key file or paste its contents below.')}
           controlId="vmware-ssh-key-input"
         />
       )}

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { reduxForm } from 'redux-form';
 import { Button, Modal, Form, Grid } from 'patternfly-react';
 import { CONVERSION_HOST_TYPES } from '../../../../../../../../common/constants';
-import SshKeyField from '../../../../../common/forms/SshKeyField';
+import TextFileField from '../../../../../common/forms/TextFileField';
 import { getConversionHostSshKeyInfoMessage } from '../../../../helpers';
 
 const fieldBaseProps = { labelWidth: 4, controlWidth: 7 };
@@ -56,18 +56,20 @@ const RetryConversionHostConfirmationModal = ({
               {conversionHostTaskToRetry.name}
             </Grid.Col>
           </Form.FormGroup>
-          <SshKeyField
+          <TextFileField
             {...fieldBaseProps}
             name="conversionHostSshKey"
             label={__('Conversion Host SSH private key')}
+            help={__('Upload your SSH key file or paste its contents below.')}
             controlId="host-ssh-key-input"
             info={getConversionHostSshKeyInfoMessage(selectedProviderType)}
           />
           {isUsingSshTransformation && (
-            <SshKeyField
+            <TextFileField
               {...fieldBaseProps}
               name="vmwareSshKey"
               label={__('VMware hypervisors SSH private key')}
+              help={__('Upload your SSH key file or paste its contents below.')}
               controlId="vmware-ssh-key-input"
               style={{ marginTop: 25 }}
             />
