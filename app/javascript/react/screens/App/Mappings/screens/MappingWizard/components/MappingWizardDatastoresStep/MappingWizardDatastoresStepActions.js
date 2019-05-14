@@ -6,7 +6,7 @@ import {
   FETCH_V2V_TARGET_DATASTORES,
   QUERY_ATTRIBUTES
 } from './MappingWizardDatastoresStepConstants';
-import { V2V_TARGET_PROVIDER_STORAGE_KEYS } from '../../MappingWizardConstants';
+import { V2V_TARGET_PROVIDER_STORAGE_KEYS, RHV } from '../../MappingWizardConstants';
 
 const _filterSourceDatastores = response => {
   const { data } = response;
@@ -52,7 +52,7 @@ const _filterTargetDatastores = (response, targetProvider) => {
 
   if (data[V2V_TARGET_PROVIDER_STORAGE_KEYS[targetProvider]]) {
     const targetDatastores = data[V2V_TARGET_PROVIDER_STORAGE_KEYS[targetProvider]]
-      .filter(storage => storage.storage_domain_type === 'data')
+      .filter(storage => (targetProvider === RHV ? storage.storage_domain_type === 'data' : true))
       .map(storage => ({
         ...storage,
         providerName: data.ext_management_system.name

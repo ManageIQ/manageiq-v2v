@@ -19,7 +19,7 @@ describe('fetchTargetDatastoresAction', () => {
     const targetProvider = V2V_TARGET_PROVIDERS[1].id;
     const [targetCloudTenant] = cloudTenants.resources;
 
-    test('dispatches PENDING and FULFILLED actions, adds provider name and filters to domain_type of data', () => {
+    test('dispatches PENDING and FULFILLED actions, adds provider name and does not filter by domain_type', () => {
       mockRequest({
         method: 'GET',
         url: '/api',
@@ -30,12 +30,10 @@ describe('fetchTargetDatastoresAction', () => {
             ext_management_system: { name: 'some provider' },
             [V2V_TARGET_PROVIDER_STORAGE_KEYS[targetProvider]]: [
               {
-                mock: 'datastore',
-                storage_domain_type: 'data'
+                mock: 'datastore'
               },
               {
-                mock: 'datastore that should NOT be in the snapshot',
-                storage_domain_type: 'export'
+                mock: 'datastore2'
               }
             ]
           }
