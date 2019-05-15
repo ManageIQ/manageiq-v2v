@@ -7,7 +7,7 @@ import DualPaneMapperList from '../../../DualPaneMapper/DualPaneMapperList';
 import DualPaneMapperCount from '../../../DualPaneMapper/DualPaneMapperCount';
 import DualPaneMapperListItem from '../../../DualPaneMapper/DualPaneMapperListItem';
 import ClustersStepTreeView from '../ClustersStepTreeView';
-import { createNewMapping, updateMapping, providerHasSshKeyPair } from './helpers';
+import { createNewMapping, updateMapping, providerHasSshKeyPair, everyConversionHostHasPrivateKey } from './helpers';
 import { sourceClustersFilter } from '../../MappingWizardClustersStepSelectors';
 import { TARGET_WARNING_MESSAGES } from '../../MappingWizardClustersStepConstants';
 import { OPENSTACK, RHV } from '../../../../MappingWizardConstants';
@@ -125,6 +125,7 @@ class ClustersStepForm extends React.Component {
       input,
       targetProvider,
       rhvConversionHosts,
+      ospConversionHosts,
       providers,
       isQueryingProviders
     } = this.props;
@@ -192,7 +193,11 @@ class ClustersStepForm extends React.Component {
                   );
                   showWarning = conversionHostsInCluster.length === 0;
                 } else if (targetProvider === OPENSTACK) {
-                  showWarning = providers.length && !isQueryingProviders && !providerHasSshKeyPair(item, providers);
+                  showWarning =
+                    providers.length &&
+                    !isQueryingProviders &&
+                    !providerHasSshKeyPair(item, providers) &&
+                    !everyConversionHostHasPrivateKey(ospConversionHosts);
                 }
 
                 return (
@@ -238,6 +243,7 @@ ClustersStepForm.propTypes = {
   isFetchingTargetClusters: PropTypes.bool,
   targetProvider: PropTypes.string,
   rhvConversionHosts: PropTypes.array,
+  ospConversionHosts: PropTypes.array,
   providers: PropTypes.array,
   isQueryingProviders: PropTypes.bool
 };
