@@ -2,7 +2,7 @@ module ManageIQ::V2V
   class Engine < ::Rails::Engine
     isolate_namespace ManageIQ::V2V
 
-    def vmdb_plugin?
+    def self.vmdb_plugin?
       true
     end
 
