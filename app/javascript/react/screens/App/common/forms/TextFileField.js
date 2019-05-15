@@ -8,23 +8,25 @@ import { FormField } from './FormField';
 const requiredWithMessage = required({ msg: __('This field is required') });
 const bodyIsRequired = value => requiredWithMessage(value.body);
 
-const SshKeyField = props => (
+const TextFileField = ({ help, hideBody, ...props }) => (
   <Field component={FormField} required validate={[bodyIsRequired]} {...props}>
     {({ input: { value, onChange, onBlur } }) => (
-      <TextFileInput
-        help={__('Upload your SSH key file or paste its contents below.')}
-        value={value}
-        onChange={onChange}
-        onBlur={onBlur}
-      />
+      <TextFileInput help={help} hideBody={hideBody} value={value} onChange={onChange} onBlur={onBlur} />
     )}
   </Field>
 );
 
-SshKeyField.propTypes = {
+TextFileField.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
+  help: PropTypes.string,
+  hideBody: PropTypes.bool,
   controlId: PropTypes.string.isRequired
 };
 
-export default SshKeyField;
+TextFileField.defaultProps = {
+  help: null,
+  hideBody: false
+};
+
+export default TextFileField;

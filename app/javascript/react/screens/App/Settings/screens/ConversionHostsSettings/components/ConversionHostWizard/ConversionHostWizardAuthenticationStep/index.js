@@ -10,7 +10,8 @@ const mapStateToProps = ({ form }) => {
   const authStepValues = authStepForm && authStepForm.values;
   return {
     selectedProviderType: locationStepValues && locationStepValues.providerType,
-    selectedTransformationMethod: authStepValues && authStepValues.transformationMethod
+    selectedTransformationMethod: authStepValues && authStepValues.transformationMethod,
+    verifyOpenstackCerts: authStepValues && authStepValues.verifyOpenstackCerts
   };
 };
 
