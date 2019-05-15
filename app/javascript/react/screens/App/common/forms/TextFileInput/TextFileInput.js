@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form, Button } from 'patternfly-react';
+import { Form, Button, noop } from 'patternfly-react';
 import Dropzone from 'react-dropzone';
 import classNames from 'classnames';
 
-const TextFileInput = ({ value: { filename, body }, onChange, onBlur, help }) => {
+const TextFileInput = ({ value: { filename, body }, onChange, onBlur, help, hideBody }) => {
   const readFile = fileHandle => {
     const reader = new FileReader();
     reader.onload = () => onChange({ filename: fileHandle.name, body: reader.result });
@@ -37,14 +37,16 @@ const TextFileInput = ({ value: { filename, body }, onChange, onBlur, help }) =>
             </Form.InputGroup.Button>
           </Form.InputGroup>
           {help && <Form.HelpBlock>{help}</Form.HelpBlock>}
-          <Form.FormControl
-            className="text-file-input__textarea"
-            componentClass="textarea"
-            value={body}
-            onChange={event => onChange({ filename: '', body: event.target.value })}
-            onBlur={() => onBlur()}
-            disabled={filename !== ''}
-          />
+          {!hideBody && (
+            <Form.FormControl
+              className="text-file-input__textarea"
+              componentClass="textarea"
+              value={body}
+              onChange={event => onChange({ filename: '', body: event.target.value })}
+              onBlur={() => onBlur()}
+              disabled={filename !== ''}
+            />
+          )}
         </div>
       )}
     </Dropzone>
@@ -57,8 +59,17 @@ TextFileInput.propTypes = {
     filename: PropTypes.string,
     body: PropTypes.string
   }),
+  hideBody: PropTypes.bool,
   onChange: PropTypes.func,
   onBlur: PropTypes.func
+};
+
+TextFileInput.defaultProps = {
+  help: null,
+  value: { filename: '', body: '' },
+  hideBody: false,
+  onChange: noop,
+  onBlur: noop
 };
 
 export default TextFileInput;

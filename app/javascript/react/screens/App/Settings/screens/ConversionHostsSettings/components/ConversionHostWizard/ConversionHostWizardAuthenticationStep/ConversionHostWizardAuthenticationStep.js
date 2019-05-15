@@ -2,17 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { reduxForm, Field } from 'redux-form';
 import { required } from 'redux-form-validators';
-import { Form } from 'patternfly-react';
+import { Form, Switch } from 'patternfly-react';
 import { stepIDs, VDDK, SSH } from '../ConversionHostWizardConstants';
 import { FormField } from '../../../../../../common/forms/FormField';
 import { OPENSTACK } from '../../../../../../../../../common/constants';
 import { BootstrapSelect } from '../../../../../../common/forms/BootstrapSelect';
-import SshKeyField from '../../../../../../common/forms/SshKeyField';
+import TextFileField from '../../../../../../common/forms/TextFileField';
 import { getConversionHostSshKeyInfoMessage } from '../../../../../helpers';
 
 const requiredWithMessage = required({ msg: __('This field is required') });
 
-const ConversionHostWizardAuthenticationStep = ({ selectedProviderType, selectedTransformationMethod }) => {
+const ConversionHostWizardAuthenticationStep = ({
+  selectedProviderType,
+  selectedTransformationMethod,
+  verifyOpenstackCerts
+}) => {
   const fieldBaseProps = { labelWidth: 4, controlWidth: 7 };
 
   return (
@@ -29,10 +33,11 @@ const ConversionHostWizardAuthenticationStep = ({ selectedProviderType, selected
           validate={[requiredWithMessage]}
         />
       )}
-      <SshKeyField
+      <TextFileField
         {...fieldBaseProps}
         name="conversionHostSshKey"
         label={__('Conversion Host SSH private key')}
+        help={__('Upload your SSH key file or paste its contents below.')}
         controlId="host-ssh-key-input"
         info={getConversionHostSshKeyInfoMessage(selectedProviderType)}
       />
@@ -50,10 +55,11 @@ const ConversionHostWizardAuthenticationStep = ({ selectedProviderType, selected
         style={{ marginTop: 25 }}
       />
       {selectedTransformationMethod === SSH && (
-        <SshKeyField
+        <TextFileField
           {...fieldBaseProps}
           name="vmwareSshKey"
           label={__('VMware hypervisors SSH private key')}
+          help={__('Upload your SSH key file or paste its contents below.')}
           controlId="vmware-ssh-key-input"
         />
       )}
@@ -82,6 +88,39 @@ const ConversionHostWizardAuthenticationStep = ({ selectedProviderType, selected
           )}
         </Field>
       )}
+      {selectedProviderType === OPENSTACK && (
+        <React.Fragment>
+          <Field
+            {...fieldBaseProps}
+            name="verifyOpenstackCerts"
+            label={__('Verify TLS Certificates for OpenStack')}
+            component={FormField}
+            controlId="verify-openstack-certs"
+            style={{ marginTop: 25 }}
+          >
+            {({ input: { value, onChange } }) => (
+              <Switch
+                bsSize="normal"
+                id="verify-openstack-certs-switch"
+                onText={__('Yes')}
+                offText={__('No')}
+                defaultValue={false}
+                value={value}
+                onChange={(element, state) => onChange(state)}
+              />
+            )}
+          </Field>
+          {verifyOpenstackCerts && (
+            <TextFileField
+              {...fieldBaseProps}
+              name="openstackCaCerts"
+              label={__('OpenStack Trusted CA Certificates')}
+              help={__('Upload your certificates file, in PEM format, or paste its contents below.')}
+              controlId="openstack-ca-certs-input"
+            />
+          )}
+        </React.Fragment>
+      )}
     </Form>
   );
 };
@@ -89,6 +128,7 @@ const ConversionHostWizardAuthenticationStep = ({ selectedProviderType, selected
 ConversionHostWizardAuthenticationStep.propTypes = {
   selectedProviderType: PropTypes.string,
   selectedTransformationMethod: PropTypes.string,
+  verifyOpenstackCerts: PropTypes.bool,
   unregisterFieldAction: PropTypes.func
 };
 
@@ -99,6 +139,8 @@ export default reduxForm({
   initialValues: {
     openstackUser: 'cloud-user',
     conversionHostSshKey: { filename: '', body: '' },
-    vmwareSshKey: { filename: '', body: '' }
+    vmwareSshKey: { filename: '', body: '' },
+    openstackCaCerts: { filename: '', body: '' },
+    verifyOpenstackCerts: false
   }
 })(ConversionHostWizardAuthenticationStep);
