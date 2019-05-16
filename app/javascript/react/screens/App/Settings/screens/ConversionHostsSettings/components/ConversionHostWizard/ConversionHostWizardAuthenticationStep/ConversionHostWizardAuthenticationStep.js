@@ -62,24 +62,15 @@ const ConversionHostWizardAuthenticationStep = ({ selectedProviderType, selected
           {...fieldBaseProps}
           name="vddkLibraryPath"
           label={__('VDDK library path')}
+          info={
+            __('This is the location where you downloaded and saved the VDDK package, as a URL accessible via HTTP. e.g. http://hostname/VMware-vix-disklib-version.x86_64.tar.gz') /* prettier-ignore */
+          }
           component={FormField}
           controlId="vddk-library-path"
           required
           validate={[requiredWithMessage]}
         >
-          {({ input }) => (
-            <Form.FormControl {...input} type="text" />
-            /*
-            // TODO replace the above FormControl with this InputGroup
-            // when API support for the Validate button is ready.
-            <Form.InputGroup>
-              <Form.FormControl {...input} type="text" />
-              <Form.InputGroup.Button>
-                <Button onClick={() => {}}>{__('Validate')}</Button>
-              </Form.InputGroup.Button>
-            </Form.InputGroup>
-            */
-          )}
+          {({ input }) => <Form.FormControl {...input} type="text" />}
         </Field>
       )}
     </Form>
