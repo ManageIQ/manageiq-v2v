@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ConversionHostsSettings integration test should mount ConversionHostWizard with mapStateToProps reduced 1`] = `
+Object {
+  "_deleteConversionHostActionCreator": [Function],
+  "conversionHostRetryModalExitedAction": [Function],
+  "conversionHostWizardExitedAction": [Function],
+  "conversionHostWizardVisible": false,
+  "deleteConversionHostAction": [Function],
+  "fetchConversionHostTasksAction": [Function],
+  "fetchConversionHostsAction": [Function],
+  "fetchServersAction": [Function],
+  "fetchSettingsAction": [Function],
+  "forms": Object {
+    "conversionHostWizardAuthenticationStep": undefined,
+    "conversionHostWizardHostsStep": undefined,
+    "conversionHostWizardLocationStep": undefined,
+    "conversionHostWizardResultsStep": undefined,
+  },
+  "hideConversionHostDeleteModalAction": [Function],
+  "hideConversionHostRetryModalAction": [Function],
+  "hideConversionHostWizardAction": [Function],
+  "isPostingConversionHosts": false,
+  "patchSettingsAction": [Function],
+  "postConversionHostsAction": [Function],
+  "saveTextFileAction": [Function],
+  "setConversionHostTaskToRetryAction": [Function],
+  "setHostToDeleteAction": [Function],
+  "showConversionHostDeleteModalAction": [Function],
+  "showConversionHostRetryModalAction": [Function],
+  "showConversionHostWizardAction": [Function],
+}
+`;
