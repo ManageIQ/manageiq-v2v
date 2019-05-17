@@ -108,7 +108,7 @@ MappingWizardGeneralStep.propTypes = {
 MappingWizardGeneralStep.defaultProps = {
   targetProvider: '',
   conversionHosts: [],
-  fetchConversionHostsUrl: '/api/conversion_hosts?attributes=resource&expand=resources',
+  fetchConversionHostsUrl: '/api/conversion_hosts?attributes=resource,authentications&expand=resources',
   dispatch: noop
 };
 
