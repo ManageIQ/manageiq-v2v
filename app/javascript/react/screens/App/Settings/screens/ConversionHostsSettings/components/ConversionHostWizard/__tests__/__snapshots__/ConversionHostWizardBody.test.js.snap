@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`conversion host wizard body renders correctly 1`] = `
+<ModalWizardBody
+  activeStep="1"
+  activeStepIndex={0}
+  disableNextStep={false}
+  goToStep={[MockFunction]}
+  hideAlertAction={[Function]}
+  loaded={true}
+  loadingMessage="Loading..."
+  loadingTitle="Loading Wizard..."
+  onClick={[Function]}
+  plansBody={Object {}}
+  stepButtonsDisabled={true}
+  steps={
+    Array [
+      Object {
+        "mock": "step",
+      },
+      Object {
+        "mock": "step",
+      },
+    ]
+  }
+  wizardSteps={
+    Array [
+      Object {
+        "mock": "step",
+      },
+      Object {
+        "mock": "step",
+      },
+    ]
+  }
+/>
+`;
