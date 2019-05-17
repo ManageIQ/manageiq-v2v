@@ -56,6 +56,7 @@ class MappingWizardClustersStep extends React.Component {
       isRejectedTargetClusters,
       targetProvider,
       rhvConversionHosts,
+      ospConversionHosts,
       providers,
       isQueryingProviders
     } = this.props;
@@ -87,6 +88,7 @@ class MappingWizardClustersStep extends React.Component {
         isFetchingTargetClusters={isFetchingTargetClusters}
         targetProvider={targetProvider}
         rhvConversionHosts={rhvConversionHosts}
+        ospConversionHosts={ospConversionHosts}
         providers={providers}
         isQueryingProviders={isQueryingProviders}
       />

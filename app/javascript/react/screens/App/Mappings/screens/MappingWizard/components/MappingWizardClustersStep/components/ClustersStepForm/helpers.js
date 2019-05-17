@@ -58,3 +58,10 @@ export const providerHasSshKeyPair = (target, providers) => {
     provider.authentications.some(authentication => authentication.authtype === 'ssh_keypair')
   );
 };
+
+const conversionHostHasPrivateKey = conversionHost =>
+  conversionHost.authentications &&
+  conversionHost.authentications.some(auth => auth.type === 'AuthPrivateKey' && auth.authtype === 'v2v');
+
+export const everyConversionHostHasPrivateKey = conversionHosts =>
+  conversionHosts && conversionHosts.every(conversionHostHasPrivateKey);
