@@ -409,7 +409,6 @@ exports[`conversion host wizard authentication step renders the redux-form wrapp
   }
   touchOnBlur={true}
   touchOnChange={false}
-  unregisterFieldAction={[MockFunction]}
   updateUnregisteredFields={false}
   verifyOpenstackCerts={null}
 />

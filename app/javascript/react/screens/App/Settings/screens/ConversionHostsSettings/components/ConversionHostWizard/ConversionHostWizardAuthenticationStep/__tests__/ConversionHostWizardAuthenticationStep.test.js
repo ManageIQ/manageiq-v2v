@@ -14,7 +14,6 @@ describe('conversion host wizard authentication step', () => {
     selectedProviderType: RHV,
     selectedTransformationMethod: null,
     verifyOpenstackCerts: null,
-    unregisterFieldAction: jest.fn(),
     store
   });
 

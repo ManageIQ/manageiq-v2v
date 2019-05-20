@@ -119,8 +119,7 @@ const ConversionHostWizardAuthenticationStep = ({
 ConversionHostWizardAuthenticationStep.propTypes = {
   selectedProviderType: PropTypes.string,
   selectedTransformationMethod: PropTypes.string,
-  verifyOpenstackCerts: PropTypes.bool,
-  unregisterFieldAction: PropTypes.func
+  verifyOpenstackCerts: PropTypes.bool
 };
 
 export default reduxForm({
