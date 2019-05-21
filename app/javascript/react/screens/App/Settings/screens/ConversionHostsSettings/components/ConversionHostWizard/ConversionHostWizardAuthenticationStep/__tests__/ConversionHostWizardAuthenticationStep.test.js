@@ -10,12 +10,12 @@ import { SSH, VDDK } from '../../ConversionHostWizardConstants';
 describe('conversion host wizard authentication step', () => {
   const store = generateStore({ form: formReducer }, {});
 
-  const getBaseProps = () => ({
+  const baseProps = {
     selectedProviderType: RHV,
     selectedTransformationMethod: null,
     verifyOpenstackCerts: null,
     store
-  });
+  };
 
   const shallowDive = jsx => {
     const connectWrapper = shallow(jsx); // <Connect(Form(ConversionHostWizardAuthenticationStep))>
@@ -25,12 +25,12 @@ describe('conversion host wizard authentication step', () => {
   };
 
   it('renders the redux-form wrapper correctly', () => {
-    const component = shallow(<ConversionHostWizardAuthenticationStep {...getBaseProps()} />);
+    const component = shallow(<ConversionHostWizardAuthenticationStep {...baseProps} />);
     expect(component).toMatchSnapshot();
   });
 
   it('renders correctly in the initial state for RHV', () => {
-    const component = shallowDive(<ConversionHostWizardAuthenticationStep {...getBaseProps()} />);
+    const component = shallowDive(<ConversionHostWizardAuthenticationStep {...baseProps} />);
     expect(component.find('Field[controlId="openstack-user-input"]')).toHaveLength(0);
     expect(component.find('TextFileField[controlId="vmware-ssh-key-input"]')).toHaveLength(0);
     expect(component.find('Field[controlId="vddk-library-path"]')).toHaveLength(0);
@@ -41,7 +41,7 @@ describe('conversion host wizard authentication step', () => {
 
   it('renders correctly in the initial state for OSP', () => {
     const component = shallowDive(
-      <ConversionHostWizardAuthenticationStep {...getBaseProps()} selectedProviderType={OPENSTACK} />
+      <ConversionHostWizardAuthenticationStep {...baseProps} selectedProviderType={OPENSTACK} />
     );
     expect(component.find('Field[controlId="openstack-user-input"]')).toHaveLength(1);
     expect(component.find('TextFileField[controlId="vmware-ssh-key-input"]')).toHaveLength(0);
@@ -53,7 +53,7 @@ describe('conversion host wizard authentication step', () => {
 
   it('renders the verify TLS certs switch correctly', () => {
     const component = shallowDive(
-      <ConversionHostWizardAuthenticationStep {...getBaseProps()} selectedProviderType={OPENSTACK} />
+      <ConversionHostWizardAuthenticationStep {...baseProps} selectedProviderType={OPENSTACK} />
     );
     const onSwitchChange = jest.fn();
     const switchRenderProp = component.find('Field[controlId="verify-openstack-certs"]').props().children;
@@ -67,11 +67,7 @@ describe('conversion host wizard authentication step', () => {
 
   it('renders correctly with verify OSP TLS certs turned on', () => {
     const component = shallowDive(
-      <ConversionHostWizardAuthenticationStep
-        {...getBaseProps()}
-        selectedProviderType={OPENSTACK}
-        verifyOpenstackCerts
-      />
+      <ConversionHostWizardAuthenticationStep {...baseProps} selectedProviderType={OPENSTACK} verifyOpenstackCerts />
     );
     expect(component.find('TextFileField[controlId="openstack-ca-certs-input"]')).toHaveLength(1);
     expect(component).toMatchSnapshot();
@@ -79,7 +75,7 @@ describe('conversion host wizard authentication step', () => {
 
   it('renders correctly with SSH transformation method selected', () => {
     const component = shallowDive(
-      <ConversionHostWizardAuthenticationStep {...getBaseProps()} selectedTransformationMethod={SSH} />
+      <ConversionHostWizardAuthenticationStep {...baseProps} selectedTransformationMethod={SSH} />
     );
     expect(component.find('TextFileField[controlId="vmware-ssh-key-input"]')).toHaveLength(1);
     expect(component.find('Field[controlId="vddk-library-path"]')).toHaveLength(0);
@@ -88,7 +84,7 @@ describe('conversion host wizard authentication step', () => {
 
   it('renders correctly with VDDK transformation method selected', () => {
     const component = shallowDive(
-      <ConversionHostWizardAuthenticationStep {...getBaseProps()} selectedTransformationMethod={VDDK} />
+      <ConversionHostWizardAuthenticationStep {...baseProps} selectedTransformationMethod={VDDK} />
     );
     expect(component.find('TextFileField[controlId="vmware-ssh-key-input"]')).toHaveLength(0);
     expect(component.find('Field[controlId="vddk-library-path"]')).toHaveLength(1);
