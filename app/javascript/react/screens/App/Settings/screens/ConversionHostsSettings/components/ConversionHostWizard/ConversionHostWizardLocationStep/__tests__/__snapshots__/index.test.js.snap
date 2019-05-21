@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ConversionHostWizardLocationStep integration test should mount ConversionHostWizardLocationStep with mapStateToProps reduced 1`] = `
+Object {
+  "fetchTargetClustersAction": [Function],
+  "isFetchingTargetClusters": false,
+  "providers": Array [
+    Object {
+      "id": "1",
+      "name": "Mock Provider",
+      "type": "ManageIQ::Providers::Redhat::InfraManager",
+    },
+  ],
+  "resetFormAction": [Function],
+  "selectedProviderId": "1",
+  "selectedProviderType": "rhevm",
+  "targetClusters": Array [],
+}
+`;
