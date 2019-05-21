@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ConversionHostWizardAuthenticationStep integration test should mount ConversionHostWizardAuthenticationStep with mapStateToProps reduced 1`] = `
+Object {
+  "selectedProviderType": "rhevm",
+  "selectedTransformationMethod": undefined,
+  "verifyOpenstackCerts": false,
+}
+`;

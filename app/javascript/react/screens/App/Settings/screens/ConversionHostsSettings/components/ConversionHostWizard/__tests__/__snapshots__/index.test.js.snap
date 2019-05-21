@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ConversionHostsSettings integration test should mount ConversionHostWizard with mapStateToProps reduced 1`] = `
+exports[`ConversionHostWizard integration test should mount ConversionHostWizard with mapStateToProps reduced 1`] = `
 Object {
   "_deleteConversionHostActionCreator": [Function],
   "conversionHostRetryModalExitedAction": [Function],

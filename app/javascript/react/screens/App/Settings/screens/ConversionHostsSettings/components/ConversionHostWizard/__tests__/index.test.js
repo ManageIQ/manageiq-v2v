@@ -8,7 +8,7 @@ import settingsReducer, { initialState as settingsInitialState } from '../../../
 import ConversionHostWizard from '../ConversionHostWizard';
 import ConversionHostWizardContainer from '../index';
 
-describe('ConversionHostsSettings integration test', () => {
+describe('ConversionHostWizard integration test', () => {
   const store = generateStore({ settings: settingsReducer, form: formReducer }, { settings: settingsInitialState });
 
   const mountComponent = () =>
