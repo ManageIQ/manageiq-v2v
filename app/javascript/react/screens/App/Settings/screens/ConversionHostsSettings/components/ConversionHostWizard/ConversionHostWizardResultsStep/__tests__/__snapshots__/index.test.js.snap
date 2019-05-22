@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ConversionHostWizardLocationStep integration test should mount ConversionHostWizardLocationStep with mapStateToProps reduced 1`] = `
+Object {
+  "isPostingConversionHosts": true,
+  "isRejectedPostingConversionHosts": false,
+  "postBodies": Array [
+    Object {
+      "auth_user": "root",
+      "conversion_host_ssh_private_key": "mock conversion host SSH key body",
+      "name": "Mock Host",
+      "resource_id": "1",
+      "resource_type": "mock host type",
+      "vmware_vddk_package_url": "mock VDDK path",
+    },
+  ],
+  "postConversionHostsAction": [Function],
+  "postConversionHostsResults": Array [],
+  "postConversionHostsUrl": "/api/conversion_hosts",
+}
+`;
