@@ -88,6 +88,7 @@ const ConversionHostWizardAuthenticationStep = ({
             component={FormField}
             controlId="verify-openstack-certs"
             style={{ marginTop: 25 }}
+            validate={() => undefined} // Force redux-form to re-run validation when this field changes, since it can unmount openstackCaCerts
           >
             {({ input: { value, onChange } }) => (
               <Switch
