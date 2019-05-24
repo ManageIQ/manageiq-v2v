@@ -79,6 +79,7 @@ exports[`conversion host wizard authentication step renders correctly in the ini
           "marginTop": 25,
         }
       }
+      validate={[Function]}
     />
   </React.Fragment>
 </Form>
@@ -350,6 +351,7 @@ exports[`conversion host wizard authentication step renders correctly with verif
           "marginTop": 25,
         }
       }
+      validate={[Function]}
     />
     <TextFileField
       controlId="openstack-ca-certs-input"
