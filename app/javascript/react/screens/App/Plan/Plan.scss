@@ -27,10 +27,10 @@
   margin-bottom: 0px;
 }
 
-.task-info-popover .popover-title {
-  text-transform: capitalize;
+.task-info-popover {
+  max-width: 450px;
 }
 
-.no-max-width {
-  max-width: none;
+.task-info-popover .popover-title {
+  text-transform: capitalize;
 }
