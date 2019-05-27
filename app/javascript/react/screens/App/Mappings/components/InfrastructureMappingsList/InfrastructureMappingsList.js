@@ -64,7 +64,7 @@ class InfrastructureMappingsList extends React.Component {
       showWizardAction={this.props.createInfraMappingClick}
       description={__('Create an infrastructure mapping to later be used by a migration plan')}
       buttonText={__('Create Infrastructure Mapping')}
-      className="mappings"
+      className="white-bg"
     />
   );
 
@@ -147,7 +147,7 @@ class InfrastructureMappingsList extends React.Component {
                 title={__('Error loading mappings.')}
                 iconType="pf"
                 iconName="error-circle-o"
-                className="mappings"
+                className="white-bg"
                 description={
                   <React.Fragment>
                     <span>{__('There was an error loading Infrastructure Mappings.')}</span>

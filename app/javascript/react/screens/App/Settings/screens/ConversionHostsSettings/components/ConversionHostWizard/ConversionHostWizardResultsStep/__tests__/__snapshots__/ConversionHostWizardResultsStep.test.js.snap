@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`conversion host wizard results step renders a loading state when posting conversion hosts 1`] = `
+<WizardLoadingState
+  message=""
+  title="Starting Conversion Host Configuration..."
+/>
+`;
+
+exports[`conversion host wizard results step renders a success state when there are post results 1`] = `
+<div
+  className="wizard-pf-complete blank-slate-pf"
+>
+  <div
+    className="modal-wizard-results-grey-icon"
+  >
+    <span
+      className="fa fa-clock-o"
+    />
+  </div>
+  <h3
+    className="blank-slate-pf-main-action"
+  >
+    Conversion host configuration is in progress.
+  </h3>
+  <p
+    className="blank-slate-pf-secondary-action"
+  >
+    This may take a few minutes. Progress of the configuration will be shown on the Conversion Hosts page.
+  </p>
+</div>
+`;
+
+exports[`conversion host wizard results step renders an error state when post was rejected 1`] = `
+<WizardErrorState
+  message="The conversion host cannot be configured. Check your settings and try again."
+  title="Error Starting Conversion Host Configuration"
+/>
+`;

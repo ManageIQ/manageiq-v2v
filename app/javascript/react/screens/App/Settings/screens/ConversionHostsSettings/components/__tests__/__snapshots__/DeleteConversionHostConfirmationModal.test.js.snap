@@ -1,0 +1,103 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`delete conversion host confirmation modal renders correctly 1`] = `
+<Modal
+  animation={true}
+  autoFocus={true}
+  backdrop="static"
+  bsClass="modal"
+  dialogComponentClass={[Function]}
+  enforceFocus={true}
+  keyboard={true}
+  manager={
+    ModalManager {
+      "add": [Function],
+      "containers": Array [],
+      "data": Array [],
+      "handleContainerOverflow": true,
+      "hideSiblingNodes": true,
+      "isTopModal": [Function],
+      "modals": Array [],
+      "remove": [Function],
+    }
+  }
+  onHide={[MockFunction]}
+  renderBackdrop={[Function]}
+  restoreFocus={true}
+  show={true}
+>
+  <ModalHeader
+    bsClass="modal-header"
+    closeButton={false}
+    closeLabel="Close"
+  >
+    <ModalCloseButton
+      className=""
+      closeText="Close"
+      onClick={[MockFunction]}
+    />
+    <ModalTitle
+      bsClass="modal-title"
+      componentClass="h4"
+    >
+      Remove Conversion Host
+    </ModalTitle>
+  </ModalHeader>
+  <ModalBody
+    bsClass="modal-body"
+    className="warning-modal-body"
+    componentClass="div"
+  >
+    <div
+      className="warning-modal-body--icon"
+    >
+      <Icon
+        name="delete"
+        type="pf"
+      />
+    </div>
+    <div
+      className="warning-modal-body--list"
+    >
+      <h4>
+        Are you sure you want to remove the following conversion host?
+      </h4>
+      <div>
+        <ul>
+          <h4>
+            <strong>
+              Mock Conversion Host
+            </strong>
+          </h4>
+        </ul>
+      </div>
+    </div>
+  </ModalBody>
+  <ModalFooter
+    bsClass="modal-footer"
+    componentClass="div"
+  >
+    <Button
+      active={false}
+      block={false}
+      bsClass="btn"
+      bsStyle="default"
+      className="btn-cancel"
+      disabled={false}
+      onClick={[MockFunction]}
+    >
+      Cancel
+    </Button>
+    <Button
+      active={false}
+      block={false}
+      bsClass="btn"
+      bsStyle="primary"
+      disabled={false}
+      onClick={[Function]}
+    >
+      Remove
+    </Button>
+  </ModalFooter>
+</Modal>
+`;

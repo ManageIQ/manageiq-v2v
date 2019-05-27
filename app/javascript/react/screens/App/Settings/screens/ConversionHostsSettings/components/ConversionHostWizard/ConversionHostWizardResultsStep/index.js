@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import ConversionHostWizardResultsStep from './ConversionHostWizardResultsStep';
+import BaseConversionHostWizardResultsStep from './ConversionHostWizardResultsStep';
 
 import { stepIDs } from '../ConversionHostWizardConstants';
 import { getConfigureConversionHostPostBodies } from './helpers';
@@ -23,8 +23,12 @@ const mapStateToProps = ({
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => Object.assign(stateProps, ownProps.data, dispatchProps);
 
-export default connect(
+const ConversionHostWizardResultsStep = connect(
   mapStateToProps,
   { postConversionHostsAction },
   mergeProps
-)(ConversionHostWizardResultsStep);
+)(BaseConversionHostWizardResultsStep);
+
+ConversionHostWizardResultsStep.displayName = 'ConversionHostWizardResultsStep';
+
+export default ConversionHostWizardResultsStep;

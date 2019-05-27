@@ -1,0 +1,758 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`conversion hosts list item renders correctly with a conversion host being disabled 1`] = `
+<ListViewItem
+  actions={
+    <div
+      className="conversion-hosts-list-actions"
+    >
+      <ConversionHostRemoveButton
+        disabled={true}
+        host={
+          Object {
+            "id": "1",
+            "meta": Object {
+              "tasksByOperation": Object {
+                "disable": Array [
+                  Object {
+                    "id": "3",
+                    "message": "Example progress message",
+                    "meta": Object {
+                      "isTask": true,
+                      "operation": "disable",
+                    },
+                    "state": "Active",
+                    "status": "Ok",
+                    "updated_on": "2019-05-13T18:07:11.849Z",
+                  },
+                  Object {
+                    "context_data": Object {
+                      "request_params": Object {
+                        "mock": "params",
+                      },
+                    },
+                    "id": "2",
+                    "message": "Example error message",
+                    "meta": Object {
+                      "isTask": true,
+                      "operation": "disable",
+                    },
+                    "state": "Finished",
+                    "status": "Error",
+                    "updated_on": "2019-05-13T18:06:11.849Z",
+                  },
+                ],
+                "enable": Array [
+                  Object {
+                    "id": "1",
+                    "message": "Example success message",
+                    "meta": Object {
+                      "isTask": true,
+                      "operation": "enable",
+                    },
+                    "state": "Finished",
+                    "status": "Ok",
+                    "updated_on": "2019-05-13T18:05:11.849Z",
+                  },
+                ],
+              },
+            },
+            "name": "Conversion Host 1",
+          }
+        }
+        setHostToDeleteAction={[MockFunction]}
+        showConversionHostDeleteModalAction={[MockFunction]}
+      />
+      <StopPropagationOnClick>
+        <DropdownKebab
+          className=""
+          componentClass={[Function]}
+          id="task-kebab-3"
+          pullRight={true}
+          toggleStyle="link"
+        >
+          <MenuItem
+            bsClass="dropdown"
+            disabled={true}
+            divider={false}
+            header={false}
+            onClick={[Function]}
+          >
+            Download Log
+          </MenuItem>
+        </DropdownKebab>
+      </StopPropagationOnClick>
+    </div>
+  }
+  additionalInfo={
+    Array [
+      <ListViewInfoItem
+        className=""
+        stacked={false}
+      >
+        <Spinner
+          className=""
+          inline={true}
+          inverse={false}
+          loading={true}
+          size="sm"
+        />
+        Removing...
+        <OverlayTrigger
+          defaultOverlayShown={false}
+          overlay={
+            <Popover
+              bsClass="popover"
+              id="task-info-popover"
+              placement="right"
+              style={
+                Object {
+                  "width": 400,
+                }
+              }
+            >
+              <UNDEFINED>
+                <strong>
+                  State:
+                </strong>
+                 
+                Active
+                <br />
+                <strong>
+                  Message:
+                </strong>
+                 
+                Example progress message
+              </UNDEFINED>
+            </Popover>
+          }
+          placement="top"
+          rootClose={true}
+          trigger="click"
+        >
+          <Button
+            active={false}
+            block={false}
+            bsClass="btn"
+            bsStyle="link"
+            disabled={false}
+          >
+            <Icon
+              name="info"
+              type="pf"
+            />
+          </Button>
+        </OverlayTrigger>
+      </ListViewInfoItem>,
+    ]
+  }
+  checkboxInput={null}
+  compoundExpand={false}
+  compoundExpanded={false}
+  description={null}
+  heading="Conversion Host 1"
+  hideCloseIcon={false}
+  leftContent={null}
+  onCloseCompoundExpand={[Function]}
+  onExpand={[Function]}
+  onExpandClose={[Function]}
+  stacked={true}
+/>
+`;
+
+exports[`conversion hosts list item renders correctly with a failed disable task 1`] = `
+<ListViewItem
+  actions={
+    <div
+      className="conversion-hosts-list-actions"
+    >
+      <UNDEFINED>
+        <ConversionHostRetryButton
+          disabled={false}
+          setConversionHostTaskToRetryAction={[MockFunction]}
+          showConversionHostRetryModalAction={[MockFunction]}
+          task={
+            Object {
+              "context_data": Object {
+                "request_params": Object {
+                  "mock": "params",
+                },
+              },
+              "id": "1",
+              "message": "Example error message",
+              "meta": Object {
+                "isTask": true,
+                "operation": "disable",
+              },
+              "state": "Finished",
+              "status": "Error",
+            }
+          }
+        />
+      </UNDEFINED>
+      <StopPropagationOnClick>
+        <DropdownKebab
+          className=""
+          componentClass={[Function]}
+          id="task-kebab-1"
+          pullRight={true}
+          toggleStyle="link"
+        >
+          <MenuItem
+            bsClass="dropdown"
+            disabled={false}
+            divider={false}
+            header={false}
+            onClick={[Function]}
+          >
+            Download Log
+          </MenuItem>
+        </DropdownKebab>
+      </StopPropagationOnClick>
+    </div>
+  }
+  additionalInfo={
+    Array [
+      <ListViewInfoItem
+        className=""
+        stacked={false}
+      >
+        <ListViewIcon
+          className=""
+          name="error-circle-o"
+          size="sm"
+          type="pf"
+        />
+        Removal Failed
+        <OverlayTrigger
+          defaultOverlayShown={false}
+          overlay={
+            <Popover
+              bsClass="popover"
+              id="task-info-popover"
+              placement="right"
+              style={
+                Object {
+                  "width": 400,
+                }
+              }
+            >
+              <UNDEFINED>
+                <strong>
+                  State:
+                </strong>
+                 
+                Finished
+                <br />
+                <strong>
+                  Message:
+                </strong>
+                 
+                Example error message
+              </UNDEFINED>
+            </Popover>
+          }
+          placement="top"
+          rootClose={true}
+          trigger="click"
+        >
+          <Button
+            active={false}
+            block={false}
+            bsClass="btn"
+            bsStyle="link"
+            disabled={false}
+          >
+            <Icon
+              name="info"
+              type="pf"
+            />
+          </Button>
+        </OverlayTrigger>
+      </ListViewInfoItem>,
+    ]
+  }
+  checkboxInput={null}
+  compoundExpand={false}
+  compoundExpanded={false}
+  description={null}
+  heading={null}
+  hideCloseIcon={false}
+  leftContent={null}
+  onCloseCompoundExpand={[Function]}
+  onExpand={[Function]}
+  onExpandClose={[Function]}
+  stacked={true}
+/>
+`;
+
+exports[`conversion hosts list item renders correctly with a failed enable task 1`] = `
+<ListViewItem
+  actions={
+    <div
+      className="conversion-hosts-list-actions"
+    >
+      <UNDEFINED>
+        <ConversionHostRetryButton
+          disabled={false}
+          setConversionHostTaskToRetryAction={[MockFunction]}
+          showConversionHostRetryModalAction={[MockFunction]}
+          task={
+            Object {
+              "context_data": Object {
+                "request_params": Object {
+                  "mock": "params",
+                },
+              },
+              "id": "1",
+              "message": "Example error message",
+              "meta": Object {
+                "isTask": true,
+                "operation": "enable",
+              },
+              "state": "Finished",
+              "status": "Error",
+            }
+          }
+        />
+      </UNDEFINED>
+      <StopPropagationOnClick>
+        <DropdownKebab
+          className=""
+          componentClass={[Function]}
+          id="task-kebab-1"
+          pullRight={true}
+          toggleStyle="link"
+        >
+          <MenuItem
+            bsClass="dropdown"
+            disabled={false}
+            divider={false}
+            header={false}
+            onClick={[Function]}
+          >
+            Download Log
+          </MenuItem>
+        </DropdownKebab>
+      </StopPropagationOnClick>
+    </div>
+  }
+  additionalInfo={
+    Array [
+      <ListViewInfoItem
+        className=""
+        stacked={false}
+      >
+        <ListViewIcon
+          className=""
+          name="error-circle-o"
+          size="sm"
+          type="pf"
+        />
+        Configuration Failed
+        <OverlayTrigger
+          defaultOverlayShown={false}
+          overlay={
+            <Popover
+              bsClass="popover"
+              id="task-info-popover"
+              placement="right"
+              style={
+                Object {
+                  "width": 400,
+                }
+              }
+            >
+              <UNDEFINED>
+                <strong>
+                  State:
+                </strong>
+                 
+                Finished
+                <br />
+                <strong>
+                  Message:
+                </strong>
+                 
+                Example error message
+              </UNDEFINED>
+            </Popover>
+          }
+          placement="top"
+          rootClose={true}
+          trigger="click"
+        >
+          <Button
+            active={false}
+            block={false}
+            bsClass="btn"
+            bsStyle="link"
+            disabled={false}
+          >
+            <Icon
+              name="info"
+              type="pf"
+            />
+          </Button>
+        </OverlayTrigger>
+      </ListViewInfoItem>,
+    ]
+  }
+  checkboxInput={null}
+  compoundExpand={false}
+  compoundExpanded={false}
+  description={null}
+  heading={null}
+  hideCloseIcon={false}
+  leftContent={null}
+  onCloseCompoundExpand={[Function]}
+  onExpand={[Function]}
+  onExpandClose={[Function]}
+  stacked={true}
+/>
+`;
+
+exports[`conversion hosts list item renders correctly with a manually enabled host (no enable task) 1`] = `
+<ListViewItem
+  actions={
+    <div
+      className="conversion-hosts-list-actions"
+    >
+      <ConversionHostRemoveButton
+        disabled={undefined}
+        host={
+          Object {
+            "id": "1",
+            "meta": Object {
+              "tasksByOperation": Object {},
+            },
+            "name": "Conversion Host 1",
+          }
+        }
+        setHostToDeleteAction={[MockFunction]}
+        showConversionHostDeleteModalAction={[MockFunction]}
+      />
+    </div>
+  }
+  additionalInfo={
+    Array [
+      <ListViewInfoItem
+        className=""
+        stacked={false}
+      >
+        <ListViewIcon
+          className=""
+          name="ok"
+          size="sm"
+          type="pf"
+        />
+        Configured
+        <OverlayTrigger
+          defaultOverlayShown={false}
+          overlay={
+            <Popover
+              bsClass="popover"
+              id="task-info-popover"
+              placement="right"
+              style={
+                Object {
+                  "width": 400,
+                }
+              }
+            >
+              No configuration task information available
+            </Popover>
+          }
+          placement="top"
+          rootClose={true}
+          trigger="click"
+        >
+          <Button
+            active={false}
+            block={false}
+            bsClass="btn"
+            bsStyle="link"
+            disabled={false}
+          >
+            <Icon
+              name="info"
+              type="pf"
+            />
+          </Button>
+        </OverlayTrigger>
+      </ListViewInfoItem>,
+    ]
+  }
+  checkboxInput={null}
+  compoundExpand={false}
+  compoundExpanded={false}
+  description={null}
+  heading="Conversion Host 1"
+  hideCloseIcon={false}
+  leftContent={null}
+  onCloseCompoundExpand={[Function]}
+  onExpand={[Function]}
+  onExpandClose={[Function]}
+  stacked={true}
+/>
+`;
+
+exports[`conversion hosts list item renders correctly with an enabled conversion host 1`] = `
+<ListViewItem
+  actions={
+    <div
+      className="conversion-hosts-list-actions"
+    >
+      <ConversionHostRemoveButton
+        disabled={false}
+        host={
+          Object {
+            "id": "1",
+            "meta": Object {
+              "tasksByOperation": Object {
+                "enable": Array [
+                  Object {
+                    "id": "1",
+                    "message": "Example error message",
+                    "meta": Object {
+                      "isTask": true,
+                      "operation": "enable",
+                    },
+                    "state": "Finished",
+                    "status": "Error",
+                    "updated_on": "2019-05-13T18:06:11.849Z",
+                  },
+                  Object {
+                    "context_data": Object {
+                      "conversion_host_check": "MOCK PLAYBOOK LOG OUTPUT",
+                      "conversion_host_enable": "MOCK PLAYBOOK LOG OUTPUT",
+                    },
+                    "id": "2",
+                    "message": "Example success message",
+                    "meta": Object {
+                      "isTask": true,
+                      "operation": "enable",
+                      "resourceName": "Conversion Host 1",
+                    },
+                    "state": "Finished",
+                    "status": "Ok",
+                    "updated_on": "2019-05-13T18:07:11.849Z",
+                  },
+                ],
+              },
+            },
+            "name": "Conversion Host 1",
+          }
+        }
+        setHostToDeleteAction={[MockFunction]}
+        showConversionHostDeleteModalAction={[MockFunction]}
+      />
+      <StopPropagationOnClick>
+        <DropdownKebab
+          className=""
+          componentClass={[Function]}
+          id="task-kebab-2"
+          pullRight={true}
+          toggleStyle="link"
+        >
+          <MenuItem
+            bsClass="dropdown"
+            disabled={false}
+            divider={false}
+            header={false}
+            onClick={[Function]}
+          >
+            Download Log
+          </MenuItem>
+        </DropdownKebab>
+      </StopPropagationOnClick>
+    </div>
+  }
+  additionalInfo={
+    Array [
+      <ListViewInfoItem
+        className=""
+        stacked={false}
+      >
+        <ListViewIcon
+          className=""
+          name="ok"
+          size="sm"
+          type="pf"
+        />
+        Configured
+        <OverlayTrigger
+          defaultOverlayShown={false}
+          overlay={
+            <Popover
+              bsClass="popover"
+              id="task-info-popover"
+              placement="right"
+              style={
+                Object {
+                  "width": 400,
+                }
+              }
+            >
+              <UNDEFINED>
+                <strong>
+                  State:
+                </strong>
+                 
+                Finished
+                <br />
+                <strong>
+                  Message:
+                </strong>
+                 
+                Example success message
+              </UNDEFINED>
+            </Popover>
+          }
+          placement="top"
+          rootClose={true}
+          trigger="click"
+        >
+          <Button
+            active={false}
+            block={false}
+            bsClass="btn"
+            bsStyle="link"
+            disabled={false}
+          >
+            <Icon
+              name="info"
+              type="pf"
+            />
+          </Button>
+        </OverlayTrigger>
+      </ListViewInfoItem>,
+    ]
+  }
+  checkboxInput={null}
+  compoundExpand={false}
+  compoundExpanded={false}
+  description={null}
+  heading="Conversion Host 1"
+  hideCloseIcon={false}
+  leftContent={null}
+  onCloseCompoundExpand={[Function]}
+  onExpand={[Function]}
+  onExpandClose={[Function]}
+  stacked={true}
+/>
+`;
+
+exports[`conversion hosts list item renders correctly with an in-progress enable task 1`] = `
+<ListViewItem
+  actions={
+    <div
+      className="conversion-hosts-list-actions"
+    >
+      <UNDEFINED>
+        <Button
+          active={false}
+          block={false}
+          bsClass="btn"
+          bsStyle="default"
+          disabled={true}
+        >
+          Remove
+        </Button>
+      </UNDEFINED>
+      <StopPropagationOnClick>
+        <DropdownKebab
+          className=""
+          componentClass={[Function]}
+          id="task-kebab-1"
+          pullRight={true}
+          toggleStyle="link"
+        >
+          <MenuItem
+            bsClass="dropdown"
+            disabled={true}
+            divider={false}
+            header={false}
+            onClick={[Function]}
+          >
+            Download Log
+          </MenuItem>
+        </DropdownKebab>
+      </StopPropagationOnClick>
+    </div>
+  }
+  additionalInfo={
+    Array [
+      <ListViewInfoItem
+        className=""
+        stacked={false}
+      >
+        <Spinner
+          className=""
+          inline={true}
+          inverse={false}
+          loading={true}
+          size="sm"
+        />
+        Configuring...
+        <OverlayTrigger
+          defaultOverlayShown={false}
+          overlay={
+            <Popover
+              bsClass="popover"
+              id="task-info-popover"
+              placement="right"
+              style={
+                Object {
+                  "width": 400,
+                }
+              }
+            >
+              <UNDEFINED>
+                <strong>
+                  State:
+                </strong>
+                 
+                Active
+                <br />
+                <strong>
+                  Message:
+                </strong>
+                 
+                Example progress message
+              </UNDEFINED>
+            </Popover>
+          }
+          placement="top"
+          rootClose={true}
+          trigger="click"
+        >
+          <Button
+            active={false}
+            block={false}
+            bsClass="btn"
+            bsStyle="link"
+            disabled={false}
+          >
+            <Icon
+              name="info"
+              type="pf"
+            />
+          </Button>
+        </OverlayTrigger>
+      </ListViewInfoItem>,
+    ]
+  }
+  checkboxInput={null}
+  compoundExpand={false}
+  compoundExpanded={false}
+  description={null}
+  heading={null}
+  hideCloseIcon={false}
+  leftContent={null}
+  onCloseCompoundExpand={[Function]}
+  onExpand={[Function]}
+  onExpandClose={[Function]}
+  stacked={true}
+/>
+`;

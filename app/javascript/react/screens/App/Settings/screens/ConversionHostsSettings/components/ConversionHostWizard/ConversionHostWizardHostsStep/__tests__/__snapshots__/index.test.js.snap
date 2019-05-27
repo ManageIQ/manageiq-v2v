@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ConversionHostWizardHostsStep integration test should mount ConversionHostWizardHostsStep with mapStateToProps reduced 1`] = `
+Object {
+  "conversionHostTasksByResource": Object {
+    "mock": "tasksByResource",
+  },
+  "conversionHosts": Array [
+    Object {
+      "mock": "conversionHost1",
+    },
+    Object {
+      "mock": "conversionHost2",
+    },
+  ],
+  "selectedCluster": Object {
+    "hosts": Array [],
+    "id": "1",
+    "mock": "cluster",
+  },
+  "selectedProviderType": "rhevm",
+}
+`;

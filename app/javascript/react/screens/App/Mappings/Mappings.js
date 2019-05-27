@@ -232,7 +232,7 @@ class Mappings extends Component {
               }
               buttonText={__('Configure Providers')}
               buttonHref="/ems_infra/show_list"
-              className="mappings"
+              className="white-bg"
             />
           )}
         </Spinner>

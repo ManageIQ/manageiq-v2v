@@ -72,12 +72,11 @@ const ConversionHostWizardAuthenticationStep = ({
             __('This is the location where you downloaded and saved the VDDK package, as a URL accessible via HTTP. e.g. http://hostname/VMware-vix-disklib-version.x86_64.tar.gz') /* prettier-ignore */
           }
           component={FormField}
+          type="text"
           controlId="vddk-library-path"
           required
           validate={[requiredWithMessage]}
-        >
-          {({ input }) => <Form.FormControl {...input} type="text" />}
-        </Field>
+        />
       )}
       {selectedProviderType === OPENSTACK && (
         <React.Fragment>
@@ -120,8 +119,7 @@ const ConversionHostWizardAuthenticationStep = ({
 ConversionHostWizardAuthenticationStep.propTypes = {
   selectedProviderType: PropTypes.string,
   selectedTransformationMethod: PropTypes.string,
-  verifyOpenstackCerts: PropTypes.bool,
-  unregisterFieldAction: PropTypes.func
+  verifyOpenstackCerts: PropTypes.bool
 };
 
 export default reduxForm({

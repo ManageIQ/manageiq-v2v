@@ -1,0 +1,95 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`conversion host wizard renders correctly 1`] = `
+<Wizard
+  backdrop="static"
+  className=""
+  dialogClassName=""
+  onClose={[MockFunction]}
+  onExited={[MockFunction]}
+  show={true}
+>
+  <WizardHeader
+    onClose={[MockFunction]}
+    title="Configure Conversion Host"
+  />
+  <WizardBody
+    className=""
+  >
+    <ConversionHostWizardBody
+      activeStep="1"
+      activeStepIndex={0}
+      disableNextStep={false}
+      goToStep={[Function]}
+      loaded={true}
+      wizardSteps={
+        Array [
+          Object {
+            "id": "conversionHostWizardLocationStep",
+            "render": [Function],
+            "title": "Location",
+          },
+          Object {
+            "id": "conversionHostWizardHostsStep",
+            "render": [Function],
+            "title": "Host(s)",
+          },
+          Object {
+            "id": "conversionHostWizardAuthenticationStep",
+            "render": [Function],
+            "title": "Authentication",
+          },
+          Object {
+            "id": "conversionHostWizardResultsStep",
+            "render": [Function],
+            "title": "Results",
+          },
+        ]
+      }
+    />
+  </WizardBody>
+  <WizardFooter
+    className="wizard-pf-footer"
+  >
+    <Button
+      active={false}
+      block={false}
+      bsClass="btn"
+      bsStyle="default"
+      className="btn-cancel"
+      disabled={false}
+      onClick={[MockFunction]}
+    >
+      Cancel
+    </Button>
+    <Button
+      active={false}
+      block={false}
+      bsClass="btn"
+      bsStyle="default"
+      disabled={true}
+      onClick={[Function]}
+    >
+      <Icon
+        name="angle-left"
+        type="fa"
+      />
+      Back
+    </Button>
+    <Button
+      active={false}
+      block={false}
+      bsClass="btn"
+      bsStyle="primary"
+      disabled={false}
+      onClick={[Function]}
+    >
+      Next
+      <Icon
+        name="angle-right"
+        type="fa"
+      />
+    </Button>
+  </WizardFooter>
+</Wizard>
+`;

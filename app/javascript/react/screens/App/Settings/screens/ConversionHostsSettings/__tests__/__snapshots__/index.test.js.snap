@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ConversionHostsSettings integration test should mount ConversionHostsSettings with mapStateToProps reduced 1`] = `
+Object {
+  "combinedListItems": Array [],
+  "conversionHostDeleteModalVisible": false,
+  "conversionHostRetryModalMounted": false,
+  "conversionHostToDelete": null,
+  "conversionHostWizardMounted": false,
+  "deleteConversionHostAction": [Function],
+  "deleteConversionHostActionUrl": "/api/conversion_hosts",
+  "fetchConversionHostTasksAction": [Function],
+  "fetchConversionHostTasksUrl": "/api/tasks?expand=resources&attributes=id,name,state,status,message,started_on,updated_on,pct_complete,context_data&filter[]=name=\\"%25Configuring a conversion_host%25\\"&sort_by=updated_on&sort_order=descending",
+  "fetchConversionHostsAction": [Function],
+  "fetchConversionHostsUrl": "/api/conversion_hosts?attributes=resource&expand=resources",
+  "fetchProvidersAction": [Function],
+  "fetchProvidersUrl": "/api/providers?expand=resources&attributes=authentications",
+  "hasSufficientProviders": false,
+  "hideConversionHostDeleteModalAction": [Function],
+  "isDeletingConversionHost": false,
+  "isFetchingProviders": true,
+  "isPostingConversionHosts": false,
+  "postConversionHostsUrl": "/api/conversion_hosts",
+  "saveTextFileAction": [Function],
+  "setConversionHostTaskToRetryAction": [Function],
+  "setHostToDeleteAction": [Function],
+  "showConversionHostDeleteModalAction": [Function],
+  "showConversionHostRetryModalAction": [Function],
+  "showConversionHostWizardAction": [Function],
+}
+`;

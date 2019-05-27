@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { reset } from 'redux-form';
-import ConversionHostWizardLocationStep from './ConversionHostWizardLocationStep';
+import BaseConversionHostWizardLocationStep from './ConversionHostWizardLocationStep';
 
 import { fetchTargetClustersAction } from '../../../../../../../../../redux/common/targetResources/targetResourcesActions';
 
@@ -24,8 +24,12 @@ const mapStateToProps = ({
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => Object.assign(stateProps, ownProps.data, dispatchProps);
 
-export default connect(
+const ConversionHostWizardLocationStep = connect(
   mapStateToProps,
   { fetchTargetClustersAction, resetFormAction: reset },
   mergeProps
-)(ConversionHostWizardLocationStep);
+)(BaseConversionHostWizardLocationStep);
+
+ConversionHostWizardLocationStep.displayName = 'ConversionHostWizardLocationStep';
+
+export default ConversionHostWizardLocationStep;
