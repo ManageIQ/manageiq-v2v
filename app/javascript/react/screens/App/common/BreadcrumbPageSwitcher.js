@@ -11,7 +11,7 @@ const BreadcrumbPageSwitcher = ({ activeHref }) => {
   );
 
   const popoverContent = (
-    <ListGroup style={{ marginBottom: 0 }}>
+    <ListGroup style={{ marginBottom: 0, borderTop: 0 }}>
       <SwitcherItem name={__('Migration Plans')} href="#/plans" />
       <SwitcherItem name={__('Infrastructure Mappings')} href="#/mappings" />
       <SwitcherItem name={__('Migration Settings')} href="#/settings" />
