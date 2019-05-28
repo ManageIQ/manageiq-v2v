@@ -25,7 +25,16 @@ const BreadcrumbPageSwitcher = ({ activeHref }) => {
       placement="bottom"
       overlay={<Popover id="breadcrumb-switcher-popover">{popoverContent}</Popover>}
     >
-      <Button style={{ marginTop: '-2px', marginBottom: '-4px', marginLeft: '15px' }}>
+      <Button
+        style={{
+          marginTop: '-2px',
+          marginBottom: '-4px',
+          marginLeft: '15px',
+          height: '22px',
+          width: '32px',
+          lineHeight: '14px'
+        }}
+      >
         <Icon type="fa" name="exchange" />
       </Button>
     </OverlayTrigger>
