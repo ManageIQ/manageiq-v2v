@@ -9,6 +9,10 @@ const BreadcrumbPageSwitcher = ({ activeHref }) => {
       {name}
     </ListGroupItem>
   );
+  SwitcherItem.propTypes = {
+    name: PropTypes.string,
+    href: PropTypes.string
+  };
 
   const popoverContent = (
     <ListGroup style={{ marginBottom: 0, borderTop: 0 }}>
