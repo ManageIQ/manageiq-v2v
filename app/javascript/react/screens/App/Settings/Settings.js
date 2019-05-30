@@ -4,6 +4,7 @@ import { Breadcrumb, Tabs, Tab } from 'patternfly-react';
 import Toolbar from '../../../config/Toolbar';
 import GeneralSettings from './screens/GeneralSettings';
 import ConversionHostsSettings from './screens/ConversionHostsSettings';
+import BreadcrumbPageSwitcher from '../common/BreadcrumbPageSwitcher';
 
 const Settings = props => {
   const { match, redirectTo } = props;
@@ -16,6 +17,7 @@ const Settings = props => {
         <Breadcrumb.Item active>
           <strong>{__('Migration Settings')}</strong>
         </Breadcrumb.Item>
+        <BreadcrumbPageSwitcher activeHref="#/settings" />
       </Toolbar>
       <div style={{ marginTop: 10 }}>
         <Tabs id="settings-tabs" activeKey={match.path} onSelect={key => redirectTo(key)} unmountOnExit>

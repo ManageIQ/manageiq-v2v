@@ -223,7 +223,7 @@ const MigrationsCompletedList = ({
                           ),
                           !isMissingMapping && (
                             <ListView.InfoItem key={`${plan.id}-infraMappingName`}>
-                              <a href="/migration#/mappings">{plan.infraMappingName}</a>
+                              {plan.infraMappingName}
                             </ListView.InfoItem>
                           ),
                           !denied ? (

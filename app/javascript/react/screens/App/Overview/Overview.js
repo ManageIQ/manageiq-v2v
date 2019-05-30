@@ -16,6 +16,7 @@ import {
 } from './OverviewConstants';
 import { FETCH_TRANSFORMATION_MAPPINGS_URL, FETCH_CLOUD_TENANTS_URL } from '../Mappings/MappingsConstants';
 import { FETCH_V2V_PROVIDERS_URL } from '../../../../redux/common/providers/providersConstants';
+import BreadcrumbPageSwitcher from '../common/BreadcrumbPageSwitcher';
 
 class Overview extends React.Component {
   constructor(props) {
@@ -418,6 +419,7 @@ class Overview extends React.Component {
         <Breadcrumb.Item active>
           <strong>{__('Migration Plans')}</strong>
         </Breadcrumb.Item>
+        <BreadcrumbPageSwitcher activeHref="#/plans" />
       </Toolbar>
     );
 

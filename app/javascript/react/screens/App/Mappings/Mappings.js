@@ -9,6 +9,7 @@ import { FETCH_TRANSFORMATION_PLANS_URL, FETCH_ARCHIVED_TRANSFORMATION_PLANS_URL
 import { FETCH_TRANSFORMATION_MAPPINGS_URL, FETCH_CLOUD_TENANTS_URL } from './MappingsConstants';
 import { FETCH_V2V_PROVIDERS_URL } from '../../../../redux/common/providers/providersConstants';
 import ShowWizardEmptyState from '../common/ShowWizardEmptyState/ShowWizardEmptyState';
+import BreadcrumbPageSwitcher from '../common/BreadcrumbPageSwitcher';
 
 class Mappings extends Component {
   constructor(props) {
@@ -179,6 +180,7 @@ class Mappings extends Component {
           <Breadcrumb.Item active>
             <strong>{__('Infrastructure Mappings')}</strong>
           </Breadcrumb.Item>
+          <BreadcrumbPageSwitcher activeHref="#/mappings" />
         </Toolbar>
         <Spinner
           loading={

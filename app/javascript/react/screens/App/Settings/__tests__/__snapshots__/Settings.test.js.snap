@@ -20,6 +20,9 @@ exports[`Settings component renders correctly 1`] = `
         Migration Settings
       </strong>
     </BreadcrumbItem>
+    <BreadcrumbPageSwitcher
+      activeHref="#/settings"
+    />
   </Toolbar>
   <div
     style={
