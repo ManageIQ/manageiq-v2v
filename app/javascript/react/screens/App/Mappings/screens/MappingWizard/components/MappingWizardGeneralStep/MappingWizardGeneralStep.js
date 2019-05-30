@@ -46,7 +46,11 @@ class MappingWizardGeneralStep extends React.Component {
   };
 
   render() {
-    const { targetProvider, editingMapping } = this.props;
+    const { targetProvider, editingMapping, providers } = this.props;
+
+    const availableProviderOptions = V2V_TARGET_PROVIDERS.filter(option =>
+      providers.some(provider => provider.type === option.type)
+    );
 
     return (
       <Form className="form-horizontal">
@@ -78,7 +82,7 @@ class MappingWizardGeneralStep extends React.Component {
           name="targetProvider"
           label={__('Target Provider')}
           component={BootstrapSelect}
-          options={V2V_TARGET_PROVIDERS}
+          options={availableProviderOptions}
           option_key="id"
           option_value="name"
           pre_selected_value={targetProvider || V2V_TARGET_PROVIDERS[0].id}
@@ -99,6 +103,7 @@ MappingWizardGeneralStep.propTypes = {
   editingMapping: PropTypes.object,
   initialize: PropTypes.func,
   initialized: PropTypes.bool,
+  providers: PropTypes.arrayOf(PropTypes.object),
   setEditingMappingAction: PropTypes.func,
   fetchConversionHostsAction: PropTypes.func,
   fetchConversionHostsUrl: PropTypes.string,
