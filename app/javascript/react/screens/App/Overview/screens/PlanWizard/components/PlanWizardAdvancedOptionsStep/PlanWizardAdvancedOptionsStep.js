@@ -48,6 +48,7 @@ class PlanWizardAdvancedOptionsStep extends Component {
     return (
       <Spinner loading={isFetchingPlaybooks}>
         <Form className="playbook-selects">
+          <Form.HelpBlock style={{ paddingLeft: '20px' }}>{__('All fields are optional')}</Form.HelpBlock>
           <Field
             name="preMigrationPlaybook"
             component={BootstrapSelect}
