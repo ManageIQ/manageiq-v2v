@@ -5,7 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Hammer-5
+## Hammer-7
+
+### Added
+- Enable (un-hide) the Conversion Hosts tab of the Settings page [(#922)](https://github.com/ManageIQ/manageiq-v2v/pull/922)
+
+### Fixed
+- Fix inline edit buttons positioning by rendering as a child of an existing table cell [(#941)](https://github.com/ManageIQ/manageiq-v2v/pull/941)
+- Fix regression in CSV validation with invalid rows [(#932)](https://github.com/ManageIQ/manageiq-v2v/pull/932)
+
+## Hammer-5 - Released 2019-04-23
 
 ### Added
 - Use conversion_hosts API for RHV target cluster warnings instead of host CF tags [(#847)](https://github.com/ManageIQ/manageiq-v2v/pull/847)
