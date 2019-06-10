@@ -17,6 +17,7 @@ import {
 import { FETCH_TRANSFORMATION_MAPPINGS_URL, FETCH_CLOUD_TENANTS_URL } from '../Mappings/MappingsConstants';
 import { FETCH_V2V_PROVIDERS_URL } from '../../../../redux/common/providers/providersConstants';
 import BreadcrumbPageSwitcher from '../common/BreadcrumbPageSwitcher';
+import NoProvidersEmptyState from '../common/NoProvidersEmptyState';
 
 class Overview extends React.Component {
   constructor(props) {
@@ -359,14 +360,7 @@ class Overview extends React.Component {
               />
             )
           ) : (
-            <ShowWizardEmptyState
-              description={
-                __('The source and target providers must be configured before attempting a migration') // prettier-ignore
-              }
-              buttonText={__('Configure Providers')}
-              buttonHref="/ems_infra/show_list"
-              className="full-page-empty"
-            />
+            <NoProvidersEmptyState className="full-page-empty" />
           )}
         </Spinner>
         <ConfirmModal show={confirmModalVisible} onCancel={hideConfirmModalAction} {...confirmModalOptions} />

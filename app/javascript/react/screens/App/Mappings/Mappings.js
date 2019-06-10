@@ -8,8 +8,8 @@ import InfrastructureMappingsList from './components/InfrastructureMappingsList/
 import { FETCH_TRANSFORMATION_PLANS_URL, FETCH_ARCHIVED_TRANSFORMATION_PLANS_URL } from '../Overview/OverviewConstants';
 import { FETCH_TRANSFORMATION_MAPPINGS_URL, FETCH_CLOUD_TENANTS_URL } from './MappingsConstants';
 import { FETCH_V2V_PROVIDERS_URL } from '../../../../redux/common/providers/providersConstants';
-import ShowWizardEmptyState from '../common/ShowWizardEmptyState/ShowWizardEmptyState';
 import BreadcrumbPageSwitcher from '../common/BreadcrumbPageSwitcher';
+import NoProvidersEmptyState from '../common/NoProvidersEmptyState';
 
 class Mappings extends Component {
   constructor(props) {
@@ -228,14 +228,7 @@ class Mappings extends Component {
               showMappingWizardEditModeAction={showMappingWizardEditModeAction}
             />
           ) : (
-            <ShowWizardEmptyState
-              description={
-                __('The source and target providers must be configured before attempting a migration') // prettier-ignore
-              }
-              buttonText={__('Configure Providers')}
-              buttonHref="/ems_infra/show_list"
-              className="white-bg"
-            />
+            <NoProvidersEmptyState className="white-bg" />
           )}
         </Spinner>
         {mappingWizardVisible && this.mappingWizard}

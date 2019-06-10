@@ -7,6 +7,7 @@ const ShowWizardEmptyState = ({
   buttonHref,
   description,
   buttonText,
+  action,
   title,
   iconType,
   iconName,
@@ -16,11 +17,14 @@ const ShowWizardEmptyState = ({
     <EmptyState.Icon type={iconType} name={iconName} />
     <EmptyState.Title>{title}</EmptyState.Title>
     <EmptyState.Info>{description}</EmptyState.Info>
-    {buttonText && (
+    {(buttonText || action) && (
       <EmptyState.Action>
-        <Button bsStyle="primary" bsSize="large" onClick={showWizardAction} href={buttonHref}>
-          {sprintf(__('%s'), buttonText)}
-        </Button>
+        {action}
+        {buttonText && (
+          <Button bsStyle="primary" bsSize="large" onClick={showWizardAction} href={buttonHref}>
+            {sprintf(__('%s'), buttonText)}
+          </Button>
+        )}
       </EmptyState.Action>
     )}
   </EmptyState>
@@ -31,6 +35,7 @@ ShowWizardEmptyState.propTypes = {
   buttonHref: PropTypes.string,
   description: PropTypes.node,
   buttonText: PropTypes.string,
+  action: PropTypes.node,
   title: PropTypes.string,
   iconType: PropTypes.string,
   iconName: PropTypes.string
