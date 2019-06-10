@@ -5,7 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Hammer-5
+## Hammer-7
+
+### Added
+- Enable (un-hide) the Conversion Hosts tab of the Settings page [(#922)](https://github.com/ManageIQ/manageiq-v2v/pull/922)
+- Add Download Log action to conversion host list items that creates a file from context_data [(#948)](https://github.com/ManageIQ/manageiq-v2v/pull/948)
+- Add option to sort plans by Completed time, and fix alignment in plan list views [(#934)](https://github.com/ManageIQ/manageiq-v2v/pull/934)
+
+### Fixed
+- Mapping Wizard: filter datastores to only those with storage_domain_type === 'data' [(#947)](https://github.com/ManageIQ/manageiq-v2v/pull/947)
+- Add OpenStack Trusted CA Certificates field to Conversion Host Wizard [(#952)](https://github.com/ManageIQ/manageiq-v2v/pull/952)
+- Prevent migration task info popovers with long error messages from being pushed off the screen [(#962)](https://github.com/ManageIQ/manageiq-v2v/pull/962)
+
+## Hammer-5 - Released 2019-04-23
 
 ### Added
 - Use conversion_hosts API for RHV target cluster warnings instead of host CF tags [(#847)](https://github.com/ManageIQ/manageiq-v2v/pull/847)
