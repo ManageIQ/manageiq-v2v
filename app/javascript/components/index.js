@@ -13,6 +13,7 @@ import PlanWizardInstancePropertiesStepContainer from '../react/screens/App/Over
 
 import OverviewContainer from '../react/screens/App/Overview';
 import SettingsContainer from '../react/screens/App/Settings';
+import AnalyticsContainer from '../react/screens/App/Analytics';
 import PlanContainer from '../react/screens/App/Plan';
 import MappingsContainer from '../react/screens/App/Mappings';
 import NotificationList from '../react/screens/App/common/NotificationList';
@@ -90,6 +91,11 @@ export const coreComponents = [
   {
     name: 'SettingsContainer',
     type: SettingsContainer,
+    store: true
+  },
+  {
+    name: 'AnalyticsContainer',
+    type: AnalyticsContainer,
     store: true
   },
   {

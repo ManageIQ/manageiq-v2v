@@ -19,6 +19,7 @@ const BreadcrumbPageSwitcher = ({ activeHref }) => {
       <SwitcherItem name={__('Migration Plans')} href="#/plans" />
       <SwitcherItem name={__('Infrastructure Mappings')} href="#/mappings" />
       <SwitcherItem name={__('Migration Settings')} href="#/settings" />
+      <SwitcherItem name={__('Migration Analytics')} href="#/analytics" />
     </ListGroup>
   );
 

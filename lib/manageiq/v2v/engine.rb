@@ -15,7 +15,8 @@ module ManageIQ::V2V
         Menu::Section.new(:migration, N_("Migration"), 'fa fa-plus', [
           Menu::Item.new('plans', N_("Migration Plans"), 'migration', {:feature => 'migration', :any => true}, '/migration#/plans'),
           Menu::Item.new('mappings', N_("Infrastructure Mappings"), 'mappings', {:feature => 'mappings', :any => true}, '/migration#/mappings'),
-          Menu::Item.new('settings', N_("Migration Settings"), 'migration_settings', {:feature => 'migration_settings', :any => true}, '/migration#/settings')
+          Menu::Item.new('settings', N_("Migration Settings"), 'migration_settings', {:feature => 'migration_settings', :any => true}, '/migration#/settings'),
+          Menu::Item.new('analytics', N_("Migration Analytics"), 'migration_analytics', {:feature => 'migration_analytics', :any => true}, '/migration#/analytics')
         ], nil, nil, nil, nil, :compute)
       )
     end

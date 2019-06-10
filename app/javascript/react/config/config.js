@@ -2,6 +2,7 @@ import OverviewContainer from '../screens/App/Overview';
 import Settings from '../screens/App/Settings';
 import PlanContainer from '../screens/App/Plan';
 import MappingsContainer from '../screens/App/Mappings';
+import Analytics from '../screens/App/Analytics';
 
 export const links = [
   {
@@ -28,6 +29,11 @@ export const links = [
     path: 'mappings',
     component: MappingsContainer,
     menu_item_id: 'menu_item_mappings'
+  },
+  {
+    path: 'analytics',
+    component: Analytics,
+    menu_item_id: 'menu_item_analytics'
   },
   {
     path: '',
