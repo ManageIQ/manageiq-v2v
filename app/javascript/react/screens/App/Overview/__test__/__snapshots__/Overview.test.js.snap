@@ -3,5 +3,6 @@
 exports[`Overview component checks for necessary providers and displays empty state if insufficient 1`] = `
 <NoProvidersEmptyState
   className="full-page-empty"
+  description="Before attempting a migration, you must have at least one VMware and one Red Hat Virtualization or Red Hat OpenStack Platform provider configured."
 />
 `;

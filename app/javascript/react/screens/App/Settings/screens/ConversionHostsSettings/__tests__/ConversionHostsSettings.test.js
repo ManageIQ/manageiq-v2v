@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import { Spinner } from 'patternfly-react';
 import ConversionHostsSettings from '../ConversionHostsSettings';
 import ConversionHostsEmptyState from '../components/ConversionHostsEmptyState';
-import ShowWizardEmptyState from '../../../../common/ShowWizardEmptyState/ShowWizardEmptyState';
+import NoProvidersEmptyState from '../../../../common/NoProvidersEmptyState';
 import ConversionHostsList from '../components/ConversionHostsList';
 import ConversionHostWizard from '../components/ConversionHostWizard';
 
@@ -38,7 +38,7 @@ describe('ConversionHostsSettings component', () => {
 
   it('renders an empty state when insufficient providers are present', () => {
     const component = shallow(<ConversionHostsSettings {...getBaseProps()} hasSufficientProviders={false} />);
-    expect(component.find(ShowWizardEmptyState)).toHaveLength(1);
+    expect(component.find(NoProvidersEmptyState)).toHaveLength(1);
     expect(component.find(ConversionHostsEmptyState)).toHaveLength(0);
     expect(component.find(ConversionHostsList)).toHaveLength(0);
     expect(component.find(ConversionHostWizard)).toHaveLength(0);
@@ -47,7 +47,7 @@ describe('ConversionHostsSettings component', () => {
   it('renders an empty state when no conversion hosts are present', () => {
     const component = shallow(<ConversionHostsSettings {...getBaseProps()} />);
     expect(component.find(ConversionHostsEmptyState)).toHaveLength(1);
-    expect(component.find(ShowWizardEmptyState)).toHaveLength(0);
+    expect(component.find(NoProvidersEmptyState)).toHaveLength(0);
     expect(component.find(ConversionHostsList)).toHaveLength(0);
     expect(component.find(ConversionHostWizard)).toHaveLength(0);
   });
@@ -55,7 +55,7 @@ describe('ConversionHostsSettings component', () => {
   it('renders the list view when conversion hosts are present', () => {
     const component = shallow(<ConversionHostsSettings {...getBaseProps()} combinedListItems={[{ foo: 'bar' }]} />);
     expect(component.find(ConversionHostsList)).toHaveLength(1);
-    expect(component.find(ShowWizardEmptyState)).toHaveLength(0);
+    expect(component.find(NoProvidersEmptyState)).toHaveLength(0);
     expect(component.find(ConversionHostsEmptyState)).toHaveLength(0);
     expect(component.find(ConversionHostWizard)).toHaveLength(0);
   });
