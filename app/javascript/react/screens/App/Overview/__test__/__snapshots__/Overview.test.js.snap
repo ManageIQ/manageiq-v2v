@@ -1,14 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Overview component checks for necessary providers and displays empty state if insufficient 1`] = `
-<ShowWizardEmptyState
-  buttonHref="/ems_infra/show_list"
-  buttonText="Configure Providers"
+<NoProvidersEmptyState
   className="full-page-empty"
-  description="The source and target providers must be configured before attempting a migration"
-  iconName="add-circle-o"
-  iconType="pf"
-  showWizardAction={null}
-  title=" "
 />
 `;

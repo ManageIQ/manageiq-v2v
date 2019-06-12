@@ -49,7 +49,7 @@ describe('Overview component', () => {
     test('and displays empty state if insufficient', () => {
       const props = getBaseProps();
       const wrapper = shallow(<Overview {...props} hasSufficientProviders={false} />); // eslint-disable-line no-unused-vars
-      expect(wrapper.find('ShowWizardEmptyState')).toMatchSnapshot();
+      expect(wrapper.find('NoProvidersEmptyState')).toMatchSnapshot();
     });
   });
 });
