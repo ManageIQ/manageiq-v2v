@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Spinner, Icon } from 'patternfly-react';
-import ShowWizardEmptyState from '../../../common/ShowWizardEmptyState/ShowWizardEmptyState';
 import ConversionHostsEmptyState from './components/ConversionHostsEmptyState';
 import ConversionHostsList from './components/ConversionHostsList';
 import ConversionHostWizard from './components/ConversionHostWizard';
 import { FETCH_V2V_PROVIDERS_URL } from '../../../../../../redux/common/providers/providersConstants';
+import NoProvidersEmptyState from '../../../common/NoProvidersEmptyState';
 
 class ConversionHostsSettings extends React.Component {
   pollingInterval = null;
@@ -90,13 +90,11 @@ class ConversionHostsSettings extends React.Component {
     return (
       <Spinner loading={isFetchingProviders || !hasMadeInitialFetch} style={{ marginTop: 15 }}>
         {!hasSufficientProviders ? (
-          <ShowWizardEmptyState
+          <NoProvidersEmptyState
+            className="full-page-empty"
             description={
               __('There are no providers available from which to configure a conversion host. You must configure a target provider before configuring conversion hosts.') // prettier-ignore
             }
-            buttonText={__('Configure Providers')}
-            buttonHref="/ems_infra/show_list"
-            className="full-page-empty"
           />
         ) : (
           <React.Fragment>
