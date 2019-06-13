@@ -1,0 +1,79 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Analytics component renders correctly 1`] = `
+<React.Fragment>
+  <Toolbar>
+    <BreadcrumbItem
+      active={true}
+    >
+      Compute
+    </BreadcrumbItem>
+    <BreadcrumbItem
+      active={true}
+    >
+      Migration
+    </BreadcrumbItem>
+    <BreadcrumbItem
+      active={true}
+    >
+      <strong>
+        Migration Analytics
+      </strong>
+    </BreadcrumbItem>
+    <BreadcrumbPageSwitcher
+      activeHref="#/analytics"
+    />
+  </Toolbar>
+  <AnalyticsContainer
+    showEmptyState={true}
+  >
+    <EmptyState
+      className="full-page-empty"
+    >
+      <div
+        className="blank-slate-pf-icon"
+        style={
+          Object {
+            "opacity": 0.4,
+          }
+        }
+      >
+        <Component
+          height="80px"
+        />
+      </div>
+      <EmptyStateTitle
+        className=""
+      >
+        Examine your virtual environment using Red Hat Migration Analytics
+      </EmptyStateTitle>
+      <EmptyStateInfo
+        className=""
+      >
+        Get a summarized report of your virtualization providers in CloudForms and collect a detailed inventory that can be further analyzed using the Migration Analytics application on cloud.redhat.com.
+      </EmptyStateInfo>
+      <EmptyStateAction
+        className=""
+        secondary={false}
+      >
+        <Button
+          active={false}
+          block={false}
+          bsClass="btn"
+          bsSize="large"
+          bsStyle="primary"
+          disabled={false}
+          onClick={[Function]}
+        >
+          Get started
+        </Button>
+      </EmptyStateAction>
+    </EmptyState>
+    <h6
+      className="manifest-version"
+    >
+      Manifest version: x.y.z 2019-06-10
+    </h6>
+  </AnalyticsContainer>
+</React.Fragment>
+`;

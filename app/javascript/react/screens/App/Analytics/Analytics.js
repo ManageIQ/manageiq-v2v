@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Breadcrumb, EmptyState, Button } from 'patternfly-react';
 import Toolbar from '../../../config/Toolbar';
 import BreadcrumbPageSwitcher from '../common/BreadcrumbPageSwitcher';
+import ProcessImprovementSvg from './process-improvement.svg';
 
 const AnalyticsContainer = ({ showEmptyState, children }) =>
   showEmptyState ? (
@@ -31,7 +32,9 @@ const Analytics = ({ showEmptyState = true }) => (
     <AnalyticsContainer showEmptyState={showEmptyState}>
       {showEmptyState && (
         <EmptyState className="full-page-empty">
-          <EmptyState.Icon type="pf" name="search" />
+          <div className="blank-slate-pf-icon" style={{ opacity: 0.4 }}>
+            <ProcessImprovementSvg height="80px" />
+          </div>
           <EmptyState.Title>
             {__('Examine your virtual environment using Red Hat Migration Analytics')}
           </EmptyState.Title>
