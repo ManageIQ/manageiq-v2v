@@ -14,12 +14,15 @@ const BreadcrumbPageSwitcher = ({ activeHref }) => {
     href: PropTypes.string
   };
 
+  // TODO: remove this when we are ready to release analytics
+  const hideMigrationAnalytics = true;
+
   const popoverContent = (
     <ListGroup style={{ marginBottom: 0, borderTop: 0 }}>
       <SwitcherItem name={__('Migration Plans')} href="#/plans" />
       <SwitcherItem name={__('Infrastructure Mappings')} href="#/mappings" />
       <SwitcherItem name={__('Migration Settings')} href="#/settings" />
-      <SwitcherItem name={__('Migration Analytics')} href="#/analytics" />
+      {!hideMigrationAnalytics && <SwitcherItem name={__('Migration Analytics')} href="#/analytics" />}
     </ListGroup>
   );
 
