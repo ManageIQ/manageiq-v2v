@@ -408,7 +408,6 @@ class Overview extends React.Component {
 
     const toolbarContent = (
       <Toolbar>
-        <Breadcrumb.Item active>{__('Compute')}</Breadcrumb.Item>
         <Breadcrumb.Item active>{__('Migration')}</Breadcrumb.Item>
         <Breadcrumb.Item active>
           <strong>{__('Migration Plans')}</strong>

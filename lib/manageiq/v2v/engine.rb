@@ -12,11 +12,11 @@ module ManageIQ::V2V
 
     initializer 'plugin' do
       Menu::CustomLoader.register(
-        Menu::Section.new(:migration, N_("Migration"), 'fa fa-plus', [
+        Menu::Section.new(:migration, N_("Migration"), 'pficon pficon-migration', [
           Menu::Item.new('plans', N_("Migration Plans"), 'migration', {:feature => 'migration', :any => true}, '/migration#/plans'),
           Menu::Item.new('mappings', N_("Infrastructure Mappings"), 'mappings', {:feature => 'mappings', :any => true}, '/migration#/mappings'),
           Menu::Item.new('settings', N_("Migration Settings"), 'migration_settings', {:feature => 'migration_settings', :any => true}, '/migration#/settings')
-        ], nil, nil, nil, nil, :compute)
+        ], nil, :conf) # Place Migration before Configuration (after Compute)
       )
     end
 

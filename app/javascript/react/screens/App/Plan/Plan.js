@@ -165,7 +165,6 @@ class Plan extends React.Component {
     return (
       <React.Fragment>
         <Toolbar>
-          <Breadcrumb.Item active>{__('Compute')}</Breadcrumb.Item>
           <Breadcrumb.Item active>{__('Migration')}</Breadcrumb.Item>
           <Breadcrumb.Item href="#/plans">{__('Migration Plans')}</Breadcrumb.Item>
           {!isRejectedPlan &&
