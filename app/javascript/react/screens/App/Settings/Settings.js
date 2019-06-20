@@ -1,23 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Breadcrumb, Tabs, Tab } from 'patternfly-react';
-import Toolbar from '../../../config/Toolbar';
+import { Tabs, Tab } from 'patternfly-react';
 import GeneralSettings from './screens/GeneralSettings';
 import ConversionHostsSettings from './screens/ConversionHostsSettings';
-import BreadcrumbPageSwitcher from '../common/BreadcrumbPageSwitcher';
+import MigrationBreadcrumbBar from '../common/MigrationBreadcrumbBar';
 
 const Settings = props => {
   const { match, redirectTo } = props;
 
   return (
     <React.Fragment>
-      <Toolbar>
-        <Breadcrumb.Item active>{__('Migration')}</Breadcrumb.Item>
-        <Breadcrumb.Item active>
-          <strong>{__('Migration Settings')}</strong>
-        </Breadcrumb.Item>
-        <BreadcrumbPageSwitcher activeHref="#/settings" />
-      </Toolbar>
+      <MigrationBreadcrumbBar activeHref="#/settings" />
       <div style={{ marginTop: 10 }}>
         <Tabs id="settings-tabs" activeKey={match.path} onSelect={key => redirectTo(key)} unmountOnExit>
           <Tab eventKey="/settings" title={__('Migration Throttling')}>

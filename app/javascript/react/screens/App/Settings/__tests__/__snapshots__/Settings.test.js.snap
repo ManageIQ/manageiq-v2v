@@ -2,23 +2,9 @@
 
 exports[`Settings component renders correctly 1`] = `
 <React.Fragment>
-  <Toolbar>
-    <BreadcrumbItem
-      active={true}
-    >
-      Migration
-    </BreadcrumbItem>
-    <BreadcrumbItem
-      active={true}
-    >
-      <strong>
-        Migration Settings
-      </strong>
-    </BreadcrumbItem>
-    <BreadcrumbPageSwitcher
-      activeHref="#/settings"
-    />
-  </Toolbar>
+  <MigrationBreadcrumbBar
+    activeHref="#/settings"
+  />
   <div
     style={
       Object {

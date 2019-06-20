@@ -3,32 +3,21 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { OverlayTrigger, Popover, Button, Icon, ListGroup, ListGroupItem } from 'patternfly-react';
 
-const BreadcrumbPageSwitcher = ({ activeHref }) => {
-  const SwitcherItem = ({ name, href }) => (
-    <ListGroupItem className={classNames('no-border', { active: href === activeHref })} href={href}>
-      {name}
-    </ListGroupItem>
-  );
-  SwitcherItem.propTypes = {
-    name: PropTypes.string,
-    href: PropTypes.string
-  };
-
-  const popoverContent = (
-    <ListGroup style={{ marginBottom: 0, borderTop: 0 }}>
-      <SwitcherItem name={__('Migration Plans')} href="#/plans" />
-      <SwitcherItem name={__('Infrastructure Mappings')} href="#/mappings" />
-      <SwitcherItem name={__('Migration Settings')} href="#/settings" />
-    </ListGroup>
+const BreadcrumbPageSwitcher = ({ items, activeHref }) => {
+  const popover = (
+    <Popover id="breadcrumb-switcher-popover">
+      <ListGroup style={{ marginBottom: 0, borderTop: 0 }}>
+        {items.map(({ name, href }) => (
+          <ListGroupItem className={classNames('no-border', { active: href === activeHref })} href={href} key={href}>
+            {name}
+          </ListGroupItem>
+        ))}
+      </ListGroup>
+    </Popover>
   );
 
   return (
-    <OverlayTrigger
-      rootClose
-      trigger="click"
-      placement="bottom"
-      overlay={<Popover id="breadcrumb-switcher-popover">{popoverContent}</Popover>}
-    >
+    <OverlayTrigger rootClose trigger="click" placement="bottom" overlay={popover}>
       <Button
         style={{
           marginTop: '-2px',
@@ -46,7 +35,8 @@ const BreadcrumbPageSwitcher = ({ activeHref }) => {
 };
 
 BreadcrumbPageSwitcher.propTypes = {
-  activeHref: PropTypes.string
+  activeHref: PropTypes.string.isRequired,
+  items: PropTypes.arrayOf(PropTypes.shape({ name: PropTypes.string, href: PropTypes.string })).isRequired
 };
 
 export default BreadcrumbPageSwitcher;

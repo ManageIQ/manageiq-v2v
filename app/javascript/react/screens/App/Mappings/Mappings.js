@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Breadcrumb, Spinner } from 'patternfly-react';
+import { Spinner } from 'patternfly-react';
 
-import Toolbar from '../../../config/Toolbar';
 import componentRegistry from '../../../../components/componentRegistry';
 import InfrastructureMappingsList from './components/InfrastructureMappingsList/InfrastructureMappingsList';
 import { FETCH_TRANSFORMATION_PLANS_URL, FETCH_ARCHIVED_TRANSFORMATION_PLANS_URL } from '../Overview/OverviewConstants';
 import { FETCH_TRANSFORMATION_MAPPINGS_URL, FETCH_CLOUD_TENANTS_URL } from './MappingsConstants';
 import { FETCH_V2V_PROVIDERS_URL } from '../../../../redux/common/providers/providersConstants';
-import BreadcrumbPageSwitcher from '../common/BreadcrumbPageSwitcher';
+import MigrationBreadcrumbBar from '../common/MigrationBreadcrumbBar';
 import NoProvidersEmptyState from '../common/NoProvidersEmptyState';
 
 class Mappings extends Component {
@@ -174,13 +173,7 @@ class Mappings extends Component {
 
     return (
       <React.Fragment>
-        <Toolbar>
-          <Breadcrumb.Item active>{__('Migration')}</Breadcrumb.Item>
-          <Breadcrumb.Item active>
-            <strong>{__('Infrastructure Mappings')}</strong>
-          </Breadcrumb.Item>
-          <BreadcrumbPageSwitcher activeHref="#/mappings" />
-        </Toolbar>
+        <MigrationBreadcrumbBar activeHref="#/mappings" />
         <Spinner
           loading={
             isFetchingCloudNetworks ||
