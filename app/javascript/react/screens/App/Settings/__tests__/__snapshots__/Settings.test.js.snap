@@ -6,11 +6,6 @@ exports[`Settings component renders correctly 1`] = `
     <BreadcrumbItem
       active={true}
     >
-      Compute
-    </BreadcrumbItem>
-    <BreadcrumbItem
-      active={true}
-    >
       Migration
     </BreadcrumbItem>
     <BreadcrumbItem
