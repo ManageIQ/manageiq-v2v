@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, Breadcrumb, CardGrid, Spinner, Icon } from 'patternfly-react';
+import { Card, CardGrid, Spinner, Icon } from 'patternfly-react';
 
-import Toolbar from '../../../config/Toolbar';
 import * as AggregateCards from './components/AggregateCards';
 import Migrations from './components/Migrations/Migrations';
 import ShowWizardEmptyState from '../common/ShowWizardEmptyState/ShowWizardEmptyState';
@@ -16,7 +15,7 @@ import {
 } from './OverviewConstants';
 import { FETCH_TRANSFORMATION_MAPPINGS_URL, FETCH_CLOUD_TENANTS_URL } from '../Mappings/MappingsConstants';
 import { FETCH_V2V_PROVIDERS_URL } from '../../../../redux/common/providers/providersConstants';
-import BreadcrumbPageSwitcher from '../common/BreadcrumbPageSwitcher';
+import MigrationBreadcrumbBar from '../common/MigrationBreadcrumbBar';
 import NoProvidersEmptyState from '../common/NoProvidersEmptyState';
 
 class Overview extends React.Component {
@@ -406,20 +405,9 @@ class Overview extends React.Component {
         </div>
       );
 
-    const toolbarContent = (
-      <Toolbar>
-        <Breadcrumb.Item active>{__('Compute')}</Breadcrumb.Item>
-        <Breadcrumb.Item active>{__('Migration')}</Breadcrumb.Item>
-        <Breadcrumb.Item active>
-          <strong>{__('Migration Plans')}</strong>
-        </Breadcrumb.Item>
-        <BreadcrumbPageSwitcher activeHref="#/plans" />
-      </Toolbar>
-    );
-
     return (
       <React.Fragment>
-        {toolbarContent}
+        <MigrationBreadcrumbBar activeHref="#/plans" />
         {overviewContent}
         {mappingWizardVisible && this.mappingWizard}
         {planWizardVisible && this.planWizard}
