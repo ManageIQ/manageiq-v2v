@@ -33,6 +33,8 @@ class Mappings extends Component {
       fetchDatastoresUrl,
       fetchNetworksAction,
       fetchNetworksUrl,
+      fetchProductFeaturesAction,
+      fetchProductFeaturesActionUrl,
       fetchProvidersAction,
       fetchProvidersUrl,
       fetchTransformationMappingsAction,
@@ -57,6 +59,7 @@ class Mappings extends Component {
     fetchNetworksAction(fetchNetworksUrl);
     fetchProvidersAction(fetchProvidersUrl);
     fetchTransformationMappingsAction(fetchTransformationMappingsUrl);
+    fetchProductFeaturesAction(fetchProductFeaturesActionUrl);
 
     Promise.all([
       fetchTransformationPlansAction({
@@ -161,6 +164,7 @@ class Mappings extends Component {
       mappingWizardVisible,
       networks,
       notStartedTransformationPlans,
+      productFeatures,
       transformationMappings,
       transformationPlans,
       setMappingToDeleteAction,
@@ -173,7 +177,7 @@ class Mappings extends Component {
 
     return (
       <React.Fragment>
-        <MigrationBreadcrumbBar activeHref="#/mappings" />
+        <MigrationBreadcrumbBar activeHref="#/mappings" productFeatures={productFeatures} />
         <Spinner
           loading={
             isFetchingCloudNetworks ||
@@ -253,6 +257,8 @@ Mappings.propTypes = {
   fetchDatastoresUrl: PropTypes.string,
   fetchNetworksAction: PropTypes.func,
   fetchNetworksUrl: PropTypes.string,
+  fetchProductFeaturesAction: PropTypes.func,
+  fetchProductFeaturesActionUrl: PropTypes.string,
   fetchProvidersAction: PropTypes.func,
   fetchProvidersUrl: PropTypes.string,
   fetchTransformationMappingsAction: PropTypes.func,
@@ -281,6 +287,7 @@ Mappings.propTypes = {
   mappingWizardVisible: PropTypes.bool,
   notStartedTransformationPlans: PropTypes.array,
   openMappingWizardOnMount: PropTypes.bool,
+  productFeatures: PropTypes.array,
   setMappingToDeleteAction: PropTypes.func,
   showDeleteConfirmationModal: PropTypes.bool,
   showDeleteConfirmationModalAction: PropTypes.func,
@@ -302,6 +309,7 @@ Mappings.defaultProps = {
     '&expand=resources',
   fetchDatastoresUrl: '/api/data_stores?expand=resources',
   fetchNetworksUrl: '/api/lans/?expand=resources',
+  fetchProductFeaturesActionUrl: '/api',
   fetchTransformationMappingsUrl: FETCH_TRANSFORMATION_MAPPINGS_URL,
   fetchArchivedTransformationPlansUrl: FETCH_ARCHIVED_TRANSFORMATION_PLANS_URL,
   fetchTransformationPlansUrl: FETCH_TRANSFORMATION_PLANS_URL,

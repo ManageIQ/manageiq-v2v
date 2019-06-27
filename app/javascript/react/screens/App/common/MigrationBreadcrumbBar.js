@@ -4,27 +4,31 @@ import { Breadcrumb } from 'patternfly-react';
 import Toolbar from '../../../config/Toolbar';
 import BreadcrumbPageSwitcher from './BreadcrumbPageSwitcher';
 
-const items = [
-  { name: __('Migration Plans'), href: '#/plans' },
-  { name: __('Infrastructure Mappings'), href: '#/mappings' },
-  { name: __('Migration Settings'), href: '#/settings' }
+const defaultItems = [
+  { name: __('Migration Plans'), href: '#/plans', productFeature: 'migration' },
+  { name: __('Infrastructure Mappings'), href: '#/mappings', productFeature: 'mappings' },
+  { name: __('Migration Settings'), href: '#/settings', productFeature: 'migration_settings' }
 ];
 
-const MigrationBreadcrumbBar = ({ activeHref }) => {
-  const activeItem = items.find(item => item.href === activeHref);
+const MigrationBreadcrumbBar = ({ activeHref, productFeatures }) => {
+  const activeItem = defaultItems.find(item => item.href === activeHref);
+  const enabledItems = productFeatures.includes('everything')
+    ? defaultItems
+    : defaultItems.filter(item => productFeatures.includes(item.productFeature));
   return (
     <Toolbar>
       <Breadcrumb.Item active>{__('Migration')}</Breadcrumb.Item>
       <Breadcrumb.Item active>
         <strong>{activeItem.name}</strong>
       </Breadcrumb.Item>
-      <BreadcrumbPageSwitcher items={items} activeHref={activeHref} />
+      <BreadcrumbPageSwitcher items={enabledItems} activeHref={activeHref} />
     </Toolbar>
   );
 };
 
 MigrationBreadcrumbBar.propTypes = {
-  activeHref: PropTypes.string.isRequired
+  activeHref: PropTypes.string.isRequired,
+  productFeatures: PropTypes.array
 };
 
 export default MigrationBreadcrumbBar;

@@ -8,6 +8,7 @@ import { initialState } from '../overview.fixtures';
 import providersReducer, {
   initialState as providersInitialState
 } from '../../../../../redux/common/providers/providersReducer';
+import { initialState as productFeaturesInitialState } from '../../../../../redux/common/productFeatures/productFeaturesReducer';
 import Overview from '../Overview';
 import OverviewContainer, { reducers } from '../index';
 
@@ -24,7 +25,8 @@ describe('Overview integration test', () => {
       combineReducers({ ...reducers, providers: providersReducer }),
       {
         overview: initialState,
-        providers: providersInitialState
+        providers: providersInitialState,
+        productFeatures: productFeaturesInitialState
       },
       applyMiddleware(...middlewares)
     );

@@ -40,7 +40,9 @@ class Overview extends React.Component {
       fetchTransformationPlansAction,
       fetchArchivedTransformationPlansUrl,
       fetchServiceTemplateAnsiblePlaybooksAction,
-      fetchServiceTemplateAnsiblePlaybooksUrl
+      fetchServiceTemplateAnsiblePlaybooksUrl,
+      fetchProductFeaturesAction,
+      fetchProductFeaturesActionUrl
     } = this.props;
 
     fetchProvidersAction(fetchProvidersUrl)
@@ -66,6 +68,7 @@ class Overview extends React.Component {
           this.startPolling();
         }
       });
+    fetchProductFeaturesAction(fetchProductFeaturesActionUrl);
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -284,7 +287,8 @@ class Overview extends React.Component {
       isEditingPlanRequest,
       cancelPlanRequestAction,
       isCancellingPlanRequest,
-      requestsProcessingCancellation
+      requestsProcessingCancellation,
+      productFeatures
     } = this.props;
 
     const mainContent = (
@@ -407,7 +411,7 @@ class Overview extends React.Component {
 
     return (
       <React.Fragment>
-        <MigrationBreadcrumbBar activeHref="#/plans" />
+        <MigrationBreadcrumbBar activeHref="#/plans" productFeatures={productFeatures} />
         {overviewContent}
         {mappingWizardVisible && this.mappingWizard}
         {planWizardVisible && this.planWizard}
@@ -486,7 +490,10 @@ Overview.propTypes = {
   isCancellingPlanRequest: PropTypes.bool,
   requestsProcessingCancellation: PropTypes.array,
   fetchCloudTenantsAction: PropTypes.func,
-  fetchCloudTenantsUrl: PropTypes.string
+  fetchCloudTenantsUrl: PropTypes.string,
+  fetchProductFeaturesAction: PropTypes.func,
+  fetchProductFeaturesActionUrl: PropTypes.string,
+  productFeatures: PropTypes.array
 };
 
 Overview.defaultProps = {
@@ -501,7 +508,8 @@ Overview.defaultProps = {
     '&expand=resources' +
     '&attributes=name,description,created_at',
   fetchArchivedTransformationPlansUrl: FETCH_ARCHIVED_TRANSFORMATION_PLANS_URL,
-  fetchProvidersUrl: FETCH_V2V_PROVIDERS_URL
+  fetchProvidersUrl: FETCH_V2V_PROVIDERS_URL,
+  fetchProductFeaturesActionUrl: '/api'
 };
 
 export default Overview;
