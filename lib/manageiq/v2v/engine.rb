@@ -10,7 +10,7 @@ module ManageIQ::V2V
       app.config.assets.paths << root.join('assets', 'images').to_s
     end
 
-    initializer 'plugin' do
+    initializer 'plugin-migration-menu' do
       Menu::CustomLoader.register(
         Menu::Section.new(:migration, N_("Migration"), 'pficon pficon-migration', [
           Menu::Item.new('plans', N_("Migration Plans"), 'migration', {:feature => 'migration', :any => true}, '/migration#/plans'),
