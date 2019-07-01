@@ -5,7 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Hammer-7
+## Hammer-8
+
+### Added
+- Add BreadcrumbPageSwitcher for Plans, Mappings and Settings pages [(#963)](https://github.com/ManageIQ/manageiq-v2v/pull/963)
+
+## Hammer-7 - Released 2019-06-10
 
 ### Added
 - Enable (un-hide) the Conversion Hosts tab of the Settings page [(#922)](https://github.com/ManageIQ/manageiq-v2v/pull/922)
