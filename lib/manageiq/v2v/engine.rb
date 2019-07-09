@@ -10,6 +10,10 @@ module ManageIQ::V2V
       app.config.assets.paths << root.join('assets', 'images').to_s
     end
 
+    initializer 'plugin.filter' do |app|
+      app.config.filter_parameters += %i[conversion_host_ssh_private_key openstack_tls_ca_certs vmware_ssh_private_key]
+    end
+
     initializer 'plugin-migration-menu' do
       Menu::CustomLoader.register(
         Menu::Section.new(:migration, N_("Migration"), 'pficon pficon-migration', [
