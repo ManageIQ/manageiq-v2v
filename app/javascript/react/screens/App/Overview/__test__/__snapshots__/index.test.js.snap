@@ -41,7 +41,7 @@ Object {
   "isFetchingClusters": false,
   "isFetchingDatastores": false,
   "isFetchingNetworks": false,
-  "isFetchingProviders": false,
+  "isFetchingProviders": true,
   "isFetchingTransformationMappings": false,
   "isRejectedClusters": false,
   "isRejectedDatastores": false,
