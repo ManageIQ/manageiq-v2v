@@ -8,6 +8,9 @@ import { initialState } from '../overview.fixtures';
 import providersReducer, {
   initialState as providersInitialState
 } from '../../../../../redux/common/providers/providersReducer';
+import productFeaturesReducer, {
+  initialState as productFeaturesInitialState
+} from '../../../../../redux/common/productFeatures/productFeaturesReducer';
 import Overview from '../Overview';
 import OverviewContainer, { reducers } from '../index';
 
@@ -21,10 +24,11 @@ describe('Overview integration test', () => {
   const middlewares = [thunk, promiseMiddleware()];
   const generateStore = () =>
     createStore(
-      combineReducers({ ...reducers, providers: providersReducer }),
+      combineReducers({ ...reducers, providers: providersReducer, productFeatures: productFeaturesReducer }),
       {
         overview: initialState,
-        providers: providersInitialState
+        providers: providersInitialState,
+        productFeatures: productFeaturesInitialState
       },
       applyMiddleware(...middlewares)
     );

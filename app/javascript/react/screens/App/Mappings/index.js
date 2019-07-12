@@ -4,6 +4,7 @@ import Mappings from './Mappings';
 import * as MappingsActions from './MappingsActions';
 import * as RouterActions from '../../../../redux/actions/routerActions';
 import * as ProvidersActions from '../../../../redux/common/providers/providersActions';
+import * as ProductFeaturesActions from '../../../../redux/common/productFeatures/productFeaturesActions';
 import reducer from './MappingsReducer';
 
 import {
@@ -18,7 +19,8 @@ const mapStateToProps = (
   {
     mappings,
     overview: { archivedTransformationPlans, transformationPlans, planId },
-    providers: { hasSufficientProviders, isRejectedProviders, isFetchingProviders }
+    providers: { hasSufficientProviders, isRejectedProviders, isFetchingProviders },
+    productFeatures: { productFeatures }
   },
   ownProps
 ) => ({
@@ -31,7 +33,8 @@ const mapStateToProps = (
   isFetchingProviders,
   activeTransformationPlans: activeTransformationPlansFilter(transformationPlans, planId),
   finishedWithErrorTransformationPlans: finishedWithErrorTransformationPlansFilter(transformationPlans),
-  notStartedTransformationPlans: notStartedTransformationPlansFilter(transformationPlans)
+  notStartedTransformationPlans: notStartedTransformationPlansFilter(transformationPlans),
+  productFeatures
 });
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => ({
@@ -42,6 +45,6 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => ({
 
 export default connect(
   mapStateToProps,
-  { ...MappingsActions, ...RouterActions, ...ProvidersActions },
+  { ...MappingsActions, ...RouterActions, ...ProvidersActions, ...ProductFeaturesActions },
   mergeProps
 )(Mappings);

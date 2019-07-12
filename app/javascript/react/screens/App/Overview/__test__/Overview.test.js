@@ -12,6 +12,9 @@ componentRegistry.registerMultiple(coreComponents);
 
 describe('Overview component', () => {
   const getBaseProps = () => ({
+    fetchProductFeaturesAction: jest
+      .fn()
+      .mockReturnValue(Promise.resolve({ identity: { miq_groups: [{ product_features: ['everything'] }] } })),
     store: {},
     planWizardVisible: false,
     isFetchingTransformationMappings: false,

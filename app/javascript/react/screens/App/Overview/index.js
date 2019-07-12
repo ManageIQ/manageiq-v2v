@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import Overview from './Overview';
 import * as OverviewActions from './OverviewActions';
 import * as NotificationActions from '../common/NotificationList/NotificationListActions';
+import * as ProductFeaturesActions from '../../../../redux/common/productFeatures/productFeaturesActions';
 import * as ProvidersActions from '../../../../redux/common/providers/providersActions';
 import * as RouterActions from '../../../../redux/actions/routerActions';
 
@@ -18,7 +19,12 @@ import {
 export const reducers = { overview: reducer, form: {} };
 
 const mapStateToProps = (
-  { overview, overview: { transformationPlans, allRequestsWithTasks, planId, cloudTenants }, providers },
+  {
+    overview,
+    overview: { transformationPlans, allRequestsWithTasks, planId, cloudTenants },
+    providers,
+    productFeatures: { productFeatures }
+  },
   ownProps
 ) => {
   const { requestsProcessingCancellation, ...overviewRest } = overview;
@@ -37,7 +43,8 @@ const mapStateToProps = (
     requestsProcessingCancellation: combineRequestsProcessingCancellation(
       requestsProcessingCancellation,
       requestsProcessingCancellationFilter(transformationPlans)
-    )
+    ),
+    productFeatures
   };
 };
 
@@ -45,6 +52,6 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => Object.assign(stateP
 
 export default connect(
   mapStateToProps,
-  Object.assign(OverviewActions, NotificationActions, ProvidersActions, RouterActions),
+  Object.assign(OverviewActions, NotificationActions, ProvidersActions, RouterActions, ProductFeaturesActions),
   mergeProps
 )(Overview);
