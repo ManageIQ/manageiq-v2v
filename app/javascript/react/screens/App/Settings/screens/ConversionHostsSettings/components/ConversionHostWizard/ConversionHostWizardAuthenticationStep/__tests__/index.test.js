@@ -42,13 +42,13 @@ describe('ConversionHostWizardAuthenticationStep integration test', () => {
     const form = () => store.getState().form[stepIDs.authenticationStep];
     const changeFormValue = (key, val) => store.dispatch(change(stepIDs.authenticationStep, key, val));
 
-    // Form starts with two empty required fields mounted.
-    expect(Object.keys(form().syncErrors)).toEqual(['conversionHostSshKey', 'transformationMethod']);
+    // Form starts with two empty required fields mounted. (with VDDK default selected)
+    expect(Object.keys(form().syncErrors)).toEqual(['conversionHostSshKey', 'vddkLibraryPath']);
 
-    // Filling these in mounts another empty required field (vmwareSshKey).
+    // Filling in conversionHostSshKey and switching to SSH transformation mounts another empty required field (vmwareSshKey).
     changeFormValue('conversionHostSshKey', { filename: '', body: 'foo' });
     changeFormValue('transformationMethod', 'SSH');
-    expect(Object.keys(form().syncErrors)).toEqual(['vmwareSshKey']);
+    expect(Object.keys(form().syncErrors)).toEqual(['vmwareSshKey']); // The vddkLibraryPath that was unmounted is still empty+required, but has no error.
 
     // Filling in vmwareSshKey makes the form pass validation.
     changeFormValue('vmwareSshKey', { filename: '', body: 'foo' });
