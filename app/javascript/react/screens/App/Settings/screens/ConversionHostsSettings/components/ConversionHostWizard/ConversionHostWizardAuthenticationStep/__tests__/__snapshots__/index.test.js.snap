@@ -3,7 +3,7 @@
 exports[`ConversionHostWizardAuthenticationStep integration test should mount ConversionHostWizardAuthenticationStep with mapStateToProps reduced 1`] = `
 Object {
   "selectedProviderType": "openstack",
-  "selectedTransformationMethod": undefined,
+  "selectedTransformationMethod": "VDDK",
   "verifyOpenstackCerts": false,
 }
 `;

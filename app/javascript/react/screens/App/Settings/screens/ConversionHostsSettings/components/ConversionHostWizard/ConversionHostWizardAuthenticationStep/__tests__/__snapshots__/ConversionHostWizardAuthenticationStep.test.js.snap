@@ -45,12 +45,12 @@ exports[`conversion host wizard authentication step renders correctly in the ini
     options={
       Array [
         Object {
-          "id": "SSH",
-          "name": "SSH",
-        },
-        Object {
           "id": "VDDK",
           "name": "VDDK",
+        },
+        Object {
+          "id": "SSH",
+          "name": "SSH",
         },
       ]
     }
@@ -115,12 +115,12 @@ exports[`conversion host wizard authentication step renders correctly in the ini
     options={
       Array [
         Object {
-          "id": "SSH",
-          "name": "SSH",
-        },
-        Object {
           "id": "VDDK",
           "name": "VDDK",
+        },
+        Object {
+          "id": "SSH",
+          "name": "SSH",
         },
       ]
     }
@@ -169,12 +169,12 @@ exports[`conversion host wizard authentication step renders correctly with SSH t
     options={
       Array [
         Object {
-          "id": "SSH",
-          "name": "SSH",
-        },
-        Object {
           "id": "VDDK",
           "name": "VDDK",
+        },
+        Object {
+          "id": "SSH",
+          "name": "SSH",
         },
       ]
     }
@@ -232,12 +232,12 @@ exports[`conversion host wizard authentication step renders correctly with VDDK 
     options={
       Array [
         Object {
-          "id": "SSH",
-          "name": "SSH",
-        },
-        Object {
           "id": "VDDK",
           "name": "VDDK",
+        },
+        Object {
+          "id": "SSH",
+          "name": "SSH",
         },
       ]
     }
@@ -317,12 +317,12 @@ exports[`conversion host wizard authentication step renders correctly with verif
     options={
       Array [
         Object {
-          "id": "SSH",
-          "name": "SSH",
-        },
-        Object {
           "id": "VDDK",
           "name": "VDDK",
+        },
+        Object {
+          "id": "SSH",
+          "name": "SSH",
         },
       ]
     }
@@ -384,6 +384,7 @@ exports[`conversion host wizard authentication step renders the redux-form wrapp
         "filename": "",
       },
       "openstackUser": "cloud-user",
+      "transformationMethod": "VDDK",
       "verifyOpenstackCerts": false,
       "vmwareSshKey": Object {
         "body": "",
