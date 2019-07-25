@@ -46,7 +46,7 @@ const ConversionHostWizardAuthenticationStep = ({
         name="transformationMethod"
         label={__('Transformation method')}
         component={BootstrapSelect}
-        options={[{ id: SSH, name: __('SSH') }, { id: VDDK, name: __('VDDK') }]}
+        options={[{ id: VDDK, name: __('VDDK') }, { id: SSH, name: __('SSH') }]}
         option_key="id"
         option_value="name"
         inline_label
@@ -129,6 +129,7 @@ export default reduxForm({
   initialValues: {
     openstackUser: 'cloud-user',
     conversionHostSshKey: { filename: '', body: '' },
+    transformationMethod: VDDK,
     vmwareSshKey: { filename: '', body: '' },
     openstackCaCerts: { filename: '', body: '' },
     verifyOpenstackCerts: false
