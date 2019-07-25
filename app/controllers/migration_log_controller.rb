@@ -10,6 +10,7 @@ class MigrationLogController < ApplicationController
   # are rendered.
   #
   def download_migration_log
+    assert_privileges('migration')
     plan_task = ServiceTemplateTransformationPlanTask.find(params[:id])
     log_type = params[:log_type] || 'v2v'
     miq_tasks_id = plan_task.transformation_log_queue(nil, log_type)
