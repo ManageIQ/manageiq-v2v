@@ -5,12 +5,12 @@ exports[`MappingWizard component renders the mapping wizard 1`] = `
   backdrop="static"
   className=""
   dialogClassName=""
-  onClose={[Function]}
+  onClose={[MockFunction]}
   onExited={[MockFunction]}
   show={true}
 >
   <WizardHeader
-    onClose={[Function]}
+    onClose={[MockFunction]}
     title="Create Infrastructure Mapping"
   />
   <WizardBody
@@ -33,31 +33,33 @@ exports[`MappingWizard component renders the mapping wizard 1`] = `
   <WizardFooter
     className=""
   >
-    <Button
-      active={false}
-      block={false}
-      bsClass="btn"
-      bsStyle="default"
-      className="btn-cancel"
-      disabled={false}
-      onClick={[Function]}
-    >
-      Cancel
-    </Button>
-    <Button
-      active={false}
-      block={false}
-      bsClass="btn"
-      bsStyle="default"
-      disabled={true}
-      onClick={[Function]}
-    >
-      <Icon
-        name="angle-left"
-        type="fa"
-      />
-      Back
-    </Button>
+    <React.Fragment>
+      <Button
+        active={false}
+        block={false}
+        bsClass="btn"
+        bsStyle="default"
+        className="btn-cancel"
+        disabled={false}
+        onClick={[MockFunction]}
+      >
+        Cancel
+      </Button>
+      <Button
+        active={false}
+        block={false}
+        bsClass="btn"
+        bsStyle="default"
+        disabled={true}
+        onClick={[Function]}
+      >
+        <Icon
+          name="angle-left"
+          type="fa"
+        />
+        Back
+      </Button>
+    </React.Fragment>
     <Button
       active={false}
       block={false}

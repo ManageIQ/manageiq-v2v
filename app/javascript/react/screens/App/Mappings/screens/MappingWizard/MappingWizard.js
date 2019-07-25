@@ -141,16 +141,12 @@ class MappingWizard extends React.Component {
     return (
       <Wizard
         show={!hideMappingWizard}
-        onClose={() => {
-          hideMappingWizardAction(onFinalStep);
-        }}
+        onClose={hideMappingWizardAction}
         onExited={mappingWizardExitedAction}
         backdrop="static"
       >
         <Wizard.Header
-          onClose={() => {
-            hideMappingWizardAction(onFinalStep);
-          }}
+          onClose={hideMappingWizardAction}
           title={!editingMapping ? __('Create Infrastructure Mapping') : __('Edit Infrastructure Mapping')}
         />
 
@@ -172,24 +168,20 @@ class MappingWizard extends React.Component {
           />
         </Wizard.Body>
         <Wizard.Footer>
-          <Button
-            bsStyle="default"
-            className="btn-cancel"
-            onClick={() => {
-              hideMappingWizardAction(onFinalStep);
-            }}
-            disabled={onFinalStep}
-          >
-            {__('Cancel')}
-          </Button>
-
-          <Button bsStyle="default" onClick={this.prevStep} disabled={onFirstStep || onFinalStep}>
-            <Icon type="fa" name="angle-left" />
-            {__('Back')}
-          </Button>
+          {!onFinalStep && (
+            <React.Fragment>
+              <Button bsStyle="default" className="btn-cancel" onClick={hideMappingWizardAction}>
+                {__('Cancel')}
+              </Button>
+              <Button bsStyle="default" onClick={this.prevStep} disabled={onFirstStep}>
+                <Icon type="fa" name="angle-left" />
+                {__('Back')}
+              </Button>
+            </React.Fragment>
+          )}
           <Button
             bsStyle="primary"
-            onClick={onFinalStep ? () => hideMappingWizardAction(onFinalStep) : this.nextStep}
+            onClick={onFinalStep ? hideMappingWizardAction : this.nextStep}
             disabled={disableNextStep}
           >
             {onFinalStep
