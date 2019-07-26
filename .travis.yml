@@ -1,24 +1,25 @@
+---
 dist: xenial
 matrix:
   include:
-  - name: "Node.js: 8"
+  - name: 'Node.js: 8'
     language: node_js
     node_js:
-    - '8' # current stable
+    - '8'
     cache: yarn
     script: yarn test --runInBand
-  - name: "Ruby: 2.4.5"
+  - name: 'Ruby: 2.5.3'
     language: ruby
     rvm:
-    - 2.4.5
+    - 2.5.3
     cache: bundler
     addons:
       postgresql: '10'
     install: bin/setup
-  - name: "Ruby: 2.5.5"
+  - name: 'Ruby: 2.5.3'
     language: ruby
     rvm:
-    - 2.5.5
+    - 2.5.3
     cache: bundler
     addons:
       postgresql: '10'
