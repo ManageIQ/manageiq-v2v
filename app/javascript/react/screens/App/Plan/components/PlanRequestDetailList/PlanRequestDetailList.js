@@ -49,7 +49,7 @@ class PlanRequestDetailList extends React.Component {
   };
 
   overlayTriggerClick = task => {
-    if (!this.props.conversionHosts[task.id]) {
+    if (!this.props.conversionHosts[task.id] && !task.options.conversion_host_name) {
       this.props.fetchConversionHostAction(this.props.fetchConversionHostUrl, task.id);
     }
 
@@ -278,6 +278,9 @@ class PlanRequestDetailList extends React.Component {
               }
               const label = sprintf(__('%s of %s Migrated'), task.diskSpaceCompletedGb, task.totalDiskSpaceGb);
 
+              const conversionHostName =
+                task.options.conversion_host_name || (conversionHosts[task.id] && conversionHosts[task.id].name);
+
               const popoverContent = (
                 <Popover
                   id={`popover${task.id}${n}`}
@@ -291,7 +294,7 @@ class PlanRequestDetailList extends React.Component {
                     </div>
                     <div>
                       <b>{__('Conversion Host')}: </b>
-                      {conversionHosts[task.id] && conversionHosts[task.id].name}
+                      {conversionHostName}
                     </div>
                     <br />
                     <div>
