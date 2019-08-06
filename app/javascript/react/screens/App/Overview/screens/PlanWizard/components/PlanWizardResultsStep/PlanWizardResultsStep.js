@@ -14,12 +14,13 @@ class PlanWizardResultsStep extends React.Component {
       editMigrationPlansAction,
       plansBody,
       planSchedule,
+      planType,
       editingPlan
     } = this.props;
     if (!editingPlan) {
-      postMigrationPlansAction(postPlansUrl, plansBody, planSchedule);
+      postMigrationPlansAction(postPlansUrl, plansBody, planSchedule, planType);
     } else if (planHasBeenEdited(editingPlan, plansBody, planSchedule)) {
-      editMigrationPlansAction(editPlansUrl, editingPlan.id, plansBody, planSchedule);
+      editMigrationPlansAction(editPlansUrl, editingPlan.id, plansBody, planSchedule, planType);
     }
   }
   renderResult = (migrationPlanMessage, migrationPlanFollowupMessage, migrationPlanIcon, showVmPowerWarning) => (
@@ -56,6 +57,7 @@ class PlanWizardResultsStep extends React.Component {
       errorPuttingPlans,
       plansBody,
       planSchedule,
+      planType,
       hidePlanWizardAction,
       targetProvider
     } = this.props;
@@ -84,7 +86,7 @@ class PlanWizardResultsStep extends React.Component {
           onClose={hidePlanWizardAction}
         />
       );
-    } else if (planSchedule === 'migration_plan_later' && migrationPlansResult) {
+    } else if (planType === 'migration_type_cold' && planSchedule === 'migration_plan_later' && migrationPlansResult) {
       const migrationPlanSaved = sprintf(__(" Migration Plan: '%s' has been saved"), plansBody.name);
       const migrationPlanFollowupMessage = __('Select Migrate on the Migration Plans page to begin migration');
       const showVmPowerWarning = targetProvider === 'openstack';
@@ -94,9 +96,18 @@ class PlanWizardResultsStep extends React.Component {
         'pficon pficon-ok',
         showVmPowerWarning
       );
-    } else if (planSchedule === 'migration_plan_now' && migrationPlansResult && migrationRequestsResult) {
+    } else if (
+      (planSchedule === 'migration_plan_now' || planType === 'migration_type_warm') &&
+      migrationPlansResult &&
+      migrationRequestsResult
+    ) {
       const migrationPlanProgress = sprintf(__(" Migration Plan: '%s' is in progress"), plansBody.name);
-      const migrationPlanFollowupMessage = __('This may take a long time. Progress of the plan will be shown in the Migration area'); // prettier-ignore
+      let migrationPlanFollowupMessage = null;
+      if (planType === 'migration_type_cold') {
+        migrationPlanFollowupMessage = __('This may take a long time. Progress of the plan will be shown in the Migration area'); // prettier-ignore
+      } else if (planType === 'migration_type_warm') {
+        migrationPlanFollowupMessage = __('Iterative copies of the VM data will begin immediately. Select an action on the Migration Plans page to schedule or begin the final cutover migration.'); // prettier-ignore
+      }
       return this.renderResult(migrationPlanProgress, migrationPlanFollowupMessage, 'fa fa-clock-o');
     }
     return null;
@@ -109,6 +120,7 @@ PlanWizardResultsStep.propTypes = {
   editMigrationPlansAction: PropTypes.func,
   plansBody: PropTypes.object,
   planSchedule: PropTypes.string,
+  planType: PropTypes.string,
   isPostingPlans: PropTypes.bool,
   isRejectedPostingPlans: PropTypes.bool,
   errorPostingPlans: PropTypes.object,
@@ -128,6 +140,7 @@ PlanWizardResultsStep.defaultProps = {
   editMigrationPlansAction: noop,
   plansBody: {},
   planSchedule: '',
+  planType: '',
   isPostingPlans: true,
   isRejectedPostingPlans: false,
   errorPostingPlans: null,

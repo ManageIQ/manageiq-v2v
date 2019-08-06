@@ -3,6 +3,7 @@ export const createMigrationPlans = (
   planWizardVMStep,
   planWizardInstancePropertiesStep,
   planWizardAdvancedOptionsStep,
+  planWizardScheduleStep,
   isEditing = false
 ) => {
   const planName = planWizardGeneralStep.values.name;
@@ -26,6 +27,8 @@ export const createMigrationPlans = (
     osp_flavor_id: ospInstanceProperties && ospInstanceProperties[vmId].osp_flavor_id
   }));
 
+  const warmMigration = planWizardScheduleStep.values.migration_plan_type_radio === 'migration_type_warm';
+
   return {
     name: planName,
     description: planDescription,
@@ -34,7 +37,8 @@ export const createMigrationPlans = (
       transformation_mapping_id: infrastructureMapping,
       pre_service_id: preMigrationPlaybook,
       post_service_id: postMigrationPlaybook,
-      actions
+      actions,
+      warm_migration: warmMigration
     }
   };
 };
