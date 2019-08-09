@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Hammer-10
+
+### Fixed
+- Add assert_privileges() to download_migration_log() [(#1007)](https://github.com/ManageIQ/manageiq-v2v/pull/1007)
+
 ## Ivanchuk-Beta2
 
 ### Added
@@ -12,7 +17,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Hide Back and Cancel buttons on the last step of Migration wizards [(#1009)](https://github.com/ManageIQ/manageiq-v2v/pull/1009)
 
 ### Fixed
-- Add assert_privileges() to download_migration_log() [(#1007)](https://github.com/ManageIQ/manageiq-v2v/pull/1007)
 - Fix conversion host name not appearing on plan details after conversion host is deleted [(#1015)](https://github.com/ManageIQ/manageiq-v2v/pull/1015)
 
 ## Hammer-8 - Released 2019-07-02
