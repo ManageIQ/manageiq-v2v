@@ -5,7 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Hammer-8
+## Hammer-10
+
+### Fixed
+- Add assert_privileges() to download_migration_log() [(#1007)](https://github.com/ManageIQ/manageiq-v2v/pull/1007)
+
+## Hammer-8 - Released 2019-07-02
 
 ### Added
 - Add BreadcrumbPageSwitcher for Plans, Mappings and Settings pages [(#963)](https://github.com/ManageIQ/manageiq-v2v/pull/963)
