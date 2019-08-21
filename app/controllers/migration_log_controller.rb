@@ -18,7 +18,7 @@ class MigrationLogController < ApplicationController
     task_results = task.task_results
     task_status = task.status
     task_message = task.message
-    MiqTask.destroy(task)
+    task.destroy
 
     render :json => {
       :log_contents   => task_results,
