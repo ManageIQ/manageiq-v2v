@@ -52,6 +52,8 @@ class MappingWizardGeneralStep extends React.Component {
       providers.some(provider => provider.type === option.type)
     );
 
+    const preSelectedValue = availableProviderOptions.map(option => option.id)[0];
+
     return (
       <Form className="form-horizontal">
         <Field
@@ -85,7 +87,7 @@ class MappingWizardGeneralStep extends React.Component {
           options={availableProviderOptions}
           option_key="id"
           option_value="name"
-          pre_selected_value={targetProvider || V2V_TARGET_PROVIDERS[0].id}
+          pre_selected_value={targetProvider || preSelectedValue}
           labelWidth={2}
           controlWidth={9}
           inline_label
