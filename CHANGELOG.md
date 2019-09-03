@@ -5,12 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Hammer-10
+## Unreleased as of Sprint 119 - 2019-09-02
+
+### Removed
+-  Remove PreMigration Ansible playbook [(#567)](https://github.com/ManageIQ/manageiq-content/pull/567)
+-  Remove CollapseSnapshots state and methods [(#566)](https://github.com/ManageIQ/manageiq-content/pull/566)
+-  Remove check of task.options\[:collapse_snapshots] [(#564)](https://github.com/ManageIQ/manageiq-content/pull/564)
+
+## Hammer-10 - Released 2019-08-15
 
 ### Fixed
 - Add assert_privileges() to download_migration_log() [(#1007)](https://github.com/ManageIQ/manageiq-v2v/pull/1007)
 
-## Ivanchuk-Beta2
+## Ivanchuk-Beta2 - Released 2019-08-14
 
 ### Added
 - Conversion Host Wizard: Set VDDK as default transformation method [(#1008)](https://github.com/ManageIQ/manageiq-v2v/pull/1008)
