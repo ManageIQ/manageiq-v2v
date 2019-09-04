@@ -1,0 +1,28 @@
+.list-view-pf.list-view-table-pf > table {
+  width: 100%;
+
+  tr {
+    display: table-row;
+
+    td {
+      display: table-cell;
+      width: auto;
+      vertical-align: middle;
+      // text-align: left;
+      padding-left: 15px;
+
+      &:last-child {
+        padding-right: 15px;
+      }
+
+      .list-view-pf-additional-info-item {
+        margin: 0;
+      }
+
+      .list-view-pf-actions {
+        float: none;
+        text-align: right;
+      }
+    }
+  }
+}

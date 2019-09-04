@@ -9,10 +9,10 @@ import { MIGRATIONS_NOT_STARTED_SORT_FIELDS, MIGRATIONS_FILTER_TYPES } from './M
 import ScheduleMigrationButton from './ScheduleMigrationButton';
 import EditScheduleMenuItems from './EditScheduleMenuItems';
 import StopPropagationOnClick from '../../../common/StopPropagationOnClick';
-import Visibility from '../../../common/Visibility';
 import ListViewToolbar from '../../../common/ListViewToolbar/ListViewToolbar';
 import DeleteMigrationMenuItem from './DeleteMigrationMenuItem';
 import getPlanScheduleInfo from './helpers/getPlanScheduleInfo';
+import ListViewTable from '../../../common/ListViewTable/ListViewTable';
 
 const MigrationsNotStartedList = ({
   migrateClick,
@@ -58,7 +58,7 @@ const MigrationsNotStartedList = ({
                     {renderActiveFilters(filteredSortedPaginatedListItems)}
                   </Toolbar>
                 </Grid.Row>
-                <ListView className="plans-not-started-list" style={{ marginTop: 10 }}>
+                <ListViewTable className="plans-not-started-list" style={{ marginTop: 10 }}>
                   {filteredSortedPaginatedListItems.items.map(plan => {
                     const { migrationScheduled, migrationStarting, showInitialScheduleButton } = getPlanScheduleInfo(
                       plan
@@ -68,24 +68,22 @@ const MigrationsNotStartedList = ({
                     const editPlanDisabled = loading === plan.href;
 
                     return (
-                      <ListView.Item
+                      <ListViewTable.Row
                         stacked
                         className="plans-not-started-list__list-item"
                         onClick={() => {
                           redirectTo(`/plan/${plan.id}`);
                         }}
                         actions={
-                          // Visibility helper is used instead of conditional rendering
-                          // so hidden buttons still take up space and the list rows stay aligned
                           <div>
-                            <Visibility hidden={!showInitialScheduleButton}>
+                            {showInitialScheduleButton && (
                               <ScheduleMigrationButton
                                 loading={loading}
                                 toggleScheduleMigrationModal={toggleScheduleMigrationModal}
                                 plan={plan}
                                 isMissingMapping={isMissingMapping}
                               />
-                            </Visibility>
+                            )}
                             <Button
                               id={`migrate_${plan.id}`}
                               onClick={e => {
@@ -141,7 +139,6 @@ const MigrationsNotStartedList = ({
                             </StopPropagationOnClick>
                           </div>
                         }
-                        leftContent={<div />}
                         heading={plan.name}
                         description={
                           <EllipsisWithTooltip id={plan.description}>
@@ -153,35 +150,34 @@ const MigrationsNotStartedList = ({
                             <Icon type="pf" name="virtual-machine" />
                             <strong>{plan.options.config_info.actions.length}</strong> {__('VMs')}
                           </ListView.InfoItem>,
-                          isMissingMapping && (
-                            <ListView.InfoItem key={`${plan.id}-infraMappingWarning`}>
-                              <Icon type="pf" name="warning-triangle-o" /> {__('Infrastucture mapping does not exist.')}
+                          <ListView.InfoItem key={`${plan.id}-infraMappingName`}>
+                            {isMissingMapping ? (
+                              <React.Fragment>
+                                <Icon type="pf" name="warning-triangle-o" />{' '}
+                                {__('Infrastucture mapping does not exist.')}
+                              </React.Fragment>
+                            ) : (
+                              plan.infraMappingName
+                            )}
+                          </ListView.InfoItem>,
+                          migrationStarting ? (
+                            <ListView.InfoItem key={`${plan.id}-starting`} style={{ textAlign: 'left' }}>
+                              {__('Migration in progress')}
                             </ListView.InfoItem>
-                          ),
-                          !isMissingMapping && (
-                            <ListView.InfoItem key={`${plan.id}-infraMappingName`}>
-                              {plan.infraMappingName}
-                            </ListView.InfoItem>
-                          ),
-                          migrationScheduled && !migrationStarting ? (
+                          ) : migrationScheduled ? (
                             <ListView.InfoItem key={`${plan.id}-scheduledTime`} style={{ textAlign: 'left' }}>
                               <Icon type="fa" name="clock-o" />
                               {__('Migration scheduled')}
                               <br />
                               {formatDateTime(migrationScheduled)}
                             </ListView.InfoItem>
-                          ) : null,
-                          migrationStarting && (
-                            <ListView.InfoItem key={`${plan.id}-starting`} style={{ textAlign: 'left' }}>
-                              {__('Migration in progress')}
-                            </ListView.InfoItem>
-                          )
+                          ) : null
                         ]}
                         key={plan.id}
                       />
                     );
                   })}
-                </ListView>
+                </ListViewTable>
                 {renderPaginationRow(filteredSortedPaginatedListItems)}
               </React.Fragment>
             )}
