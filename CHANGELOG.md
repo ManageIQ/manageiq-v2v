@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Ivanchuk-1
+
+### Added
+- Conversion Host Wizard: Set VDDK as default transformation method [(#1008)](https://github.com/ManageIQ/manageiq-v2v/pull/1008)
+- Hide Back and Cancel buttons on the last step of Migration wizards [(#1009)](https://github.com/ManageIQ/manageiq-v2v/pull/1009)
+
+### Fixed
+- Fix conversion host name not appearing on plan details after conversion host is deleted [(#1015)](https://github.com/ManageIQ/manageiq-v2v/pull/1015)
+
 ## Unreleased as of Sprint 119 - 2019-09-02
 
 ### Removed
@@ -16,15 +25,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 ### Fixed
 - Add assert_privileges() to download_migration_log() [(#1007)](https://github.com/ManageIQ/manageiq-v2v/pull/1007)
-
-## Ivanchuk-Beta2 - Released 2019-08-14
-
-### Added
-- Conversion Host Wizard: Set VDDK as default transformation method [(#1008)](https://github.com/ManageIQ/manageiq-v2v/pull/1008)
-- Hide Back and Cancel buttons on the last step of Migration wizards [(#1009)](https://github.com/ManageIQ/manageiq-v2v/pull/1009)
-
-### Fixed
-- Fix conversion host name not appearing on plan details after conversion host is deleted [(#1015)](https://github.com/ManageIQ/manageiq-v2v/pull/1015)
 
 ## Hammer-8 - Released 2019-07-02
 
