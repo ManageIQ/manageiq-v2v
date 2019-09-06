@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Ivanchuk-Beta2
+## Ivanchuk-1
 
 ### Added
 - Conversion Host Wizard: Set VDDK as default transformation method [(#1008)](https://github.com/ManageIQ/manageiq-v2v/pull/1008)
