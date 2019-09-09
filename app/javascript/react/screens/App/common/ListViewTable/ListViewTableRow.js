@@ -1,10 +1,11 @@
 import React from 'react';
 import classNames from 'classnames';
-import { layout, ListView } from 'patternfly-react';
+import { ListView } from 'patternfly-react';
+import { ListViewTableContext } from './ListViewTable';
 
 // TODO implement expandable support
 
-const ListViewTableRow = ({
+const BaseListViewTableRow = ({
   className,
   stacked,
   leftContent,
@@ -14,7 +15,6 @@ const ListViewTableRow = ({
   actions,
   ...props
 }) => {
-  console.log('current layout?', layout.current());
   const row = (
     <tr
       className={classNames(className, 'list-group-item', 'list-view-pf-main-info', 'list-view-pf-body', {
@@ -35,7 +35,6 @@ const ListViewTableRow = ({
           <ListView.Actions>{actions}</ListView.Actions>
         </td>
       )}
-      {/* TODO handle float CSS of actions? */}
     </tr>
   );
   const numColumns = row.props.children.filter(child => !!child).length;
@@ -43,8 +42,17 @@ const ListViewTableRow = ({
   return row;
 };
 
-ListViewTableRow.propTypes = {
+BaseListViewTableRow.propTypes = {
   ...ListView.Item.propTypes
+};
+
+const ListViewTableRow = props => {
+  const { isSmallViewport } = React.useContext(ListViewTableContext);
+  return isSmallViewport ? <ListView.Item {...props} /> : <BaseListViewTableRow {...props} />;
+};
+
+ListViewTableRow.propTypes = {
+  ...BaseListViewTableRow.propTypes
 };
 
 export default ListViewTableRow;
