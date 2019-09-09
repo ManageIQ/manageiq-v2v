@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { reduxForm, Field } from 'redux-form';
 import { Form, Button, Icon, OverlayTrigger, Popover, Spinner } from 'patternfly-react';
 import NumberInput from '../../../common/forms/NumberInput';
-import TextInputWithCheckbox from '../../../common/forms/TextInputWithCheckbox';
 
 const FORM_NAME = 'settings';
 
@@ -51,6 +50,7 @@ export class GeneralSettings extends React.Component {
 
     const inputEnabledFunction = value => value !== 'unlimited';
 
+    // eslint-disable-next-line no-unused-vars
     const validatePercentInput = value => {
       const numberRegex = /^\d+$/;
       if ((inputEnabledFunction(value) && !numberRegex.test(value)) || value < 0 || value > 100) {
@@ -112,21 +112,11 @@ export class GeneralSettings extends React.Component {
                 />
               </div>
             </Form.FormGroup>
-            <Form.FormGroup />
-            <div>
-              <h3>{__('Resource Utilization Limits for Migrations')}</h3>
-            </div>
-            <Field
-              id="cpu_limit_per_host"
-              name="cpu_limit_per_host"
-              component={TextInputWithCheckbox}
-              validate={validatePercentInput}
-              label={__('Max CPU utilization per conversion host')}
-              postfix="％"
-              inputEnabledFunction={inputEnabledFunction}
-              initialUncheckedValue="unlimited"
-              vertical
-            />
+            {/*
+              TODO: Add CPU throttling field back here when it is working.
+              It was removed because of a throttling bug in CFME 5.11.
+              See git blame data for these lines.
+            */}
             <Form.FormGroup style={{ marginTop: '40px' }}>
               <Button
                 bsStyle="primary"
