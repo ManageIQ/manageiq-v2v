@@ -1,18 +1,23 @@
 .list-view-pf.list-view-table-pf > table {
   width: 100%;
 
-  tr {
+  tr.list-group-item {
     display: table-row;
 
     td {
       display: table-cell;
       width: auto;
       vertical-align: middle;
-      // text-align: left;
       padding-left: 15px;
 
       &:last-child {
         padding-right: 15px;
+      }
+
+      .list-view-pf-description {
+        float: none;
+        width: auto;
+        max-width: 20vw;
       }
 
       .list-view-pf-additional-info-item {
@@ -22,6 +27,7 @@
       .list-view-pf-actions {
         float: none;
         text-align: right;
+        white-space: nowrap;
       }
     }
   }

@@ -17,19 +17,26 @@ const BaseListViewTableRow = ({
 }) => {
   const row = (
     <tr
-      className={classNames(className, 'list-group-item', 'list-view-pf-main-info', 'list-view-pf-body', {
+      className={classNames(className, 'list-group-item', {
         'list-view-pf-stacked': stacked
       })}
       {...props}
     >
-      {leftContent && <td className="list-view-pf-left">{leftContent}</td>}
+      {leftContent && <td className="list-view-pf-left list-view-pf-main-info">{leftContent}</td>}
       {(heading || description) && (
-        <td>
-          {heading && <ListView.DescriptionHeading>{heading}</ListView.DescriptionHeading>}
-          {description && <ListView.DescriptionText>{description}</ListView.DescriptionText>}
+        <td className="list-view-pf-main-info">
+          <ListView.Description>
+            {heading && <ListView.DescriptionHeading>{heading}</ListView.DescriptionHeading>}
+            {description && <ListView.DescriptionText>{description}</ListView.DescriptionText>}
+          </ListView.Description>
         </td>
       )}
-      {additionalInfo && additionalInfo.map((infoItem, index) => <td key={`info-item-${index}`}>{infoItem}</td>)}
+      {additionalInfo &&
+        additionalInfo.map((infoItem, index) => (
+          <td key={`info-item-${index}`} className="list-view-pf-main-info">
+            {infoItem}
+          </td>
+        ))}
       {actions && (
         <td>
           <ListView.Actions>{actions}</ListView.Actions>
