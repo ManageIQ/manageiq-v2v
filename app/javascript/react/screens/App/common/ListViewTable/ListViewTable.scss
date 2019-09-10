@@ -14,10 +14,23 @@
         padding-right: 15px;
       }
 
+      &.list-view-pf-main-info.empty-info-item {
+        padding-left: 0;
+      }
+
+      .list-view-pf-left {
+        padding-right: 5px;
+      }
+
       .list-view-pf-description {
         float: none;
         width: auto;
         max-width: 20vw;
+
+        .list-group-item-heading,
+        .list-group-item-text {
+          margin-right: 15px;
+        }
       }
 
       .list-view-pf-additional-info-item {
@@ -28,6 +41,7 @@
         float: none;
         text-align: right;
         white-space: nowrap;
+        margin-left: 0;
       }
     }
   }
