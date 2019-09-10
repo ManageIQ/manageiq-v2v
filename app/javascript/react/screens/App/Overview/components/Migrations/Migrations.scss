@@ -27,6 +27,10 @@
   }
 }
 
+.list-view-pf-additional-info-item.num-vms-migrated strong.total {
+  margin-left: 5px;
+}
+
 @media (min-width: 992px) {
   .migrations .list-view-pf-main-info .list-view-pf-body {
     .list-view-pf-description {

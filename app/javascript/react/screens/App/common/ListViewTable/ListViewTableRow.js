@@ -33,7 +33,10 @@ const BaseListViewTableRow = ({
       )}
       {additionalInfo &&
         additionalInfo.map((infoItem, index) => (
-          <td key={`info-item-${index}`} className="list-view-pf-main-info">
+          <td
+            key={`info-item-${index}`}
+            className={classNames('list-view-pf-main-info', { 'empty-info-item': !infoItem })}
+          >
             {infoItem}
           </td>
         ))}
