@@ -1,373 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`conversion host wizard authentication step renders correctly in the initial state for OSP 1`] = `
-<Form
-  bsClass="form"
-  className="form-horizontal"
-  componentClass="form"
-  horizontal={false}
-  inline={false}
->
-  <Field
-    component={[Function]}
-    controlId="openstack-user-input"
-    controlWidth={7}
-    label="OpenStack User"
-    labelWidth={4}
-    name="openstackUser"
-    required={true}
-    type="text"
-    validate={
-      Array [
-        [Function],
-      ]
-    }
-  />
-  <TextFileField
-    controlId="host-ssh-key-input"
-    controlWidth={7}
-    help="Upload your SSH key file or paste its contents below."
-    hideBody={false}
-    info="This is the private key file used to connect to the conversion host instance for the OpenStack User."
-    label="Conversion Host SSH private key"
-    labelWidth={4}
-    name="conversionHostSshKey"
-  />
-  <Field
-    component={[Function]}
-    controlWidth={7}
-    inline_label={true}
-    label="Transformation method"
-    labelWidth={4}
-    name="transformationMethod"
-    option_key="id"
-    option_value="name"
-    options={
-      Array [
-        Object {
-          "id": "VDDK",
-          "name": "VDDK",
-        },
-        Object {
-          "id": "SSH",
-          "name": "SSH",
-        },
-      ]
-    }
-    required={true}
-    style={
-      Object {
-        "marginTop": 25,
-      }
-    }
-    validate={
-      Array [
-        [Function],
-      ]
-    }
-  />
-  <Field
-    component={[Function]}
-    controlId="verify-openstack-certs"
-    controlWidth={7}
-    label="Verify TLS Certificates for OpenStack"
-    labelWidth={4}
-    name="verifyOpenstackCerts"
-    style={
-      Object {
-        "marginTop": 25,
-      }
-    }
-    validate={[Function]}
-  >
-    <Component />
-  </Field>
-</Form>
-`;
-
 exports[`conversion host wizard authentication step renders correctly in the initial state for RHV 1`] = `
-<Form
-  bsClass="form"
-  className="form-horizontal"
-  componentClass="form"
-  horizontal={false}
-  inline={false}
->
-  <TextFileField
-    controlId="host-ssh-key-input"
-    controlWidth={7}
-    help="Upload your SSH key file or paste its contents below."
-    hideBody={false}
-    info="RHV-M deploys a common SSH public key on all hosts when configuring them. This allows commands and playbooks to be run from RHV-M. The associated private key is in the file /etc/pki/ovirt-engine/keys/engine_id_rsa on RHV-M."
-    label="Conversion Host SSH private key"
-    labelWidth={4}
-    name="conversionHostSshKey"
-  />
-  <Field
-    component={[Function]}
-    controlWidth={7}
-    inline_label={true}
-    label="Transformation method"
-    labelWidth={4}
-    name="transformationMethod"
-    option_key="id"
-    option_value="name"
-    options={
-      Array [
-        Object {
-          "id": "VDDK",
-          "name": "VDDK",
-        },
-        Object {
-          "id": "SSH",
-          "name": "SSH",
-        },
-      ]
-    }
-    required={true}
-    style={
-      Object {
-        "marginTop": 25,
-      }
-    }
-    validate={
-      Array [
-        [Function],
-      ]
-    }
-  />
-</Form>
-`;
-
-exports[`conversion host wizard authentication step renders correctly with SSH transformation method selected 1`] = `
-<Form
-  bsClass="form"
-  className="form-horizontal"
-  componentClass="form"
-  horizontal={false}
-  inline={false}
->
-  <TextFileField
-    controlId="host-ssh-key-input"
-    controlWidth={7}
-    help="Upload your SSH key file or paste its contents below."
-    hideBody={false}
-    info="RHV-M deploys a common SSH public key on all hosts when configuring them. This allows commands and playbooks to be run from RHV-M. The associated private key is in the file /etc/pki/ovirt-engine/keys/engine_id_rsa on RHV-M."
-    label="Conversion Host SSH private key"
-    labelWidth={4}
-    name="conversionHostSshKey"
-  />
-  <Field
-    component={[Function]}
-    controlWidth={7}
-    inline_label={true}
-    label="Transformation method"
-    labelWidth={4}
-    name="transformationMethod"
-    option_key="id"
-    option_value="name"
-    options={
-      Array [
-        Object {
-          "id": "VDDK",
-          "name": "VDDK",
-        },
-        Object {
-          "id": "SSH",
-          "name": "SSH",
-        },
-      ]
-    }
-    required={true}
-    style={
-      Object {
-        "marginTop": 25,
-      }
-    }
-    validate={
-      Array [
-        [Function],
-      ]
-    }
-  />
-  <TextFileField
-    controlId="vmware-ssh-key-input"
-    controlWidth={7}
-    help="Upload your SSH key file or paste its contents below."
-    hideBody={false}
-    label="VMware hypervisors SSH private key"
-    labelWidth={4}
-    name="vmwareSshKey"
-  />
-</Form>
-`;
-
-exports[`conversion host wizard authentication step renders correctly with VDDK transformation method selected 1`] = `
-<Form
-  bsClass="form"
-  className="form-horizontal"
-  componentClass="form"
-  horizontal={false}
-  inline={false}
->
-  <TextFileField
-    controlId="host-ssh-key-input"
-    controlWidth={7}
-    help="Upload your SSH key file or paste its contents below."
-    hideBody={false}
-    info="RHV-M deploys a common SSH public key on all hosts when configuring them. This allows commands and playbooks to be run from RHV-M. The associated private key is in the file /etc/pki/ovirt-engine/keys/engine_id_rsa on RHV-M."
-    label="Conversion Host SSH private key"
-    labelWidth={4}
-    name="conversionHostSshKey"
-  />
-  <Field
-    component={[Function]}
-    controlWidth={7}
-    inline_label={true}
-    label="Transformation method"
-    labelWidth={4}
-    name="transformationMethod"
-    option_key="id"
-    option_value="name"
-    options={
-      Array [
-        Object {
-          "id": "VDDK",
-          "name": "VDDK",
-        },
-        Object {
-          "id": "SSH",
-          "name": "SSH",
-        },
-      ]
-    }
-    required={true}
-    style={
-      Object {
-        "marginTop": 25,
-      }
-    }
-    validate={
-      Array [
-        [Function],
-      ]
-    }
-  />
-  <Field
-    component={[Function]}
-    controlId="vddk-library-path"
-    controlWidth={7}
-    info="This is the location where you downloaded and saved the VDDK package, as a URL accessible via HTTP. e.g. http://hostname/VMware-vix-disklib-version.x86_64.tar.gz"
-    label="VDDK library path"
-    labelWidth={4}
-    name="vddkLibraryPath"
-    required={true}
-    type="text"
-    validate={
-      Array [
-        [Function],
-      ]
-    }
-  />
-</Form>
-`;
-
-exports[`conversion host wizard authentication step renders correctly with verify OSP TLS certs turned on 1`] = `
-<Form
-  bsClass="form"
-  className="form-horizontal"
-  componentClass="form"
-  horizontal={false}
-  inline={false}
->
-  <Field
-    component={[Function]}
-    controlId="openstack-user-input"
-    controlWidth={7}
-    label="OpenStack User"
-    labelWidth={4}
-    name="openstackUser"
-    required={true}
-    type="text"
-    validate={
-      Array [
-        [Function],
-      ]
-    }
-  />
-  <TextFileField
-    controlId="host-ssh-key-input"
-    controlWidth={7}
-    help="Upload your SSH key file or paste its contents below."
-    hideBody={false}
-    info="This is the private key file used to connect to the conversion host instance for the OpenStack User."
-    label="Conversion Host SSH private key"
-    labelWidth={4}
-    name="conversionHostSshKey"
-  />
-  <Field
-    component={[Function]}
-    controlWidth={7}
-    inline_label={true}
-    label="Transformation method"
-    labelWidth={4}
-    name="transformationMethod"
-    option_key="id"
-    option_value="name"
-    options={
-      Array [
-        Object {
-          "id": "VDDK",
-          "name": "VDDK",
-        },
-        Object {
-          "id": "SSH",
-          "name": "SSH",
-        },
-      ]
-    }
-    required={true}
-    style={
-      Object {
-        "marginTop": 25,
-      }
-    }
-    validate={
-      Array [
-        [Function],
-      ]
-    }
-  />
-  <Field
-    component={[Function]}
-    controlId="verify-openstack-certs"
-    controlWidth={7}
-    label="Verify TLS Certificates for OpenStack"
-    labelWidth={4}
-    name="verifyOpenstackCerts"
-    style={
-      Object {
-        "marginTop": 25,
-      }
-    }
-    validate={[Function]}
-  >
-    <Component />
-  </Field>
-  <TextFileField
-    controlId="openstack-ca-certs-input"
-    controlWidth={7}
-    help="Upload your certificates file, in PEM format, or paste its contents below."
-    hideBody={false}
-    label="OpenStack Trusted CA Certificates"
-    labelWidth={4}
-    name="openstackCaCerts"
-  />
-</Form>
-`;
-
-exports[`conversion host wizard authentication step renders the redux-form wrapper correctly 1`] = `
 <Connect(Form(ConversionHostWizardAuthenticationStep))
+  _reduxForm={null}
   destroyOnUnmount={false}
   enableReinitialize={false}
   forceUnregisterOnUnmount={true}
@@ -410,6 +45,7 @@ exports[`conversion host wizard authentication step renders the redux-form wrapp
       Symbol(observable): [Function],
     }
   }
+  submitAsSideEffect={false}
   touchOnBlur={true}
   touchOnChange={false}
   updateUnregisteredFields={false}
@@ -417,26 +53,55 @@ exports[`conversion host wizard authentication step renders the redux-form wrapp
 />
 `;
 
-exports[`conversion host wizard authentication step renders the verify TLS certs switch correctly 1`] = `
-<Switch
-  animate={true}
-  baseClass="bootstrap-switch"
-  bsSize="normal"
-  defaultValue={false}
-  disabled={false}
-  handleWidth="auto"
-  id="verify-openstack-certs-switch"
-  inverse={false}
-  labelText=" "
-  labelWidth="auto"
-  offColor="default"
-  offText="No"
-  onChange={[Function]}
-  onColor="primary"
-  onText="Yes"
-  readonly={false}
-  tristate={false}
-  value={false}
-  wrapperClass="wrapper"
+exports[`conversion host wizard authentication step renders the redux-form wrapper correctly 1`] = `
+<Hoc
+  destroyOnUnmount={false}
+  enableReinitialize={false}
+  forceUnregisterOnUnmount={true}
+  form="conversionHostWizardAuthenticationStep"
+  forwardedRef={null}
+  getFormState={[Function]}
+  initialValues={
+    Object {
+      "conversionHostSshKey": Object {
+        "body": "",
+        "filename": "",
+      },
+      "openstackCaCerts": Object {
+        "body": "",
+        "filename": "",
+      },
+      "openstackUser": "cloud-user",
+      "transformationMethod": "VDDK",
+      "verifyOpenstackCerts": false,
+      "vmwareSshKey": Object {
+        "body": "",
+        "filename": "",
+      },
+    }
+  }
+  keepDirtyOnReinitialize={false}
+  persistentSubmitErrors={false}
+  pure={true}
+  selectedProviderType="rhevm"
+  selectedTransformationMethod={null}
+  shouldAsyncValidate={[Function]}
+  shouldError={[Function]}
+  shouldValidate={[Function]}
+  shouldWarn={[Function]}
+  store={
+    Object {
+      "dispatch": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(observable): [Function],
+    }
+  }
+  submitAsSideEffect={false}
+  touchOnBlur={true}
+  touchOnChange={false}
+  updateUnregisteredFields={false}
+  verifyOpenstackCerts={null}
 />
 `;

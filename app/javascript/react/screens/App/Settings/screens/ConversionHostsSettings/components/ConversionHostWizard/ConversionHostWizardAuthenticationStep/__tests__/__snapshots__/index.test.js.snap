@@ -2,8 +2,41 @@
 
 exports[`ConversionHostWizardAuthenticationStep integration test should mount ConversionHostWizardAuthenticationStep with mapStateToProps reduced 1`] = `
 Object {
+  "destroyOnUnmount": false,
+  "enableReinitialize": false,
+  "forceUnregisterOnUnmount": true,
+  "form": "conversionHostWizardAuthenticationStep",
+  "getFormState": [Function],
+  "initialValues": Object {
+    "conversionHostSshKey": Object {
+      "body": "",
+      "filename": "",
+    },
+    "openstackCaCerts": Object {
+      "body": "",
+      "filename": "",
+    },
+    "openstackUser": "cloud-user",
+    "transformationMethod": "VDDK",
+    "verifyOpenstackCerts": false,
+    "vmwareSshKey": Object {
+      "body": "",
+      "filename": "",
+    },
+  },
+  "keepDirtyOnReinitialize": false,
+  "persistentSubmitErrors": false,
+  "pure": true,
   "selectedProviderType": "openstack",
   "selectedTransformationMethod": "VDDK",
+  "shouldAsyncValidate": [Function],
+  "shouldError": [Function],
+  "shouldValidate": [Function],
+  "shouldWarn": [Function],
+  "submitAsSideEffect": false,
+  "touchOnBlur": true,
+  "touchOnChange": false,
+  "updateUnregisteredFields": false,
   "verifyOpenstackCerts": false,
 }
 `;

@@ -1,5 +1,6 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
+import { Provider } from 'react-redux';
 import { reducer as formReducer } from 'redux-form';
 
 import { generateStore } from '../../../../../../../common/testReduxHelpers';
@@ -58,6 +59,8 @@ const mockTasksByResource = {
 describe('conversion host wizard hosts step', () => {
   const store = generateStore({ form: formReducer }, {});
 
+  const ProviderWraper = ({ children }) => <Provider store={store}>{children}</Provider>; // eslint-disable-line react/prop-types
+
   const baseProps = {
     selectedProviderType: RHV,
     selectedCluster: mockRhvCluster,
@@ -84,8 +87,15 @@ describe('conversion host wizard hosts step', () => {
   });
 
   it('filters out options for RHV hosts that are configured or being configured', () => {
-    const component = shallowDive(<ConversionHostWizardHostsStep {...baseProps} />);
-    const filteredHostOptions = component.find('Field[controlId="host-selection"]').props().options;
+    const component = mount(
+      <ProviderWraper>
+        <ConversionHostWizardHostsStep {...baseProps} />
+      </ProviderWraper>
+    );
+    const filteredHostOptions = component
+      .find('Field[controlId="host-selection"]')
+      .first()
+      .props().options;
     expect(filteredHostOptions.find(option => option === mockConfiguredRhvHost)).toBeFalsy();
     expect(filteredHostOptions.find(option => option === mockInProgressRhvHost)).toBeFalsy();
   });
@@ -98,10 +108,19 @@ describe('conversion host wizard hosts step', () => {
   });
 
   it('filters out options for OSP hosts that are configured or being configured', () => {
-    const component = shallowDive(
-      <ConversionHostWizardHostsStep {...baseProps} selectedProviderType={OPENSTACK} selectedCluster={mockOspTenant} />
+    const component = mount(
+      <ProviderWraper>
+        <ConversionHostWizardHostsStep
+          {...baseProps}
+          selectedProviderType={OPENSTACK}
+          selectedCluster={mockOspTenant}
+        />
+      </ProviderWraper>
     );
-    const filteredHostOptions = component.find('Field[controlId="host-selection"]').props().options;
+    const filteredHostOptions = component
+      .find('Field[controlId="host-selection"]')
+      .first()
+      .props().options;
     expect(filteredHostOptions.find(option => option === mockConfiguredOspVm)).toBeFalsy();
     expect(filteredHostOptions.find(option => option === mockInProgressOspVm)).toBeFalsy();
   });

@@ -1,482 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`conversion host wizard location step renders correctly after loading clusters but before selecting a provider 1`] = `
-<Form
-  bsClass="form"
-  className="form-horizontal"
-  componentClass="form"
-  horizontal={false}
-  inline={false}
->
-  <Field
-    component={[Function]}
-    controlWidth={9}
-    inline_label={true}
-    label="Provider Type"
-    labelWidth={2}
-    name="providerType"
-    option_key="id"
-    option_value="name"
-    options={
-      Array [
-        Object {
-          "id": "rhevm",
-          "name": "Red Hat Virtualization",
-          "type": "ManageIQ::Providers::Redhat::InfraManager",
-        },
-        Object {
-          "id": "openstack",
-          "name": "Red Hat OpenStack Platform",
-          "type": "ManageIQ::Providers::Openstack::CloudManager",
-        },
-      ]
-    }
-    required={true}
-    validate={
-      Array [
-        [Function],
-      ]
-    }
-  />
-  <Spinner
-    className=""
-    inline={false}
-    inverse={false}
-    loading={false}
-    size="md"
-  >
-    <Field
-      component={[Function]}
-      controlWidth={9}
-      inline_label={true}
-      label="Provider"
-      labelWidth={2}
-      name="provider"
-      option_key="id"
-      option_value="name"
-      options={
-        Array [
-          Object {
-            "id": "1",
-            "name": "Mock RHV",
-            "type": "ManageIQ::Providers::Redhat::InfraManager",
-          },
-        ]
-      }
-      required={true}
-      validate={
-        Array [
-          [Function],
-        ]
-      }
-    />
-    <Field
-      component={[Function]}
-      controlWidth={9}
-      disabled={true}
-      inline_label={true}
-      label="Cluster"
-      labelWidth={2}
-      name="cluster"
-      onChange={[Function]}
-      option_key="id"
-      option_value="name"
-      options={Array []}
-      required={true}
-      validate={
-        Array [
-          [Function],
-        ]
-      }
-    />
-  </Spinner>
-</Form>
-`;
-
-exports[`conversion host wizard location step renders correctly after selecting a RHV provider 1`] = `
-<Form
-  bsClass="form"
-  className="form-horizontal"
-  componentClass="form"
-  horizontal={false}
-  inline={false}
->
-  <Field
-    component={[Function]}
-    controlWidth={9}
-    inline_label={true}
-    label="Provider Type"
-    labelWidth={2}
-    name="providerType"
-    option_key="id"
-    option_value="name"
-    options={
-      Array [
-        Object {
-          "id": "rhevm",
-          "name": "Red Hat Virtualization",
-          "type": "ManageIQ::Providers::Redhat::InfraManager",
-        },
-        Object {
-          "id": "openstack",
-          "name": "Red Hat OpenStack Platform",
-          "type": "ManageIQ::Providers::Openstack::CloudManager",
-        },
-      ]
-    }
-    required={true}
-    validate={
-      Array [
-        [Function],
-      ]
-    }
-  />
-  <Spinner
-    className=""
-    inline={false}
-    inverse={false}
-    loading={false}
-    size="md"
-  >
-    <Field
-      component={[Function]}
-      controlWidth={9}
-      inline_label={true}
-      label="Provider"
-      labelWidth={2}
-      name="provider"
-      option_key="id"
-      option_value="name"
-      options={
-        Array [
-          Object {
-            "id": "1",
-            "name": "Mock RHV",
-            "type": "ManageIQ::Providers::Redhat::InfraManager",
-          },
-        ]
-      }
-      required={true}
-      validate={
-        Array [
-          [Function],
-        ]
-      }
-    />
-    <Field
-      component={[Function]}
-      controlWidth={9}
-      disabled={false}
-      inline_label={true}
-      label="Cluster"
-      labelWidth={2}
-      name="cluster"
-      onChange={[Function]}
-      option_key="id"
-      option_value="name"
-      options={
-        Array [
-          Object {
-            "ems_id": "1",
-            "id": "1",
-            "name": "Mock RHV Cluster 1",
-          },
-          Object {
-            "ems_id": "1",
-            "id": "2",
-            "name": "Mock RHV Cluster 2",
-          },
-        ]
-      }
-      required={true}
-      validate={
-        Array [
-          [Function],
-        ]
-      }
-    />
-  </Spinner>
-</Form>
-`;
-
-exports[`conversion host wizard location step renders correctly after selecting an OSP provider 1`] = `
-<Form
-  bsClass="form"
-  className="form-horizontal"
-  componentClass="form"
-  horizontal={false}
-  inline={false}
->
-  <Field
-    component={[Function]}
-    controlWidth={9}
-    inline_label={true}
-    label="Provider Type"
-    labelWidth={2}
-    name="providerType"
-    option_key="id"
-    option_value="name"
-    options={
-      Array [
-        Object {
-          "id": "rhevm",
-          "name": "Red Hat Virtualization",
-          "type": "ManageIQ::Providers::Redhat::InfraManager",
-        },
-        Object {
-          "id": "openstack",
-          "name": "Red Hat OpenStack Platform",
-          "type": "ManageIQ::Providers::Openstack::CloudManager",
-        },
-      ]
-    }
-    required={true}
-    validate={
-      Array [
-        [Function],
-      ]
-    }
-  />
-  <Spinner
-    className=""
-    inline={false}
-    inverse={false}
-    loading={false}
-    size="md"
-  >
-    <Field
-      component={[Function]}
-      controlWidth={9}
-      inline_label={true}
-      label="Provider"
-      labelWidth={2}
-      name="provider"
-      option_key="id"
-      option_value="name"
-      options={
-        Array [
-          Object {
-            "id": "2",
-            "name": "Mock OSP",
-            "type": "ManageIQ::Providers::Openstack::CloudManager",
-          },
-        ]
-      }
-      required={true}
-      validate={
-        Array [
-          [Function],
-        ]
-      }
-    />
-    <Field
-      component={[Function]}
-      controlWidth={9}
-      disabled={false}
-      inline_label={true}
-      label="Project"
-      labelWidth={2}
-      name="cluster"
-      onChange={[Function]}
-      option_key="id"
-      option_value="name"
-      options={
-        Array [
-          Object {
-            "ems_id": "2",
-            "id": "1",
-            "name": "Mock OSP Project 1",
-          },
-          Object {
-            "ems_id": "2",
-            "id": "2",
-            "name": "Mock OSP Project 2",
-          },
-        ]
-      }
-      required={true}
-      validate={
-        Array [
-          [Function],
-        ]
-      }
-    />
-  </Spinner>
-</Form>
-`;
-
 exports[`conversion host wizard location step renders correctly in the initial state with both providers present 1`] = `
-<Form
-  bsClass="form"
-  className="form-horizontal"
-  componentClass="form"
-  horizontal={false}
-  inline={false}
->
-  <Field
-    component={[Function]}
-    controlWidth={9}
-    inline_label={true}
-    label="Provider Type"
-    labelWidth={2}
-    name="providerType"
-    option_key="id"
-    option_value="name"
-    options={
-      Array [
-        Object {
-          "id": "rhevm",
-          "name": "Red Hat Virtualization",
-          "type": "ManageIQ::Providers::Redhat::InfraManager",
-        },
-        Object {
-          "id": "openstack",
-          "name": "Red Hat OpenStack Platform",
-          "type": "ManageIQ::Providers::Openstack::CloudManager",
-        },
-      ]
-    }
-    required={true}
-    validate={
-      Array [
-        [Function],
-      ]
-    }
-  />
-</Form>
-`;
-
-exports[`conversion host wizard location step renders correctly in the initial state with only RHV providers present 1`] = `
-<Form
-  bsClass="form"
-  className="form-horizontal"
-  componentClass="form"
-  horizontal={false}
-  inline={false}
->
-  <Field
-    component={[Function]}
-    controlWidth={9}
-    inline_label={true}
-    label="Provider Type"
-    labelWidth={2}
-    name="providerType"
-    option_key="id"
-    option_value="name"
-    options={
-      Array [
-        Object {
-          "id": "rhevm",
-          "name": "Red Hat Virtualization",
-          "type": "ManageIQ::Providers::Redhat::InfraManager",
-        },
-      ]
-    }
-    required={true}
-    validate={
-      Array [
-        [Function],
-      ]
-    }
-  />
-</Form>
-`;
-
-exports[`conversion host wizard location step renders correctly when loading clusters after selecting a provider type 1`] = `
-<Form
-  bsClass="form"
-  className="form-horizontal"
-  componentClass="form"
-  horizontal={false}
-  inline={false}
->
-  <Field
-    component={[Function]}
-    controlWidth={9}
-    inline_label={true}
-    label="Provider Type"
-    labelWidth={2}
-    name="providerType"
-    option_key="id"
-    option_value="name"
-    options={
-      Array [
-        Object {
-          "id": "rhevm",
-          "name": "Red Hat Virtualization",
-          "type": "ManageIQ::Providers::Redhat::InfraManager",
-        },
-        Object {
-          "id": "openstack",
-          "name": "Red Hat OpenStack Platform",
-          "type": "ManageIQ::Providers::Openstack::CloudManager",
-        },
-      ]
-    }
-    required={true}
-    validate={
-      Array [
-        [Function],
-      ]
-    }
-  />
-  <Spinner
-    className=""
-    inline={false}
-    inverse={false}
-    loading={true}
-    size="md"
-  >
-    <Field
-      component={[Function]}
-      controlWidth={9}
-      inline_label={true}
-      label="Provider"
-      labelWidth={2}
-      name="provider"
-      option_key="id"
-      option_value="name"
-      options={
-        Array [
-          Object {
-            "id": "1",
-            "name": "Mock RHV",
-            "type": "ManageIQ::Providers::Redhat::InfraManager",
-          },
-        ]
-      }
-      required={true}
-      validate={
-        Array [
-          [Function],
-        ]
-      }
-    />
-    <Field
-      component={[Function]}
-      controlWidth={9}
-      disabled={true}
-      inline_label={true}
-      label="Cluster"
-      labelWidth={2}
-      name="cluster"
-      onChange={[Function]}
-      option_key="id"
-      option_value="name"
-      options={Array []}
-      required={true}
-      validate={
-        Array [
-          [Function],
-        ]
-      }
-    />
-  </Spinner>
-</Form>
-`;
-
-exports[`conversion host wizard location step renders the redux-form wrapper correctly 1`] = `
 <Connect(Form(ConversionHostWizardLocationStep))
+  _reduxForm={null}
   destroyOnUnmount={false}
   enableReinitialize={false}
   fetchTargetClustersAction={[MockFunction]}
@@ -523,6 +49,116 @@ exports[`conversion host wizard location step renders the redux-form wrapper cor
       Symbol(observable): [Function],
     }
   }
+  submitAsSideEffect={false}
+  targetClusters={Array []}
+  touchOnBlur={true}
+  touchOnChange={false}
+  updateUnregisteredFields={false}
+/>
+`;
+
+exports[`conversion host wizard location step renders correctly in the initial state with only RHV providers present 1`] = `
+<Connect(Form(ConversionHostWizardLocationStep))
+  _reduxForm={null}
+  destroyOnUnmount={false}
+  enableReinitialize={false}
+  fetchTargetClustersAction={[MockFunction]}
+  fetchTargetComputeUrls={
+    Object {
+      "openstack": "/api/mock/openstack/compute",
+      "rhevm": "/api/mock/rhv/compute",
+    }
+  }
+  forceUnregisterOnUnmount={false}
+  form="conversionHostWizardLocationStep"
+  getFormState={[Function]}
+  isFetchingTargetClusters={false}
+  keepDirtyOnReinitialize={false}
+  persistentSubmitErrors={false}
+  providers={
+    Array [
+      Object {
+        "id": "1",
+        "name": "Mock RHV",
+        "type": "ManageIQ::Providers::Redhat::InfraManager",
+      },
+    ]
+  }
+  pure={true}
+  resetFormAction={[MockFunction]}
+  selectedProviderId={null}
+  selectedProviderType={null}
+  shouldAsyncValidate={[Function]}
+  shouldError={[Function]}
+  shouldValidate={[Function]}
+  shouldWarn={[Function]}
+  store={
+    Object {
+      "dispatch": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(observable): [Function],
+    }
+  }
+  submitAsSideEffect={false}
+  targetClusters={Array []}
+  touchOnBlur={true}
+  touchOnChange={false}
+  updateUnregisteredFields={false}
+/>
+`;
+
+exports[`conversion host wizard location step renders the redux-form wrapper correctly 1`] = `
+<Hoc
+  destroyOnUnmount={false}
+  enableReinitialize={false}
+  fetchTargetClustersAction={[MockFunction]}
+  fetchTargetComputeUrls={
+    Object {
+      "openstack": "/api/mock/openstack/compute",
+      "rhevm": "/api/mock/rhv/compute",
+    }
+  }
+  forceUnregisterOnUnmount={false}
+  form="conversionHostWizardLocationStep"
+  forwardedRef={null}
+  getFormState={[Function]}
+  isFetchingTargetClusters={false}
+  keepDirtyOnReinitialize={false}
+  persistentSubmitErrors={false}
+  providers={
+    Array [
+      Object {
+        "id": "1",
+        "name": "Mock RHV",
+        "type": "ManageIQ::Providers::Redhat::InfraManager",
+      },
+      Object {
+        "id": "2",
+        "name": "Mock OSP",
+        "type": "ManageIQ::Providers::Openstack::CloudManager",
+      },
+    ]
+  }
+  pure={true}
+  resetFormAction={[MockFunction]}
+  selectedProviderId={null}
+  selectedProviderType={null}
+  shouldAsyncValidate={[Function]}
+  shouldError={[Function]}
+  shouldValidate={[Function]}
+  shouldWarn={[Function]}
+  store={
+    Object {
+      "dispatch": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(observable): [Function],
+    }
+  }
+  submitAsSideEffect={false}
   targetClusters={Array []}
   touchOnBlur={true}
   touchOnChange={false}

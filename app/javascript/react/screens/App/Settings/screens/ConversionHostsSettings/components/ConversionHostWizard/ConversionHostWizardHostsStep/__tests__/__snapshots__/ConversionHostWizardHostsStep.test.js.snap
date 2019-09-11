@@ -1,153 +1,132 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`conversion host wizard hosts step renders correctly in the OSP example case 1`] = `
-<Form
-  bsClass="form"
-  className="form-vertical"
-  componentClass="form"
-  horizontal={false}
-  inline={false}
->
-  <FormGroup
-    bsClass="form-group"
-    controlId="host-selection"
-  >
-    <ControlLabel
-      bsClass="control-label"
-      srOnly={false}
-    >
-      Hosts to configure as conversion hosts
-    </ControlLabel>
-    <Field
-      clearButton={true}
-      component={[Function]}
-      controlId="host-selection"
-      emptyLabel="No matches found."
-      highlightOnlyResult={true}
-      labelKey="name"
-      multiple={true}
-      name="hosts"
-      options={
-        Array [
-          Object {
-            "id": "3",
-            "name": "available-vm-1",
-            "type": "ManageIQ::Providers::Openstack::CloudManager::Vm",
-          },
-          Object {
-            "id": "4",
-            "name": "available-vm-2",
-            "type": "ManageIQ::Providers::Openstack::CloudManager::Vm",
-          },
-        ]
-      }
-      placeholder="Select one or more hosts..."
-      selectHintOnEnter={true}
-      validate={
-        Array [
-          [Function],
-        ]
-      }
-    />
-  </FormGroup>
-</Form>
+<Connect(Form(ConversionHostWizardHostsStep))
+  _reduxForm={null}
+  conversionHostTasksByResource={
+    Object {
+      "ManageIQ::Providers::Openstack::CloudManager::Vm": Object {
+        "1": Object {
+          "enable": Array [
+            Object {
+              "mock": "task",
+              "state": "Finished",
+            },
+          ],
+        },
+        "2": Object {
+          "enable": Array [
+            Object {
+              "mock": "task",
+              "state": "Active",
+            },
+          ],
+        },
+      },
+      "ManageIQ::Providers::Redhat::InfraManager::Host": Object {
+        "1": Object {
+          "enable": Array [
+            Object {
+              "mock": "task",
+              "state": "Finished",
+            },
+          ],
+        },
+        "2": Object {
+          "enable": Array [
+            Object {
+              "mock": "task",
+              "state": "Active",
+            },
+          ],
+        },
+      },
+    }
+  }
+  conversionHosts={
+    Array [
+      Object {
+        "mock": "rhvConversionHost",
+        "resource": Object {
+          "id": "1",
+          "name": "already-configured-host",
+          "type": "ManageIQ::Providers::Redhat::InfraManager::Host",
+        },
+      },
+      Object {
+        "mock": "ospConversionHost",
+        "resource": Object {
+          "id": "1",
+          "name": "already-configured-vm",
+          "type": "ManageIQ::Providers::Openstack::CloudManager::Vm",
+        },
+      },
+    ]
+  }
+  destroyOnUnmount={false}
+  enableReinitialize={false}
+  forceUnregisterOnUnmount={false}
+  form="conversionHostWizardHostsStep"
+  getFormState={[Function]}
+  initialValues={
+    Object {
+      "hosts": Array [],
+    }
+  }
+  keepDirtyOnReinitialize={false}
+  persistentSubmitErrors={false}
+  pure={true}
+  selectedCluster={
+    Object {
+      "mock": "tenant",
+      "vms": Array [
+        Object {
+          "id": "1",
+          "name": "already-configured-vm",
+          "type": "ManageIQ::Providers::Openstack::CloudManager::Vm",
+        },
+        Object {
+          "id": "2",
+          "name": "vm-being-configured",
+          "type": "ManageIQ::Providers::Openstack::CloudManager::Vm",
+        },
+        Object {
+          "id": "3",
+          "name": "available-vm-1",
+          "type": "ManageIQ::Providers::Openstack::CloudManager::Vm",
+        },
+        Object {
+          "id": "4",
+          "name": "available-vm-2",
+          "type": "ManageIQ::Providers::Openstack::CloudManager::Vm",
+        },
+      ],
+    }
+  }
+  selectedProviderType="openstack"
+  shouldAsyncValidate={[Function]}
+  shouldError={[Function]}
+  shouldValidate={[Function]}
+  shouldWarn={[Function]}
+  store={
+    Object {
+      "dispatch": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(observable): [Function],
+    }
+  }
+  submitAsSideEffect={false}
+  touchOnBlur={true}
+  touchOnChange={false}
+  updateUnregisteredFields={false}
+/>
 `;
 
 exports[`conversion host wizard hosts step renders correctly in the RHV example case 1`] = `
-<Form
-  bsClass="form"
-  className="form-vertical"
-  componentClass="form"
-  horizontal={false}
-  inline={false}
->
-  <FormGroup
-    bsClass="form-group"
-    controlId="host-selection"
-  >
-    <ControlLabel
-      bsClass="control-label"
-      srOnly={false}
-    >
-      Hosts to configure as conversion hosts
-    </ControlLabel>
-    <Field
-      clearButton={true}
-      component={[Function]}
-      controlId="host-selection"
-      emptyLabel="No matches found."
-      highlightOnlyResult={true}
-      labelKey="name"
-      multiple={true}
-      name="hosts"
-      options={
-        Array [
-          Object {
-            "id": "3",
-            "name": "available-host-1",
-            "type": "ManageIQ::Providers::Redhat::InfraManager::Host",
-          },
-          Object {
-            "id": "4",
-            "name": "available-host-2",
-            "type": "ManageIQ::Providers::Redhat::InfraManager::Host",
-          },
-        ]
-      }
-      placeholder="Select one or more hosts..."
-      selectHintOnEnter={true}
-      validate={
-        Array [
-          [Function],
-        ]
-      }
-    />
-  </FormGroup>
-</Form>
-`;
-
-exports[`conversion host wizard hosts step renders correctly when there are no hosts available 1`] = `
-<Form
-  bsClass="form"
-  className="form-vertical"
-  componentClass="form"
-  horizontal={false}
-  inline={false}
->
-  <FormGroup
-    bsClass="form-group"
-    controlId="host-selection"
-  >
-    <ControlLabel
-      bsClass="control-label"
-      srOnly={false}
-    >
-      Hosts to configure as conversion hosts
-    </ControlLabel>
-    <Field
-      clearButton={true}
-      component={[Function]}
-      controlId="host-selection"
-      emptyLabel="No hosts available for the selected cluster."
-      highlightOnlyResult={true}
-      labelKey="name"
-      multiple={true}
-      name="hosts"
-      options={Array []}
-      placeholder="Select one or more hosts..."
-      selectHintOnEnter={true}
-      validate={
-        Array [
-          [Function],
-        ]
-      }
-    />
-  </FormGroup>
-</Form>
-`;
-
-exports[`conversion host wizard hosts step renders the redux-form wrapper correctly 1`] = `
 <Connect(Form(ConversionHostWizardHostsStep))
+  _reduxForm={null}
   conversionHostTasksByResource={
     Object {
       "ManageIQ::Providers::Openstack::CloudManager::Vm": Object {
@@ -262,6 +241,233 @@ exports[`conversion host wizard hosts step renders the redux-form wrapper correc
       Symbol(observable): [Function],
     }
   }
+  submitAsSideEffect={false}
+  touchOnBlur={true}
+  touchOnChange={false}
+  updateUnregisteredFields={false}
+/>
+`;
+
+exports[`conversion host wizard hosts step renders correctly when there are no hosts available 1`] = `
+<Connect(Form(ConversionHostWizardHostsStep))
+  _reduxForm={null}
+  conversionHostTasksByResource={
+    Object {
+      "ManageIQ::Providers::Openstack::CloudManager::Vm": Object {
+        "1": Object {
+          "enable": Array [
+            Object {
+              "mock": "task",
+              "state": "Finished",
+            },
+          ],
+        },
+        "2": Object {
+          "enable": Array [
+            Object {
+              "mock": "task",
+              "state": "Active",
+            },
+          ],
+        },
+      },
+      "ManageIQ::Providers::Redhat::InfraManager::Host": Object {
+        "1": Object {
+          "enable": Array [
+            Object {
+              "mock": "task",
+              "state": "Finished",
+            },
+          ],
+        },
+        "2": Object {
+          "enable": Array [
+            Object {
+              "mock": "task",
+              "state": "Active",
+            },
+          ],
+        },
+      },
+    }
+  }
+  conversionHosts={
+    Array [
+      Object {
+        "mock": "rhvConversionHost",
+        "resource": Object {
+          "id": "1",
+          "name": "already-configured-host",
+          "type": "ManageIQ::Providers::Redhat::InfraManager::Host",
+        },
+      },
+      Object {
+        "mock": "ospConversionHost",
+        "resource": Object {
+          "id": "1",
+          "name": "already-configured-vm",
+          "type": "ManageIQ::Providers::Openstack::CloudManager::Vm",
+        },
+      },
+    ]
+  }
+  destroyOnUnmount={false}
+  enableReinitialize={false}
+  forceUnregisterOnUnmount={false}
+  form="conversionHostWizardHostsStep"
+  getFormState={[Function]}
+  initialValues={
+    Object {
+      "hosts": Array [],
+    }
+  }
+  keepDirtyOnReinitialize={false}
+  persistentSubmitErrors={false}
+  pure={true}
+  selectedCluster={
+    Object {
+      "hosts": Array [],
+    }
+  }
+  selectedProviderType="rhevm"
+  shouldAsyncValidate={[Function]}
+  shouldError={[Function]}
+  shouldValidate={[Function]}
+  shouldWarn={[Function]}
+  store={
+    Object {
+      "dispatch": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(observable): [Function],
+    }
+  }
+  submitAsSideEffect={false}
+  touchOnBlur={true}
+  touchOnChange={false}
+  updateUnregisteredFields={false}
+/>
+`;
+
+exports[`conversion host wizard hosts step renders the redux-form wrapper correctly 1`] = `
+<Hoc
+  conversionHostTasksByResource={
+    Object {
+      "ManageIQ::Providers::Openstack::CloudManager::Vm": Object {
+        "1": Object {
+          "enable": Array [
+            Object {
+              "mock": "task",
+              "state": "Finished",
+            },
+          ],
+        },
+        "2": Object {
+          "enable": Array [
+            Object {
+              "mock": "task",
+              "state": "Active",
+            },
+          ],
+        },
+      },
+      "ManageIQ::Providers::Redhat::InfraManager::Host": Object {
+        "1": Object {
+          "enable": Array [
+            Object {
+              "mock": "task",
+              "state": "Finished",
+            },
+          ],
+        },
+        "2": Object {
+          "enable": Array [
+            Object {
+              "mock": "task",
+              "state": "Active",
+            },
+          ],
+        },
+      },
+    }
+  }
+  conversionHosts={
+    Array [
+      Object {
+        "mock": "rhvConversionHost",
+        "resource": Object {
+          "id": "1",
+          "name": "already-configured-host",
+          "type": "ManageIQ::Providers::Redhat::InfraManager::Host",
+        },
+      },
+      Object {
+        "mock": "ospConversionHost",
+        "resource": Object {
+          "id": "1",
+          "name": "already-configured-vm",
+          "type": "ManageIQ::Providers::Openstack::CloudManager::Vm",
+        },
+      },
+    ]
+  }
+  destroyOnUnmount={false}
+  enableReinitialize={false}
+  forceUnregisterOnUnmount={false}
+  form="conversionHostWizardHostsStep"
+  forwardedRef={null}
+  getFormState={[Function]}
+  initialValues={
+    Object {
+      "hosts": Array [],
+    }
+  }
+  keepDirtyOnReinitialize={false}
+  persistentSubmitErrors={false}
+  pure={true}
+  selectedCluster={
+    Object {
+      "hosts": Array [
+        Object {
+          "id": "1",
+          "name": "already-configured-host",
+          "type": "ManageIQ::Providers::Redhat::InfraManager::Host",
+        },
+        Object {
+          "id": "2",
+          "name": "host-being-configured",
+          "type": "ManageIQ::Providers::Redhat::InfraManager::Host",
+        },
+        Object {
+          "id": "3",
+          "name": "available-host-1",
+          "type": "ManageIQ::Providers::Redhat::InfraManager::Host",
+        },
+        Object {
+          "id": "4",
+          "name": "available-host-2",
+          "type": "ManageIQ::Providers::Redhat::InfraManager::Host",
+        },
+      ],
+      "mock": "cluster",
+    }
+  }
+  selectedProviderType="rhevm"
+  shouldAsyncValidate={[Function]}
+  shouldError={[Function]}
+  shouldValidate={[Function]}
+  shouldWarn={[Function]}
+  store={
+    Object {
+      "dispatch": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(observable): [Function],
+    }
+  }
+  submitAsSideEffect={false}
   touchOnBlur={true}
   touchOnChange={false}
   updateUnregisteredFields={false}
