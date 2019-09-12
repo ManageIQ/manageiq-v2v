@@ -27,8 +27,8 @@ class MappingWizardDatastoresStep extends React.Component {
       []
     );
 
-    const synchronousSetState = fn => {
-      this.state = { ...this.state, ...fn() };
+    const synchronousSetState = newState => {
+      this.state = { ...this.state, ...newState };
     };
 
     if (sourceClusters.length === 1 || !pristine) {
@@ -89,7 +89,7 @@ class MappingWizardDatastoresStep extends React.Component {
     }
   }
 
-  selectSourceCluster = (sourceClusterId, setState = this.setState) => {
+  selectSourceCluster = (sourceClusterId, synchronousSetState) => {
     // when dropdown selection occurs for source cluster, we go retrieve the datastores for that
     // cluster
     const {
@@ -106,10 +106,16 @@ class MappingWizardDatastoresStep extends React.Component {
 
     const { nodes: sourceClusters, ...targetCluster } = selectedClusterMapping;
 
-    setState(() => ({
+    const newState = {
       selectedCluster: sourceClusters.find(sourceCluster => sourceCluster.id === sourceClusterId),
       selectedClusterMapping
-    }));
+    };
+
+    if (synchronousSetState) {
+      synchronousSetState(newState);
+    } else {
+      this.setState(newState);
+    }
 
     fetchSourceDatastoresAction(fetchStoragesUrls.source, sourceClusterId);
     fetchTargetDatastoresAction(fetchStoragesUrls[targetProvider], targetCluster.id, targetProvider);
