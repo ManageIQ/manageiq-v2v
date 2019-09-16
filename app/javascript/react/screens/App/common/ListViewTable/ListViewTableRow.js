@@ -56,10 +56,11 @@ BaseListViewTableRow.propTypes = {
   ...ListView.Item.propTypes
 };
 
-const ListViewTableRow = props => {
-  const { isSmallViewport } = React.useContext(ListViewTableContext);
-  return isSmallViewport ? <ListView.Item {...props} /> : <BaseListViewTableRow {...props} />;
-};
+const ListViewTableRow = props => (
+  <ListViewTableContext.Consumer>
+    {({ isSmallViewport }) => (isSmallViewport ? <ListView.Item {...props} /> : <BaseListViewTableRow {...props} />)}
+  </ListViewTableContext.Consumer>
+);
 
 ListViewTableRow.propTypes = {
   ...BaseListViewTableRow.propTypes
