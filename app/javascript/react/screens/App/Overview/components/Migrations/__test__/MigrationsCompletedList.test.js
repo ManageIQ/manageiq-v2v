@@ -5,6 +5,7 @@ import { shallow, mount } from 'enzyme';
 import { transformationPlans } from '../../../overview.transformationPlans.fixtures';
 import { allRequestsWithTasks } from '../../../overview.requestWithTasks.fixtures';
 import MigrationsCompletedList from '../MigrationsCompletedList';
+import ListViewTableRow from '../../../../common/ListViewTable/ListViewTableRow';
 
 const [, , , finishedPlanOne, finishedPlanTwo] = transformationPlans.resources;
 const finishedTransformationPlans = [
@@ -25,7 +26,7 @@ describe('when displaying archived migration plans', () => {
       />
     );
 
-    wrapper.find('ListViewItem').forEach(item => {
+    wrapper.find(ListViewTableRow).forEach(item => {
       expect(item.prop('actions')).toBeTruthy();
     });
   });
@@ -41,7 +42,7 @@ describe('when displaying archived migration plans', () => {
       />
     );
 
-    wrapper.find('ListViewItem').forEach(item => {
+    wrapper.find(ListViewTableRow).forEach(item => {
       const archiveButton = item.find('a').filterWhere(link => link.text() === 'Archive plan');
       expect(archiveButton).toHaveLength(0);
     });
@@ -72,13 +73,13 @@ describe('when displaying active (not archived) migration plans', () => {
   });
 
   test('each list item renders an actions node', () => {
-    wrapper.find('ListViewItem').forEach(item => {
+    wrapper.find(ListViewTableRow).forEach(item => {
       expect(item.prop('actions')).toBeTruthy();
     });
   });
 
   test('clicking the archive button launches the confirmation modal', () => {
-    wrapper.find('ListViewItem').forEach(item => {
+    wrapper.find(ListViewTableRow).forEach(item => {
       const archiveButton = item.find('a').filterWhere(link => link.text() === 'Archive plan');
 
       archiveButton.simulate('click');

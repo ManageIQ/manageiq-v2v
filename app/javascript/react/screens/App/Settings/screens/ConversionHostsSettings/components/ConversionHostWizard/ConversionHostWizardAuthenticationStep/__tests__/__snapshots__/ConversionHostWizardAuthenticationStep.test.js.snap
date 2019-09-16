@@ -66,22 +66,22 @@ exports[`conversion host wizard authentication step renders correctly in the ini
       ]
     }
   />
-  <React.Fragment>
-    <Field
-      component={[Function]}
-      controlId="verify-openstack-certs"
-      controlWidth={7}
-      label="Verify TLS Certificates for OpenStack"
-      labelWidth={4}
-      name="verifyOpenstackCerts"
-      style={
-        Object {
-          "marginTop": 25,
-        }
+  <Field
+    component={[Function]}
+    controlId="verify-openstack-certs"
+    controlWidth={7}
+    label="Verify TLS Certificates for OpenStack"
+    labelWidth={4}
+    name="verifyOpenstackCerts"
+    style={
+      Object {
+        "marginTop": 25,
       }
-      validate={[Function]}
-    />
-  </React.Fragment>
+    }
+    validate={[Function]}
+  >
+    <Component />
+  </Field>
 </Form>
 `;
 
@@ -338,31 +338,31 @@ exports[`conversion host wizard authentication step renders correctly with verif
       ]
     }
   />
-  <React.Fragment>
-    <Field
-      component={[Function]}
-      controlId="verify-openstack-certs"
-      controlWidth={7}
-      label="Verify TLS Certificates for OpenStack"
-      labelWidth={4}
-      name="verifyOpenstackCerts"
-      style={
-        Object {
-          "marginTop": 25,
-        }
+  <Field
+    component={[Function]}
+    controlId="verify-openstack-certs"
+    controlWidth={7}
+    label="Verify TLS Certificates for OpenStack"
+    labelWidth={4}
+    name="verifyOpenstackCerts"
+    style={
+      Object {
+        "marginTop": 25,
       }
-      validate={[Function]}
-    />
-    <TextFileField
-      controlId="openstack-ca-certs-input"
-      controlWidth={7}
-      help="Upload your certificates file, in PEM format, or paste its contents below."
-      hideBody={false}
-      label="OpenStack Trusted CA Certificates"
-      labelWidth={4}
-      name="openstackCaCerts"
-    />
-  </React.Fragment>
+    }
+    validate={[Function]}
+  >
+    <Component />
+  </Field>
+  <TextFileField
+    controlId="openstack-ca-certs-input"
+    controlWidth={7}
+    help="Upload your certificates file, in PEM format, or paste its contents below."
+    hideBody={false}
+    label="OpenStack Trusted CA Certificates"
+    labelWidth={4}
+    name="openstackCaCerts"
+  />
 </Form>
 `;
 
