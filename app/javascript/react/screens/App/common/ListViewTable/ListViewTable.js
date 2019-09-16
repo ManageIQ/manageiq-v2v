@@ -24,7 +24,7 @@ BaseListViewTable.propTypes = {
 };
 
 class ListViewTable extends React.Component {
-  state = { isSmallViewport: !layout.is('desktop') };
+  state = { isSmallViewport: process.env.NODE_ENV === 'test' ? false : !layout.is('desktop') };
 
   componentDidMount() {
     layout.addChangeListener(this.onLayoutChange);
