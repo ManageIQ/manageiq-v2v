@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ListView, layout } from 'patternfly-react';
+import { ListView, layout as pfLayout } from 'patternfly-react';
 import ListViewTableRow from './ListViewTableRow';
 
 export const ListViewTableContext = React.createContext({});
@@ -23,8 +23,17 @@ BaseListViewTable.propTypes = {
   isSmallViewport: PropTypes.bool
 };
 
+const layout =
+  process.env.NODE_ENV === 'test'
+    ? {
+        is: () => true,
+        addChangeListener: () => {},
+        removeChangeListener: () => {}
+      }
+    : pfLayout;
+
 class ListViewTable extends React.Component {
-  state = { isSmallViewport: process.env.NODE_ENV === 'test' ? false : !layout.is('desktop') };
+  state = { isSmallViewport: !layout.is('desktop') };
 
   componentDidMount() {
     layout.addChangeListener(this.onLayoutChange);
