@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 
-import MigrationsInProgressCard from '../MigrationsInProgressCard';
+import MigrationInProgressListItem from '../MigrationInProgressListItem';
 import { transformationPlans } from '../../../overview.transformationPlans.fixtures';
 import {
   MIGRATIONS_FILTERS,
@@ -18,8 +18,8 @@ describe('when the request is denied', () => {
     allRequestsWithTasks
   };
 
-  test('the card renders an error view', () => {
-    const wrapper = shallow(<MigrationsInProgressCard {...baseProps} />);
+  test('renders an error view', () => {
+    const wrapper = shallow(<MigrationInProgressListItem {...baseProps} />);
 
     expect(wrapper).toMatchSnapshot();
   });
@@ -28,7 +28,7 @@ describe('when the request is denied', () => {
     const acknowledgeDeniedPlanRequestAction = jest.fn(() => Promise.resolve());
     const setMigrationsFilterAction = jest.fn();
     const wrapper = mount(
-      <MigrationsInProgressCard
+      <MigrationInProgressListItem
         {...baseProps}
         acknowledgeDeniedPlanRequestAction={acknowledgeDeniedPlanRequestAction}
         setMigrationsFilterAction={setMigrationsFilterAction}
@@ -54,8 +54,8 @@ describe('if there are no conversion hosts available', () => {
     requestsProcessingCancellation: []
   };
 
-  test('the card renders an error view', () => {
-    const wrapper = shallow(<MigrationsInProgressCard {...baseProps} />);
+  test('renders an error view', () => {
+    const wrapper = shallow(<MigrationInProgressListItem {...baseProps} />);
 
     expect(wrapper).toMatchSnapshot();
   });
@@ -64,7 +64,7 @@ describe('if there are no conversion hosts available', () => {
     const cancelPlanRequestAction = jest.fn(() => Promise.resolve());
     const fetchTransformationPlansAction = jest.fn();
     const wrapper = mount(
-      <MigrationsInProgressCard
+      <MigrationInProgressListItem
         {...baseProps}
         cancelPlanRequestAction={cancelPlanRequestAction}
         fetchTransformationPlansAction={fetchTransformationPlansAction}

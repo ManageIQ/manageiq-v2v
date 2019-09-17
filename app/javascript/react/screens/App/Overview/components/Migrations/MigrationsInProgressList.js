@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, Grid, Spinner } from 'patternfly-react';
 import ShowWizardEmptyState from '../../../common/ShowWizardEmptyState/ShowWizardEmptyState';
-import MigrationInProgressCard from './MigrationsInProgressCard';
+import MigrationInProgressListItem from './MigrationInProgressListItem';
 
-const MigrationsInProgressCards = ({
+const MigrationsInProgressList = ({
   activeTransformationPlans,
   serviceTemplatePlaybooks,
   allRequestsWithTasks,
@@ -33,7 +33,7 @@ const MigrationsInProgressCards = ({
           <Spinner loading={loading}>
             {activeTransformationPlans.length > 0 && allRequestsWithTasks.length > 0 ? (
               activeTransformationPlans.map(plan => (
-                <MigrationInProgressCard
+                <MigrationInProgressListItem
                   plan={plan}
                   serviceTemplatePlaybooks={serviceTemplatePlaybooks}
                   allRequestsWithTasks={allRequestsWithTasks}
@@ -67,7 +67,7 @@ const MigrationsInProgressCards = ({
   </div>
 );
 
-MigrationsInProgressCards.propTypes = {
+MigrationsInProgressList.propTypes = {
   activeTransformationPlans: PropTypes.array,
   serviceTemplatePlaybooks: PropTypes.array,
   allRequestsWithTasks: PropTypes.array,
@@ -86,10 +86,10 @@ MigrationsInProgressCards.propTypes = {
   requestsProcessingCancellation: PropTypes.array
 };
 
-MigrationsInProgressCards.defaultProps = {
+MigrationsInProgressList.defaultProps = {
   activeTransformationPlans: [],
   serviceTemplatePlaybooks: [],
   loading: false
 };
 
-export default MigrationsInProgressCards;
+export default MigrationsInProgressList;
