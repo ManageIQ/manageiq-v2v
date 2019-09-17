@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`if there are no conversion hosts available the card renders an error view 1`] = `
+exports[`if there are no conversion hosts available renders an error view 1`] = `
 <InProgressCard
   footer={
     <CardFooter
@@ -30,7 +30,7 @@ exports[`if there are no conversion hosts available the card renders an error vi
 </InProgressCard>
 `;
 
-exports[`when the request is denied the card renders an error view 1`] = `
+exports[`when the request is denied renders an error view 1`] = `
 <InProgressCard
   footer={
     <CardFooter

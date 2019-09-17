@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Immutable from 'seamless-immutable';
 import { noop, Grid, Icon } from 'patternfly-react';
-import MigrationsInProgressCards from './MigrationsInProgressCards';
+import MigrationsInProgressList from './MigrationsInProgressList';
 import MigrationsNotStartedList from './MigrationsNotStartedList';
 import MigrationsCompletedList from './MigrationsCompletedList';
 import ShowWizardEmptyState from '../../../common/ShowWizardEmptyState/ShowWizardEmptyState';
@@ -138,7 +138,7 @@ class Migrations extends React.Component {
               />
             )}
             {activeFilter === MIGRATIONS_FILTERS.inProgress && (
-              <MigrationsInProgressCards
+              <MigrationsInProgressList
                 activeTransformationPlans={activeTransformationPlans}
                 serviceTemplatePlaybooks={serviceTemplatePlaybooks}
                 allRequestsWithTasks={allRequestsWithTasks}
