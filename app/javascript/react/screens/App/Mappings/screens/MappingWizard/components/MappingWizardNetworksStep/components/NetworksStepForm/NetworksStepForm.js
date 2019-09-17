@@ -305,9 +305,7 @@ class NetworksStepForm extends React.Component {
     return (
       <div className={classes}>
         <p style={{ marginLeft: -48 }}>
-          {__(
-            'Select one or more source networks to map to a single target. Select Add Mapping. Multiple mappings can be added.') // prettier-ignore
-          }
+          {__('Select one or more source networks to map to a single target. Select Add Mapping. Multiple mappings can be added.') /* prettier-ignore */}
         </p>
         <DualPaneMapper
           handleButtonClick={this.addNetworkMapping}
