@@ -143,9 +143,7 @@ class ClustersStepForm extends React.Component {
     return (
       <div className="dual-pane-mapper-form">
         <p style={{ marginLeft: -40 }}>
-          {__(
-            'Select source cluster(s) and a target cluster and click Add Mapping to add the mapping. Multiple mappings can be added.') // prettier-ignore
-          }
+          {__('Select source cluster(s) and a target cluster and click Add Mapping to add the mapping. Multiple mappings can be added.') /* prettier-ignore */}
         </p>
         <DualPaneMapper
           handleButtonClick={this.addMapping}
