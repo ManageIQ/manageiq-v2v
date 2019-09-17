@@ -19,7 +19,7 @@ import CardEmptyState from './CardEmptyState';
 import CardFooter from './CardFooter';
 import { urlBuilder } from './helpers';
 
-const MigrationsInProgressCard = ({
+const MigrationInProgressListItem = ({
   plan,
   serviceTemplatePlaybooks,
   allRequestsWithTasks,
@@ -337,7 +337,7 @@ const MigrationsInProgressCard = ({
   );
 };
 
-MigrationsInProgressCard.propTypes = {
+MigrationInProgressListItem.propTypes = {
   plan: PropTypes.object.isRequired,
   serviceTemplatePlaybooks: PropTypes.array,
   allRequestsWithTasks: PropTypes.array,
@@ -355,4 +355,4 @@ MigrationsInProgressCard.propTypes = {
   requestsProcessingCancellation: PropTypes.array
 };
 
-export default MigrationsInProgressCard;
+export default MigrationInProgressListItem;
