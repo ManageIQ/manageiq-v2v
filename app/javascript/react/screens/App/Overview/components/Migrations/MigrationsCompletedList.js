@@ -20,6 +20,7 @@ import StopPropagationOnClick from '../../../common/StopPropagationOnClick';
 import Visibility from '../../../common/Visibility';
 import getPlanScheduleInfo from './helpers/getPlanScheduleInfo';
 import ListViewTable from '../../../common/ListViewTable/ListViewTable';
+import ScheduledTimeInfoItem from './ScheduledTimeInfoItem';
 
 const MigrationsCompletedList = ({
   finishedTransformationPlans,
@@ -171,7 +172,7 @@ const MigrationsCompletedList = ({
 
                     const isMissingMapping = !plan.infraMappingName;
 
-                    const showScheduledTime = migrationScheduled && !staleMigrationSchedule && !migrationStarting;
+                    const showScheduledTime = !!migrationScheduled && !staleMigrationSchedule && !migrationStarting;
 
                     return (
                       <ListViewTable.Row
@@ -240,19 +241,12 @@ const MigrationsCompletedList = ({
                               {formatDateTime(mostRecentRequest.fulfilled_on)}
                             </ListView.InfoItem>
                           ) : null,
-                          showScheduledTime ? (
-                            <ListView.InfoItem key={`${plan.id}-scheduledTime`} style={{ textAlign: 'left' }}>
-                              <Icon type="fa" name="clock-o" />
-                              {__('Migration scheduled')}
-                              <br />
-                              {formatDateTime(migrationScheduled)}
-                            </ListView.InfoItem>
-                          ) : null,
-                          migrationStarting && (
-                            <ListView.InfoItem key={`${plan.id}-starting`} style={{ textAlign: 'left' }}>
-                              {__('Migration in progress')}
-                            </ListView.InfoItem>
-                          )
+                          <ScheduledTimeInfoItem
+                            planId={plan.id}
+                            migrationStarting={migrationStarting}
+                            showScheduledTime={showScheduledTime}
+                            migrationScheduled={migrationScheduled}
+                          />
                         ]}
                         actions={
                           // Visibility helper is used instead of conditional rendering
