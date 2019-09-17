@@ -4,7 +4,6 @@ import { noop, Button, ListView, Grid, Icon, Spinner, Toolbar, DropdownKebab, Me
 import EllipsisWithTooltip from 'react-ellipsis-with-tooltip';
 import ShowWizardEmptyState from '../../../common/ShowWizardEmptyState/ShowWizardEmptyState';
 import ScheduleMigrationModal from '../ScheduleMigrationModal/ScheduleMigrationModal';
-import { formatDateTime } from '../../../../../../components/dates/MomentDate';
 import { MIGRATIONS_NOT_STARTED_SORT_FIELDS, MIGRATIONS_FILTER_TYPES } from './MigrationsConstants';
 import ScheduleMigrationButton from './ScheduleMigrationButton';
 import EditScheduleMenuItems from './EditScheduleMenuItems';
@@ -13,6 +12,7 @@ import ListViewToolbar from '../../../common/ListViewToolbar/ListViewToolbar';
 import DeleteMigrationMenuItem from './DeleteMigrationMenuItem';
 import getPlanScheduleInfo from './helpers/getPlanScheduleInfo';
 import ListViewTable from '../../../common/ListViewTable/ListViewTable';
+import ScheduledTimeInfoItem from './ScheduledTimeInfoItem';
 
 const MigrationsNotStartedList = ({
   migrateClick,
@@ -160,18 +160,12 @@ const MigrationsNotStartedList = ({
                               plan.infraMappingName
                             )}
                           </ListView.InfoItem>,
-                          migrationStarting ? (
-                            <ListView.InfoItem key={`${plan.id}-starting`} style={{ textAlign: 'left' }}>
-                              {__('Migration in progress')}
-                            </ListView.InfoItem>
-                          ) : migrationScheduled ? (
-                            <ListView.InfoItem key={`${plan.id}-scheduledTime`} style={{ textAlign: 'left' }}>
-                              <Icon type="fa" name="clock-o" />
-                              {__('Migration scheduled')}
-                              <br />
-                              {formatDateTime(migrationScheduled)}
-                            </ListView.InfoItem>
-                          ) : null
+                          <ScheduledTimeInfoItem
+                            planId={plan.id}
+                            migrationStarting={migrationStarting}
+                            showScheduledTime={!!migrationScheduled}
+                            migrationScheduled={migrationScheduled}
+                          />
                         ]}
                         key={plan.id}
                       />
