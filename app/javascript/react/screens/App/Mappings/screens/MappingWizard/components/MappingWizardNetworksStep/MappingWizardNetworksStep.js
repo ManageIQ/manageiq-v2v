@@ -27,8 +27,8 @@ class MappingWizardNetworksStep extends React.Component {
       []
     );
 
-    const synchronousSetState = fn => {
-      this.state = { ...this.state, ...fn() };
+    const synchronousSetState = newState => {
+      this.state = { ...this.state, ...newState };
     };
 
     if (sourceClusters.length === 1 || !pristine) {
@@ -90,7 +90,7 @@ class MappingWizardNetworksStep extends React.Component {
     }
   }
 
-  selectSourceCluster = (sourceClusterId, setState = this.setState) => {
+  selectSourceCluster = (sourceClusterId, synchronousSetState) => {
     // when dropdown selection occurs for source cluster, we go retrieve the
     // newworks for that cluster
     const {
@@ -108,10 +108,16 @@ class MappingWizardNetworksStep extends React.Component {
 
     const { nodes: sourceClusters, ...targetCluster } = selectedClusterMapping;
 
-    setState(() => ({
+    const newState = {
       selectedCluster: sourceClusters.find(sourceCluster => sourceCluster.id === sourceClusterId),
       selectedClusterMapping
-    }));
+    };
+
+    if (synchronousSetState) {
+      synchronousSetState(newState);
+    } else {
+      this.setState(newState);
+    }
 
     fetchSourceNetworksAction(fetchNetworksUrls.source, sourceClusterId);
     fetchTargetNetworksAction(fetchNetworksUrls[targetProvider], targetCluster.id, targetProvider);
