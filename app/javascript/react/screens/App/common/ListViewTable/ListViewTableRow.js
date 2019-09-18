@@ -47,8 +47,8 @@ const BaseListViewTableRow = ({
       )}
     </tr>
   );
-  const numColumns = row.props.children.filter(child => !!child).length;
-  console.log('TODO: use this for colspan of expanded content -- numColumns =', numColumns);
+  const numColumns = row.props.children.filter(child => !!child).length; // eslint-disable-line no-unused-vars
+  // TODO: use numColumns for colspan of expanded content
   return row;
 };
 
