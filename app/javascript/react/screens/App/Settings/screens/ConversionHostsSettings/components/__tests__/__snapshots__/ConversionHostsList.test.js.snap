@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`conversion hosts list renders the inner list view correctly 1`] = `
-<React.Fragment>
+<Fragment>
   <Row
     bsClass="row"
     componentClass="div"
@@ -172,11 +172,11 @@ exports[`conversion hosts list renders the inner list view correctly 1`] = `
       viewType="list"
     />
   </div>
-</React.Fragment>
+</Fragment>
 `;
 
 exports[`conversion hosts list renders the outer components correctly 1`] = `
-<React.Fragment>
+<Fragment>
   <ListViewToolbar
     defaultFilterTypeIndex={0}
     defaultSortTypeIndex={0}
@@ -215,7 +215,9 @@ exports[`conversion hosts list renders the outer components correctly 1`] = `
         },
       ]
     }
-  />
+  >
+    <Component />
+  </ListViewToolbar>
   <DeleteConversionHostConfirmationModal
     conversionHostDeleteModalVisible={false}
     conversionHostToDelete={null}
@@ -223,5 +225,5 @@ exports[`conversion hosts list renders the outer components correctly 1`] = `
     hideConversionHostDeleteModalAction={[MockFunction]}
     isDeletingConversionHost={false}
   />
-</React.Fragment>
+</Fragment>
 `;

@@ -51,33 +51,31 @@ exports[`conversion host wizard renders correctly 1`] = `
   <WizardFooter
     className="wizard-pf-footer"
   >
-    <React.Fragment>
-      <Button
-        active={false}
-        block={false}
-        bsClass="btn"
-        bsStyle="default"
-        className="btn-cancel"
-        disabled={false}
-        onClick={[MockFunction]}
-      >
-        Cancel
-      </Button>
-      <Button
-        active={false}
-        block={false}
-        bsClass="btn"
-        bsStyle="default"
-        disabled={true}
-        onClick={[Function]}
-      >
-        <Icon
-          name="angle-left"
-          type="fa"
-        />
-        Back
-      </Button>
-    </React.Fragment>
+    <Button
+      active={false}
+      block={false}
+      bsClass="btn"
+      bsStyle="default"
+      className="btn-cancel"
+      disabled={false}
+      onClick={[MockFunction]}
+    >
+      Cancel
+    </Button>
+    <Button
+      active={false}
+      block={false}
+      bsClass="btn"
+      bsStyle="default"
+      disabled={true}
+      onClick={[Function]}
+    >
+      <Icon
+        name="angle-left"
+        type="fa"
+      />
+      Back
+    </Button>
     <Button
       active={false}
       block={false}

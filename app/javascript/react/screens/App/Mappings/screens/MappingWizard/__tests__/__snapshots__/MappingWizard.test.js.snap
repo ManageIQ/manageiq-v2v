@@ -33,33 +33,31 @@ exports[`MappingWizard component renders the mapping wizard 1`] = `
   <WizardFooter
     className=""
   >
-    <React.Fragment>
-      <Button
-        active={false}
-        block={false}
-        bsClass="btn"
-        bsStyle="default"
-        className="btn-cancel"
-        disabled={false}
-        onClick={[MockFunction]}
-      >
-        Cancel
-      </Button>
-      <Button
-        active={false}
-        block={false}
-        bsClass="btn"
-        bsStyle="default"
-        disabled={true}
-        onClick={[Function]}
-      >
-        <Icon
-          name="angle-left"
-          type="fa"
-        />
-        Back
-      </Button>
-    </React.Fragment>
+    <Button
+      active={false}
+      block={false}
+      bsClass="btn"
+      bsStyle="default"
+      className="btn-cancel"
+      disabled={false}
+      onClick={[MockFunction]}
+    >
+      Cancel
+    </Button>
+    <Button
+      active={false}
+      block={false}
+      bsClass="btn"
+      bsStyle="default"
+      disabled={true}
+      onClick={[Function]}
+    >
+      <Icon
+        name="angle-left"
+        type="fa"
+      />
+      Back
+    </Button>
     <Button
       active={false}
       block={false}
