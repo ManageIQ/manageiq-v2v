@@ -1,0 +1,48 @@
+.list-view-pf.list-view-table-pf > table {
+  width: 100%;
+
+  tr.list-group-item {
+    display: table-row;
+
+    td {
+      display: table-cell;
+      width: auto;
+      vertical-align: middle;
+      padding-left: 15px;
+
+      &:last-child {
+        padding-right: 15px;
+      }
+
+      &.list-view-pf-main-info.empty-info-item {
+        padding-left: 0;
+      }
+
+      .list-view-pf-left {
+        padding-right: 5px;
+      }
+
+      .list-view-pf-description {
+        float: none;
+        width: auto;
+        max-width: 20vw;
+
+        .list-group-item-heading,
+        .list-group-item-text {
+          margin-right: 15px;
+        }
+      }
+
+      .list-view-pf-additional-info-item {
+        margin: 0;
+      }
+
+      .list-view-pf-actions {
+        float: none;
+        text-align: right;
+        white-space: nowrap;
+        margin-left: 0;
+      }
+    }
+  }
+}

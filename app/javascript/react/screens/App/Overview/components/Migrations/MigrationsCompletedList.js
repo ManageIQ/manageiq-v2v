@@ -19,6 +19,8 @@ import DeleteMigrationMenuItem from './DeleteMigrationMenuItem';
 import StopPropagationOnClick from '../../../common/StopPropagationOnClick';
 import Visibility from '../../../common/Visibility';
 import getPlanScheduleInfo from './helpers/getPlanScheduleInfo';
+import ListViewTable from '../../../common/ListViewTable/ListViewTable';
+import ScheduledTimeInfoItem from './ScheduledTimeInfoItem';
 
 const MigrationsCompletedList = ({
   finishedTransformationPlans,
@@ -70,7 +72,7 @@ const MigrationsCompletedList = ({
                     {renderActiveFilters(filteredSortedPaginatedListItems)}
                   </Toolbar>
                 </Grid.Row>
-                <ListView className="plans-complete-list" style={{ marginTop: 10 }}>
+                <ListViewTable className="plans-complete-list" style={{ marginTop: 10 }}>
                   {filteredSortedPaginatedListItems.items.map(plan => {
                     const {
                       migrationScheduled,
@@ -170,10 +172,10 @@ const MigrationsCompletedList = ({
 
                     const isMissingMapping = !plan.infraMappingName;
 
-                    const showScheduledTime = migrationScheduled && !staleMigrationSchedule && !migrationStarting;
+                    const showScheduledTime = !!migrationScheduled && !staleMigrationSchedule && !migrationStarting;
 
                     return (
-                      <ListView.Item
+                      <ListViewTable.Row
                         stacked
                         className="plans-complete-list__list-item"
                         onClick={e => {
@@ -209,19 +211,18 @@ const MigrationsCompletedList = ({
                         heading={plan.name}
                         description={plan.description}
                         additionalInfo={[
-                          <ListView.InfoItem key={`${plan.id}-migrated`} style={{ paddingRight: 40 }}>
+                          <ListView.InfoItem className="num-vms-migrated" key={`${plan.id}-migrated`}>
                             <ListView.Icon type="pf" size="lg" name="screen" />
-                            &nbsp;
-                            <strong>{succeedCount}</strong> {__('of')} &nbsp;
-                            <strong>{Object.keys(tasks).length} </strong>
+                            <strong>{succeedCount}</strong>
+                            {__('of')}
+                            <strong className="total">{Object.keys(tasks).length} </strong>
                             {__('VMs successfully migrated.')}
                           </ListView.InfoItem>,
-                          isMissingMapping && (
+                          isMissingMapping ? (
                             <ListView.InfoItem key={`${plan.id}-infraMappingWarning`}>
                               <Icon type="pf" name="warning-triangle-o" /> {__('Infrastucture mapping does not exist.')}
                             </ListView.InfoItem>
-                          ),
-                          !isMissingMapping && (
+                          ) : (
                             <ListView.InfoItem key={`${plan.id}-infraMappingName`}>
                               {plan.infraMappingName}
                             </ListView.InfoItem>
@@ -240,19 +241,12 @@ const MigrationsCompletedList = ({
                               {formatDateTime(mostRecentRequest.fulfilled_on)}
                             </ListView.InfoItem>
                           ) : null,
-                          showScheduledTime ? (
-                            <ListView.InfoItem key={`${plan.id}-scheduledTime`} style={{ textAlign: 'left' }}>
-                              <Icon type="fa" name="clock-o" />
-                              {__('Migration scheduled')}
-                              <br />
-                              {formatDateTime(migrationScheduled)}
-                            </ListView.InfoItem>
-                          ) : null,
-                          migrationStarting && (
-                            <ListView.InfoItem key={`${plan.id}-starting`} style={{ textAlign: 'left' }}>
-                              {__('Migration in progress')}
-                            </ListView.InfoItem>
-                          )
+                          <ScheduledTimeInfoItem
+                            planId={plan.id}
+                            migrationStarting={migrationStarting}
+                            showScheduledTime={showScheduledTime}
+                            migrationScheduled={migrationScheduled}
+                          />
                         ]}
                         actions={
                           // Visibility helper is used instead of conditional rendering
@@ -334,7 +328,7 @@ const MigrationsCompletedList = ({
                       />
                     );
                   })}
-                </ListView>
+                </ListViewTable>
                 {renderPaginationRow(filteredSortedPaginatedListItems)}
               </React.Fragment>
             )}

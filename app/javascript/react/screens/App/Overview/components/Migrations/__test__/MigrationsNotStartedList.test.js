@@ -3,6 +3,7 @@ import { mount } from 'enzyme';
 
 import MigrationsNotStartedList from '../MigrationsNotStartedList';
 import { transformationPlans } from '../../../overview.transformationPlans.fixtures';
+import ListViewTableRow from '../../../../common/ListViewTable/ListViewTableRow';
 
 const { resources: plans } = transformationPlans;
 const [notStartedPlan] = plans;
@@ -25,7 +26,7 @@ beforeEach(() => {
 
 test('clicking on a plan fires redirectTo with the path to its details page', () => {
   wrapper
-    .find('ListViewItem')
+    .find(ListViewTableRow)
     .at(0)
     .simulate('click');
 
