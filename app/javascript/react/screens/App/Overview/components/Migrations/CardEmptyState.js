@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { EmptyState, Spinner } from 'patternfly-react';
 
+// TODO maybe remove this, it probably won't be used anymore
+
 const CardEmptyState = ({ iconType, iconName, emptyStateInfo, emptyStateInfoStyles, showSpinner, spinnerStyles }) => (
   <EmptyState>
     {showSpinner && <Spinner loading size="lg" style={spinnerStyles} />}

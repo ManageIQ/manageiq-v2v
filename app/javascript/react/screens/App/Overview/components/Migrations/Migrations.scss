@@ -1,3 +1,5 @@
+// TODO remove card-specific styles
+
 .card-pf-multi-card-container {
   background: transparent;
   border: none;
@@ -20,24 +22,19 @@
   }
 }
 
-.active-migration-elapsed-time {
-  .fa,
-  .pficon {
-    margin-right: 5px;
+.migrations {
+  .active-migration-elapsed-time {
+    .fa,
+    .pficon {
+      margin-right: 5px;
+    }
   }
-}
 
-.list-view-pf-additional-info-item.num-vms-migrated strong.total {
-  margin-left: 5px;
-}
+  .list-view-pf-additional-info-item.num-vms-migrated strong.total {
+    margin-left: 5px;
+  }
 
-@media (min-width: 992px) {
-  .migrations .list-view-pf-main-info .list-view-pf-body {
-    .list-view-pf-description {
-      width: 25%;
-    }
-    .list-view-pf-additional-info {
-      width: 75%;
-    }
+  .list-view-pf-additional-info-item .spinner-sm.spinner-inline {
+    margin: 0 10px 0 0;
   }
 }
