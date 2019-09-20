@@ -21,6 +21,7 @@ import Visibility from '../../../common/Visibility';
 import getPlanScheduleInfo from './helpers/getPlanScheduleInfo';
 import ListViewTable from '../../../common/ListViewTable/ListViewTable';
 import ScheduledTimeInfoItem from './ScheduledTimeInfoItem';
+import MappingNameInfoItem from './MappingNameInfoItem';
 
 const MigrationsCompletedList = ({
   finishedTransformationPlans,
@@ -218,15 +219,7 @@ const MigrationsCompletedList = ({
                             <strong className="total">{Object.keys(tasks).length} </strong>
                             {__('VMs successfully migrated.')}
                           </ListView.InfoItem>,
-                          isMissingMapping ? (
-                            <ListView.InfoItem key={`${plan.id}-infraMappingWarning`}>
-                              <Icon type="pf" name="warning-triangle-o" /> {__('Infrastucture mapping does not exist.')}
-                            </ListView.InfoItem>
-                          ) : (
-                            <ListView.InfoItem key={`${plan.id}-infraMappingName`}>
-                              {plan.infraMappingName}
-                            </ListView.InfoItem>
-                          ),
+                          <MappingNameInfoItem key={`${plan.id}-mappingName`} plan={plan} />,
                           !denied ? (
                             <ListView.InfoItem key={`${plan.id}-elapsed`}>
                               <ListView.Icon type="fa" size="lg" name="clock-o" />
