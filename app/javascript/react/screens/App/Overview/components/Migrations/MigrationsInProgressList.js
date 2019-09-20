@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Grid, Spinner } from 'patternfly-react';
 import ShowWizardEmptyState from '../../../common/ShowWizardEmptyState/ShowWizardEmptyState';
 import MigrationInProgressListItem from './MigrationInProgressListItem';
+import ListViewTable from '../../../common/ListViewTable/ListViewTable';
 
 const MigrationsInProgressList = ({
   activeTransformationPlans,
@@ -22,11 +23,11 @@ const MigrationsInProgressList = ({
   isCancellingPlanRequest,
   requestsProcessingCancellation
 }) => (
-  <React.Fragment>
-    <Grid.Col xs={12} id="progress-bar-items">
-      <Spinner loading={!!loading}>
-        {activeTransformationPlans.length > 0 && allRequestsWithTasks.length > 0 ? (
-          activeTransformationPlans.map(plan => (
+  <Grid.Col xs={12} id="progress-bar-items">
+    <Spinner loading={!!loading}>
+      {activeTransformationPlans.length > 0 && allRequestsWithTasks.length > 0 ? (
+        <ListViewTable className="plans-in-progress-list" style={{ marginTop: 10 }}>
+          {activeTransformationPlans.map(plan => (
             <MigrationInProgressListItem
               plan={plan}
               serviceTemplatePlaybooks={serviceTemplatePlaybooks}
@@ -45,19 +46,19 @@ const MigrationsInProgressList = ({
               isCancellingPlanRequest={isCancellingPlanRequest}
               requestsProcessingCancellation={requestsProcessingCancellation}
             />
-          ))
-        ) : (
-          <ShowWizardEmptyState
-            title={__('No Migration Plans In Progress')}
-            iconType="pf"
-            iconName="info"
-            description={<span>{__('There are no existing migration plans in an In Progress state.')}</span>}
-          />
-        )}
-      </Spinner>
-    </Grid.Col>
+          ))}
+        </ListViewTable>
+      ) : (
+        <ShowWizardEmptyState
+          title={__('No Migration Plans In Progress')}
+          iconType="pf"
+          iconName="info"
+          description={<span>{__('There are no existing migration plans in an In Progress state.')}</span>}
+        />
+      )}
+    </Spinner>
     {/* TODO: scheduling modal here? maybe lift that out of CompletedList? */}
-  </React.Fragment>
+  </Grid.Col>
 );
 
 MigrationsInProgressList.propTypes = {

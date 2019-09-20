@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import numeral from 'numeral';
-import { Icon, OverlayTrigger, Popover, Tooltip, UtilizationBar } from 'patternfly-react';
+import { Spinner, ListView, Icon, OverlayTrigger, Popover, Tooltip, UtilizationBar } from 'patternfly-react';
 
 import InProgressCard from './InProgressCard';
 import InProgressWithDetailCard from './InProgressWithDetailCard';
@@ -18,12 +18,17 @@ import {
 import CardEmptyState from './CardEmptyState';
 import CardFooter from './CardFooter';
 import { urlBuilder } from './helpers';
+import ListViewTable from '../../../common/ListViewTable/ListViewTable';
+import MappingNameInfoItem from './MappingNameInfoItem';
+import NumVmsInfoItem from './NumVmsInfoItem';
+
+// TODO breakdown of things that need to be done here
 
 const MigrationInProgressListItem = ({
   plan,
   serviceTemplatePlaybooks,
   allRequestsWithTasks,
-  reloadCard,
+  reloadCard, // TODO where does this come from, can we rename it?
   handleClick,
   fetchTransformationPlansAction,
   fetchTransformationPlansUrl,
@@ -44,18 +49,32 @@ const MigrationInProgressListItem = ({
     mostRecentRequest.miq_request_tasks.length > 0 &&
     mostRecentRequest.miq_request_tasks.every(task => !task.conversion_host_id);
 
-  // if most recent request is still pending, show loading card
-  if (reloadCard || !mostRecentRequest || mostRecentRequest.request_state === 'pending') {
+  const isInitiating = reloadCard || !mostRecentRequest || mostRecentRequest.request_state === 'pending';
+
+  // If most recent request is still pending, show loading state
+  if (isInitiating) {
     return (
-      <InProgressCard title={<h3 className="card-pf-title">{plan.name}</h3>}>
-        <CardEmptyState
-          emptyStateInfo={__('Initiating migration. This might take a few minutes.')}
-          showSpinner
-          spinnerStyles={{ marginBottom: '15px' }}
-        />
-      </InProgressCard>
+      <ListViewTable.Row
+        stacked
+        className="plans-in-progress-list__list-item"
+        key={mostRecentRequest.id}
+        leftContent={<Spinner size="lg" loading />}
+        heading={plan.name}
+        description={plan.description}
+        additionalInfo={[
+          <MappingNameInfoItem key="mappingName" plan={plan} />,
+          <NumVmsInfoItem key="numVms" plan={plan} />,
+          <ListView.InfoItem key="initiating">
+            <Spinner size="sm" inline loading />
+            {__('Initiating migration. This might take a few minutes.')}
+          </ListView.InfoItem>
+        ]}
+        actions={<div />}
+      />
     );
   }
+
+  return null;
 
   if (waitingForConversionHost) {
     const cancelPlanRequest = () => {
