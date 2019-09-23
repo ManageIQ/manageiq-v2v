@@ -6,10 +6,7 @@ import { Spinner, ListView, Icon, OverlayTrigger, Popover, Tooltip, UtilizationB
 import InProgressCard from './InProgressCard';
 import InProgressWithDetailCard from './InProgressWithDetailCard';
 import TickingIsoElapsedTime from '../../../../../../components/dates/TickingIsoElapsedTime';
-import getMostRecentRequest from '../../../common/getMostRecentRequest';
-import getMostRecentVMTasksFromRequests from './helpers/getMostRecentVMTasksFromRequests';
 import getPlaybookName from './helpers/getPlaybookName';
-import { PLAN_JOB_STATES } from '../../../../../../data/models/plans';
 import {
   MIGRATIONS_FILTERS,
   TRANSFORMATION_PLAN_REQUESTS_URL,
@@ -21,8 +18,36 @@ import { urlBuilder } from './helpers';
 import ListViewTable from '../../../common/ListViewTable/ListViewTable';
 import MappingNameInfoItem from './MappingNameInfoItem';
 import NumVmsInfoItem from './NumVmsInfoItem';
+import {
+  countFailedVms,
+  isWaitingForConversionHost,
+  getRequestsOfPlan,
+  getIndexedTasksOfPlan,
+  aggregateTasks,
+  calculateTotalDiskSpace
+} from './helpers/inProgressHelpers';
 
-// TODO breakdown of things that need to be done here
+// TODO move this to another file
+const InProgressRow = ({ plan, additionalInfo, actions = <div /> }) => (
+  <ListViewTable.Row
+    stacked
+    className="plans-in-progress-list__list-item"
+    leftContent={<Spinner size="lg" loading />}
+    heading={plan.name}
+    description={plan.description}
+    additionalInfo={[
+      <MappingNameInfoItem key="mappingName" plan={plan} />,
+      <NumVmsInfoItem key="numVms" plan={plan} />,
+      ...additionalInfo
+    ]}
+    actions={actions}
+  />
+);
+InProgressRow.propTypes = {
+  plan: PropTypes.shape({ name: PropTypes.string, description: PropTypes.string }),
+  additionalInfo: PropTypes.arrayOf(PropTypes.node),
+  actions: PropTypes.node
+};
 
 const MigrationInProgressListItem = ({
   plan,
@@ -41,41 +66,149 @@ const MigrationInProgressListItem = ({
   isCancellingPlanRequest,
   requestsProcessingCancellation
 }) => {
-  const requestsOfAssociatedPlan = allRequestsWithTasks.filter(request => request.source_id === plan.id);
-  const mostRecentRequest = requestsOfAssociatedPlan.length > 0 && getMostRecentRequest(requestsOfAssociatedPlan);
-  const waitingForConversionHost =
-    mostRecentRequest &&
-    mostRecentRequest.approval_state === 'approved' &&
-    mostRecentRequest.miq_request_tasks.length > 0 &&
-    mostRecentRequest.miq_request_tasks.every(task => !task.conversion_host_id);
+  const { requestsOfAssociatedPlan, mostRecentRequest } = getRequestsOfPlan(plan, allRequestsWithTasks);
+  const waitingForConversionHost = isWaitingForConversionHost(mostRecentRequest);
 
   const isInitiating = reloadCard || !mostRecentRequest || mostRecentRequest.request_state === 'pending';
 
-  // If most recent request is still pending, show loading state
   if (isInitiating) {
     return (
-      <ListViewTable.Row
-        stacked
-        className="plans-in-progress-list__list-item"
-        key={mostRecentRequest.id}
-        leftContent={<Spinner size="lg" loading />}
-        heading={plan.name}
-        description={plan.description}
+      <InProgressRow
+        plan={plan}
         additionalInfo={[
-          <MappingNameInfoItem key="mappingName" plan={plan} />,
-          <NumVmsInfoItem key="numVms" plan={plan} />,
           <ListView.InfoItem key="initiating">
             <Spinner size="sm" inline loading />
             {__('Initiating migration. This might take a few minutes.')}
           </ListView.InfoItem>
         ]}
-        actions={<div />}
       />
     );
   }
 
-  return null;
+  // ////////////////////////////////
+  // ////////////////////////////////
+  // ////////////////////////////////
+  // ////////////////////////////////
+  // ////////////////////////////////
+  // ////////////////////////////////
+  // ////////////////////////////////
+  // //////////////////////////////// TODO move the below into a helper file?
 
+  // UX business rule: reflect failed immediately if any single task has failed
+  // in the most recent request
+  const { failed, numFailedVms } = countFailedVms(mostRecentRequest);
+
+  // TODO RETURN ROW if failed!
+
+  // UX business rule: aggregrate the tasks across requests reflecting current status of all tasks,
+  // (gather the last status for the vm, gather the last storage for use in UX bussiness rule 3)
+
+  const tasksBySourceId = getIndexedTasksOfPlan(plan, requestsOfAssociatedPlan, mostRecentRequest);
+  const {
+    numTotalVms,
+    numCompletedVms,
+    taskRunningPreMigrationPlaybook,
+    taskRunningPostMigrationPlaybook
+  } = aggregateTasks(tasksBySourceId);
+
+  let failedOverlay = null;
+  if (failed) {
+    failedOverlay = (
+      <OverlayTrigger
+        overlay={
+          <Popover id={`description_${plan.id}`} title={sprintf('%s', plan.name)}>
+            <Icon
+              type="pf"
+              name="error-circle-o"
+              size="sm"
+              style={{
+                width: 'inherit',
+                backgroundColor: 'transparent',
+                paddingRight: 5
+              }}
+            />
+            {sprintf(__('%s of %s VM migrations failed.'), numFailedVms, numTotalVms)}
+          </Popover>
+        }
+        placement="top"
+        trigger={['hover']}
+        delay={500}
+        rootClose={false}
+      >
+        <Icon
+          type="pf"
+          name="error-circle-o"
+          size="md"
+          style={{
+            width: 'inherit',
+            backgroundColor: 'transparent',
+            paddingRight: 10
+          }}
+        />
+      </OverlayTrigger>
+    );
+  }
+
+  // TODO --- below logic is not needed if playbooks are running -- how to handle this?
+
+  // UX business rule: reflect the total disk space migrated, aggregated across requests
+  const { totalDiskSpace, totalMigratedDiskSpace } = calculateTotalDiskSpace(tasksBySourceId);
+  const totalDiskSpaceGb = numeral(totalDiskSpace).format('0.00b');
+  const totalMigratedDiskSpaceGb = numeral(totalMigratedDiskSpace).format('0.00b');
+
+  const elapsedTime = <TickingIsoElapsedTime startTime={mostRecentRequest.created_on} />;
+
+  // Tooltips
+  const vmBarLabel = (
+    <span>
+      <strong id="vms-migrated" className="label-strong">
+        {sprintf(__('%s of %s VMs'), numCompletedVms, numTotalVms)}
+      </strong>{' '}
+      {__('migrated')}
+    </span>
+  );
+
+  const diskSpaceBarLabel = (
+    <span>
+      <strong id="size-migrated" className="label-strong">
+        {sprintf(__('%s of %s'), totalMigratedDiskSpaceGb, totalDiskSpaceGb)}
+      </strong>{' '}
+      {__('migrated')}
+    </span>
+  );
+
+  const availableTooltip = (id, max, now) => {
+    if (max > 0) {
+      return <Tooltip id={id}>{sprintf(__('%s%% Remaining'), Math.round(((max - now) / max) * 100))}</Tooltip>;
+    }
+    return <Tooltip id={id}>{__('No Data')}</Tooltip>;
+  };
+  const usedTooltip = (id, max, now) => {
+    if (max > 0) {
+      return <Tooltip id={id}>{sprintf(__('%s%% Complete'), Math.round((now / max) * 100))}</Tooltip>;
+    }
+    return <Tooltip id={id}>{__('No Data')}</Tooltip>;
+  };
+
+  const usedVmTooltip = () => usedTooltip(`used-vm-${plan.id}`, numTotalVms, numCompletedVms);
+  const availableVmTooltip = () => availableTooltip(`available-vm-${plan.id}`, numTotalVms, numCompletedVms);
+
+  const usedDiskSpaceTooltip = () => usedTooltip(`total-disk-${plan.id}`, totalDiskSpace, totalMigratedDiskSpace);
+  const availableDiskSpaceTooltip = () =>
+    availableTooltip(`migrated-disk-${plan.id}`, totalDiskSpace, totalMigratedDiskSpace);
+
+  // //////////////////////////////// TODO move the above into a helper file?
+  // ////////////////////////////////
+  // ////////////////////////////////
+  // ////////////////////////////////
+  // ////////////////////////////////
+  // ////////////////////////////////
+  // ////////////////////////////////
+  // ////////////////////////////////
+
+  return <InProgressRow plan={plan} additionalInfo={[]} />;
+
+  // TODO handle this case after initiating
   if (waitingForConversionHost) {
     const cancelPlanRequest = () => {
       cancelPlanRequestAction(TRANSFORMATION_PLAN_REQUESTS_URL, mostRecentRequest.id).then(() =>
@@ -113,6 +246,7 @@ const MigrationInProgressListItem = ({
     );
   }
 
+  // TODO handle this case after waiting-for-host
   if (mostRecentRequest.approval_state === 'denied') {
     const onButtonClick = () =>
       acknowledgeDeniedPlanRequestAction({
@@ -146,96 +280,7 @@ const MigrationInProgressListItem = ({
     );
   }
 
-  // UX business rule: reflect failed immediately if any single task has failed
-  // in the most recent request
-  let failed = false;
-  let failedVms = 0;
-  mostRecentRequest.miq_request_tasks.forEach(task => {
-    if (task.status === 'Error') {
-      failed = true;
-      failedVms += 1;
-    }
-  });
-
-  // UX business rule: aggregrate the tasks across requests reflecting current status of all tasks,
-  // (gather the last status for the vm, gather the last storage for use in UX bussiness rule 3)
-  const tasks = {};
-  let tasksOfPlan = {};
-  if (requestsOfAssociatedPlan.length > 0) {
-    tasksOfPlan = getMostRecentVMTasksFromRequests(requestsOfAssociatedPlan, plan.options.config_info.actions);
-  } else if (mostRecentRequest) {
-    tasksOfPlan = mostRecentRequest.miq_request_tasks;
-  }
-  tasksOfPlan.forEach(task => {
-    tasks[task.source_id] = tasks[task.source_id] || {};
-    tasks[task.source_id].completed = task.status === 'Ok' && task.state === 'finished';
-    tasks[task.source_id].virtv2v_disks = task.options.virtv2v_disks;
-    tasks[task.source_id].playbooks = task.options.playbooks;
-  });
-
-  let completedVMs = 0;
-  const totalVMs = Object.keys(tasks).length;
-  let taskRunningPreMigrationPlaybook = null;
-  let taskRunningPostMigrationPlaybook = null;
-  Object.keys(tasks).forEach(task => {
-    if (tasks[task].completed) completedVMs += 1;
-
-    // after we have assigned the latest tasks for each source, check the running playbook status
-    const { playbooks } = tasks[task];
-    if (playbooks) {
-      if (
-        playbooks.pre &&
-        (playbooks.pre.job_state === PLAN_JOB_STATES.PENDING || playbooks.pre.job_state === PLAN_JOB_STATES.ACTIVE)
-      ) {
-        taskRunningPreMigrationPlaybook = tasks[task];
-      }
-      if (
-        playbooks.post &&
-        (playbooks.post.job_state === PLAN_JOB_STATES.PENDING || playbooks.post.job_state === PLAN_JOB_STATES.ACTIVE)
-      ) {
-        taskRunningPostMigrationPlaybook = tasks[task];
-      }
-    }
-  });
-
-  let failedOverlay = null;
-  if (failed) {
-    failedOverlay = (
-      <OverlayTrigger
-        overlay={
-          <Popover id={`description_${plan.id}`} title={sprintf('%s', plan.name)}>
-            <Icon
-              type="pf"
-              name="error-circle-o"
-              size="sm"
-              style={{
-                width: 'inherit',
-                backgroundColor: 'transparent',
-                paddingRight: 5
-              }}
-            />
-            {sprintf(__('%s of %s VM migrations failed.'), failedVms, totalVMs)}
-          </Popover>
-        }
-        placement="top"
-        trigger={['hover']}
-        delay={500}
-        rootClose={false}
-      >
-        <Icon
-          type="pf"
-          name="error-circle-o"
-          size="md"
-          style={{
-            width: 'inherit',
-            backgroundColor: 'transparent',
-            paddingRight: 10
-          }}
-        />
-      </OverlayTrigger>
-    );
-  }
-
+  // TODO handle this case after denied
   // UX business rule: if there are any pre migration playbooks running, show this content instead
   if (taskRunningPreMigrationPlaybook) {
     const playbookName = getPlaybookName(serviceTemplatePlaybooks, plan.options.config_info.pre_service_id);
@@ -250,24 +295,7 @@ const MigrationInProgressListItem = ({
     );
   }
 
-  // UX business rule: reflect the total disk space migrated, aggregated across requests
-  let totalDiskSpace = 0;
-  let totalMigratedDiskSpace = 0;
-  Object.keys(tasks).forEach(task => {
-    const taskDisks = tasks[task].virtv2v_disks;
-    if (taskDisks && taskDisks.length) {
-      const totalTaskDiskSpace = taskDisks.reduce((a, b) => a + b.size, 0);
-      const percentComplete = taskDisks.reduce((a, b) => a + b.percent, 0) / (100 * taskDisks.length);
-      const taskDiskSpaceCompleted = percentComplete * totalTaskDiskSpace;
-
-      totalDiskSpace += totalTaskDiskSpace;
-      totalMigratedDiskSpace += taskDiskSpaceCompleted;
-    }
-  });
-
-  const totalDiskSpaceGb = numeral(totalDiskSpace).format('0.00 ib');
-  const totalMigratedDiskSpaceGb = numeral(totalMigratedDiskSpace).format('0.00 ib');
-
+  // TODO handle this case after pre-playbooks
   // UX business rule: if all disks have been migrated and we have a post migration playbook running, show this instead
   if (totalMigratedDiskSpaceGb >= totalDiskSpaceGb && taskRunningPostMigrationPlaybook) {
     const playbookName = getPlaybookName(serviceTemplatePlaybooks, plan.options.config_info.post_service_id);
@@ -282,48 +310,7 @@ const MigrationInProgressListItem = ({
     );
   }
 
-  // UX business rule: reflect most request recent elapsed time
-  const elapsedTime = <TickingIsoElapsedTime startTime={mostRecentRequest.created_on} />;
-
-  // Tooltips
-  const vmBarLabel = (
-    <span>
-      <strong id="vms-migrated" className="label-strong">
-        {sprintf(__('%s of %s VMs'), completedVMs, totalVMs)}
-      </strong>{' '}
-      {__('migrated')}
-    </span>
-  );
-
-  const diskSpaceBarLabel = (
-    <span>
-      <strong id="size-migrated" className="label-strong">
-        {sprintf(__('%s of %s'), totalMigratedDiskSpaceGb, totalDiskSpaceGb)}
-      </strong>{' '}
-      {__('migrated')}
-    </span>
-  );
-
-  const availableTooltip = (id, max, now) => {
-    if (max > 0) {
-      return <Tooltip id={id}>{sprintf(__('%s%% Remaining'), Math.round(((max - now) / max) * 100))}</Tooltip>;
-    }
-    return <Tooltip id={id}>{__('No Data')}</Tooltip>;
-  };
-  const usedTooltip = (id, max, now) => {
-    if (max > 0) {
-      return <Tooltip id={id}>{sprintf(__('%s%% Complete'), Math.round((now / max) * 100))}</Tooltip>;
-    }
-    return <Tooltip id={id}>{__('No Data')}</Tooltip>;
-  };
-
-  const usedVmTooltip = () => usedTooltip(`used-vm-${plan.id}`, totalVMs, completedVMs);
-  const availableVmTooltip = () => availableTooltip(`available-vm-${plan.id}`, totalVMs, completedVMs);
-
-  const usedDiskSpaceTooltip = () => usedTooltip(`total-disk-${plan.id}`, totalDiskSpace, totalMigratedDiskSpace);
-  const availableDiskSpaceTooltip = () =>
-    availableTooltip(`migrated-disk-${plan.id}`, totalDiskSpace, totalMigratedDiskSpace);
-
+  // TODO handle base case: actually showing progress!
   return (
     <InProgressWithDetailCard plan={plan} failedOverlay={failedOverlay} handleClick={handleClick}>
       <div id={`datastore-progress-bar-${plan.id}`}>
@@ -339,8 +326,8 @@ const MigrationInProgressListItem = ({
       </div>
       <div id={`vm-progress-bar-${plan.id}`}>
         <UtilizationBar
-          now={completedVMs}
-          max={totalVMs}
+          now={numCompletedVms}
+          max={numTotalVms}
           description={__('VMs')}
           label={vmBarLabel}
           descriptionPlacementTop
