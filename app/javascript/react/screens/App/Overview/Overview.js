@@ -378,36 +378,31 @@ class Overview extends React.Component {
         />
       </React.Fragment>
     );
-
-    const inProgressCardsVisible =
-      migrationsFilter === MIGRATIONS_FILTERS.inProgress && activeTransformationPlans.length > 0;
-
     const emptyStateVisible =
       (migrationsFilter === MIGRATIONS_FILTERS.notStarted && notStartedTransformationPlans.length === 0) ||
       (migrationsFilter === MIGRATIONS_FILTERS.inProgress && activeTransformationPlans.length === 0) ||
       (migrationsFilter === MIGRATIONS_FILTERS.completed && finishedTransformationPlans.length === 0) ||
       (migrationsFilter === MIGRATIONS_FILTERS.archived && archivedTransformationPlans.length === 0);
 
-    // Full-height grey background (.cards-pf) for in-progress cards and empty states, otherwise only grey behind aggregate cards
-    const overviewContent =
-      inProgressCardsVisible || emptyStateVisible ? (
-        <div
-          className="row cards-pf"
-          style={{ overflow: 'auto', overflowX: 'hidden', paddingBottom: 50, height: '100%' }}
-        >
+    // Full-height grey background (.cards-pf) for empty states, otherwise only grey behind aggregate cards
+    const overviewContent = emptyStateVisible ? (
+      <div
+        className="row cards-pf"
+        style={{ overflow: 'auto', overflowX: 'hidden', paddingBottom: 50, height: '100%' }}
+      >
+        {this.renderAggregateDataCards()}
+        {mainContent}
+      </div>
+    ) : (
+      <div className="row" style={{ overflow: 'auto', overflowX: 'hidden', paddingBottom: 50, height: '100%' }}>
+        <div className="row cards-pf" style={{ marginLeft: 0, marginRight: 0 }}>
           {this.renderAggregateDataCards()}
+        </div>
+        <div className="row" style={{ marginLeft: 0, marginRight: 0 }}>
           {mainContent}
         </div>
-      ) : (
-        <div className="row" style={{ overflow: 'auto', overflowX: 'hidden', paddingBottom: 50, height: '100%' }}>
-          <div className="row cards-pf" style={{ marginLeft: 0, marginRight: 0 }}>
-            {this.renderAggregateDataCards()}
-          </div>
-          <div className="row" style={{ marginLeft: 0, marginRight: 0 }}>
-            {mainContent}
-          </div>
-        </div>
-      );
+      </div>
+    );
 
     return (
       <React.Fragment>
