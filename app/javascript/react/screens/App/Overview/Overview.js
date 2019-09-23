@@ -376,19 +376,15 @@ class Overview extends React.Component {
         />
       </React.Fragment>
     );
-
-    const inProgressCardsVisible =
-      migrationsFilter === MIGRATIONS_FILTERS.inProgress && activeTransformationPlans.length > 0;
-
     const emptyStateVisible =
       (migrationsFilter === MIGRATIONS_FILTERS.notStarted && notStartedTransformationPlans.length === 0) ||
       (migrationsFilter === MIGRATIONS_FILTERS.inProgress && activeTransformationPlans.length === 0) ||
       (migrationsFilter === MIGRATIONS_FILTERS.completed && finishedTransformationPlans.length === 0) ||
       (migrationsFilter === MIGRATIONS_FILTERS.archived && archivedTransformationPlans.length === 0);
 
-    // Full-height grey background (.cards-pf) for in-progress cards and empty states, otherwise only grey behind aggregate cards
+    // Full-height grey background (.cards-pf) for empty states, otherwise only grey behind aggregate cards
     const overviewContent =
-      (inProgressCardsVisible || emptyStateVisible) && !isMainContentLoading ? (
+      emptyStateVisible && !isMainContentLoading ? (
         <div className="row cards-pf main-body-content">
           {this.renderAggregateDataCards()}
           {mainContent}
