@@ -22,7 +22,6 @@ Object {
   "ospConversionHosts": Array [],
   "persistentSubmitErrors": false,
   "pure": true,
-  "queryProvidersAction": [Function],
   "rhvConversionHosts": Array [],
   "shouldAsyncValidate": [Function],
   "shouldError": [Function],

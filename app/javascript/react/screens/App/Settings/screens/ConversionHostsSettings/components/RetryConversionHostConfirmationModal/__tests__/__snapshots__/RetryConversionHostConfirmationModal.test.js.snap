@@ -1,5 +1,269 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`retry conversion host confirmation modal renders correctly for a VDDK task 1`] = `
+<Modal
+  animation={true}
+  autoFocus={true}
+  backdrop="static"
+  bsClass="modal"
+  dialogClassName="modal-lg wizard-pf"
+  dialogComponentClass={[Function]}
+  enforceFocus={true}
+  keyboard={true}
+  manager={
+    ModalManager {
+      "add": [Function],
+      "containers": Array [],
+      "data": Array [],
+      "handleContainerOverflow": true,
+      "hideSiblingNodes": true,
+      "isTopModal": [Function],
+      "modals": Array [],
+      "remove": [Function],
+    }
+  }
+  onExited={[MockFunction]}
+  onHide={[MockFunction]}
+  renderBackdrop={[Function]}
+  restoreFocus={true}
+  show={true}
+>
+  <ModalHeader
+    bsClass="modal-header"
+    closeButton={false}
+    closeLabel="Close"
+  >
+    <ModalCloseButton
+      className=""
+      closeText="Close"
+      onClick={[MockFunction]}
+    />
+    <ModalTitle
+      bsClass="modal-title"
+      componentClass="h4"
+    >
+      Retry Conversion Host Configuration
+    </ModalTitle>
+  </ModalHeader>
+  <ModalBody
+    bsClass="modal-body"
+    componentClass="div"
+  >
+    <Form
+      bsClass="form"
+      className="form-horizontal"
+      componentClass="form"
+      horizontal={false}
+      inline={false}
+    >
+      <ul>
+        <p>
+          For your security, SSH private keys from the configuration wizard were not saved. Re-enter the necessary authentication details to retry configuration of the following conversion host:
+        </p>
+      </ul>
+      <FormGroup
+        bsClass="form-group"
+      >
+        <Col
+          bsClass="col"
+          componentClass={[Function]}
+          sm={4}
+        >
+          Host
+        </Col>
+        <Col
+          bsClass="col"
+          componentClass="div"
+          sm={7}
+          style={
+            Object {
+              "paddingTop": 3,
+            }
+          }
+        >
+          Mock Host
+        </Col>
+      </FormGroup>
+      <TextFileField
+        controlId="host-ssh-key-input"
+        controlWidth={7}
+        help="Upload your SSH key file or paste its contents below."
+        hideBody={false}
+        info=""
+        label="Conversion Host SSH private key"
+        labelWidth={4}
+        name="conversionHostSshKey"
+      />
+    </Form>
+  </ModalBody>
+  <ModalFooter
+    bsClass="modal-footer"
+    componentClass="div"
+  >
+    <Button
+      active={false}
+      block={false}
+      bsClass="btn"
+      bsStyle="default"
+      className="btn-cancel"
+      disabled={false}
+      onClick={[MockFunction]}
+    >
+      Cancel
+    </Button>
+    <Button
+      active={false}
+      block={false}
+      bsClass="btn"
+      bsStyle="primary"
+      disabled={false}
+      onClick={[Function]}
+    >
+      Retry
+    </Button>
+  </ModalFooter>
+</Modal>
+`;
+
+exports[`retry conversion host confirmation modal renders correctly for an SSH task 1`] = `
+<Modal
+  animation={true}
+  autoFocus={true}
+  backdrop="static"
+  bsClass="modal"
+  dialogClassName="modal-lg wizard-pf"
+  dialogComponentClass={[Function]}
+  enforceFocus={true}
+  keyboard={true}
+  manager={
+    ModalManager {
+      "add": [Function],
+      "containers": Array [],
+      "data": Array [],
+      "handleContainerOverflow": true,
+      "hideSiblingNodes": true,
+      "isTopModal": [Function],
+      "modals": Array [],
+      "remove": [Function],
+    }
+  }
+  onExited={[MockFunction]}
+  onHide={[MockFunction]}
+  renderBackdrop={[Function]}
+  restoreFocus={true}
+  show={true}
+>
+  <ModalHeader
+    bsClass="modal-header"
+    closeButton={false}
+    closeLabel="Close"
+  >
+    <ModalCloseButton
+      className=""
+      closeText="Close"
+      onClick={[MockFunction]}
+    />
+    <ModalTitle
+      bsClass="modal-title"
+      componentClass="h4"
+    >
+      Retry Conversion Host Configuration
+    </ModalTitle>
+  </ModalHeader>
+  <ModalBody
+    bsClass="modal-body"
+    componentClass="div"
+  >
+    <Form
+      bsClass="form"
+      className="form-horizontal"
+      componentClass="form"
+      horizontal={false}
+      inline={false}
+    >
+      <ul>
+        <p>
+          For your security, SSH private keys from the configuration wizard were not saved. Re-enter the necessary authentication details to retry configuration of the following conversion host:
+        </p>
+      </ul>
+      <FormGroup
+        bsClass="form-group"
+      >
+        <Col
+          bsClass="col"
+          componentClass={[Function]}
+          sm={4}
+        >
+          Host
+        </Col>
+        <Col
+          bsClass="col"
+          componentClass="div"
+          sm={7}
+          style={
+            Object {
+              "paddingTop": 3,
+            }
+          }
+        >
+          Mock Host
+        </Col>
+      </FormGroup>
+      <TextFileField
+        controlId="host-ssh-key-input"
+        controlWidth={7}
+        help="Upload your SSH key file or paste its contents below."
+        hideBody={false}
+        info=""
+        label="Conversion Host SSH private key"
+        labelWidth={4}
+        name="conversionHostSshKey"
+      />
+      <TextFileField
+        controlId="vmware-ssh-key-input"
+        controlWidth={7}
+        help="Upload your SSH key file or paste its contents below."
+        hideBody={false}
+        label="VMware hypervisors SSH private key"
+        labelWidth={4}
+        name="vmwareSshKey"
+        style={
+          Object {
+            "marginTop": 25,
+          }
+        }
+      />
+    </Form>
+  </ModalBody>
+  <ModalFooter
+    bsClass="modal-footer"
+    componentClass="div"
+  >
+    <Button
+      active={false}
+      block={false}
+      bsClass="btn"
+      bsStyle="default"
+      className="btn-cancel"
+      disabled={false}
+      onClick={[MockFunction]}
+    >
+      Cancel
+    </Button>
+    <Button
+      active={false}
+      block={false}
+      bsClass="btn"
+      bsStyle="primary"
+      disabled={false}
+      onClick={[Function]}
+    >
+      Retry
+    </Button>
+  </ModalFooter>
+</Modal>
+`;
+
 exports[`retry conversion host confirmation modal renders the redux-form wrapper correctly 1`] = `
 <Hoc
   conversionHostRetryModalExitedAction={[MockFunction]}

@@ -4,7 +4,9 @@ import { Provider } from 'react-redux';
 import { reducer as formReducer } from 'redux-form';
 
 import { generateStore } from '../../../../../../common/testReduxHelpers';
-import RetryConversionHostConfirmationModal from '../RetryConversionHostConfirmationModal';
+import RetryConversionHostConfirmationModalConnected, {
+  RetryConversionHostConfirmationModal
+} from '../RetryConversionHostConfirmationModal';
 
 const flushPromises = () => new Promise(setImmediate); // https://stackoverflow.com/a/51045733
 
@@ -42,36 +44,35 @@ describe('retry conversion host confirmation modal', () => {
   });
 
   it('renders the redux-form wrapper correctly', () => {
-    const component = shallow(<RetryConversionHostConfirmationModal {...getBaseProps()} />);
+    const component = shallow(<RetryConversionHostConfirmationModalConnected {...getBaseProps()} />);
     expect(component).toMatchSnapshot();
   });
 
   it('renders correctly for a VDDK task', () => {
-    const component = mount(
-      <ProviderWrapper>
-        <RetryConversionHostConfirmationModal {...getBaseProps()} />
-      </ProviderWrapper>
-    );
+    const component = shallow(<RetryConversionHostConfirmationModal {...getBaseProps()} />);
     expect(component.find('TextFileField')).toHaveLength(1);
+    expect(component).toMatchSnapshot();
   });
 
   it('renders correctly for an SSH task', () => {
-    const component = mount(
-      <ProviderWrapper>
-        <RetryConversionHostConfirmationModal
-          {...getBaseProps()}
-          conversionHostTaskToRetry={mockSshTask}
-          retryForm={mockSshForm}
-        />
-      </ProviderWrapper>
+    const component = shallow(
+      <RetryConversionHostConfirmationModal
+        {...getBaseProps()}
+        conversionHostTaskToRetry={mockSshTask}
+        retryForm={mockSshForm}
+      />
     );
     expect(component.find('TextFileField')).toHaveLength(2);
+    expect(component).toMatchSnapshot();
   });
 
   it('disables the retry button when there are validation errors', () => {
     const component = mount(
       <ProviderWrapper>
-        <RetryConversionHostConfirmationModal {...getBaseProps()} retryForm={{ syncErrors: { mock: 'errors' } }} />
+        <RetryConversionHostConfirmationModalConnected
+          {...getBaseProps()}
+          retryForm={{ syncErrors: { mock: 'errors' } }}
+        />
       </ProviderWrapper>
     );
     expect(component.find('Button[bsStyle="primary"]').props().disabled).toBeTruthy();
@@ -80,7 +81,7 @@ describe('retry conversion host confirmation modal', () => {
   it('disables the retry button when already retrying', () => {
     const component = mount(
       <ProviderWrapper>
-        <RetryConversionHostConfirmationModal {...getBaseProps()} isPostingConversionHosts />
+        <RetryConversionHostConfirmationModalConnected {...getBaseProps()} isPostingConversionHosts />
       </ProviderWrapper>
     );
     expect(component.find('Button[bsStyle="primary"]').props().disabled).toBeTruthy();
@@ -90,7 +91,7 @@ describe('retry conversion host confirmation modal', () => {
     const props = getBaseProps();
     const component = mount(
       <ProviderWrapper>
-        <RetryConversionHostConfirmationModal {...props} />
+        <RetryConversionHostConfirmationModalConnected {...props} />
       </ProviderWrapper>
     );
     component.find('Button[bsStyle="primary"]').simulate('click');
@@ -111,7 +112,7 @@ describe('retry conversion host confirmation modal', () => {
     const props = getBaseProps();
     const component = mount(
       <ProviderWrapper>
-        <RetryConversionHostConfirmationModal
+        <RetryConversionHostConfirmationModalConnected
           {...props}
           conversionHostTaskToRetry={mockSshTask}
           retryForm={mockSshForm}

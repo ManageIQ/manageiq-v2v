@@ -8,7 +8,7 @@ import { getConversionHostSshKeyInfoMessage } from '../../../../helpers';
 
 const fieldBaseProps = { labelWidth: 4, controlWidth: 7 };
 
-const RetryConversionHostConfirmationModal = ({
+export const RetryConversionHostConfirmationModal = ({
   show,
   conversionHostTaskToRetry,
   isPostingConversionHosts,
