@@ -4,7 +4,9 @@ import { Provider } from 'react-redux';
 import { reducer as formReducer } from 'redux-form';
 
 import { generateStore } from '../../../../../../../common/testReduxHelpers';
-import ConversionHostWizardLocationStep from '../ConversionHostWizardLocationStep';
+import ConversionHostWizardLocationStepConnected, {
+  ConversionHostWizardLocationStep
+} from '../ConversionHostWizardLocationStep';
 import { RHV, OPENSTACK } from '../../../../../../../../../../common/constants';
 
 describe('conversion host wizard location step', () => {
@@ -61,18 +63,18 @@ describe('conversion host wizard location step', () => {
   };
 
   it('renders the redux-form wrapper correctly', () => {
-    const component = shallow(<ConversionHostWizardLocationStep {...getBaseProps()} />);
+    const component = shallow(<ConversionHostWizardLocationStepConnected {...getBaseProps()} />);
     expect(component).toMatchSnapshot();
   });
 
   it('renders correctly in the initial state with both providers present', () => {
-    const component = shallowDive(<ConversionHostWizardLocationStep {...getBaseProps()} />);
+    const component = shallowDive(<ConversionHostWizardLocationStepConnected {...getBaseProps()} />);
     expect(component).toMatchSnapshot();
   });
 
   it('renders correctly in the initial state with only RHV providers present', () => {
     const component = shallowDive(
-      <ConversionHostWizardLocationStep {...getBaseProps()} providers={[mockRhvProvider]} />
+      <ConversionHostWizardLocationStepConnected {...getBaseProps()} providers={[mockRhvProvider]} />
     );
     expect(component).toMatchSnapshot();
   });
@@ -81,7 +83,7 @@ describe('conversion host wizard location step', () => {
     const baseProps = getBaseProps();
     const component = mount(
       <ProviderWrapper>
-        <ConversionHostWizardLocationStep {...baseProps} />
+        <ConversionHostWizardLocationStepConnected {...baseProps} />
       </ProviderWrapper>
     );
     expect(baseProps.fetchTargetClustersAction).toHaveBeenCalledTimes(0);
@@ -92,30 +94,29 @@ describe('conversion host wizard location step', () => {
 
   it('does not call fetchTargetClustersAction when the selectedProviderType does not change', () => {
     const baseProps = getBaseProps();
-    const component = shallowDive(<ConversionHostWizardLocationStep {...baseProps} selectedProviderType={RHV} />);
+    const component = shallowDive(
+      <ConversionHostWizardLocationStepConnected {...baseProps} selectedProviderType={RHV} />
+    );
     expect(baseProps.fetchTargetClustersAction).toHaveBeenCalledTimes(0);
     component.setProps({ unrelatedProp: 'foo' });
     expect(baseProps.fetchTargetClustersAction).toHaveBeenCalledTimes(0);
   });
 
   it('renders correctly when loading clusters after selecting a provider type', () => {
-    const component = mount(
-      <ProviderWrapper>
-        <ConversionHostWizardLocationStep {...getBaseProps()} selectedProviderType={RHV} isFetchingTargetClusters />
-      </ProviderWrapper>
+    const component = shallow(
+      <ConversionHostWizardLocationStep {...getBaseProps()} selectedProviderType={RHV} isFetchingTargetClusters />
     );
     expect(component.find('Spinner').props().loading).toBeTruthy();
+    expect(component).toMatchSnapshot();
   });
 
   it('renders correctly after loading clusters but before selecting a provider', () => {
-    const component = mount(
-      <ProviderWrapper>
-        <ConversionHostWizardLocationStep
-          {...getBaseProps()}
-          selectedProviderType={RHV}
-          targetClusters={mockRhvClusters}
-        />
-      </ProviderWrapper>
+    const component = shallow(
+      <ConversionHostWizardLocationStep
+        {...getBaseProps()}
+        selectedProviderType={RHV}
+        targetClusters={mockRhvClusters}
+      />
     );
     expect(component.find('Spinner').props().loading).toBeFalsy();
     expect(
@@ -124,18 +125,17 @@ describe('conversion host wizard location step', () => {
         .first()
         .props().options
     ).toEqual([]);
+    expect(component).toMatchSnapshot();
   });
 
   it('renders correctly after selecting a RHV provider', () => {
-    const component = mount(
-      <ProviderWrapper>
-        <ConversionHostWizardLocationStep
-          {...getBaseProps()}
-          selectedProviderType={RHV}
-          targetClusters={mockRhvClusters}
-          selectedProviderId="1"
-        />
-      </ProviderWrapper>
+    const component = shallow(
+      <ConversionHostWizardLocationStep
+        {...getBaseProps()}
+        selectedProviderType={RHV}
+        targetClusters={mockRhvClusters}
+        selectedProviderId="1"
+      />
     );
     expect(
       component
@@ -144,18 +144,17 @@ describe('conversion host wizard location step', () => {
         .props()
         .options.map(option => option.id)
     ).toEqual(['1', '2']);
+    expect(component).toMatchSnapshot();
   });
 
   it('renders correctly after selecting an OSP provider', () => {
-    const component = mount(
-      <ProviderWrapper>
-        <ConversionHostWizardLocationStep
-          {...getBaseProps()}
-          selectedProviderType={OPENSTACK}
-          targetClusters={mockOspTenants}
-          selectedProviderId="2"
-        />
-      </ProviderWrapper>
+    const component = shallow(
+      <ConversionHostWizardLocationStep
+        {...getBaseProps()}
+        selectedProviderType={OPENSTACK}
+        targetClusters={mockOspTenants}
+        selectedProviderId="2"
+      />
     );
     expect(
       component
@@ -164,13 +163,14 @@ describe('conversion host wizard location step', () => {
         .props()
         .options.map(option => option.id)
     ).toEqual(['1', '2']);
+    expect(component).toMatchSnapshot();
   });
 
   it('resets the hosts step when the cluster field changes', () => {
     const baseProps = getBaseProps();
     const component = mount(
       <ProviderWrapper>
-        <ConversionHostWizardLocationStep
+        <ConversionHostWizardLocationStepConnected
           {...baseProps}
           selectedProviderType={RHV}
           targetClusters={mockRhvClusters}
