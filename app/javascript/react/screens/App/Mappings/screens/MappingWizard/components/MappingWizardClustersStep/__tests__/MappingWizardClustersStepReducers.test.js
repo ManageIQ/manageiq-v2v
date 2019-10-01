@@ -1,6 +1,5 @@
-import Immutable from 'seamless-immutable';
 import clustersReducer, { initialState } from '../MappingWizardClustersStepReducer';
-import { FETCH_V2V_SOURCE_CLUSTERS, QUERY_V2V_PROVIDERS } from '../MappingWizardClustersStepConstants';
+import { FETCH_V2V_SOURCE_CLUSTERS } from '../MappingWizardClustersStepConstants';
 import { sourceClusters } from '../mappingWizardClustersStep.fixtures';
 
 test('sets default state', () => {
@@ -73,70 +72,6 @@ describe('fetching source clusters', () => {
       const state = clustersReducer(prevState, action);
 
       expect(state).toMatchSnapshot();
-    });
-  });
-});
-
-describe('QUERY_V2V_PROVIDERS', () => {
-  test('querying providers is pending', () => {
-    const action = { type: `${QUERY_V2V_PROVIDERS}_PENDING` };
-    const prevState = Immutable({
-      ...initialState,
-      isRejectedQueryProviders: true
-    });
-    const state = clustersReducer(prevState, action);
-
-    expect(state).toEqual({
-      ...prevState,
-      isQueryingProviders: true,
-      isRejectedQueryProviders: false
-    });
-  });
-
-  test('querying providers is fulfilled', () => {
-    const payload = {
-      data: {
-        results: [{ mock: 'data' }]
-      }
-    };
-    const action = {
-      type: `${QUERY_V2V_PROVIDERS}_FULFILLED`,
-      payload
-    };
-    const prevState = Immutable({
-      ...initialState,
-      isQueryingProviders: true,
-      isRejectedQueryProviders: true,
-      errorQueryProviders: 'error'
-    });
-    const state = clustersReducer(prevState, action);
-
-    expect(state).toEqual({
-      ...prevState,
-      providers: payload.data.results,
-      isQueryingProviders: false,
-      isRejectedQueryProviders: false,
-      errorQueryProviders: null
-    });
-  });
-
-  test('fetching a plan is rejected', () => {
-    const payload = { error: 'error' };
-    const action = {
-      type: `${QUERY_V2V_PROVIDERS}_REJECTED`,
-      payload
-    };
-    const prevState = Immutable({
-      ...initialState,
-      isQueryingProviders: true
-    });
-    const state = clustersReducer(prevState, action);
-
-    expect(state).toEqual({
-      ...prevState,
-      isQueryingProviders: false,
-      isRejectedQueryProviders: true,
-      errorQueryProviders: payload
     });
   });
 });

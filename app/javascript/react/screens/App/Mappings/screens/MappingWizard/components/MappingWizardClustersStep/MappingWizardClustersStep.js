@@ -5,7 +5,6 @@ import { Field, reduxForm } from 'redux-form';
 import { length } from 'redux-form-validators';
 
 import ClustersStepForm from './components/ClustersStepForm/ClustersStepForm';
-import { QUERY_PROVIDERS_URL } from './MappingWizardClustersStepConstants';
 import { FETCH_TARGET_COMPUTE_URLS } from '../../../../../../../../redux/common/targetResources/targetResourcesConstants';
 import { getProviderIds } from './helpers';
 import { OPENSTACK } from '../../MappingWizardConstants';
@@ -32,18 +31,11 @@ class MappingWizardClustersStep extends React.Component {
       fetchSourceClustersAction,
       fetchTargetComputeUrls,
       fetchTargetClustersAction,
-      targetProvider,
-      queryProvidersAction,
-      queryProvidersUrl
+      targetProvider
     } = this.props;
 
     fetchSourceClustersAction(fetchSourceClustersUrl);
-    fetchTargetClustersAction(fetchTargetComputeUrls[targetProvider]).then(result => {
-      const safeToProceed = result.value && result.value.data && result.value.data.resources.length > 0;
-      if (targetProvider === OPENSTACK && safeToProceed) {
-        queryProvidersAction(queryProvidersUrl, getProviderIds(result.value.data.resources));
-      }
-    });
+    fetchTargetClustersAction(fetchTargetComputeUrls[targetProvider]);
   };
 
   render() {
@@ -55,10 +47,7 @@ class MappingWizardClustersStep extends React.Component {
       isRejectedSourceClusters,
       isRejectedTargetClusters,
       targetProvider,
-      rhvConversionHosts,
-      ospConversionHosts,
-      providers,
-      isQueryingProviders
+      rhvConversionHosts
     } = this.props;
 
     if (isRejectedSourceClusters || isRejectedTargetClusters) {
@@ -88,9 +77,6 @@ class MappingWizardClustersStep extends React.Component {
         isFetchingTargetClusters={isFetchingTargetClusters}
         targetProvider={targetProvider}
         rhvConversionHosts={rhvConversionHosts}
-        ospConversionHosts={ospConversionHosts}
-        providers={providers}
-        isQueryingProviders={isQueryingProviders}
       />
     );
   }
@@ -111,11 +97,7 @@ MappingWizardClustersStep.propTypes = {
   isRejectedTargetClusters: PropTypes.bool,
   targetProvider: PropTypes.string,
   rhvConversionHosts: PropTypes.array,
-  ospConversionHosts: PropTypes.array,
-  providers: PropTypes.array,
-  isQueryingProviders: PropTypes.bool,
-  queryProvidersAction: PropTypes.func,
-  queryProvidersUrl: PropTypes.string
+  ospConversionHosts: PropTypes.array
 };
 MappingWizardClustersStep.defaultProps = {
   fetchSourceClustersAction: noop,
@@ -131,8 +113,7 @@ MappingWizardClustersStep.defaultProps = {
     '/api/clusters?expand=resources' +
     '&attributes=ext_management_system.emstype,v_parent_datacenter,ext_management_system.name' +
     '&filter[]=ext_management_system.emstype=vmwarews',
-  fetchTargetComputeUrls: FETCH_TARGET_COMPUTE_URLS,
-  queryProvidersUrl: QUERY_PROVIDERS_URL
+  fetchTargetComputeUrls: FETCH_TARGET_COMPUTE_URLS
 };
 
 export default reduxForm({
