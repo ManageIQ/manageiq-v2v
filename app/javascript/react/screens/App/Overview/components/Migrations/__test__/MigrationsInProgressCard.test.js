@@ -8,7 +8,6 @@ import {
   TRANSFORMATION_PLAN_REQUESTS_URL,
   FETCH_TRANSFORMATION_PLANS_URL
 } from '../../../OverviewConstants';
-import { TRANSFORMATION_MAPPING_ITEM_DESTINATION_TYPES } from '../../../../Mappings/screens/MappingWizard/MappingWizardConstants';
 
 describe('when the request is denied', () => {
   const plan = { ...transformationPlans.resources[7], transformation_mapping: { transformation_mapping_items: [] } };
