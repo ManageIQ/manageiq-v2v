@@ -16,7 +16,6 @@ Object {
   "isRejectedTargetClusters": false,
   "keepDirtyOnReinitialize": true,
   "ospConversionHosts": Array [],
-  "queryProvidersAction": [Function],
   "rhvConversionHosts": Array [],
   "showAlertAction": [Function],
   "sourceClusters": Array [],
