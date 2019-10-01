@@ -1,17 +1,45 @@
-import { hasRsaKey } from '../providersHelpers';
+import { sufficientProviders } from '../providersHelpers';
 
-describe('hasRsaKey', () => {
-  test('returns false if the provider is missing the authentications attribute', () => {
-    const provider = { name: 'provider' };
-    const result = hasRsaKey(provider);
-
-    expect(result).toBe(false);
+describe('sufficientProviders helper', () => {
+  test('false when there are no providers', () => {
+    expect(sufficientProviders()).toBeFalsy();
+    expect(sufficientProviders([])).toBeFalsy();
   });
 
-  test('returns true if the provider has an authentication of type ssh_keypair', () => {
-    const provider = { authentications: [{ authtype: 'ssh_keypair' }] };
-    const result = hasRsaKey(provider);
+  test('false when only a source provider exists', () => {
+    expect(sufficientProviders([{ type: 'ManageIQ::Providers::Vmware::InfraManager' }])).toBeFalsy();
+  });
 
-    expect(result).toBe(true);
+  test('false when only a target provider exists', () => {
+    expect(sufficientProviders([{ type: 'ManageIQ::Providers::Redhat::InfraManager' }])).toBeFalsy();
+    expect(sufficientProviders([{ type: 'ManageIQ::Providers::Openstack::CloudManager' }])).toBeFalsy();
+    expect(
+      sufficientProviders([
+        { type: 'ManageIQ::Providers::Redhat::InfraManager' },
+        { type: 'ManageIQ::Providers::Openstack::CloudManager' }
+      ])
+    ).toBeFalsy();
+  });
+
+  test('true when both a source and a target provider exist', () => {
+    expect(
+      sufficientProviders([
+        { type: 'ManageIQ::Providers::Vmware::InfraManager' },
+        { type: 'ManageIQ::Providers::Redhat::InfraManager' }
+      ])
+    ).toBeTruthy();
+    expect(
+      sufficientProviders([
+        { type: 'ManageIQ::Providers::Vmware::InfraManager' },
+        { type: 'ManageIQ::Providers::Openstack::CloudManager' }
+      ])
+    ).toBeTruthy();
+    expect(
+      sufficientProviders([
+        { type: 'ManageIQ::Providers::Vmware::InfraManager' },
+        { type: 'ManageIQ::Providers::Redhat::InfraManager' },
+        { type: 'ManageIQ::Providers::Openstack::CloudManager' }
+      ])
+    ).toBeTruthy();
   });
 });

@@ -18,7 +18,6 @@ import {
 import CardEmptyState from './CardEmptyState';
 import CardFooter from './CardFooter';
 import { urlBuilder } from './helpers';
-import { getMappingType } from '../../../Mappings/components/InfrastructureMappingsList/helpers';
 
 const MigrationsInProgressCard = ({
   plan,

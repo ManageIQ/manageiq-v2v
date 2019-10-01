@@ -81,26 +81,4 @@ describe('if there are no conversion hosts available', () => {
       archived: false
     });
   });
-
-  test('and the OSP provider does not have a RSA key, display an alternate message', () => {
-    const { openstack } = TRANSFORMATION_MAPPING_ITEM_DESTINATION_TYPES;
-    const ospPlan = {
-      ...plan,
-      transformation_mapping: {
-        transformation_mapping_items: [
-          { destination_type: openstack.cluster, destination_id: '1' },
-          { destination_type: openstack.datastore },
-          { destination_type: openstack.network }
-        ]
-      },
-      targetProvider: {
-        hasRsaKey: false
-      }
-    };
-    const wrapper = mount(<MigrationsInProgressCard {...baseProps} plan={ospPlan} />);
-
-    expect(wrapper.text()).toMatchSnapshot();
-
-    wrapper.unmount();
-  });
 });
