@@ -6,7 +6,6 @@ import { length } from 'redux-form-validators';
 
 import ClustersStepForm from './components/ClustersStepForm/ClustersStepForm';
 import { FETCH_TARGET_COMPUTE_URLS } from '../../../../../../../../redux/common/targetResources/targetResourcesConstants';
-import { getProviderIds } from './helpers';
 import { OPENSTACK } from '../../MappingWizardConstants';
 
 class MappingWizardClustersStep extends React.Component {

@@ -7,7 +7,7 @@ import DualPaneMapperList from '../../../DualPaneMapper/DualPaneMapperList';
 import DualPaneMapperCount from '../../../DualPaneMapper/DualPaneMapperCount';
 import DualPaneMapperListItem from '../../../DualPaneMapper/DualPaneMapperListItem';
 import ClustersStepTreeView from '../ClustersStepTreeView';
-import { createNewMapping, updateMapping, providerHasSshKeyPair, everyConversionHostHasPrivateKey } from './helpers';
+import { createNewMapping, updateMapping } from './helpers';
 import { sourceClustersFilter } from '../../MappingWizardClustersStepSelectors';
 import { CONVERSION_HOST_WARNING_MESSAGES } from '../../MappingWizardClustersStepConstants';
 import { RHV } from '../../../../MappingWizardConstants';
