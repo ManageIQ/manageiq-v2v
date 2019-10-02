@@ -13,13 +13,11 @@ import { PLAN_JOB_STATES } from '../../../../../../data/models/plans';
 import {
   MIGRATIONS_FILTERS,
   TRANSFORMATION_PLAN_REQUESTS_URL,
-  WAITING_FOR_CONVERSION_HOST_MESSAGES
+  WAITING_FOR_CONVERSION_HOST_MESSAGE
 } from '../../OverviewConstants';
 import CardEmptyState from './CardEmptyState';
 import CardFooter from './CardFooter';
 import { urlBuilder } from './helpers';
-import { getMappingType } from '../../../Mappings/components/InfrastructureMappingsList/helpers';
-import { OPENSTACK } from '../../../Mappings/screens/MappingWizard/MappingWizardConstants';
 
 const MigrationsInProgressCard = ({
   plan,
@@ -70,10 +68,6 @@ const MigrationsInProgressCard = ({
       urlBuilder(TRANSFORMATION_PLAN_REQUESTS_URL, mostRecentRequest.id)
     );
 
-    const targetIsOsp = getMappingType(plan.transformation_mapping.transformation_mapping_items) === OPENSTACK;
-    const cardMessage =
-      targetIsOsp && plan.targetProvider && !plan.targetProvider.hasRsaKey ? 'noRsaKey' : 'notAvailable';
-
     return (
       <InProgressCard
         title={<h3 className="card-pf-title">{plan.name}</h3>}
@@ -93,7 +87,7 @@ const MigrationsInProgressCard = ({
       >
         <CardEmptyState
           showSpinner
-          emptyStateInfo={WAITING_FOR_CONVERSION_HOST_MESSAGES[cardMessage]}
+          emptyStateInfo={WAITING_FOR_CONVERSION_HOST_MESSAGE}
           emptyStateInfoStyles={{ marginTop: 10 }}
         />
       </InProgressCard>

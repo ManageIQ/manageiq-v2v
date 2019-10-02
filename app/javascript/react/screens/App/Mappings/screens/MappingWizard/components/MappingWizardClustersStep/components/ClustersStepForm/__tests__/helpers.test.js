@@ -2,9 +2,7 @@ import {
   targetClusterWithExtendedData,
   sourceClusterWithExtendedData,
   updateMapping,
-  createNewMapping,
-  providerHasSshKeyPair,
-  everyConversionHostHasPrivateKey
+  createNewMapping
 } from '../helpers';
 
 import { srcClusters, tgtClusters } from '../clustersStepForm.fixtures';
@@ -50,61 +48,4 @@ test('createNewMapping constructs a clusters step mapping', () => {
   const [sourceCluster] = srcClusters;
 
   expect(createNewMapping(targetCluster, [sourceCluster])).toMatchSnapshot();
-});
-
-describe('providerHasSshKeyPair', () => {
-  test('is correct in the true case', () => {
-    const target = { ems_id: '1' };
-    const providers = [
-      {
-        id: '1',
-        authentications: [{ authtype: 'ssh_keypair' }]
-      }
-    ];
-    expect(providerHasSshKeyPair(target, providers)).toBeTruthy();
-  });
-
-  test('is correct in the false case', () => {
-    const target = { ems_id: '1' };
-    const providers = [
-      {
-        id: '1',
-        authentications: []
-      }
-    ];
-    expect(providerHasSshKeyPair(target, providers)).toBeFalsy();
-  });
-});
-
-describe('everyConversionHostHasPrivateKey', () => {
-  test('is correct in the true case', () => {
-    const conversionHosts = [
-      {
-        mock: 'hostWithRightAuthentication',
-        authentications: [{ type: 'AuthPrivateKey', authtype: 'v2v' }]
-      },
-      {
-        mock: 'hostWithRightAndWrongAuthentications',
-        authentications: [{ type: 'foo', authtype: 'bar' }, { type: 'AuthPrivateKey', authtype: 'v2v' }]
-      }
-    ];
-    expect(everyConversionHostHasPrivateKey(conversionHosts)).toBeTruthy();
-  });
-
-  test('is correct in the false case', () => {
-    const conversionHosts = [
-      {
-        mock: 'hostWithoutAuthentications'
-      },
-      {
-        mock: 'hostWithWrongAuthentication',
-        authentications: [{ type: 'foo', authtype: 'bar' }]
-      },
-      {
-        mock: 'hostWithRightAuthentication',
-        authentications: [{ type: 'foo', authtype: 'bar' }, { type: 'AuthPrivateKey', authtype: 'v2v' }]
-      }
-    ];
-    expect(everyConversionHostHasPrivateKey(conversionHosts)).toBeFalsy();
-  });
 });

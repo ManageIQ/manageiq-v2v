@@ -7,10 +7,10 @@ import DualPaneMapperList from '../../../DualPaneMapper/DualPaneMapperList';
 import DualPaneMapperCount from '../../../DualPaneMapper/DualPaneMapperCount';
 import DualPaneMapperListItem from '../../../DualPaneMapper/DualPaneMapperListItem';
 import ClustersStepTreeView from '../ClustersStepTreeView';
-import { createNewMapping, updateMapping, providerHasSshKeyPair, everyConversionHostHasPrivateKey } from './helpers';
+import { createNewMapping, updateMapping } from './helpers';
 import { sourceClustersFilter } from '../../MappingWizardClustersStepSelectors';
-import { TARGET_WARNING_MESSAGES } from '../../MappingWizardClustersStepConstants';
-import { OPENSTACK, RHV } from '../../../../MappingWizardConstants';
+import { CONVERSION_HOST_WARNING_MESSAGES } from '../../MappingWizardClustersStepConstants';
+import { RHV } from '../../../../MappingWizardConstants';
 import { multiProviderTargetLabel } from '../../../helpers';
 
 class ClustersStepForm extends React.Component {
@@ -124,10 +124,7 @@ class ClustersStepForm extends React.Component {
       isFetchingTargetClusters,
       input,
       targetProvider,
-      rhvConversionHosts,
-      ospConversionHosts,
-      providers,
-      isQueryingProviders
+      rhvConversionHosts
     } = this.props;
 
     const { selectedTargetCluster, selectedSourceClusters, selectedMapping } = this.state;
@@ -186,18 +183,12 @@ class ClustersStepForm extends React.Component {
               counter={targetCounter}
             >
               {targetClusters.map(item => {
-                let showWarning;
+                let showConversionHostWarning = false;
                 if (targetProvider === RHV) {
                   const conversionHostsInCluster = rhvConversionHosts.filter(
                     ch => ch.resource.ems_cluster_id === item.id
                   );
-                  showWarning = conversionHostsInCluster.length === 0;
-                } else if (targetProvider === OPENSTACK) {
-                  showWarning =
-                    providers.length &&
-                    !isQueryingProviders &&
-                    !providerHasSshKeyPair(item, providers) &&
-                    !everyConversionHostHasPrivateKey(ospConversionHosts);
+                  showConversionHostWarning = conversionHostsInCluster.length === 0;
                 }
 
                 return (
@@ -212,7 +203,7 @@ class ClustersStepForm extends React.Component {
                     selected={selectedTargetCluster && selectedTargetCluster.id === item.id}
                     handleClick={this.selectTargetCluster}
                     handleKeyPress={this.selectTargetCluster}
-                    warningMessage={showWarning ? TARGET_WARNING_MESSAGES[targetProvider] : ''}
+                    warningMessage={showConversionHostWarning ? CONVERSION_HOST_WARNING_MESSAGES[targetProvider] : ''}
                   />
                 );
               })}
@@ -242,10 +233,7 @@ ClustersStepForm.propTypes = {
   isFetchingSourceClusters: PropTypes.bool,
   isFetchingTargetClusters: PropTypes.bool,
   targetProvider: PropTypes.string,
-  rhvConversionHosts: PropTypes.array,
-  ospConversionHosts: PropTypes.array,
-  providers: PropTypes.array,
-  isQueryingProviders: PropTypes.bool
+  rhvConversionHosts: PropTypes.array
 };
 
 export default ClustersStepForm;

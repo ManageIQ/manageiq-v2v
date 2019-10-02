@@ -24,8 +24,7 @@ describe('target provider is OSP', () => {
     hideAlertAction: jest.fn(),
     showAlertAction: jest.fn(),
     sourceClusters: [],
-    targetProvider: OPENSTACK,
-    queryProvidersAction: jest.fn()
+    targetProvider: OPENSTACK
   });
 
   test('cloud tenants are fetched and a conversion host alert is triggered', () => {
@@ -53,22 +52,6 @@ describe('target provider is OSP', () => {
     );
 
     expect(baseProps.showAlertAction).toHaveBeenCalledTimes(0);
-
-    wrapper.unmount();
-  });
-
-  test('providers are queried', async () => {
-    const baseProps = getBaseProps();
-    const wrapper = mount(
-      <Provider store={store}>
-        <MappingWizardClustersStep {...baseProps} />
-      </Provider>
-    );
-
-    await expect(baseProps.fetchTargetClustersAction).toHaveBeenCalledWith(
-      FETCH_TARGET_COMPUTE_URLS[baseProps.targetProvider]
-    );
-    expect(baseProps.queryProvidersAction).toHaveBeenCalled();
 
     wrapper.unmount();
   });

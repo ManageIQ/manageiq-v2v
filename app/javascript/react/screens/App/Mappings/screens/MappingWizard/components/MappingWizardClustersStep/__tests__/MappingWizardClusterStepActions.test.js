@@ -32,33 +32,3 @@ describe('mappingWizard actions', () => {
     });
   });
 });
-
-describe('queryProvidersAction', () => {
-  const url = '/api';
-  const providerIds = ['1'];
-  test('dispatches PENDING and FULFILLED actions', () => {
-    mockRequest({
-      method: 'POST',
-      url,
-      status: 200,
-      response: [{ mock: 'data' }]
-    });
-
-    return store.dispatch(actions.queryProvidersAction(url, providerIds)).then(() => {
-      expect(store.getActions()).toMatchSnapshot();
-    });
-  });
-
-  test('dispatches PENDING and REJECTED actions', () => {
-    mockRequest({
-      method: 'POST',
-      url,
-      status: 404,
-      response: { error: 'error' }
-    });
-
-    return store.dispatch(actions.queryProvidersAction(url, providerIds)).catch(() => {
-      expect(store.getActions()).toMatchSnapshot();
-    });
-  });
-});

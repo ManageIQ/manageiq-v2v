@@ -49,19 +49,3 @@ export const createClusterMappings = (transformationItems, targetClusters, sourc
   }
   return [];
 };
-
-export const providerHasSshKeyPair = (target, providers) => {
-  const provider = providers.find(prov => prov.id === target.ems_id);
-
-  return (
-    provider.authentications &&
-    provider.authentications.some(authentication => authentication.authtype === 'ssh_keypair')
-  );
-};
-
-const conversionHostHasPrivateKey = conversionHost =>
-  conversionHost.authentications &&
-  conversionHost.authentications.some(auth => auth.type === 'AuthPrivateKey' && auth.authtype === 'v2v');
-
-export const everyConversionHostHasPrivateKey = conversionHosts =>
-  conversionHosts && conversionHosts.every(conversionHostHasPrivateKey);

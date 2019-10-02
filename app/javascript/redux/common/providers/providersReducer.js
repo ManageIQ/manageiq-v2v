@@ -2,7 +2,7 @@ import Immutable from 'seamless-immutable';
 
 import { FETCH_V2V_PROVIDERS } from './providersConstants';
 import { validateProviders } from './providersValidators';
-import { hasRsaKey, sufficientProviders } from './providersHelpers';
+import { sufficientProviders } from './providersHelpers';
 
 export const initialState = Immutable({
   isFetchingProviders: false,
@@ -32,10 +32,7 @@ export default (state = initialState, action) => {
         validateProviders(action.payload.data.resources);
         return insufficient
           .set('hasSufficientProviders', sufficientProviders(action.payload.data.resources))
-          .set(
-            'providers',
-            action.payload.data.resources.map(provider => ({ ...provider, hasRsaKey: hasRsaKey(provider) }))
-          );
+          .set('providers', action.payload.data.resources);
       })();
     case `${FETCH_V2V_PROVIDERS}_REJECTED`:
       return state
