@@ -23,32 +23,3 @@ Array [
   },
 ]
 `;
-
-exports[`queryProvidersAction dispatches PENDING and FULFILLED actions 1`] = `
-Array [
-  Object {
-    "type": "QUERY_V2V_PROVIDERS_PENDING",
-  },
-  Object {
-    "payload": Array [
-      Object {
-        "mock": "data",
-      },
-    ],
-    "type": "QUERY_V2V_PROVIDERS_FULFILLED",
-  },
-]
-`;
-
-exports[`queryProvidersAction dispatches PENDING and REJECTED actions 1`] = `
-Array [
-  Object {
-    "type": "QUERY_V2V_PROVIDERS_PENDING",
-  },
-  Object {
-    "error": true,
-    "payload": [Error: <mocked error>],
-    "type": "QUERY_V2V_PROVIDERS_REJECTED",
-  },
-]
-`;

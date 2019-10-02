@@ -2,16 +2,12 @@
 
 exports[`fetching source clusters is pending 1`] = `
 Object {
-  "errorQueryProviders": null,
   "errorSourceClusters": null,
   "errorTargetClusters": null,
   "isFetchingSourceClusters": true,
   "isFetchingTargetClusters": false,
-  "isQueryingProviders": false,
-  "isRejectedQueryProviders": false,
   "isRejectedSourceClusters": false,
   "isRejectedTargetClusters": false,
-  "providers": Array [],
   "sourceClusters": Array [],
   "targetClusters": Array [],
 }
@@ -19,16 +15,12 @@ Object {
 
 exports[`fetching source clusters is rejected 1`] = `
 Object {
-  "errorQueryProviders": null,
   "errorSourceClusters": "error",
   "errorTargetClusters": null,
   "isFetchingSourceClusters": false,
   "isFetchingTargetClusters": false,
-  "isQueryingProviders": false,
-  "isRejectedQueryProviders": false,
   "isRejectedSourceClusters": true,
   "isRejectedTargetClusters": false,
-  "providers": Array [],
   "sourceClusters": Array [],
   "targetClusters": Array [],
 }
@@ -36,16 +28,12 @@ Object {
 
 exports[`fetching source clusters is successful, and there is data 1`] = `
 Object {
-  "errorQueryProviders": null,
   "errorSourceClusters": null,
   "errorTargetClusters": null,
   "isFetchingSourceClusters": false,
   "isFetchingTargetClusters": false,
-  "isQueryingProviders": false,
-  "isRejectedQueryProviders": false,
   "isRejectedSourceClusters": false,
   "isRejectedTargetClusters": false,
-  "providers": Array [],
   "sourceClusters": Array [
     Object {
       "0": Object {
@@ -131,16 +119,12 @@ Object {
 
 exports[`fetching source clusters is successful, and there is no data 1`] = `
 Object {
-  "errorQueryProviders": null,
   "errorSourceClusters": null,
   "errorTargetClusters": null,
   "isFetchingSourceClusters": false,
   "isFetchingTargetClusters": false,
-  "isQueryingProviders": false,
-  "isRejectedQueryProviders": false,
   "isRejectedSourceClusters": false,
   "isRejectedTargetClusters": false,
-  "providers": Array [],
   "sourceClusters": Array [],
   "targetClusters": Array [],
 }
@@ -148,16 +132,12 @@ Object {
 
 exports[`sets default state 1`] = `
 Object {
-  "errorQueryProviders": null,
   "errorSourceClusters": null,
   "errorTargetClusters": null,
   "isFetchingSourceClusters": false,
   "isFetchingTargetClusters": false,
-  "isQueryingProviders": false,
-  "isRejectedQueryProviders": false,
   "isRejectedSourceClusters": false,
   "isRejectedTargetClusters": false,
-  "providers": Array [],
   "sourceClusters": Array [],
   "targetClusters": Array [],
 }

@@ -63,7 +63,5 @@ export const FETCH_ARCHIVED_TRANSFORMATION_PLANS_URL =
 
 export const TRANSFORMATION_PLAN_REQUESTS_URL = '/api/requests';
 
-export const WAITING_FOR_CONVERSION_HOST_MESSAGES = {
-  notAvailable: __('Waiting for an available conversion host. You can continue waiting or go to the Migration Settings page to increase the number of migrations per host'), // prettier-ignore
-  noRsaKey: __('No RSA key pair exists on the OpenStack provider. Cancel the migration, add the key, and retry.')
-};
+export const WAITING_FOR_CONVERSION_HOST_MESSAGE =
+  __('Waiting for an available conversion host. You can continue waiting or go to the Migration Settings page to increase the number of migrations per host'); // prettier-ignore

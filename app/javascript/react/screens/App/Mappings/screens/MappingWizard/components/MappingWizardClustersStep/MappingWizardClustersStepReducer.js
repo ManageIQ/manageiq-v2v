@@ -1,6 +1,6 @@
 import Immutable from 'seamless-immutable';
 
-import { FETCH_V2V_SOURCE_CLUSTERS, QUERY_V2V_PROVIDERS } from './MappingWizardClustersStepConstants';
+import { FETCH_V2V_SOURCE_CLUSTERS } from './MappingWizardClustersStepConstants';
 import { V2V_MAPPING_WIZARD_EXITED } from '../../../../screens/MappingWizard/MappingWizardConstants';
 
 export const initialState = Immutable({
@@ -11,11 +11,7 @@ export const initialState = Immutable({
   targetClusters: [],
   isFetchingTargetClusters: false,
   isRejectedTargetClusters: false,
-  errorTargetClusters: null,
-  providers: [],
-  isQueryingProviders: false,
-  isRejectedQueryProviders: false,
-  errorQueryProviders: null
+  errorTargetClusters: null
 });
 
 export default (state = initialState, action) => {
@@ -39,19 +35,6 @@ export default (state = initialState, action) => {
         .set('isRejectedSourceClusters', true)
         .set('isFetchingSourceClusters', false);
 
-    case `${QUERY_V2V_PROVIDERS}_PENDING`:
-      return state.set('isQueryingProviders', true).set('isRejectedQueryProviders', false);
-    case `${QUERY_V2V_PROVIDERS}_FULFILLED`:
-      return state
-        .set('providers', action.payload.data.results)
-        .set('isQueryingProviders', false)
-        .set('isRejectedQueryProviders', false)
-        .set('errorQueryProviders', null);
-    case `${QUERY_V2V_PROVIDERS}_REJECTED`:
-      return state
-        .set('errorQueryProviders', action.payload)
-        .set('isRejectedQueryProviders', true)
-        .set('isQueryingProviders', false);
     case V2V_MAPPING_WIZARD_EXITED:
       return initialState;
     default:

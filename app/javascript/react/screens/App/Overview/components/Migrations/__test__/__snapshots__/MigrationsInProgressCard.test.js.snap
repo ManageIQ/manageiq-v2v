@@ -1,7 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`if there are no conversion hosts available and the OSP provider does not have a RSA key, display an alternate message 1`] = `"Migration Plan F-0No RSA key pair exists on the OpenStack provider. Cancel the migration, add the key, and retry.Cancel Migration"`;
-
 exports[`if there are no conversion hosts available the card renders an error view 1`] = `
 <InProgressCard
   footer={

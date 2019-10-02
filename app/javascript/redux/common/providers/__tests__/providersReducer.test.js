@@ -34,10 +34,7 @@ describe('fetching providers', () => {
       isRejectedProviders: false,
       errorFetchingProviders: null,
       hasSufficientProviders: true,
-      providers: providers.resources.map(provider => ({
-        ...provider,
-        hasRsaKey: false
-      }))
+      providers: providers.resources
     });
   });
 
