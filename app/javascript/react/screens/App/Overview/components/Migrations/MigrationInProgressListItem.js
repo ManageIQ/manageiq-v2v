@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import numeral from 'numeral';
-import { Spinner, ListView, Icon, OverlayTrigger, Popover, Tooltip, UtilizationBar } from 'patternfly-react';
+import { Spinner, ListView, Icon, UtilizationBar } from 'patternfly-react';
 
 import InProgressCard from './InProgressCard';
 import InProgressWithDetailCard from './InProgressWithDetailCard';
@@ -26,6 +26,8 @@ import {
   aggregateTasks,
   calculateTotalDiskSpace
 } from './helpers/inProgressHelpers';
+import MigrationFailedOverlay from './MigrationFailedOverlay';
+import ProgressBarTooltip from './ProgressBarTooltip';
 
 // TODO move this to another file
 const InProgressRow = ({ plan, additionalInfo, actions = <div /> }) => (
@@ -85,24 +87,12 @@ const MigrationInProgressListItem = ({
     );
   }
 
-  // ////////////////////////////////
-  // ////////////////////////////////
-  // ////////////////////////////////
-  // ////////////////////////////////
-  // ////////////////////////////////
-  // ////////////////////////////////
-  // ////////////////////////////////
-  // //////////////////////////////// TODO move the below into a helper file?
-
   // UX business rule: reflect failed immediately if any single task has failed
   // in the most recent request
   const { failed, numFailedVms } = countFailedVms(mostRecentRequest);
 
-  // TODO RETURN ROW if failed!
-
   // UX business rule: aggregrate the tasks across requests reflecting current status of all tasks,
   // (gather the last status for the vm, gather the last storage for use in UX bussiness rule 3)
-
   const tasksBySourceId = getIndexedTasksOfPlan(plan, requestsOfAssociatedPlan, mostRecentRequest);
   const {
     numTotalVms,
@@ -111,101 +101,16 @@ const MigrationInProgressListItem = ({
     taskRunningPostMigrationPlaybook
   } = aggregateTasks(tasksBySourceId);
 
-  let failedOverlay = null;
-  if (failed) {
-    failedOverlay = (
-      <OverlayTrigger
-        overlay={
-          <Popover id={`description_${plan.id}`} title={sprintf('%s', plan.name)}>
-            <Icon
-              type="pf"
-              name="error-circle-o"
-              size="sm"
-              style={{
-                width: 'inherit',
-                backgroundColor: 'transparent',
-                paddingRight: 5
-              }}
-            />
-            {sprintf(__('%s of %s VM migrations failed.'), numFailedVms, numTotalVms)}
-          </Popover>
-        }
-        placement="top"
-        trigger={['hover']}
-        delay={500}
-        rootClose={false}
-      >
-        <Icon
-          type="pf"
-          name="error-circle-o"
-          size="md"
-          style={{
-            width: 'inherit',
-            backgroundColor: 'transparent',
-            paddingRight: 10
-          }}
-        />
-      </OverlayTrigger>
-    );
-  }
+  const failedOverlay = failed ? (
+    <MigrationFailedOverlay plan={plan} numFailedVms={numFailedVms} numTotalVms={numTotalVms} />
+  ) : null;
 
   // TODO --- below logic is not needed if playbooks are running -- how to handle this?
 
   // UX business rule: reflect the total disk space migrated, aggregated across requests
   const { totalDiskSpace, totalMigratedDiskSpace } = calculateTotalDiskSpace(tasksBySourceId);
-  const totalDiskSpaceGb = numeral(totalDiskSpace).format('0.00b');
-  const totalMigratedDiskSpaceGb = numeral(totalMigratedDiskSpace).format('0.00b');
 
-  const elapsedTime = <TickingIsoElapsedTime startTime={mostRecentRequest.created_on} />;
-
-  // Tooltips
-  const vmBarLabel = (
-    <span>
-      <strong id="vms-migrated" className="label-strong">
-        {sprintf(__('%s of %s VMs'), numCompletedVms, numTotalVms)}
-      </strong>{' '}
-      {__('migrated')}
-    </span>
-  );
-
-  const diskSpaceBarLabel = (
-    <span>
-      <strong id="size-migrated" className="label-strong">
-        {sprintf(__('%s of %s'), totalMigratedDiskSpaceGb, totalDiskSpaceGb)}
-      </strong>{' '}
-      {__('migrated')}
-    </span>
-  );
-
-  const availableTooltip = (id, max, now) => {
-    if (max > 0) {
-      return <Tooltip id={id}>{sprintf(__('%s%% Remaining'), Math.round(((max - now) / max) * 100))}</Tooltip>;
-    }
-    return <Tooltip id={id}>{__('No Data')}</Tooltip>;
-  };
-  const usedTooltip = (id, max, now) => {
-    if (max > 0) {
-      return <Tooltip id={id}>{sprintf(__('%s%% Complete'), Math.round((now / max) * 100))}</Tooltip>;
-    }
-    return <Tooltip id={id}>{__('No Data')}</Tooltip>;
-  };
-
-  const usedVmTooltip = () => usedTooltip(`used-vm-${plan.id}`, numTotalVms, numCompletedVms);
-  const availableVmTooltip = () => availableTooltip(`available-vm-${plan.id}`, numTotalVms, numCompletedVms);
-
-  const usedDiskSpaceTooltip = () => usedTooltip(`total-disk-${plan.id}`, totalDiskSpace, totalMigratedDiskSpace);
-  const availableDiskSpaceTooltip = () =>
-    availableTooltip(`migrated-disk-${plan.id}`, totalDiskSpace, totalMigratedDiskSpace);
-
-  // //////////////////////////////// TODO move the above into a helper file?
-  // ////////////////////////////////
-  // ////////////////////////////////
-  // ////////////////////////////////
-  // ////////////////////////////////
-  // ////////////////////////////////
-  // ////////////////////////////////
-  // ////////////////////////////////
-
+  // TODO remove this temporary escape hatch
   return <InProgressRow plan={plan} additionalInfo={[]} />;
 
   // TODO handle this case after initiating
@@ -297,7 +202,7 @@ const MigrationInProgressListItem = ({
 
   // TODO handle this case after pre-playbooks
   // UX business rule: if all disks have been migrated and we have a post migration playbook running, show this instead
-  if (totalMigratedDiskSpaceGb >= totalDiskSpaceGb && taskRunningPostMigrationPlaybook) {
+  if (totalMigratedDiskSpace >= totalDiskSpace && taskRunningPostMigrationPlaybook) {
     const playbookName = getPlaybookName(serviceTemplatePlaybooks, plan.options.config_info.post_service_id);
     return (
       <InProgressWithDetailCard plan={plan} failedOverlay={failedOverlay} handleClick={handleClick}>
@@ -318,10 +223,25 @@ const MigrationInProgressListItem = ({
           now={totalMigratedDiskSpace}
           max={totalDiskSpace}
           description={__('Datastores')}
-          label={diskSpaceBarLabel}
+          label={
+            <span>
+              <strong id="size-migrated" className="label-strong">
+                {sprintf(
+                  __('%s of %s'),
+                  numeral(totalMigratedDiskSpace).format('0.00b'),
+                  numeral(totalDiskSpace).format('0.00b')
+                )}
+              </strong>{' '}
+              {__('migrated')}
+            </span>
+          }
           descriptionPlacementTop
-          availableTooltipFunction={availableDiskSpaceTooltip}
-          usedTooltipFunction={usedDiskSpaceTooltip}
+          availableTooltipFunction={() => (
+            <ProgressBarTooltip id={`migrated-disk-${plan.id}`} max={totalDiskSpace} now={totalMigratedDiskSpace} />
+          )}
+          usedTooltipFunction={() => (
+            <ProgressBarTooltip id={`total-disk-${plan.id}`} max={totalDiskSpace} now={totalMigratedDiskSpace} />
+          )}
         />
       </div>
       <div id={`vm-progress-bar-${plan.id}`}>
@@ -329,15 +249,26 @@ const MigrationInProgressListItem = ({
           now={numCompletedVms}
           max={numTotalVms}
           description={__('VMs')}
-          label={vmBarLabel}
+          label={
+            <span>
+              <strong id="vms-migrated" className="label-strong">
+                {sprintf(__('%s of %s VMs'), numCompletedVms, numTotalVms)}
+              </strong>{' '}
+              {__('migrated')}
+            </span>
+          }
           descriptionPlacementTop
-          availableTooltipFunction={availableVmTooltip}
-          usedTooltipFunction={usedVmTooltip}
+          availableTooltipFunction={() => (
+            <ProgressBarTooltip id={`available-vm-${plan.id}`} max={numTotalVms} now={numCompletedVms} />
+          )}
+          usedTooltipFunction={() => (
+            <ProgressBarTooltip id={`used-vm-${plan.id}`} max={numTotalVms} now={numCompletedVms} />
+          )}
         />
       </div>
       <div className="active-migration-elapsed-time">
         <Icon type="fa" name="clock-o" />
-        {elapsedTime}
+        <TickingIsoElapsedTime startTime={mostRecentRequest.created_on} />
       </div>
     </InProgressWithDetailCard>
   );
