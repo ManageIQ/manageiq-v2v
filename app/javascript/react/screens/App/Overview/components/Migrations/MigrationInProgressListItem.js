@@ -64,7 +64,7 @@ const MigrationInProgressListItem = ({
   isCancellingPlanRequest,
   requestsProcessingCancellation
 }) => {
-  const { requestsOfAssociatedPlan, mostRecentRequest } = getRequestsOfPlan(plan, allRequestsWithTasks);
+  const { requestsOfAssociatedPlan, mostRecentRequest } = getRequestsOfPlan({ plan, allRequestsWithTasks });
   const waitingForConversionHost = isWaitingForConversionHost(mostRecentRequest);
 
   const isInitiating = reloadCard || !mostRecentRequest || mostRecentRequest.request_state === 'pending';
@@ -123,7 +123,7 @@ const MigrationInProgressListItem = ({
 
   // UX business rule: aggregrate the tasks across requests reflecting current status of all tasks,
   // (gather the last status for the vm, gather the last storage for use in UX bussiness rule 3)
-  const tasksBySourceId = getIndexedTasksOfPlan(plan, requestsOfAssociatedPlan, mostRecentRequest);
+  const tasksBySourceId = getIndexedTasksOfPlan({ plan, requestsOfAssociatedPlan, mostRecentRequest });
   const {
     numTotalVms,
     numCompletedVms,
