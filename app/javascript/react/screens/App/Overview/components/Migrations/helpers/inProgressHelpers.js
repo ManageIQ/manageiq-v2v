@@ -4,7 +4,7 @@ import { PLAN_JOB_STATES } from '../../../../../../../data/models/plans';
 import { urlBuilder } from '../helpers';
 import { TRANSFORMATION_PLAN_REQUESTS_URL } from '../../../OverviewConstants';
 
-export const getRequestsOfPlan = (plan, allRequestsWithTasks) => {
+export const getRequestsOfPlan = ({ plan, allRequestsWithTasks }) => {
   const requestsOfAssociatedPlan = allRequestsWithTasks.filter(request => request.source_id === plan.id);
   const mostRecentRequest = requestsOfAssociatedPlan.length > 0 && getMostRecentRequest(requestsOfAssociatedPlan);
   return { requestsOfAssociatedPlan, mostRecentRequest };
@@ -48,7 +48,7 @@ export const countFailedVms = mostRecentRequest => {
   return { failed, numFailedVms };
 };
 
-export const getIndexedTasksOfPlan = (plan, requestsOfAssociatedPlan, mostRecentRequest) => {
+export const getIndexedTasksOfPlan = ({ plan, requestsOfAssociatedPlan, mostRecentRequest }) => {
   const tasksBySourceId = {};
   let tasksOfPlan = {};
   if (requestsOfAssociatedPlan.length > 0) {
