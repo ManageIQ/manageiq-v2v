@@ -1,6 +1,8 @@
 import getMostRecentVMTasksFromRequests from './getMostRecentVMTasksFromRequests';
 import getMostRecentRequest from '../../../../common/getMostRecentRequest';
 import { PLAN_JOB_STATES } from '../../../../../../../data/models/plans';
+import { urlBuilder } from '../helpers';
+import { TRANSFORMATION_PLAN_REQUESTS_URL } from '../../../OverviewConstants';
 
 export const getRequestsOfPlan = (plan, allRequestsWithTasks) => {
   const requestsOfAssociatedPlan = allRequestsWithTasks.filter(request => request.source_id === plan.id);
@@ -13,6 +15,26 @@ export const isWaitingForConversionHost = mostRecentRequest =>
   mostRecentRequest.approval_state === 'approved' &&
   mostRecentRequest.miq_request_tasks.length > 0 &&
   mostRecentRequest.miq_request_tasks.every(task => !task.conversion_host_id);
+
+export const shouldDisableCancelButton = ({
+  requestsProcessingCancellation,
+  mostRecentRequest,
+  isFetchingTransformationPlans,
+  isFetchingAllRequestsWithTasks,
+  isCancellingPlanRequest
+}) => {
+  const isProcessingCancellation = requestsProcessingCancellation.includes(
+    urlBuilder(TRANSFORMATION_PLAN_REQUESTS_URL, mostRecentRequest.id)
+  );
+
+  return (
+    isProcessingCancellation &&
+    (isFetchingTransformationPlans ||
+      isFetchingAllRequestsWithTasks ||
+      isCancellingPlanRequest ||
+      !!mostRecentRequest.cancelation_status)
+  );
+};
 
 export const countFailedVms = mostRecentRequest => {
   let failed = false;

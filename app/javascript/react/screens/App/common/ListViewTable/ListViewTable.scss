@@ -37,6 +37,10 @@
         margin: 0;
       }
 
+      .spinner-sm.spinner-inline {
+        min-width: 18px;
+      }
+
       .list-view-pf-actions {
         float: none;
         text-align: right;
