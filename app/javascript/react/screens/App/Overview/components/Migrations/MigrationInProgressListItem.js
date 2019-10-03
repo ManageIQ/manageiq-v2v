@@ -1,20 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import numeral from 'numeral';
-import { Spinner, ListView, Icon, UtilizationBar } from 'patternfly-react';
+import { Spinner, ListView, Button, Icon, UtilizationBar } from 'patternfly-react';
 
 import InProgressCard from './InProgressCard';
 import InProgressWithDetailCard from './InProgressWithDetailCard';
 import TickingIsoElapsedTime from '../../../../../../components/dates/TickingIsoElapsedTime';
 import getPlaybookName from './helpers/getPlaybookName';
-import {
-  MIGRATIONS_FILTERS,
-  TRANSFORMATION_PLAN_REQUESTS_URL,
-  WAITING_FOR_CONVERSION_HOST_MESSAGE
-} from '../../OverviewConstants';
+import { MIGRATIONS_FILTERS, TRANSFORMATION_PLAN_REQUESTS_URL } from '../../OverviewConstants';
 import CardEmptyState from './CardEmptyState';
 import CardFooter from './CardFooter';
-import { urlBuilder } from './helpers';
 import ListViewTable from '../../../common/ListViewTable/ListViewTable';
 import MappingNameInfoItem from './MappingNameInfoItem';
 import NumVmsInfoItem from './NumVmsInfoItem';
@@ -24,12 +19,13 @@ import {
   getRequestsOfPlan,
   getIndexedTasksOfPlan,
   aggregateTasks,
-  calculateTotalDiskSpace
+  calculateTotalDiskSpace,
+  shouldDisableCancelButton
 } from './helpers/inProgressHelpers';
 import MigrationFailedOverlay from './MigrationFailedOverlay';
 import ProgressBarTooltip from './ProgressBarTooltip';
 
-// TODO move this to another file
+// TODO move this to another file ?
 const InProgressRow = ({ plan, additionalInfo, actions = <div /> }) => (
   <ListViewTable.Row
     stacked
@@ -46,8 +42,8 @@ const InProgressRow = ({ plan, additionalInfo, actions = <div /> }) => (
   />
 );
 InProgressRow.propTypes = {
-  plan: PropTypes.shape({ name: PropTypes.string, description: PropTypes.string }),
-  additionalInfo: PropTypes.arrayOf(PropTypes.node),
+  plan: PropTypes.shape({ name: PropTypes.string, description: PropTypes.string }).isRequired,
+  additionalInfo: PropTypes.arrayOf(PropTypes.node).isRequired,
   actions: PropTypes.node
 };
 
@@ -87,6 +83,40 @@ const MigrationInProgressListItem = ({
     );
   }
 
+  if (waitingForConversionHost) {
+    const cancelButtonDisabled = shouldDisableCancelButton({
+      requestsProcessingCancellation,
+      mostRecentRequest,
+      isFetchingTransformationPlans,
+      isFetchingAllRequestsWithTasks,
+      isCancellingPlanRequest
+    });
+
+    const onCancelClick = event => {
+      event.stopPropagation();
+      cancelPlanRequestAction(TRANSFORMATION_PLAN_REQUESTS_URL, mostRecentRequest.id).then(() =>
+        fetchTransformationPlansAction({ url: fetchTransformationPlansUrl, archived: false })
+      );
+    };
+
+    return (
+      <InProgressRow
+        plan={plan}
+        additionalInfo={[
+          <ListView.InfoItem key="initiating">
+            <Spinner size="sm" inline loading />
+            {__('Waiting for an available conversion host. You can continue waiting or go to the Migration Settings page to increase the number of migrations per host.') /* prettier-ignore */}
+          </ListView.InfoItem>
+        ]}
+        actions={
+          <Button disabled={cancelButtonDisabled} onClick={onCancelClick}>
+            {__('Cancel Migration')}
+          </Button>
+        }
+      />
+    );
+  }
+
   // UX business rule: reflect failed immediately if any single task has failed
   // in the most recent request
   const { failed, numFailedVms } = countFailedVms(mostRecentRequest);
@@ -112,44 +142,6 @@ const MigrationInProgressListItem = ({
 
   // TODO remove this temporary escape hatch
   return <InProgressRow plan={plan} additionalInfo={[]} />;
-
-  // TODO handle this case after initiating
-  if (waitingForConversionHost) {
-    const cancelPlanRequest = () => {
-      cancelPlanRequestAction(TRANSFORMATION_PLAN_REQUESTS_URL, mostRecentRequest.id).then(() =>
-        fetchTransformationPlansAction({ url: fetchTransformationPlansUrl, archived: false })
-      );
-    };
-
-    const isProcessingCancellation = requestsProcessingCancellation.includes(
-      urlBuilder(TRANSFORMATION_PLAN_REQUESTS_URL, mostRecentRequest.id)
-    );
-
-    return (
-      <InProgressCard
-        title={<h3 className="card-pf-title">{plan.name}</h3>}
-        footer={
-          <CardFooter
-            disabled={
-              isProcessingCancellation &&
-              (isFetchingTransformationPlans ||
-                isFetchingAllRequestsWithTasks ||
-                isCancellingPlanRequest ||
-                !!mostRecentRequest.cancelation_status)
-            }
-            buttonText={__('Cancel Migration')}
-            onButtonClick={cancelPlanRequest}
-          />
-        }
-      >
-        <CardEmptyState
-          showSpinner
-          emptyStateInfo={WAITING_FOR_CONVERSION_HOST_MESSAGE}
-          emptyStateInfoStyles={{ marginTop: 10 }}
-        />
-      </InProgressCard>
-    );
-  }
 
   // TODO handle this case after waiting-for-host
   if (mostRecentRequest.approval_state === 'denied') {
