@@ -70,6 +70,7 @@ const MigrationInProgressListItem = ({
 
   const isInitiating = reloadCard || !mostRecentRequest || mostRecentRequest.request_state === 'pending';
 
+  // Plan request state: initiating
   if (isInitiating) {
     return (
       <InProgressRow
@@ -84,6 +85,7 @@ const MigrationInProgressListItem = ({
     );
   }
 
+  // Plan request state: waiting for conversion host
   if (waitingForConversionHost) {
     const cancelButtonDisabled = shouldDisableCancelButton({
       requestsProcessingCancellation,
@@ -104,7 +106,7 @@ const MigrationInProgressListItem = ({
       <InProgressRow
         plan={plan}
         additionalInfo={[
-          <ListView.InfoItem key="initiating">
+          <ListView.InfoItem key="waiting-for-host">
             <Spinner size="sm" inline loading />
             <EllipsisWithTooltip style={{ maxWidth: 300 }}>
               {__('Waiting for an available conversion host. You can continue waiting or go to the Migration Settings page to increase the number of migrations per host.') /* prettier-ignore */}
@@ -113,6 +115,35 @@ const MigrationInProgressListItem = ({
         ]}
         actions={
           <Button disabled={cancelButtonDisabled} onClick={onCancelClick}>
+            {__('Cancel Migration')}
+          </Button>
+        }
+      />
+    );
+  }
+
+  // Plan request state: denied / no conversion host configured
+  if (mostRecentRequest.approval_state === 'denied') {
+    const onCancelClick = () =>
+      acknowledgeDeniedPlanRequestAction({
+        plansUrl: fetchTransformationPlansUrl,
+        planRequest: mostRecentRequest
+      }).then(() => setMigrationsFilterAction(MIGRATIONS_FILTERS.completed));
+
+    return (
+      <InProgressRow
+        plan={plan}
+        additionalInfo={[
+          <ListView.InfoItem key="denied">
+            <Icon type="pf" name="error-circle-o" />
+            <EllipsisWithTooltip style={{ maxWidth: 300 }}>
+              {__('Unable to migrate VMs because no conversion host was configured at the time of the attempted migration.') /* prettier-ignore */}{' '}
+              {__('See the product documentation for information on configuring conversion hosts.')}
+            </EllipsisWithTooltip>
+          </ListView.InfoItem>
+        ]}
+        actions={
+          <Button disabled={isEditingPlanRequest} onClick={onCancelClick}>
             {__('Cancel Migration')}
           </Button>
         }
@@ -145,40 +176,6 @@ const MigrationInProgressListItem = ({
 
   // TODO remove this temporary escape hatch
   return <InProgressRow plan={plan} additionalInfo={[]} />;
-
-  // TODO handle this case after waiting-for-host
-  if (mostRecentRequest.approval_state === 'denied') {
-    const onButtonClick = () =>
-      acknowledgeDeniedPlanRequestAction({
-        plansUrl: fetchTransformationPlansUrl,
-        planRequest: mostRecentRequest
-      }).then(() => setMigrationsFilterAction(MIGRATIONS_FILTERS.completed));
-
-    return (
-      <InProgressCard
-        title={<h3 className="card-pf-title">{plan.name}</h3>}
-        footer={
-          <CardFooter
-            disabled={isEditingPlanRequest}
-            buttonText={__('Cancel Migration')}
-            onButtonClick={onButtonClick}
-          />
-        }
-      >
-        <CardEmptyState
-          iconType="pf"
-          iconName="error-circle-o"
-          emptyStateInfo={
-            <React.Fragment>
-              {__('Unable to migrate VMs because no conversion host was configured at the time of the attempted migration.') /* prettier-ignore */}{' '}
-              {__('See the product documentation for information on configuring conversion hosts.')}
-            </React.Fragment>
-          }
-          emptyStateInfoStyles={{ marginTop: 10 }}
-        />
-      </InProgressCard>
-    );
-  }
 
   // TODO handle this case after denied
   // UX business rule: if there are any pre migration playbooks running, show this content instead
