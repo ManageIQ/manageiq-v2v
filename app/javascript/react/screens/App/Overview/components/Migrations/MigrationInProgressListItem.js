@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import numeral from 'numeral';
 import { Spinner, ListView, Button, Icon, UtilizationBar } from 'patternfly-react';
+import EllipsisWithTooltip from 'react-ellipsis-with-tooltip';
 
 import InProgressCard from './InProgressCard';
 import InProgressWithDetailCard from './InProgressWithDetailCard';
@@ -32,7 +33,7 @@ const InProgressRow = ({ plan, additionalInfo, actions = <div /> }) => (
     className="plans-in-progress-list__list-item"
     leftContent={<Spinner size="lg" loading />}
     heading={plan.name}
-    description={plan.description}
+    description={<EllipsisWithTooltip>{plan.description}</EllipsisWithTooltip>}
     additionalInfo={[
       <MappingNameInfoItem key="mappingName" plan={plan} />,
       <NumVmsInfoItem key="numVms" plan={plan} />,
@@ -105,7 +106,9 @@ const MigrationInProgressListItem = ({
         additionalInfo={[
           <ListView.InfoItem key="initiating">
             <Spinner size="sm" inline loading />
-            {__('Waiting for an available conversion host. You can continue waiting or go to the Migration Settings page to increase the number of migrations per host.') /* prettier-ignore */}
+            <EllipsisWithTooltip style={{ maxWidth: 300 }}>
+              {__('Waiting for an available conversion host. You can continue waiting or go to the Migration Settings page to increase the number of migrations per host.') /* prettier-ignore */}
+            </EllipsisWithTooltip>
           </ListView.InfoItem>
         ]}
         actions={
