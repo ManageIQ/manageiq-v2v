@@ -244,6 +244,7 @@ const MigrationsCompletedList = ({
                         actions={
                           // Visibility helper is used instead of conditional rendering
                           // so hidden buttons still take up space and the list rows stay aligned
+                          // TODO: should have removed this in the last PR...
                           <div>
                             <Visibility hidden={archived || !(failed || denied)}>
                               <Visibility hidden={!showInitialScheduleButton}>
