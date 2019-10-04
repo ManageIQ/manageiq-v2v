@@ -6,7 +6,7 @@ import TextFileInput from './TextFileInput';
 import { FormField } from './FormField';
 
 const requiredWithMessage = required({ msg: __('This field is required') });
-const bodyIsRequired = value => requiredWithMessage(value.body);
+const bodyIsRequired = (value = {}) => requiredWithMessage(value.body);
 
 const TextFileField = ({ help, hideBody, ...props }) => (
   <Field component={FormField} required validate={[bodyIsRequired]} {...props}>

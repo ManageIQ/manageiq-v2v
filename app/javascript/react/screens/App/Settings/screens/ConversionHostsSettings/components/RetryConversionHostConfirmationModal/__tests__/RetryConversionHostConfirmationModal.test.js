@@ -1,9 +1,12 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
+import { Provider } from 'react-redux';
 import { reducer as formReducer } from 'redux-form';
 
 import { generateStore } from '../../../../../../common/testReduxHelpers';
-import RetryConversionHostConfirmationModal from '../RetryConversionHostConfirmationModal';
+import RetryConversionHostConfirmationModalConnected, {
+  RetryConversionHostConfirmationModal
+} from '../RetryConversionHostConfirmationModal';
 
 const flushPromises = () => new Promise(setImmediate); // https://stackoverflow.com/a/51045733
 
@@ -26,6 +29,8 @@ const mockSshForm = {
 describe('retry conversion host confirmation modal', () => {
   const store = generateStore({ form: formReducer }, {});
 
+  const ProviderWrapper = ({ children }) => <Provider store={store}>{children}</Provider>; // eslint-disable-line react/prop-types
+
   const getBaseProps = () => ({
     show: true,
     conversionHostTaskToRetry: mockVddkTask,
@@ -38,26 +43,19 @@ describe('retry conversion host confirmation modal', () => {
     store
   });
 
-  const shallowDive = jsx => {
-    const connectWrapper = shallow(jsx); // <Connect(Form(RetryConversionHostConfirmationModal))>
-    const formWrapper = connectWrapper.dive(); // <Form(RetryConversionHostConfirmationModal)>
-    const componentWrapper = formWrapper.dive(); // <RetryConversionHostConfirmationModal>
-    return componentWrapper.dive(); // shallow-rendered RetryConversionHostConfirmationModal
-  };
-
   it('renders the redux-form wrapper correctly', () => {
-    const component = shallow(<RetryConversionHostConfirmationModal {...getBaseProps()} />);
+    const component = shallow(<RetryConversionHostConfirmationModalConnected {...getBaseProps()} />);
     expect(component).toMatchSnapshot();
   });
 
   it('renders correctly for a VDDK task', () => {
-    const component = shallowDive(<RetryConversionHostConfirmationModal {...getBaseProps()} />);
+    const component = shallow(<RetryConversionHostConfirmationModal {...getBaseProps()} />);
     expect(component.find('TextFileField')).toHaveLength(1);
     expect(component).toMatchSnapshot();
   });
 
   it('renders correctly for an SSH task', () => {
-    const component = shallowDive(
+    const component = shallow(
       <RetryConversionHostConfirmationModal
         {...getBaseProps()}
         conversionHostTaskToRetry={mockSshTask}
@@ -69,22 +67,33 @@ describe('retry conversion host confirmation modal', () => {
   });
 
   it('disables the retry button when there are validation errors', () => {
-    const component = shallowDive(
-      <RetryConversionHostConfirmationModal {...getBaseProps()} retryForm={{ syncErrors: { mock: 'errors' } }} />
+    const component = mount(
+      <ProviderWrapper>
+        <RetryConversionHostConfirmationModalConnected
+          {...getBaseProps()}
+          retryForm={{ syncErrors: { mock: 'errors' } }}
+        />
+      </ProviderWrapper>
     );
     expect(component.find('Button[bsStyle="primary"]').props().disabled).toBeTruthy();
   });
 
   it('disables the retry button when already retrying', () => {
-    const component = shallowDive(
-      <RetryConversionHostConfirmationModal {...getBaseProps()} isPostingConversionHosts />
+    const component = mount(
+      <ProviderWrapper>
+        <RetryConversionHostConfirmationModalConnected {...getBaseProps()} isPostingConversionHosts />
+      </ProviderWrapper>
     );
     expect(component.find('Button[bsStyle="primary"]').props().disabled).toBeTruthy();
   });
 
   it('constructs the postBody correctly and calls postConversionHostsAction for a VDDK task', async () => {
     const props = getBaseProps();
-    const component = shallowDive(<RetryConversionHostConfirmationModal {...props} />);
+    const component = mount(
+      <ProviderWrapper>
+        <RetryConversionHostConfirmationModalConnected {...props} />
+      </ProviderWrapper>
+    );
     component.find('Button[bsStyle="primary"]').simulate('click');
     expect(props.postConversionHostsAction).toHaveBeenCalledTimes(1);
     expect(props.postConversionHostsAction).toHaveBeenCalledWith(props.postConversionHostsUrl, [
@@ -101,12 +110,14 @@ describe('retry conversion host confirmation modal', () => {
 
   it('constructs the postBody correctly and calls postConversionHostsAction for an SSH task', async () => {
     const props = getBaseProps();
-    const component = shallowDive(
-      <RetryConversionHostConfirmationModal
-        {...props}
-        conversionHostTaskToRetry={mockSshTask}
-        retryForm={mockSshForm}
-      />
+    const component = mount(
+      <ProviderWrapper>
+        <RetryConversionHostConfirmationModalConnected
+          {...props}
+          conversionHostTaskToRetry={mockSshTask}
+          retryForm={mockSshForm}
+        />
+      </ProviderWrapper>
     );
     component.find('Button[bsStyle="primary"]').simulate('click');
     expect(props.postConversionHostsAction).toHaveBeenCalledTimes(1);

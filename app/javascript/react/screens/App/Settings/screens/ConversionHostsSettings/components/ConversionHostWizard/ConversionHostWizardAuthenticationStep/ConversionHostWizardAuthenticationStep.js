@@ -12,7 +12,7 @@ import { getConversionHostSshKeyInfoMessage } from '../../../../../helpers';
 
 const requiredWithMessage = required({ msg: __('This field is required') });
 
-const ConversionHostWizardAuthenticationStep = ({
+export const ConversionHostWizardAuthenticationStep = ({
   selectedProviderType,
   selectedTransformationMethod,
   verifyOpenstackCerts

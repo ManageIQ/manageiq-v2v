@@ -265,7 +265,7 @@ exports[`retry conversion host confirmation modal renders correctly for an SSH t
 `;
 
 exports[`retry conversion host confirmation modal renders the redux-form wrapper correctly 1`] = `
-<Connect(Form(RetryConversionHostConfirmationModal))
+<Hoc
   conversionHostRetryModalExitedAction={[MockFunction]}
   conversionHostTaskToRetry={
     Object {
@@ -282,6 +282,7 @@ exports[`retry conversion host confirmation modal renders the redux-form wrapper
   enableReinitialize={false}
   forceUnregisterOnUnmount={false}
   form="retryConversionHost"
+  forwardedRef={null}
   getFormState={[Function]}
   hideConversionHostRetryModalAction={[MockFunction]}
   initialValues={
@@ -325,6 +326,7 @@ exports[`retry conversion host confirmation modal renders the redux-form wrapper
       Symbol(observable): [Function],
     }
   }
+  submitAsSideEffect={false}
   touchOnBlur={true}
   touchOnChange={false}
   updateUnregisteredFields={false}

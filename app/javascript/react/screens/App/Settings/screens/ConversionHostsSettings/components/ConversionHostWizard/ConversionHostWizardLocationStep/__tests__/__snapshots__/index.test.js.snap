@@ -2,8 +2,15 @@
 
 exports[`ConversionHostWizardLocationStep integration test should mount ConversionHostWizardLocationStep with mapStateToProps reduced 1`] = `
 Object {
+  "destroyOnUnmount": false,
+  "enableReinitialize": false,
   "fetchTargetClustersAction": [Function],
+  "forceUnregisterOnUnmount": false,
+  "form": "conversionHostWizardLocationStep",
+  "getFormState": [Function],
   "isFetchingTargetClusters": false,
+  "keepDirtyOnReinitialize": false,
+  "persistentSubmitErrors": false,
   "providers": Array [
     Object {
       "id": "1",
@@ -11,9 +18,18 @@ Object {
       "type": "ManageIQ::Providers::Redhat::InfraManager",
     },
   ],
+  "pure": true,
   "resetFormAction": [Function],
   "selectedProviderId": "1",
   "selectedProviderType": "rhevm",
+  "shouldAsyncValidate": [Function],
+  "shouldError": [Function],
+  "shouldValidate": [Function],
+  "shouldWarn": [Function],
+  "submitAsSideEffect": false,
   "targetClusters": Array [],
+  "touchOnBlur": true,
+  "touchOnChange": false,
+  "updateUnregisteredFields": false,
 }
 `;

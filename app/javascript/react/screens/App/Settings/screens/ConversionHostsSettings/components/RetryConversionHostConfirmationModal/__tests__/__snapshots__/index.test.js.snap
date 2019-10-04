@@ -11,9 +11,27 @@ Object {
       },
     },
   },
+  "destroyOnUnmount": true,
+  "enableReinitialize": false,
+  "forceUnregisterOnUnmount": false,
+  "form": "retryConversionHost",
+  "getFormState": [Function],
   "hideConversionHostRetryModalAction": [Function],
+  "initialValues": Object {
+    "conversionHostSshKey": Object {
+      "body": "",
+      "filename": "",
+    },
+    "vmwareSshKey": Object {
+      "body": "",
+      "filename": "",
+    },
+  },
   "isPostingConversionHosts": false,
+  "keepDirtyOnReinitialize": false,
+  "persistentSubmitErrors": false,
   "postConversionHostsAction": [Function],
+  "pure": true,
   "retryForm": Object {
     "initial": Object {
       "conversionHostSshKey": Object {
@@ -36,6 +54,14 @@ Object {
       },
     },
   },
+  "shouldAsyncValidate": [Function],
+  "shouldError": [Function],
+  "shouldValidate": [Function],
+  "shouldWarn": [Function],
   "show": false,
+  "submitAsSideEffect": false,
+  "touchOnBlur": true,
+  "touchOnChange": false,
+  "updateUnregisteredFields": false,
 }
 `;

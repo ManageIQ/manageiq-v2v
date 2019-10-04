@@ -2,10 +2,14 @@
 
 exports[`Mapping Wizard integration test should mount the MappingWizardClusterStep with mapStateToProps reduced 1`] = `
 Object {
+  "destroyOnUnmount": false,
   "enableReinitialize": true,
   "fetchSourceClustersAction": [Function],
   "fetchSourceClustersUrl": "/api/dummyProviders",
   "fetchTargetClustersAction": [Function],
+  "forceUnregisterOnUnmount": false,
+  "form": "mappingWizardClustersStep",
+  "getFormState": [Function],
   "hideAlertAction": [Function],
   "initialValues": Object {
     "clusterMappings": Array [],
@@ -16,10 +20,20 @@ Object {
   "isRejectedTargetClusters": false,
   "keepDirtyOnReinitialize": true,
   "ospConversionHosts": Array [],
+  "persistentSubmitErrors": false,
+  "pure": true,
   "rhvConversionHosts": Array [],
+  "shouldAsyncValidate": [Function],
+  "shouldError": [Function],
+  "shouldValidate": [Function],
+  "shouldWarn": [Function],
   "showAlertAction": [Function],
   "sourceClusters": Array [],
+  "submitAsSideEffect": false,
   "targetClusters": Array [],
   "targetProvider": "rhevm",
+  "touchOnBlur": true,
+  "touchOnChange": false,
+  "updateUnregisteredFields": false,
 }
 `;

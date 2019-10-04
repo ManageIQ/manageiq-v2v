@@ -1,13 +1,20 @@
-import React from 'react';
-import { shallow } from 'enzyme';
+import React, { cloneElement } from 'react';
+import { shallow, mount } from 'enzyme';
+import { Provider } from 'react-redux';
 import { reducer as formReducer } from 'redux-form';
 
 import { generateStore } from '../../../../../../../common/testReduxHelpers';
-import ConversionHostWizardLocationStep from '../ConversionHostWizardLocationStep';
+import ConversionHostWizardLocationStepConnected, {
+  ConversionHostWizardLocationStep
+} from '../ConversionHostWizardLocationStep';
 import { RHV, OPENSTACK } from '../../../../../../../../../../common/constants';
 
 describe('conversion host wizard location step', () => {
   const store = generateStore({ form: formReducer }, {});
+
+  const ProviderWrapper = (
+    { children, ...props } // eslint-disable-line react/prop-types
+  ) => <Provider store={store}>{cloneElement(children, props)}</Provider>;
 
   const mockRhvProvider = {
     id: '1',
@@ -56,25 +63,29 @@ describe('conversion host wizard location step', () => {
   };
 
   it('renders the redux-form wrapper correctly', () => {
-    const component = shallow(<ConversionHostWizardLocationStep {...getBaseProps()} />);
+    const component = shallow(<ConversionHostWizardLocationStepConnected {...getBaseProps()} />);
     expect(component).toMatchSnapshot();
   });
 
   it('renders correctly in the initial state with both providers present', () => {
-    const component = shallowDive(<ConversionHostWizardLocationStep {...getBaseProps()} />);
+    const component = shallowDive(<ConversionHostWizardLocationStepConnected {...getBaseProps()} />);
     expect(component).toMatchSnapshot();
   });
 
   it('renders correctly in the initial state with only RHV providers present', () => {
     const component = shallowDive(
-      <ConversionHostWizardLocationStep {...getBaseProps()} providers={[mockRhvProvider]} />
+      <ConversionHostWizardLocationStepConnected {...getBaseProps()} providers={[mockRhvProvider]} />
     );
     expect(component).toMatchSnapshot();
   });
 
   it('calls fetchTargetClustersAction when the selectedProviderType changes', () => {
     const baseProps = getBaseProps();
-    const component = shallowDive(<ConversionHostWizardLocationStep {...baseProps} />);
+    const component = mount(
+      <ProviderWrapper>
+        <ConversionHostWizardLocationStepConnected {...baseProps} />
+      </ProviderWrapper>
+    );
     expect(baseProps.fetchTargetClustersAction).toHaveBeenCalledTimes(0);
     component.setProps({ selectedProviderType: RHV });
     expect(baseProps.fetchTargetClustersAction).toHaveBeenCalledTimes(1);
@@ -83,14 +94,16 @@ describe('conversion host wizard location step', () => {
 
   it('does not call fetchTargetClustersAction when the selectedProviderType does not change', () => {
     const baseProps = getBaseProps();
-    const component = shallowDive(<ConversionHostWizardLocationStep {...baseProps} selectedProviderType={RHV} />);
+    const component = shallowDive(
+      <ConversionHostWizardLocationStepConnected {...baseProps} selectedProviderType={RHV} />
+    );
     expect(baseProps.fetchTargetClustersAction).toHaveBeenCalledTimes(0);
     component.setProps({ unrelatedProp: 'foo' });
     expect(baseProps.fetchTargetClustersAction).toHaveBeenCalledTimes(0);
   });
 
   it('renders correctly when loading clusters after selecting a provider type', () => {
-    const component = shallowDive(
+    const component = shallow(
       <ConversionHostWizardLocationStep {...getBaseProps()} selectedProviderType={RHV} isFetchingTargetClusters />
     );
     expect(component.find('Spinner').props().loading).toBeTruthy();
@@ -98,7 +111,7 @@ describe('conversion host wizard location step', () => {
   });
 
   it('renders correctly after loading clusters but before selecting a provider', () => {
-    const component = shallowDive(
+    const component = shallow(
       <ConversionHostWizardLocationStep
         {...getBaseProps()}
         selectedProviderType={RHV}
@@ -106,12 +119,17 @@ describe('conversion host wizard location step', () => {
       />
     );
     expect(component.find('Spinner').props().loading).toBeFalsy();
-    expect(component.find('Field[name="cluster"]').props().options).toEqual([]);
+    expect(
+      component
+        .find('Field[name="cluster"]')
+        .first()
+        .props().options
+    ).toEqual([]);
     expect(component).toMatchSnapshot();
   });
 
   it('renders correctly after selecting a RHV provider', () => {
-    const component = shallowDive(
+    const component = shallow(
       <ConversionHostWizardLocationStep
         {...getBaseProps()}
         selectedProviderType={RHV}
@@ -122,6 +140,7 @@ describe('conversion host wizard location step', () => {
     expect(
       component
         .find('Field[name="cluster"]')
+        .first()
         .props()
         .options.map(option => option.id)
     ).toEqual(['1', '2']);
@@ -129,7 +148,7 @@ describe('conversion host wizard location step', () => {
   });
 
   it('renders correctly after selecting an OSP provider', () => {
-    const component = shallowDive(
+    const component = shallow(
       <ConversionHostWizardLocationStep
         {...getBaseProps()}
         selectedProviderType={OPENSTACK}
@@ -140,6 +159,7 @@ describe('conversion host wizard location step', () => {
     expect(
       component
         .find('Field[name="cluster"]')
+        .first()
         .props()
         .options.map(option => option.id)
     ).toEqual(['1', '2']);
@@ -148,16 +168,19 @@ describe('conversion host wizard location step', () => {
 
   it('resets the hosts step when the cluster field changes', () => {
     const baseProps = getBaseProps();
-    const component = shallowDive(
-      <ConversionHostWizardLocationStep
-        {...baseProps}
-        selectedProviderType={RHV}
-        targetClusters={mockRhvClusters}
-        selectedProviderId="1"
-      />
+    const component = mount(
+      <ProviderWrapper>
+        <ConversionHostWizardLocationStepConnected
+          {...baseProps}
+          selectedProviderType={RHV}
+          targetClusters={mockRhvClusters}
+          selectedProviderId="1"
+        />
+      </ProviderWrapper>
     );
     component
       .find('Field[name="cluster"]')
+      .first()
       .props()
       .onChange();
     expect(baseProps.resetFormAction).toHaveBeenCalledWith('conversionHostWizardHostsStep');

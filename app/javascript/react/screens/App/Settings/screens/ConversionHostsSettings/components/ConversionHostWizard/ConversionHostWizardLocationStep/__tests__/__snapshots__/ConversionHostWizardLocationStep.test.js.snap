@@ -306,80 +306,112 @@ exports[`conversion host wizard location step renders correctly after selecting 
 `;
 
 exports[`conversion host wizard location step renders correctly in the initial state with both providers present 1`] = `
-<Form
-  bsClass="form"
-  className="form-horizontal"
-  componentClass="form"
-  horizontal={false}
-  inline={false}
->
-  <Field
-    component={[Function]}
-    controlWidth={9}
-    inline_label={true}
-    label="Provider Type"
-    labelWidth={2}
-    name="providerType"
-    option_key="id"
-    option_value="name"
-    options={
-      Array [
-        Object {
-          "id": "rhevm",
-          "name": "Red Hat Virtualization",
-          "type": "ManageIQ::Providers::Redhat::InfraManager",
-        },
-        Object {
-          "id": "openstack",
-          "name": "Red Hat OpenStack Platform",
-          "type": "ManageIQ::Providers::Openstack::CloudManager",
-        },
-      ]
+<Connect(Form(ConversionHostWizardLocationStep))
+  _reduxForm={null}
+  destroyOnUnmount={false}
+  enableReinitialize={false}
+  fetchTargetClustersAction={[MockFunction]}
+  fetchTargetComputeUrls={
+    Object {
+      "openstack": "/api/mock/openstack/compute",
+      "rhevm": "/api/mock/rhv/compute",
     }
-    required={true}
-    validate={
-      Array [
-        [Function],
-      ]
+  }
+  forceUnregisterOnUnmount={false}
+  form="conversionHostWizardLocationStep"
+  getFormState={[Function]}
+  isFetchingTargetClusters={false}
+  keepDirtyOnReinitialize={false}
+  persistentSubmitErrors={false}
+  providers={
+    Array [
+      Object {
+        "id": "1",
+        "name": "Mock RHV",
+        "type": "ManageIQ::Providers::Redhat::InfraManager",
+      },
+      Object {
+        "id": "2",
+        "name": "Mock OSP",
+        "type": "ManageIQ::Providers::Openstack::CloudManager",
+      },
+    ]
+  }
+  pure={true}
+  resetFormAction={[MockFunction]}
+  selectedProviderId={null}
+  selectedProviderType={null}
+  shouldAsyncValidate={[Function]}
+  shouldError={[Function]}
+  shouldValidate={[Function]}
+  shouldWarn={[Function]}
+  store={
+    Object {
+      "dispatch": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(observable): [Function],
     }
-  />
-</Form>
+  }
+  submitAsSideEffect={false}
+  targetClusters={Array []}
+  touchOnBlur={true}
+  touchOnChange={false}
+  updateUnregisteredFields={false}
+/>
 `;
 
 exports[`conversion host wizard location step renders correctly in the initial state with only RHV providers present 1`] = `
-<Form
-  bsClass="form"
-  className="form-horizontal"
-  componentClass="form"
-  horizontal={false}
-  inline={false}
->
-  <Field
-    component={[Function]}
-    controlWidth={9}
-    inline_label={true}
-    label="Provider Type"
-    labelWidth={2}
-    name="providerType"
-    option_key="id"
-    option_value="name"
-    options={
-      Array [
-        Object {
-          "id": "rhevm",
-          "name": "Red Hat Virtualization",
-          "type": "ManageIQ::Providers::Redhat::InfraManager",
-        },
-      ]
+<Connect(Form(ConversionHostWizardLocationStep))
+  _reduxForm={null}
+  destroyOnUnmount={false}
+  enableReinitialize={false}
+  fetchTargetClustersAction={[MockFunction]}
+  fetchTargetComputeUrls={
+    Object {
+      "openstack": "/api/mock/openstack/compute",
+      "rhevm": "/api/mock/rhv/compute",
     }
-    required={true}
-    validate={
-      Array [
-        [Function],
-      ]
+  }
+  forceUnregisterOnUnmount={false}
+  form="conversionHostWizardLocationStep"
+  getFormState={[Function]}
+  isFetchingTargetClusters={false}
+  keepDirtyOnReinitialize={false}
+  persistentSubmitErrors={false}
+  providers={
+    Array [
+      Object {
+        "id": "1",
+        "name": "Mock RHV",
+        "type": "ManageIQ::Providers::Redhat::InfraManager",
+      },
+    ]
+  }
+  pure={true}
+  resetFormAction={[MockFunction]}
+  selectedProviderId={null}
+  selectedProviderType={null}
+  shouldAsyncValidate={[Function]}
+  shouldError={[Function]}
+  shouldValidate={[Function]}
+  shouldWarn={[Function]}
+  store={
+    Object {
+      "dispatch": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(observable): [Function],
     }
-  />
-</Form>
+  }
+  submitAsSideEffect={false}
+  targetClusters={Array []}
+  touchOnBlur={true}
+  touchOnChange={false}
+  updateUnregisteredFields={false}
+/>
 `;
 
 exports[`conversion host wizard location step renders correctly when loading clusters after selecting a provider type 1`] = `
@@ -476,7 +508,7 @@ exports[`conversion host wizard location step renders correctly when loading clu
 `;
 
 exports[`conversion host wizard location step renders the redux-form wrapper correctly 1`] = `
-<Connect(Form(ConversionHostWizardLocationStep))
+<Hoc
   destroyOnUnmount={false}
   enableReinitialize={false}
   fetchTargetClustersAction={[MockFunction]}
@@ -488,6 +520,7 @@ exports[`conversion host wizard location step renders the redux-form wrapper cor
   }
   forceUnregisterOnUnmount={false}
   form="conversionHostWizardLocationStep"
+  forwardedRef={null}
   getFormState={[Function]}
   isFetchingTargetClusters={false}
   keepDirtyOnReinitialize={false}
@@ -523,6 +556,7 @@ exports[`conversion host wizard location step renders the redux-form wrapper cor
       Symbol(observable): [Function],
     }
   }
+  submitAsSideEffect={false}
   targetClusters={Array []}
   touchOnBlur={true}
   touchOnChange={false}

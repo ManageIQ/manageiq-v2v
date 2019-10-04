@@ -10,7 +10,7 @@ import { FETCH_TARGET_COMPUTE_URLS } from '../../../../../../../../../redux/comm
 
 import { stepIDs } from '../ConversionHostWizardConstants';
 
-class ConversionHostWizardLocationStep extends React.Component {
+export class ConversionHostWizardLocationStep extends React.Component {
   componentDidUpdate(prevProps) {
     const { fetchTargetClustersAction, fetchTargetComputeUrls, selectedProviderType } = this.props;
     if (prevProps.selectedProviderType !== selectedProviderType) {
