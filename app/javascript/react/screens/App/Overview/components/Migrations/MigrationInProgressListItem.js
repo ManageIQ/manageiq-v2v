@@ -4,13 +4,11 @@ import numeral from 'numeral';
 import { Spinner, ListView, Button, Icon, UtilizationBar } from 'patternfly-react';
 import EllipsisWithTooltip from 'react-ellipsis-with-tooltip';
 
-import InProgressCard from './InProgressCard';
 import InProgressWithDetailCard from './InProgressWithDetailCard';
 import TickingIsoElapsedTime from '../../../../../../components/dates/TickingIsoElapsedTime';
 import getPlaybookName from './helpers/getPlaybookName';
 import { MIGRATIONS_FILTERS, TRANSFORMATION_PLAN_REQUESTS_URL } from '../../OverviewConstants';
 import CardEmptyState from './CardEmptyState';
-import CardFooter from './CardFooter';
 import ListViewTable from '../../../common/ListViewTable/ListViewTable';
 import MappingNameInfoItem from './MappingNameInfoItem';
 import NumVmsInfoItem from './NumVmsInfoItem';
@@ -169,43 +167,32 @@ const MigrationInProgressListItem = ({
     <MigrationFailedOverlay plan={plan} numFailedVms={numFailedVms} numTotalVms={numTotalVms} />
   ) : null;
 
-  // TODO --- below logic is not needed if playbooks are running -- how to handle this?
-
   // UX business rule: reflect the total disk space migrated, aggregated across requests
   const { totalDiskSpace, totalMigratedDiskSpace } = calculateTotalDiskSpace(tasksBySourceId);
 
+  // UX business rule: if there are any pre migration playbooks running,
+  // or if all disks have been migrated and we have a post migration playbook running, show this instead
+  if (
+    taskRunningPreMigrationPlaybook ||
+    (totalMigratedDiskSpace >= totalDiskSpace && taskRunningPostMigrationPlaybook)
+  ) {
+    const { pre_service_id, post_service_id } = plan.options.config_info;
+    const playbookId = taskRunningPreMigrationPlaybook ? pre_service_id : post_service_id;
+    const playbookName = getPlaybookName(serviceTemplatePlaybooks, playbookId);
+    return (
+      // TODO replace this with a list item
+      <InProgressWithDetailCard plan={plan} failedOverlay={failedOverlay} handleClick={handleClick}>
+        <CardEmptyState
+          emptyStateInfo={sprintf(__('Running playbook service %s. This might take a few minutes.'), playbookName)}
+          showSpinner
+          spinnerStyles={{ marginBottom: '15px' }}
+        />
+      </InProgressWithDetailCard>
+    );
+  }
+
   // TODO remove this temporary escape hatch
   return <InProgressRow plan={plan} additionalInfo={[]} />;
-
-  // TODO handle this case after denied
-  // UX business rule: if there are any pre migration playbooks running, show this content instead
-  if (taskRunningPreMigrationPlaybook) {
-    const playbookName = getPlaybookName(serviceTemplatePlaybooks, plan.options.config_info.pre_service_id);
-    return (
-      <InProgressWithDetailCard plan={plan} failedOverlay={failedOverlay} handleClick={handleClick}>
-        <CardEmptyState
-          emptyStateInfo={sprintf(__('Running playbook service %s. This might take a few minutes.'), playbookName)}
-          showSpinner
-          spinnerStyles={{ marginBottom: '15px' }}
-        />
-      </InProgressWithDetailCard>
-    );
-  }
-
-  // TODO handle this case after pre-playbooks
-  // UX business rule: if all disks have been migrated and we have a post migration playbook running, show this instead
-  if (totalMigratedDiskSpace >= totalDiskSpace && taskRunningPostMigrationPlaybook) {
-    const playbookName = getPlaybookName(serviceTemplatePlaybooks, plan.options.config_info.post_service_id);
-    return (
-      <InProgressWithDetailCard plan={plan} failedOverlay={failedOverlay} handleClick={handleClick}>
-        <CardEmptyState
-          emptyStateInfo={sprintf(__('Running playbook service %s. This might take a few minutes.'), playbookName)}
-          showSpinner
-          spinnerStyles={{ marginBottom: '15px' }}
-        />
-      </InProgressWithDetailCard>
-    );
-  }
 
   // TODO handle base case: actually showing progress!
   return (
