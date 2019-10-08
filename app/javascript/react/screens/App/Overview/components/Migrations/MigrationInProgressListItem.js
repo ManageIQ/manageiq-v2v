@@ -24,13 +24,20 @@ import {
 import MigrationFailedOverlay from './MigrationFailedOverlay';
 import ProgressBarTooltip from './ProgressBarTooltip';
 
-// TODO move this to another file ?
-const InProgressRow = ({ plan, additionalInfo, actions = <div /> }) => (
+// TODO move this to another file. deal with required props?
+const InProgressRow = ({ plan, numFailedVms = 0, numTotalVms, additionalInfo, actions = <div /> }) => (
   <ListViewTable.Row
     stacked
     className="plans-in-progress-list__list-item"
     leftContent={<Spinner size="lg" loading />}
-    heading={plan.name}
+    heading={
+      <React.Fragment>
+        {numFailedVms > 0 && (
+          <MigrationFailedOverlay plan={plan} numFailedVms={numFailedVms} numTotalVms={numTotalVms} />
+        )}
+        {plan.name}
+      </React.Fragment>
+    }
     description={<EllipsisWithTooltip>{plan.description}</EllipsisWithTooltip>}
     additionalInfo={[
       <MappingNameInfoItem key="mappingName" plan={plan} />,
@@ -41,7 +48,9 @@ const InProgressRow = ({ plan, additionalInfo, actions = <div /> }) => (
   />
 );
 InProgressRow.propTypes = {
-  plan: PropTypes.shape({ name: PropTypes.string, description: PropTypes.string }).isRequired,
+  plan: PropTypes.shape({ name: PropTypes.node, description: PropTypes.node }).isRequired,
+  numFailedVms: PropTypes.number,
+  numTotalVms: PropTypes.number,
   additionalInfo: PropTypes.arrayOf(PropTypes.node).isRequired,
   actions: PropTypes.node
 };
@@ -51,7 +60,7 @@ const MigrationInProgressListItem = ({
   serviceTemplatePlaybooks,
   allRequestsWithTasks,
   reloadCard, // TODO where does this come from, can we rename it?
-  handleClick,
+  redirectTo,
   fetchTransformationPlansAction,
   fetchTransformationPlansUrl,
   isFetchingTransformationPlans,
@@ -151,7 +160,7 @@ const MigrationInProgressListItem = ({
 
   // UX business rule: reflect failed immediately if any single task has failed
   // in the most recent request
-  const { failed, numFailedVms } = countFailedVms(mostRecentRequest);
+  const numFailedVms = countFailedVms(mostRecentRequest);
 
   // UX business rule: aggregrate the tasks across requests reflecting current status of all tasks,
   // (gather the last status for the vm, gather the last storage for use in UX bussiness rule 3)
@@ -163,12 +172,14 @@ const MigrationInProgressListItem = ({
     taskRunningPostMigrationPlaybook
   } = aggregateTasks(tasksBySourceId);
 
-  const failedOverlay = failed ? (
-    <MigrationFailedOverlay plan={plan} numFailedVms={numFailedVms} numTotalVms={numTotalVms} />
-  ) : null;
-
   // UX business rule: reflect the total disk space migrated, aggregated across requests
   const { totalDiskSpace, totalMigratedDiskSpace } = calculateTotalDiskSpace(tasksBySourceId);
+
+  const redirectToPlan = event => {
+    event.stopPropagation();
+    redirectTo(`/plan/${plan.id}`);
+  };
+  const baseRowProps = { plan, numFailedVms, numTotalVms, onClick: redirectToPlan };
 
   // UX business rule: if there are any pre migration playbooks running,
   // or if all disks have been migrated and we have a post migration playbook running, show this instead
@@ -180,14 +191,15 @@ const MigrationInProgressListItem = ({
     const playbookId = taskRunningPreMigrationPlaybook ? pre_service_id : post_service_id;
     const playbookName = getPlaybookName(serviceTemplatePlaybooks, playbookId);
     return (
-      // TODO replace this with a list item
-      <InProgressWithDetailCard plan={plan} failedOverlay={failedOverlay} handleClick={handleClick}>
-        <CardEmptyState
-          emptyStateInfo={sprintf(__('Running playbook service %s. This might take a few minutes.'), playbookName)}
-          showSpinner
-          spinnerStyles={{ marginBottom: '15px' }}
-        />
-      </InProgressWithDetailCard>
+      <InProgressRow
+        {...baseRowProps}
+        additionalInfo={[
+          <ListView.InfoItem key="running-playbook">
+            <Spinner size="sm" inline loading />
+            {sprintf(__('Running playbook service %s. This might take a few minutes.'), playbookName)}
+          </ListView.InfoItem>
+        ]}
+      />
     );
   }
 
@@ -196,7 +208,7 @@ const MigrationInProgressListItem = ({
 
   // TODO handle base case: actually showing progress!
   return (
-    <InProgressWithDetailCard plan={plan} failedOverlay={failedOverlay} handleClick={handleClick}>
+    <InProgressWithDetailCard plan={plan} failedOverlay={failedOverlay} handleClick={redirectTo}>
       <div id={`datastore-progress-bar-${plan.id}`}>
         <UtilizationBar
           now={totalMigratedDiskSpace}
@@ -258,7 +270,7 @@ MigrationInProgressListItem.propTypes = {
   serviceTemplatePlaybooks: PropTypes.array,
   allRequestsWithTasks: PropTypes.array,
   reloadCard: PropTypes.bool,
-  handleClick: PropTypes.func,
+  redirectTo: PropTypes.func,
   fetchTransformationPlansAction: PropTypes.func,
   fetchTransformationPlansUrl: PropTypes.string,
   isFetchingTransformationPlans: PropTypes.bool,
