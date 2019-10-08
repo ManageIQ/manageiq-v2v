@@ -37,15 +37,13 @@ export const shouldDisableCancelButton = ({
 };
 
 export const countFailedVms = mostRecentRequest => {
-  let failed = false;
   let numFailedVms = 0;
   mostRecentRequest.miq_request_tasks.forEach(task => {
     if (task.status === 'Error') {
-      failed = true;
       numFailedVms += 1;
     }
   });
-  return { failed, numFailedVms };
+  return numFailedVms;
 };
 
 export const getIndexedTasksOfPlan = ({ plan, requestsOfAssociatedPlan, mostRecentRequest }) => {
