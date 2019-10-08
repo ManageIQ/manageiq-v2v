@@ -4,11 +4,9 @@ import numeral from 'numeral';
 import { Spinner, ListView, Button, Icon, UtilizationBar } from 'patternfly-react';
 import EllipsisWithTooltip from 'react-ellipsis-with-tooltip';
 
-import InProgressWithDetailCard from './InProgressWithDetailCard';
 import TickingIsoElapsedTime from '../../../../../../components/dates/TickingIsoElapsedTime';
 import getPlaybookName from './helpers/getPlaybookName';
 import { MIGRATIONS_FILTERS, TRANSFORMATION_PLAN_REQUESTS_URL } from '../../OverviewConstants';
-import CardEmptyState from './CardEmptyState';
 import ListViewTable from '../../../common/ListViewTable/ListViewTable';
 import MappingNameInfoItem from './MappingNameInfoItem';
 import NumVmsInfoItem from './NumVmsInfoItem';
