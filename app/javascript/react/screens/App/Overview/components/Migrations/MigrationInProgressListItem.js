@@ -6,9 +6,6 @@ import EllipsisWithTooltip from 'react-ellipsis-with-tooltip';
 import TickingIsoElapsedTime from '../../../../../../components/dates/TickingIsoElapsedTime';
 import getPlaybookName from './helpers/getPlaybookName';
 import { MIGRATIONS_FILTERS, TRANSFORMATION_PLAN_REQUESTS_URL } from '../../OverviewConstants';
-import ListViewTable from '../../../common/ListViewTable/ListViewTable';
-import MappingNameInfoItem from './MappingNameInfoItem';
-import NumVmsInfoItem from './NumVmsInfoItem';
 import {
   countFailedVms,
   isWaitingForConversionHost,
@@ -18,39 +15,8 @@ import {
   calculateTotalDiskSpace,
   shouldDisableCancelButton
 } from './helpers/inProgressHelpers';
-import MigrationFailedOverlay from './MigrationFailedOverlay';
+import InProgressRow from './InProgressRow';
 import ProgressBarTooltip from './ProgressBarTooltip';
-
-// TODO move this to another file. deal with required props?
-const InProgressRow = ({ plan, numFailedVms = 0, numTotalVms, additionalInfo, actions = <div /> }) => (
-  <ListViewTable.Row
-    stacked
-    className="plans-in-progress-list__list-item"
-    leftContent={<Spinner size="lg" loading />}
-    heading={
-      <React.Fragment>
-        {numFailedVms > 0 && (
-          <MigrationFailedOverlay plan={plan} numFailedVms={numFailedVms} numTotalVms={numTotalVms} />
-        )}
-        {plan.name}
-      </React.Fragment>
-    }
-    description={<EllipsisWithTooltip>{plan.description}</EllipsisWithTooltip>}
-    additionalInfo={[
-      <MappingNameInfoItem key="mappingName" plan={plan} />,
-      <NumVmsInfoItem key="numVms" plan={plan} />,
-      ...additionalInfo
-    ]}
-    actions={actions}
-  />
-);
-InProgressRow.propTypes = {
-  plan: PropTypes.shape({ name: PropTypes.node, description: PropTypes.node }).isRequired,
-  numFailedVms: PropTypes.number,
-  numTotalVms: PropTypes.number,
-  additionalInfo: PropTypes.arrayOf(PropTypes.node).isRequired,
-  actions: PropTypes.node
-};
 
 const MigrationInProgressListItem = ({
   plan,
