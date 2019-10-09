@@ -20,6 +20,10 @@
 
       &.list-view-pf-left {
         width: 60px;
+
+        .spinner.spinner-lg {
+          margin-left: 20px;
+        }
       }
 
       .list-view-pf-description {

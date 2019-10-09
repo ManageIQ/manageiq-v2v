@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import numeral from 'numeral';
 import { Spinner, ListView, Button, Icon, UtilizationBar } from 'patternfly-react';
 import EllipsisWithTooltip from 'react-ellipsis-with-tooltip';
 
@@ -201,65 +200,40 @@ const MigrationInProgressListItem = ({
     );
   }
 
-  // TODO remove this temporary escape hatch
-  return <InProgressRow plan={plan} additionalInfo={[]} />;
+  // TODO strip out broken tests, fix where we can, open an issue for remaining unit tests
 
-  // TODO handle base case: actually showing progress!
   return (
-    <InProgressWithDetailCard plan={plan} failedOverlay={failedOverlay} handleClick={redirectTo}>
-      <div id={`datastore-progress-bar-${plan.id}`}>
-        <UtilizationBar
-          now={totalMigratedDiskSpace}
-          max={totalDiskSpace}
-          description={__('Datastores')}
-          label={
-            <span>
-              <strong id="size-migrated" className="label-strong">
-                {sprintf(
-                  __('%s of %s'),
-                  numeral(totalMigratedDiskSpace).format('0.00b'),
-                  numeral(totalDiskSpace).format('0.00b')
-                )}
-              </strong>{' '}
-              {__('migrated')}
-            </span>
-          }
-          descriptionPlacementTop
-          availableTooltipFunction={() => (
-            <ProgressBarTooltip id={`migrated-disk-${plan.id}`} max={totalDiskSpace} now={totalMigratedDiskSpace} />
-          )}
-          usedTooltipFunction={() => (
-            <ProgressBarTooltip id={`total-disk-${plan.id}`} max={totalDiskSpace} now={totalMigratedDiskSpace} />
-          )}
-        />
-      </div>
-      <div id={`vm-progress-bar-${plan.id}`}>
-        <UtilizationBar
-          now={numCompletedVms}
-          max={numTotalVms}
-          description={__('VMs')}
-          label={
-            <span>
-              <strong id="vms-migrated" className="label-strong">
-                {sprintf(__('%s of %s VMs'), numCompletedVms, numTotalVms)}
-              </strong>{' '}
-              {__('migrated')}
-            </span>
-          }
-          descriptionPlacementTop
-          availableTooltipFunction={() => (
-            <ProgressBarTooltip id={`available-vm-${plan.id}`} max={numTotalVms} now={numCompletedVms} />
-          )}
-          usedTooltipFunction={() => (
-            <ProgressBarTooltip id={`used-vm-${plan.id}`} max={numTotalVms} now={numCompletedVms} />
-          )}
-        />
-      </div>
-      <div className="active-migration-elapsed-time">
-        <Icon type="fa" name="clock-o" />
-        <TickingIsoElapsedTime startTime={mostRecentRequest.created_on} />
-      </div>
-    </InProgressWithDetailCard>
+    <InProgressRow
+      {...baseRowProps}
+      additionalInfo={[
+        <ListView.InfoItem key="migration-progress">
+          <div id={`vm-progress-bar-${plan.id}`} className="vm-progress-bar">
+            <UtilizationBar
+              now={numCompletedVms}
+              max={numTotalVms}
+              description={__('Migrating data')}
+              label={
+                <span>
+                  <span id="vms-migrated">{sprintf(__('%s of %s VMs'), numCompletedVms, numTotalVms)}</span>{' '}
+                  {__('migrated')}
+                </span>
+              }
+              descriptionPlacementTop
+              availableTooltipFunction={() => (
+                <ProgressBarTooltip id={`available-vm-${plan.id}`} max={numTotalVms} now={numCompletedVms} />
+              )}
+              usedTooltipFunction={() => (
+                <ProgressBarTooltip id={`used-vm-${plan.id}`} max={numTotalVms} now={numCompletedVms} />
+              )}
+            />
+            <div className="active-migration-elapsed-time">
+              <Icon type="fa" name="clock-o" />
+              <TickingIsoElapsedTime startTime={mostRecentRequest.created_on} />
+            </div>
+          </div>
+        </ListView.InfoItem>
+      ]}
+    />
   );
 };
 
