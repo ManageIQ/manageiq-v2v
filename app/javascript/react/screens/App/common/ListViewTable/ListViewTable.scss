@@ -4,6 +4,10 @@
   tr.list-group-item {
     display: table-row;
 
+    &.clickable {
+      cursor: pointer;
+    }
+
     td {
       display: table-cell;
       width: auto;

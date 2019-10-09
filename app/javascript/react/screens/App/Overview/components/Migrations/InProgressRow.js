@@ -1,17 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import EllipsisWithTooltip from 'react-ellipsis-with-tooltip';
-import { Spinner } from 'patternfly-react';
+import { Spinner, noop } from 'patternfly-react';
 
 import ListViewTable from '../../../common/ListViewTable/ListViewTable';
 import MigrationFailedOverlay from './MigrationFailedOverlay';
 import MappingNameInfoItem from './MappingNameInfoItem';
 import NumVmsInfoItem from './NumVmsInfoItem';
 
-const InProgressRow = ({ plan, numFailedVms, numTotalVms, additionalInfo, actions }) => (
+const InProgressRow = ({ plan, numFailedVms, numTotalVms, onClick, additionalInfo, actions }) => (
   <ListViewTable.Row
+    onClick={onClick || noop}
     stacked
-    className="plans-in-progress-list__list-item"
+    className={classNames('plans-in-progress-list__list-item', { clickable: !!onClick })}
     leftContent={<Spinner size="lg" loading />}
     heading={
       <React.Fragment>
@@ -33,13 +35,15 @@ const InProgressRow = ({ plan, numFailedVms, numTotalVms, additionalInfo, action
 
 InProgressRow.propTypes = {
   plan: PropTypes.shape({ name: PropTypes.node, description: PropTypes.node }).isRequired,
+  additionalInfo: PropTypes.arrayOf(PropTypes.node).isRequired,
+  onClick: PropTypes.func,
   numFailedVms: PropTypes.number,
   numTotalVms: PropTypes.number,
-  additionalInfo: PropTypes.arrayOf(PropTypes.node).isRequired,
   actions: PropTypes.node
 };
 
 InProgressRow.defaultProps = {
+  onClick: null,
   numFailedVms: 0,
   numTotalVms: 0,
   actions: <div />
