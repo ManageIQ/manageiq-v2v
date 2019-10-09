@@ -200,8 +200,6 @@ const MigrationInProgressListItem = ({
     );
   }
 
-  // TODO strip out broken tests, fix where we can, open an issue for remaining unit tests
-
   return (
     <InProgressRow
       {...baseRowProps}
