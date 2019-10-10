@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { ListView } from 'patternfly-react';
 import { ListViewTableContext } from './ListViewTable';
@@ -13,12 +14,20 @@ const BaseListViewTableRow = ({
   description,
   additionalInfo,
   actions,
+  children,
+  expanded,
+  toggleExpanded,
   ...props
 }) => {
+  // TODO Look at ListViewItem, what do the `list-group-item-header` and `list-group-item-container` CSS classes do?
+
+  // TODO add the expand chevron thing .list-view-pf-expand, compare with original ListViewItem
+  // TODO call toggleExpanded on click, where?
   const row = (
     <tr
       className={classNames(className, 'list-group-item', {
-        'list-view-pf-stacked': stacked
+        'list-view-pf-stacked': stacked,
+        'list-view-pf-expand-active': expanded
       })}
       {...props}
     >
@@ -53,17 +62,59 @@ const BaseListViewTableRow = ({
 };
 
 BaseListViewTableRow.propTypes = {
+  ...ListView.Item.propTypes,
+  expanded: PropTypes.bool.isRequired,
+  toggleExpanded: PropTypes.func.isRequired
+};
+
+BaseListViewTableRow.defaultProps = {
+  ...ListView.Item.defaultProps
+};
+
+class ListViewTableRow extends React.Component {
+  state = { expanded: this.props.initExpanded };
+  toggleExpanded = () => {
+    const { onExpand, onExpandClose } = this.props;
+    if (this.state.expanded) {
+      onExpandClose();
+    } else {
+      onExpand();
+    }
+    this.setState(prevState => ({ expanded: !prevState.expanded }));
+  };
+
+  render() {
+    const {
+      props,
+      state: { expanded },
+      toggleExpanded
+    } = this;
+
+    return (
+      <ListViewTableContext.Consumer>
+        {({ isSmallViewport }) =>
+          isSmallViewport ? (
+            <ListView.Item
+              {...props}
+              initExpanded={expanded}
+              onExpand={toggleExpanded}
+              onExpandClose={toggleExpanded}
+            />
+          ) : (
+            <BaseListViewTableRow {...props} expanded={expanded} toggleExpanded={toggleExpanded} />
+          )
+        }
+      </ListViewTableContext.Consumer>
+    );
+  }
+}
+
+ListViewTableRow.propTypes = {
   ...ListView.Item.propTypes
 };
 
-const ListViewTableRow = props => (
-  <ListViewTableContext.Consumer>
-    {({ isSmallViewport }) => (isSmallViewport ? <ListView.Item {...props} /> : <BaseListViewTableRow {...props} />)}
-  </ListViewTableContext.Consumer>
-);
-
-ListViewTableRow.propTypes = {
-  ...BaseListViewTableRow.propTypes
+ListViewTableRow.defaultProps = {
+  ...ListView.Item.defaultProps
 };
 
 export default ListViewTableRow;
