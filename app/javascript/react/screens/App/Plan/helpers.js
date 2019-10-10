@@ -1,7 +1,6 @@
 import numeral from 'numeral';
 
 import {
-  STATUS_MESSAGE_KEYS,
   V2V_MIGRATION_STATUS_MESSAGES,
   V2V_DOWNLOAD_LOG_STATUS_MESSAGES,
   V2V_BACKEND_ERROR_MESSAGES
@@ -21,11 +20,8 @@ const processVMTasks = vmTasks => {
       message: V2V_MIGRATION_STATUS_MESSAGES[task.message] || __('VM migrations stalled'),
       delivered_on: new Date(task.options.delivered_on),
       updated_on: new Date(task.updated_on),
-      completed:
-        task.message === STATUS_MESSAGE_KEYS.VM_TRANSFORMATIONS_COMPLETED ||
-        task.message === STATUS_MESSAGE_KEYS.VM_TRANSFORMATIONS_FAILED ||
-        task.message === STATUS_MESSAGE_KEYS.FAILED ||
-        (!V2V_MIGRATION_STATUS_MESSAGES[task.message] && task.state === 'finished'),
+      completed: task.state === 'finished',
+      completedSuccessfully: taskCompletedSuccessfully(task),
       state: task.state,
       status: task.status,
       options: {},
@@ -74,11 +70,6 @@ const processVMTasks = vmTasks => {
 
     taskDetails.elapsedTime = IsoElapsedTime(new Date(startDateTime), new Date(lastUpdateDateTime));
 
-    if (taskDetails.completed) {
-      taskDetails.completedSuccessfully =
-        (task.options.progress && task.options.progress.current_description === 'Virtual machine migrated') ||
-        (task.options.progress && task.options.progress.current_description === 'Mark source as migrated');
-    }
     if (task.options && task.options.virtv2v_disks && task.options.virtv2v_disks.length) {
       taskDetails.totalDiskSpace = task.options.virtv2v_disks.reduce((a, b) => a + b.size, 0);
       taskDetails.totalDiskSpaceGb = numeral(taskDetails.totalDiskSpace).format('0.00b');
