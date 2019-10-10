@@ -4,6 +4,10 @@
   tr.list-group-item {
     display: table-row;
 
+    &.clickable {
+      cursor: pointer;
+    }
+
     td {
       display: table-cell;
       width: auto;
@@ -18,8 +22,12 @@
         padding-left: 0;
       }
 
-      .list-view-pf-left {
-        padding-right: 5px;
+      &.list-view-pf-left {
+        width: 60px;
+
+        .spinner.spinner-lg {
+          margin-left: 20px;
+        }
       }
 
       .list-view-pf-description {
@@ -35,6 +43,10 @@
 
       .list-view-pf-additional-info-item {
         margin: 0;
+      }
+
+      .spinner-sm.spinner-inline {
+        min-width: 18px;
       }
 
       .list-view-pf-actions {

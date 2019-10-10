@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { noop, Button, ListView, Grid, Icon, Spinner, Toolbar, DropdownKebab, MenuItem } from 'patternfly-react';
+import { noop, Button, Grid, Spinner, Toolbar, DropdownKebab, MenuItem } from 'patternfly-react';
 import EllipsisWithTooltip from 'react-ellipsis-with-tooltip';
 import ShowWizardEmptyState from '../../../common/ShowWizardEmptyState/ShowWizardEmptyState';
 import ScheduleMigrationModal from '../ScheduleMigrationModal/ScheduleMigrationModal';
@@ -13,6 +13,8 @@ import DeleteMigrationMenuItem from './DeleteMigrationMenuItem';
 import getPlanScheduleInfo from './helpers/getPlanScheduleInfo';
 import ListViewTable from '../../../common/ListViewTable/ListViewTable';
 import ScheduledTimeInfoItem from './ScheduledTimeInfoItem';
+import NumVmsInfoItem from './NumVmsInfoItem';
+import MappingNameInfoItem from './MappingNameInfoItem';
 
 const MigrationsNotStartedList = ({
   migrateClick,
@@ -146,20 +148,8 @@ const MigrationsNotStartedList = ({
                           </EllipsisWithTooltip>
                         }
                         additionalInfo={[
-                          <ListView.InfoItem key={plan.id}>
-                            <Icon type="pf" name="virtual-machine" />
-                            <strong>{plan.options.config_info.actions.length}</strong> {__('VMs')}
-                          </ListView.InfoItem>,
-                          <ListView.InfoItem key={`${plan.id}-infraMappingName`}>
-                            {isMissingMapping ? (
-                              <React.Fragment>
-                                <Icon type="pf" name="warning-triangle-o" />{' '}
-                                {__('Infrastucture mapping does not exist.')}
-                              </React.Fragment>
-                            ) : (
-                              plan.infraMappingName
-                            )}
-                          </ListView.InfoItem>,
+                          <NumVmsInfoItem key={`${plan.id}-numVms`} plan={plan} />,
+                          <MappingNameInfoItem key={`${plan.id}-mappingName`} plan={plan} />,
                           <ScheduledTimeInfoItem
                             planId={plan.id}
                             migrationStarting={migrationStarting}
