@@ -39,6 +39,9 @@ exports[`if there are no conversion hosts available renders an error view 1`] = 
       </ListViewInfoItem>,
     ]
   }
+  numFailedVms={0}
+  numTotalVms={0}
+  onClick={null}
   plan={
     Object {
       "configVmLength": 2,
@@ -145,6 +148,9 @@ exports[`when the request is denied renders an error view 1`] = `
       </ListViewInfoItem>,
     ]
   }
+  numFailedVms={0}
+  numTotalVms={0}
+  onClick={null}
   plan={
     Object {
       "configVmLength": 2,
