@@ -9,6 +9,7 @@ describe('Plan wizard results step', () => {
     postMigrationPlansAction: jest.fn(),
     editMigrationPlansAction: jest.fn(),
     plansBody: { name: 'Mock Plan', mock: 'data' },
+    planType: 'migration_type_cold',
     planSchedule: 'migration_plan_later',
     isPostingPlans: false,
     isRejectedPostingPlans: false,
