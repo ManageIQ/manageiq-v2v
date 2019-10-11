@@ -21,6 +21,7 @@ Object {
   "setMetadataWithNextButtonClickedAction": [Function],
   "setMigrationsFilterAction": [Function],
   "setPlanScheduleAction": [Function],
+  "setPlanTypeAction": [Function],
   "setPlansBodyAction": [Function],
   "showAlertAction": [Function],
   "showConfirmModalAction": [Function],
