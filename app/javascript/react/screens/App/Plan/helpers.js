@@ -72,13 +72,13 @@ const processVMTasks = vmTasks => {
 
     if (task.options && task.options.virtv2v_disks && task.options.virtv2v_disks.length) {
       taskDetails.totalDiskSpace = task.options.virtv2v_disks.reduce((a, b) => a + b.size, 0);
-      taskDetails.totalDiskSpaceGb = numeral(taskDetails.totalDiskSpace).format('0.00b');
+      taskDetails.totalDiskSpaceGb = numeral(taskDetails.totalDiskSpace).format('0.00 ib');
 
       const percentComplete =
         task.options.virtv2v_disks.reduce((a, b) => a + b.percent, 0) / (100 * task.options.virtv2v_disks.length);
 
       taskDetails.diskSpaceCompleted = percentComplete * taskDetails.totalDiskSpace;
-      taskDetails.diskSpaceCompletedGb = numeral(taskDetails.diskSpaceCompleted).format('0.00b');
+      taskDetails.diskSpaceCompletedGb = numeral(taskDetails.diskSpaceCompleted).format('0.00 ib');
       taskDetails.percentComplete = Math.round(percentComplete * 100);
     }
     tasks.push(taskDetails);
