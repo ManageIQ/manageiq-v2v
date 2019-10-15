@@ -13,12 +13,15 @@ import {
   Tooltip,
   UtilizationBar,
   DropdownButton,
-  MenuItem
+  MenuItem,
+  Row,
+  Col
 } from 'patternfly-react';
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
 import { migrationStatusMessage, REQUEST_TASKS_URL } from '../../PlanConstants';
 import TickingIsoElapsedTime from '../../../../../../components/dates/TickingIsoElapsedTime';
 import ConfirmModal from '../../../common/ConfirmModal';
+import ListViewTable from '../../../common/ListViewTable/ListViewTable';
 
 class PlanRequestDetailList extends React.Component {
   state = {
@@ -209,7 +212,7 @@ class PlanRequestDetailList extends React.Component {
           )}
         </Grid.Row>
         <div style={{ overflow: 'auto', paddingBottom: 300, height: '100%' }}>
-          <ListView className="plan-request-details-list">
+          <ListViewTable className="plan-request-details-list">
             {filteredSortedPaginatedListItems.items.map((task, n) => {
               let currentDescription = task.options.progress
                 ? migrationStatusMessage(task.options.progress.current_description)
@@ -307,7 +310,7 @@ class PlanRequestDetailList extends React.Component {
               );
 
               return (
-                <ListView.Item
+                <ListViewTable.Row
                   key={task.id}
                   checkboxInput={
                     <input
@@ -424,10 +427,14 @@ class PlanRequestDetailList extends React.Component {
                     </DropdownButton>
                   }
                   stacked
-                />
+                >
+                  <Row>
+                    <Col sm={11}>TODO: Hey this is the expanded stuff right here</Col>
+                  </Row>
+                </ListViewTable.Row>
               );
             })}
-          </ListView>
+          </ListViewTable>
           {renderPaginationRow(filteredSortedPaginatedListItems)}
         </div>
         <ConfirmModal

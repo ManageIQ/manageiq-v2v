@@ -53,7 +53,7 @@ const BaseListViewTableRow = ({
       e.target.tagName !== 'INPUT' &&
       !e.target.classList.contains('fa-ellipsis-v')
     ) {
-      console.log('toggle!');
+      console.log('TOGGLE!');
       toggleExpanded();
     }
   };
@@ -95,24 +95,26 @@ const BaseListViewTableRow = ({
     </tr>
   );
 
-  if (expandable) {
+  if (expandable && expanded) {
     const numColumns = row.props.children.filter(child => !!child).length;
 
     return (
       <React.Fragment>
         {row /* TODO with ListViewExpand in leftContent? */}
-        <tr colSpan={numColumns} className="list-group-item-container container-fluid">
-          {hideCloseIcon ? (
-            children
-          ) : (
-            // TODO replace inline styles with CSS
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <div style={{ flexGrow: 1 }}>{children}</div>
-              <div className="close">
-                <Icon type="pf" name="close" onClick={toggleExpanded} />
+        <tr className="list-group-item-container container-fluid">
+          <td colSpan={numColumns}>
+            {hideCloseIcon ? (
+              children
+            ) : (
+              // TODO replace inline styles with CSS
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <div style={{ flexGrow: 1 }}>{children}</div>
+                <div className="close">
+                  <Icon type="pf" name="close" onClick={toggleExpanded} />
+                </div>
               </div>
-            </div>
-          )}
+            )}
+          </td>
         </tr>
       </React.Fragment>
     );
