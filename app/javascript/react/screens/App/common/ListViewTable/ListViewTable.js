@@ -61,6 +61,10 @@ ListViewTable.propTypes = {
   ...ListView.propTypes
 };
 
+ListViewTable.defaultProps = {
+  ...ListView.defaultProps
+};
+
 ListViewTable.Row = ListViewTableRow;
 
 export default ListViewTable;

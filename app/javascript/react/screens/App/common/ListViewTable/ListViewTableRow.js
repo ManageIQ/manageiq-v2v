@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { ListView } from 'patternfly-react';
+import { ListView, Icon } from 'patternfly-react';
 import { ListViewTableContext } from './ListViewTable';
 
 // TODO implement expandable support
@@ -9,6 +9,7 @@ import { ListViewTableContext } from './ListViewTable';
 const BaseListViewTableRow = ({
   className,
   stacked,
+  checkboxInput,
   leftContent,
   heading,
   description,
@@ -17,18 +18,55 @@ const BaseListViewTableRow = ({
   children,
   expanded,
   toggleExpanded,
+  hideCloseIcon,
+  compoundExpand,
+  compoundExpanded,
+  onCloseCompoundExpand,
   ...props
 }) => {
   // TODO Look at ListViewItem, what do the `list-group-item-header` and `list-group-item-container` CSS classes do?
 
-  // TODO add the expand chevron thing .list-view-pf-expand, compare with original ListViewItem
-  // TODO call toggleExpanded on click, where?
+  // TODO do we need multiple <tbody> elements to achieve these styles? how does that work for a non-expandable list?
+  //      is it acceptable to just have every row in a tbody no matter what? would match the original ListViewGroupItem...s
+
+  // TODO add the expand chevron thing .list-view-pf-expand, ListViewExpand?
+
+  console.log('TODO: handle checkbox input!', checkboxInput); // eslint-disable-line no-console
+  if (compoundExpand) {
+    // eslint-disable-next-line no-console
+    console.warn('ListViewTable does not currently support the compoundExpand props.', {
+      compoundExpand,
+      compoundExpanded,
+      onCloseCompoundExpand
+    });
+  }
+
+  const expandable = !!children;
+
+  const handleClick = e => {
+    console.log('CLICK!');
+    // ignore selected child elements click
+    if (
+      expandable &&
+      e.target.tagName !== 'BUTTON' &&
+      e.target.tagName !== 'A' &&
+      e.target.tagName !== 'INPUT' &&
+      !e.target.classList.contains('fa-ellipsis-v')
+    ) {
+      console.log('toggle!');
+      toggleExpanded();
+    }
+  };
+
   const row = (
     <tr
-      className={classNames(className, 'list-group-item', {
+      className={classNames(className, {
+        'list-group-item': true,
         'list-view-pf-stacked': stacked,
+        'list-group-item-header': expandable, // TODO ??? maybe this needs to be on a wrapping <tbody> instead
         'list-view-pf-expand-active': expanded
       })}
+      onClick={handleClick}
       {...props}
     >
       {leftContent && <td className="list-view-pf-left list-view-pf-main-info">{leftContent}</td>}
@@ -56,8 +94,30 @@ const BaseListViewTableRow = ({
       )}
     </tr>
   );
-  const numColumns = row.props.children.filter(child => !!child).length; // eslint-disable-line no-unused-vars
-  // TODO: use numColumns for colspan of expanded content
+
+  if (expandable) {
+    const numColumns = row.props.children.filter(child => !!child).length;
+
+    return (
+      <React.Fragment>
+        {row /* TODO with ListViewExpand in leftContent? */}
+        <tr colSpan={numColumns} className="list-group-item-container container-fluid">
+          {hideCloseIcon ? (
+            children
+          ) : (
+            // TODO replace inline styles with CSS
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <div style={{ flexGrow: 1 }}>{children}</div>
+              <div className="close">
+                <Icon type="pf" name="close" onClick={toggleExpanded} />
+              </div>
+            </div>
+          )}
+        </tr>
+      </React.Fragment>
+    );
+  }
+
   return row;
 };
 
@@ -67,12 +127,8 @@ BaseListViewTableRow.propTypes = {
   toggleExpanded: PropTypes.func.isRequired
 };
 
-BaseListViewTableRow.defaultProps = {
-  ...ListView.Item.defaultProps
-};
-
 class ListViewTableRow extends React.Component {
-  state = { expanded: this.props.initExpanded };
+  state = { expanded: this.props.initExpanded || false };
   toggleExpanded = () => {
     const { onExpand, onExpandClose } = this.props;
     if (this.state.expanded) {
@@ -84,11 +140,9 @@ class ListViewTableRow extends React.Component {
   };
 
   render() {
-    const {
-      props,
-      state: { expanded },
-      toggleExpanded
-    } = this;
+    // Don't pass down certain props because they are handled here by toggleExpanded
+    const { initExpanded, onExpand, onExpandClose, ...props } = this.props; // eslint-disable-line no-unused-vars
+    const { expanded } = this.state;
 
     return (
       <ListViewTableContext.Consumer>
@@ -97,11 +151,11 @@ class ListViewTableRow extends React.Component {
             <ListView.Item
               {...props}
               initExpanded={expanded}
-              onExpand={toggleExpanded}
-              onExpandClose={toggleExpanded}
+              onExpand={this.toggleExpanded}
+              onExpandClose={this.toggleExpanded}
             />
           ) : (
-            <BaseListViewTableRow {...props} expanded={expanded} toggleExpanded={toggleExpanded} />
+            <BaseListViewTableRow {...props} expanded={expanded} toggleExpanded={this.toggleExpanded} />
           )
         }
       </ListViewTableContext.Consumer>
