@@ -212,27 +212,27 @@ const MigrationsCompletedList = ({
                         heading={plan.name}
                         description={plan.description}
                         additionalInfo={[
-                          <ListView.InfoItem className="num-vms-migrated" key={`${plan.id}-migrated`}>
+                          <ListViewTable.InfoItem className="num-vms-migrated" key={`${plan.id}-migrated`}>
                             <ListView.Icon type="pf" size="lg" name="screen" />
                             <strong>{succeedCount}</strong>
                             {__('of')}
                             <strong className="total">{Object.keys(tasks).length} </strong>
                             {__('VMs successfully migrated.')}
-                          </ListView.InfoItem>,
+                          </ListViewTable.InfoItem>,
                           <MappingNameInfoItem key={`${plan.id}-mappingName`} plan={plan} />,
                           !denied ? (
-                            <ListView.InfoItem key={`${plan.id}-elapsed`}>
+                            <ListViewTable.InfoItem key={`${plan.id}-elapsed`}>
                               <ListView.Icon type="fa" size="lg" name="clock-o" />
                               {elapsedTime}
-                            </ListView.InfoItem>
+                            </ListViewTable.InfoItem>
                           ) : null,
                           !denied && !showScheduledTime && mostRecentRequest.fulfilled_on ? (
-                            <ListView.InfoItem key={`${plan.id}-completed`} style={{ textAlign: 'left' }}>
+                            <ListViewTable.InfoItem key={`${plan.id}-completed`} style={{ textAlign: 'left' }}>
                               <Icon type="fa" name="clock-o" />
                               {__('Completed:')}
                               <br />
                               {formatDateTime(mostRecentRequest.fulfilled_on)}
-                            </ListView.InfoItem>
+                            </ListViewTable.InfoItem>
                           ) : null,
                           <ScheduledTimeInfoItem
                             planId={plan.id}

@@ -22,6 +22,7 @@ import { migrationStatusMessage, REQUEST_TASKS_URL } from '../../PlanConstants';
 import TickingIsoElapsedTime from '../../../../../../components/dates/TickingIsoElapsedTime';
 import ConfirmModal from '../../../common/ConfirmModal';
 import ListViewTable from '../../../common/ListViewTable/ListViewTable';
+import StopPropagationOnClick from '../../../common/StopPropagationOnClick';
 
 class PlanRequestDetailList extends React.Component {
   state = {
@@ -325,7 +326,7 @@ class PlanRequestDetailList extends React.Component {
                   leftContent={leftContent}
                   heading={task.vmName}
                   additionalInfo={[
-                    <ListView.InfoItem
+                    <ListViewTable.InfoItem
                       key={`${task.id}-message`}
                       style={{
                         flexDirection: 'column',
@@ -341,17 +342,19 @@ class PlanRequestDetailList extends React.Component {
                         </div>
                         &nbsp;
                         {/* Todo: revisit FieldLevelHelp props in patternfly-react to support this */}
-                        <OverlayTrigger
-                          rootClose
-                          trigger="click"
-                          onEnter={() => this.overlayTriggerClick(task)}
-                          placement="left"
-                          overlay={popoverContent}
-                        >
-                          <Button bsStyle="link">
-                            <Icon type="pf" name="info" />
-                          </Button>
-                        </OverlayTrigger>
+                        <StopPropagationOnClick>
+                          <OverlayTrigger
+                            rootClose
+                            trigger="click"
+                            onEnter={() => this.overlayTriggerClick(task)}
+                            placement="left"
+                            overlay={popoverContent}
+                          >
+                            <Button bsStyle="link">
+                              <Icon type="pf" name="info" />
+                            </Button>
+                          </OverlayTrigger>
+                        </StopPropagationOnClick>
                       </div>
                       <div>
                         <ListView.Icon type="fa" size="lg" name="clock-o" />
@@ -360,8 +363,8 @@ class PlanRequestDetailList extends React.Component {
                           endTime={task.completed ? task.lastUpdateDateTime : null}
                         />
                       </div>
-                    </ListView.InfoItem>,
-                    <ListView.InfoItem key={`${task.id}-times`} style={{ minWidth: 150, paddingRight: 20 }}>
+                    </ListViewTable.InfoItem>,
+                    <ListViewTable.InfoItem key={`${task.id}-times`} style={{ minWidth: 150, paddingRight: 20 }}>
                       <UtilizationBar
                         now={task.percentComplete}
                         min={0}
@@ -380,7 +383,7 @@ class PlanRequestDetailList extends React.Component {
                         )}
                         descriptionPlacementTop
                       />
-                    </ListView.InfoItem>
+                    </ListViewTable.InfoItem>
                   ]}
                   actions={
                     <DropdownButton

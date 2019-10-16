@@ -1,15 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ListView, Icon } from 'patternfly-react';
+import { Icon } from 'patternfly-react';
+import ListViewTable from '../../../common/ListViewTable/ListViewTable';
 
 const MappingNameInfoItem = ({ plan }) => (
-  <ListView.InfoItem>
+  <ListViewTable.InfoItem>
     {plan.infraMappingName || (
       <React.Fragment>
         <Icon type="pf" name="warning-triangle-o" /> {__('Infrastucture mapping does not exist.')}
       </React.Fragment>
     )}
-  </ListView.InfoItem>
+  </ListViewTable.InfoItem>
 );
 
 MappingNameInfoItem.propTypes = {

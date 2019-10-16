@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Spinner, ListView, Button, Icon, UtilizationBar } from 'patternfly-react';
+import { Spinner, Button, Icon, UtilizationBar } from 'patternfly-react';
 import EllipsisWithTooltip from 'react-ellipsis-with-tooltip';
 
+import ListViewTable from '../../../common/ListViewTable/ListViewTable';
 import TickingIsoElapsedTime from '../../../../../../components/dates/TickingIsoElapsedTime';
 import getPlaybookName from './helpers/getPlaybookName';
 import { MIGRATIONS_FILTERS, TRANSFORMATION_PLAN_REQUESTS_URL } from '../../OverviewConstants';
@@ -46,10 +47,10 @@ const MigrationInProgressListItem = ({
       <InProgressRow
         plan={plan}
         additionalInfo={[
-          <ListView.InfoItem key="initiating">
+          <ListViewTable.InfoItem key="initiating">
             <Spinner size="sm" inline loading />
             {__('Initiating migration. This might take a few minutes.')}
-          </ListView.InfoItem>
+          </ListViewTable.InfoItem>
         ]}
       />
     );
@@ -65,8 +66,7 @@ const MigrationInProgressListItem = ({
       isCancellingPlanRequest
     });
 
-    const onCancelClick = event => {
-      event.stopPropagation();
+    const onCancelClick = () => {
       cancelPlanRequestAction(TRANSFORMATION_PLAN_REQUESTS_URL, mostRecentRequest.id).then(() =>
         fetchTransformationPlansAction({ url: fetchTransformationPlansUrl, archived: false })
       );
@@ -76,12 +76,12 @@ const MigrationInProgressListItem = ({
       <InProgressRow
         plan={plan}
         additionalInfo={[
-          <ListView.InfoItem key="waiting-for-host">
+          <ListViewTable.InfoItem key="waiting-for-host">
             <Spinner size="sm" inline loading />
             <EllipsisWithTooltip style={{ maxWidth: 300 }}>
               {__('Waiting for an available conversion host. You can continue waiting or go to the Migration Settings page to increase the number of migrations per host.') /* prettier-ignore */}
             </EllipsisWithTooltip>
-          </ListView.InfoItem>
+          </ListViewTable.InfoItem>
         ]}
         actions={
           <Button disabled={cancelButtonDisabled} onClick={onCancelClick}>
@@ -104,13 +104,13 @@ const MigrationInProgressListItem = ({
       <InProgressRow
         plan={plan}
         additionalInfo={[
-          <ListView.InfoItem key="denied">
+          <ListViewTable.InfoItem key="denied">
             <Icon type="pf" name="error-circle-o" />
             <EllipsisWithTooltip style={{ maxWidth: 300 }}>
               {__('Unable to migrate VMs because no conversion host was configured at the time of the attempted migration.') /* prettier-ignore */}{' '}
               {__('See the product documentation for information on configuring conversion hosts.')}
             </EllipsisWithTooltip>
-          </ListView.InfoItem>
+          </ListViewTable.InfoItem>
         ]}
         actions={
           <Button disabled={isEditingPlanRequest} onClick={onCancelClick}>
@@ -157,10 +157,10 @@ const MigrationInProgressListItem = ({
       <InProgressRow
         {...baseRowProps}
         additionalInfo={[
-          <ListView.InfoItem key="running-playbook">
+          <ListViewTable.InfoItem key="running-playbook">
             <Spinner size="sm" inline loading />
             {sprintf(__('Running playbook service %s. This might take a few minutes.'), playbookName)}
-          </ListView.InfoItem>
+          </ListViewTable.InfoItem>
         ]}
       />
     );
@@ -170,7 +170,7 @@ const MigrationInProgressListItem = ({
     <InProgressRow
       {...baseRowProps}
       additionalInfo={[
-        <ListView.InfoItem key="migration-progress">
+        <ListViewTable.InfoItem key="migration-progress">
           <div id={`vm-progress-bar-${plan.id}`} className="vm-progress-bar">
             <UtilizationBar
               now={numCompletedVms}
@@ -195,7 +195,7 @@ const MigrationInProgressListItem = ({
               <TickingIsoElapsedTime startTime={mostRecentRequest.created_on} />
             </div>
           </div>
-        </ListView.InfoItem>
+        </ListViewTable.InfoItem>
       ]}
     />
   );
