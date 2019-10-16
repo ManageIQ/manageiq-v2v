@@ -32,7 +32,6 @@ const BaseListViewTableRow = ({
 
   // TODO add the expand chevron thing .list-view-pf-expand, ListViewExpand?
 
-  console.log('TODO: handle checkbox input!', checkboxInput); // eslint-disable-line no-console
   if (compoundExpand) {
     // eslint-disable-next-line no-console
     console.warn('ListViewTable does not currently support the compoundExpand props.', {
@@ -69,7 +68,20 @@ const BaseListViewTableRow = ({
       onClick={expandable ? handleExpandClick : noop}
       {...props}
     >
-      {leftContent && <td className="list-view-pf-left list-view-pf-main-info">{leftContent}</td>}
+      {checkboxInput && (
+        <td className="list-view-table-checkbox-cell">
+          <ListView.Checkbox>{checkboxInput}</ListView.Checkbox>
+        </td>
+      )}
+      {leftContent && (
+        <td
+          className={classNames('list-view-pf-left', 'list-view-pf-main-info', {
+            'adjacent-to-checkbox-cell': !!checkboxInput
+          })}
+        >
+          {leftContent}
+        </td>
+      )}
       {(heading || description) && (
         <td className="list-view-pf-main-info">
           <ListView.Description>

@@ -22,11 +22,26 @@
         padding-left: 0;
       }
 
+      &.list-view-table-checkbox-cell {
+        width: 50px;
+      }
+
       &.list-view-pf-left {
         width: 60px;
 
+        .spinner.spinner-md,
         .spinner.spinner-lg {
           margin-left: 20px;
+        }
+
+        &.adjacent-to-checkbox-cell {
+          width: 30px;
+          padding-left: 0;
+
+          .spinner.spinner-md,
+          .spinner.spinner-lg {
+            margin-left: 0;
+          }
         }
       }
 
