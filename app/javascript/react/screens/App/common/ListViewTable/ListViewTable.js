@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { ListView, layout as pfLayout } from 'patternfly-react';
 import ListViewTableRow from './ListViewTableRow';
+import ListViewTableInfoItem from './ListViewTableInfoItem';
 
 export const ListViewTableContext = React.createContext({});
 
@@ -66,5 +67,6 @@ ListViewTable.defaultProps = {
 };
 
 ListViewTable.Row = ListViewTableRow;
+ListViewTable.InfoItem = ListViewTableInfoItem;
 
 export default ListViewTable;

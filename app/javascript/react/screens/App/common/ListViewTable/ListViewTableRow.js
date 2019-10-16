@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { ListView, Icon } from 'patternfly-react';
+import { ListView, Icon, noop } from 'patternfly-react';
 import { ListViewTableContext } from './ListViewTable';
+import StopPropagationOnClick from '../StopPropagationOnClick';
 
 // TODO implement expandable support
 
@@ -43,9 +44,9 @@ const BaseListViewTableRow = ({
 
   const expandable = !!children;
 
-  const handleClick = e => {
-    console.log('CLICK!');
+  const handleExpandClick = e => {
     // ignore selected child elements click
+    // (this is copied from patternfly-react's ListViewGroupItemHeader)
     if (
       expandable &&
       e.target.tagName !== 'BUTTON' &&
@@ -53,7 +54,6 @@ const BaseListViewTableRow = ({
       e.target.tagName !== 'INPUT' &&
       !e.target.classList.contains('fa-ellipsis-v')
     ) {
-      console.log('TOGGLE!');
       toggleExpanded();
     }
   };
@@ -66,7 +66,7 @@ const BaseListViewTableRow = ({
         'list-group-item-header': expandable, // TODO ??? maybe this needs to be on a wrapping <tbody> instead
         'list-view-pf-expand-active': expanded
       })}
-      onClick={handleClick}
+      onClick={expandable ? handleExpandClick : noop}
       {...props}
     >
       {leftContent && <td className="list-view-pf-left list-view-pf-main-info">{leftContent}</td>}
@@ -89,7 +89,9 @@ const BaseListViewTableRow = ({
         ))}
       {actions && (
         <td>
-          <ListView.Actions>{actions}</ListView.Actions>
+          <ListView.Actions>
+            <StopPropagationOnClick>{actions}</StopPropagationOnClick>
+          </ListView.Actions>
         </td>
       )}
     </tr>
