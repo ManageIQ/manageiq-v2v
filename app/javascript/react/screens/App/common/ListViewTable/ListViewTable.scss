@@ -22,10 +22,6 @@
         padding-left: 0;
       }
 
-      &.list-view-table-checkbox-cell {
-        width: 50px;
-      }
-
       &.list-view-pf-left {
         width: 60px;
 
@@ -34,14 +30,22 @@
           margin-left: 20px;
         }
 
-        &.adjacent-to-checkbox-cell {
-          width: 30px;
-          padding-left: 0;
-
+        &.contains-extra-left-content {
           .spinner.spinner-md,
           .spinner.spinner-lg {
             margin-left: 0;
+            margin-top: 20px;
+            margin-bottom: 20px;
           }
+        }
+      }
+
+      .list-view-table-flex {
+        display: flex;
+        align-items: center;
+
+        & > div {
+          float: none;
         }
       }
 
