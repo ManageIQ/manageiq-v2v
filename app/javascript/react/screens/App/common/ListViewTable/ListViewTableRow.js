@@ -28,9 +28,7 @@ const BaseListViewTableRow = ({
   // TODO Look at ListViewItem, what do the `list-group-item-header` and `list-group-item-container` CSS classes do?
 
   // TODO do we need multiple <tbody> elements to achieve these styles? how does that work for a non-expandable list?
-  //      is it acceptable to just have every row in a tbody no matter what? would match the original ListViewGroupItem...s
-
-  // TODO add the expand chevron thing .list-view-pf-expand, ListViewExpand?
+  //      is it acceptable to just have every row in a tbody no matter what? would match the original ListViewGroupItem...
 
   if (compoundExpand) {
     // eslint-disable-next-line no-console
@@ -68,18 +66,17 @@ const BaseListViewTableRow = ({
       onClick={expandable ? handleExpandClick : noop}
       {...props}
     >
-      {checkboxInput && (
-        <td className="list-view-table-checkbox-cell">
-          <ListView.Checkbox>{checkboxInput}</ListView.Checkbox>
-        </td>
-      )}
-      {leftContent && (
+      {(expandable || checkboxInput || leftContent) && (
         <td
           className={classNames('list-view-pf-left', 'list-view-pf-main-info', {
-            'adjacent-to-checkbox-cell': !!checkboxInput
+            'contains-extra-left-content': expandable || checkboxInput
           })}
         >
-          {leftContent}
+          <div className="list-view-table-flex">
+            {expandable && <ListView.Expand expanded={expanded} toggleExpanded={toggleExpanded} />}
+            {checkboxInput && <ListView.Checkbox>{checkboxInput}</ListView.Checkbox>}
+            {leftContent}
+          </div>
         </td>
       )}
       {(heading || description) && (
