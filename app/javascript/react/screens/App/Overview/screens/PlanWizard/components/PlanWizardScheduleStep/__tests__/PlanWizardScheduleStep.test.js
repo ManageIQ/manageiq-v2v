@@ -24,4 +24,11 @@ describe('Plan wizard schedule step', () => {
     );
     expect(component).toMatchSnapshot();
   });
+
+  it('renders with a info text when warm migration selected', () => {
+    const component = shallow(
+      <PlanWizardScheduleStep targetProvider="openstack" migration_plan_type_radio="migration_type_warm" />
+    );
+    expect(component).toMatchSnapshot();
+  });
 });
