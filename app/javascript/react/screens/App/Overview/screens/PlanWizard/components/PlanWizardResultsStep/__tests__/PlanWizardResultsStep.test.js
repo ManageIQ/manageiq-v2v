@@ -9,7 +9,6 @@ describe('Plan wizard results step', () => {
     postMigrationPlansAction: jest.fn(),
     editMigrationPlansAction: jest.fn(),
     plansBody: { name: 'Mock Plan', mock: 'data' },
-    planType: 'migration_type_cold',
     planSchedule: 'migration_plan_later',
     isPostingPlans: false,
     isRejectedPostingPlans: false,
@@ -25,12 +24,19 @@ describe('Plan wizard results step', () => {
   });
 
   it('renders with a warning if migrating an OSP plan later', () => {
-    const component = shallow(<PlanWizardResultsStep {...getBaseProps()} />);
+    const component = shallow(<PlanWizardResultsStep {...getBaseProps()} planType="migration_type_cold" />);
     expect(component).toMatchSnapshot();
   });
 
   it('renders with no warning if migrating an OSP plan immediately', () => {
-    const component = shallow(<PlanWizardResultsStep {...getBaseProps()} planSchedule="migration_plan_now" />);
+    const component = shallow(
+      <PlanWizardResultsStep {...getBaseProps()} planType="migration_type_cold" planSchedule="migration_plan_now" />
+    );
+    expect(component).toMatchSnapshot();
+  });
+
+  it('renders with info message if doing warm migration', () => {
+    const component = shallow(<PlanWizardResultsStep {...getBaseProps()} planType="migration_type_warm" />);
     expect(component).toMatchSnapshot();
   });
 });
