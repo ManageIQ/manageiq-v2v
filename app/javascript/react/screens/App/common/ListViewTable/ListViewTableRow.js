@@ -55,18 +55,21 @@ const BaseListViewTableRow = ({
     }
   };
 
+  const hasLeftContentCell = expandable || checkboxInput || leftContent;
+  const hasHeadingCell = heading || description;
+
   const row = (
     <tr
       className={classNames(className, {
         'list-group-item': true,
         'list-view-pf-stacked': stacked,
-        'list-group-item-header': expandable, // TODO ??? maybe this needs to be on a wrapping <tbody> instead
+        'list-group-item-header': expandable,
         'list-view-pf-expand-active': expanded
       })}
       onClick={expandable ? handleExpandClick : noop}
       {...props}
     >
-      {(expandable || checkboxInput || leftContent) && (
+      {hasLeftContentCell && (
         <td
           className={classNames('list-view-pf-left', 'list-view-pf-main-info', {
             'contains-extra-left-content': expandable || checkboxInput
@@ -79,7 +82,7 @@ const BaseListViewTableRow = ({
           </div>
         </td>
       )}
-      {(heading || description) && (
+      {hasHeadingCell && (
         <td className="list-view-pf-main-info">
           <ListView.Description>
             {heading && <ListView.DescriptionHeading>{heading}</ListView.DescriptionHeading>}
@@ -107,13 +110,17 @@ const BaseListViewTableRow = ({
   );
 
   if (expandable && expanded) {
-    const numColumns = row.props.children.filter(child => !!child).length;
+    const numColumns =
+      (hasLeftContentCell ? 1 : 0) +
+      (hasHeadingCell ? 1 : 0) +
+      (additionalInfo ? additionalInfo.length : 0) +
+      (actions ? 1 : 0);
 
     return (
       <React.Fragment>
-        {row /* TODO with ListViewExpand in leftContent? */}
-        <tr className="list-group-item-container container-fluid">
-          <td colSpan={numColumns}>
+        {row}
+        <tr className="list-group-item-container-row">
+          <td colSpan={numColumns} className="list-group-item-container">
             {hideCloseIcon ? (
               children
             ) : (

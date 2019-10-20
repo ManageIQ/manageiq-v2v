@@ -1,8 +1,15 @@
 .list-view-pf.list-view-table-pf > table {
+  $expanded-border: solid 1px #bbb;
+
   width: 100%;
 
   tr.list-group-item {
     display: table-row;
+
+    &:before,
+    &:after {
+      content: none;
+    }
 
     &.clickable {
       cursor: pointer;
@@ -73,6 +80,40 @@
         text-align: right;
         white-space: nowrap;
         margin-left: 0;
+      }
+    }
+
+    &.list-view-pf-expand-active {
+      border: none;
+
+      td {
+        border-top: $expanded-border;
+        border-bottom: $expanded-border;
+
+        &:first-child {
+          border-left: $expanded-border;
+        }
+
+        &:last-child {
+          border-right: $expanded-border;
+        }
+      }
+    }
+  }
+
+  tr.list-group-item-container-row {
+    border: $expanded-border;
+
+    td.list-group-item-container {
+      width: auto;
+      margin: auto;
+      position: static;
+      box-shadow: 0 2px 6px rgba(3, 3, 3, 0.2);
+      clip-path: inset(0px -6px -6px -6px);
+
+      .close {
+        position: static;
+        right: 0;
       }
     }
   }
