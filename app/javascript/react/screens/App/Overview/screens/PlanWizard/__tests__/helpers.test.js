@@ -7,13 +7,15 @@ describe('createMigrationPlans', () => {
       planWizardGeneralStep,
       planWizardVMStep,
       planWizardInstancePropertiesStep,
-      planWizardAdvancedOptionsStep
+      planWizardAdvancedOptionsStep,
+      planWizardScheduleStep
     } = ospPlanReduxFormState;
     const plansBody = createMigrationPlans(
       planWizardGeneralStep,
       planWizardVMStep,
       planWizardInstancePropertiesStep,
-      planWizardAdvancedOptionsStep
+      planWizardAdvancedOptionsStep,
+      planWizardScheduleStep
     );
     expect(plansBody).toMatchSnapshot();
   });
@@ -23,13 +25,15 @@ describe('createMigrationPlans', () => {
       planWizardGeneralStep,
       planWizardVMStep,
       planWizardInstancePropertiesStep,
-      planWizardAdvancedOptionsStep
+      planWizardAdvancedOptionsStep,
+      planWizardScheduleStep
     } = rhvPlanReduxFormState;
     const plansBody = createMigrationPlans(
       planWizardGeneralStep,
       planWizardVMStep,
       planWizardInstancePropertiesStep,
-      planWizardAdvancedOptionsStep
+      planWizardAdvancedOptionsStep,
+      planWizardScheduleStep
     );
     expect(plansBody).toMatchSnapshot();
   });

@@ -48,7 +48,7 @@ class PlanWizard extends React.Component {
     };
     const scheduleStep = {
       id: stepIDs.scheduleStep,
-      title: __('Schedule'),
+      title: __('Type and Schedule'),
       render: () => <PlanWizardScheduleStep />,
       disableGoto: true
     };
@@ -105,6 +105,7 @@ class PlanWizard extends React.Component {
       planWizardScheduleStep,
       setPlansBodyAction,
       setPlanScheduleAction,
+      setPlanTypeAction,
       setMigrationsFilterAction,
       showConfirmModalAction,
       hideConfirmModalAction,
@@ -166,10 +167,12 @@ class PlanWizard extends React.Component {
         planWizardVMStep,
         planWizardInstancePropertiesStep,
         planWizardAdvancedOptionsStep,
+        planWizardScheduleStep,
         isEditing
       );
 
       setPlanScheduleAction(planWizardScheduleStep.values.migration_plan_choice_radio);
+      setPlanTypeAction(planWizardScheduleStep.values.migration_plan_type_radio);
       setPlansBodyAction(plansBody);
 
       if (planWizardScheduleStep.values.migration_plan_choice_radio === 'migration_plan_now') {
@@ -286,6 +289,7 @@ PlanWizard.propTypes = {
   transformationMappings: PropTypes.array,
   setPlansBodyAction: PropTypes.func,
   setPlanScheduleAction: PropTypes.func,
+  setPlanTypeAction: PropTypes.func,
   resetVmStepAction: PropTypes.func,
   setMigrationsFilterAction: PropTypes.func,
   showConfirmModalAction: PropTypes.func,
@@ -310,6 +314,7 @@ PlanWizard.defaultProps = {
   transformationMappings: [],
   setPlansBodyAction: noop,
   setPlanScheduleAction: noop,
+  setPlanTypeAction: noop,
   resetVmStepAction: noop,
   showAlertAction: noop,
   hideAlertAction: noop,

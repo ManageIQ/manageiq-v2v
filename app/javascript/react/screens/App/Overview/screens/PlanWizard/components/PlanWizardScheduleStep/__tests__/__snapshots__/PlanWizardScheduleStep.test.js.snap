@@ -1,13 +1,75 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Plan wizard schedule step renders with a warning if migrating an OSP plan immediately 1`] = `
+exports[`Plan wizard schedule step renders with a info text when warm migration selected 1`] = `
 <Form
   bsClass="form"
-  className="form-horizontal"
+  className="form-vertical"
   componentClass="form"
   horizontal={false}
   inline={false}
 >
+  <Field
+    component={[Function]}
+    controlWidth={12}
+    inline_label={false}
+    label="Migration Type"
+    name="migration_plan_type_radio"
+    options={
+      Array [
+        Object {
+          "id": "migration_type_cold",
+          "name": "Cold Migration - Source VMs are shut down while all of the VM data is migrated.",
+        },
+        Object {
+          "id": "migration_type_warm",
+          "name": "Warm Migration - VM data is iteratively pre-copied. A final, cutover migration is scheduled and run later.",
+        },
+      ]
+    }
+    type="radio"
+  />
+  <HelpBlock
+    bsClass="help-block"
+    style={
+      Object {
+        "paddingLeft": "22px",
+        "paddingTop": "100px",
+      }
+    }
+  >
+    Pre-copying of the VM data will begin immediately after plan creation. You can schedule and run final cutover migration later.
+  </HelpBlock>
+</Form>
+`;
+
+exports[`Plan wizard schedule step renders with a warning if migrating an OSP plan immediately 1`] = `
+<Form
+  bsClass="form"
+  className="form-vertical"
+  componentClass="form"
+  horizontal={false}
+  inline={false}
+>
+  <Field
+    component={[Function]}
+    controlWidth={12}
+    inline_label={false}
+    label="Migration Type"
+    name="migration_plan_type_radio"
+    options={
+      Array [
+        Object {
+          "id": "migration_type_cold",
+          "name": "Cold Migration - Source VMs are shut down while all of the VM data is migrated.",
+        },
+        Object {
+          "id": "migration_type_warm",
+          "name": "Warm Migration - VM data is iteratively pre-copied. A final, cutover migration is scheduled and run later.",
+        },
+      ]
+    }
+    type="radio"
+  />
   <Field
     component={[Function]}
     help={
@@ -25,8 +87,8 @@ exports[`Plan wizard schedule step renders with a warning if migrating an OSP pl
         </p>
       </div>
     }
-    label="Run migration plan"
-    labelWidth="3"
+    inline_label={false}
+    label="Schedule"
     name="migration_plan_choice_radio"
     options={
       Array [
@@ -40,6 +102,11 @@ exports[`Plan wizard schedule step renders with a warning if migrating an OSP pl
         },
       ]
     }
+    style={
+      Object {
+        "paddingTop": "100px",
+      }
+    }
     type="radio"
   />
 </Form>
@@ -48,16 +115,36 @@ exports[`Plan wizard schedule step renders with a warning if migrating an OSP pl
 exports[`Plan wizard schedule step renders with no warning if migrating an OSP plan later 1`] = `
 <Form
   bsClass="form"
-  className="form-horizontal"
+  className="form-vertical"
   componentClass="form"
   horizontal={false}
   inline={false}
 >
   <Field
     component={[Function]}
+    controlWidth={12}
+    inline_label={false}
+    label="Migration Type"
+    name="migration_plan_type_radio"
+    options={
+      Array [
+        Object {
+          "id": "migration_type_cold",
+          "name": "Cold Migration - Source VMs are shut down while all of the VM data is migrated.",
+        },
+        Object {
+          "id": "migration_type_warm",
+          "name": "Warm Migration - VM data is iteratively pre-copied. A final, cutover migration is scheduled and run later.",
+        },
+      ]
+    }
+    type="radio"
+  />
+  <Field
+    component={[Function]}
     help={null}
-    label="Run migration plan"
-    labelWidth="3"
+    inline_label={false}
+    label="Schedule"
     name="migration_plan_choice_radio"
     options={
       Array [
@@ -70,6 +157,11 @@ exports[`Plan wizard schedule step renders with no warning if migrating an OSP p
           "name": "Start migration immediately",
         },
       ]
+    }
+    style={
+      Object {
+        "paddingTop": "100px",
+      }
     }
     type="radio"
   />
