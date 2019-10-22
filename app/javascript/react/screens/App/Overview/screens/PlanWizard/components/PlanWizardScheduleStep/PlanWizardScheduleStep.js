@@ -20,9 +20,7 @@ export const PlanWizardScheduleStep = ({ targetProvider, migration_plan_type_rad
         },
         {
           id: 'migration_type_warm',
-          name: __(
-            'Warm Migration - VM data is iteratively pre-copied. A final, cutover migration is scheduled and run later.'
-          )
+          name: __('Warm Migration - VM data is iteratively pre-copied. A final, cutover migration is scheduled and run later.') // prettier-ignore
         }
       ]}
     />
@@ -60,9 +58,7 @@ export const PlanWizardScheduleStep = ({ targetProvider, migration_plan_type_rad
     )}
     {migration_plan_type_radio === 'migration_type_warm' && (
       <Form.HelpBlock style={{ paddingLeft: '22px', paddingTop: '100px' }}>
-        {__(
-          'Pre-copying of the VM data will begin immediately after plan creation. You can schedule and run final cutover migration later.'
-        )}
+        {__('Pre-copying of the VM data will begin immediately after plan creation. You can schedule and run final cutover migration later.') /* prettier-ignore */}
       </Form.HelpBlock>
     )}
   </Form>
