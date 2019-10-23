@@ -5,7 +5,17 @@ import ScheduleMigrationModalBody from './ScheduleMigrationModalBody';
 import getPlanScheduleInfo from '../Migrations/helpers/getPlanScheduleInfo';
 
 class ScheduleMigrationModal extends React.Component {
-  state = { dateTimeInput: '' };
+  constructor(props) {
+    super(props);
+
+    const { scheduleMigrationPlan } = this.props;
+    const { migrationScheduled } = getPlanScheduleInfo(scheduleMigrationPlan) || '';
+
+    this.state = {
+      dateTimeInput: migrationScheduled ? new Date(migrationScheduled) : null,
+      startMigrationNow: null
+    };
+  }
 
   render() {
     const {
@@ -14,28 +24,39 @@ class ScheduleMigrationModal extends React.Component {
       scheduleMigrationPlan,
       scheduleMigration,
       fetchTransformationPlansAction,
-      fetchTransformationPlansUrl
+      fetchTransformationPlansUrl,
+      migrateClick
     } = this.props;
 
-    const { migrationScheduled } = getPlanScheduleInfo(scheduleMigrationPlan);
-
-    const handleChange = event => {
+    const handleDatepickerChange = event => {
       this.setState({ dateTimeInput: event });
+    };
+
+    const startMigrationNowHandler = event => {
+      this.setState({ startMigrationNow: event });
     };
 
     const modalClose = () => {
       toggleScheduleMigrationModal();
-      handleChange();
     };
+
+    const modalTitle = plan =>
+      plan != null && (plan.status === 'Error' || plan.status === 'Denied')
+        ? __('Schedule Retry')
+        : __('Schedule Migration');
 
     return (
       <Modal show={scheduleMigrationModal} onHide={modalClose} backdrop="static">
         <Modal.Header>
           <Modal.CloseButton onClick={modalClose} />
-          <Modal.Title>{__('Schedule Migration Plan')}</Modal.Title>
+          <Modal.Title>{modalTitle(scheduleMigrationPlan)}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <ScheduleMigrationModalBody handleChange={handleChange} defaultDate={migrationScheduled || ''} />
+          <ScheduleMigrationModalBody
+            handleDatepickerChange={handleDatepickerChange}
+            startMigrationNowHandler={startMigrationNowHandler}
+            defaultDate={this.state.dateTimeInput}
+          />
         </Modal.Body>
         <Modal.Footer>
           <Button bsStyle="default" className="btn-cancel" onClick={modalClose}>
@@ -43,18 +64,21 @@ class ScheduleMigrationModal extends React.Component {
           </Button>
           <Button
             bsStyle="primary"
-            disabled={!this.state.dateTimeInput}
             onClick={() => {
-              scheduleMigration({
-                plan: scheduleMigrationPlan,
-                scheduleTime: this.state.dateTimeInput
-              }).then(() => {
-                fetchTransformationPlansAction({
-                  url: fetchTransformationPlansUrl,
-                  archived: false
+              if (this.state.startMigrationNow) {
+                migrateClick(scheduleMigrationPlan.href);
+                toggleScheduleMigrationModal();
+              } else {
+                scheduleMigration({
+                  plan: scheduleMigrationPlan,
+                  scheduleTime: this.state.dateTimeInput
+                }).then(() => {
+                  fetchTransformationPlansAction({
+                    url: fetchTransformationPlansUrl,
+                    archived: false
+                  });
                 });
-              });
-              handleChange();
+              }
             }}
           >
             {__('Schedule')}
@@ -70,6 +94,7 @@ ScheduleMigrationModal.propTypes = {
   toggleScheduleMigrationModal: PropTypes.func,
   scheduleMigrationPlan: PropTypes.object,
   scheduleMigration: PropTypes.func,
+  migrateClick: PropTypes.func,
   fetchTransformationPlansAction: PropTypes.func,
   fetchTransformationPlansUrl: PropTypes.string
 };

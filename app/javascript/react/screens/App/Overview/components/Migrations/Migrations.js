@@ -159,6 +159,7 @@ class Migrations extends React.Component {
             )}
             {activeFilter === MIGRATIONS_FILTERS.completed && (
               <MigrationsCompletedList
+                migrateClick={createTransformationPlanRequestClick}
                 finishedTransformationPlans={Immutable.asMutable(finishedTransformationPlans, { deep: true })}
                 allRequestsWithTasks={allRequestsWithTasks}
                 retryClick={createTransformationPlanRequestClick}

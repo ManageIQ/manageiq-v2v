@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { noop, Button, ListView, Grid, Spinner, Icon, Toolbar, DropdownKebab, MenuItem } from 'patternfly-react';
+import { noop, ListView, Grid, Spinner, Icon, Toolbar, DropdownKebab, MenuItem } from 'patternfly-react';
 import { IsoElapsedTime } from '../../../../../../components/dates/IsoElapsedTime';
 import ShowWizardEmptyState from '../../../common/ShowWizardEmptyState/ShowWizardEmptyState';
 import getMostRecentRequest from '../../../common/getMostRecentRequest';
@@ -46,7 +46,8 @@ const MigrationsCompletedList = ({
   scheduleMigration,
   fetchTransformationMappingsAction,
   fetchTransformationMappingsUrl,
-  showEditPlanNameModalAction
+  showEditPlanNameModalAction,
+  migrateClick
 }) => (
   <React.Fragment>
     <Grid.Col xs={12}>
@@ -255,15 +256,6 @@ const MigrationsCompletedList = ({
                                   isMissingMapping={isMissingMapping}
                                 />
                               </Visibility>
-                              <Button
-                                onClick={e => {
-                                  e.stopPropagation();
-                                  retryClick(plan.href, plan.id);
-                                }}
-                                disabled={isMissingMapping || loading === plan.href || migrationStarting}
-                              >
-                                {__('Retry')}
-                              </Button>
                             </Visibility>
                             <StopPropagationOnClick>
                               <DropdownKebab id={`${plan.id}-kebab`} pullRight>
@@ -348,6 +340,7 @@ const MigrationsCompletedList = ({
       scheduleMigrationModal={scheduleMigrationModal}
       scheduleMigrationPlan={scheduleMigrationPlan}
       scheduleMigration={scheduleMigration}
+      migrateClick={migrateClick}
       fetchTransformationPlansAction={fetchTransformationPlansAction}
       fetchTransformationPlansUrl={fetchTransformationPlansUrl}
     />
@@ -355,6 +348,7 @@ const MigrationsCompletedList = ({
 );
 
 MigrationsCompletedList.propTypes = {
+  migrateClick: PropTypes.func,
   finishedTransformationPlans: PropTypes.array,
   allRequestsWithTasks: PropTypes.array,
   retryClick: PropTypes.func,
@@ -380,6 +374,7 @@ MigrationsCompletedList.propTypes = {
   showEditPlanNameModalAction: PropTypes.func
 };
 MigrationsCompletedList.defaultProps = {
+  migrateClick: noop,
   finishedTransformationPlans: [],
   retryClick: noop,
   loading: false

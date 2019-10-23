@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { noop, Button, Grid, Spinner, Toolbar, DropdownKebab, MenuItem } from 'patternfly-react';
+import { noop, Grid, Spinner, Toolbar, DropdownKebab, MenuItem } from 'patternfly-react';
 import EllipsisWithTooltip from 'react-ellipsis-with-tooltip';
 import ShowWizardEmptyState from '../../../common/ShowWizardEmptyState/ShowWizardEmptyState';
 import ScheduleMigrationModal from '../ScheduleMigrationModal/ScheduleMigrationModal';
@@ -86,18 +86,6 @@ const MigrationsNotStartedList = ({
                                 isMissingMapping={isMissingMapping}
                               />
                             )}
-                            <Button
-                              id={`migrate_${plan.id}`}
-                              onClick={e => {
-                                e.stopPropagation();
-                                migrateClick(plan.href);
-                              }}
-                              disabled={
-                                isMissingMapping || loading === plan.href || plan.schedule_type || migrationStarting
-                              }
-                            >
-                              {__('Migrate')}
-                            </Button>
                             <StopPropagationOnClick>
                               <DropdownKebab id={`${plan.id}-kebab`} pullRight>
                                 <MenuItem
@@ -181,6 +169,7 @@ const MigrationsNotStartedList = ({
       scheduleMigrationModal={scheduleMigrationModal}
       scheduleMigrationPlan={scheduleMigrationPlan}
       scheduleMigration={scheduleMigration}
+      migrateClick={migrateClick}
       fetchTransformationPlansAction={fetchTransformationPlansAction}
       fetchTransformationPlansUrl={fetchTransformationPlansUrl}
     />
