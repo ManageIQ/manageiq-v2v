@@ -62,7 +62,7 @@ export const FormField = ({
       case 'radio':
         field = options.map(val => (
           <div key={val.id}>
-            <label htmlFor={input.name}>
+            <label>
               <Field name={input.name} component="input" type="radio" value={val.id} />
               {` ${val.name}`}
             </label>
