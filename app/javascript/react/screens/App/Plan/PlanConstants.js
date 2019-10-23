@@ -52,9 +52,7 @@ const STATUS_MESSAGES_BY_API_STRING = Object.keys(MIGRATION_STATUS_MESSAGE_MAP).
   return { ...messages, [message.apiString]: message.text };
 }, {});
 
-export const migrationStatusMessage = apiString => STATUS_MESSAGES_BY_API_STRING[apiString] || apiString;
-
-// TODO move messages around, see notes
+export const migrationStatusMessage = apiString => STATUS_MESSAGES_BY_API_STRING[apiString] || apiString || '';
 
 const DOWNLOAD_LOG_STATUS_MESSAGES = {};
 DOWNLOAD_LOG_STATUS_MESSAGES.DOWNLOAD_LOG_ERROR_NO_HOST = __('Conversion host was not found');
