@@ -16,7 +16,7 @@ import {
   MenuItem
 } from 'patternfly-react';
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
-import { V2V_MIGRATION_STATUS_MESSAGES, REQUEST_TASKS_URL } from '../../PlanConstants';
+import { migrationStatusMessage, REQUEST_TASKS_URL } from '../../PlanConstants';
 import TickingIsoElapsedTime from '../../../../../../components/dates/TickingIsoElapsedTime';
 import ConfirmModal from '../../../common/ConfirmModal';
 
@@ -284,7 +284,7 @@ class PlanRequestDetailList extends React.Component {
               const popoverContent = (
                 <Popover
                   id={`popover${task.id}${n}`}
-                  title={V2V_MIGRATION_STATUS_MESSAGES[task.message]}
+                  title={migrationStatusMessage(task.message)}
                   className="task-info-popover"
                 >
                   <div>
@@ -325,7 +325,7 @@ class PlanRequestDetailList extends React.Component {
                 ) : (
                   <div>
                     <b>{__('Status')}: </b>
-                    {task.options.progress && V2V_MIGRATION_STATUS_MESSAGES[task.options.progress.current_description]}
+                    {task.options.progress && migrationStatusMessage(task.options.progress.current_description)}
                   </div>
                 );
               return (

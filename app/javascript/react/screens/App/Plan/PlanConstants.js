@@ -47,12 +47,13 @@ export const MIGRATION_STATUS_MESSAGE_MAP = {
   CANCELLED: { apiString: 'VM cancelled', text: __('VM cancelled') }
 };
 
-export const V2V_MIGRATION_STATUS_MESSAGES = Object.keys(MIGRATION_STATUS_MESSAGE_MAP).reduce((messages, id) => {
+const STATUS_MESSAGES_BY_API_STRING = Object.keys(MIGRATION_STATUS_MESSAGE_MAP).reduce((messages, id) => {
   const message = MIGRATION_STATUS_MESSAGE_MAP[id];
   return { ...messages, [message.apiString]: message.text };
 }, {});
 
-// TODO look for usage of these messages and make sure they can fall back to server-provided strings
+export const migrationStatusMessage = apiString => STATUS_MESSAGES_BY_API_STRING[apiString] || apiString;
+
 // TODO move messages around, see notes
 
 const DOWNLOAD_LOG_STATUS_MESSAGES = {};
