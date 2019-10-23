@@ -19,59 +19,41 @@ export const FETCH_V2V_CONVERSION_HOST = 'FETCH_V2V_CONVERSION_HOST';
 
 export const REQUEST_TASKS_URL = '/api/request_tasks';
 
-export const STATUS_MESSAGE_KEYS = {
-  ACQUIRE_TRANSFORMATION_HOST: 'Acquire Transformation Host',
-  ASSESS_MIGRATION: 'Assess Migration',
-  AUTOMATION_STARTING: 'Automation Starting',
-  COLLAPSE_SNAPSHOTS: 'Collapse Snapshots',
-  CONVERT_DISKS: 'Convert disks',
-  FAILED: 'Failed',
-  SOURCE_MIGRATED: 'Mark source as migrated',
-  MIGRATING: 'Migrating',
-  MIGRATION_COMPLETE: 'Migration complete',
-  POST_MIGRATION: 'Post-migration',
-  POWER_OFF: 'Power off',
-  POWER_ON: 'Power-on VM',
-  PRE_MIGRATION: 'Pre-migration',
-  PRE_TRANSFORM_VM: 'Pre Transform VM',
-  REFRESH_INVENTORY: 'Refresh inventory',
-  RESTORE_VM_ATTRIBUTES: 'Restore VM Attributes',
-  RUN_PRE_MIGRATION_PLAYBOOK: 'Run pre-migration playbook',
-  RUN_POST_MIGRATION_PLAYBOOK: 'Run post-migration playbook',
-  TRANSFORM_VM: 'Transform VM',
-  UPDATE_DESCRIPTION: 'Update description of VM',
-  VALIDATING: 'Validating',
-  VM_TRANSFORMATIONS_COMPLETED: 'VM Transformations completed',
-  VM_MIGRATED: 'Virtual machine migrated',
-  VM_TRANSFORMATIONS_FAILED: 'VM Transformations failed'
+export const MIGRATION_STATUS_MESSAGE_MAP = {
+  ACQUIRE_TRANSFORMATION_HOST: { apiString: 'Acquire Transformation Host', text: __('Acquire Transformation Host') },
+  ASSESS_MIGRATION: { apiString: 'Assess Migration', text: __('Assess Migration') },
+  AUTOMATION_STARTING: { apiString: 'Automation Starting', text: __('Automation Starting') },
+  COLLAPSE_SNAPSHOTS: { apiString: 'Collapse Snapshots', text: __('Collapse Snapshots') },
+  CONVERT_DISKS: { apiString: 'Convert disks', text: __('Convert disks') },
+  FAILED: { apiString: 'Failed', text: __('Failed') },
+  SOURCE_MIGRATED: { apiString: 'Mark source as migrated', text: __('Mark source as migrated') },
+  MIGRATING: { apiString: 'Migrating', text: __('Migrating') },
+  MIGRATION_COMPLETE: { apiString: 'Migration complete', text: __('Migration complete') },
+  POST_MIGRATION: { apiString: 'Post-migration', text: __('Postmigration') },
+  POWER_OFF: { apiString: 'Power off', text: __('Power off') },
+  POWER_ON: { apiString: 'Power-on VM', text: __('Power-on VM') },
+  PRE_MIGRATION: { apiString: 'Pre-migration', text: __('Premigration') },
+  PRE_TRANSFORM_VM: { apiString: 'Pre Transform VM', text: __('Premigrate VM') },
+  REFRESH_INVENTORY: { apiString: 'Refresh inventory', text: __('Refresh inventory') },
+  RESTORE_VM_ATTRIBUTES: { apiString: 'Restore VM Attributes', text: __('Restore VM Attributes') },
+  RUN_PRE_MIGRATION_PLAYBOOK: { apiString: 'Run pre-migration playbook', text: __('Run premigration playbook') },
+  RUN_POST_MIGRATION_PLAYBOOK: { apiString: 'Run post-migration playbook', text: __('Run postmigration playbook') },
+  TRANSFORM_VM: { apiString: 'Transform VM', text: __('Migrate VM') },
+  UPDATE_DESCRIPTION: { apiString: 'Update description of VM', text: __('Update description of VM') },
+  VALIDATING: { apiString: 'Validating', text: __('Validating') },
+  VM_TRANSFORMATIONS_COMPLETED: { apiString: 'VM Transformations completed', text: __('VM migrations completed') },
+  VM_MIGRATED: { apiString: 'Virtual machine migrated', text: __('Virtual machine migrated') },
+  VM_TRANSFORMATIONS_FAILED: { apiString: 'VM Transformations failed', text: __('VM migrations failed') },
+  CANCELLED: { apiString: 'VM cancelled', text: __('VM cancelled') }
 };
 
-const STATUS_MESSAGES = {};
-STATUS_MESSAGES[STATUS_MESSAGE_KEYS.ACQUIRE_TRANSFORMATION_HOST] = __('Acquire Transformation Host');
-STATUS_MESSAGES[STATUS_MESSAGE_KEYS.ASSESS_MIGRATION] = __('Assess Migration');
-STATUS_MESSAGES[STATUS_MESSAGE_KEYS.AUTOMATION_STARTING] = __('Automation Starting');
-STATUS_MESSAGES[STATUS_MESSAGE_KEYS.COLLAPSE_SNAPSHOTS] = __('Collapse Snapshots');
-STATUS_MESSAGES[STATUS_MESSAGE_KEYS.CONVERT_DISKS] = __('Convert disks');
-STATUS_MESSAGES[STATUS_MESSAGE_KEYS.FAILED] = __('Failed');
-STATUS_MESSAGES[STATUS_MESSAGE_KEYS.SOURCE_MIGRATED] = __('Mark source as migrated');
-STATUS_MESSAGES[STATUS_MESSAGE_KEYS.MIGRATING] = __('Migrating');
-STATUS_MESSAGES[STATUS_MESSAGE_KEYS.MIGRATION_COMPLETE] = __('Migration complete');
-STATUS_MESSAGES[STATUS_MESSAGE_KEYS.POST_MIGRATION] = __('Postmigration');
-STATUS_MESSAGES[STATUS_MESSAGE_KEYS.POWER_OFF] = __('Power off');
-STATUS_MESSAGES[STATUS_MESSAGE_KEYS.POWER_ON] = __('Power-on VM');
-STATUS_MESSAGES[STATUS_MESSAGE_KEYS.PRE_MIGRATION] = __('Premigration');
-STATUS_MESSAGES[STATUS_MESSAGE_KEYS.PRE_TRANSFORM_VM] = __('Premigrate VM');
-STATUS_MESSAGES[STATUS_MESSAGE_KEYS.REFRESH_INVENTORY] = __('Refresh inventory');
-STATUS_MESSAGES[STATUS_MESSAGE_KEYS.RESTORE_VM_ATTRIBUTES] = __('Restore VM Attributes');
-STATUS_MESSAGES[STATUS_MESSAGE_KEYS.RUN_PRE_MIGRATION_PLAYBOOK] = __('Run premigration playbook');
-STATUS_MESSAGES[STATUS_MESSAGE_KEYS.RUN_POST_MIGRATION_PLAYBOOK] = __('Run postmigration playbook');
-STATUS_MESSAGES[STATUS_MESSAGE_KEYS.TRANSFORM_VM] = __('Migrate VM');
-STATUS_MESSAGES[STATUS_MESSAGE_KEYS.UPDATE_DESCRIPTION] = __('Update description of VM');
-STATUS_MESSAGES[STATUS_MESSAGE_KEYS.VALIDATING] = __('Validating');
-STATUS_MESSAGES[STATUS_MESSAGE_KEYS.VM_TRANSFORMATIONS_COMPLETED] = __('VM migrations completed');
-STATUS_MESSAGES[STATUS_MESSAGE_KEYS.VM_MIGRATED] = __('Virtual machine migrated');
-STATUS_MESSAGES[STATUS_MESSAGE_KEYS.VM_TRANSFORMATIONS_FAILED] = __('VM migrations failed');
-STATUS_MESSAGES[STATUS_MESSAGE_KEYS.CANCELLED] = __('VM cancelled');
+export const V2V_MIGRATION_STATUS_MESSAGES = Object.keys(MIGRATION_STATUS_MESSAGE_MAP).reduce((messages, id) => {
+  const message = MIGRATION_STATUS_MESSAGE_MAP[id];
+  return { ...messages, [message.apiString]: message.text };
+}, {});
+
+// TODO look for usage of these messages and make sure they can fall back to server-provided strings
+// TODO move messages around, see notes
 
 const DOWNLOAD_LOG_STATUS_MESSAGES = {};
 DOWNLOAD_LOG_STATUS_MESSAGES.DOWNLOAD_LOG_ERROR_NO_HOST = __('Conversion host was not found');
@@ -85,8 +67,6 @@ BACKEND_ERROR_MESSAGES.DOWNLOAD_LOG_ERROR_NO_CREDS_SET =
   'Credential was not found for host [^]*. Download of transformation log aborted.';
 BACKEND_ERROR_MESSAGES.DOWNLOAD_LOG_ERROR_SCP_ISSUE =
   'Download of transformation log for [^]* with ID [^]* failed with error: [^]*';
-
-export { STATUS_MESSAGES as V2V_MIGRATION_STATUS_MESSAGES };
 
 export { DOWNLOAD_LOG_STATUS_MESSAGES as V2V_DOWNLOAD_LOG_STATUS_MESSAGES };
 export { BACKEND_ERROR_MESSAGES as V2V_BACKEND_ERROR_MESSAGES };
