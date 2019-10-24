@@ -1,10 +1,6 @@
 import numeral from 'numeral';
 
-import {
-  V2V_MIGRATION_STATUS_MESSAGES,
-  V2V_DOWNLOAD_LOG_STATUS_MESSAGES,
-  V2V_BACKEND_ERROR_MESSAGES
-} from './PlanConstants';
+import { V2V_DOWNLOAD_LOG_STATUS_MESSAGES, V2V_BACKEND_ERROR_MESSAGES } from './PlanConstants';
 import { IsoElapsedTime } from '../../../../components/dates/IsoElapsedTime';
 import getMostRecentVMTasksFromRequests from '../Overview/components/Migrations/helpers/getMostRecentVMTasksFromRequests';
 
@@ -17,7 +13,7 @@ const processVMTasks = vmTasks => {
   vmTasks.forEach(task => {
     const taskDetails = {
       id: task.id,
-      message: V2V_MIGRATION_STATUS_MESSAGES[task.message] || __('VM migrations stalled'),
+      message: task.message,
       delivered_on: new Date(task.options.delivered_on),
       updated_on: new Date(task.updated_on),
       completed: task.state === 'finished',
