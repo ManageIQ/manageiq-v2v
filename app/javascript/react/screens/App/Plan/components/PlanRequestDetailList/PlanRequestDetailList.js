@@ -17,6 +17,7 @@ import {
   Row,
   Col
 } from 'patternfly-react';
+import EllipsisWithTooltip from 'react-ellipsis-with-tooltip';
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
 import { migrationStatusMessage, REQUEST_TASKS_URL } from '../../PlanConstants';
 import TickingIsoElapsedTime from '../../../../../../components/dates/TickingIsoElapsedTime';
@@ -338,7 +339,9 @@ class PlanRequestDetailList extends React.Component {
                       <div>
                         <div style={{ display: 'inline-block', textAlign: 'left' }}>
                           <span>{mainStatusMessage}</span>
-                          <div>{statusDetailMessage}</div>
+                          <div style={{ maxWidth: 250 }}>
+                            <EllipsisWithTooltip>{statusDetailMessage}</EllipsisWithTooltip>
+                          </div>
                         </div>
                         &nbsp;
                         {/* Todo: revisit FieldLevelHelp props in patternfly-react to support this */}
