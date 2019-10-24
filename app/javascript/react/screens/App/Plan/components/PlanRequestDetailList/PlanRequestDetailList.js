@@ -13,9 +13,7 @@ import {
   Tooltip,
   UtilizationBar,
   DropdownButton,
-  MenuItem,
-  Row,
-  Col
+  MenuItem
 } from 'patternfly-react';
 import EllipsisWithTooltip from 'react-ellipsis-with-tooltip';
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
@@ -434,9 +432,7 @@ class PlanRequestDetailList extends React.Component {
                   }
                   stacked
                 >
-                  <Row>
-                    <Col sm={11}>TODO: Hey this is the expanded stuff right here</Col>
-                  </Row>
+                  TODO: Expanded content still in development
                 </ListViewTable.Row>
               );
             })}
