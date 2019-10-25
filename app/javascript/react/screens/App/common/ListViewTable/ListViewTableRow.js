@@ -25,11 +25,6 @@ const BaseListViewTableRow = ({
   onCloseCompoundExpand,
   ...props
 }) => {
-  // TODO Look at ListViewItem, what do the `list-group-item-header` and `list-group-item-container` CSS classes do?
-
-  // TODO do we need multiple <tbody> elements to achieve these styles? how does that work for a non-expandable list?
-  //      is it acceptable to just have every row in a tbody no matter what? would match the original ListViewGroupItem...
-
   if (compoundExpand) {
     // eslint-disable-next-line no-console
     console.warn('ListViewTable does not currently support the compoundExpand props.', {
