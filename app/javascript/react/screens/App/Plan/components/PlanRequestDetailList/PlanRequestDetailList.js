@@ -431,9 +431,7 @@ class PlanRequestDetailList extends React.Component {
                     </DropdownButton>
                   }
                   stacked
-                >
-                  TODO: Expanded content still in development
-                </ListViewTable.Row>
+                />
               );
             })}
           </ListViewTable>
