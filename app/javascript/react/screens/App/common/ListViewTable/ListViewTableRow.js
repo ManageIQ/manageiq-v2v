@@ -119,14 +119,13 @@ const BaseListViewTableRow = ({
     return (
       <React.Fragment>
         {row}
-        <tr className="list-group-item-container-row">
+        <tr className="list-group-expanded-container-row">
           <td colSpan={numColumns} className="list-group-item-container">
             {hideCloseIcon ? (
               children
             ) : (
-              // TODO replace inline styles with CSS
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <div style={{ flexGrow: 1 }}>{children}</div>
+              <div className="expanded-content-flex-container">
+                <div className="expanded-content-children">{children}</div>
                 <div className="close">
                   <Icon type="pf" name="close" onClick={toggleExpanded} />
                 </div>
