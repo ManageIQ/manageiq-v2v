@@ -88,7 +88,9 @@ export const attachTasksToConversionHosts = (conversionHosts, tasksByResource) =
 
 export const getCombinedConversionHostListItems = (conversionHosts, tasksWithMetadata, tasksByResource) => {
   const activeEnableTasks = getActiveConversionHostEnableTasks(tasksWithMetadata, conversionHosts);
-  const conversionHostsWithTasks = attachTasksToConversionHosts(conversionHosts, tasksByResource);
+  const conversionHostsWithTasks = attachTasksToConversionHosts(conversionHosts, tasksByResource).filter(
+    conversionHost => conversionHost.resource.ems_id !== null
+  );
   return [...activeEnableTasks, ...conversionHostsWithTasks];
 };
 
