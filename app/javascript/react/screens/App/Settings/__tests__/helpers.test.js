@@ -93,6 +93,17 @@ describe('conversion host list item filtering and metadata', () => {
     const resourceIds = combinedListItems.map(item => (item.meta.isTask ? item.meta.resourceId : item.resource.id));
     expect(resourceIds).toEqual(['1', '2', '7', '3', '4', '5', '8', '9', '10', '12']);
   });
+
+  it('filters out conversion hosts with an invalid resource', () => {
+    const combinedListItems = getCombinedConversionHostListItems(exampleConversionHosts, tasks, tasksByResource);
+    const hostsWithOneInvalid = [...exampleConversionHosts];
+    hostsWithOneInvalid[1] = {
+      ...exampleConversionHosts[1],
+      resource: { ...exampleConversionHosts[1].resource, ems_id: null }
+    };
+    const combinedItemsWithOneInvalid = getCombinedConversionHostListItems(hostsWithOneInvalid, tasks, tasksByResource);
+    expect(combinedItemsWithOneInvalid).toHaveLength(combinedListItems.length - 1);
+  });
 });
 
 describe('conversion host log file helper', () => {

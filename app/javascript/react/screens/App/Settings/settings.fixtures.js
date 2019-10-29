@@ -63,7 +63,7 @@ const exampleTask = (updated_on, operation, id) => ({
 
 const exampleConversionHost = resourceId => ({
   id: `ch-${resourceId}`,
-  resource: { id: resourceId, name: `example-host-${resourceId}`, type: exampleConversionHostType }
+  resource: { id: resourceId, name: `example-host-${resourceId}`, type: exampleConversionHostType, ems_id: '123' }
 });
 
 // Example tasks to try and show a resource in each possible enablement state
