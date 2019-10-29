@@ -92,6 +92,20 @@ export const getCombinedConversionHostListItems = (conversionHosts, tasksWithMet
   return [...activeEnableTasks, ...conversionHostsWithTasks];
 };
 
+export const inferTransportMethod = conversionHostsListItem => {
+  const vddk = __('VDDK');
+  const ssh = __('SSH');
+  if (conversionHostsListItem.meta.isTask) {
+    const { request_params } = conversionHostsListItem.context_data;
+    if (request_params.vmware_vddk_package_url) return vddk;
+    if (request_params.vmware_ssh_private_key) return ssh;
+  } else {
+    if (conversionHostsListItem.vddk_transport_supported) return vddk;
+    if (conversionHostsListItem.ssh_transport_supported) return ssh;
+  }
+  return null;
+};
+
 export const getConversionHostTaskLogFile = task => {
   const {
     meta: { resourceName, operation },

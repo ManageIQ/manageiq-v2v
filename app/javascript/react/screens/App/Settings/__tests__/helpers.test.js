@@ -95,6 +95,36 @@ describe('conversion host list item filtering and metadata', () => {
   });
 });
 
+describe('transport method helper'), () => {
+  describe('for an enablement task', () => {
+    it('detects VDDK properly', () => {
+      /// TODO
+    });
+    
+    it('detects SSH properly', () => {
+      /// TODO
+    });
+
+    it('returns null if neither match', () => {
+      /// TODO
+    });
+  });
+
+  describe('for a conversion host', () => {
+    it('detects VDDK properly', () => {
+      /// TODO
+    });
+    
+    it('detects SSH properly', () => {
+      /// TODO
+    });
+
+    it('returns null if neither match', () => {
+      /// TODO
+    });
+  });
+});
+
 describe('conversion host log file helper', () => {
   it('generates a file from an enable task', () => {
     const task = {

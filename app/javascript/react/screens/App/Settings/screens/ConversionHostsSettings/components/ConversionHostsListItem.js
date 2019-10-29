@@ -6,7 +6,7 @@ import ConversionHostRemoveButton from './ConversionHostRemoveButton';
 import ConversionHostRetryButton from './ConversionHostRetryButton';
 import StopPropagationOnClick from '../../../../common/StopPropagationOnClick';
 import { FINISHED, ERROR, ENABLE, DISABLE } from '../ConversionHostsSettingsConstants';
-import { getConversionHostTaskLogFile } from '../../../helpers';
+import { getConversionHostTaskLogFile, inferTransportMethod } from '../../../helpers';
 
 const removeFailedTaskSupported = false; // TODO remove me when the Remove button works
 
@@ -52,6 +52,8 @@ const ConversionHostsListItem = ({
       placement="top"
       overlay={
         <Popover id="task-info-popover" style={{ width: 400 }}>
+          <strong>{__('Transport method:')}</strong> {inferTransportMethod(listItem)}
+          <br />
           {mostRecentTask ? (
             <React.Fragment>
               <strong>{__('State:')}</strong> {mostRecentTask.state}
