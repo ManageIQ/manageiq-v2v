@@ -5,7 +5,8 @@ import {
   attachTasksToConversionHosts,
   getCombinedConversionHostListItems,
   getConversionHostTaskLogFile,
-  getConversionHostSshKeyInfoMessage
+  getConversionHostSshKeyInfoMessage,
+  inferTransportMethod
 } from '../helpers';
 
 import {
@@ -95,32 +96,65 @@ describe('conversion host list item filtering and metadata', () => {
   });
 });
 
-describe('transport method helper'), () => {
+describe('transport method helper', () => {
   describe('for an enablement task', () => {
     it('detects VDDK properly', () => {
-      /// TODO
+      const task = {
+        meta: { isTask: true },
+        context_data: {
+          request_params: {
+            vmware_vddk_package_url: 'foo'
+          }
+        }
+      };
+      expect(inferTransportMethod(task)).toEqual(__('VDDK'));
     });
-    
+
     it('detects SSH properly', () => {
-      /// TODO
+      const task = {
+        meta: { isTask: true },
+        context_data: {
+          request_params: {
+            vmware_ssh_private_key: 'foo'
+          }
+        }
+      };
+      expect(inferTransportMethod(task)).toEqual(__('SSH'));
     });
 
     it('returns null if neither match', () => {
-      /// TODO
+      const task = {
+        meta: { isTask: true },
+        context_data: {
+          request_params: {}
+        }
+      };
+      expect(inferTransportMethod(task)).toEqual(null);
     });
   });
 
   describe('for a conversion host', () => {
     it('detects VDDK properly', () => {
-      /// TODO
+      const host = {
+        meta: { isTask: false },
+        vddk_transport_supported: true
+      };
+      expect(inferTransportMethod(host)).toEqual(__('VDDK'));
     });
-    
+
     it('detects SSH properly', () => {
-      /// TODO
+      const host = {
+        meta: { isTask: false },
+        ssh_transport_supported: true
+      };
+      expect(inferTransportMethod(host)).toEqual(__('SSH'));
     });
 
     it('returns null if neither match', () => {
-      /// TODO
+      const host = {
+        meta: { isTask: false }
+      };
+      expect(inferTransportMethod(host)).toEqual(null);
     });
   });
 });
