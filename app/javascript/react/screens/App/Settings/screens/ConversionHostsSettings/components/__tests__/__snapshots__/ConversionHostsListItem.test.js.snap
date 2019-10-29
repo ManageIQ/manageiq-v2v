@@ -58,6 +58,7 @@ exports[`conversion hosts list item renders correctly with a conversion host bei
               },
             },
             "name": "Conversion Host 1",
+            "vddk_transport_supported": true,
           }
         }
         setHostToDeleteAction={[MockFunction]}
@@ -111,6 +112,14 @@ exports[`conversion hosts list item renders correctly with a conversion host bei
                 }
               }
             >
+              <UNDEFINED>
+                <strong>
+                  Transformation method:
+                </strong>
+                 
+                VDDK
+                <br />
+              </UNDEFINED>
               <UNDEFINED>
                 <strong>
                   State:
@@ -175,7 +184,7 @@ exports[`conversion hosts list item renders correctly with a failed disable task
             Object {
               "context_data": Object {
                 "request_params": Object {
-                  "mock": "params",
+                  "vmware_vddk_package_url": "foo",
                 },
               },
               "id": "1",
@@ -237,6 +246,14 @@ exports[`conversion hosts list item renders correctly with a failed disable task
                 }
               }
             >
+              <UNDEFINED>
+                <strong>
+                  Transformation method:
+                </strong>
+                 
+                VDDK
+                <br />
+              </UNDEFINED>
               <UNDEFINED>
                 <strong>
                   State:
@@ -301,7 +318,7 @@ exports[`conversion hosts list item renders correctly with a failed enable task 
             Object {
               "context_data": Object {
                 "request_params": Object {
-                  "mock": "params",
+                  "vmware_vddk_package_url": "foo",
                 },
               },
               "id": "1",
@@ -363,6 +380,14 @@ exports[`conversion hosts list item renders correctly with a failed enable task 
                 }
               }
             >
+              <UNDEFINED>
+                <strong>
+                  Transformation method:
+                </strong>
+                 
+                VDDK
+                <br />
+              </UNDEFINED>
               <UNDEFINED>
                 <strong>
                   State:
@@ -542,6 +567,7 @@ exports[`conversion hosts list item renders correctly with an enabled conversion
               },
             },
             "name": "Conversion Host 1",
+            "vddk_transport_supported": true,
           }
         }
         setHostToDeleteAction={[MockFunction]}
@@ -594,6 +620,14 @@ exports[`conversion hosts list item renders correctly with an enabled conversion
                 }
               }
             >
+              <UNDEFINED>
+                <strong>
+                  Transformation method:
+                </strong>
+                 
+                VDDK
+                <br />
+              </UNDEFINED>
               <UNDEFINED>
                 <strong>
                   State:
@@ -708,6 +742,14 @@ exports[`conversion hosts list item renders correctly with an in-progress enable
                 }
               }
             >
+              <UNDEFINED>
+                <strong>
+                  Transformation method:
+                </strong>
+                 
+                VDDK
+                <br />
+              </UNDEFINED>
               <UNDEFINED>
                 <strong>
                   State:

@@ -45,15 +45,21 @@ const ConversionHostsListItem = ({
     statusMessage = __('Configured');
   }
 
-  const taskInfoPopover = (
+  const transportMethod = inferTransportMethod(listItem);
+
+  const infoPopover = (
     <OverlayTrigger
       rootClose
       trigger="click"
       placement="top"
       overlay={
         <Popover id="task-info-popover" style={{ width: 400 }}>
-          <strong>{__('Transport method:')}</strong> {inferTransportMethod(listItem)}
-          <br />
+          {transportMethod && (
+            <React.Fragment>
+              <strong>{__('Transformation method:')}</strong> {transportMethod}
+              <br />
+            </React.Fragment>
+          )}
           {mostRecentTask ? (
             <React.Fragment>
               <strong>{__('State:')}</strong> {mostRecentTask.state}
@@ -125,7 +131,7 @@ const ConversionHostsListItem = ({
         <ListView.InfoItem key="task-status">
           {statusIcon}
           {statusMessage}
-          {taskInfoPopover}
+          {infoPopover}
         </ListView.InfoItem>
       ]}
       stacked
