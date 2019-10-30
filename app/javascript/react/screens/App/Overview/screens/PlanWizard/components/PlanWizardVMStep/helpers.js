@@ -67,7 +67,7 @@ export const _formatValidVms = (payloadVms, meta) => {
     vms &&
     vms.map((v, vIndex) => {
       v.valid = true;
-      v.allocated_size = numeral(v.allocated_size).format('0.00b');
+      v.allocated_size = numeral(v.allocated_size).format('0.00 ib');
       v.reason = V2V_VM_POST_VALIDATION_REASONS[v.reason];
       manageDuplicateVMRows(v, vIndex, uniqueIds);
       return v;
@@ -82,7 +82,7 @@ export const _formatInvalidVms = (payloadVms, meta) => {
   return (
     backfilledVms &&
     backfilledVms.map((v, vIndex) => {
-      v.allocated_size = numeral(v.allocated_size).format('0.00b');
+      v.allocated_size = numeral(v.allocated_size).format('0.00 ib');
       v.reason = V2V_VM_POST_VALIDATION_REASONS[v.reason];
       if (
         v.reason === V2V_VM_POST_VALIDATION_REASONS.migrated ||
@@ -108,7 +108,7 @@ export const _formatConflictVms = (payloadVms, meta) => {
   return (
     backfilledVms &&
     backfilledVms.map((v, vIndex) => {
-      v.allocated_size = numeral(v.allocated_size).format('0.00b');
+      v.allocated_size = numeral(v.allocated_size).format('0.00 ib');
       v.reason = V2V_VM_POST_VALIDATION_REASONS[v.reason];
 
       if (v.cluster === '' || v.path === '') {
