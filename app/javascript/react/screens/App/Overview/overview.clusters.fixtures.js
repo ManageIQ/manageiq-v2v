@@ -67,7 +67,7 @@ const clustersData = {
       effective_cpu: null,
       effective_memory: null,
       ems_ref: 'b29a82fd-0671-4d41-80b0-43a1534f9e8a',
-      type: 'ManageIQ::Providers::Openstack::InfraManager::EmsCluster',
+      type: 'ManageIQ::Providers::Openstack::InfraManager::Cluster',
       v_parent_datacenter: ''
     },
     {
@@ -89,7 +89,7 @@ const clustersData = {
       effective_cpu: null,
       effective_memory: null,
       ems_ref: '36f49390-e62d-4823-a088-c62f9dad0429',
-      type: 'ManageIQ::Providers::Openstack::InfraManager::EmsCluster',
+      type: 'ManageIQ::Providers::Openstack::InfraManager::Cluster',
       v_parent_datacenter: ''
     },
     {
