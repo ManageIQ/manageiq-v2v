@@ -91,6 +91,12 @@ exports[`conversion hosts list item renders correctly with a conversion host bei
         className=""
         stacked={false}
       >
+        VDDK
+      </ListViewInfoItem>,
+      <ListViewInfoItem
+        className=""
+        stacked={false}
+      >
         <Spinner
           className=""
           inline={true}
@@ -112,14 +118,6 @@ exports[`conversion hosts list item renders correctly with a conversion host bei
                 }
               }
             >
-              <UNDEFINED>
-                <strong>
-                  Transformation method:
-                </strong>
-                 
-                VDDK
-                <br />
-              </UNDEFINED>
               <UNDEFINED>
                 <strong>
                   State:
@@ -226,6 +224,12 @@ exports[`conversion hosts list item renders correctly with a failed disable task
         className=""
         stacked={false}
       >
+        VDDK
+      </ListViewInfoItem>,
+      <ListViewInfoItem
+        className=""
+        stacked={false}
+      >
         <ListViewIcon
           className=""
           name="error-circle-o"
@@ -246,14 +250,6 @@ exports[`conversion hosts list item renders correctly with a failed disable task
                 }
               }
             >
-              <UNDEFINED>
-                <strong>
-                  Transformation method:
-                </strong>
-                 
-                VDDK
-                <br />
-              </UNDEFINED>
               <UNDEFINED>
                 <strong>
                   State:
@@ -360,6 +356,12 @@ exports[`conversion hosts list item renders correctly with a failed enable task 
         className=""
         stacked={false}
       >
+        VDDK
+      </ListViewInfoItem>,
+      <ListViewInfoItem
+        className=""
+        stacked={false}
+      >
         <ListViewIcon
           className=""
           name="error-circle-o"
@@ -380,14 +382,6 @@ exports[`conversion hosts list item renders correctly with a failed enable task 
                 }
               }
             >
-              <UNDEFINED>
-                <strong>
-                  Transformation method:
-                </strong>
-                 
-                VDDK
-                <br />
-              </UNDEFINED>
               <UNDEFINED>
                 <strong>
                   State:
@@ -461,6 +455,10 @@ exports[`conversion hosts list item renders correctly with a manually enabled ho
   }
   additionalInfo={
     Array [
+      <ListViewInfoItem
+        className=""
+        stacked={false}
+      />,
       <ListViewInfoItem
         className=""
         stacked={false}
@@ -600,6 +598,12 @@ exports[`conversion hosts list item renders correctly with an enabled conversion
         className=""
         stacked={false}
       >
+        VDDK
+      </ListViewInfoItem>,
+      <ListViewInfoItem
+        className=""
+        stacked={false}
+      >
         <ListViewIcon
           className=""
           name="ok"
@@ -620,14 +624,6 @@ exports[`conversion hosts list item renders correctly with an enabled conversion
                 }
               }
             >
-              <UNDEFINED>
-                <strong>
-                  Transformation method:
-                </strong>
-                 
-                VDDK
-                <br />
-              </UNDEFINED>
               <UNDEFINED>
                 <strong>
                   State:
@@ -721,6 +717,12 @@ exports[`conversion hosts list item renders correctly with an in-progress enable
         className=""
         stacked={false}
       >
+        VDDK
+      </ListViewInfoItem>,
+      <ListViewInfoItem
+        className=""
+        stacked={false}
+      >
         <Spinner
           className=""
           inline={true}
@@ -742,14 +744,6 @@ exports[`conversion hosts list item renders correctly with an in-progress enable
                 }
               }
             >
-              <UNDEFINED>
-                <strong>
-                  Transformation method:
-                </strong>
-                 
-                VDDK
-                <br />
-              </UNDEFINED>
               <UNDEFINED>
                 <strong>
                   State:
