@@ -5,7 +5,8 @@ import {
   attachTasksToConversionHosts,
   getCombinedConversionHostListItems,
   getConversionHostTaskLogFile,
-  getConversionHostSshKeyInfoMessage
+  getConversionHostSshKeyInfoMessage,
+  inferTransportMethod
 } from '../helpers';
 
 import {
@@ -103,6 +104,69 @@ describe('conversion host list item filtering and metadata', () => {
     };
     const combinedItemsWithOneInvalid = getCombinedConversionHostListItems(hostsWithOneInvalid, tasks, tasksByResource);
     expect(combinedItemsWithOneInvalid).toHaveLength(combinedListItems.length - 1);
+  });
+});
+
+describe('transport method helper', () => {
+  describe('for an enablement task', () => {
+    it('detects VDDK properly', () => {
+      const task = {
+        meta: { isTask: true },
+        context_data: {
+          request_params: {
+            vmware_vddk_package_url: 'foo'
+          }
+        }
+      };
+      expect(inferTransportMethod(task)).toEqual(__('VDDK'));
+    });
+
+    it('detects SSH properly', () => {
+      const task = {
+        meta: { isTask: true },
+        context_data: {
+          request_params: {
+            vmware_ssh_private_key: 'foo'
+          }
+        }
+      };
+      expect(inferTransportMethod(task)).toEqual(__('SSH'));
+    });
+
+    it('returns null if neither match', () => {
+      const task = {
+        meta: { isTask: true },
+        context_data: {
+          request_params: {}
+        }
+      };
+      expect(inferTransportMethod(task)).toEqual(null);
+    });
+  });
+
+  describe('for a conversion host', () => {
+    it('detects VDDK properly', () => {
+      const host = {
+        meta: { isTask: false },
+        vddk_transport_supported: true
+      };
+      expect(inferTransportMethod(host)).toEqual(__('VDDK'));
+    });
+
+    it('detects SSH properly', () => {
+      const host = {
+        meta: { isTask: false },
+        ssh_transport_supported: true
+      };
+      expect(inferTransportMethod(host)).toEqual(__('SSH'));
+    });
+
+    it('returns null if neither match', () => {
+      const host = {
+        meta: { isTask: false }
+      };
+      expect(inferTransportMethod(host)).toEqual(null);
+    });
   });
 });
 

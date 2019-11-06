@@ -9,6 +9,7 @@ import ConversionHostRetryButton from '../ConversionHostRetryButton';
 const conversionHostEnabled = {
   name: 'Conversion Host 1',
   id: '1',
+  vddk_transport_supported: true,
   meta: {
     tasksByOperation: {
       enable: [
@@ -35,6 +36,7 @@ const conversionHostEnabled = {
 const conversionHostDisabling = {
   name: 'Conversion Host 1',
   id: '1',
+  vddk_transport_supported: true,
   meta: {
     tasksByOperation: {
       enable: [
@@ -63,17 +65,22 @@ const conversionHostDisabling = {
     }
   }
 };
-const enableTaskInProgress = { id: '1', meta: { isTask: true, operation: 'enable' }, ...inProgress };
+const enableTaskInProgress = {
+  id: '1',
+  meta: { isTask: true, operation: 'enable' },
+  context_data: { request_params: { vmware_vddk_package_url: 'foo' } },
+  ...inProgress
+};
 const enableTaskFailed = {
   id: '1',
   meta: { isTask: true, operation: 'enable' },
-  context_data: { request_params: { mock: 'params' } },
+  context_data: { request_params: { vmware_vddk_package_url: 'foo' } },
   ...failed
 };
 const disableTaskFailed = {
   id: '1',
   meta: { isTask: true, operation: 'disable' },
-  context_data: { request_params: { mock: 'params' } },
+  context_data: { request_params: { vmware_vddk_package_url: 'foo' } },
   ...failed
 };
 

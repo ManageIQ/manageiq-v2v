@@ -6,7 +6,7 @@ import ConversionHostRemoveButton from './ConversionHostRemoveButton';
 import ConversionHostRetryButton from './ConversionHostRetryButton';
 import StopPropagationOnClick from '../../../../common/StopPropagationOnClick';
 import { FINISHED, ERROR, ENABLE, DISABLE } from '../ConversionHostsSettingsConstants';
-import { getConversionHostTaskLogFile } from '../../../helpers';
+import { getConversionHostTaskLogFile, inferTransportMethod } from '../../../helpers';
 
 const removeFailedTaskSupported = false; // TODO remove me when the Remove button works
 
@@ -120,6 +120,7 @@ const ConversionHostsListItem = ({
     <ListView.Item
       heading={listItem.name}
       additionalInfo={[
+        <ListView.InfoItem key="transport-method">{inferTransportMethod(listItem)}</ListView.InfoItem>,
         <ListView.InfoItem key="task-status">
           {statusIcon}
           {statusMessage}
