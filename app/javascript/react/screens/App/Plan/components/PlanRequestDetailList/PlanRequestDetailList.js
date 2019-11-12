@@ -2,26 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   Button,
-  Icon,
   Grid,
   FormGroup,
   ListView,
   Popover,
-  OverlayTrigger,
   Spinner,
   Toolbar,
-  Tooltip,
-  UtilizationBar,
   DropdownButton,
   MenuItem
 } from 'patternfly-react';
-import EllipsisWithTooltip from 'react-ellipsis-with-tooltip';
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
 import { migrationStatusMessage, REQUEST_TASKS_URL } from '../../PlanConstants';
-import TickingIsoElapsedTime from '../../../../../../components/dates/TickingIsoElapsedTime';
 import ConfirmModal from '../../../common/ConfirmModal';
 import ListViewTable from '../../../common/ListViewTable/ListViewTable';
-import StopPropagationOnClick from '../../../common/StopPropagationOnClick';
+import PlanRequestDetailListItem from './PlanRequestDetailListItem';
 
 class PlanRequestDetailList extends React.Component {
   state = {
@@ -40,18 +34,18 @@ class PlanRequestDetailList extends React.Component {
     }
   }
 
-  onSelect = (eventKey, task) => {
+  downloadLogForTask = (logType, task) => {
     const { downloadLogAction, fetchOrchestrationStackUrl, fetchOrchestrationStackAction } = this.props;
-    if (eventKey === 'migration') {
+    if (logType === 'migration') {
       downloadLogAction(task, 'v2v');
-    } else if (eventKey === 'wrapper') {
+    } else if (logType === 'wrapper') {
       downloadLogAction(task, 'wrapper');
     } else {
-      fetchOrchestrationStackAction(fetchOrchestrationStackUrl, eventKey, task);
+      fetchOrchestrationStackAction(fetchOrchestrationStackUrl, logType, task);
     }
   };
 
-  overlayTriggerClick = task => {
+  fetchDetailsForTask = task => {
     if (!this.props.conversionHosts[task.id] && !task.options.conversion_host_name) {
       this.props.fetchConversionHostAction(this.props.fetchConversionHostUrl, task.id);
     }
@@ -112,11 +106,6 @@ class PlanRequestDetailList extends React.Component {
     } else {
       this.selectAllInProgressTasks();
     }
-  };
-
-  taskIsSelected = task => {
-    const { selectedTasksForCancel } = this.props;
-    return selectedTasksForCancel.findIndex(t => t.id === task.id) > -1;
   };
 
   selectAllInProgressTasks = () => {
@@ -309,128 +298,25 @@ class PlanRequestDetailList extends React.Component {
                 </Popover>
               );
 
+              // TODO add expanded content, lay it out like warm migration mockups for pre-copy list
+              // TODO set up mock data for testing
+              // TODO ???
+              // TODO profit
+
               return (
-                <ListViewTable.Row
-                  key={task.id}
-                  checkboxInput={
-                    <input
-                      type="checkbox"
-                      disabled={taskCancelled || task.completed}
-                      checked={this.taskIsSelected(task)}
-                      onChange={() => {
-                        this.handleCheckboxChange(task);
-                      }}
-                    />
-                  }
-                  leftContent={leftContent}
-                  heading={task.vmName}
-                  additionalInfo={[
-                    <ListViewTable.InfoItem
-                      key={`${task.id}-message`}
-                      style={{
-                        flexDirection: 'column',
-                        alignItems: 'flex-start',
-                        marginRight: 80,
-                        minWidth: 200
-                      }}
-                    >
-                      <div>
-                        <div style={{ display: 'inline-block', textAlign: 'left' }}>
-                          <span>{mainStatusMessage}</span>
-                          <div style={{ maxWidth: 250 }}>
-                            <EllipsisWithTooltip>{statusDetailMessage}</EllipsisWithTooltip>
-                          </div>
-                        </div>
-                        &nbsp;
-                        {/* Todo: revisit FieldLevelHelp props in patternfly-react to support this */}
-                        <StopPropagationOnClick>
-                          <OverlayTrigger
-                            rootClose
-                            trigger="click"
-                            onEnter={() => this.overlayTriggerClick(task)}
-                            placement="left"
-                            overlay={popoverContent}
-                          >
-                            <Button bsStyle="link">
-                              <Icon type="pf" name="info" />
-                            </Button>
-                          </OverlayTrigger>
-                        </StopPropagationOnClick>
-                      </div>
-                      <div>
-                        <ListView.Icon type="fa" size="lg" name="clock-o" />
-                        <TickingIsoElapsedTime
-                          startTime={task.startDateTime}
-                          endTime={task.completed ? task.lastUpdateDateTime : null}
-                        />
-                      </div>
-                    </ListViewTable.InfoItem>,
-                    <ListViewTable.InfoItem key={`${task.id}-times`} style={{ minWidth: 150, paddingRight: 20 }}>
-                      <UtilizationBar
-                        now={task.percentComplete}
-                        min={0}
-                        max={100}
-                        description={label}
-                        label=" "
-                        usedTooltipFunction={(max, now) => (
-                          <Tooltip id={Date.now()}>
-                            {now} % {__('Migrated')}
-                          </Tooltip>
-                        )}
-                        availableTooltipFunction={(max, now) => (
-                          <Tooltip id={Date.now()}>
-                            {max - now} % {__('Remaining')}
-                          </Tooltip>
-                        )}
-                        descriptionPlacementTop
-                      />
-                    </ListViewTable.InfoItem>
-                  ]}
-                  actions={
-                    <DropdownButton
-                      id={`${task.id}-${task.descriptionPrefix}_download_log_dropdown`}
-                      title={__('Download Log')}
-                      pullRight
-                      onSelect={eventKey => this.onSelect(eventKey, task)}
-                      disabled={
-                        !task.log_available ||
-                        (downloadLogInProgressTaskIds &&
-                          downloadLogInProgressTaskIds.find(element => element === task.id) &&
-                          !task.options.prePlaybookComplete &&
-                          !task.options.postPlaybookComplete)
-                      }
-                    >
-                      {task.options.prePlaybookComplete && (
-                        <MenuItem
-                          eventKey="preMigration"
-                          disabled={downloadLogInProgressTaskIds && downloadLogInProgressTaskIds.indexOf(task.id) > -1}
-                        >
-                          {__('Premigration log')}
-                        </MenuItem>
-                      )}
-                      <MenuItem
-                        eventKey="migration"
-                        disabled={downloadLogInProgressTaskIds && downloadLogInProgressTaskIds.indexOf(task.id) > -1}
-                      >
-                        {__('Migration log')}
-                      </MenuItem>
-                      <MenuItem
-                        eventKey="wrapper"
-                        disabled={downloadLogInProgressTaskIds && downloadLogInProgressTaskIds.indexOf(task.id) > -1}
-                      >
-                        {__('Virt-v2v-wrapper log')}
-                      </MenuItem>
-                      {task.options.postPlaybookComplete && (
-                        <MenuItem
-                          eventKey="postMigration"
-                          disabled={downloadLogInProgressTaskIds && downloadLogInProgressTaskIds.indexOf(task.id) > -1}
-                        >
-                          {__('Postmigration log')}
-                        </MenuItem>
-                      )}
-                    </DropdownButton>
-                  }
-                  stacked
+                <PlanRequestDetailListItem
+                  task={task}
+                  taskCancelled={taskCancelled}
+                  leftContent={leftContent} // TODO move this into the list item file?
+                  mainStatusMessage={mainStatusMessage} // TODO move this into the list item file?
+                  statusDetailMessage={statusDetailMessage} // TODO move this into the list item file?
+                  popoverContent={popoverContent} // TODO move this into the list item file?
+                  label={label} // TODO move this into the list item file?
+                  downloadLogInProgressTaskIds={downloadLogInProgressTaskIds}
+                  selectedTasksForCancel={selectedTasksForCancel}
+                  handleCheckboxChange={this.handleCheckboxChange}
+                  fetchDetailsForTask={this.fetchDetailsForTask}
+                  downloadLogForTask={this.downloadLogForTask}
                 />
               );
             })}
