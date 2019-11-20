@@ -22,7 +22,7 @@ ScheduledTimeInfoItem.propTypes = {
   planId: PropTypes.string,
   migrationStarting: PropTypes.bool,
   showScheduledTime: PropTypes.bool,
-  migrationScheduled: PropTypes.number
+  migrationScheduled: PropTypes.oneOfType(PropTypes.number, PropTypes.string)
 };
 
 export default ScheduledTimeInfoItem;
