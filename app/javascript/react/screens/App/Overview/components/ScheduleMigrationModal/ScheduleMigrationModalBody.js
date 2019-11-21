@@ -1,59 +1,30 @@
 import React from 'react';
 import { Icon } from 'patternfly-react';
 import PropTypes from 'prop-types';
+import { initializeDatepicker } from '../../helpers';
 
 class ScheduleMigrationModalBody extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      showDatepicker: false
-    };
-  }
-
   componentDidMount() {
-    const { startMigrationNowHandler } = this.props;
-    startMigrationNowHandler(!this.state.showDatepicker);
+    if (this.props.showDatepicker) {
+      const { handleDatepickerChange, defaultDate } = this.props;
+      initializeDatepicker(handleDatepickerChange, defaultDate);
+    }
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevState.showDatepicker !== this.state.showDatepicker) {
-      const { startMigrationNowHandler } = this.props;
-      startMigrationNowHandler(!this.state.showDatepicker);
-
-      if (this.state.showDatepicker) {
+    if (prevProps.showDatepicker !== this.props.showDatepicker) {
+      if (this.props.showDatepicker) {
         const { handleDatepickerChange, defaultDate } = this.props;
-        const datetimeSelector = $('#dateTimePicker');
-        const minDate = new Date(Date.now() + 120000);
-
-        datetimeSelector.datetimepicker({
-          defaultDate: defaultDate > minDate ? defaultDate : minDate,
-          useCurrent: !defaultDate,
-          allowInputToggle: true,
-          showTodayButton: true,
-          minDate,
-          toolbarPlacement: 'bottom',
-          sideBySide: true,
-          icons: {
-            today: 'today-button-pf'
-          }
-        });
-
-        datetimeSelector.on('dp.change', e => {
-          handleDatepickerChange(e.date._d);
-        });
-
-        const picker = datetimeSelector.data('DateTimePicker');
-        handleDatepickerChange(picker.date().toDate());
+        initializeDatepicker(handleDatepickerChange, defaultDate);
       }
     }
   }
 
   render() {
+    const { setScheduleMode, startNowLabel, startLaterLabel, showDatepicker } = this.props;
+
     const handleRadioChange = event => {
-      this.setState({
-        showDatepicker: event.currentTarget.value === 'schedule_migration_later'
-      });
+      setScheduleMode(event.currentTarget.value === 'schedule_migration_now');
     };
 
     return (
@@ -68,9 +39,9 @@ class ScheduleMigrationModalBody extends React.Component {
                     name="schedule_migration_start"
                     value="schedule_migration_now"
                     onChange={handleRadioChange}
-                    checked={!this.state.showDatepicker}
+                    checked={!showDatepicker}
                   />
-                  {__('Start migration immediately')}
+                  {startNowLabel}
                 </label>
               </div>
               <div className="radio">
@@ -80,14 +51,15 @@ class ScheduleMigrationModalBody extends React.Component {
                     name="schedule_migration_start"
                     value="schedule_migration_later"
                     onChange={handleRadioChange}
+                    checked={showDatepicker}
                   />
-                  {__('Select date and time for the start of the migration')}
+                  {startLaterLabel}
                 </label>
               </div>
             </div>
           </div>
         </div>
-        {this.state.showDatepicker && (
+        {showDatepicker && (
           <div className="row">
             <div className="col-xs-12">
               <div className="form-group">
@@ -108,8 +80,11 @@ class ScheduleMigrationModalBody extends React.Component {
 
 ScheduleMigrationModalBody.propTypes = {
   handleDatepickerChange: PropTypes.func,
-  startMigrationNowHandler: PropTypes.func,
-  defaultDate: PropTypes.instanceOf(Date)
+  setScheduleMode: PropTypes.func,
+  defaultDate: PropTypes.instanceOf(Date),
+  startNowLabel: PropTypes.string,
+  startLaterLabel: PropTypes.string,
+  showDatepicker: PropTypes.bool
 };
 
 export default ScheduleMigrationModalBody;

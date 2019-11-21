@@ -47,7 +47,8 @@ const MigrationsCompletedList = ({
   fetchTransformationMappingsAction,
   fetchTransformationMappingsUrl,
   showEditPlanNameModalAction,
-  migrateClick
+  scheduleMigrationNow,
+  scheduleCutover
 }) => (
   <React.Fragment>
     <Grid.Col xs={12}>
@@ -340,7 +341,8 @@ const MigrationsCompletedList = ({
       scheduleMigrationModal={scheduleMigrationModal}
       scheduleMigrationPlan={scheduleMigrationPlan}
       scheduleMigration={scheduleMigration}
-      migrateClick={migrateClick}
+      scheduleMigrationNow={scheduleMigrationNow}
+      scheduleCutover={scheduleCutover}
       fetchTransformationPlansAction={fetchTransformationPlansAction}
       fetchTransformationPlansUrl={fetchTransformationPlansUrl}
     />
@@ -348,7 +350,7 @@ const MigrationsCompletedList = ({
 );
 
 MigrationsCompletedList.propTypes = {
-  migrateClick: PropTypes.func,
+  scheduleMigrationNow: PropTypes.func,
   finishedTransformationPlans: PropTypes.array,
   allRequestsWithTasks: PropTypes.array,
   retryClick: PropTypes.func,
@@ -369,12 +371,14 @@ MigrationsCompletedList.propTypes = {
   scheduleMigrationModal: PropTypes.bool,
   scheduleMigrationPlan: PropTypes.object,
   scheduleMigration: PropTypes.func,
+  scheduleCutover: PropTypes.func,
   fetchTransformationMappingsAction: PropTypes.func,
   fetchTransformationMappingsUrl: PropTypes.string,
   showEditPlanNameModalAction: PropTypes.func
 };
 MigrationsCompletedList.defaultProps = {
-  migrateClick: noop,
+  scheduleMigrationNow: noop,
+  scheduleCutover: noop,
   finishedTransformationPlans: [],
   retryClick: noop,
   loading: false

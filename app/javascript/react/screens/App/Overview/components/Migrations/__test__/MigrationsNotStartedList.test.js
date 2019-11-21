@@ -8,15 +8,15 @@ import ListViewTableRow from '../../../../common/ListViewTable/ListViewTableRow'
 const { resources: plans } = transformationPlans;
 const [notStartedPlan] = plans;
 
-let migrateClick;
+let scheduleMigrationNow;
 let redirectTo;
 let wrapper;
 beforeEach(() => {
-  migrateClick = jest.fn();
+  scheduleMigrationNow = jest.fn();
   redirectTo = jest.fn();
   wrapper = mount(
     <MigrationsNotStartedList
-      migrateClick={migrateClick}
+      scheduleMigrationNow={scheduleMigrationNow}
       redirectTo={redirectTo}
       loading=""
       notStartedPlans={[notStartedPlan]}
@@ -33,7 +33,7 @@ test('clicking on a plan fires redirectTo with the path to its details page', ()
   expect(redirectTo).toHaveBeenLastCalledWith(`/plan/${notStartedPlan.id}`);
 });
 
-test.skip('clicking on the Migrate button fires migrateClick with the correct API endpoint', () => {
+test.skip('clicking on the Migrate button fires scheduleMigrationNow with the correct API endpoint', () => {
   const e = {
     stopPropagation: jest.fn()
   };
@@ -42,5 +42,5 @@ test.skip('clicking on the Migrate button fires migrateClick with the correct AP
     .prop('actions')
     .props.children.props.onClick(e);
 
-  expect(migrateClick).toHaveBeenLastCalledWith(`/api/service_templates/${notStartedPlan.id}`);
+  expect(scheduleMigrationNow).toHaveBeenLastCalledWith(`/api/service_templates/${notStartedPlan.id}`);
 });

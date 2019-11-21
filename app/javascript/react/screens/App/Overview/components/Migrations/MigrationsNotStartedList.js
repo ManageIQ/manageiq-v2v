@@ -17,7 +17,7 @@ import NumVmsInfoItem from './NumVmsInfoItem';
 import MappingNameInfoItem from './MappingNameInfoItem';
 
 const MigrationsNotStartedList = ({
-  migrateClick,
+  scheduleMigrationNow,
   notStartedPlans,
   loading,
   redirectTo,
@@ -28,6 +28,7 @@ const MigrationsNotStartedList = ({
   scheduleMigrationModal,
   scheduleMigrationPlan,
   scheduleMigration,
+  scheduleCutover,
   fetchTransformationPlansAction,
   fetchTransformationPlansUrl,
   deleteTransformationPlanAction,
@@ -169,7 +170,8 @@ const MigrationsNotStartedList = ({
       scheduleMigrationModal={scheduleMigrationModal}
       scheduleMigrationPlan={scheduleMigrationPlan}
       scheduleMigration={scheduleMigration}
-      migrateClick={migrateClick}
+      scheduleMigrationNow={scheduleMigrationNow}
+      scheduleCutover={scheduleCutover}
       fetchTransformationPlansAction={fetchTransformationPlansAction}
       fetchTransformationPlansUrl={fetchTransformationPlansUrl}
     />
@@ -177,7 +179,7 @@ const MigrationsNotStartedList = ({
 );
 
 MigrationsNotStartedList.propTypes = {
-  migrateClick: PropTypes.func,
+  scheduleMigrationNow: PropTypes.func,
   showConfirmModalAction: PropTypes.func,
   hideConfirmModalAction: PropTypes.func,
   addNotificationAction: PropTypes.func,
@@ -188,6 +190,7 @@ MigrationsNotStartedList.propTypes = {
   scheduleMigrationModal: PropTypes.bool,
   scheduleMigrationPlan: PropTypes.object,
   scheduleMigration: PropTypes.func,
+  scheduleCutover: PropTypes.func,
   fetchTransformationPlansAction: PropTypes.func,
   fetchTransformationPlansUrl: PropTypes.string,
   deleteTransformationPlanAction: PropTypes.func,
@@ -197,7 +200,7 @@ MigrationsNotStartedList.propTypes = {
   fetchTransformationMappingsUrl: PropTypes.string
 };
 MigrationsNotStartedList.defaultProps = {
-  migrateClick: noop,
+  scheduleMigrationNow: noop,
   notStartedPlans: [],
   loading: ''
 };

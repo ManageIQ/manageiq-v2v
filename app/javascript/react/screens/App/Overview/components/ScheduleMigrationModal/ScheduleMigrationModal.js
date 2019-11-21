@@ -1,18 +1,17 @@
+import moment from 'moment';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Modal } from 'patternfly-react';
 import ScheduleMigrationModalBody from './ScheduleMigrationModalBody';
 import getPlanScheduleInfo from '../Migrations/helpers/getPlanScheduleInfo';
+import isPlanWarmMigration from '../Migrations/helpers/isPlanWarmMigration';
 
 class ScheduleMigrationModal extends React.Component {
   constructor(props) {
     super(props);
 
-    const { scheduleMigrationPlan } = this.props;
-    const { migrationScheduled } = getPlanScheduleInfo(scheduleMigrationPlan) || '';
-
     this.state = {
-      dateTimeInput: migrationScheduled ? new Date(migrationScheduled) : null,
+      dateTimeInput: null,
       startMigrationNow: null
     };
   }
@@ -25,14 +24,15 @@ class ScheduleMigrationModal extends React.Component {
       scheduleMigration,
       fetchTransformationPlansAction,
       fetchTransformationPlansUrl,
-      migrateClick
+      scheduleMigrationNow,
+      scheduleCutover
     } = this.props;
 
     const handleDatepickerChange = event => {
       this.setState({ dateTimeInput: event });
     };
 
-    const startMigrationNowHandler = event => {
+    const setScheduleMode = event => {
       this.setState({ startMigrationNow: event });
     };
 
@@ -40,10 +40,34 @@ class ScheduleMigrationModal extends React.Component {
       toggleScheduleMigrationModal();
     };
 
-    const modalTitle = plan =>
-      plan != null && (plan.status === 'Error' || plan.status === 'Denied')
-        ? __('Schedule Retry')
-        : __('Schedule Migration');
+    const modalMode = plan => {
+      let mode = 'migration';
+      if (isPlanWarmMigration(plan) && plan.status === 'Ok') {
+        mode = 'cutover';
+      } else if (plan != null && (plan.status === 'Error' || plan.status === 'Denied')) {
+        mode = 'retry';
+      }
+      return mode;
+    };
+
+    const MODAL_STRINGS = {
+      migration: [
+        __('Schedule Migration'),
+        __('Start migration immediately'),
+        __('Select date and time for the start of the migration')
+      ],
+      cutover: [__('Schedule Cutover'), __('Start cutover immediately'), __('Select date and time to start cutover')],
+      retry: [__('Schedule Retry'), __('Retry migration immediately'), __('Select date and time to retry migration')]
+    };
+
+    const modalTitle = plan => MODAL_STRINGS[modalMode(plan)][0];
+
+    const modalBodyStrings = plan => [MODAL_STRINGS[modalMode(plan)][1], MODAL_STRINGS[modalMode(plan)][2]];
+
+    const { migrationScheduled, migrationCutover } = getPlanScheduleInfo(scheduleMigrationPlan);
+    const defaultDate = isPlanWarmMigration(scheduleMigrationPlan)
+      ? new Date(migrationCutover)
+      : new Date(migrationScheduled);
 
     return (
       <Modal show={scheduleMigrationModal} onHide={modalClose} backdrop="static">
@@ -54,8 +78,11 @@ class ScheduleMigrationModal extends React.Component {
         <Modal.Body>
           <ScheduleMigrationModalBody
             handleDatepickerChange={handleDatepickerChange}
-            startMigrationNowHandler={startMigrationNowHandler}
-            defaultDate={this.state.dateTimeInput}
+            setScheduleMode={setScheduleMode}
+            defaultDate={defaultDate}
+            startNowLabel={modalBodyStrings(scheduleMigrationPlan)[0]}
+            startLaterLabel={modalBodyStrings(scheduleMigrationPlan)[1]}
+            showDatepicker={!this.state.startMigrationNow}
           />
         </Modal.Body>
         <Modal.Footer>
@@ -65,8 +92,25 @@ class ScheduleMigrationModal extends React.Component {
           <Button
             bsStyle="primary"
             onClick={() => {
-              if (this.state.startMigrationNow) {
-                migrateClick(scheduleMigrationPlan.href);
+              if (modalMode(scheduleMigrationPlan) === 'cutover') {
+                let cutoverDatetime = this.state.dateTimeInput;
+                if (this.state.startMigrationNow) {
+                  // now == schedule warm migration cutover 2 minutes from now
+                  cutoverDatetime = moment(new Date())
+                    .add(2, 'm')
+                    .toDate();
+                }
+                scheduleCutover({
+                  plan: scheduleMigrationPlan,
+                  cutoverTime: cutoverDatetime
+                }).then(() => {
+                  fetchTransformationPlansAction({
+                    url: fetchTransformationPlansUrl,
+                    archived: false
+                  });
+                });
+              } else if (this.state.startMigrationNow) {
+                scheduleMigrationNow(scheduleMigrationPlan.href);
                 toggleScheduleMigrationModal();
               } else {
                 scheduleMigration({
@@ -94,7 +138,8 @@ ScheduleMigrationModal.propTypes = {
   toggleScheduleMigrationModal: PropTypes.func,
   scheduleMigrationPlan: PropTypes.object,
   scheduleMigration: PropTypes.func,
-  migrateClick: PropTypes.func,
+  scheduleMigrationNow: PropTypes.func,
+  scheduleCutover: PropTypes.func,
   fetchTransformationPlansAction: PropTypes.func,
   fetchTransformationPlansUrl: PropTypes.string
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Spinner, Button, Icon, UtilizationBar } from 'patternfly-react';
+import { Spinner, Button, Icon, UtilizationBar, DropdownKebab, MenuItem } from 'patternfly-react';
 import EllipsisWithTooltip from 'react-ellipsis-with-tooltip';
 
 import ListViewTable from '../../../common/ListViewTable/ListViewTable';
@@ -18,6 +18,9 @@ import {
 } from './helpers/inProgressHelpers';
 import InProgressRow from './InProgressRow';
 import ProgressBarTooltip from './ProgressBarTooltip';
+import ScheduleMigrationButton from './ScheduleMigrationButton';
+import CutoverTimeInfoItem from './CutoverTimeInfoItem';
+import StopPropagationOnClick from '../../../common/StopPropagationOnClick';
 
 const MigrationInProgressListItem = ({
   plan,
@@ -34,12 +37,19 @@ const MigrationInProgressListItem = ({
   setMigrationsFilterAction,
   cancelPlanRequestAction,
   isCancellingPlanRequest,
-  requestsProcessingCancellation
+  requestsProcessingCancellation,
+  loading,
+  toggleScheduleMigrationModal
 }) => {
   const { requestsOfAssociatedPlan, mostRecentRequest } = getRequestsOfPlan({ plan, allRequestsWithTasks });
   const waitingForConversionHost = isWaitingForConversionHost(mostRecentRequest);
 
   const isInitiating = reloadCard || !mostRecentRequest || mostRecentRequest.request_state === 'pending';
+
+  const showScheduleMigrationButton =
+    plan.options.config_info.warm_migration && !plan.options.config_info.warm_migration_cutover_datetime;
+  const showWarmMigrationKebab =
+    plan.options.config_info.warm_migration && plan.options.config_info.warm_migration_cutover_datetime;
 
   // Plan request state: initiating
   if (isInitiating) {
@@ -50,7 +60,8 @@ const MigrationInProgressListItem = ({
           <ListViewTable.InfoItem key="initiating">
             <Spinner size="sm" inline loading />
             {__('Initiating migration. This might take a few minutes.')}
-          </ListViewTable.InfoItem>
+          </ListViewTable.InfoItem>,
+          <CutoverTimeInfoItem plan={plan} />
         ]}
       />
     );
@@ -81,7 +92,8 @@ const MigrationInProgressListItem = ({
             <EllipsisWithTooltip style={{ maxWidth: 300 }}>
               {__('Waiting for an available conversion host. You can continue waiting or go to the Migration Settings page to increase the number of migrations per host.') /* prettier-ignore */}
             </EllipsisWithTooltip>
-          </ListViewTable.InfoItem>
+          </ListViewTable.InfoItem>,
+          <CutoverTimeInfoItem plan={plan} />
         ]}
         actions={
           <Button disabled={cancelButtonDisabled} onClick={onCancelClick}>
@@ -110,7 +122,8 @@ const MigrationInProgressListItem = ({
               {__('Unable to migrate VMs because no conversion host was configured at the time of the attempted migration.') /* prettier-ignore */}{' '}
               {__('See the product documentation for information on configuring conversion hosts.')}
             </EllipsisWithTooltip>
-          </ListViewTable.InfoItem>
+          </ListViewTable.InfoItem>,
+          <CutoverTimeInfoItem plan={plan} />
         ]}
         actions={
           <Button disabled={isEditingPlanRequest} onClick={onCancelClick}>
@@ -160,8 +173,36 @@ const MigrationInProgressListItem = ({
           <ListViewTable.InfoItem key="running-playbook">
             <Spinner size="sm" inline loading />
             {sprintf(__('Running playbook service %s. This might take a few minutes.'), playbookName)}
-          </ListViewTable.InfoItem>
+          </ListViewTable.InfoItem>,
+          <CutoverTimeInfoItem plan={plan} />
         ]}
+        actions={
+          <div>
+            {showScheduleMigrationButton && (
+              <ScheduleMigrationButton
+                loading={loading}
+                toggleScheduleMigrationModal={toggleScheduleMigrationModal}
+                plan={plan}
+                isMissingMapping={!plan.infraMappingName}
+              />
+            )}
+            {showWarmMigrationKebab && (
+              <StopPropagationOnClick>
+                <DropdownKebab id={`${plan.id}-kebab`} pullRight>
+                  <MenuItem
+                    id={`edit_cutover_${plan.id}`}
+                    onClick={e => {
+                      e.stopPropagation();
+                      toggleScheduleMigrationModal({ plan });
+                    }}
+                  >
+                    {__('Edit Cutover')}
+                  </MenuItem>
+                </DropdownKebab>
+              </StopPropagationOnClick>
+            )}
+          </div>
+        }
       />
     );
   }
@@ -195,8 +236,36 @@ const MigrationInProgressListItem = ({
               <TickingIsoElapsedTime startTime={mostRecentRequest.created_on} />
             </div>
           </div>
-        </ListViewTable.InfoItem>
+        </ListViewTable.InfoItem>,
+        <CutoverTimeInfoItem plan={plan} />
       ]}
+      actions={
+        <div>
+          {showScheduleMigrationButton && (
+            <ScheduleMigrationButton
+              loading={loading}
+              toggleScheduleMigrationModal={toggleScheduleMigrationModal}
+              plan={plan}
+              isMissingMapping={!plan.infraMappingName}
+            />
+          )}
+          {showWarmMigrationKebab && (
+            <StopPropagationOnClick>
+              <DropdownKebab id={`${plan.id}-kebab`} pullRight>
+                <MenuItem
+                  id={`edit_cutover_${plan.id}`}
+                  onClick={e => {
+                    e.stopPropagation();
+                    toggleScheduleMigrationModal({ plan });
+                  }}
+                >
+                  {__('Edit Cutover')}
+                </MenuItem>
+              </DropdownKebab>
+            </StopPropagationOnClick>
+          )}
+        </div>
+      }
     />
   );
 };
@@ -216,7 +285,9 @@ MigrationInProgressListItem.propTypes = {
   setMigrationsFilterAction: PropTypes.func,
   cancelPlanRequestAction: PropTypes.func,
   isCancellingPlanRequest: PropTypes.bool,
-  requestsProcessingCancellation: PropTypes.array
+  requestsProcessingCancellation: PropTypes.array,
+  loading: PropTypes.bool,
+  toggleScheduleMigrationModal: PropTypes.func
 };
 
 export default MigrationInProgressListItem;
