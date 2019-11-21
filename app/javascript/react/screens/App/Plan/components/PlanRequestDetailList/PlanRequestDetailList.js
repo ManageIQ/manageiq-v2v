@@ -1,18 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Button,
-  Grid,
-  FormGroup,
-  ListView,
-  Popover,
-  Spinner,
-  Toolbar,
-  DropdownButton,
-  MenuItem
-} from 'patternfly-react';
-import { formatDateTime } from '../../../../../../components/dates/MomentDate';
-import { migrationStatusMessage, REQUEST_TASKS_URL } from '../../PlanConstants';
+import { Button, Grid, FormGroup, Toolbar, DropdownButton, MenuItem } from 'patternfly-react';
+import { REQUEST_TASKS_URL } from '../../PlanConstants';
 import ConfirmModal from '../../../common/ConfirmModal';
 import ListViewTable from '../../../common/ListViewTable/ListViewTable';
 import PlanRequestDetailListItem from './PlanRequestDetailListItem';
@@ -202,124 +191,25 @@ class PlanRequestDetailList extends React.Component {
         </Grid.Row>
         <div style={{ overflow: 'auto', paddingBottom: 300, height: '100%' }}>
           <ListViewTable className="plan-request-details-list">
-            {filteredSortedPaginatedListItems.items.map((task, n) => {
-              let currentDescription = task.options.progress
-                ? migrationStatusMessage(task.options.progress.current_description)
-                : '';
-              if (task.options.prePlaybookRunning || task.options.postPlaybookRunning) {
-                currentDescription = `${currentDescription} (${ansiblePlaybookTemplate.name})`;
-              }
-              let mainStatusMessage = currentDescription;
-              let taskCancelled = false;
-              if (markedForCancellation.find(t => t.id === task.id)) {
-                mainStatusMessage = `${currentDescription}: ${__('Cancel request sent')}`;
-                taskCancelled = true;
-              } else if (task.cancelation_status === 'cancel_requested') {
-                mainStatusMessage = `${currentDescription}: ${__('Cancel requested')}`;
-                taskCancelled = true;
-              } else if (task.cancelation_status === 'canceling') {
-                mainStatusMessage = `${currentDescription}: ${__('Cancelling')}`;
-                taskCancelled = true;
-              } else if (task.cancelation_status === 'canceled') {
-                mainStatusMessage = `${currentDescription}: ${__('Cancelled')}`;
-                taskCancelled = true;
-              }
-              const statusDetailMessage =
-                task.options.progress &&
-                task.options.progress.current_state &&
-                task.options.progress.states &&
-                migrationStatusMessage(task.options.progress.states[task.options.progress.current_state].message);
-
-              let leftContent;
-              if (task.message === 'Pending') {
-                leftContent = (
-                  <ListView.Icon
-                    type="pf"
-                    name="pending"
-                    size="md"
-                    style={{ width: 'inherit', backgroundColor: 'transparent' }}
-                  />
-                );
-              } else if (taskCancelled && task.completed) {
-                mainStatusMessage = `${currentDescription}: ${__('Migration cancelled')}`;
-                leftContent = (
-                  <ListView.Icon
-                    type="fa"
-                    name="ban"
-                    size="md"
-                    style={{ width: 'inherit', backgroundColor: 'transparent' }}
-                  />
-                );
-              } else if (task.completed && !task.completedSuccessfully) {
-                leftContent = (
-                  <ListView.Icon
-                    type="pf"
-                    name="error-circle-o"
-                    size="md"
-                    style={{ width: 'inherit', backgroundColor: 'transparent' }}
-                  />
-                );
-              } else if (task.completed) {
-                leftContent = (
-                  <ListView.Icon
-                    type="pf"
-                    name="ok"
-                    size="md"
-                    style={{ width: 'inherit', backgroundColor: 'transparent' }}
-                  />
-                );
-              } else {
-                leftContent = <Spinner loading />;
-              }
-              const label = sprintf(__('%s of %s Migrated'), task.diskSpaceCompletedGb, task.totalDiskSpaceGb);
-
-              const conversionHostName =
-                task.options.conversion_host_name || (conversionHosts[task.id] && conversionHosts[task.id].name);
-
-              const popoverContent = (
-                <Popover id={`popover${task.id}${n}`} title={mainStatusMessage} className="task-info-popover">
-                  <div>
-                    <div>
-                      <b>{__('Start Time')}: </b>
-                      {formatDateTime(task.startDateTime)}
-                    </div>
-                    <div>
-                      <b>{__('Conversion Host')}: </b>
-                      {conversionHostName}
-                    </div>
-                    {task.log_available && (
-                      <div>
-                        <strong>{__('Log:')}</strong>
-                        <br />
-                        {task.options.virtv2v_wrapper.v2v_log}
-                      </div>
-                    )}
-                  </div>
-                </Popover>
-              );
-
+            {filteredSortedPaginatedListItems.items.map(task => (
               // TODO add expanded content, lay it out like warm migration mockups for pre-copy list
               // TODO set up mock data for testing
               // TODO ???
               // TODO profit
 
-              return (
-                <PlanRequestDetailListItem
-                  task={task}
-                  taskCancelled={taskCancelled}
-                  leftContent={leftContent} // TODO move this into the list item file?
-                  mainStatusMessage={mainStatusMessage} // TODO move this into the list item file?
-                  statusDetailMessage={statusDetailMessage} // TODO move this into the list item file?
-                  popoverContent={popoverContent} // TODO move this into the list item file?
-                  label={label} // TODO move this into the list item file?
-                  downloadLogInProgressTaskIds={downloadLogInProgressTaskIds}
-                  selectedTasksForCancel={selectedTasksForCancel}
-                  handleCheckboxChange={this.handleCheckboxChange}
-                  fetchDetailsForTask={this.fetchDetailsForTask}
-                  downloadLogForTask={this.downloadLogForTask}
-                />
-              );
-            })}
+              <PlanRequestDetailListItem
+                task={task}
+                conversionHosts={conversionHosts}
+                downloadLogInProgressTaskIds={downloadLogInProgressTaskIds}
+                ansiblePlaybookTemplate={ansiblePlaybookTemplate}
+                markedForCancellation={markedForCancellation}
+                selectedTasksForCancel={selectedTasksForCancel}
+                handleCheckboxChange={this.handleCheckboxChange}
+                fetchDetailsForTask={this.fetchDetailsForTask}
+                downloadLogForTask={this.downloadLogForTask}
+                key={task.id}
+              />
+            ))}
           </ListViewTable>
           {renderPaginationRow(filteredSortedPaginatedListItems)}
         </div>

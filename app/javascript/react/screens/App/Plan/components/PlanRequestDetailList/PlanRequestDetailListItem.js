@@ -4,6 +4,8 @@ import {
   Button,
   Icon,
   ListView,
+  Popover,
+  Spinner,
   OverlayTrigger,
   Tooltip,
   UtilizationBar,
@@ -12,24 +14,104 @@ import {
 } from 'patternfly-react';
 import EllipsisWithTooltip from 'react-ellipsis-with-tooltip';
 import ListViewTable from '../../../common/ListViewTable/ListViewTable';
+import { formatDateTime } from '../../../../../../components/dates/MomentDate';
+import { migrationStatusMessage } from '../../PlanConstants';
 import TickingIsoElapsedTime from '../../../../../../components/dates/TickingIsoElapsedTime';
 import StopPropagationOnClick from '../../../common/StopPropagationOnClick';
 
 const PlanRequestDetailListItem = ({
   task,
-  taskCancelled,
-  leftContent,
-  mainStatusMessage,
-  statusDetailMessage,
-  popoverContent,
-  label,
+  conversionHosts,
   downloadLogInProgressTaskIds,
-  selectedTasksForCancel,
+  ansiblePlaybookTemplate,
+  markedForCancellation, // TODO better prop names for these two?
+  selectedTasksForCancel, // ^
   handleCheckboxChange,
   fetchDetailsForTask,
   downloadLogForTask
 }) => {
+  let currentDescription = task.options.progress
+    ? migrationStatusMessage(task.options.progress.current_description)
+    : '';
+  if (task.options.prePlaybookRunning || task.options.postPlaybookRunning) {
+    currentDescription = `${currentDescription} (${ansiblePlaybookTemplate.name})`;
+  }
+  let mainStatusMessage = currentDescription;
+  let taskCancelled = false;
+  if (markedForCancellation.find(t => t.id === task.id)) {
+    mainStatusMessage = `${currentDescription}: ${__('Cancel request sent')}`;
+    taskCancelled = true;
+  } else if (task.cancelation_status === 'cancel_requested') {
+    mainStatusMessage = `${currentDescription}: ${__('Cancel requested')}`;
+    taskCancelled = true;
+  } else if (task.cancelation_status === 'canceling') {
+    mainStatusMessage = `${currentDescription}: ${__('Cancelling')}`;
+    taskCancelled = true;
+  } else if (task.cancelation_status === 'canceled') {
+    mainStatusMessage = `${currentDescription}: ${__('Cancelled')}`;
+    taskCancelled = true;
+  }
+  const statusDetailMessage =
+    task.options.progress &&
+    task.options.progress.current_state &&
+    task.options.progress.states &&
+    migrationStatusMessage(task.options.progress.states[task.options.progress.current_state].message);
+
+  let leftContent;
+  if (task.message === 'Pending') {
+    leftContent = (
+      <ListView.Icon type="pf" name="pending" size="md" style={{ width: 'inherit', backgroundColor: 'transparent' }} />
+    );
+  } else if (taskCancelled && task.completed) {
+    mainStatusMessage = `${currentDescription}: ${__('Migration cancelled')}`;
+    leftContent = (
+      <ListView.Icon type="fa" name="ban" size="md" style={{ width: 'inherit', backgroundColor: 'transparent' }} />
+    );
+  } else if (task.completed && !task.completedSuccessfully) {
+    leftContent = (
+      <ListView.Icon
+        type="pf"
+        name="error-circle-o"
+        size="md"
+        style={{ width: 'inherit', backgroundColor: 'transparent' }}
+      />
+    );
+  } else if (task.completed) {
+    leftContent = (
+      <ListView.Icon type="pf" name="ok" size="md" style={{ width: 'inherit', backgroundColor: 'transparent' }} />
+    );
+  } else {
+    leftContent = <Spinner loading />;
+  }
+  const label = sprintf(__('%s of %s Migrated'), task.diskSpaceCompletedGb, task.totalDiskSpaceGb);
+
+  const conversionHostName =
+    task.options.conversion_host_name || (conversionHosts[task.id] && conversionHosts[task.id].name);
+
+  const popoverContent = (
+    <Popover id={`popover${task.id}`} title={mainStatusMessage} className="task-info-popover">
+      <div>
+        <div>
+          <b>{__('Start Time')}: </b>
+          {formatDateTime(task.startDateTime)}
+        </div>
+        <div>
+          <b>{__('Conversion Host')}: </b>
+          {conversionHostName}
+        </div>
+        {task.log_available && (
+          <div>
+            <strong>{__('Log:')}</strong>
+            <br />
+            {task.options.virtv2v_wrapper.v2v_log}
+          </div>
+        )}
+      </div>
+    </Popover>
+  );
+
   const taskIsSelectedForCancel = !!selectedTasksForCancel.find(t => t.id === task.id);
+
   return (
     <ListViewTable.Row
       key={task.id}
@@ -156,6 +238,9 @@ const PlanRequestDetailListItem = ({
 const taskShape = PropTypes.shape({
   id: PropTypes.string,
   completed: PropTypes.bool,
+  completedSuccessfully: PropTypes.bool,
+  diskSpaceCompletedGb: PropTypes.string,
+  totalDiskSpaceGb: PropTypes.string,
   vmName: PropTypes.string,
   startDateTime: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)]),
   lastUpdateDateTime: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)]),
@@ -170,13 +255,10 @@ const taskShape = PropTypes.shape({
 
 PlanRequestDetailListItem.propTypes = {
   task: taskShape.isRequired,
-  taskCancelled: PropTypes.bool,
-  leftContent: PropTypes.node,
-  mainStatusMessage: PropTypes.string, // TODO or is it a node?
-  statusDetailMessage: PropTypes.string, // TODO or is it a node?
-  popoverContent: PropTypes.node,
-  label: PropTypes.string, // TODO or is it a node?
-  downloadLogInProgressTaskIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+  conversionHosts: PropTypes.object, // Map of task ids to conversion host objects
+  downloadLogInProgressTaskIds: PropTypes.arrayOf(PropTypes.string),
+  ansiblePlaybookTemplate: PropTypes.shape({ name: PropTypes.string }),
+  markedForCancellation: PropTypes.arrayOf(taskShape).isRequired,
   selectedTasksForCancel: PropTypes.arrayOf(taskShape).isRequired,
   handleCheckboxChange: PropTypes.func.isRequired,
   fetchDetailsForTask: PropTypes.func.isRequired,
@@ -184,12 +266,8 @@ PlanRequestDetailListItem.propTypes = {
 };
 
 PlanRequestDetailListItem.defaultProps = {
-  taskCancelled: false,
-  leftContent: null,
-  mainStatusMessage: '',
-  statusDetailMessage: '',
-  popoverContent: null,
-  label: ''
+  downloadLogInProgressTaskIds: [],
+  ansiblePlaybookTemplate: { name: '' }
 };
 
 export default PlanRequestDetailListItem;
