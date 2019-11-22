@@ -165,6 +165,7 @@ const PlanRequestDetailListItem = ({
             />
           </div>
         </ListViewTable.InfoItem>,
+        // TODO add number of pre-copies here if it's a warm migration plan!
         <ListViewTable.InfoItem key={`${task.id}-times`} style={{ minWidth: 150, paddingRight: 20 }}>
           <UtilizationBar
             now={task.percentComplete}
@@ -231,7 +232,44 @@ const PlanRequestDetailListItem = ({
         </DropdownButton>
       }
       stacked
-    />
+    >
+      {/* TODO add a condition here to show this content only for warm migrations! */}
+      <div>TODO: popover content goes here instead -- load extra data on expand? do we need a spinner?</div>
+      <table className="warm-migration-precopies">
+        <tbody>
+          <tr>
+            <td>
+              <Spinner loading />
+            </td>
+            <td>Pre-copy 3</td>
+            <td>Start: TIMESTAMP HERE</td>
+            <td>End: TIMESTAMP HERE</td>
+            <td>XYZ GB copied</td>
+            <td>Download log button?</td>
+          </tr>
+          <tr>
+            <td>
+              <Spinner loading />
+            </td>
+            <td>Pre-copy 2</td>
+            <td>Start: TIMESTAMP HERE</td>
+            <td>End: TIMESTAMP HERE</td>
+            <td>XYZ GB copied</td>
+            <td>Download log button?</td>
+          </tr>
+          <tr>
+            <td>
+              <Spinner loading />
+            </td>
+            <td>Pre-copy 1</td>
+            <td>Start: TIMESTAMP HERE</td>
+            <td>End: TIMESTAMP HERE</td>
+            <td>XYZ GB copied</td>
+            <td>Download log button?</td>
+          </tr>
+        </tbody>
+      </table>
+    </ListViewTable.Row>
   );
 };
 
