@@ -1,38 +1,41 @@
-.plan-request-details-list .list-view-pf-main-info {
-  padding: 10px 0;
-}
+.plan-request-details-list {
+  .list-view-pf-main-info {
+    padding: 10px 0;
+  }
 
-.plan-request-details-list .list-view-pf-additional-info-item {
-  padding: 10px 0;
-}
+  .list-view-pf-additional-info-item {
+    padding: 10px 0;
+  }
 
-.plan-request-details-list .progress-description {
-  overflow: visible;
-  text-overflow: initial;
-}
+  .task-status-messages {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
-.plan-request-details-list .list-view-pf-description {
-  width: 30%;
-}
+  .elapsed-clock-icon {
+    margin-right: 5px;
+  }
 
-.plan-request-details-list .utilization-bar-pf {
-  min-width: 175px;
-}
+  .progress-description {
+    overflow: visible;
+    text-overflow: initial;
+  }
 
-.plan-request-details-list .progress-description {
-  margin-bottom: 7px;
-}
+  .list-view-pf-description {
+    width: 30%;
+  }
 
-.plan-request-details-list .progress {
-  margin-bottom: 0px;
-}
+  .utilization-bar-pf {
+    min-width: 175px;
+  }
 
-.task-info-popover {
-  max-width: 450px;
-}
+  .progress-description {
+    margin-bottom: 7px;
+  }
 
-.task-info-popover .popover-title {
-  text-transform: capitalize;
+  .progress {
+    margin-bottom: 0px;
+  }
 }
 
 table.warm-migration-precopies {

@@ -196,6 +196,7 @@ class PlanRequestDetailList extends React.Component {
 
               <PlanRequestDetailListItem
                 task={task}
+                isWarmMigration // TODO use actual plan property?
                 conversionHosts={conversionHosts}
                 downloadLogInProgressTaskIds={downloadLogInProgressTaskIds}
                 ansiblePlaybookTemplate={ansiblePlaybookTemplate}

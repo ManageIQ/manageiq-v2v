@@ -1,26 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Button,
-  Icon,
-  ListView,
-  Popover,
-  Spinner,
-  OverlayTrigger,
-  Tooltip,
-  UtilizationBar,
-  DropdownButton,
-  MenuItem
-} from 'patternfly-react';
+import { ListView, Spinner, Tooltip, UtilizationBar, DropdownButton, MenuItem } from 'patternfly-react';
 import EllipsisWithTooltip from 'react-ellipsis-with-tooltip';
 import ListViewTable from '../../../common/ListViewTable/ListViewTable';
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
 import { migrationStatusMessage } from '../../PlanConstants';
 import TickingIsoElapsedTime from '../../../../../../components/dates/TickingIsoElapsedTime';
-import StopPropagationOnClick from '../../../common/StopPropagationOnClick';
 
 const PlanRequestDetailListItem = ({
   task,
+  isWarmMigration,
   conversionHosts,
   downloadLogInProgressTaskIds,
   ansiblePlaybookTemplate,
@@ -104,32 +93,27 @@ const PlanRequestDetailListItem = ({
       leftContent={leftContent}
       heading={task.vmName}
       additionalInfo={[
-        <ListViewTable.InfoItem
-          key={`${task.id}-message`}
-          style={{
-            flexDirection: 'column',
-            alignItems: 'flex-start',
-            marginRight: 80,
-            minWidth: 200
-          }}
-        >
+        <ListViewTable.InfoItem key={`${task.id}-message`} className="task-status-messages">
           <div>
             <div style={{ display: 'inline-block', textAlign: 'left' }}>
               <span>{mainStatusMessage}</span>
-              <div style={{ maxWidth: 250 }}>
+              <div style={{ maxWidth: 225 }}>
                 <EllipsisWithTooltip>{statusDetailMessage}</EllipsisWithTooltip>
               </div>
             </div>
           </div>
           <div>
-            <ListView.Icon type="fa" size="lg" name="clock-o" />
+            <ListView.Icon type="fa" size="lg" name="clock-o" className="elapsed-clock-icon" />
+            {__('Elapsed: ')}
             <TickingIsoElapsedTime
               startTime={task.startDateTime}
               endTime={task.completed ? task.lastUpdateDateTime : null}
             />
           </div>
         </ListViewTable.InfoItem>,
-        // TODO add number of pre-copies here if it's a warm migration plan!
+        isWarmMigration ? (
+          <ListViewTable.InfoItem key={`${task.id}-num-precopies`}>3 {__('Pre-copies')}</ListViewTable.InfoItem>
+        ) : null,
         <ListViewTable.InfoItem key={`${task.id}-times`} style={{ minWidth: 150, paddingRight: 20 }}>
           <UtilizationBar
             now={task.percentComplete}
@@ -214,37 +198,40 @@ const PlanRequestDetailListItem = ({
           </div>
         )}
       </div>
-      <table className="warm-migration-precopies">
-        <tbody>
-          <tr>
-            <td className="precopy-status-icon">
-              <Spinner loading />
-            </td>
-            <td>Pre-copy 3</td>
-            <td>Start: 09 Aug 2019 11:34:56</td>
-            <td />
-            <td>91 GB copied</td>
-          </tr>
-          <tr>
-            <td className="precopy-status-icon">
-              <ListView.Icon type="pf" name="warning-triangle-o" size="md" />
-            </td>
-            <td>Pre-copy 2</td>
-            <td>Start: 09 Aug 2019 11:34:56</td>
-            <td>End: 09 Aug 2019 11:34:56</td>
-            <td>0 GB copied</td>
-          </tr>
-          <tr>
-            <td className="precopy-status-icon">
-              <ListView.Icon type="pf" name="ok" size="md" />
-            </td>
-            <td>Pre-copy 1</td>
-            <td>Start: 09 Aug 2019 11:34:56</td>
-            <td>End: 09 Aug 2019 11:34:56</td>
-            <td>32 GB copied</td>
-          </tr>
-        </tbody>
-      </table>
+      {isWarmMigration && (
+        <table className="warm-migration-precopies">
+          <tbody>
+            <tr>
+              <td className="precopy-status-icon">
+                <Spinner loading />
+              </td>
+              <td>Pre-copy 3</td>
+              <td>Start: October 9th 2019, 11:36 am</td>
+              <td />
+              <td>91 GB copied</td>
+            </tr>
+            <tr>
+              <td className="precopy-status-icon">
+                <ListView.Icon type="pf" name="warning-triangle-o" size="md" />
+                {/* TODO popover with warning/status messages */}
+              </td>
+              <td>Pre-copy 2</td>
+              <td>Start: Start: October 9th 2019, 11:35 am</td>
+              <td>End: Start: October 9th 2019, 11:36 am</td>
+              <td>0 GB copied</td>
+            </tr>
+            <tr>
+              <td className="precopy-status-icon">
+                <ListView.Icon type="pf" name="ok" size="md" />
+              </td>
+              <td>Pre-copy 1</td>
+              <td>Start: Start: October 9th 2019, 11:25 am</td>
+              <td>End: Start: October 9th 2019, 11:35 am</td>
+              <td>32 GB copied</td>
+            </tr>
+          </tbody>
+        </table>
+      )}
     </ListViewTable.Row>
   );
 };
@@ -269,6 +256,7 @@ const taskShape = PropTypes.shape({
 
 PlanRequestDetailListItem.propTypes = {
   task: taskShape.isRequired,
+  isWarmMigration: PropTypes.bool,
   conversionHosts: PropTypes.object, // Map of task ids to conversion host objects
   downloadLogInProgressTaskIds: PropTypes.arrayOf(PropTypes.string),
   ansiblePlaybookTemplate: PropTypes.shape({ name: PropTypes.string }),
@@ -280,6 +268,7 @@ PlanRequestDetailListItem.propTypes = {
 };
 
 PlanRequestDetailListItem.defaultProps = {
+  isWarmMigration: false,
   downloadLogInProgressTaskIds: [],
   ansiblePlaybookTemplate: { name: '' }
 };
