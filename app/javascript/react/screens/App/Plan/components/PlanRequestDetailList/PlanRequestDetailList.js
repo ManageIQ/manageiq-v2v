@@ -192,10 +192,7 @@ class PlanRequestDetailList extends React.Component {
         <div style={{ overflow: 'auto', paddingBottom: 300, height: '100%' }}>
           <ListViewTable className="plan-request-details-list">
             {filteredSortedPaginatedListItems.items.map(task => (
-              // TODO add expanded content, lay it out like warm migration mockups for pre-copy list
               // TODO set up mock data for testing
-              // TODO ???
-              // TODO profit
 
               <PlanRequestDetailListItem
                 task={task}
