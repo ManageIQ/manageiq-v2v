@@ -23,6 +23,8 @@ import ListViewTable from '../../../common/ListViewTable/ListViewTable';
 import ScheduledTimeInfoItem from './ScheduledTimeInfoItem';
 import MappingNameInfoItem from './MappingNameInfoItem';
 
+// TODO minor layout changes based on warm migration mockups v0.5 slide 14
+
 const MigrationsCompletedList = ({
   finishedTransformationPlans,
   allRequestsWithTasks,

@@ -7,6 +7,8 @@ import ListViewTable from '../../../common/ListViewTable/ListViewTable';
 import ListViewToolbar from '../../../common/ListViewToolbar/ListViewToolbar';
 import { MIGRATIONS_FILTER_TYPES, MIGRATIONS_IN_PROGRESS_SORT_FIELDS } from './MigrationsConstants';
 
+// TODO changes from warm migration mockups v0.5 slide 10
+
 const MigrationsInProgressList = ({
   activeTransformationPlans,
   serviceTemplatePlaybooks,
