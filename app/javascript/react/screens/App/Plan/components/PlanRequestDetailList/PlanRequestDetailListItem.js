@@ -60,7 +60,7 @@ const PlanRequestDetailListItem = ({
   let leftContent;
   if (task.message === 'Pending') {
     leftContent = (
-      <ListView.Icon type="pf" name="pending" size="md" style={{ width: 'inherit', backgroundColor: 'transparent' }} />
+      <ListView.Icon type="pf" name="p`ending" size="md" style={{ width: 'inherit', backgroundColor: 'transparent' }} />
     );
   } else if (taskCancelled && task.completed) {
     mainStatusMessage = `${currentDescription}: ${__('Migration cancelled')}`;
@@ -87,28 +87,6 @@ const PlanRequestDetailListItem = ({
 
   const conversionHostName =
     task.options.conversion_host_name || (conversionHosts[task.id] && conversionHosts[task.id].name);
-
-  const popoverContent = (
-    <Popover id={`popover${task.id}`} title={mainStatusMessage} className="task-info-popover">
-      <div>
-        <div>
-          <b>{__('Start Time')}: </b>
-          {formatDateTime(task.startDateTime)}
-        </div>
-        <div>
-          <b>{__('Conversion Host')}: </b>
-          {conversionHostName}
-        </div>
-        {task.log_available && (
-          <div>
-            <strong>{__('Log:')}</strong>
-            <br />
-            {task.options.virtv2v_wrapper.v2v_log}
-          </div>
-        )}
-      </div>
-    </Popover>
-  );
 
   const taskIsSelectedForCancel = !!selectedTasksForCancel.find(t => t.id === task.id);
 
@@ -142,20 +120,6 @@ const PlanRequestDetailListItem = ({
                 <EllipsisWithTooltip>{statusDetailMessage}</EllipsisWithTooltip>
               </div>
             </div>
-            &nbsp;
-            <StopPropagationOnClick>
-              <OverlayTrigger
-                rootClose
-                trigger="click"
-                onEnter={() => fetchDetailsForTask(task)} // TODO also call this on row expand? how to dedupe?
-                placement="left"
-                overlay={popoverContent}
-              >
-                <Button bsStyle="link">
-                  <Icon type="pf" name="info" />
-                </Button>
-              </OverlayTrigger>
-            </StopPropagationOnClick>
           </div>
           <div>
             <ListView.Icon type="fa" size="lg" name="clock-o" />
@@ -232,40 +196,52 @@ const PlanRequestDetailListItem = ({
         </DropdownButton>
       }
       stacked
+      onExpand={() => fetchDetailsForTask(task)}
     >
-      {/* TODO add a condition here to show this content only for warm migrations! */}
-      <div>TODO: popover content goes here instead -- load extra data on expand? do we need a spinner?</div>
+      <div className="expanded-task-info">
+        <div>
+          <strong>{__('Start Time')}: </strong>
+          {formatDateTime(task.startDateTime)}
+        </div>
+        <div>
+          <strong>{__('Conversion Host')}: </strong>
+          {conversionHostName}
+        </div>
+        {task.log_available && (
+          <div>
+            <strong>{__('Log:')} </strong>
+            {task.options.virtv2v_wrapper.v2v_log}
+          </div>
+        )}
+      </div>
       <table className="warm-migration-precopies">
         <tbody>
           <tr>
-            <td>
+            <td className="precopy-status-icon">
               <Spinner loading />
             </td>
             <td>Pre-copy 3</td>
-            <td>Start: TIMESTAMP HERE</td>
-            <td>End: TIMESTAMP HERE</td>
-            <td>XYZ GB copied</td>
-            <td>Download log button?</td>
+            <td>Start: 09 Aug 2019 11:34:56</td>
+            <td />
+            <td>91 GB copied</td>
           </tr>
           <tr>
-            <td>
-              <Spinner loading />
+            <td className="precopy-status-icon">
+              <ListView.Icon type="pf" name="warning-triangle-o" size="md" />
             </td>
             <td>Pre-copy 2</td>
-            <td>Start: TIMESTAMP HERE</td>
-            <td>End: TIMESTAMP HERE</td>
-            <td>XYZ GB copied</td>
-            <td>Download log button?</td>
+            <td>Start: 09 Aug 2019 11:34:56</td>
+            <td>End: 09 Aug 2019 11:34:56</td>
+            <td>0 GB copied</td>
           </tr>
           <tr>
-            <td>
-              <Spinner loading />
+            <td className="precopy-status-icon">
+              <ListView.Icon type="pf" name="ok" size="md" />
             </td>
             <td>Pre-copy 1</td>
-            <td>Start: TIMESTAMP HERE</td>
-            <td>End: TIMESTAMP HERE</td>
-            <td>XYZ GB copied</td>
-            <td>Download log button?</td>
+            <td>Start: 09 Aug 2019 11:34:56</td>
+            <td>End: 09 Aug 2019 11:34:56</td>
+            <td>32 GB copied</td>
           </tr>
         </tbody>
       </table>

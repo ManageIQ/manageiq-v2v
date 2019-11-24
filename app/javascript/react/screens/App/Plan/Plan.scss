@@ -37,8 +37,17 @@
 
 table.warm-migration-precopies {
   width: 100%;
+  margin-top: 10px;
 
   td {
-    margin: 10px;
+    padding: 5px;
+
+    &.precopy-status-icon {
+      text-align: center;
+
+      .list-view-pf-icon-md {
+        font-size: 20px;
+      }
+    }
   }
 }
