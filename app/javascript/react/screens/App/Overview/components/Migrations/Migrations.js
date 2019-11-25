@@ -105,6 +105,12 @@ class Migrations extends React.Component {
         fake: 'last-failed',
         name: 'Warm migration test 3',
         description: ''
+      },
+      {
+        ...fakeWarmPlan,
+        fake: 'last-succeeded',
+        name: 'Warm migration test 4',
+        description: ''
       }
     ];
 

@@ -1,29 +1,5 @@
-// TODO remove card-specific styles
-
-.card-pf-multi-card-container {
-  background: transparent;
-  border: none;
-  box-shadow: none;
-  margin-bottom: 0;
-
-  .card-pf-heading h3 {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .card-pf-body > .message-text {
-    font-size: 16px;
-    margin-left: 5px;
-  }
-
-  .card-pf-title {
-    padding: 2px 0;
-  }
-}
-
 .migrations {
-  .active-migration-elapsed-time {
+  .info-with-inline-icon {
     display: flex;
     align-items: center;
 
@@ -39,7 +15,7 @@
     }
 
     .spinner-sm.spinner-inline {
-      margin: 0 10px 0 0;
+      margin: 0 5px 0 0;
     }
 
     .vm-progress-bar {
@@ -50,6 +26,26 @@
       .progress-description,
       .progress {
         margin-bottom: 5px;
+      }
+    }
+
+    .precopy-status-with-schedule {
+      display: flex;
+      width: 100%;
+      align-items: center;
+
+      > div {
+        flex-grow: 1;
+        text-align: left;
+
+        + div {
+          padding-left: 15px;
+        }
+      }
+
+      .edit-schedule {
+        font-size: 14px;
+        margin-left: 5px;
       }
     }
   }

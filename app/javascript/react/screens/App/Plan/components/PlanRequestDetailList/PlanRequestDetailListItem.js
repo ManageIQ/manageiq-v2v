@@ -1,6 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ListView, Spinner, Tooltip, UtilizationBar, DropdownButton, MenuItem } from 'patternfly-react';
+import {
+  ListView,
+  Spinner,
+  Tooltip,
+  UtilizationBar,
+  DropdownButton,
+  MenuItem,
+  OverlayTrigger,
+  Popover
+} from 'patternfly-react';
 import EllipsisWithTooltip from 'react-ellipsis-with-tooltip';
 import ListViewTable from '../../../common/ListViewTable/ListViewTable';
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
@@ -207,18 +216,30 @@ const PlanRequestDetailListItem = ({
                 <Spinner loading />
               </td>
               <td>Pre-copy 3</td>
-              <td>Start: October 9th 2019, 11:36 am</td>
+              <td>Start: November 26th 2019, 11:36 am</td>
               <td />
               <td>91 GB copied</td>
             </tr>
             <tr>
               <td className="precopy-status-icon">
-                <ListView.Icon type="pf" name="warning-triangle-o" size="md" />
-                {/* TODO popover with warning/status messages */}
+                <OverlayTrigger
+                  overlay={
+                    <Popover id="fake-warning">
+                      <div style={{ maxWidth: 400 }}>Pre-copy failed because (message here)</div>
+                    </Popover>
+                  }
+                  placement="top"
+                  trigger={['click']}
+                  delay={500}
+                  rootClose
+                  onClick={event => event.stopPropagation()}
+                >
+                  <ListView.Icon type="pf" name="warning-triangle-o" size="md" style={{ cursor: 'pointer' }} />
+                </OverlayTrigger>
               </td>
               <td>Pre-copy 2</td>
-              <td>Start: Start: October 9th 2019, 11:35 am</td>
-              <td>End: Start: October 9th 2019, 11:36 am</td>
+              <td>Start: November 26th 2019, 11:35 am</td>
+              <td>End: November 26th 2019, 11:36 am</td>
               <td>0 GB copied</td>
             </tr>
             <tr>
@@ -226,8 +247,8 @@ const PlanRequestDetailListItem = ({
                 <ListView.Icon type="pf" name="ok" size="md" />
               </td>
               <td>Pre-copy 1</td>
-              <td>Start: Start: October 9th 2019, 11:25 am</td>
-              <td>End: Start: October 9th 2019, 11:35 am</td>
+              <td>Start: November 26th 2019, 11:25 am</td>
+              <td>End: November 26th 2019, 11:35 am</td>
               <td>32 GB copied</td>
             </tr>
           </tbody>

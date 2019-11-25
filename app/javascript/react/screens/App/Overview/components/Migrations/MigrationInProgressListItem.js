@@ -50,10 +50,12 @@ const MigrationInProgressListItem = ({
 
   const isInitiating = reloadCard || !mostRecentRequest || mostRecentRequest.request_state === 'pending';
 
-  const showScheduleMigrationButton =
-    plan.options.config_info.warm_migration && !plan.options.config_info.warm_migration_cutover_datetime;
-  const showWarmMigrationKebab =
-    plan.options.config_info.warm_migration && plan.options.config_info.warm_migration_cutover_datetime;
+  const isWarmMigration = !!plan.options.config_info.warm_migration;
+  const isBeforeCutover = isWarmMigration && !!plan.fake; // TODO replace with real logic
+
+  const showScheduleMigrationButton = isWarmMigration && !plan.options.config_info.warm_migration_cutover_datetime;
+  const showWarmMigrationKebab = isWarmMigration && plan.options.config_info.warm_migration_cutover_datetime;
+  // TODO replace with real cutover_datetime property (on plan request)
 
   // Plan request state: initiating
   if (isInitiating) {
@@ -140,7 +142,7 @@ const MigrationInProgressListItem = ({
 
   // UX business rule: reflect failed immediately if any single task has failed
   // in the most recent request
-  const numFailedVms = countFailedVms(mostRecentRequest);
+  const numFailedVms = countFailedVms(mostRecentRequest); // TODO consider warm migration case, what changes for detecting failure?
 
   // UX business rule: aggregrate the tasks across requests reflecting current status of all tasks,
   // (gather the last status for the vm, gather the last storage for use in UX bussiness rule 3)
@@ -255,6 +257,67 @@ const MigrationInProgressListItem = ({
     );
   }
 
+  if (isWarmMigration && isBeforeCutover) {
+    // TODO replace these stubs with real logic
+    let precopyStatus = <div>TODO: status here</div>;
+    let cutoverSchedule = <div>TODO: schedule here</div>; // TODO null if no scheduled time
+
+    if (plan.fake === 'initial-with-schedule' || plan.fake === 'initial-unscheduled') {
+      precopyStatus = (
+        <div className="info-with-inline-icon">
+          <Spinner size="sm" inline loading />
+          <div>{__('Initial pre-copy in progress')}</div>
+        </div>
+      );
+    } else if (plan.fake === 'last-failed') {
+      precopyStatus = (
+        <div className="info-with-inline-icon">
+          <Icon type="pf" name="warning-triangle-o" />
+          <div>{__('Last pre-copy failed for one or more VMs')}</div>
+        </div>
+      );
+    } else if (plan.fake === 'last-succeeded') {
+      precopyStatus = (
+        <div className="info-with-inline-icon">
+          <Icon type="pf" name="ok" />
+          <div>{__('Last pre-copy succeeded')}</div>
+        </div>
+      );
+    }
+
+    if (plan.fake === 'initial-with-schedule' || plan.fake === 'last-succeeded') {
+      cutoverSchedule = (
+        <div>
+          {__('Scheduled for cutover:')}
+          <br />
+          {__('November 28th 2019, 2:00 am')}
+          <Icon className="edit-schedule" type="pf" name="edit" />
+        </div>
+      );
+    } else {
+      cutoverSchedule = null;
+    }
+
+    return (
+      <InProgressRow
+        {...baseRowProps}
+        additionalInfo={[
+          <ListViewTable.InfoItem key="migration-progress">
+            {cutoverSchedule ? (
+              <div className="precopy-status-with-schedule">
+                {precopyStatus}
+                {cutoverSchedule}
+              </div>
+            ) : (
+              precopyStatus
+            )}
+          </ListViewTable.InfoItem>
+        ]} // TODO handle real schedule action here
+        actions={!cutoverSchedule ? <Button onClick={() => alert('TODO')}>{__('Schedule Cutover')}</Button> : <div />}
+      />
+    );
+  }
+
   return (
     <InProgressRow
       {...baseRowProps}
@@ -279,7 +342,7 @@ const MigrationInProgressListItem = ({
                 <ProgressBarTooltip id={`used-vm-${plan.id}`} max={numTotalVms} now={numCompletedVms} />
               )}
             />
-            <div className="active-migration-elapsed-time">
+            <div className="info-with-inline-icon">
               <Icon type="fa" name="clock-o" />
               <TickingIsoElapsedTime startTime={mostRecentRequest.created_on} />
             </div>
