@@ -49,6 +49,7 @@ const PlanRequestDetailListItem = ({
   let leftContent;
   if (task.message === 'Pending') {
     leftContent = (
+      // TODO what's the deal with these width: inherit rules? maybe we can strip that out
       <ListView.Icon type="pf" name="p`ending" size="md" style={{ width: 'inherit', backgroundColor: 'transparent' }} />
     );
   } else if (taskCancelled && task.completed) {
@@ -114,7 +115,7 @@ const PlanRequestDetailListItem = ({
         isWarmMigration ? (
           <ListViewTable.InfoItem key={`${task.id}-num-precopies`}>3 {__('Pre-copies')}</ListViewTable.InfoItem>
         ) : null,
-        <ListViewTable.InfoItem key={`${task.id}-times`} style={{ minWidth: 150, paddingRight: 20 }}>
+        <ListViewTable.InfoItem key={`${task.id}-times`}>
           <UtilizationBar
             now={task.percentComplete}
             min={0}
