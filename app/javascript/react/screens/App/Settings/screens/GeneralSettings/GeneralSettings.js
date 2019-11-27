@@ -28,7 +28,10 @@ export class GeneralSettings extends React.Component {
     } = this.props;
     if (fieldChanging === 'max_concurrent_tasks_per_conversion_host' && newValue > max_concurrent_tasks_per_ems) {
       formChangeAction(FORM_NAME, 'max_concurrent_tasks_per_ems', newValue);
-    } else if (fieldChanging === 'max_concurrent_tasks_per_ems' && newValue < max_concurrent_tasks_per_conversion_host) {
+    } else if (
+      fieldChanging === 'max_concurrent_tasks_per_ems' &&
+      newValue < max_concurrent_tasks_per_conversion_host
+    ) {
       formChangeAction(FORM_NAME, 'max_concurrent_tasks_per_conversion_host', newValue);
     }
   };
