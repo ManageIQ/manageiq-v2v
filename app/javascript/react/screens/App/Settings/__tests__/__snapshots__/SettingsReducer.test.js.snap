@@ -588,7 +588,7 @@ Object {
   "savedSettings": Object {
     "cpu_limit_per_host": 10,
     "max_concurrent_tasks_per_ems": 10,
-    "max_concurrent_tasks_per_host": 10,
+    "max_concurrent_tasks_per_conversion_host": 10,
   },
   "savingSettingsRejected": false,
   "servers": Array [],
@@ -830,7 +830,7 @@ Object {
   "savedSettings": Object {
     "cpu_limit_per_host": 10,
     "max_concurrent_tasks_per_ems": 10,
-    "max_concurrent_tasks_per_host": 10,
+    "max_concurrent_tasks_per_conversion_host": 10,
   },
   "savingSettingsRejected": false,
   "servers": Array [],
