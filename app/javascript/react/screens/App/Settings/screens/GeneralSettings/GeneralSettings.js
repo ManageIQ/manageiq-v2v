@@ -22,14 +22,17 @@ export class GeneralSettings extends React.Component {
   enforceConstraintsOnChange = (event, newValue, prevValue, fieldChanging) => {
     const {
       settingsForm: {
-        values: { max_concurrent_tasks_per_host, max_concurrent_tasks_per_ems }
+        values: { max_concurrent_tasks_per_conversion_host, max_concurrent_tasks_per_ems }
       },
       formChangeAction
     } = this.props;
-    if (fieldChanging === 'max_concurrent_tasks_per_host' && newValue > max_concurrent_tasks_per_ems) {
+    if (fieldChanging === 'max_concurrent_tasks_per_conversion_host' && newValue > max_concurrent_tasks_per_ems) {
       formChangeAction(FORM_NAME, 'max_concurrent_tasks_per_ems', newValue);
-    } else if (fieldChanging === 'max_concurrent_tasks_per_ems' && newValue < max_concurrent_tasks_per_host) {
-      formChangeAction(FORM_NAME, 'max_concurrent_tasks_per_host', newValue);
+    } else if (
+      fieldChanging === 'max_concurrent_tasks_per_ems' &&
+      newValue < max_concurrent_tasks_per_conversion_host
+    ) {
+      formChangeAction(FORM_NAME, 'max_concurrent_tasks_per_conversion_host', newValue);
     }
   };
 
@@ -88,8 +91,8 @@ export class GeneralSettings extends React.Component {
               </Form.ControlLabel>
               <div style={{ width: 150 }}>
                 <Field
-                  id="max_concurrent_tasks_per_host"
-                  name="max_concurrent_tasks_per_host"
+                  id="max_concurrent_tasks_per_conversion_host"
+                  name="max_concurrent_tasks_per_conversion_host"
                   component={NumberInput}
                   normalize={NumberInput.normalizeStringToInt}
                   min={1}
