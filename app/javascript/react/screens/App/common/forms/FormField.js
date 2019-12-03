@@ -19,6 +19,7 @@ export const FormField = ({
   maxLength,
   maxLengthWarning,
   info,
+  infoIconName,
   children,
   inline_label,
   ...props
@@ -61,9 +62,9 @@ export const FormField = ({
         break;
       case 'radio':
         field = options.map(val => (
-          <div key={val.id}>
+          <div key={val.id} className={val.disabled ? 'text-muted' : ''}>
             <label htmlFor={input.name}>
-              <Field name={input.name} component="input" type="radio" value={val.id} />
+              <Field name={input.name} component="input" type="radio" value={val.id} disabled={val.disabled} />
               {` ${val.name}`}
             </label>
             <br />
@@ -89,7 +90,7 @@ export const FormField = ({
         }
       >
         <Button bsStyle="link">
-          <Icon type="pf" name="info" />
+          <Icon type="pf" name={infoIconName} />
         </Button>
       </OverlayTrigger>
     );
@@ -105,7 +106,8 @@ export const FormField = ({
         </Grid.Col>
       )}
       <Grid.Col sm={Number.parseInt(controlWidth, 10) || 9} id={input.name}>
-        {!inline_label && <h4>{label}</h4>}
+        {!inline_label && <div style={{ fontSize: '15px', display: 'inline' }}>{label}</div>}
+        {renderInfoPopover()}
         {renderField()}
         {(help || (touched && error) || warning) && (
           <Form.HelpBlock>
@@ -134,10 +136,12 @@ FormField.propTypes = {
   maxLength: PropTypes.number,
   maxLengthWarning: PropTypes.string,
   info: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  infoIconName: PropTypes.string,
   children: PropTypes.func,
   inline_label: PropTypes.bool
 };
 
 FormField.defaultProps = {
-  inline_label: true
+  inline_label: true,
+  infoIconName: 'info'
 };
