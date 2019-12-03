@@ -246,8 +246,8 @@ const MigrationsInProgressCard = ({
     }
   });
 
-  const totalDiskSpaceGb = numeral(totalDiskSpace).format('0.00b');
-  const totalMigratedDiskSpaceGb = numeral(totalMigratedDiskSpace).format('0.00b');
+  const totalDiskSpaceGb = numeral(totalDiskSpace).format('0.00 ib');
+  const totalMigratedDiskSpaceGb = numeral(totalMigratedDiskSpace).format('0.00 ib');
 
   // UX business rule: if all disks have been migrated and we have a post migration playbook running, show this instead
   if (totalMigratedDiskSpaceGb >= totalDiskSpaceGb && taskRunningPostMigrationPlaybook) {
