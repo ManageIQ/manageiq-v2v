@@ -25,26 +25,45 @@ export const MIGRATION_STATUS_MESSAGE_MAP = {
   AUTOMATION_STARTING: { apiString: 'Automation Starting', text: __('Automation Starting') },
   COLLAPSE_SNAPSHOTS: { apiString: 'Collapse Snapshots', text: __('Collapse Snapshots') },
   CONVERT_DISKS: { apiString: 'Convert disks', text: __('Convert disks') },
+  CONVERTING_DISKS: { apiString: 'Converting disks', text: __('Converting disks') },
   FAILED: { apiString: 'Failed', text: __('Failed') },
-  SOURCE_MIGRATED: { apiString: 'Mark source as migrated', text: __('Mark source as migrated') },
+  SOURCE_MIGRATED: { apiString: 'Mark source as migrated', text: __('Marking source as migrated') },
   MIGRATING: { apiString: 'Migrating', text: __('Migrating') },
   MIGRATION_COMPLETE: { apiString: 'Migration complete', text: __('Migration complete') },
   POST_MIGRATION: { apiString: 'Post-migration', text: __('Postmigration') },
   POWER_OFF: { apiString: 'Power off', text: __('Power off') },
   POWER_ON: { apiString: 'Power-on VM', text: __('Power-on VM') },
+  SHUTTING_DOWN_VM: { apiString: 'Shutting down virtual machine', text: __('Shutting down virtual machine') },
+  POWERING_ON_VM: { apiString: 'Power on virtual machine', text: __('Powering on virtual machine') },
   PRE_MIGRATION: { apiString: 'Pre-migration', text: __('Premigration') },
   PRE_TRANSFORM_VM: { apiString: 'Pre Transform VM', text: __('Premigrate VM') },
   REFRESH_INVENTORY: { apiString: 'Refresh inventory', text: __('Refresh inventory') },
-  RESTORE_VM_ATTRIBUTES: { apiString: 'Restore VM Attributes', text: __('Restore VM Attributes') },
+  RESTORE_VM_ATTRIBUTES: { apiString: 'Restore VM Attributes', text: __('Restoring VM Attributes') },
   RUN_PRE_MIGRATION_PLAYBOOK: { apiString: 'Run pre-migration playbook', text: __('Run premigration playbook') },
   RUN_POST_MIGRATION_PLAYBOOK: { apiString: 'Run post-migration playbook', text: __('Run postmigration playbook') },
+  RUNNING_PRE_MIGRATION_PLAYBOOK: {
+    apiString: 'Running pre-migration playbook',
+    text: __('Running premigration playbook')
+  },
+  RUNNING_POST_MIGRATION_PLAYBOOK: {
+    apiString: 'Running post-migration playbook',
+    text: __('Running postmigration playbook')
+  },
   TRANSFORM_VM: { apiString: 'Transform VM', text: __('Migrate VM') },
   UPDATE_DESCRIPTION: { apiString: 'Update description of VM', text: __('Update description of VM') },
   VALIDATING: { apiString: 'Validating', text: __('Validating') },
   VM_TRANSFORMATIONS_COMPLETED: { apiString: 'VM Transformations completed', text: __('VM migrations completed') },
   VM_MIGRATED: { apiString: 'Virtual machine migrated', text: __('Virtual machine migrated') },
   VM_TRANSFORMATIONS_FAILED: { apiString: 'VM Transformations failed', text: __('VM migrations failed') },
-  CANCELLED: { apiString: 'VM cancelled', text: __('VM cancelled') }
+  CANCELLED: { apiString: 'VM cancelled', text: __('VM cancelled') },
+  PRECOPYING: { apiString: 'Precopying disks', text: __('Precopying disks') },
+  WAITING_FOR_IP: { apiString: 'Waiting for VM IP address', text: __('Waiting for VM IP address') },
+  WAITING_FOR_INVENTORY_REFRESH: { apiString: 'Identify destination VM', text: __('Waiting for inventory refresh') },
+  APPLYING_RIGHT_SIZING: {
+    apiString: 'Apply Right-Sizing Recommendation',
+    text: __('Applying Right-Sizing Recommendation')
+  },
+  ABORTING_VIRTV2V: { apiString: 'Abort virt-v2v operation', text: __('Aborting virt-v2v operation') }
 };
 
 const STATUS_MESSAGES_BY_API_STRING = Object.keys(MIGRATION_STATUS_MESSAGE_MAP).reduce((messages, id) => {
