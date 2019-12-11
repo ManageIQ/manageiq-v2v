@@ -14,7 +14,7 @@ const mapStateToProps = (
   ...planWizardResultsStep,
   ...planWizard,
   ...ownProps.data,
-  targetProvider: getTargetProviderType({ form, overview }),
+  targetProvider: getTargetProviderType({ form, overview }), // TODO rename this prop to targetProviderType
   editingPlan: findEditingPlan(transformationPlans, editingPlanId)
 });
 

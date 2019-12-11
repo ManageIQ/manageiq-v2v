@@ -29,13 +29,15 @@ export const getWarmMigrationCompatibility = ({
   form: {
     planWizardGeneralStep: { values: generalStepValues },
     planWizardVMStep: { values: vmStepValues }
-  }
+  },
+  targetProviderType
 }) => {
   const vms = [...valid_vms, ...invalid_vms, ...conflict_vms].filter(vm => vmStepValues.selectedVms.includes(vm.id));
   const isEveryVmCompatible = vms.every(vm => vm.warm_migration_compatible);
 
   const selectedMapping = transformationMappings.find(map => map.id === generalStepValues.infrastructure_mapping);
   console.log('Selected mapping: ', selectedMapping);
+  console.log('Target provider type', targetProviderType);
 
   // Determine the provider type of the selected mapping (take value from index that uses getTargetProviderType from above)
   // Load required resources on VM step as part of discovery? or in the background with a spinner on the schedule step? maybe as soon as a selection is made in the general step (prefetch!)
