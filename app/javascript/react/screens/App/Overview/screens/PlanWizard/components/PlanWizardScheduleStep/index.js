@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 import PlanWizardScheduleStep from './PlanWizardScheduleStep';
-import { getCurrentTargetProvider, getWarmMigrationCompatibility } from '../../PlanWizardSelectors';
+import { getTargetProviderType, getWarmMigrationCompatibility } from '../../PlanWizardSelectors';
 
 const mapStateToProps = ({ planWizardVMStep, overview, form }) => ({
-  targetProvider: getCurrentTargetProvider(form, overview.transformationMappings),
+  targetProvider: getTargetProviderType({ form, overview }),
   migration_plan_choice_radio:
     form.planWizardScheduleStep &&
     form.planWizardScheduleStep.values &&

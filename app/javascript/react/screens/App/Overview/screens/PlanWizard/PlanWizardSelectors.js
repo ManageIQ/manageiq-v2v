@@ -17,7 +17,7 @@ export const planWizardFormFilter = form => ({
   planWizardScheduleStep: form.planWizardScheduleStep
 });
 
-export const getCurrentTargetProvider = (form, transformationMappings) => {
+export const getTargetProviderType = ({ form, overview: { transformationMappings } }) => {
   const mappingId = form.planWizardGeneralStep.values.infrastructure_mapping;
   const selectedMapping = transformationMappings.find(mapping => mapping.id === mappingId);
   return getMappingType(selectedMapping.transformation_mapping_items);
@@ -37,7 +37,7 @@ export const getWarmMigrationCompatibility = ({
   const selectedMapping = transformationMappings.find(map => map.id === generalStepValues.infrastructure_mapping);
   console.log('Selected mapping: ', selectedMapping);
 
-  // Determine the provider type of the selected mapping (we do this elsewhere in the wizard somewhere, right?)
+  // Determine the provider type of the selected mapping (take value from index that uses getTargetProviderType from above)
   // Load required resources on VM step as part of discovery? or in the background with a spinner on the schedule step? maybe as soon as a selection is made in the general step (prefetch!)
   // Figure out a list of the target clusters associated with the selected VMs
   // - Load all clusters of the type matching the selected mapping's target provider type (need to use targetResourcesReducer like ConversionHostWizardLocationStep does, use FETCH_TARGET_COMPUTE_URLS)
