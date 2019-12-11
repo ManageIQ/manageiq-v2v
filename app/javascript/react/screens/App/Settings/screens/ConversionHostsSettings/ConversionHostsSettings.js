@@ -6,6 +6,7 @@ import ConversionHostsList from './components/ConversionHostsList';
 import ConversionHostWizard from './components/ConversionHostWizard';
 import { FETCH_V2V_PROVIDERS_URL } from '../../../../../../redux/common/providers/providersConstants';
 import NoProvidersEmptyState from '../../../common/NoProvidersEmptyState';
+import { FETCH_CONVERSION_HOSTS_URL } from '../../SettingsConstants';
 
 class ConversionHostsSettings extends React.Component {
   pollingInterval = null;
@@ -178,7 +179,7 @@ ConversionHostsSettings.propTypes = {
 ConversionHostsSettings.defaultProps = {
   deleteConversionHostActionUrl: '/api/conversion_hosts',
   fetchProvidersUrl: FETCH_V2V_PROVIDERS_URL,
-  fetchConversionHostsUrl: '/api/conversion_hosts?attributes=resource&expand=resources',
+  fetchConversionHostsUrl: FETCH_CONVERSION_HOSTS_URL,
   fetchConversionHostTasksUrl:
     '/api/tasks?expand=resources&attributes=id,name,state,status,message,started_on,updated_on,pct_complete,context_data&filter[]=name="%25Configuring a conversion_host%25"&sort_by=updated_on&sort_order=descending',
   postConversionHostsUrl: '/api/conversion_hosts'

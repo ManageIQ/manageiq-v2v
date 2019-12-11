@@ -9,7 +9,7 @@ describe('Plan wizard schedule step', () => {
         targetProvider="openstack"
         migration_plan_type_radio="migration_type_cold"
         migration_plan_choice_radio="migration_plan_now"
-        enableWarmMigration
+        shouldEnableWarmMigration
       />
     );
     expect(component).toMatchSnapshot();
@@ -21,7 +21,7 @@ describe('Plan wizard schedule step', () => {
         targetProvider="openstack"
         migration_plan_type_radio="migration_type_cold"
         migration_plan_choice_radio="migration_plan_later"
-        enableWarmMigration
+        shouldEnableWarmMigration
       />
     );
     expect(component).toMatchSnapshot();
@@ -32,7 +32,7 @@ describe('Plan wizard schedule step', () => {
       <PlanWizardScheduleStep
         targetProvider="openstack"
         migration_plan_type_radio="migration_type_warm"
-        enableWarmMigration
+        shouldEnableWarmMigration
       />
     );
     expect(component).toMatchSnapshot();
@@ -43,7 +43,7 @@ describe('Plan wizard schedule step', () => {
       <PlanWizardScheduleStep
         targetProvider="openstack"
         migration_plan_type_radio="migration_type_cold"
-        enableWarmMigration={false}
+        shouldEnableWarmMigration={false}
       />
     );
     expect(component).toMatchSnapshot();
