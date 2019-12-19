@@ -69,3 +69,5 @@ const _queryPreselectedVmsActionCreator = ids => dispatch => {
 };
 
 export const queryPreselectedVmsAction = ids => _queryPreselectedVmsActionCreator(ids);
+
+export { fetchTargetValidationDataAction } from '../../PlanWizardActions';

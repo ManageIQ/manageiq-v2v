@@ -9,6 +9,10 @@ import {
 } from './PlanWizardConstants';
 import { RESET_V2V_ADVANCED_OPTIONS_STEP_VMS } from './components/PlanWizardAdvancedOptionsStep/PlanWizardAdvancedOptionsStepConstants';
 import { V2V_VM_STEP_RESET } from './components/PlanWizardVMStep/PlanWizardVMStepConstants';
+import { FETCH_TARGET_COMPUTE_URLS } from '../../../../../../redux/common/targetResources/targetResourcesConstants';
+import { fetchTargetClustersAction } from '../../../../../../redux/common/targetResources/targetResourcesActions';
+import { FETCH_CONVERSION_HOSTS_URL } from '../../../Settings/SettingsConstants';
+import { fetchConversionHostsAction } from '../../../Settings/SettingsActions';
 
 export const hidePlanWizardAction = () => dispatch => {
   dispatch({
@@ -94,4 +98,9 @@ export const resetAdvancedOptionsStepAction = () => dispatch => {
     type: RESET_V2V_ADVANCED_OPTIONS_STEP_VMS
   });
   dispatch(reset('planWizardAdvancedOptionsStep'));
+};
+
+export const fetchTargetValidationDataAction = targetProviderType => dispatch => {
+  fetchTargetClustersAction(FETCH_TARGET_COMPUTE_URLS[targetProviderType])(dispatch);
+  fetchConversionHostsAction(FETCH_CONVERSION_HOSTS_URL)(dispatch);
 };

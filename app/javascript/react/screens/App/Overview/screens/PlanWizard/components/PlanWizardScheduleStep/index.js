@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import PlanWizardScheduleStep from './PlanWizardScheduleStep';
 import { getTargetProviderType, getWarmMigrationCompatibility } from '../../PlanWizardSelectors';
 
-const mapStateToProps = ({ planWizardVMStep, overview, form }) => {
+const mapStateToProps = ({ planWizardVMStep, overview, form, targetResources, settings }) => {
   const targetProviderType = getTargetProviderType({ form, overview });
   return {
     targetProvider: targetProviderType, // TODO rename this prop to targetProviderType
@@ -18,7 +18,14 @@ const mapStateToProps = ({ planWizardVMStep, overview, form }) => {
       migration_plan_choice_radio: 'migration_plan_later',
       migration_plan_type_radio: 'migration_type_cold'
     },
-    ...getWarmMigrationCompatibility({ planWizardVMStep, overview, form, targetProviderType })
+    ...getWarmMigrationCompatibility({
+      planWizardVMStep,
+      overview,
+      form,
+      targetResources,
+      settings,
+      targetProviderType
+    })
   };
 };
 
