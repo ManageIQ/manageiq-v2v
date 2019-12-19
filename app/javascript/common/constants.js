@@ -39,3 +39,22 @@ export const CONVERSION_HOST_TYPES = {
   [RHV]: 'ManageIQ::Providers::Redhat::InfraManager::Host',
   [OPENSTACK]: 'ManageIQ::Providers::Openstack::CloudManager::Vm'
 };
+
+export const TRANSFORMATION_MAPPING_ITEM_SOURCE_TYPES = {
+  cluster: 'EmsCluster',
+  datastore: 'Storage',
+  network: 'Lan'
+};
+
+export const TRANSFORMATION_MAPPING_ITEM_DESTINATION_TYPES = {
+  [OPENSTACK]: {
+    cluster: 'CloudTenant',
+    datastore: 'CloudVolumeType',
+    network: 'CloudNetwork'
+  },
+  [RHV]: {
+    cluster: 'EmsCluster',
+    datastore: 'Storage',
+    network: 'Lan'
+  }
+};
