@@ -18,55 +18,69 @@ export const planWizardFormFilter = form => ({
   planWizardScheduleStep: form.planWizardScheduleStep
 });
 
-export const getTargetProviderType = ({ form, overview: { transformationMappings } }) => {
-  const mappingId =
-    form.planWizardGeneralStep &&
-    form.planWizardGeneralStep.values &&
-    form.planWizardGeneralStep.values.infrastructure_mapping;
-  const selectedMapping = transformationMappings.find(mapping => mapping.id === mappingId);
-  return selectedMapping && getMappingType(selectedMapping.transformation_mapping_items);
+const getSelectedMapping = ({
+  overview: { transformationMappings },
+  form: {
+    planWizardGeneralStep: {
+      values: { infrastructure_mapping: selectedMappingId }
+    }
+  }
+}) => transformationMappings.find(map => map.id === selectedMappingId);
+
+export const getTargetProviderType = ({ overview, form, selectedMapping = getSelectedMapping({ overview, form }) }) =>
+  getMappingType(selectedMapping.transformation_mapping_items);
+
+const getSelectedVms = ({
+  planWizardVMStep: { valid_vms, invalid_vms, conflict_vms },
+  form: {
+    planWizardVMStep: { values: vmStepValues }
+  }
+}) => [...valid_vms, ...invalid_vms, ...conflict_vms].filter(vm => vmStepValues.selectedVms.includes(vm.id));
+
+const getTargetClustersInPlan = ({
+  form,
+  overview,
+  planWizardVMStep,
+  targetResources: { targetClusters },
+  vms = getSelectedVms({ planWizardVMStep, form })
+}) => {
+  const selectedMapping = getSelectedMapping({ overview, form });
+  const targetProviderType = getTargetProviderType({ overview, form, selectedMapping });
+  const targetClusterType = TRANSFORMATION_MAPPING_ITEM_DESTINATION_TYPES[targetProviderType].cluster;
+  const vmSourceClusterIds = vms.map(vm => vm.ems_cluster_id);
+  return selectedMapping.transformation_mapping_items
+    .filter(mappingItem => mappingItem.destination_type === targetClusterType) // Only include clusters of the target type
+    .filter(mappingItem => vmSourceClusterIds.includes(mappingItem.source_id)) // Only include clusters targeted by the selected VMs
+    .map(mappingItem => targetClusters.find(cluster => cluster.id === mappingItem.destination_id));
 };
 
 export const getWarmMigrationCompatibility = ({
-  planWizardVMStep: { valid_vms, invalid_vms, conflict_vms },
-  overview: { transformationMappings },
-  form: {
-    planWizardGeneralStep: { values: generalStepValues },
-    planWizardVMStep: { values: vmStepValues }
-  },
-  targetResources: { isFetchingTargetClusters, targetClusters },
-  settings: { isFetchingConversionHosts, conversionHosts },
-  targetProviderType
+  planWizardVMStep,
+  form,
+  overview,
+  targetResources,
+  settings,
+  settings: { conversionHosts }
 }) => {
-  if (isFetchingTargetClusters || isFetchingConversionHosts) {
+  if (targetResources.isFetchingTargetClusters || settings.isFetchingConversionHosts) {
     return { isFetchingTargetValidationData: true, shouldEnableWarmMigration: false };
   }
 
-  const vms = [...valid_vms, ...invalid_vms, ...conflict_vms].filter(vm => vmStepValues.selectedVms.includes(vm.id));
-  const isEveryVmCompatible = vms.every(vm => vm.warm_migration_compatible);
-
-  const selectedMapping = transformationMappings.find(map => map.id === generalStepValues.infrastructure_mapping);
-  const targetClusterType = TRANSFORMATION_MAPPING_ITEM_DESTINATION_TYPES[targetProviderType].cluster;
-  const targetClustersInSelectedMapping = selectedMapping.transformation_mapping_items
-    .filter(mappingItem => mappingItem.destination_type === targetClusterType)
-    .map(mappingItem => targetClusters.find(cluster => cluster.id === mappingItem.destination_id));
+  const vms = getSelectedVms({ planWizardVMStep, form });
+  const targetClustersInPlan = getTargetClustersInPlan({ form, overview, planWizardVMStep, targetResources, vms });
 
   console.log('warm migration compat?', {
-    selectedMapping,
-    targetProviderType,
-    targetClusters,
     conversionHosts,
-    targetClustersInSelectedMapping,
+    targetClustersInPlan,
     vms
   });
 
-  // * Figure out a list of the target clusters associated with the selected VMs
-  //   - For each mapping item of the corresponding destination_type (EmsCluster or CloudTenant) find the matching cluster by destination_id (use TRANSFORMATION_MAPPING_ITEM_DESTINATION_TYPES)
-  //   - Filter by associated VM? how does this work? <----- ???
   // * For every cluster (.every()):
   //   - Figure out the EMS id of each target cluster (use ems_id of the loaded cluster object)
   //   - Find conversion hosts whose resource have that EMS id
   //   - Check that there is at least one configured for VDDK
+
+  const isEveryVmCompatible = vms.every(vm => vm.warm_migration_compatible);
 
   const shouldEnableWarmMigration = isEveryVmCompatible; // TODO && ...
   return { isFetchingTargetValidationData: false, isEveryVmCompatible, shouldEnableWarmMigration };
