@@ -1,5 +1,5 @@
 import { getMappingType } from '../../../Mappings/components/InfrastructureMappingsList/helpers';
-import { TRANSFORMATION_MAPPING_ITEM_DESTINATION_TYPES } from '../../../../../../common/constants';
+import { TRANSFORMATION_MAPPING_ITEM_DESTINATION_TYPES, RHV, OPENSTACK } from '../../../../../../common/constants';
 
 export const findEditingPlan = (transformationPlans, editingPlanId) =>
   editingPlanId && transformationPlans.find(plan => plan.id === editingPlanId);
@@ -42,10 +42,10 @@ const getTargetClustersInPlan = ({
   overview,
   planWizardVMStep,
   targetResources: { targetClusters },
+  selectedMapping = getSelectedMapping({ overview, form }),
+  targetProviderType = getTargetProviderType({ overview, form, selectedMapping }),
   vms = getSelectedVms({ planWizardVMStep, form })
 }) => {
-  const selectedMapping = getSelectedMapping({ overview, form });
-  const targetProviderType = getTargetProviderType({ overview, form, selectedMapping });
   const targetClusterType = TRANSFORMATION_MAPPING_ITEM_DESTINATION_TYPES[targetProviderType].cluster;
   const vmSourceClusterIds = vms.map(vm => vm.ems_cluster_id);
   return selectedMapping.transformation_mapping_items
@@ -54,34 +54,50 @@ const getTargetClustersInPlan = ({
     .map(mappingItem => targetClusters.find(cluster => cluster.id === mappingItem.destination_id));
 };
 
+const getAvailableConversionHostsForCluster = ({ settings: { conversionHosts }, targetProviderType, targetCluster }) =>
+  conversionHosts.filter(({ resource }) => {
+    // For RHV, we need a conversion host in each target cluster, but for OSP we only need one in each target EMS.
+    if (targetProviderType === RHV) return resource.ems_cluster_id === targetCluster.id;
+    if (targetProviderType === OPENSTACK) return resource.ems_id === targetCluster.ems_id;
+    return false;
+  });
+
 export const getWarmMigrationCompatibility = ({
   planWizardVMStep,
   form,
   overview,
   targetResources,
   settings,
-  settings: { conversionHosts }
+  selectedMapping = getSelectedMapping({ overview, form }),
+  targetProviderType = getTargetProviderType({ overview, form, selectedMapping })
 }) => {
   if (targetResources.isFetchingTargetClusters || settings.isFetchingConversionHosts) {
     return { isFetchingTargetValidationData: true, shouldEnableWarmMigration: false };
   }
 
   const vms = getSelectedVms({ planWizardVMStep, form });
-  const targetClustersInPlan = getTargetClustersInPlan({ form, overview, planWizardVMStep, targetResources, vms });
-
-  console.log('warm migration compat?', {
-    conversionHosts,
-    targetClustersInPlan,
+  const targetClustersInPlan = getTargetClustersInPlan({
+    form,
+    overview,
+    planWizardVMStep,
+    targetResources,
+    selectedMapping,
+    targetProviderType,
     vms
   });
 
-  // * For every cluster (.every()):
-  //   - Figure out the EMS id of each target cluster (use ems_id of the loaded cluster object)
-  //   - Find conversion hosts whose resource have that EMS id
-  //   - Check that there is at least one configured for VDDK
-
   const isEveryVmCompatible = vms.every(vm => vm.warm_migration_compatible);
+  const areConversionHostsConfigured = targetClustersInPlan.every(targetCluster =>
+    getAvailableConversionHostsForCluster({ settings, targetProviderType, targetCluster }).some(
+      conversionHost => conversionHost.vddk_transport_supported
+    )
+  );
+  const shouldEnableWarmMigration = isEveryVmCompatible && areConversionHostsConfigured;
 
-  const shouldEnableWarmMigration = isEveryVmCompatible; // TODO && ...
-  return { isFetchingTargetValidationData: false, isEveryVmCompatible, shouldEnableWarmMigration };
+  return {
+    isFetchingTargetValidationData: false,
+    isEveryVmCompatible,
+    areConversionHostsConfigured,
+    shouldEnableWarmMigration
+  };
 };

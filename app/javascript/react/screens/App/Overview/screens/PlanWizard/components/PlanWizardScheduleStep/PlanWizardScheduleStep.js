@@ -8,8 +8,12 @@ export const PlanWizardScheduleStep = ({
   targetProvider,
   migration_plan_type_radio,
   migration_plan_choice_radio,
-  isFetchingTargetValidationData,
-  shouldEnableWarmMigration
+  warmMigrationCompatibility: {
+    isFetchingTargetValidationData,
+    isEveryVmCompatible,
+    areConversionHostsConfigured,
+    shouldEnableWarmMigration
+  }
 }) => (
   <Spinner size="lg" loading={isFetchingTargetValidationData}>
     <Form className="form-vertical">
@@ -22,6 +26,7 @@ export const PlanWizardScheduleStep = ({
         controlWidth={12}
         info={
           // TODO make this message a toast, and introduce a second one for the case where VDDK conversion hosts are missing (see Vince's email for that messaging).
+          console.log({ isEveryVmCompatible, areConversionHostsConfigured, shouldEnableWarmMigration }) ||
           shouldEnableWarmMigration
             ? null
             : __("Warm migration is not possible because one or more selected VMs has disks that can't be pre-copied.")
@@ -84,8 +89,12 @@ PlanWizardScheduleStep.propTypes = {
   targetProvider: PropTypes.string,
   migration_plan_type_radio: PropTypes.string,
   migration_plan_choice_radio: PropTypes.string,
-  isFetchingTargetValidationData: PropTypes.bool,
-  shouldEnableWarmMigration: PropTypes.bool
+  warmMigrationCompatibility: PropTypes.shape({
+    isFetchingTargetValidationData: PropTypes.bool,
+    isEveryVmCompatible: PropTypes.bool,
+    areConversionHostsConfigured: PropTypes.bool,
+    shouldEnableWarmMigration: PropTypes.bool
+  })
 };
 
 export default reduxForm({

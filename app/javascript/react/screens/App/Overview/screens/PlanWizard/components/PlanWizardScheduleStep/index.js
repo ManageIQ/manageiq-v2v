@@ -18,10 +18,10 @@ const mapStateToProps = ({ planWizardVMStep, overview, form, targetResources, se
       migration_plan_choice_radio: 'migration_plan_later',
       migration_plan_type_radio: 'migration_type_cold'
     },
-    ...getWarmMigrationCompatibility({
+    warmMigrationCompatibility: getWarmMigrationCompatibility({
       planWizardVMStep,
-      overview,
       form,
+      overview,
       targetResources,
       settings,
       targetProviderType
