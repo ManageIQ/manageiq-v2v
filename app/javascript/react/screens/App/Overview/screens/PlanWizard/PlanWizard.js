@@ -122,7 +122,7 @@ class PlanWizard extends React.Component {
 
     if (activeStep.id === stepIDs.generalStep) {
       if (planWizardGeneralStep.asyncErrors) {
-        showAlertAction(sprintf(__('Name %s already exists'), planWizardGeneralStep.values.name));
+        showAlertAction({ alertText: sprintf(__('Name %s already exists'), planWizardGeneralStep.values.name) });
         return;
       }
       hideAlertAction();
@@ -204,8 +204,7 @@ class PlanWizard extends React.Component {
       hidePlanWizard,
       hidePlanWizardAction,
       planWizardExitedAction,
-      alertText,
-      alertType,
+      alerts,
       hideAlertAction,
       editingPlan
     } = this.props;
@@ -246,8 +245,7 @@ class PlanWizard extends React.Component {
             goToStep={this.goToStep}
             disableNextStep={disableNextStep}
             plansBody={plansBody}
-            alertText={alertText}
-            alertType={alertType}
+            alerts={alerts}
             hideAlertAction={hideAlertAction}
           />
         </Wizard.Body>
@@ -296,8 +294,7 @@ PlanWizard.propTypes = {
   hideConfirmModalAction: PropTypes.func,
   showAlertAction: PropTypes.func,
   hideAlertAction: PropTypes.func,
-  alertText: PropTypes.string,
-  alertType: PropTypes.string,
+  alerts: PropTypes.objectOf(PropTypes.shape({ alertText: PropTypes.string, alertType: PropTypes.string })),
   setMetadataWithBackButtonClickedAction: PropTypes.func,
   setMetadataWithNextButtonClickedAction: PropTypes.func,
   editingPlan: PropTypes.object
@@ -318,7 +315,6 @@ PlanWizard.defaultProps = {
   resetVmStepAction: noop,
   showAlertAction: noop,
   hideAlertAction: noop,
-  alertText: undefined,
-  alertType: undefined
+  alerts: {}
 };
 export default PlanWizard;

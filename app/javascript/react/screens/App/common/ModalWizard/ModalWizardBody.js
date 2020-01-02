@@ -51,7 +51,9 @@ class ModalWizardBody extends React.Component {
   };
 
   render() {
-    const { loaded, steps, activeStepIndex, alertText, alertType, hideAlertAction, stepButtonsDisabled } = this.props;
+    // TODO go and actually test multiple alerts
+    // TODO look at other TODOs
+    const { loaded, steps, activeStepIndex, alerts, hideAlertAction, stepButtonsDisabled } = this.props;
     const step = steps[activeStepIndex];
 
     if (!loaded) {
@@ -60,16 +62,19 @@ class ModalWizardBody extends React.Component {
 
     const renderedStep = step && step.render && step.render(activeStepIndex, step.title);
 
+    // TODO maybe we need to make the left-sliding work differently or something, maybe put that on the container
     const alertClasses = cx('modal-wizard-alert--alert', {
-      'is-visible': alertText
+      'is-visible': true // TODO
     });
 
     return (
       <React.Fragment>
         <div className="modal-wizard-alert">
-          <Alert className={alertClasses} type={alertType} onDismiss={hideAlertAction}>
-            {alertText}
-          </Alert>
+          {Object.values(alerts).map(({ alertText, alertType, alertId }) => (
+            <Alert key={alertId} className={alertClasses} type={alertType} onDismiss={() => hideAlertAction(alertId)}>
+              {alertText}
+            </Alert>
+          ))}
         </div>
         <Wizard.Steps
           className={cx({ 'step-buttons-disabled': stepButtonsDisabled })}
@@ -113,8 +118,7 @@ ModalWizardBody.propTypes = {
   goToStep: PropTypes.func,
   stepButtonsDisabled: PropTypes.bool,
   disableNextStep: PropTypes.bool,
-  alertText: PropTypes.string,
-  alertType: PropTypes.string,
+  alerts: PropTypes.objectOf(PropTypes.shape({ alertText: PropTypes.string, alertType: PropTypes.string })),
   hideAlertAction: PropTypes.func
 };
 
@@ -129,6 +133,7 @@ ModalWizardBody.defaultProps = {
   goToStep: noop,
   stepButtonsDisabled: false,
   disableNextStep: true,
+  alerts: {},
   hideAlertAction: noop
 };
 

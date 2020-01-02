@@ -7,6 +7,8 @@ export const V2V_SET_PLAN_TYPE = 'V2V_SET_PLAN_TYPE';
 export const V2V_PLAN_WIZARD_SHOW_ALERT = 'V2V_PLAN_WIZARD_SHOW_ALERT';
 export const V2V_PLAN_WIZARD_HIDE_ALERT = 'V2V_PLAN_WIZARD_HIDE_ALERT';
 
+export const SINGLETON_ALERT_ID = 'SINGLETON_ALERT';
+
 export const stepIDs = {
   generalStep: 'planWizardGeneralStep',
   vmStep: 'planWizardVMStep',

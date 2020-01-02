@@ -1,23 +1,22 @@
-.modal-wizard-alert {
+.wizard-pf.modal-dialog .modal-wizard-alert {
   position: absolute;
-  height: 120px;
+  height: 100%;
   width: 100%;
   overflow: hidden;
-}
 
-.modal-wizard-alert .modal-wizard-alert--alert {
-  position: absolute;
-  bottom: 0px;
-  width: calc(100% - 40px);
-  left: -1000px;
-  transition: left 0.2s ease-in;
-  z-index: 1;
-  margin-bottom: 0;
-  margin-left: 20px;
-}
+  .modal-wizard-alert--alert {
+    width: calc(100% - 40px);
+    left: -1000px;
+    transition: left 0.2s ease-in;
+    z-index: 1;
+    margin-bottom: 0;
+    margin-left: 20px;
+    margin-top: 10px;
+  }
 
-.modal-wizard-alert .modal-wizard-alert--alert.is-visible {
-  left: 1px;
+  .modal-wizard-alert--alert.is-visible {
+    left: 1px;
+  }
 }
 
 .modal-wizard-results-grey-icon {

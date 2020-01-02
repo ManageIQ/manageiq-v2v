@@ -25,6 +25,7 @@ export const PlanWizardScheduleStep = ({
         inline_label={false}
         controlWidth={12}
         info={
+          // vvvvvvvv
           // TODO make this message a toast, and introduce a second one for the case where VDDK conversion hosts are missing (see Vince's email for that messaging).
           console.log({ isEveryVmCompatible, areConversionHostsConfigured, shouldEnableWarmMigration }) ||
           shouldEnableWarmMigration

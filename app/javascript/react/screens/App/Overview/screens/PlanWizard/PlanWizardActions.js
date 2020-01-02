@@ -5,7 +5,8 @@ import {
   V2V_SET_PLAN_SCHEDULE,
   V2V_SET_PLAN_TYPE,
   V2V_PLAN_WIZARD_SHOW_ALERT,
-  V2V_PLAN_WIZARD_HIDE_ALERT
+  V2V_PLAN_WIZARD_HIDE_ALERT,
+  SINGLETON_ALERT_ID
 } from './PlanWizardConstants';
 import { RESET_V2V_ADVANCED_OPTIONS_STEP_VMS } from './components/PlanWizardAdvancedOptionsStep/PlanWizardAdvancedOptionsStepConstants';
 import { V2V_VM_STEP_RESET } from './components/PlanWizardVMStep/PlanWizardVMStepConstants';
@@ -80,16 +81,17 @@ export const resetVmStepAction = () => dispatch => {
   dispatch(reset('planWizardVMStep'));
 };
 
-export const showAlertAction = (alertText, alertType = 'error') => dispatch => {
+export const showAlertAction = ({ alertText, alertType = 'error', alertId = SINGLETON_ALERT_ID }) => dispatch => {
   dispatch({
     type: V2V_PLAN_WIZARD_SHOW_ALERT,
-    payload: { alertText, alertType }
+    payload: { alertText, alertType, alertId }
   });
 };
 
-export const hideAlertAction = () => dispatch => {
+export const hideAlertAction = (alertId = null) => dispatch => {
   dispatch({
-    type: V2V_PLAN_WIZARD_HIDE_ALERT
+    type: V2V_PLAN_WIZARD_HIDE_ALERT,
+    alertId
   });
 };
 

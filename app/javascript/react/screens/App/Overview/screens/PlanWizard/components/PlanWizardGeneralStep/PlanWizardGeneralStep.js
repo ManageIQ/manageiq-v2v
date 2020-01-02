@@ -32,12 +32,13 @@ const PlanWizardGeneralStep = ({
       controlWidth={9}
       onChange={event => {
         if (editingPlan && (editingOrphanedPlan || event.target.value !== editingPlan.transformation_mapping.id)) {
-          showAlertAction(
-            __('Selecting a different infrastructure mapping will cause all VM and option selections to be cleared.'),
-            'warning'
-          );
+          showAlertAction({
+            alertText: __('Selecting a different infrastructure mapping will cause all VM and option selections to be cleared.'), // prettier-ignore
+            alertType: 'warning',
+            alertId: 'mapping-changed-when-editing'
+          });
         } else {
-          hideAlertAction();
+          hideAlertAction('mapping-changed-when-editing');
         }
       }}
     />
