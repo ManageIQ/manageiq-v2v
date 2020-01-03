@@ -51,7 +51,6 @@ class ModalWizardBody extends React.Component {
   };
 
   render() {
-    // TODO go and actually test multiple alerts
     // TODO look at other TODOs
     const { loaded, steps, activeStepIndex, alerts, hideAlertAction, stepButtonsDisabled } = this.props;
     const step = steps[activeStepIndex];
@@ -62,16 +61,16 @@ class ModalWizardBody extends React.Component {
 
     const renderedStep = step && step.render && step.render(activeStepIndex, step.title);
 
-    // TODO maybe we need to make the left-sliding work differently or something, maybe put that on the container
-    const alertClasses = cx('modal-wizard-alert--alert', {
-      'is-visible': true // TODO
-    });
-
     return (
       <React.Fragment>
         <div className="modal-wizard-alert">
           {Object.values(alerts).map(({ alertText, alertType, alertId }) => (
-            <Alert key={alertId} className={alertClasses} type={alertType} onDismiss={() => hideAlertAction(alertId)}>
+            <Alert
+              key={alertId}
+              className="modal-wizard-alert--alert is-visible"
+              type={alertType}
+              onDismiss={() => hideAlertAction(alertId)}
+            >
               {alertText}
             </Alert>
           ))}
