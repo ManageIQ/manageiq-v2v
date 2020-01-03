@@ -51,7 +51,6 @@ class ModalWizardBody extends React.Component {
   };
 
   render() {
-    // TODO look at other TODOs
     const { loaded, steps, activeStepIndex, alerts, hideAlertAction, stepButtonsDisabled } = this.props;
     const step = steps[activeStepIndex];
 
@@ -117,7 +116,7 @@ ModalWizardBody.propTypes = {
   goToStep: PropTypes.func,
   stepButtonsDisabled: PropTypes.bool,
   disableNextStep: PropTypes.bool,
-  alerts: PropTypes.objectOf(PropTypes.shape({ alertText: PropTypes.string, alertType: PropTypes.string })),
+  alerts: PropTypes.objectOf(PropTypes.shape({ alertText: PropTypes.node, alertType: PropTypes.string })),
   hideAlertAction: PropTypes.func
 };
 

@@ -294,7 +294,7 @@ PlanWizard.propTypes = {
   hideConfirmModalAction: PropTypes.func,
   showAlertAction: PropTypes.func,
   hideAlertAction: PropTypes.func,
-  alerts: PropTypes.objectOf(PropTypes.shape({ alertText: PropTypes.string, alertType: PropTypes.string })),
+  alerts: PropTypes.objectOf(PropTypes.shape({ alertText: PropTypes.node, alertType: PropTypes.string })),
   setMetadataWithBackButtonClickedAction: PropTypes.func,
   setMetadataWithNextButtonClickedAction: PropTypes.func,
   editingPlan: PropTypes.object

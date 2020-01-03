@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import PlanWizardScheduleStep from './PlanWizardScheduleStep';
 import { getTargetProviderType, getWarmMigrationCompatibility } from '../../PlanWizardSelectors';
+import { showAlertAction, hideAlertAction } from '../../PlanWizardActions';
 
 const mapStateToProps = ({ planWizardVMStep, overview, form, targetResources, settings }) => {
   const targetProviderType = getTargetProviderType({ form, overview });
@@ -29,4 +30,4 @@ const mapStateToProps = ({ planWizardVMStep, overview, form, targetResources, se
   };
 };
 
-export default connect(mapStateToProps)(PlanWizardScheduleStep);
+export default connect(mapStateToProps, { showAlertAction, hideAlertAction })(PlanWizardScheduleStep);

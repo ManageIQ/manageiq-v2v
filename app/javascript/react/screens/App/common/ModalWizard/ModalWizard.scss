@@ -9,9 +9,9 @@
 
 .wizard-pf.modal-dialog .modal-wizard-alert {
   position: absolute;
-  height: 100%;
   width: 100%;
-  overflow: hidden;
+  height: 0px;
+  overflow: visible;
 
   .modal-wizard-alert--alert {
     width: calc(100% - 40px);
