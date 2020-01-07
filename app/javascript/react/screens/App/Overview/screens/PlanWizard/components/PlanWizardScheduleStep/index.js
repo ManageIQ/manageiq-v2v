@@ -30,4 +30,7 @@ const mapStateToProps = ({ planWizardVMStep, overview, form, targetResources, se
   };
 };
 
-export default connect(mapStateToProps, { showAlertAction, hideAlertAction })(PlanWizardScheduleStep);
+export default connect(
+  mapStateToProps,
+  { showAlertAction, hideAlertAction }
+)(PlanWizardScheduleStep);

@@ -186,10 +186,10 @@ class MappingWizard extends React.Component {
             {onFinalStep
               ? __('Close')
               : activeStepIndex === 3
-              ? editingMapping
-                ? __('Save')
-                : __('Create')
-              : __('Next')}
+                ? editingMapping
+                  ? __('Save')
+                  : __('Create')
+                : __('Next')}
             {!onFinalStep && <Icon type="fa" name="angle-right" />}
           </Button>
         </Wizard.Footer>

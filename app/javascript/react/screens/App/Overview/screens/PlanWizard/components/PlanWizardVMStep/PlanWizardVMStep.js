@@ -24,16 +24,10 @@ export class PlanWizardVMStep extends React.Component {
       this.validateVms([], null, { combineRequests: !!shouldPrefillForEditing });
       if (shouldPrefillForEditing) {
         const vmIds = getVmIds(editingPlan);
-        queryPreselectedVmsAction(vmIds).then(
-          ({
-            value: {
-              data: { results }
-            }
-          }) => {
-            const vmNames = results.map(result => ({ name: result.name }));
-            this.validateVms(vmNames, editingPlan.id, { combineRequests: true });
-          }
-        );
+        queryPreselectedVmsAction(vmIds).then(({ value: { data: { results } } }) => {
+          const vmNames = results.map(result => ({ name: result.name }));
+          this.validateVms(vmNames, editingPlan.id, { combineRequests: true });
+        });
       }
     }
     fetchTargetValidationDataAction(targetProviderType);

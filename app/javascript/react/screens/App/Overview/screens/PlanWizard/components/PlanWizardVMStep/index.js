@@ -26,4 +26,7 @@ const mapStateToProps = ({ planWizardVMStep, form, overview }, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps, PlanWizardVMStepActions)(PlanWizardVMStep);
+export default connect(
+  mapStateToProps,
+  PlanWizardVMStepActions
+)(PlanWizardVMStep);
