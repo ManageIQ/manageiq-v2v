@@ -4,7 +4,7 @@ import { Field, reduxForm } from 'redux-form';
 import { Spinner, Form, Icon } from 'patternfly-react';
 import { FormField } from '../../../../../common/forms/FormField';
 
-class PlanWizardScheduleStep extends React.Component {
+export class PlanWizardScheduleStep extends React.Component {
   componentDidMount() {
     const {
       warmMigrationCompatibility: { isEveryVmCompatible, areConversionHostsConfigured },
