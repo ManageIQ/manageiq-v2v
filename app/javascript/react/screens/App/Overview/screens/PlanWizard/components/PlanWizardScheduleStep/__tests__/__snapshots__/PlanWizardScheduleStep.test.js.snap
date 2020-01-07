@@ -1,237 +1,275 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Plan wizard schedule step renders with a info text when warm migration is not available 1`] = `
-<Form
-  bsClass="form"
-  className="form-vertical"
-  componentClass="form"
-  horizontal={false}
-  inline={false}
->
-  <Field
-    component={[Function]}
-    controlWidth={12}
-    info="Warm migration is not possible because one or more selected VMs has disks that can't be pre-copied."
-    infoIconName="warning-triangle-o"
-    inline_label={false}
-    label="Migration Type"
-    name="migration_plan_type_radio"
-    options={
-      Array [
-        Object {
-          "id": "migration_type_cold",
-          "name": "Cold Migration - Source VMs are shut down while all of the VM data is migrated.",
-        },
-        Object {
-          "disabled": true,
-          "id": "migration_type_warm",
-          "name": "Warm Migration - VM data is iteratively pre-copied. A final, cutover migration is scheduled and run later.",
-        },
-      ]
-    }
-    type="radio"
-  />
-  <Field
-    component={[Function]}
-    help={null}
-    inline_label={false}
-    label="Schedule"
-    name="migration_plan_choice_radio"
-    options={
-      Array [
-        Object {
-          "id": "migration_plan_later",
-          "name": "Save migration plan to run later",
-        },
-        Object {
-          "id": "migration_plan_now",
-          "name": "Start migration immediately",
-        },
-      ]
-    }
-    style={
-      Object {
-        "paddingTop": "100px",
-      }
-    }
-    type="radio"
-  />
-</Form>
-`;
-
 exports[`Plan wizard schedule step renders with a info text when warm migration selected 1`] = `
-<Form
-  bsClass="form"
-  className="form-vertical"
-  componentClass="form"
-  horizontal={false}
+<Spinner
+  className=""
   inline={false}
+  inverse={false}
+  loading={false}
+  size="lg"
 >
-  <Field
-    component={[Function]}
-    controlWidth={12}
-    info={null}
-    infoIconName="warning-triangle-o"
-    inline_label={false}
-    label="Migration Type"
-    name="migration_plan_type_radio"
-    options={
-      Array [
-        Object {
-          "id": "migration_type_cold",
-          "name": "Cold Migration - Source VMs are shut down while all of the VM data is migrated.",
-        },
-        Object {
-          "disabled": false,
-          "id": "migration_type_warm",
-          "name": "Warm Migration - VM data is iteratively pre-copied. A final, cutover migration is scheduled and run later.",
-        },
-      ]
-    }
-    type="radio"
-  />
-  <HelpBlock
-    bsClass="help-block"
-    style={
-      Object {
-        "paddingLeft": "22px",
-        "paddingTop": "100px",
-      }
-    }
+  <Form
+    bsClass="form"
+    className="form-vertical"
+    componentClass="form"
+    horizontal={false}
+    inline={false}
   >
-    Pre-copying of the VM data will begin immediately after plan creation. You can schedule and run final cutover migration later.
-  </HelpBlock>
-</Form>
+    <Field
+      component={[Function]}
+      controlWidth={12}
+      inline_label={false}
+      label="Migration Type"
+      name="migration_plan_type_radio"
+      options={
+        Array [
+          Object {
+            "id": "migration_type_cold",
+            "name": "Cold Migration - Source VMs are shut down while all of the VM data is migrated.",
+          },
+          Object {
+            "disabled": false,
+            "id": "migration_type_warm",
+            "name": "Warm Migration - VM data is iteratively pre-copied. A final, cutover migration is scheduled and run later.",
+          },
+        ]
+      }
+      type="radio"
+    />
+    <HelpBlock
+      bsClass="help-block"
+      style={
+        Object {
+          "paddingLeft": "22px",
+          "paddingTop": "100px",
+        }
+      }
+    >
+      Pre-copying of the VM data will begin immediately after plan creation. You can schedule and run final cutover migration later.
+    </HelpBlock>
+  </Form>
+</Spinner>
 `;
 
 exports[`Plan wizard schedule step renders with a warning if migrating an OSP plan immediately 1`] = `
-<Form
-  bsClass="form"
-  className="form-vertical"
-  componentClass="form"
-  horizontal={false}
+<Spinner
+  className=""
   inline={false}
+  inverse={false}
+  loading={false}
+  size="lg"
 >
-  <Field
-    component={[Function]}
-    controlWidth={12}
-    info={null}
-    infoIconName="warning-triangle-o"
-    inline_label={false}
-    label="Migration Type"
-    name="migration_plan_type_radio"
-    options={
-      Array [
-        Object {
-          "id": "migration_type_cold",
-          "name": "Cold Migration - Source VMs are shut down while all of the VM data is migrated.",
-        },
-        Object {
-          "disabled": false,
-          "id": "migration_type_warm",
-          "name": "Warm Migration - VM data is iteratively pre-copied. A final, cutover migration is scheduled and run later.",
-        },
-      ]
-    }
-    type="radio"
-  />
-  <Field
-    component={[Function]}
-    help={
-      <div
-        className="plan-wizard-vm-power-warning"
-      >
-        <Icon
-          name="warning-triangle-o"
-          type="pf"
-        />
-        <p>
-          VMs must be powered on in order to migrate.
-          <br />
-          Ensure that all VMs in the Migration Plan are powered on before selecting Create.
-        </p>
-      </div>
-    }
-    inline_label={false}
-    label="Schedule"
-    name="migration_plan_choice_radio"
-    options={
-      Array [
-        Object {
-          "id": "migration_plan_later",
-          "name": "Save migration plan to run later",
-        },
-        Object {
-          "id": "migration_plan_now",
-          "name": "Start migration immediately",
-        },
-      ]
-    }
-    style={
-      Object {
-        "paddingTop": "100px",
+  <Form
+    bsClass="form"
+    className="form-vertical"
+    componentClass="form"
+    horizontal={false}
+    inline={false}
+  >
+    <Field
+      component={[Function]}
+      controlWidth={12}
+      inline_label={false}
+      label="Migration Type"
+      name="migration_plan_type_radio"
+      options={
+        Array [
+          Object {
+            "id": "migration_type_cold",
+            "name": "Cold Migration - Source VMs are shut down while all of the VM data is migrated.",
+          },
+          Object {
+            "disabled": false,
+            "id": "migration_type_warm",
+            "name": "Warm Migration - VM data is iteratively pre-copied. A final, cutover migration is scheduled and run later.",
+          },
+        ]
       }
-    }
-    type="radio"
-  />
-</Form>
+      type="radio"
+    />
+    <Field
+      component={[Function]}
+      help={
+        <div
+          className="plan-wizard-vm-power-warning"
+        >
+          <Icon
+            name="warning-triangle-o"
+            type="pf"
+          />
+          <p>
+            VMs must be powered on in order to migrate.
+            <br />
+            Ensure that all VMs in the Migration Plan are powered on before selecting Create.
+          </p>
+        </div>
+      }
+      inline_label={false}
+      label="Schedule"
+      name="migration_plan_choice_radio"
+      options={
+        Array [
+          Object {
+            "id": "migration_plan_later",
+            "name": "Save migration plan to run later",
+          },
+          Object {
+            "id": "migration_plan_now",
+            "name": "Start migration immediately",
+          },
+        ]
+      }
+      style={
+        Object {
+          "paddingTop": "100px",
+        }
+      }
+      type="radio"
+    />
+  </Form>
+</Spinner>
 `;
 
 exports[`Plan wizard schedule step renders with no warning if migrating an OSP plan later 1`] = `
-<Form
-  bsClass="form"
-  className="form-vertical"
-  componentClass="form"
-  horizontal={false}
+<Spinner
+  className=""
   inline={false}
+  inverse={false}
+  loading={false}
+  size="lg"
 >
-  <Field
-    component={[Function]}
-    controlWidth={12}
-    info={null}
-    infoIconName="warning-triangle-o"
-    inline_label={false}
-    label="Migration Type"
-    name="migration_plan_type_radio"
-    options={
-      Array [
-        Object {
-          "id": "migration_type_cold",
-          "name": "Cold Migration - Source VMs are shut down while all of the VM data is migrated.",
-        },
-        Object {
-          "disabled": false,
-          "id": "migration_type_warm",
-          "name": "Warm Migration - VM data is iteratively pre-copied. A final, cutover migration is scheduled and run later.",
-        },
-      ]
-    }
-    type="radio"
-  />
-  <Field
-    component={[Function]}
-    help={null}
-    inline_label={false}
-    label="Schedule"
-    name="migration_plan_choice_radio"
-    options={
-      Array [
-        Object {
-          "id": "migration_plan_later",
-          "name": "Save migration plan to run later",
-        },
-        Object {
-          "id": "migration_plan_now",
-          "name": "Start migration immediately",
-        },
-      ]
-    }
-    style={
-      Object {
-        "paddingTop": "100px",
+  <Form
+    bsClass="form"
+    className="form-vertical"
+    componentClass="form"
+    horizontal={false}
+    inline={false}
+  >
+    <Field
+      component={[Function]}
+      controlWidth={12}
+      inline_label={false}
+      label="Migration Type"
+      name="migration_plan_type_radio"
+      options={
+        Array [
+          Object {
+            "id": "migration_type_cold",
+            "name": "Cold Migration - Source VMs are shut down while all of the VM data is migrated.",
+          },
+          Object {
+            "disabled": false,
+            "id": "migration_type_warm",
+            "name": "Warm Migration - VM data is iteratively pre-copied. A final, cutover migration is scheduled and run later.",
+          },
+        ]
       }
-    }
-    type="radio"
-  />
-</Form>
+      type="radio"
+    />
+    <Field
+      component={[Function]}
+      help={null}
+      inline_label={false}
+      label="Schedule"
+      name="migration_plan_choice_radio"
+      options={
+        Array [
+          Object {
+            "id": "migration_plan_later",
+            "name": "Save migration plan to run later",
+          },
+          Object {
+            "id": "migration_plan_now",
+            "name": "Start migration immediately",
+          },
+        ]
+      }
+      style={
+        Object {
+          "paddingTop": "100px",
+        }
+      }
+      type="radio"
+    />
+  </Form>
+</Spinner>
+`;
+
+exports[`Plan wizard schedule step renders with warm migration option disabled when it is not available 1`] = `
+<Spinner
+  className=""
+  inline={false}
+  inverse={false}
+  loading={false}
+  size="lg"
+>
+  <Form
+    bsClass="form"
+    className="form-vertical"
+    componentClass="form"
+    horizontal={false}
+    inline={false}
+  >
+    <Field
+      component={[Function]}
+      controlWidth={12}
+      inline_label={false}
+      label="Migration Type"
+      name="migration_plan_type_radio"
+      options={
+        Array [
+          Object {
+            "id": "migration_type_cold",
+            "name": "Cold Migration - Source VMs are shut down while all of the VM data is migrated.",
+          },
+          Object {
+            "disabled": true,
+            "id": "migration_type_warm",
+            "name": "Warm Migration - VM data is iteratively pre-copied. A final, cutover migration is scheduled and run later.",
+          },
+        ]
+      }
+      type="radio"
+    />
+    <Field
+      component={[Function]}
+      help={
+        <div
+          className="plan-wizard-vm-power-warning"
+        >
+          <Icon
+            name="warning-triangle-o"
+            type="pf"
+          />
+          <p>
+            VMs must be powered on in order to migrate.
+            <br />
+            Ensure that all VMs in the Migration Plan are powered on before selecting Create.
+          </p>
+        </div>
+      }
+      inline_label={false}
+      label="Schedule"
+      name="migration_plan_choice_radio"
+      options={
+        Array [
+          Object {
+            "id": "migration_plan_later",
+            "name": "Save migration plan to run later",
+          },
+          Object {
+            "id": "migration_plan_now",
+            "name": "Start migration immediately",
+          },
+        ]
+      }
+      style={
+        Object {
+          "paddingTop": "100px",
+        }
+      }
+      type="radio"
+    />
+  </Form>
+</Spinner>
 `;
