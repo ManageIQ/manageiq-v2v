@@ -19,7 +19,7 @@ class PlanWizardScheduleStep extends React.Component {
             {__('One or more selected VMs have disks with snapshots that cannot be pre-copied. See product documentation for more information.') /* prettier-ignore */}
           </span>
         ),
-        alertType: 'warning'
+        alertType: 'info'
       });
     }
     if (!areConversionHostsConfigured) {
@@ -31,7 +31,7 @@ class PlanWizardScheduleStep extends React.Component {
             {__('One or more selected VMs are mapped to a target cluster without a VDDK configured conversion host. See product documentation for more information.') /* prettier-ignore */}
           </span>
         ),
-        alertType: 'warning'
+        alertType: 'info'
       });
     }
   }
