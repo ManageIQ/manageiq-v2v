@@ -11,7 +11,15 @@ import { overwriteCsvConfirmModalProps } from '../../PlanWizardConstants';
 
 export class PlanWizardVMStep extends React.Component {
   componentDidMount() {
-    const { vm_choice_radio, editingPlan, shouldPrefillForEditing, queryPreselectedVmsAction, pristine } = this.props;
+    const {
+      vm_choice_radio,
+      editingPlan,
+      shouldPrefillForEditing,
+      queryPreselectedVmsAction,
+      pristine,
+      fetchTargetValidationDataAction,
+      targetProviderType
+    } = this.props;
     if (pristine && vm_choice_radio === 'vms_via_discovery') {
       this.validateVms([], null, { combineRequests: !!shouldPrefillForEditing });
       if (shouldPrefillForEditing) {
@@ -22,6 +30,7 @@ export class PlanWizardVMStep extends React.Component {
         });
       }
     }
+    fetchTargetValidationDataAction(targetProviderType);
   }
   componentDidUpdate(prevProps) {
     const { vm_choice_radio } = this.props;
@@ -130,7 +139,7 @@ export class PlanWizardVMStep extends React.Component {
           </p>
         </div>
       );
-    } else if (!discoveryMode && (valid_vms.length === 0 && invalid_vms.length === 0 && conflict_vms.length === 0)) {
+    } else if (!discoveryMode && valid_vms.length === 0 && invalid_vms.length === 0 && conflict_vms.length === 0) {
       return <CSVDropzoneField onCSVParseSuccess={this.onCSVParseSuccess} onCSVParseFailure={this.onCSVParseFailure} />;
     } else if (!isValidatingVms && validationServiceCalled && !(shouldPrefillForEditing && isQueryingVms)) {
       // set make rows editable so they can be selected
@@ -210,7 +219,9 @@ PlanWizardVMStep.propTypes = {
   queryPreselectedVmsAction: PropTypes.func,
   isQueryingVms: PropTypes.bool,
   formSelectedVms: PropTypes.array,
-  pristine: PropTypes.bool
+  pristine: PropTypes.bool,
+  targetProviderType: PropTypes.string,
+  fetchTargetValidationDataAction: PropTypes.func.isRequired
 };
 
 PlanWizardVMStep.defaultProps = {
@@ -224,7 +235,8 @@ PlanWizardVMStep.defaultProps = {
   errorValidatingVms: null,
   valid_vms: [],
   invalid_vms: [],
-  conflict_vms: []
+  conflict_vms: [],
+  targetProviderType: null
 };
 
 export default reduxForm({

@@ -123,7 +123,7 @@ class MappingWizard extends React.Component {
       mappingWizardClustersStep,
       mappingWizardDatastoresStep,
       mappingWizardNetworksStep,
-      alertText,
+      alertText, // NOTE: we may want to replace alertText and alertType with an alerts hash like we did in the PlanWizard
       alertType,
       hideAlertAction,
       editingMapping
@@ -162,8 +162,7 @@ class MappingWizard extends React.Component {
             mappingWizardClustersStep={mappingWizardClustersStep}
             mappingWizardDatastoresStep={mappingWizardDatastoresStep}
             mappingWizardNetworksStep={mappingWizardNetworksStep}
-            alertText={alertText}
-            alertType={alertType}
+            alerts={alertText ? { singleAlert: { alertText, alertType } } : {}}
             hideAlertAction={hideAlertAction}
           />
         </Wizard.Body>

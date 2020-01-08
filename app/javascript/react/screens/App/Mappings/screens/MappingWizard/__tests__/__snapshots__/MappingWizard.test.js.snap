@@ -19,6 +19,7 @@ exports[`MappingWizard component renders the mapping wizard 1`] = `
     <MappingWizardBody
       activeStep="1"
       activeStepIndex={0}
+      alerts={Object {}}
       disableNextStep={false}
       goToStep={[Function]}
       hideAlertAction={[Function]}

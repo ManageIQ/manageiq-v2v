@@ -2,9 +2,9 @@
 
 exports[`Plan Wizard integration test should mount the PlanWizard with mapStateToProps reduced 1`] = `
 Object {
-  "alertText": undefined,
-  "alertType": undefined,
+  "alerts": Object {},
   "editingPlan": undefined,
+  "fetchTargetValidationDataAction": [Function],
   "hideAlertAction": [Function],
   "hideConfirmModalAction": [Function],
   "hidePlanWizard": false,

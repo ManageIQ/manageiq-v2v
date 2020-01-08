@@ -1,6 +1,7 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
 import { PlanWizardVMStep } from '../PlanWizardVMStep';
+import { RHV } from '../../../../../../../../../common/constants';
 
 const getBaseProps = () => ({
   infrastructure_mapping_id: '1',
@@ -10,10 +11,12 @@ const getBaseProps = () => ({
   csvImportAction: jest.fn(),
   showConfirmModalAction: jest.fn(),
   hideConfirmModalAction: jest.fn(),
-  csvParseErrorAction: jest.fn()
+  csvParseErrorAction: jest.fn(),
+  fetchTargetValidationDataAction: jest.fn(),
+  targetProviderType: RHV
 });
 
-describe('VM discovery on mount', () => {
+describe('VM discovery and target validation on mount', () => {
   test('validate VMs action is called on mount in discovery mode', () => {
     const props = getBaseProps();
     mount(<PlanWizardVMStep {...props} />);
@@ -48,6 +51,13 @@ describe('VM discovery on mount', () => {
     mount(<PlanWizardVMStep {...props} />);
     await expect(props.queryPreselectedVmsAction).toHaveBeenCalledTimes(1);
     expect(props.validateVmsAction).toHaveBeenCalledTimes(2);
+  });
+
+  test('fetch target validation data action is called on mount', () => {
+    const props = getBaseProps();
+    mount(<PlanWizardVMStep {...props} />);
+    expect(props.fetchTargetValidationDataAction).toHaveBeenCalledTimes(1);
+    expect(props.fetchTargetValidationDataAction).toHaveBeenCalledWith(props.targetProviderType);
   });
 });
 

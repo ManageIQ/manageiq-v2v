@@ -3,18 +3,18 @@ import PlanWizardResultsStep from './PlanWizardResultsStep';
 import * as PlanWizardResultsStepActions from './PlanWizardResultsStepActions';
 
 import reducer from './PlanWizardResultsStepReducer';
-import { findEditingPlan, getCurrentTargetProvider } from '../../PlanWizardSelectors';
+import { findEditingPlan, getTargetProviderType } from '../../PlanWizardSelectors';
 
 export const reducers = { planWizardResultsStep: reducer };
 
 const mapStateToProps = (
-  { planWizardResultsStep, planWizard, overview: { transformationPlans, transformationMappings, editingPlanId }, form },
+  { planWizardResultsStep, planWizard, overview, overview: { transformationPlans, editingPlanId }, form },
   ownProps
 ) => ({
   ...planWizardResultsStep,
   ...planWizard,
   ...ownProps.data,
-  targetProvider: getCurrentTargetProvider(form, transformationMappings),
+  targetProvider: getTargetProviderType({ form, overview }), // TODO rename this prop to targetProviderType
   editingPlan: findEditingPlan(transformationPlans, editingPlanId)
 });
 

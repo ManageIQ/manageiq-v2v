@@ -52,6 +52,7 @@ export const hideWarningModalAction = () => dispatch => {
   });
 };
 
+// NOTE: we may want to remove these show/hide actions and instead make the ones from PlanWizard reusable, which support multiple alerts
 export const showAlertAction = (alertText, alertType = 'error') => dispatch => {
   dispatch({
     type: V2V_SHOW_ALERT,
