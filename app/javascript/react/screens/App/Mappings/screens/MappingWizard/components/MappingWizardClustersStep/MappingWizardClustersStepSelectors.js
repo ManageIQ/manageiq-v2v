@@ -12,4 +12,4 @@ export const sourceClustersFilter = (sourceClustersToFilter, clustersStepMapping
 };
 
 export const conversionHostsFilter = (conversionHosts, providerType) =>
-  conversionHosts.filter(host => host.resource && host.resource.type === CONVERSION_HOST_TYPES[providerType]);
+  conversionHosts.filter(host => host.resource && CONVERSION_HOST_TYPES[providerType].includes(host.resource.type));
