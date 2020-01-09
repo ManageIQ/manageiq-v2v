@@ -24,8 +24,8 @@ const RetryConversionHostConfirmationModal = ({
     conversionHostTaskToRetry.context_data.request_params;
   const isUsingSshTransformation = !requestParams.vmware_vddk_package_url;
 
-  const selectedProviderType = Object.keys(CONVERSION_HOST_TYPES).find(
-    key => CONVERSION_HOST_TYPES[key] === requestParams.resource_type
+  const selectedProviderType = Object.keys(CONVERSION_HOST_TYPES).find(key =>
+    CONVERSION_HOST_TYPES[key].includes(requestParams.resource_type)
   );
   const formHasErrors = retryForm && !!retryForm.syncErrors;
 
