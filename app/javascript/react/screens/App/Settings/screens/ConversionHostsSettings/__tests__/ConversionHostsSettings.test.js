@@ -11,7 +11,7 @@ const getBaseProps = () => ({
   deleteConversionHostAction: jest.fn(),
   fetchProvidersAction: jest.fn(),
   isFetchingProviders: false,
-  hasSufficientProviders: true,
+  hasTargetProvider: true,
   fetchConversionHostsAction: jest.fn(() => Promise.resolve()),
   fetchConversionHostTasksAction: jest.fn(() => Promise.resolve()),
   combinedListItems: [],
@@ -37,7 +37,7 @@ describe('ConversionHostsSettings component', () => {
   });
 
   it('renders an empty state when insufficient providers are present', () => {
-    const component = shallow(<ConversionHostsSettings {...getBaseProps()} hasSufficientProviders={false} />);
+    const component = shallow(<ConversionHostsSettings {...getBaseProps()} hasTargetProvider={false} />);
     expect(component.find(NoProvidersEmptyState)).toHaveLength(1);
     expect(component.find(ConversionHostsEmptyState)).toHaveLength(0);
     expect(component.find(ConversionHostsList)).toHaveLength(0);
