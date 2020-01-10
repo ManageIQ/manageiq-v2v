@@ -64,7 +64,7 @@ class ConversionHostsSettings extends React.Component {
   render() {
     const {
       isFetchingProviders,
-      hasSufficientProviders,
+      hasTargetProvider,
       combinedListItems,
       setHostToDeleteAction,
       showConversionHostDeleteModalAction,
@@ -90,7 +90,7 @@ class ConversionHostsSettings extends React.Component {
 
     return (
       <Spinner loading={isFetchingProviders || !hasMadeInitialFetch} style={{ marginTop: 15 }}>
-        {!hasSufficientProviders ? (
+        {!hasTargetProvider ? (
           <NoProvidersEmptyState
             className="full-page-empty"
             description={
@@ -154,7 +154,7 @@ ConversionHostsSettings.propTypes = {
   fetchProvidersUrl: PropTypes.string,
   fetchProvidersAction: PropTypes.func,
   isFetchingProviders: PropTypes.bool,
-  hasSufficientProviders: PropTypes.bool,
+  hasTargetProvider: PropTypes.bool,
   fetchConversionHostsUrl: PropTypes.string,
   fetchConversionHostsAction: PropTypes.func,
   fetchConversionHostTasksAction: PropTypes.func,

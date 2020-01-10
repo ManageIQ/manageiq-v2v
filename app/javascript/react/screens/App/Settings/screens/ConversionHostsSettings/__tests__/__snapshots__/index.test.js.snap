@@ -15,7 +15,7 @@ Object {
   "fetchConversionHostsUrl": "/api/conversion_hosts?attributes=resource&expand=resources",
   "fetchProvidersAction": [Function],
   "fetchProvidersUrl": "/api/providers?expand=resources&attributes=authentications",
-  "hasSufficientProviders": false,
+  "hasTargetProvider": false,
   "hideConversionHostDeleteModalAction": [Function],
   "isDeletingConversionHost": false,
   "isFetchingProviders": true,
