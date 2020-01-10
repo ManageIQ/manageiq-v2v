@@ -19,7 +19,7 @@ import { getCombinedConversionHostListItems } from '../../helpers';
 
 const mapStateToProps = (
   {
-    providers: { isFetchingProviders, hasSufficientProviders },
+    providers: { isFetchingProviders, hasTargetProvider },
     settings: {
       conversionHosts,
       conversionHostTasks,
@@ -35,7 +35,7 @@ const mapStateToProps = (
   ownProps
 ) => ({
   isFetchingProviders,
-  hasSufficientProviders,
+  hasTargetProvider,
   combinedListItems: getCombinedConversionHostListItems(
     conversionHosts,
     conversionHostTasks,
