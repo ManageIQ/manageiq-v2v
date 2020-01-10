@@ -2,14 +2,15 @@ import Immutable from 'seamless-immutable';
 
 import { FETCH_V2V_PROVIDERS } from './providersConstants';
 import { validateProviders } from './providersValidators';
-import { sufficientProviders } from './providersHelpers';
+import { sufficientProviders, checkTargetProviders } from './providersHelpers';
 
 export const initialState = Immutable({
   isFetchingProviders: false,
   isRejectedProviders: false,
   errorFetchingProviders: null,
   providers: [],
-  hasSufficientProviders: false
+  hasSufficientProviders: false,
+  hasTargetProvider: false
 });
 
 export default (state = initialState, action) => {
@@ -32,6 +33,7 @@ export default (state = initialState, action) => {
         validateProviders(action.payload.data.resources);
         return insufficient
           .set('hasSufficientProviders', sufficientProviders(action.payload.data.resources))
+          .set('hasTargetProvider', checkTargetProviders(action.payload.data.resources))
           .set('providers', action.payload.data.resources);
       })();
     case `${FETCH_V2V_PROVIDERS}_REJECTED`:
