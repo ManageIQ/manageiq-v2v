@@ -34,6 +34,7 @@ Object {
   "fetchTransformationPlansUrl": "/api/dummyTransformationPlans",
   "finishedTransformationPlans": Array [],
   "hasSufficientProviders": false,
+  "hasTargetProvider": false,
   "hideConfirmModalAction": [Function],
   "hideEditPlanNameModalAction": [Function],
   "hideMappingWizard": false,

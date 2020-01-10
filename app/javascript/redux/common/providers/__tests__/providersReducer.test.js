@@ -34,6 +34,7 @@ describe('fetching providers', () => {
       isRejectedProviders: false,
       errorFetchingProviders: null,
       hasSufficientProviders: true,
+      hasTargetProvider: true,
       providers: providers.resources
     });
   });
