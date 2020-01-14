@@ -106,8 +106,12 @@ export const FormField = ({
         </Grid.Col>
       )}
       <Grid.Col sm={Number.parseInt(controlWidth, 10) || 9} id={input.name}>
-        {!inline_label && <div style={{ fontSize: '15px', display: 'inline' }}>{label}</div>}
-        {renderInfoPopover()}
+        {!inline_label && (
+          <React.Fragment>
+            <div style={{ fontSize: '15px', display: 'inline' }}>{label}</div>
+            {renderInfoPopover()}
+          </React.Fragment>
+        )}
         {renderField()}
         {(help || (touched && error) || warning) && (
           <Form.HelpBlock>
