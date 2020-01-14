@@ -13,7 +13,7 @@ describe('ConversionHostWizardHostsStep integration test', () => {
     { form: formReducer },
     {
       form: { conversionHostWizardLocationStep: { values: { providerType: RHV, cluster: '1' } } },
-      targetResources: { targetClusters: [{ mock: 'cluster', id: '1', hosts: [] }] },
+      targetResources: { targetClusters: [{ mock: 'cluster', id: '1', vms: [] }] },
       settings: {
         conversionHosts: [{ mock: 'conversionHost1' }, { mock: 'conversionHost2' }],
         conversionHostTasksByResource: { mock: 'tasksByResource' }

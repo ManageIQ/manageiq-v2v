@@ -8,19 +8,19 @@ import ConversionHostWizardHostsStep from '../ConversionHostWizardHostsStep';
 import { RHV, CONVERSION_HOST_TYPES, OPENSTACK } from '../../../../../../../../../../common/constants';
 import { FINISHED } from '../../../../ConversionHostsSettingsConstants';
 
-const mockConfiguredRhvHost = { id: '1', name: 'already-configured-host', type: CONVERSION_HOST_TYPES[RHV] };
-const mockInProgressRhvHost = { id: '2', name: 'host-being-configured', type: CONVERSION_HOST_TYPES[RHV] };
+const mockConfiguredRhvHost = { id: '1', name: 'already-configured-host', type: CONVERSION_HOST_TYPES[RHV][0] };
+const mockInProgressRhvHost = { id: '2', name: 'host-being-configured', type: CONVERSION_HOST_TYPES[RHV][0] };
 
-const mockConfiguredOspVm = { id: '1', name: 'already-configured-vm', type: CONVERSION_HOST_TYPES[OPENSTACK] };
-const mockInProgressOspVm = { id: '2', name: 'vm-being-configured', type: CONVERSION_HOST_TYPES[OPENSTACK] };
+const mockConfiguredOspVm = { id: '1', name: 'already-configured-vm', type: CONVERSION_HOST_TYPES[OPENSTACK][0] };
+const mockInProgressOspVm = { id: '2', name: 'vm-being-configured', type: CONVERSION_HOST_TYPES[OPENSTACK][0] };
 
 const mockRhvCluster = {
   mock: 'cluster',
-  hosts: [
+  vms: [
     mockConfiguredRhvHost,
     mockInProgressRhvHost,
-    { id: '3', name: 'available-host-1', type: CONVERSION_HOST_TYPES[RHV] },
-    { id: '4', name: 'available-host-2', type: CONVERSION_HOST_TYPES[RHV] }
+    { id: '3', name: 'available-host-1', type: CONVERSION_HOST_TYPES[RHV][0] },
+    { id: '4', name: 'available-host-2', type: CONVERSION_HOST_TYPES[RHV][0] }
   ]
 };
 
@@ -29,8 +29,8 @@ const mockOspTenant = {
   vms: [
     mockConfiguredOspVm,
     mockInProgressOspVm,
-    { id: '3', name: 'available-vm-1', type: CONVERSION_HOST_TYPES[OPENSTACK] },
-    { id: '4', name: 'available-vm-2', type: CONVERSION_HOST_TYPES[OPENSTACK] }
+    { id: '3', name: 'available-vm-1', type: CONVERSION_HOST_TYPES[OPENSTACK][0] },
+    { id: '4', name: 'available-vm-2', type: CONVERSION_HOST_TYPES[OPENSTACK][0] }
   ]
 };
 
@@ -46,11 +46,11 @@ const mockConversionHosts = [
 ];
 
 const mockTasksByResource = {
-  [CONVERSION_HOST_TYPES[RHV]]: {
+  [CONVERSION_HOST_TYPES[RHV][0]]: {
     '1': { enable: [{ mock: 'task', state: FINISHED }] },
     '2': { enable: [{ mock: 'task', state: 'Active' }] }
   },
-  [CONVERSION_HOST_TYPES[OPENSTACK]]: {
+  [CONVERSION_HOST_TYPES[OPENSTACK][0]]: {
     '1': { enable: [{ mock: 'task', state: FINISHED }] },
     '2': { enable: [{ mock: 'task', state: 'Active' }] }
   }
@@ -126,7 +126,7 @@ describe('conversion host wizard hosts step', () => {
   });
 
   it('renders correctly when there are no hosts available', () => {
-    const component = shallowDive(<ConversionHostWizardHostsStep {...baseProps} selectedCluster={{ hosts: [] }} />);
+    const component = shallowDive(<ConversionHostWizardHostsStep {...baseProps} selectedCluster={{ vms: [] }} />);
     expect(component).toMatchSnapshot();
   });
 });

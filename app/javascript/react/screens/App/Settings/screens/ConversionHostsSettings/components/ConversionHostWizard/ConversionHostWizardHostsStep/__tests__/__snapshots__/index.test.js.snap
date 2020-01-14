@@ -25,9 +25,9 @@ Object {
   "persistentSubmitErrors": false,
   "pure": true,
   "selectedCluster": Object {
-    "hosts": Array [],
     "id": "1",
     "mock": "cluster",
+    "vms": Array [],
   },
   "selectedProviderType": "rhevm",
   "shouldAsyncValidate": [Function],
