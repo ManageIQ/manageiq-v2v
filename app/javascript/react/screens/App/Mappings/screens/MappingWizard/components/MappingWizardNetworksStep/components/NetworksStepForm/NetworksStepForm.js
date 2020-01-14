@@ -269,16 +269,16 @@ class NetworksStepForm extends React.Component {
     input.onChange([]);
   };
 
-  noNetworksFound = (networks, loading) =>
-    !networks.length &&
+  noNetworksFound = (groupedSourceNetworks, loading) =>
+    !Object.keys(groupedSourceNetworks).length &&
     !loading && (
       <div className="dual-pane-mapper-item">
         <Icon type="pf" name="error-circle-o" /> {__('No networks found.')}
       </div>
     );
 
-  allNetworksMapped = (sourceNetworks, filteredNetworks, loading) =>
-    !!sourceNetworks.length &&
+  allNetworksMapped = (groupedSourceNetworks, filteredNetworks, loading) =>
+    !!Object.keys(groupedSourceNetworks).length &&
     !filteredNetworks.length &&
     !loading && (
       <div className="dual-pane-mapper-item">
