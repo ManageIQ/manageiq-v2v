@@ -243,8 +243,18 @@ class DatastoresStepForm extends React.Component {
     input.onChange([]);
   };
 
-  allDatastoresMapped = filteredDatastores =>
-    !filteredDatastores.length && (
+  noDatastoresFound = (datastores, loading) =>
+    !datastores.length &&
+    !loading && (
+      <div className="dual-pane-mapper-item">
+        <Icon type="pf" name="error-circle-o" /> {__('No datastores found.')}
+      </div>
+    );
+
+  allDatastoresMapped = (sourceDatastores, filteredDatastores, loading) =>
+    !!sourceDatastores.length &&
+    !filteredDatastores.length &&
+    !loading && (
       <div className="dual-pane-mapper-item">
         <Icon type="pf" name="ok" /> {__('All source datastores have been mapped.')}
       </div>
@@ -267,10 +277,12 @@ class DatastoresStepForm extends React.Component {
       'is-hidden': !selectedCluster
     });
 
+    const filteredSourceDatastores = sourceDatastoreFilter(sourceDatastores, input.value);
+
     const sourceCounter = (
       <DualPaneMapperCount
         selectedItems={selectedSourceDatastores.length}
-        totalItems={sourceDatastoreFilter(sourceDatastores, input.value).length}
+        totalItems={filteredSourceDatastores.length}
       />
     );
 
@@ -295,7 +307,7 @@ class DatastoresStepForm extends React.Component {
           >
             {sourceDatastores && (
               <React.Fragment>
-                {sourceDatastoreFilter(sourceDatastores, input.value).map(item => (
+                {filteredSourceDatastores.map(item => (
                   <DualPaneMapperListItem
                     item={item}
                     text={sourceDatastoreInfo(item)}
@@ -308,7 +320,8 @@ class DatastoresStepForm extends React.Component {
                     handleKeyPress={this.selectSourceDatastore}
                   />
                 ))}
-                {this.allDatastoresMapped(sourceDatastoreFilter(sourceDatastores, input.value))}
+                {this.noDatastoresFound(sourceDatastores, isFetchingSourceDatastores)}
+                {this.allDatastoresMapped(sourceDatastores, filteredSourceDatastores, isFetchingSourceDatastores)}
               </React.Fragment>
             )}
           </DualPaneMapperList>

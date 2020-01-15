@@ -269,8 +269,18 @@ class NetworksStepForm extends React.Component {
     input.onChange([]);
   };
 
-  allNetworksMapped = filteredNetworks =>
-    !filteredNetworks.length && (
+  noNetworksFound = (groupedSourceNetworks, loading) =>
+    !Object.keys(groupedSourceNetworks).length &&
+    !loading && (
+      <div className="dual-pane-mapper-item">
+        <Icon type="pf" name="error-circle-o" /> {__('No networks found.')}
+      </div>
+    );
+
+  allNetworksMapped = (groupedSourceNetworks, filteredNetworks, loading) =>
+    !!Object.keys(groupedSourceNetworks).length &&
+    !filteredNetworks.length &&
+    !loading && (
       <div className="dual-pane-mapper-item">
         <Icon type="pf" name="ok" /> {__('All source networks have been mapped.')}
       </div>
@@ -293,11 +303,10 @@ class NetworksStepForm extends React.Component {
       'is-hidden': !selectedCluster
     });
 
+    const filteredSourceNetworks = sourceNetworksFilter(groupedSourceNetworks, input.value);
+
     const sourceCounter = (
-      <DualPaneMapperCount
-        selectedItems={selectedSourceNetworks.length}
-        totalItems={sourceNetworksFilter(groupedSourceNetworks, input.value).length}
-      />
+      <DualPaneMapperCount selectedItems={selectedSourceNetworks.length} totalItems={filteredSourceNetworks.length} />
     );
 
     const targetCounter = <DualPaneMapperCount selectedItems={selectedTargetNetwork ? 1 : 0} totalItems={1} />;
@@ -321,7 +330,7 @@ class NetworksStepForm extends React.Component {
           >
             {groupedSourceNetworks && (
               <React.Fragment>
-                {sourceNetworksFilter(groupedSourceNetworks, input.value).map(sourceNetwork => (
+                {filteredSourceNetworks.map(sourceNetwork => (
                   <DualPaneMapperListItem
                     item={sourceNetwork}
                     text={`${sourceNetwork.providerName} \\ ${selectedCluster.v_parent_datacenter} \\ ${
@@ -338,7 +347,8 @@ class NetworksStepForm extends React.Component {
                     handleKeyPress={this.selectSourceNetwork}
                   />
                 ))}
-                {this.allNetworksMapped(sourceNetworksFilter(groupedSourceNetworks, input.value))}
+                {this.noNetworksFound(groupedSourceNetworks, isFetchingSourceNetworks)}
+                {this.allNetworksMapped(groupedSourceNetworks, filteredSourceNetworks, isFetchingSourceNetworks)}
               </React.Fragment>
             )}
           </DualPaneMapperList>
