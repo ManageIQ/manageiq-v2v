@@ -34,6 +34,7 @@ export class PlanWizardScheduleStep extends React.Component {
         alertType: 'info'
       });
     }
+    // TODO if target isn't RHV, disallow warm migration and pop another alert
   }
 
   componentWillUnmount() {
