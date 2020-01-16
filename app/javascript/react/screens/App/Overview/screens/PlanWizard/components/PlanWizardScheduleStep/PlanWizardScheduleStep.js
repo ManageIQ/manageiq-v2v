@@ -7,9 +7,21 @@ import { FormField } from '../../../../../common/forms/FormField';
 export class PlanWizardScheduleStep extends React.Component {
   componentDidMount() {
     const {
-      warmMigrationCompatibility: { isEveryVmCompatible, areConversionHostsConfigured },
+      warmMigrationCompatibility: { isRhvTarget, isEveryVmCompatible, areConversionHostsConfigured },
       showAlertAction
     } = this.props;
+    if (!isRhvTarget) {
+      showAlertAction({
+        alertId: 'warmMigrationNonRhvTarget',
+        alertText: (
+          <span>
+            <strong>{__('Warm migration not supported.')}</strong>{' '}
+            {__('Warm migration is currently only supported for Red Hat Virtualization targets.')}
+          </span>
+        ),
+        alertType: 'info'
+      });
+    }
     if (!isEveryVmCompatible) {
       showAlertAction({
         alertId: 'warmMigrationBadVms',
@@ -34,7 +46,6 @@ export class PlanWizardScheduleStep extends React.Component {
         alertType: 'info'
       });
     }
-    // TODO if target isn't RHV, disallow warm migration and pop another alert
   }
 
   componentWillUnmount() {
@@ -121,6 +132,7 @@ PlanWizardScheduleStep.propTypes = {
   migration_plan_choice_radio: PropTypes.string,
   warmMigrationCompatibility: PropTypes.shape({
     isFetchingTargetValidationData: PropTypes.bool,
+    isRhvTarget: PropTypes.bool,
     isEveryVmCompatible: PropTypes.bool,
     areConversionHostsConfigured: PropTypes.bool,
     shouldEnableWarmMigration: PropTypes.bool
