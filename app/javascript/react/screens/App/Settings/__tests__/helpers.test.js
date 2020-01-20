@@ -110,26 +110,14 @@ describe('transport method helper', () => {
       expect(inferTransportMethod(task)).toEqual(__('VDDK'));
     });
 
-    it('detects SSH properly', () => {
-      const task = {
-        meta: { isTask: true },
-        context_data: {
-          request_params: {
-            vmware_ssh_private_key: 'foo'
-          }
-        }
-      };
-      expect(inferTransportMethod(task)).toEqual(__('SSH'));
-    });
-
-    it('returns null if neither match', () => {
+    it('returns SSH if VDDK not detected', () => {
       const task = {
         meta: { isTask: true },
         context_data: {
           request_params: {}
         }
       };
-      expect(inferTransportMethod(task)).toEqual(null);
+      expect(inferTransportMethod(task)).toEqual(__('SSH'));
     });
   });
 

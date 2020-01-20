@@ -97,12 +97,10 @@ export const inferTransportMethod = conversionHostsListItem => {
   const ssh = __('SSH');
   if (conversionHostsListItem.meta.isTask) {
     const { request_params } = conversionHostsListItem.context_data;
-    if (request_params.vmware_vddk_package_url) return vddk;
-    if (request_params.vmware_ssh_private_key) return ssh;
-  } else {
-    if (conversionHostsListItem.vddk_transport_supported) return vddk;
-    if (conversionHostsListItem.ssh_transport_supported) return ssh;
+    return request_params.vmware_vddk_package_url ? vddk : ssh;
   }
+  if (conversionHostsListItem.vddk_transport_supported) return vddk;
+  if (conversionHostsListItem.ssh_transport_supported) return ssh;
   return null;
 };
 
