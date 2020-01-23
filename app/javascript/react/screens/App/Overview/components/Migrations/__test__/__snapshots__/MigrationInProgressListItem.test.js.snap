@@ -37,6 +37,73 @@ exports[`if there are no conversion hosts available renders an error view 1`] = 
           Waiting for an available conversion host. You can continue waiting or go to the Migration Settings page to increase the number of migrations per host.
         </EllipisWithTooltip>
       </ListViewTableInfoItem>,
+      <CutoverTimeInfoItem
+        plan={
+          Object {
+            "configVmLength": 2,
+            "created_on": "2018-05-01T12:13:50Z",
+            "fulfilledOn": "2018-04-06T12:31:30Z",
+            "href": "http://localhost:3000/api/service_templates/60",
+            "id": "60",
+            "miq_requests": Array [
+              Object {
+                "approval_state": "approved",
+                "created_on": "2018-04-06T12:31:30Z",
+                "description": "Migration Plan F-0",
+                "destination_id": null,
+                "destination_type": null,
+                "fulfilled_on": "2018-04-06T12:31:30Z",
+                "href": "http://localhost:3000/api/service_requests/6000",
+                "id": "6000",
+                "message": "VM Transformations <SOMETHING>",
+                "options": Object {
+                  "cart_state": "ordered",
+                  "delivered_on": "2018-04-06T12:49:30Z",
+                  "dialog": null,
+                  "initiator": null,
+                  "requester_group": "EvmGroup-super_administrator",
+                  "src_id": "60",
+                  "workflow_settings": Object {
+                    "resource_action_id": "2507",
+                  },
+                },
+                "process": true,
+                "request_state": "active",
+                "request_type": "transformation_plan",
+                "requester_id": "1",
+                "requester_name": "Administrator",
+                "service_order_id": "91",
+                "source_id": "60",
+                "source_type": "ServiceTemplate",
+                "status": "Ok",
+                "tenant_id": "1",
+                "type": "ServiceTemplateTransformationPlanRequest",
+                "updated_on": "2018-04-06T12:31:30Z",
+                "userid": "admin",
+              },
+            ],
+            "name": "Migration Plan F-0",
+            "options": Object {
+              "config_info": Object {
+                "actions": Array [
+                  Object {
+                    "vm_id": "1",
+                  },
+                  Object {
+                    "vm_id": "3",
+                  },
+                ],
+                "transformation_mapping_id": "1",
+              },
+            },
+            "scheduleTime": null,
+            "status": "Ok",
+            "transformation_mapping": Object {
+              "transformation_mapping_items": Array [],
+            },
+          }
+        }
+      />,
     ]
   }
   numFailedVms={0}
@@ -146,6 +213,73 @@ exports[`when the request is denied renders an error view 1`] = `
           See the product documentation for information on configuring conversion hosts.
         </EllipisWithTooltip>
       </ListViewTableInfoItem>,
+      <CutoverTimeInfoItem
+        plan={
+          Object {
+            "configVmLength": 2,
+            "created_on": "2018-05-01T12:13:50Z",
+            "fulfilledOn": "2018-04-06T12:31:30Z",
+            "href": "http://localhost:3000/api/service_templates/80",
+            "id": "80",
+            "miq_requests": Array [
+              Object {
+                "approval_state": "denied",
+                "cancelation_status": null,
+                "created_on": "2018-04-06T12:31:30Z",
+                "description": "Migration Plan H-0",
+                "destination_id": null,
+                "destination_type": null,
+                "fulfilled_on": "2018-04-06T12:31:30Z",
+                "href": "http://localhost:3000/api/service_requests/8000",
+                "id": "8000",
+                "message": "VM Transformations <SOMETHING>",
+                "options": Object {
+                  "cart_state": "ordered",
+                  "delivered_on": "2018-04-06T12:49:30Z",
+                  "dialog": null,
+                  "initiator": null,
+                  "requester_group": "EvmGroup-super_administrator",
+                  "src_id": "60",
+                  "workflow_settings": Object {
+                    "resource_action_id": "2507",
+                  },
+                },
+                "process": true,
+                "request_state": "active",
+                "request_type": "transformation_plan",
+                "requester_id": "1",
+                "requester_name": "Administrator",
+                "service_order_id": "91",
+                "source_id": "80",
+                "source_type": "ServiceTemplate",
+                "status": "Ok",
+                "tenant_id": "1",
+                "updated_on": "2018-04-06T12:31:30Z",
+                "userid": "admin",
+              },
+            ],
+            "name": "Migration Plan H-0",
+            "options": Object {
+              "config_info": Object {
+                "actions": Array [
+                  Object {
+                    "vm_id": "1",
+                  },
+                  Object {
+                    "vm_id": "3",
+                  },
+                ],
+                "transformation_mapping_id": "1",
+              },
+            },
+            "scheduleTime": null,
+            "status": "Ok",
+            "transformation_mapping": Object {
+              "transformation_mapping_items": Array [],
+            },
+          }
+        }
+      />,
     ]
   }
   numFailedVms={0}

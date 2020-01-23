@@ -33,3 +33,28 @@ export const attachTargetProvider = (plan, providers, clusters, targetProviderTy
 
   return { ...plan, targetProvider };
 };
+
+export const initializeDatepicker = (handleDatepickerChange, defaultDate) => {
+  const datetimeSelector = $('#dateTimePicker');
+  const minDate = new Date(Date.now() + 120000);
+
+  datetimeSelector.datetimepicker({
+    defaultDate: defaultDate > minDate ? defaultDate : minDate,
+    useCurrent: !defaultDate,
+    allowInputToggle: true,
+    showTodayButton: true,
+    minDate,
+    toolbarPlacement: 'bottom',
+    sideBySide: true,
+    icons: {
+      today: 'today-button-pf'
+    }
+  });
+
+  datetimeSelector.on('dp.change', e => {
+    handleDatepickerChange(e.date._d);
+  });
+
+  const picker = datetimeSelector.data('DateTimePicker');
+  handleDatepickerChange(picker.date().toDate());
+};

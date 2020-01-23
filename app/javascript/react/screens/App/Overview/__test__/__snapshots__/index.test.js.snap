@@ -60,6 +60,7 @@ Object {
   "removeNotificationAction": [Function],
   "requestsProcessingCancellation": Array [],
   "retryMigrationAction": [Function],
+  "scheduleCutover": [Function],
   "scheduleMigration": [Function],
   "setMigrationsFilterAction": [Function],
   "showConfirmModalAction": [Function],

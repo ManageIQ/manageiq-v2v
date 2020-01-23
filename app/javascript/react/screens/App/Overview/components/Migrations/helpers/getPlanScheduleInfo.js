@@ -3,11 +3,19 @@ const getPlanScheduleInfo = plan => {
   const staleMigrationSchedule = new Date(migrationScheduled).getTime() < Date.now();
   const migrationStarting = staleMigrationSchedule && new Date(migrationScheduled).getTime() > Date.now() - 120000;
   const showInitialScheduleButton = staleMigrationSchedule && !migrationStarting;
+  const migrationCutover =
+    (plan &&
+      plan.options &&
+      plan.options.config_info &&
+      plan.options.config_info.warm_migration &&
+      plan.options.config_info.warm_migration_cutover_datetime) ||
+    0;
   return {
     migrationScheduled,
     staleMigrationSchedule,
     migrationStarting,
-    showInitialScheduleButton
+    showInitialScheduleButton,
+    migrationCutover
   };
 };
 
