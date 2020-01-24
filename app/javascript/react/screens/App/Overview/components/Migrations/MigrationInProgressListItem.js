@@ -21,6 +21,7 @@ import ProgressBarTooltip from './ProgressBarTooltip';
 import ScheduleMigrationButton from './ScheduleMigrationButton';
 import CutoverTimeInfoItem from './CutoverTimeInfoItem';
 import StopPropagationOnClick from '../../../common/StopPropagationOnClick';
+import { formatDateTime } from '../../../../../../components/dates/MomentDate';
 
 const MigrationInProgressListItem = ({
   plan,
@@ -39,7 +40,10 @@ const MigrationInProgressListItem = ({
   isCancellingPlanRequest,
   requestsProcessingCancellation,
   loading,
-  toggleScheduleMigrationModal
+  toggleScheduleMigrationModal,
+  showConfirmModalAction,
+  hideConfirmModalAction,
+  scheduleCutover
 }) => {
   const { requestsOfAssociatedPlan, mostRecentRequest } = getRequestsOfPlan({ plan, allRequestsWithTasks });
   const waitingForConversionHost = isWaitingForConversionHost(mostRecentRequest);
@@ -157,6 +161,38 @@ const MigrationInProgressListItem = ({
   };
   const baseRowProps = { plan, numFailedVms, numTotalVms, onClick: redirectToPlan };
 
+  const confirmationWarningText = (
+    <React.Fragment>
+      <p>
+        {sprintf(
+          __('Are you sure you want to unschedule cutover for plan %s targeted to run on %s ?'),
+          plan.name,
+          formatDateTime(plan.options.config_info.warm_migration_cutover_datetime)
+        )}
+      </p>
+    </React.Fragment>
+  );
+
+  const confirmModalProps = {
+    title: __('Unschedule Cutover for Migration Plan'),
+    body: confirmationWarningText,
+    icon: <Icon className="confirm-warning-icon" type="pf" name="warning-triangle-o" />,
+    confirmButtonLabel: __('Unschedule')
+  };
+
+  const onConfirm = () => {
+    scheduleCutover({
+      plan,
+      cutoverTime: null
+    }).then(() => {
+      fetchTransformationPlansAction({
+        url: fetchTransformationPlansUrl,
+        archived: false
+      });
+    });
+    hideConfirmModalAction();
+  };
+
   // UX business rule: if there are any pre migration playbooks running,
   // or if all disks have been migrated and we have a post migration playbook running, show this instead
   if (
@@ -197,6 +233,18 @@ const MigrationInProgressListItem = ({
                     }}
                   >
                     {__('Edit Cutover')}
+                  </MenuItem>
+                  <MenuItem
+                    id={`delete_cutover_${plan.id}`}
+                    onClick={e => {
+                      e.stopPropagation();
+                      showConfirmModalAction({
+                        ...confirmModalProps,
+                        onConfirm
+                      });
+                    }}
+                  >
+                    {__('Delete Scheduled Cutover')}
                   </MenuItem>
                 </DropdownKebab>
               </StopPropagationOnClick>
@@ -261,6 +309,18 @@ const MigrationInProgressListItem = ({
                 >
                   {__('Edit Cutover')}
                 </MenuItem>
+                <MenuItem
+                  id={`delete_cutover_${plan.id}`}
+                  onClick={e => {
+                    e.stopPropagation();
+                    showConfirmModalAction({
+                      ...confirmModalProps,
+                      onConfirm
+                    });
+                  }}
+                >
+                  {__('Delete Scheduled Cutover')}
+                </MenuItem>
               </DropdownKebab>
             </StopPropagationOnClick>
           )}
@@ -287,7 +347,10 @@ MigrationInProgressListItem.propTypes = {
   isCancellingPlanRequest: PropTypes.bool,
   requestsProcessingCancellation: PropTypes.array,
   loading: PropTypes.bool,
-  toggleScheduleMigrationModal: PropTypes.func
+  toggleScheduleMigrationModal: PropTypes.func,
+  showConfirmModalAction: PropTypes.func,
+  hideConfirmModalAction: PropTypes.func,
+  scheduleCutover: PropTypes.func
 };
 
 export default MigrationInProgressListItem;
