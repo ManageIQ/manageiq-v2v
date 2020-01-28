@@ -114,7 +114,7 @@ export class GeneralSettings extends React.Component {
             </Form.FormGroup>
             <Form.FormGroup />
             <div>
-              <h3>{__('Resource Utilization Limits for Migrations')}</h3>
+              <h3>{__('Resource Utilization Limits for Migrations') /* TODO remove CPU throttling */}</h3>
             </div>
             <Field
               id="cpu_limit_per_host"

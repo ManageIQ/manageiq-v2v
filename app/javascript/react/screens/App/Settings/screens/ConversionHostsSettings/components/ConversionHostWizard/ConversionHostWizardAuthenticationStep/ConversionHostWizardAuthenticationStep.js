@@ -79,6 +79,7 @@ const ConversionHostWizardAuthenticationStep = ({
         />
       )}
       {selectedProviderType === OPENSTACK && (
+        // TODO collect CA certs for RHV too, see chat with Fabien for strings.
         <React.Fragment>
           <Field
             {...fieldBaseProps}
