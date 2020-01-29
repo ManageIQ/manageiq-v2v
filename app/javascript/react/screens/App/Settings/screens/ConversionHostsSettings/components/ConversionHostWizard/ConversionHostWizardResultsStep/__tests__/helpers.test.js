@@ -8,7 +8,7 @@ describe('conversion host wizard results step helpers', () => {
   };
   const commonAuthStepValues = {
     conversionHostSshKey: { body: 'mock conversion host SSH key body' },
-    openstackCaCerts: { body: '' }
+    caCerts: { body: '' }
   };
   const vddkAuthStepValues = {
     ...commonAuthStepValues,
@@ -58,7 +58,7 @@ describe('conversion host wizard results step helpers', () => {
       const postBodies = getConfigureConversionHostPostBodies(locationStepValues, hostsStepValues, {
         ...sshAuthStepValues,
         openstackUser: 'cloud-user',
-        openstackCaCerts: { body: 'mock openstack CA certs body' }
+        caCerts: { body: 'mock CA certs body' }
       });
       expect(postBodies).toMatchSnapshot();
     });
