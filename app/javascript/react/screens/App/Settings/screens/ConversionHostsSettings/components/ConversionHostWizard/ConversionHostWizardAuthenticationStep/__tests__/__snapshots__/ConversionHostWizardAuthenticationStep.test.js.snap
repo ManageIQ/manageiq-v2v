@@ -66,18 +66,16 @@ exports[`conversion host wizard authentication step renders correctly in the ini
       ]
     }
   />
-  <React.Fragment>
-    <Field
-      component={[Function]}
-      controlId="verify-openstack-certs"
-      controlWidth={7}
-      label="Verify TLS Certificates for OpenStack"
-      labelWidth={4}
-      name="verifyOpenstackCerts"
-      style={
-        Object {
-          "marginTop": 25,
-        }
+  <Field
+    component={[Function]}
+    controlId="verify-ca-certs"
+    controlWidth={7}
+    label="Verify TLS Certificates"
+    labelWidth={4}
+    name="verifyCaCerts"
+    style={
+      Object {
+        "marginTop": 25,
       }
       validate={[Function]}
     />
@@ -136,6 +134,22 @@ exports[`conversion host wizard authentication step renders correctly in the ini
       ]
     }
   />
+  <Field
+    component={[Function]}
+    controlId="verify-ca-certs"
+    controlWidth={7}
+    label="Verify TLS Certificates"
+    labelWidth={4}
+    name="verifyCaCerts"
+    style={
+      Object {
+        "marginTop": 25,
+      }
+    }
+    validate={[Function]}
+  >
+    <Component />
+  </Field>
 </Form>
 `;
 
@@ -199,6 +213,22 @@ exports[`conversion host wizard authentication step renders correctly with SSH t
     labelWidth={4}
     name="vmwareSshKey"
   />
+  <Field
+    component={[Function]}
+    controlId="verify-ca-certs"
+    controlWidth={7}
+    label="Verify TLS Certificates"
+    labelWidth={4}
+    name="verifyCaCerts"
+    style={
+      Object {
+        "marginTop": 25,
+      }
+    }
+    validate={[Function]}
+  >
+    <Component />
+  </Field>
 </Form>
 `;
 
@@ -269,10 +299,26 @@ exports[`conversion host wizard authentication step renders correctly with VDDK 
       ]
     }
   />
+  <Field
+    component={[Function]}
+    controlId="verify-ca-certs"
+    controlWidth={7}
+    label="Verify TLS Certificates"
+    labelWidth={4}
+    name="verifyCaCerts"
+    style={
+      Object {
+        "marginTop": 25,
+      }
+    }
+    validate={[Function]}
+  >
+    <Component />
+  </Field>
 </Form>
 `;
 
-exports[`conversion host wizard authentication step renders correctly with verify OSP TLS certs turned on 1`] = `
+exports[`conversion host wizard authentication step renders correctly with verify TLS certs turned on 1`] = `
 <Form
   bsClass="form"
   className="form-horizontal"
@@ -338,31 +384,30 @@ exports[`conversion host wizard authentication step renders correctly with verif
       ]
     }
   />
-  <React.Fragment>
-    <Field
-      component={[Function]}
-      controlId="verify-openstack-certs"
-      controlWidth={7}
-      label="Verify TLS Certificates for OpenStack"
-      labelWidth={4}
-      name="verifyOpenstackCerts"
-      style={
-        Object {
-          "marginTop": 25,
-        }
+  <Field
+    component={[Function]}
+    controlId="verify-ca-certs"
+    controlWidth={7}
+    label="Verify TLS Certificates"
+    labelWidth={4}
+    name="verifyCaCerts"
+    style={
+      Object {
+        "marginTop": 25,
       }
-      validate={[Function]}
-    />
-    <TextFileField
-      controlId="openstack-ca-certs-input"
-      controlWidth={7}
-      help="Upload your certificates file, in PEM format, or paste its contents below."
-      hideBody={false}
-      label="OpenStack Trusted CA Certificates"
-      labelWidth={4}
-      name="openstackCaCerts"
-    />
-  </React.Fragment>
+    }
+  >
+    <Component />
+  </Field>
+  <TextFileField
+    controlId="ca-certs-input"
+    controlWidth={7}
+    help="Upload your certificates file, in PEM format, or paste its contents below."
+    hideBody={false}
+    label="Trusted CA Certificates"
+    labelWidth={4}
+    name="caCerts"
+  />
 </Form>
 `;
 
@@ -409,34 +454,22 @@ exports[`conversion host wizard authentication step renders the redux-form wrapp
       "subscribe": [Function],
       Symbol(observable): [Function],
     }
-  }
-  touchOnBlur={true}
-  touchOnChange={false}
-  updateUnregisteredFields={false}
-  verifyOpenstackCerts={null}
-/>
-`;
-
-exports[`conversion host wizard authentication step renders the verify TLS certs switch correctly 1`] = `
-<Switch
-  animate={true}
-  baseClass="bootstrap-switch"
-  bsSize="normal"
-  defaultValue={false}
-  disabled={false}
-  handleWidth="auto"
-  id="verify-openstack-certs-switch"
-  inverse={false}
-  labelText=" "
-  labelWidth="auto"
-  offColor="default"
-  offText="No"
-  onChange={[Function]}
-  onColor="primary"
-  onText="Yes"
-  readonly={false}
-  tristate={false}
-  value={false}
-  wrapperClass="wrapper"
-/>
+  />
+  <Field
+    component={[Function]}
+    controlId="verify-ca-certs"
+    controlWidth={7}
+    label="Verify TLS Certificates"
+    labelWidth={4}
+    name="verifyCaCerts"
+    style={
+      Object {
+        "marginTop": 25,
+      }
+    }
+    validate={[Function]}
+  >
+    <Component />
+  </Field>
+</Form>
 `;
