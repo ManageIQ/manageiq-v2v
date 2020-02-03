@@ -1,17 +1,11 @@
 ---
-- include_tasks: "check-transport-vddk-facts.yml"
+- name: Stat VDDK library
+  stat:
+    path: "{{ v2v_vddk_install_dir }}/vmware-vix-disklib-distrib/lib64/libvixDiskLib.so"
+  ignore_errors: "yes"
+  register: stat_vddk_library
 
 - name: Assert that VDDK library is installed
   assert:
-    that: "{{ v2v_vddk_library_installed }}"
+    that: "{{ stat_vddk_library.stat.exists }}"
     msg: "VDDK library is not installed"
-
-- name: Assert that VDDK nbdkit plugin is installed
-  assert:
-    that: "{{ v2v_nbdkit_plugin_installed }}"
-    msg: "VDDK nbdkit plugin is not installed"
-
-- name: Assert that VDDK nbdkit plugin test succeeded
-  assert:
-    that: "{{ v2v_nbdkit_plugin_working }}"
-    msg: "VDDK nbdkit plugin failed validation"

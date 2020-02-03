@@ -1,10 +1,8 @@
 ---
 - name: Check variables definition
   assert:
-    that: "{{ item }} is defined"
-    msg: "Variable '{{ item }}' is mandatory to {{ role_action }} VDDK plugin."
-  with_items:
-    - v2v_vddk_install_dir
+    that: "v2v_vddk_install_dir is defined"
+    msg: "Variable 'v2v_vddk_install_dir' is mandatory to {{ role_action }} VDDK plugin."
 
 - name: Remove VDDK library
   file:
