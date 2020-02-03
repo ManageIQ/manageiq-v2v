@@ -2,5 +2,5 @@
 - name: Enable conversion host role
   hosts: all
   roles:
-    - role: oVirt.v2v-conversion-host
+    - role: manageiq.v2v-conversion-host
       role_action: install
