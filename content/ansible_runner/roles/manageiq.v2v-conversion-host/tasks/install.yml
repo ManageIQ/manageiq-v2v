@@ -1,0 +1,4 @@
+---
+- include_tasks: "install-transport-{{ v2v_transport_method }}.yml"
+
+- include_tasks: "install-provider-ssl-ca-chain.yml"

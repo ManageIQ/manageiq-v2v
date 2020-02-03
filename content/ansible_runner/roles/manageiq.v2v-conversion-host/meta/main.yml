@@ -1,0 +1,12 @@
+---
+galaxy_info:
+  author: Fabien Dupont, Tomáš Golembiovský
+  description: Setup machine based on Universal Conversion Image as conversion host for ManageIQ
+  company: Red Hat, Inc.
+  license: Apache License 2.0
+  min_ansible_version: 2.4
+  platforms:
+    - name: EL
+      versions:
+        - 8
+  galaxy_tags: [conversion, v2v, manageiq]

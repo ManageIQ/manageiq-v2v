@@ -1,0 +1,38 @@
+---
+- name: Check that some vars are defined
+  assert:
+    that: "{{ item }} is defined"
+    msg: "Variable '{{ item }}' is mandatory to {{ role_action }} VDDK plugin."
+  with_items:
+    - v2v_vddk_install_dir
+    - v2v_vddk_package_url
+
+- include_tasks: "check-transport-vddk-facts.yml"
+
+- block:
+    - name: Clean any previous VDDK
+      file:
+        path: "{{ v2v_vddk_install_dir }}/vmware-vix-disklib-distrib/"
+        state: absent
+
+    - name: Create directory for VDDK
+      file:
+        path: "{{ v2v_vddk_install_dir }}"
+        state: directory
+        mode: 0755
+
+    - name: Extract VDDK
+      unarchive:
+        src: "{{ v2v_vddk_package_url }}"
+        dest: "{{ v2v_vddk_install_dir }}"
+        remote_src: true
+
+  when:
+    - not v2v_vddk_library_installed or
+      not v2v_nbdkit_plugin_installed or
+      not v2v_nbdkit_plugin_working
+
+- name: Make sure VDDK plugin is installed
+  yum:
+    state: "{{ v2v_yum_check }}"
+    name: nbdkit-plugin-vddk

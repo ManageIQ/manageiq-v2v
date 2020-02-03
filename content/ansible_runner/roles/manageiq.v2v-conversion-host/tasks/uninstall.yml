@@ -1,0 +1,4 @@
+---
+- include_tasks: "uninstall-provider-ssl-ca-chain.yml"
+
+- include_tasks: "uninstall-transport-{{ v2v_transport_method }}.yml"

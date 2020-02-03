@@ -1,0 +1,11 @@
+---
+- name: Create CA chain file in anchors
+  copy:
+    dest: "/etc/pki/ca-trust/source/anchors/v2v-conversion-host-ca-bundle.pem"
+    content: "{{ v2v_ca_bundle }}"
+    owner: root
+    group: root
+    mode: 0644
+  notify: Update ca-trust bundle
+  when:
+    - "v2v_ca_bundle is defined"

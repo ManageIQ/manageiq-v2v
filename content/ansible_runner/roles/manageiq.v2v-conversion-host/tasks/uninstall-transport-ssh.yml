@@ -1,0 +1,13 @@
+---
+- name: Set facts ssh_config_path, ssh_config_owner
+  set_fact:
+    ssh_config_path: "/root/.ssh"
+    ssh_config_owner: "root"
+
+- name: Delete SSH private key file for VMware host
+  file:
+    path: "{{ ssh_config_path }}/id_rsa"
+    state: absent
+  when:
+    - "v2v_ssh_private_key is defined"
+    - "ssh_config_path is defined"

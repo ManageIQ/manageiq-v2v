@@ -1,0 +1,12 @@
+---
+- name: Check variables definition
+  assert:
+    that: "{{ item }} is defined"
+    msg: "Variable '{{ item }}' is mandatory to {{ role_action }} VDDK plugin."
+  with_items:
+    - v2v_vddk_install_dir
+
+- name: Remove VDDK library
+  file:
+    path: "{{ v2v_vddk_install_dir }}/vmware-vix-disklib-distrib"
+    state: absent

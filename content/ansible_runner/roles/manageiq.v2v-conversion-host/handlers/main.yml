@@ -1,0 +1,3 @@
+---
+- name: Update ca-trust bundle
+  command: /usr/bin/update-ca-trust
