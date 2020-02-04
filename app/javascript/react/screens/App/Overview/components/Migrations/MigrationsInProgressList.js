@@ -30,7 +30,9 @@ const MigrationsInProgressList = ({
   scheduleMigrationPlan,
   scheduleMigration,
   scheduleMigrationNow,
-  scheduleCutover
+  scheduleCutover,
+  showConfirmModalAction,
+  hideConfirmModalAction
 }) => (
   <React.Fragment>
     <Grid.Col xs={12} id="progress-bar-items">
@@ -77,6 +79,9 @@ const MigrationsInProgressList = ({
                       requestsProcessingCancellation={requestsProcessingCancellation}
                       loading={loading}
                       toggleScheduleMigrationModal={toggleScheduleMigrationModal}
+                      showConfirmModalAction={showConfirmModalAction}
+                      hideConfirmModalAction={hideConfirmModalAction}
+                      scheduleCutover={scheduleCutover}
                     />
                   ))}
                 </ListViewTable>
@@ -129,7 +134,9 @@ MigrationsInProgressList.propTypes = {
   scheduleMigrationPlan: PropTypes.object,
   scheduleMigration: PropTypes.func,
   scheduleMigrationNow: PropTypes.func,
-  scheduleCutover: PropTypes.func
+  scheduleCutover: PropTypes.func,
+  showConfirmModalAction: PropTypes.func,
+  hideConfirmModalAction: PropTypes.func
 };
 
 MigrationsInProgressList.defaultProps = {

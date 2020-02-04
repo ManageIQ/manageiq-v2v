@@ -163,6 +163,8 @@ class Migrations extends React.Component {
                 scheduleMigration={scheduleMigration}
                 scheduleMigrationNow={createTransformationPlanRequestClick}
                 scheduleCutover={scheduleCutover}
+                showConfirmModalAction={showConfirmModalAction}
+                hideConfirmModalAction={hideConfirmModalAction}
               />
             )}
             {activeFilter === MIGRATIONS_FILTERS.completed && (
