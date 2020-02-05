@@ -20,9 +20,12 @@ const TextFileInput = ({ value: { filename, body }, onChange, onBlur, help, hide
   const clear = () => onChange({ filename: '', body: '' });
 
   return (
-    <Dropzone onDrop={onFileDrop} onClick={event => event.preventDefault()}>
+    <Dropzone onDrop={onFileDrop}>
       {({ getRootProps, getInputProps, isDragActive, open }) => (
-        <div {...getRootProps()} className={classNames('text-file-input__dropzone', { active: isDragActive })}>
+        <div
+          {...getRootProps({ onClick: event => event.stopPropagation() })}
+          className={classNames('text-file-input__dropzone', { active: isDragActive })}
+        >
           <input {...getInputProps()} />
           <Form.InputGroup>
             <Form.FormControl type="text" disabled value={filename} />
