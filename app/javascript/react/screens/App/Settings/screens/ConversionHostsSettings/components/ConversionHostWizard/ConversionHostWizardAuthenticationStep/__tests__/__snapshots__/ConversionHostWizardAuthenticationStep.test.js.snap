@@ -147,7 +147,6 @@ exports[`conversion host wizard authentication step renders correctly in the ini
         "marginTop": 25,
       }
     }
-    validate={[Function]}
   >
     <Component />
   </Field>
@@ -226,7 +225,6 @@ exports[`conversion host wizard authentication step renders correctly with SSH t
         "marginTop": 25,
       }
     }
-    validate={[Function]}
   >
     <Component />
   </Field>
@@ -312,7 +310,6 @@ exports[`conversion host wizard authentication step renders correctly with VDDK 
         "marginTop": 25,
       }
     }
-    validate={[Function]}
   >
     <Component />
   </Field>
@@ -475,7 +472,6 @@ exports[`conversion host wizard authentication step renders the redux-form wrapp
         "marginTop": 25,
       }
     }
-    validate={[Function]}
   >
     <Component />
   </Field>
