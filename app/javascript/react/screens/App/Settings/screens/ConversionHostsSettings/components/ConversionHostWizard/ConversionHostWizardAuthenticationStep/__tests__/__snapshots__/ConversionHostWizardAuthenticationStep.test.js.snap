@@ -78,7 +78,6 @@ exports[`conversion host wizard authentication step renders correctly in the ini
         "marginTop": 25,
       }
     }
-    validate={[Function]}
   >
     <Component />
   </Field>
@@ -350,7 +349,6 @@ exports[`conversion host wizard authentication step renders correctly with verif
         "marginTop": 25,
       }
     }
-    validate={[Function]}
   >
     <Component />
   </Field>
