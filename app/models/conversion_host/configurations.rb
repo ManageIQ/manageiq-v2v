@@ -1,11 +1,11 @@
 module ConversionHost::Configurations
   extend ActiveSupport::Concern
   module ClassMethods
-    def notify_configuration_result(op, success, resource_info)
+    def notify_configuration_result(operation, success, resource_info)
       Notification.create(
         :type    => success ? :conversion_host_config_success : :conversion_host_config_failure,
         :options => {
-          :op_name => op,
+          :op_name => operation,
           :op_arg  => resource_info,
         }
       )
@@ -16,15 +16,15 @@ module ConversionHost::Configurations
     # instance id, resource and parameters are all mandatory. The auth user is
     # optional.
     #
-    def queue_configuration(op, instance_id, resource, params, auth_user = nil)
+    def queue_configuration(operation, instance_id, resource, params, auth_user = nil)
       task_opts = {
-        :action => "Configuring a conversion_host: operation=#{op} resource=(name: #{resource.name} type: #{resource.class.name} id: #{resource.id})",
+        :action => "Configuring a conversion_host: operation=#{operation} resource=(name: #{resource.name} type: #{resource.class.name} id: #{resource.id})",
         :userid => auth_user
       }
 
       queue_opts = {
         :class_name  => name,
-        :method_name => op,
+        :method_name => opeation,
         :instance_id => instance_id,
         :role        => 'ems_operations',
         :zone        => resource.ext_management_system.my_zone,
@@ -97,8 +97,6 @@ module ConversionHost::Configurations
           end
         end
       end
-    rescue StandardError => error
-      raise
     ensure
       resource_info = "type=#{params[:resource_type]} id=#{params[:resource_id]}"
       notify_configuration_result('enable', error.nil?, resource_info)
@@ -115,8 +113,6 @@ module ConversionHost::Configurations
 
     disable_conversion_host_role
     destroy!
-  rescue StandardError => error
-    raise
   ensure
     self.class.notify_configuration_result('disable', error.nil?, resource_info)
   end

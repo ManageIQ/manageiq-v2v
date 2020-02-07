@@ -503,7 +503,7 @@ RSpec.describe ConversionHost, :v2v do
   context "#run_conversion" do
     let(:vm) { FactoryBot.create(:vm_openstack) }
     let(:conversion_host) { FactoryBot.create(:conversion_host, :resource => vm) }
-    let(:conversion_options) { {:foo => 1, :bar => 'hello', :password => 'xxx', :ssh_key => 'xyz' } }
+    let(:conversion_options) { {:foo => 1, :bar => 'hello', :password => 'xxx', :ssh_key => 'xyz'} }
     let(:filtered_options) { conversion_options.clone.update(:ssh_key => '__FILTERED__', :password => '__FILTERED__') }
 
     it "works as expected if the connection is successful and the JSON is valid" do
@@ -564,7 +564,7 @@ RSpec.describe ConversionHost, :v2v do
     let(:vm) { FactoryBot.create(:vm_openstack) }
     let(:conversion_host) { FactoryBot.create(:conversion_host, :resource => vm) }
     let(:path) { 'some_path' }
-    let(:limits) { { :cpu => '50', :network => '10' } }
+    let(:limits) { {:cpu => '50', :network => '10'} }
 
     it "works as expected if the connection is successful and the JSON is generated" do
       allow(conversion_host).to receive(:connect_ssh).and_return(true)

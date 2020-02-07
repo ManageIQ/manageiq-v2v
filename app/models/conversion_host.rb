@@ -9,21 +9,21 @@ class ConversionHost < ApplicationRecord
   belongs_to :resource, :polymorphic => true
   has_many :service_template_transformation_plan_tasks, :dependent => :nullify
   has_many :active_tasks, -> { where(:state => ['active', 'migrate', 'pending']) },
-    :class_name => "ServiceTemplateTransformationPlanTask",
-    :inverse_of => :conversion_host
+           :class_name => "ServiceTemplateTransformationPlanTask",
+           :inverse_of => :conversion_host
 
   delegate :ext_management_system, :hostname, :ems_ref, :to => :resource, :allow_nil => true
 
   validates :name, :presence => true
   validates :resource, :presence => true
-  validates :resource_id, :uniqueness => { :scope => :resource_type }
+  validates :resource_id, :uniqueness => {:scope => :resource_type}
 
   validates :address,
-    :uniqueness => true,
-    :format     => { :with => Resolv::AddressRegex },
-    :inclusion  => { :in => ->(conversion_host) { conversion_host.resource.ipaddresses } },
-    :unless     => ->(conversion_host) { conversion_host.address.blank? || conversion_host.resource.blank? || conversion_host.resource.ipaddresses.blank? },
-    :presence   => false
+            :uniqueness => true,
+            :format     => {:with => Resolv::AddressRegex},
+            :inclusion  => {:in => ->(conversion_host) { conversion_host.resource.ipaddresses }},
+            :unless     => ->(conversion_host) { conversion_host.address.blank? || conversion_host.resource.blank? || conversion_host.resource.ipaddresses.blank? },
+            :presence   => false
 
   validate :resource_supports_conversion_host
 
@@ -56,7 +56,7 @@ class ConversionHost < ApplicationRecord
 
       auth = authentication_type(auth_type) || authentications.first
 
-      ssh_options = { :timeout => 10, :use_agent => false }
+      ssh_options = {:timeout => 10, :use_agent => false}
 
       case auth
       when AuthUseridPassword
@@ -81,7 +81,7 @@ class ConversionHost < ApplicationRecord
     raise MiqException::MiqInvalidCredentialsError, _("Incorrect credentials - %{error_message}") % {:error_message => err.message}
   rescue Net::SSH::HostKeyMismatch => err
     raise MiqException::MiqSshUtilHostKeyMismatch, _("Host key mismatch - %{error_message}") % {:error_message => err.message}
-  rescue Exception => err
+  rescue => err
     raise _("Unknown error - %{error_message}") % {:error_message => err.message}
   else
     true
@@ -126,7 +126,7 @@ class ConversionHost < ApplicationRecord
   def check_ssh_connection
     connect_ssh { |ssu| ssu.shell_exec('uname -a') }
     true
-  rescue StandardError
+  rescue
     false
   end
 
@@ -144,6 +144,7 @@ class ConversionHost < ApplicationRecord
   #
   def ipaddress(family = 'ipv4')
     return address if address.present? && IPAddr.new(address).send("#{family}?")
+
     resource.ipaddresses.detect { |ip| IPAddr.new(ip).send("#{family}?") }
   end
 
@@ -164,7 +165,7 @@ class ConversionHost < ApplicationRecord
     raise "Failed to connect and apply limits in file '#{path}' with [#{err.class}: #{err}]"
   rescue JSON::GeneratorError => err
     raise "Could not generate JSON from limits '#{limits}' with [#{err.class}: #{err}]"
-  rescue StandardError => err
+  rescue => err
     raise "Could not apply the limits in '#{path}' on '#{resource.name}' with [#{err.class}: #{err}]"
   end
 
@@ -183,14 +184,14 @@ class ConversionHost < ApplicationRecord
     raise "Failed to connect and run conversion using options #{filtered_options} with [#{err.class}: #{err}]"
   rescue JSON::ParserError
     raise "Could not parse result data after running virt-v2v-wrapper using options: #{filtered_options}. Result was: #{result}."
-  rescue StandardError => err
+  rescue => err
     raise "Starting conversion failed on '#{resource.name}' with [#{err.class}: #{err}]"
   end
 
   def create_cutover_file(path)
     connect_ssh { |ssu| ssu.shell_exec("touch #{path}") }
     true
-  rescue StandardError
+  rescue
     false
   end
 
@@ -214,7 +215,7 @@ class ConversionHost < ApplicationRecord
     raise "Failed to connect and retrieve conversion state data from file '#{path}' with [#{err.class}: #{err}"
   rescue JSON::ParserError
     raise "Could not parse conversion state data from file '#{path}': #{json_state}"
-  rescue StandardError => err
+  rescue => err
     raise "Error retrieving and parsing conversion state file '#{path}' from '#{resource.name}' with [#{err.class}: #{err}"
   end
 
@@ -241,6 +242,7 @@ class ConversionHost < ApplicationRecord
   def enable_conversion_host_role(vmware_vddk_package_url = nil, vmware_ssh_private_key = nil, tls_ca_certs = nil, miq_task_id = nil)
     raise "vmware_vddk_package_url is mandatory if transformation method is vddk" if vddk_transport_supported && vmware_vddk_package_url.nil?
     raise "vmware_ssh_private_key is mandatory if transformation_method is ssh" if ssh_transport_supported && vmware_ssh_private_key.nil?
+
     playbook = "/usr/share/v2v-conversion-host-ansible/playbooks/conversion_host_enable.yml"
     extra_vars = {
       :v2v_host_type        => resource.ext_management_system.emstype,
@@ -307,8 +309,8 @@ class ConversionHost < ApplicationRecord
     MiqSshUtil.shell_with_su(*miq_ssh_util_args) do |ssu, _shell|
       yield(ssu)
     end
-  rescue Exception => e
-    _log.error("SSH connection failed for [#{ipaddress}] with [#{e.class}: #{e}]")
+  rescue => err
+    _log.error("SSH connection failed for [#{ipaddress}] with [#{err.class}: #{err}]")
     raise e
   end
 
@@ -319,7 +321,7 @@ class ConversionHost < ApplicationRecord
     authentication = find_credentials
     case authentication.type
     when 'AuthPrivateKey', 'AuthToken'
-      [host, authentication.userid, nil, nil, nil, { :key_data => authentication.auth_key, :passwordless_sudo => true }]
+      [host, authentication.userid, nil, nil, nil, {:key_data => authentication.auth_key, :passwordless_sudo => true}]
     when 'AuthUseridPassword'
       [host, authentication.userid, authentication.password, nil, nil]
     else
