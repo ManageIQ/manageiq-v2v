@@ -87,7 +87,6 @@ export const ConversionHostWizardAuthenticationStep = ({
             component={FormField}
             controlId="verify-openstack-certs"
             style={{ marginTop: 25 }}
-            validate={() => undefined} // Force redux-form to re-run validation when this field changes, since it can unmount openstackCaCerts
           >
             {({ input: { value, onChange } }) => (
               <Switch
@@ -126,6 +125,7 @@ export default reduxForm({
   form: stepIDs.authenticationStep,
   destroyOnUnmount: false,
   forceUnregisterOnUnmount: true,
+  shouldError: () => true, // Force validation to re-run on every field change so unmounted fields get excluded
   initialValues: {
     openstackUser: 'cloud-user',
     conversionHostSshKey: { filename: '', body: '' },
