@@ -66,16 +66,18 @@ exports[`conversion host wizard authentication step renders correctly in the ini
       ]
     }
   />
-  <Field
-    component={[Function]}
-    controlId="verify-ca-certs"
-    controlWidth={7}
-    label="Verify TLS Certificates"
-    labelWidth={4}
-    name="verifyCaCerts"
-    style={
-      Object {
-        "marginTop": 25,
+  <React.Fragment>
+    <Field
+      component={[Function]}
+      controlId="verify-ca-certs"
+      controlWidth={7}
+      label="Verify TLS Certificates"
+      labelWidth={4}
+      name="verifyCaCerts"
+      style={
+        Object {
+          "marginTop": 25,
+        }
       }
       validate={[Function]}
     />
@@ -134,22 +136,22 @@ exports[`conversion host wizard authentication step renders correctly in the ini
       ]
     }
   />
-  <Field
-    component={[Function]}
-    controlId="verify-ca-certs"
-    controlWidth={7}
-    label="Verify TLS Certificates"
-    labelWidth={4}
-    name="verifyCaCerts"
-    style={
-      Object {
-        "marginTop": 25,
+  <React.Fragment>
+    <Field
+      component={[Function]}
+      controlId="verify-ca-certs"
+      controlWidth={7}
+      label="Verify TLS Certificates"
+      labelWidth={4}
+      name="verifyCaCerts"
+      style={
+        Object {
+          "marginTop": 25,
+        }
       }
-    }
-    validate={[Function]}
-  >
-    <Component />
-  </Field>
+      validate={[Function]}
+    />
+  </React.Fragment>
 </Form>
 `;
 
@@ -213,22 +215,22 @@ exports[`conversion host wizard authentication step renders correctly with SSH t
     labelWidth={4}
     name="vmwareSshKey"
   />
-  <Field
-    component={[Function]}
-    controlId="verify-ca-certs"
-    controlWidth={7}
-    label="Verify TLS Certificates"
-    labelWidth={4}
-    name="verifyCaCerts"
-    style={
-      Object {
-        "marginTop": 25,
+  <React.Fragment>
+    <Field
+      component={[Function]}
+      controlId="verify-ca-certs"
+      controlWidth={7}
+      label="Verify TLS Certificates"
+      labelWidth={4}
+      name="verifyCaCerts"
+      style={
+        Object {
+          "marginTop": 25,
+        }
       }
-    }
-    validate={[Function]}
-  >
-    <Component />
-  </Field>
+      validate={[Function]}
+    />
+  </React.Fragment>
 </Form>
 `;
 
@@ -299,22 +301,22 @@ exports[`conversion host wizard authentication step renders correctly with VDDK 
       ]
     }
   />
-  <Field
-    component={[Function]}
-    controlId="verify-ca-certs"
-    controlWidth={7}
-    label="Verify TLS Certificates"
-    labelWidth={4}
-    name="verifyCaCerts"
-    style={
-      Object {
-        "marginTop": 25,
+  <React.Fragment>
+    <Field
+      component={[Function]}
+      controlId="verify-ca-certs"
+      controlWidth={7}
+      label="Verify TLS Certificates"
+      labelWidth={4}
+      name="verifyCaCerts"
+      style={
+        Object {
+          "marginTop": 25,
+        }
       }
-    }
-    validate={[Function]}
-  >
-    <Component />
-  </Field>
+      validate={[Function]}
+    />
+  </React.Fragment>
 </Form>
 `;
 
@@ -384,30 +386,31 @@ exports[`conversion host wizard authentication step renders correctly with verif
       ]
     }
   />
-  <Field
-    component={[Function]}
-    controlId="verify-ca-certs"
-    controlWidth={7}
-    label="Verify TLS Certificates"
-    labelWidth={4}
-    name="verifyCaCerts"
-    style={
-      Object {
-        "marginTop": 25,
+  <React.Fragment>
+    <Field
+      component={[Function]}
+      controlId="verify-ca-certs"
+      controlWidth={7}
+      label="Verify TLS Certificates"
+      labelWidth={4}
+      name="verifyCaCerts"
+      style={
+        Object {
+          "marginTop": 25,
+        }
       }
-    }
-  >
-    <Component />
-  </Field>
-  <TextFileField
-    controlId="ca-certs-input"
-    controlWidth={7}
-    help="Upload your certificates file, in PEM format, or paste its contents below."
-    hideBody={false}
-    label="Trusted CA Certificates"
-    labelWidth={4}
-    name="caCerts"
-  />
+      validate={[Function]}
+    />
+    <TextFileField
+      controlId="ca-certs-input"
+      controlWidth={7}
+      help="Upload your certificates file, in PEM format, or paste its contents below."
+      hideBody={false}
+      label="Trusted CA Certificates"
+      labelWidth={4}
+      name="caCerts"
+    />
+  </React.Fragment>
 </Form>
 `;
 
@@ -420,17 +423,17 @@ exports[`conversion host wizard authentication step renders the redux-form wrapp
   getFormState={[Function]}
   initialValues={
     Object {
-      "conversionHostSshKey": Object {
+      "caCerts": Object {
         "body": "",
         "filename": "",
       },
-      "openstackCaCerts": Object {
+      "conversionHostSshKey": Object {
         "body": "",
         "filename": "",
       },
       "openstackUser": "cloud-user",
       "transformationMethod": "VDDK",
-      "verifyOpenstackCerts": false,
+      "verifyCaCerts": false,
       "vmwareSshKey": Object {
         "body": "",
         "filename": "",
@@ -454,22 +457,34 @@ exports[`conversion host wizard authentication step renders the redux-form wrapp
       "subscribe": [Function],
       Symbol(observable): [Function],
     }
-  />
-  <Field
-    component={[Function]}
-    controlId="verify-ca-certs"
-    controlWidth={7}
-    label="Verify TLS Certificates"
-    labelWidth={4}
-    name="verifyCaCerts"
-    style={
-      Object {
-        "marginTop": 25,
-      }
-    }
-    validate={[Function]}
-  >
-    <Component />
-  </Field>
-</Form>
+  }
+  touchOnBlur={true}
+  touchOnChange={false}
+  updateUnregisteredFields={false}
+  verifyCaCerts={null}
+/>
+`;
+
+exports[`conversion host wizard authentication step renders the verify TLS certs switch correctly 1`] = `
+<Switch
+  animate={true}
+  baseClass="bootstrap-switch"
+  bsSize="normal"
+  defaultValue={false}
+  disabled={false}
+  handleWidth="auto"
+  id="verify-ca-certs-switch"
+  inverse={false}
+  labelText=" "
+  labelWidth="auto"
+  offColor="default"
+  offText="No"
+  onChange={[Function]}
+  onColor="primary"
+  onText="Yes"
+  readonly={false}
+  tristate={false}
+  value={false}
+  wrapperClass="wrapper"
+/>
 `;
