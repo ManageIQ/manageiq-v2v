@@ -81,3 +81,75 @@ describe('if there are no conversion hosts available', () => {
     });
   });
 });
+
+describe('warm migration without cutover date set', () => {
+  const plan = {
+    ...transformationPlans.resources[8],
+    transformation_mapping: { transformation_mapping_items: [] },
+    infraMappingName: 'name'
+  };
+  const [request] = plan.miq_requests;
+  const allRequestsWithTasks = [{ ...request, miq_request_tasks: [{ conversion_host_id: 1 }] }];
+  const baseProps = {
+    plan,
+    allRequestsWithTasks,
+    requestsProcessingCancellation: [],
+    loading: false
+  };
+
+  test('renders an in progress view', () => {
+    const wrapper = shallow(<MigrationInProgressListItem {...baseProps} />);
+    expect(wrapper).toMatchSnapshot();
+  });
+
+  test('clicking the schedule cutover button launches modal window', async () => {
+    const toggleScheduleMigrationModal = jest.fn(() => Promise.resolve());
+    const wrapper = mount(
+      <MigrationInProgressListItem {...baseProps} toggleScheduleMigrationModal={toggleScheduleMigrationModal} />
+    );
+
+    wrapper.find('button').simulate('click');
+    await expect(toggleScheduleMigrationModal).toHaveBeenCalledWith({ plan });
+  });
+});
+
+describe('warm migration with cutover date set', () => {
+  const plan = {
+    ...transformationPlans.resources[9],
+    transformation_mapping: { transformation_mapping_items: [] },
+    infraMappingName: 'name'
+  };
+  const [request] = plan.miq_requests;
+  const allRequestsWithTasks = [{ ...request, miq_request_tasks: [{ conversion_host_id: 1 }] }];
+  const baseProps = {
+    plan,
+    allRequestsWithTasks,
+    requestsProcessingCancellation: [],
+    loading: false
+  };
+
+  test('renders an in progress view', () => {
+    const wrapper = shallow(<MigrationInProgressListItem {...baseProps} />);
+    expect(wrapper).toMatchSnapshot();
+  });
+
+  test('clicking the edit cutover button launches modal window', async () => {
+    const toggleScheduleMigrationModal = jest.fn(() => Promise.resolve());
+    const wrapper = mount(
+      <MigrationInProgressListItem {...baseProps} toggleScheduleMigrationModal={toggleScheduleMigrationModal} />
+    );
+
+    wrapper.find('a[id^="edit_cutover"]').simulate('click');
+    await expect(toggleScheduleMigrationModal).toHaveBeenCalledWith({ plan });
+  });
+
+  test('clicking the delete cutover button launches confirmation window', async () => {
+    const showConfirmModalAction = jest.fn(() => Promise.resolve());
+    const wrapper = mount(
+      <MigrationInProgressListItem {...baseProps} showConfirmModalAction={showConfirmModalAction} />
+    );
+
+    wrapper.find('a[id^="delete_cutover"]').simulate('click');
+    await expect(showConfirmModalAction).toHaveBeenCalled();
+  });
+});

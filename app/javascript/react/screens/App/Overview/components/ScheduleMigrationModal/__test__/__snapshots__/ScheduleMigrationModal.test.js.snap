@@ -1,0 +1,256 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`When initialized with cold migration plan renders schedule migration modal 1`] = `
+<Modal
+  animation={true}
+  autoFocus={true}
+  backdrop="static"
+  bsClass="modal"
+  dialogComponentClass={[Function]}
+  enforceFocus={true}
+  keyboard={true}
+  manager={
+    ModalManager {
+      "add": [Function],
+      "containers": Array [],
+      "data": Array [],
+      "handleContainerOverflow": true,
+      "hideSiblingNodes": true,
+      "isTopModal": [Function],
+      "modals": Array [],
+      "remove": [Function],
+    }
+  }
+  onHide={[Function]}
+  renderBackdrop={[Function]}
+  restoreFocus={true}
+  show={true}
+>
+  <ModalHeader
+    bsClass="modal-header"
+    closeButton={false}
+    closeLabel="Close"
+  >
+    <ModalCloseButton
+      className=""
+      closeText="Close"
+      onClick={[Function]}
+    />
+    <ModalTitle
+      bsClass="modal-title"
+      componentClass="h4"
+    >
+      Schedule Migration
+    </ModalTitle>
+  </ModalHeader>
+  <ModalBody
+    bsClass="modal-body"
+    componentClass="div"
+  >
+    <ScheduleMigrationModalBody
+      defaultDate={1970-01-01T00:00:00.000Z}
+      handleDatepickerChange={[Function]}
+      setScheduleMode={[Function]}
+      showDatepicker={true}
+      startLaterLabel="Select date and time for the start of the migration"
+      startNowLabel="Start migration immediately"
+    />
+  </ModalBody>
+  <ModalFooter
+    bsClass="modal-footer"
+    componentClass="div"
+  >
+    <Button
+      active={false}
+      block={false}
+      bsClass="btn"
+      bsStyle="default"
+      className="btn-cancel"
+      disabled={false}
+      onClick={[Function]}
+    >
+      Cancel
+    </Button>
+    <Button
+      active={false}
+      block={false}
+      bsClass="btn"
+      bsStyle="primary"
+      disabled={false}
+      onClick={[Function]}
+    >
+      Schedule
+    </Button>
+  </ModalFooter>
+</Modal>
+`;
+
+exports[`When initialized with failed cold migration plan renders schedule retry modal 1`] = `
+<Modal
+  animation={true}
+  autoFocus={true}
+  backdrop="static"
+  bsClass="modal"
+  dialogComponentClass={[Function]}
+  enforceFocus={true}
+  keyboard={true}
+  manager={
+    ModalManager {
+      "add": [Function],
+      "containers": Array [],
+      "data": Array [],
+      "handleContainerOverflow": true,
+      "hideSiblingNodes": true,
+      "isTopModal": [Function],
+      "modals": Array [],
+      "remove": [Function],
+    }
+  }
+  onHide={[Function]}
+  renderBackdrop={[Function]}
+  restoreFocus={true}
+  show={true}
+>
+  <ModalHeader
+    bsClass="modal-header"
+    closeButton={false}
+    closeLabel="Close"
+  >
+    <ModalCloseButton
+      className=""
+      closeText="Close"
+      onClick={[Function]}
+    />
+    <ModalTitle
+      bsClass="modal-title"
+      componentClass="h4"
+    >
+      Schedule Retry
+    </ModalTitle>
+  </ModalHeader>
+  <ModalBody
+    bsClass="modal-body"
+    componentClass="div"
+  >
+    <ScheduleMigrationModalBody
+      defaultDate={1970-01-01T00:00:00.000Z}
+      handleDatepickerChange={[Function]}
+      setScheduleMode={[Function]}
+      showDatepicker={true}
+      startLaterLabel="Select date and time to retry migration"
+      startNowLabel="Retry migration immediately"
+    />
+  </ModalBody>
+  <ModalFooter
+    bsClass="modal-footer"
+    componentClass="div"
+  >
+    <Button
+      active={false}
+      block={false}
+      bsClass="btn"
+      bsStyle="default"
+      className="btn-cancel"
+      disabled={false}
+      onClick={[Function]}
+    >
+      Cancel
+    </Button>
+    <Button
+      active={false}
+      block={false}
+      bsClass="btn"
+      bsStyle="primary"
+      disabled={false}
+      onClick={[Function]}
+    >
+      Schedule
+    </Button>
+  </ModalFooter>
+</Modal>
+`;
+
+exports[`When initialized with warm migration plan renders schedule cutover modal 1`] = `
+<Modal
+  animation={true}
+  autoFocus={true}
+  backdrop="static"
+  bsClass="modal"
+  dialogComponentClass={[Function]}
+  enforceFocus={true}
+  keyboard={true}
+  manager={
+    ModalManager {
+      "add": [Function],
+      "containers": Array [],
+      "data": Array [],
+      "handleContainerOverflow": true,
+      "hideSiblingNodes": true,
+      "isTopModal": [Function],
+      "modals": Array [],
+      "remove": [Function],
+    }
+  }
+  onHide={[Function]}
+  renderBackdrop={[Function]}
+  restoreFocus={true}
+  show={true}
+>
+  <ModalHeader
+    bsClass="modal-header"
+    closeButton={false}
+    closeLabel="Close"
+  >
+    <ModalCloseButton
+      className=""
+      closeText="Close"
+      onClick={[Function]}
+    />
+    <ModalTitle
+      bsClass="modal-title"
+      componentClass="h4"
+    >
+      Schedule Cutover
+    </ModalTitle>
+  </ModalHeader>
+  <ModalBody
+    bsClass="modal-body"
+    componentClass="div"
+  >
+    <ScheduleMigrationModalBody
+      defaultDate={1970-01-01T00:00:00.000Z}
+      handleDatepickerChange={[Function]}
+      setScheduleMode={[Function]}
+      showDatepicker={true}
+      startLaterLabel="Select date and time to start cutover"
+      startNowLabel="Start cutover immediately"
+    />
+  </ModalBody>
+  <ModalFooter
+    bsClass="modal-footer"
+    componentClass="div"
+  >
+    <Button
+      active={false}
+      block={false}
+      bsClass="btn"
+      bsStyle="default"
+      className="btn-cancel"
+      disabled={false}
+      onClick={[Function]}
+    >
+      Cancel
+    </Button>
+    <Button
+      active={false}
+      block={false}
+      bsClass="btn"
+      bsStyle="primary"
+      disabled={false}
+      onClick={[Function]}
+    >
+      Schedule
+    </Button>
+  </ModalFooter>
+</Modal>
+`;

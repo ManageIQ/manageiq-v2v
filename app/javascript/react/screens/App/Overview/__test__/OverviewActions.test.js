@@ -41,7 +41,7 @@ describe('fetchTransformationPlansAction', () => {
         expect(actions[0].type).toBe('FETCH_V2V_TRANSFORMATION_PLANS_PENDING');
         expect(actions[1].type).toBe('FETCH_V2V_ALL_REQUESTS_WITH_TASKS_PENDING');
         expect(actions[2].type).toBe('FETCH_V2V_TRANSFORMATION_PLANS_FULFILLED');
-        expect(actions[2].payload.data.resources).toHaveLength(8);
+        expect(actions[2].payload.data.resources).toHaveLength(10);
       });
   });
 
