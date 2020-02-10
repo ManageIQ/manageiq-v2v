@@ -16,7 +16,7 @@ describe('conversion host wizard authentication step', () => {
   const baseProps = {
     selectedProviderType: RHV,
     selectedTransformationMethod: null,
-    verifyOpenstackCerts: null,
+    verifyCaCerts: null,
     store
   };
 
@@ -32,8 +32,8 @@ describe('conversion host wizard authentication step', () => {
     expect(component.find('Field[controlId="openstack-user-input"]')).toHaveLength(0);
     expect(component.find('TextFileField[controlId="vmware-ssh-key-input"]')).toHaveLength(0);
     expect(component.find('Field[controlId="vddk-library-path"]')).toHaveLength(0);
-    expect(component.find('Field[controlId="verify-openstack-certs"]')).toHaveLength(0);
-    expect(component.find('TextFileField[controlId="openstack-ca-certs-input"]')).toHaveLength(0);
+    expect(component.find('Field[controlId="verify-ca-certs"]')).toHaveLength(1);
+    expect(component.find('TextFileField[controlId="ca-certs-input"]')).toHaveLength(0);
     expect(component).toMatchSnapshot();
   });
 
@@ -44,8 +44,8 @@ describe('conversion host wizard authentication step', () => {
     expect(component.find('Field[controlId="openstack-user-input"]')).toHaveLength(1);
     expect(component.find('TextFileField[controlId="vmware-ssh-key-input"]')).toHaveLength(0);
     expect(component.find('Field[controlId="vddk-library-path"]')).toHaveLength(0);
-    expect(component.find('Field[controlId="verify-openstack-certs"]')).toHaveLength(1);
-    expect(component.find('TextFileField[controlId="openstack-ca-certs-input"]')).toHaveLength(0);
+    expect(component.find('Field[controlId="verify-ca-certs"]')).toHaveLength(1);
+    expect(component.find('TextFileField[controlId="ca-certs-input"]')).toHaveLength(0);
     expect(component).toMatchSnapshot();
   });
 
@@ -57,7 +57,7 @@ describe('conversion host wizard authentication step', () => {
     );
     const onSwitchChange = jest.fn();
     const switchRenderProp = component
-      .find('Field[controlId="verify-openstack-certs"]')
+      .find('Field[controlId="verify-ca-certs"]')
       .first()
       .props().children;
     const renderedSwitch = switchRenderProp({ input: { value: false, onChange: onSwitchChange } });
@@ -67,11 +67,11 @@ describe('conversion host wizard authentication step', () => {
     expect(onSwitchChange).toHaveBeenCalledWith(true);
   });
 
-  it('renders correctly with verify OSP TLS certs turned on', () => {
+  it('renders correctly with verify TLS certs turned on', () => {
     const component = shallow(
-      <ConversionHostWizardAuthenticationStep {...baseProps} selectedProviderType={OPENSTACK} verifyOpenstackCerts />
+      <ConversionHostWizardAuthenticationStep {...baseProps} selectedProviderType={OPENSTACK} verifyCaCerts />
     );
-    expect(component.find('TextFileField[controlId="openstack-ca-certs-input"]')).toHaveLength(1);
+    expect(component.find('TextFileField[controlId="ca-certs-input"]')).toHaveLength(1);
     expect(component).toMatchSnapshot();
   });
 

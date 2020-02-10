@@ -19,8 +19,7 @@ export const settings = Immutable({
   transformation: {
     limits: {
       max_concurrent_tasks_per_conversion_host: 10,
-      max_concurrent_tasks_per_ems: 10,
-      cpu_limit_per_host: 10
+      max_concurrent_tasks_per_ems: 10
     }
   },
   otherSettings: {
@@ -30,8 +29,7 @@ export const settings = Immutable({
 
 export const settingsFormValues = Immutable({
   max_concurrent_tasks_per_conversion_host: 10,
-  max_concurrent_tasks_per_ems: 10,
-  cpu_limit_per_host: 10
+  max_concurrent_tasks_per_ems: 10
 });
 
 export const fetchServersData = {
