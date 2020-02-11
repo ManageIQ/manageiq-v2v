@@ -42,6 +42,11 @@ export const sourceNetworksFilter = (groupedSourceNetworks, networksStepMappings
   );
 };
 
+export const sourceNetworkInfo = (sourceNetwork, selectedCluster) =>
+  `${sourceNetwork.providerName} \\ ${selectedCluster.v_parent_datacenter} \\ ${sourceNetwork.name}`;
+
+export const targetNetworkInfo = targetNetwork => `${targetNetwork.providerName} \\ ${targetNetwork.name}`;
+
 export const clustersMappingWithTreeViewAttrs = clusterMapping => ({
   ...clusterMapping,
   text: clusterMapping.name,
