@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`When initialized with cold migration plan renders Schedule Migration button 1`] = `
+<Button
+  active={false}
+  block={false}
+  bsClass="btn"
+  bsStyle="default"
+  disabled={false}
+  id="schedule_undefined"
+  onClick={[Function]}
+>
+  Schedule Migration
+</Button>
+`;
+
+exports[`When initialized with cold migration plan renders Schedule Retry button 1`] = `
+<Button
+  active={false}
+  block={false}
+  bsClass="btn"
+  bsStyle="default"
+  disabled={false}
+  id="schedule_undefined"
+  onClick={[Function]}
+>
+  Schedule Retry
+</Button>
+`;
+
+exports[`When initialized with warm migration plan renders Schedule Cutover button 1`] = `
+<Button
+  active={false}
+  block={false}
+  bsClass="btn"
+  bsStyle="default"
+  disabled={false}
+  id="schedule_undefined"
+  onClick={[Function]}
+>
+  Schedule Migration
+</Button>
+`;
+
+exports[`When initialized with warm migration plan renders Schedule Retry button 1`] = `
+<Button
+  active={false}
+  block={false}
+  bsClass="btn"
+  bsStyle="default"
+  disabled={false}
+  id="schedule_undefined"
+  onClick={[Function]}
+>
+  Schedule Retry
+</Button>
+`;

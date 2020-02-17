@@ -442,6 +442,119 @@ export const transformationPlans = Immutable({
       configVmLength: 2,
       scheduleTime: null,
       status: 'Ok'
+    },
+    // PLAN I-0 APPROVED
+    // |-- Request 1: active
+    {
+      href: 'http://localhost:3000/api/service_templates/90',
+      name: 'Migration Plan I-0',
+      options: {
+        config_info: {
+          transformation_mapping_id: '1',
+          actions: [{ vm_id: '1' }, { vm_id: '3' }],
+          warm_migration: true
+        }
+      },
+      created_on: '2018-05-01T12:13:50Z',
+      id: '90',
+      miq_requests: [
+        {
+          href: 'http://localhost:3000/api/service_requests/6000',
+          id: '6000',
+          description: 'Migration Plan I-0',
+          approval_state: 'approved',
+          type: 'ServiceTemplateTransformationPlanRequest',
+          created_on: '2018-04-06T12:31:30Z',
+          updated_on: '2018-04-06T12:31:30Z',
+          fulfilled_on: '2018-04-06T12:31:30Z',
+          requester_id: '1',
+          requester_name: 'Administrator',
+          request_type: 'transformation_plan',
+          request_state: 'active',
+          message: 'VM Transformations <SOMETHING>',
+          status: 'Ok',
+          options: {
+            dialog: null,
+            workflow_settings: {
+              resource_action_id: '2507'
+            },
+            initiator: null,
+            src_id: '90',
+            cart_state: 'ordered',
+            requester_group: 'EvmGroup-super_administrator',
+            delivered_on: '2018-04-06T12:49:30Z'
+          },
+          userid: 'admin',
+          source_id: '90',
+          source_type: 'ServiceTemplate',
+          destination_id: null,
+          destination_type: null,
+          tenant_id: '1',
+          service_order_id: '91',
+          process: true
+        }
+      ],
+      fulfilledOn: '2018-04-06T12:31:30Z',
+      configVmLength: 2,
+      scheduleTime: null,
+      status: 'Ok'
+    },
+    // PLAN J-0 APPROVED
+    // |-- Request 1: active
+    {
+      href: 'http://localhost:3000/api/service_templates/100',
+      name: 'Migration Plan J-0',
+      options: {
+        config_info: {
+          transformation_mapping_id: '1',
+          actions: [{ vm_id: '1' }, { vm_id: '3' }],
+          warm_migration: true,
+          warm_migration_cutover_datetime: '2030-08-14T02:34:56-06:00'
+        }
+      },
+      created_on: '2018-05-01T12:13:50Z',
+      id: '100',
+      miq_requests: [
+        {
+          href: 'http://localhost:3000/api/service_requests/6000',
+          id: '6000',
+          description: 'Migration Plan J-0',
+          approval_state: 'approved',
+          type: 'ServiceTemplateTransformationPlanRequest',
+          created_on: '2018-04-06T12:31:30Z',
+          updated_on: '2018-04-06T12:31:30Z',
+          fulfilled_on: '2018-04-06T12:31:30Z',
+          requester_id: '1',
+          requester_name: 'Administrator',
+          request_type: 'transformation_plan',
+          request_state: 'active',
+          message: 'VM Transformations <SOMETHING>',
+          status: 'Ok',
+          options: {
+            dialog: null,
+            workflow_settings: {
+              resource_action_id: '2507'
+            },
+            initiator: null,
+            src_id: '100',
+            cart_state: 'ordered',
+            requester_group: 'EvmGroup-super_administrator',
+            delivered_on: '2018-04-06T12:49:30Z'
+          },
+          userid: 'admin',
+          source_id: '100',
+          source_type: 'ServiceTemplate',
+          destination_id: null,
+          destination_type: null,
+          tenant_id: '1',
+          service_order_id: '91',
+          process: true
+        }
+      ],
+      fulfilledOn: '2018-04-06T12:31:30Z',
+      configVmLength: 2,
+      scheduleTime: null,
+      status: 'Ok'
     }
   ]
 });

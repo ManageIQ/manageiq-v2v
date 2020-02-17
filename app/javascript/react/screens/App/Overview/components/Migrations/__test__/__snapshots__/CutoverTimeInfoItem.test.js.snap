@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`When initialized with cold migration plan returns null 1`] = `""`;
+
+exports[`When initialized with warm migration plan renders info item 1`] = `
+<ListViewTableInfoItem
+  className=""
+  key="undefined-cutoverTime"
+  stacked={false}
+  style={
+    Object {
+      "textAlign": "left",
+    }
+  }
+>
+  <Icon
+    name="clock-o"
+    type="fa"
+  />
+  Cutover scheduled
+  <br />
+  February 7th 2020, 5:52 pm
+</ListViewTableInfoItem>
+`;
