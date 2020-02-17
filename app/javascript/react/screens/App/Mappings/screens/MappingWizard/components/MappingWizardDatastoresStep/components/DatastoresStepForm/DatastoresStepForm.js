@@ -12,6 +12,7 @@ import MappingWizardTreeView from '../../../MappingWizardTreeView/MappingWizardT
 import { sourceDatastoreFilter } from '../../MappingWizardDatastoresStepSelectors';
 import { targetDatastoreTreeViewInfo, sourceDatastoreInfo, targetDatastoreInfo, updateMappings } from './helpers';
 import { multiProviderTargetLabel } from '../../../helpers';
+import { sortBy } from '../../../../helpers';
 
 class DatastoresStepForm extends React.Component {
   state = {
@@ -277,7 +278,8 @@ class DatastoresStepForm extends React.Component {
       'is-hidden': !selectedCluster
     });
 
-    const filteredSourceDatastores = sourceDatastoreFilter(sourceDatastores, input.value);
+    const filteredSourceDatastores = sortBy(sourceDatastoreInfo)(sourceDatastoreFilter(sourceDatastores, input.value));
+    const sortedTargetDatastores = sortBy(targetDatastoreInfo)(targetDatastores);
 
     const sourceCounter = (
       <DualPaneMapperCount
@@ -332,7 +334,7 @@ class DatastoresStepForm extends React.Component {
             counter={targetCounter}
           >
             {targetDatastores &&
-              targetDatastores.map(item => (
+              sortedTargetDatastores.map(item => (
                 <DualPaneMapperListItem
                   item={item}
                   text={targetDatastoreInfo(item)}

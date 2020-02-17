@@ -16,6 +16,9 @@ export const sourceClusterWithExtendedData = sourceCluster => ({
   icon: 'fa fa-file-o'
 });
 
+export const clusterInfo = ({ ext_management_system, v_parent_datacenter, name }) =>
+  `${ext_management_system.name} \\ ${v_parent_datacenter ? `${v_parent_datacenter} \\` : ''} ${name}`;
+
 export const updateMapping = (clustersStepMapping, targetClusterToAddTo, sourceClustersToAdd) => {
   const { nodes: sourceClusters, ...targetCluster } = clustersStepMapping;
 

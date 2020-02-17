@@ -7,11 +7,12 @@ import DualPaneMapperList from '../../../DualPaneMapper/DualPaneMapperList';
 import DualPaneMapperCount from '../../../DualPaneMapper/DualPaneMapperCount';
 import DualPaneMapperListItem from '../../../DualPaneMapper/DualPaneMapperListItem';
 import ClustersStepTreeView from '../ClustersStepTreeView';
-import { createNewMapping, updateMapping } from './helpers';
+import { createNewMapping, updateMapping, clusterInfo } from './helpers';
 import { sourceClustersFilter } from '../../MappingWizardClustersStepSelectors';
 import { CONVERSION_HOST_WARNING_MESSAGES } from '../../MappingWizardClustersStepConstants';
 import { RHV } from '../../../../MappingWizardConstants';
 import { multiProviderTargetLabel } from '../../../helpers';
+import { sortBy } from '../../../../helpers';
 
 class ClustersStepForm extends React.Component {
   state = {
@@ -129,7 +130,8 @@ class ClustersStepForm extends React.Component {
 
     const { selectedTargetCluster, selectedSourceClusters, selectedMapping } = this.state;
 
-    const filteredSourceClusters = sourceClustersFilter(sourceClusters, input.value);
+    const filteredSourceClusters = sortBy(clusterInfo)(sourceClustersFilter(sourceClusters, input.value));
+    const sortedTargetClusters = sortBy(clusterInfo)(targetClusters);
 
     const sourceCounter = (
       <DualPaneMapperCount selectedItems={selectedSourceClusters.length} totalItems={filteredSourceClusters.length} />
@@ -158,11 +160,7 @@ class ClustersStepForm extends React.Component {
               {filteredSourceClusters.map(item => (
                 <DualPaneMapperListItem
                   item={item}
-                  text={
-                    item.v_parent_datacenter
-                      ? `${item.ext_management_system.name} \\ ${item.v_parent_datacenter} \\ ${item.name}`
-                      : `${item.name}`
-                  }
+                  text={clusterInfo(item)}
                   key={item.id}
                   selected={
                     selectedSourceClusters && selectedSourceClusters.some(sourceCluster => sourceCluster.id === item.id)
@@ -182,7 +180,7 @@ class ClustersStepForm extends React.Component {
               loading={isFetchingTargetClusters}
               counter={targetCounter}
             >
-              {targetClusters.map(item => {
+              {sortedTargetClusters.map(item => {
                 let showConversionHostWarning = false;
                 if (targetProvider === RHV) {
                   const conversionHostsInCluster = rhvConversionHosts.filter(
@@ -194,11 +192,7 @@ class ClustersStepForm extends React.Component {
                 return (
                   <DualPaneMapperListItem
                     item={item}
-                    text={
-                      item.v_parent_datacenter
-                        ? `${item.ext_management_system.name} \\ ${item.v_parent_datacenter} \\ ${item.name}`
-                        : `${item.ext_management_system.name} \\ ${item.name}`
-                    }
+                    text={clusterInfo(item)}
                     key={item.id}
                     selected={selectedTargetCluster && selectedTargetCluster.id === item.id}
                     handleClick={this.selectTargetCluster}
