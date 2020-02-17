@@ -23,6 +23,12 @@
   margin-left: 5px;
 }
 
+.dual-pane-mapper-list {
+  width: 300px;
+  overflow: auto;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
 .dual-pane-mapper-list.dual-pane-mapper-list-left {
   margin-right: 5px;
 }
@@ -30,11 +36,11 @@
   margin-left: 5px;
 }
 .dual-pane-mapper-list .dual-pane-mapper-items-container {
-  border: 1px solid rgba(0, 0, 0, 0.3);
   height: 130px;
-  overflow-x: hidden;
-  overflow-y: auto;
-  width: 300px;
+  overflow: auto;
+  width: max-content;
+  min-width: 100%;
+  white-space: nowrap;
   &.has-counter {
     height: 110px;
   }
@@ -47,11 +53,8 @@
 .dual-pane-mapper-list .dual-pane-mapper-item {
   cursor: pointer;
   padding: 0 10px;
-  width: 100%;
 }
-.dual-pane-mapper-list
-  .dual-pane-mapper-item
-  .dual-pane-mapper-item-select-indicator {
+.dual-pane-mapper-list .dual-pane-mapper-item .dual-pane-mapper-item-select-indicator {
   display: inline-block;
   font-size: 12px;
   margin-left: 10px;
@@ -62,9 +65,7 @@
   background-color: #3397db;
   color: #fff;
 }
-.dual-pane-mapper-list
-  .dual-pane-mapper-item.selected
-  .dual-pane-mapper-item-select-indicator {
+.dual-pane-mapper-list .dual-pane-mapper-item.selected .dual-pane-mapper-item-select-indicator {
   visibility: visible;
 }
 .dual-pane-mapper-list .dual-pane-mapper-item:hover {
@@ -73,11 +74,8 @@
 }
 .dual-pane-mapper-list .dual-pane-mapper-item-container {
   display: inline-block;
-  overflow: hidden;
-  text-overflow: ellipsis;
   vertical-align: middle;
-  white-space: nowrap;
-  width: calc(100% - 26px);
+  min-width: calc(100% - 26px);
 }
 .dual-pane-mapper-list .dual-pane-mapper-item .clickable-icon {
   padding-left: 7px;

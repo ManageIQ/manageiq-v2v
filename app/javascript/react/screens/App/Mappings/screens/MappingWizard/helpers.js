@@ -1,3 +1,4 @@
+import Immutable from 'seamless-immutable';
 import { TRANSFORMATION_MAPPING_ITEM_DESTINATION_TYPES } from './MappingWizardConstants';
 
 export const mappingUrlRegex = /\/api\/\w{1,}\/\d{1,}/;
@@ -120,3 +121,6 @@ export const determineTargetProvider = transformation =>
   ).length
     ? 'openstack'
     : 'rhevm';
+
+export const sortBy = getValue => items =>
+  Immutable(items ? Immutable.asMutable(items).sort((a, b) => (getValue(a) > getValue(b) ? 1 : -1)) : []);

@@ -10,6 +10,7 @@ import DualPaneMapperListItem from '../../../DualPaneMapper/DualPaneMapperListIt
 import MappingWizardTreeView from '../../../MappingWizardTreeView/MappingWizardTreeView';
 import { networkKey } from '../../../../../../../common/networkKey';
 import { multiProviderTargetLabel } from '../../../helpers';
+import { sortBy } from '../../../../helpers';
 
 import {
   sourceNetworksFilter,
@@ -19,7 +20,9 @@ import {
   mappingsForTreeView,
   mappingWithTargetNetworkRemoved,
   mappingWithSourceNetworkRemoved,
-  getRepresentatives
+  getRepresentatives,
+  sourceNetworkInfo,
+  targetNetworkInfo
 } from './helpers';
 
 class NetworksStepForm extends React.Component {
@@ -303,7 +306,10 @@ class NetworksStepForm extends React.Component {
       'is-hidden': !selectedCluster
     });
 
-    const filteredSourceNetworks = sourceNetworksFilter(groupedSourceNetworks, input.value);
+    const filteredSourceNetworks = sortBy(sourceNetwork => sourceNetworkInfo(sourceNetwork, selectedCluster))(
+      sourceNetworksFilter(groupedSourceNetworks, input.value)
+    );
+    const sortedTargetNetworkReps = sortBy(targetNetworkInfo)(getRepresentatives(groupedTargetNetworks));
 
     const sourceCounter = (
       <DualPaneMapperCount selectedItems={selectedSourceNetworks.length} totalItems={filteredSourceNetworks.length} />
@@ -331,9 +337,7 @@ class NetworksStepForm extends React.Component {
                 {filteredSourceNetworks.map(sourceNetwork => (
                   <DualPaneMapperListItem
                     item={sourceNetwork}
-                    text={`${sourceNetwork.providerName} \\ ${selectedCluster.v_parent_datacenter} \\ ${
-                      sourceNetwork.name
-                    }`}
+                    text={sourceNetworkInfo(sourceNetwork, selectedCluster)}
                     key={sourceNetwork.id}
                     selected={
                       selectedSourceNetworks &&
@@ -357,10 +361,10 @@ class NetworksStepForm extends React.Component {
             counter={targetCounter}
           >
             {groupedTargetNetworks &&
-              getRepresentatives(groupedTargetNetworks).map(targetNetwork => (
+              sortedTargetNetworkReps.map(targetNetwork => (
                 <DualPaneMapperListItem
                   item={targetNetwork}
-                  text={`${targetNetwork.providerName} \\ ${targetNetwork.name}`}
+                  text={targetNetworkInfo(targetNetwork)}
                   key={targetNetwork.id}
                   selected={selectedTargetNetwork && networkKey(selectedTargetNetwork) === networkKey(targetNetwork)}
                   handleClick={this.selectTargetNetwork}

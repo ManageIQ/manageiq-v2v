@@ -11,10 +11,10 @@ const DualPaneMapperList = ({ children, listTitle, loading, id, counter }) => {
 
   return (
     <div className="dual-pane-mapper-list-container">
+      <label htmlFor="availableTitle">
+        <span id="listTitle">{listTitle}</span>
+      </label>
       <div className="dual-pane-mapper-list">
-        <label htmlFor="availableTitle">
-          <span id="listTitle">{listTitle}</span>
-        </label>
         <div className={classes} id={id}>
           {loading ? <Spinner loading /> : children}
         </div>
