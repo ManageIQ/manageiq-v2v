@@ -125,7 +125,8 @@ class ClustersStepForm extends React.Component {
       isFetchingTargetClusters,
       input,
       targetProvider,
-      rhvConversionHosts
+      rhvConversionHosts,
+      ospConversionHosts
     } = this.props;
 
     const { selectedTargetCluster, selectedSourceClusters, selectedMapping } = this.state;
@@ -225,7 +226,8 @@ ClustersStepForm.propTypes = {
   isFetchingSourceClusters: PropTypes.bool,
   isFetchingTargetClusters: PropTypes.bool,
   targetProvider: PropTypes.string,
-  rhvConversionHosts: PropTypes.array
+  rhvConversionHosts: PropTypes.array,
+  ospConversionHosts: PropTypes.array
 };
 
 export default ClustersStepForm;

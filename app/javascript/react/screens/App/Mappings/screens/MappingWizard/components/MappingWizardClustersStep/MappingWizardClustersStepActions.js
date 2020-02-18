@@ -2,8 +2,6 @@ import URI from 'urijs';
 import API from '../../../../../../../../common/API';
 import { FETCH_V2V_SOURCE_CLUSTERS } from './MappingWizardClustersStepConstants';
 
-export { showAlertAction, hideAlertAction } from '../../MappingWizardActions';
-
 const _getSourceClustersActionCreator = url => dispatch =>
   dispatch({
     type: FETCH_V2V_SOURCE_CLUSTERS,

@@ -6,22 +6,10 @@ import { length } from 'redux-form-validators';
 
 import ClustersStepForm from './components/ClustersStepForm/ClustersStepForm';
 import { FETCH_TARGET_COMPUTE_URLS } from '../../../../../../../../redux/common/targetResources/targetResourcesConstants';
-import { OPENSTACK } from '../../MappingWizardConstants';
 
 class MappingWizardClustersStep extends React.Component {
   componentDidMount() {
-    const { targetProvider, ospConversionHosts, showAlertAction } = this.props;
     this.fetchClusters();
-    if (targetProvider === OPENSTACK && ospConversionHosts.length === 0) {
-      showAlertAction(
-        __('No OpenStack conversion hosts are configured. You can continue to create an infrastructure mapping, but you must configure a conversion host before migration execution.'), // prettier-ignore
-        'warning'
-      );
-    }
-  }
-
-  componentWillUnmount() {
-    this.props.hideAlertAction();
   }
 
   fetchClusters = () => {
@@ -46,7 +34,8 @@ class MappingWizardClustersStep extends React.Component {
       isRejectedSourceClusters,
       isRejectedTargetClusters,
       targetProvider,
-      rhvConversionHosts
+      rhvConversionHosts,
+      ospConversionHosts
     } = this.props;
 
     if (isRejectedSourceClusters || isRejectedTargetClusters) {
@@ -76,6 +65,7 @@ class MappingWizardClustersStep extends React.Component {
         isFetchingTargetClusters={isFetchingTargetClusters}
         targetProvider={targetProvider}
         rhvConversionHosts={rhvConversionHosts}
+        ospConversionHosts={ospConversionHosts}
       />
     );
   }
@@ -86,8 +76,6 @@ MappingWizardClustersStep.propTypes = {
   fetchSourceClustersAction: PropTypes.func,
   fetchTargetComputeUrls: PropTypes.object,
   fetchTargetClustersAction: PropTypes.func,
-  showAlertAction: PropTypes.func,
-  hideAlertAction: PropTypes.func,
   sourceClusters: PropTypes.arrayOf(PropTypes.object),
   targetClusters: PropTypes.arrayOf(PropTypes.object),
   isFetchingSourceClusters: PropTypes.bool,
