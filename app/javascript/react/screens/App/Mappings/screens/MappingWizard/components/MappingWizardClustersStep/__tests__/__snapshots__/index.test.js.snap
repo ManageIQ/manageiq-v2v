@@ -10,7 +10,6 @@ Object {
   "forceUnregisterOnUnmount": false,
   "form": "mappingWizardClustersStep",
   "getFormState": [Function],
-  "hideAlertAction": [Function],
   "initialValues": Object {
     "clusterMappings": Array [],
   },
@@ -27,7 +26,6 @@ Object {
   "shouldError": [Function],
   "shouldValidate": [Function],
   "shouldWarn": [Function],
-  "showAlertAction": [Function],
   "sourceClusters": Array [],
   "submitAsSideEffect": false,
   "targetClusters": Array [],
