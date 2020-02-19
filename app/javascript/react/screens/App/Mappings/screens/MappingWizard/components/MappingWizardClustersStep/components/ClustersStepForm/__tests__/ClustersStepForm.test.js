@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import ClustersStepForm from '../ClustersStepForm';
 import { srcClusters, tgtClusters } from '../clustersStepForm.fixtures';
 import { targetClusterWithExtendedData, sourceClusterWithExtendedData } from '../helpers';
-import { RHV } from '../../../../../MappingWizardConstants';
+import { RHV, OPENSTACK } from '../../../../../MappingWizardConstants';
 
 let onChange;
 let baseProps;
@@ -97,7 +97,9 @@ describe('RHV conversion hosts', () => {
     ...baseProps,
     input: { value: [], onChange },
     sourceClusters: [],
-    targetClusters: [{ id: '1', name: 'target cluster', ems_id: '1', ext_management_system: { name: 'RHV' } }],
+    targetClusters: [
+      { id: 'cluster1', name: 'target cluster', ems_id: 'ems1', ext_management_system: { name: 'RHV' } }
+    ],
     targetProvider: RHV
   };
 
@@ -108,8 +110,33 @@ describe('RHV conversion hosts', () => {
   });
 
   test('does not display a warning icon if the target cluster has a configured conversion host', () => {
-    const rhvConversionHosts = [{ resource: { ems_cluster_id: '1' } }];
+    const rhvConversionHosts = [{ resource: { ems_cluster_id: 'cluster1' } }];
     const wrapper = shallow(<ClustersStepForm {...props} rhvConversionHosts={rhvConversionHosts} />);
+    const listItem = wrapper.find('DualPaneMapperListItem');
+    expect(listItem.prop('warningMessage')).toBeFalsy();
+  });
+});
+
+describe('OSP conversion hosts', () => {
+  const props = {
+    ...baseProps,
+    input: { value: [], onChange },
+    sourceClusters: [],
+    targetClusters: [
+      { id: 'project1', name: 'target project', ems_id: 'ems1', ext_management_system: { name: 'OSP' } }
+    ],
+    targetProvider: OPENSTACK
+  };
+
+  test('displays a warning icon if the target provider does not have a configured conversion host', () => {
+    const wrapper = shallow(<ClustersStepForm {...props} ospConversionHosts={[]} />);
+    const listItem = wrapper.find('DualPaneMapperListItem');
+    expect(listItem.prop('warningMessage')).toBeTruthy();
+  });
+
+  test('does not display a warning icon if there is a configured conversion host anywhere in the target provider', () => {
+    const ospConversionHosts = [{ resource: { ems_id: 'ems1', ems_cluster_id: 'project2' } }];
+    const wrapper = shallow(<ClustersStepForm {...props} ospConversionHosts={ospConversionHosts} />);
     const listItem = wrapper.find('DualPaneMapperListItem');
     expect(listItem.prop('warningMessage')).toBeFalsy();
   });

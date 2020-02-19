@@ -10,7 +10,7 @@ import ClustersStepTreeView from '../ClustersStepTreeView';
 import { createNewMapping, updateMapping, clusterInfo } from './helpers';
 import { sourceClustersFilter } from '../../MappingWizardClustersStepSelectors';
 import { CONVERSION_HOST_WARNING_MESSAGES } from '../../MappingWizardClustersStepConstants';
-import { RHV } from '../../../../MappingWizardConstants';
+import { RHV, OPENSTACK } from '../../../../MappingWizardConstants';
 import { multiProviderTargetLabel } from '../../../helpers';
 import { sortBy } from '../../../../helpers';
 
@@ -125,7 +125,8 @@ class ClustersStepForm extends React.Component {
       isFetchingTargetClusters,
       input,
       targetProvider,
-      rhvConversionHosts
+      rhvConversionHosts,
+      ospConversionHosts
     } = this.props;
 
     const { selectedTargetCluster, selectedSourceClusters, selectedMapping } = this.state;
@@ -179,13 +180,16 @@ class ClustersStepForm extends React.Component {
               counter={targetCounter}
             >
               {sortedTargetClusters.map(item => {
-                let showConversionHostWarning = false;
+                let associatedConversionHosts = [];
                 if (targetProvider === RHV) {
-                  const conversionHostsInCluster = rhvConversionHosts.filter(
-                    ch => ch.resource.ems_cluster_id === item.id
-                  );
-                  showConversionHostWarning = conversionHostsInCluster.length === 0;
+                  // RHV conversion hosts need to be in the target cluster itself
+                  associatedConversionHosts = rhvConversionHosts.filter(ch => ch.resource.ems_cluster_id === item.id);
                 }
+                if (targetProvider === OPENSTACK) {
+                  // OSP conversion hosts only need to be in the same provider as the target cluster
+                  associatedConversionHosts = ospConversionHosts.filter(ch => ch.resource.ems_id === item.ems_id);
+                }
+                const showConversionHostWarning = associatedConversionHosts.length === 0;
 
                 return (
                   <DualPaneMapperListItem
@@ -225,7 +229,8 @@ ClustersStepForm.propTypes = {
   isFetchingSourceClusters: PropTypes.bool,
   isFetchingTargetClusters: PropTypes.bool,
   targetProvider: PropTypes.string,
-  rhvConversionHosts: PropTypes.array
+  rhvConversionHosts: PropTypes.array,
+  ospConversionHosts: PropTypes.array
 };
 
 export default ClustersStepForm;
