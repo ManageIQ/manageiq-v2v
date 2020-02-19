@@ -6,7 +6,6 @@ Object {
   "fetchSourceClustersAction": [Function],
   "fetchSourceClustersUrl": "/api/dummyProviders",
   "fetchTargetClustersAction": [Function],
-  "hideAlertAction": [Function],
   "initialValues": Object {
     "clusterMappings": Array [],
   },
@@ -17,7 +16,6 @@ Object {
   "keepDirtyOnReinitialize": true,
   "ospConversionHosts": Array [],
   "rhvConversionHosts": Array [],
-  "showAlertAction": [Function],
   "sourceClusters": Array [],
   "targetClusters": Array [],
   "targetProvider": "rhevm",

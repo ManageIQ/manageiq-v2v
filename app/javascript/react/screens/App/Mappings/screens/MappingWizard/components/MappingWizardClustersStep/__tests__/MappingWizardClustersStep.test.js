@@ -27,31 +27,17 @@ describe('target provider is OSP', () => {
     targetProvider: OPENSTACK
   });
 
-  test('cloud tenants are fetched and a conversion host alert is triggered', () => {
+  test('cloud tenants are fetched', () => {
     const baseProps = getBaseProps();
     const wrapper = mount(
       <Provider store={store}>
-        <MappingWizardClustersStep {...baseProps} ospConversionHosts={[]} />
+        <MappingWizardClustersStep {...baseProps} />
       </Provider>
     );
 
     expect(baseProps.fetchTargetClustersAction).toHaveBeenCalledWith(
       FETCH_TARGET_COMPUTE_URLS[baseProps.targetProvider]
     );
-    expect(baseProps.showAlertAction).toHaveBeenCalled();
-
-    wrapper.unmount();
-  });
-
-  test('no alert is triggered when there are conversion hosts', () => {
-    const baseProps = getBaseProps();
-    const wrapper = mount(
-      <Provider store={store}>
-        <MappingWizardClustersStep {...baseProps} ospConversionHosts={[{ mock: 'data' }]} />
-      </Provider>
-    );
-
-    expect(baseProps.showAlertAction).toHaveBeenCalledTimes(0);
 
     wrapper.unmount();
   });
