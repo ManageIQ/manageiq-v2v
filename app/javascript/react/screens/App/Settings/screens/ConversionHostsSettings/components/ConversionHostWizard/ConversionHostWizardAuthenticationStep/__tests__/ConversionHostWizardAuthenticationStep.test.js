@@ -31,7 +31,6 @@ describe('conversion host wizard authentication step', () => {
 
   it('renders correctly in the initial state for RHV', () => {
     const component = shallowDive(<ConversionHostWizardAuthenticationStep {...baseProps} />);
-    expect(component.find('Field[controlId="openstack-user-input"]')).toHaveLength(0);
     expect(component.find('TextFileField[controlId="vmware-ssh-key-input"]')).toHaveLength(0);
     expect(component.find('Field[controlId="vddk-library-path"]')).toHaveLength(0);
     expect(component.find('Field[controlId="verify-ca-certs"]')).toHaveLength(1);
@@ -43,7 +42,6 @@ describe('conversion host wizard authentication step', () => {
     const component = shallowDive(
       <ConversionHostWizardAuthenticationStep {...baseProps} selectedProviderType={OPENSTACK} />
     );
-    expect(component.find('Field[controlId="openstack-user-input"]')).toHaveLength(1);
     expect(component.find('TextFileField[controlId="vmware-ssh-key-input"]')).toHaveLength(0);
     expect(component.find('Field[controlId="vddk-library-path"]')).toHaveLength(0);
     expect(component.find('Field[controlId="verify-ca-certs"]')).toHaveLength(1);
