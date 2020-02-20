@@ -5,7 +5,6 @@ import { required } from 'redux-form-validators';
 import { Form, Switch } from 'patternfly-react';
 import { stepIDs, VDDK, SSH } from '../ConversionHostWizardConstants';
 import { FormField } from '../../../../../../common/forms/FormField';
-import { OPENSTACK } from '../../../../../../../../../common/constants';
 import { BootstrapSelect } from '../../../../../../common/forms/BootstrapSelect';
 import TextFileField from '../../../../../../common/forms/TextFileField';
 import { getConversionHostSshKeyInfoMessage } from '../../../../../helpers';
@@ -21,18 +20,6 @@ export const ConversionHostWizardAuthenticationStep = ({
 
   return (
     <Form className="form-horizontal">
-      {selectedProviderType === OPENSTACK && (
-        <Field
-          {...fieldBaseProps}
-          name="openstackUser"
-          label={__('OpenStack User')}
-          component={FormField}
-          type="text"
-          controlId="openstack-user-input"
-          required
-          validate={[requiredWithMessage]}
-        />
-      )}
       <TextFileField
         {...fieldBaseProps}
         name="conversionHostSshKey"
@@ -125,7 +112,6 @@ export default reduxForm({
   forceUnregisterOnUnmount: true,
   shouldError: () => true, // Force validation to re-run on every field change so unmounted fields get excluded
   initialValues: {
-    openstackUser: 'cloud-user',
     conversionHostSshKey: { filename: '', body: '' },
     transformationMethod: VDDK,
     vmwareSshKey: { filename: '', body: '' },
