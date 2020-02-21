@@ -2,7 +2,7 @@ import http from './http';
 import { links } from '../react/config/config';
 
 const updateUrl = '/migration/menu_section_url?section=migration&url=/migration%23';
-const activeMenuItemSelector = '[data-target="#menu-migration"] > div > ul > li[class="list-group-item active"]';
+const activeMenuItemSelector = 'li[id="menu_section_migration"] > div > ul > li[class="menu-list-group-item active"]';
 
 export const updateVerticalMenu = path => {
   // POST /migration/menu_section_url to update session[:tab_url] on server
