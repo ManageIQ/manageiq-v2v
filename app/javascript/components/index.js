@@ -16,10 +16,6 @@ import SettingsContainer from '../react/screens/App/Settings';
 import PlanContainer from '../react/screens/App/Plan';
 import MappingsContainer from '../react/screens/App/Mappings';
 import NotificationList from '../react/screens/App/common/NotificationList';
-import IsoDate from './dates/IsoDate';
-import LongDateTime from './dates/LongDateTime';
-import RelativeDateTime from './dates/RelativeDateTime';
-import ShortDateTime from './dates/ShortDateTime';
 
 /**
  * NOTE: This should not exist, predefining (default) props should be in components not in some registry
@@ -107,30 +103,6 @@ export const coreComponents = [
     type: NotificationList,
     data: true,
     store: true
-  },
-  {
-    name: 'RelativeDateTime',
-    type: RelativeDateTime,
-    data: true,
-    store: false
-  },
-  {
-    name: 'LongDateTime',
-    type: LongDateTime,
-    data: true,
-    store: false
-  },
-  {
-    name: 'ShortDateTime',
-    type: ShortDateTime,
-    data: true,
-    store: false
-  },
-  {
-    name: 'IsoDate',
-    type: IsoDate,
-    data: true,
-    store: false
   }
 ];
 
