@@ -16,7 +16,7 @@ exports[`conversion host wizard hosts step renders correctly in the OSP example 
       bsClass="control-label"
       srOnly={false}
     >
-      Hosts to configure as conversion hosts
+      VMs to configure as conversion hosts
     </ControlLabel>
     <Field
       clearButton={true}
@@ -41,7 +41,7 @@ exports[`conversion host wizard hosts step renders correctly in the OSP example 
           },
         ]
       }
-      placeholder="Select one or more hosts..."
+      placeholder="Select one or more VMs..."
       selectHintOnEnter={true}
       validate={
         Array [
@@ -69,7 +69,7 @@ exports[`conversion host wizard hosts step renders correctly in the RHV example 
       bsClass="control-label"
       srOnly={false}
     >
-      Hosts to configure as conversion hosts
+      VMs to configure as conversion hosts
     </ControlLabel>
     <Field
       clearButton={true}
@@ -85,16 +85,16 @@ exports[`conversion host wizard hosts step renders correctly in the RHV example 
           Object {
             "id": "3",
             "name": "available-host-1",
-            "type": "ManageIQ::Providers::Redhat::InfraManager::Host",
+            "type": "ManageIQ::Providers::Redhat::InfraManager::Vm",
           },
           Object {
             "id": "4",
             "name": "available-host-2",
-            "type": "ManageIQ::Providers::Redhat::InfraManager::Host",
+            "type": "ManageIQ::Providers::Redhat::InfraManager::Vm",
           },
         ]
       }
-      placeholder="Select one or more hosts..."
+      placeholder="Select one or more VMs..."
       selectHintOnEnter={true}
       validate={
         Array [
@@ -122,19 +122,19 @@ exports[`conversion host wizard hosts step renders correctly when there are no h
       bsClass="control-label"
       srOnly={false}
     >
-      Hosts to configure as conversion hosts
+      VMs to configure as conversion hosts
     </ControlLabel>
     <Field
       clearButton={true}
       component={[Function]}
       controlId="host-selection"
-      emptyLabel="No hosts available for the selected cluster."
+      emptyLabel="No VMs available for the selected cluster."
       highlightOnlyResult={true}
       labelKey="name"
       multiple={true}
       name="hosts"
       options={Array []}
-      placeholder="Select one or more hosts..."
+      placeholder="Select one or more VMs..."
       selectHintOnEnter={true}
       validate={
         Array [
@@ -168,7 +168,7 @@ exports[`conversion host wizard hosts step renders the redux-form wrapper correc
           ],
         },
       },
-      "ManageIQ::Providers::Redhat::InfraManager::Host": Object {
+      "ManageIQ::Providers::Redhat::InfraManager::Vm": Object {
         "1": Object {
           "enable": Array [
             Object {
@@ -195,7 +195,7 @@ exports[`conversion host wizard hosts step renders the redux-form wrapper correc
         "resource": Object {
           "id": "1",
           "name": "already-configured-host",
-          "type": "ManageIQ::Providers::Redhat::InfraManager::Host",
+          "type": "ManageIQ::Providers::Redhat::InfraManager::Vm",
         },
       },
       Object {
@@ -223,29 +223,29 @@ exports[`conversion host wizard hosts step renders the redux-form wrapper correc
   pure={true}
   selectedCluster={
     Object {
-      "hosts": Array [
+      "mock": "cluster",
+      "vms": Array [
         Object {
           "id": "1",
           "name": "already-configured-host",
-          "type": "ManageIQ::Providers::Redhat::InfraManager::Host",
+          "type": "ManageIQ::Providers::Redhat::InfraManager::Vm",
         },
         Object {
           "id": "2",
           "name": "host-being-configured",
-          "type": "ManageIQ::Providers::Redhat::InfraManager::Host",
+          "type": "ManageIQ::Providers::Redhat::InfraManager::Vm",
         },
         Object {
           "id": "3",
           "name": "available-host-1",
-          "type": "ManageIQ::Providers::Redhat::InfraManager::Host",
+          "type": "ManageIQ::Providers::Redhat::InfraManager::Vm",
         },
         Object {
           "id": "4",
           "name": "available-host-2",
-          "type": "ManageIQ::Providers::Redhat::InfraManager::Host",
+          "type": "ManageIQ::Providers::Redhat::InfraManager::Vm",
         },
       ],
-      "mock": "cluster",
     }
   }
   selectedProviderType="rhevm"
