@@ -4,6 +4,6 @@ exports[`ConversionHostWizardAuthenticationStep integration test should mount Co
 Object {
   "selectedProviderType": "openstack",
   "selectedTransformationMethod": "VDDK",
-  "verifyOpenstackCerts": false,
+  "verifyCaCerts": false,
 }
 `;

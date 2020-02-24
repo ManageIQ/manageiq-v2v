@@ -69,11 +69,11 @@ exports[`conversion host wizard authentication step renders correctly in the ini
   <React.Fragment>
     <Field
       component={[Function]}
-      controlId="verify-openstack-certs"
+      controlId="verify-ca-certs"
       controlWidth={7}
-      label="Verify TLS Certificates for OpenStack"
+      label="Verify TLS Certificates"
       labelWidth={4}
-      name="verifyOpenstackCerts"
+      name="verifyCaCerts"
       style={
         Object {
           "marginTop": 25,
@@ -136,6 +136,22 @@ exports[`conversion host wizard authentication step renders correctly in the ini
       ]
     }
   />
+  <React.Fragment>
+    <Field
+      component={[Function]}
+      controlId="verify-ca-certs"
+      controlWidth={7}
+      label="Verify TLS Certificates"
+      labelWidth={4}
+      name="verifyCaCerts"
+      style={
+        Object {
+          "marginTop": 25,
+        }
+      }
+      validate={[Function]}
+    />
+  </React.Fragment>
 </Form>
 `;
 
@@ -199,6 +215,22 @@ exports[`conversion host wizard authentication step renders correctly with SSH t
     labelWidth={4}
     name="vmwareSshKey"
   />
+  <React.Fragment>
+    <Field
+      component={[Function]}
+      controlId="verify-ca-certs"
+      controlWidth={7}
+      label="Verify TLS Certificates"
+      labelWidth={4}
+      name="verifyCaCerts"
+      style={
+        Object {
+          "marginTop": 25,
+        }
+      }
+      validate={[Function]}
+    />
+  </React.Fragment>
 </Form>
 `;
 
@@ -269,10 +301,26 @@ exports[`conversion host wizard authentication step renders correctly with VDDK 
       ]
     }
   />
+  <React.Fragment>
+    <Field
+      component={[Function]}
+      controlId="verify-ca-certs"
+      controlWidth={7}
+      label="Verify TLS Certificates"
+      labelWidth={4}
+      name="verifyCaCerts"
+      style={
+        Object {
+          "marginTop": 25,
+        }
+      }
+      validate={[Function]}
+    />
+  </React.Fragment>
 </Form>
 `;
 
-exports[`conversion host wizard authentication step renders correctly with verify OSP TLS certs turned on 1`] = `
+exports[`conversion host wizard authentication step renders correctly with verify TLS certs turned on 1`] = `
 <Form
   bsClass="form"
   className="form-horizontal"
@@ -341,11 +389,11 @@ exports[`conversion host wizard authentication step renders correctly with verif
   <React.Fragment>
     <Field
       component={[Function]}
-      controlId="verify-openstack-certs"
+      controlId="verify-ca-certs"
       controlWidth={7}
-      label="Verify TLS Certificates for OpenStack"
+      label="Verify TLS Certificates"
       labelWidth={4}
-      name="verifyOpenstackCerts"
+      name="verifyCaCerts"
       style={
         Object {
           "marginTop": 25,
@@ -354,13 +402,13 @@ exports[`conversion host wizard authentication step renders correctly with verif
       validate={[Function]}
     />
     <TextFileField
-      controlId="openstack-ca-certs-input"
+      controlId="ca-certs-input"
       controlWidth={7}
       help="Upload your certificates file, in PEM format, or paste its contents below."
       hideBody={false}
-      label="OpenStack Trusted CA Certificates"
+      label="Trusted CA Certificates"
       labelWidth={4}
-      name="openstackCaCerts"
+      name="caCerts"
     />
   </React.Fragment>
 </Form>
@@ -375,17 +423,17 @@ exports[`conversion host wizard authentication step renders the redux-form wrapp
   getFormState={[Function]}
   initialValues={
     Object {
-      "conversionHostSshKey": Object {
+      "caCerts": Object {
         "body": "",
         "filename": "",
       },
-      "openstackCaCerts": Object {
+      "conversionHostSshKey": Object {
         "body": "",
         "filename": "",
       },
       "openstackUser": "cloud-user",
       "transformationMethod": "VDDK",
-      "verifyOpenstackCerts": false,
+      "verifyCaCerts": false,
       "vmwareSshKey": Object {
         "body": "",
         "filename": "",
@@ -413,7 +461,7 @@ exports[`conversion host wizard authentication step renders the redux-form wrapp
   touchOnBlur={true}
   touchOnChange={false}
   updateUnregisteredFields={false}
-  verifyOpenstackCerts={null}
+  verifyCaCerts={null}
 />
 `;
 
@@ -425,7 +473,7 @@ exports[`conversion host wizard authentication step renders the verify TLS certs
   defaultValue={false}
   disabled={false}
   handleWidth="auto"
-  id="verify-openstack-certs-switch"
+  id="verify-ca-certs-switch"
   inverse={false}
   labelText=" "
   labelWidth="auto"

@@ -20,7 +20,7 @@ describe('ConversionHostWizardLocationStep integration test', () => {
         conversionHostWizardAuthenticationStep: {
           values: {
             conversionHostSshKey: { body: 'mock conversion host SSH key body' },
-            openstackCaCerts: { body: '' },
+            caCerts: { body: '' },
             transformationMethod: VDDK,
             vddkLibraryPath: 'mock VDDK path'
           }

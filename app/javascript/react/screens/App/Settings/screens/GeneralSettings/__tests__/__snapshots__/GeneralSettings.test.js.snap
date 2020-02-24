@@ -129,25 +129,6 @@ exports[`GeneralSettings component renders the general settings page 1`] = `
       </FormGroup>
       <FormGroup
         bsClass="form-group"
-      />
-      <div>
-        <h3>
-          Resource Utilization Limits for Migrations
-        </h3>
-      </div>
-      <Field
-        component={[Function]}
-        id="cpu_limit_per_host"
-        initialUncheckedValue="unlimited"
-        inputEnabledFunction={[Function]}
-        label="Max CPU utilization per conversion host"
-        name="cpu_limit_per_host"
-        postfix="％"
-        validate={[Function]}
-        vertical={true}
-      />
-      <FormGroup
-        bsClass="form-group"
         style={
           Object {
             "marginTop": "40px",
