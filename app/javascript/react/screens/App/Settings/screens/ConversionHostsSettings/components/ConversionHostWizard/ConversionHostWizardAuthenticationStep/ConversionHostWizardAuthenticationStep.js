@@ -7,15 +7,11 @@ import { stepIDs, VDDK, SSH } from '../ConversionHostWizardConstants';
 import { FormField } from '../../../../../../common/forms/FormField';
 import { BootstrapSelect } from '../../../../../../common/forms/BootstrapSelect';
 import TextFileField from '../../../../../../common/forms/TextFileField';
-import { getConversionHostSshKeyInfoMessage } from '../../../../../helpers';
+import { CONVERSION_HOST_SSH_KEY_MESSAGE } from '../../../../../SettingsConstants';
 
 const requiredWithMessage = required({ msg: __('This field is required') });
 
-const ConversionHostWizardAuthenticationStep = ({
-  selectedProviderType,
-  selectedTransformationMethod,
-  verifyCaCerts
-}) => {
+const ConversionHostWizardAuthenticationStep = ({ selectedTransformationMethod, verifyCaCerts }) => {
   const fieldBaseProps = { labelWidth: 4, controlWidth: 7 };
 
   return (
@@ -26,7 +22,7 @@ const ConversionHostWizardAuthenticationStep = ({
         label={__('Conversion Host SSH private key')}
         help={__('Upload your SSH key file or paste its contents below.')}
         controlId="host-ssh-key-input"
-        info={getConversionHostSshKeyInfoMessage(selectedProviderType)}
+        info={CONVERSION_HOST_SSH_KEY_MESSAGE}
       />
       <Field
         {...fieldBaseProps}
