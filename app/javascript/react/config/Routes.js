@@ -8,7 +8,7 @@ import componentRegistry from '../../components/componentRegistry';
 const Routes = ({ store }) =>
   links.map(({ path, component, redirect }) => {
     if (typeof redirect !== 'undefined') {
-      return <Route exact key={path} path={path} render={() => <Redirect to={redirect} />} />;
+      return <Route exact key={path} path={`/${path}`} render={() => <Redirect to={redirect} />} />;
     }
     const coreComponent = componentSettings(component);
     if (coreComponent) {
