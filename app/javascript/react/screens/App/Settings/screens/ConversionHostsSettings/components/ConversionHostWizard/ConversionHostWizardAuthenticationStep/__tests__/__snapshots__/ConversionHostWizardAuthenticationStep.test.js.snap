@@ -13,7 +13,7 @@ exports[`conversion host wizard authentication step renders correctly in the ini
     controlWidth={7}
     help="Upload your SSH key file or paste its contents below."
     hideBody={false}
-    info="This is the private key file used to connect to the conversion host instance for the OpenStack User."
+    info="This is the private key file used to connect to the conversion host instance for cloud-user."
     label="Conversion Host SSH private key"
     labelWidth={4}
     name="conversionHostSshKey"
@@ -82,7 +82,7 @@ exports[`conversion host wizard authentication step renders correctly in the ini
     controlWidth={7}
     help="Upload your SSH key file or paste its contents below."
     hideBody={false}
-    info="RHV-M deploys a common SSH public key on all hosts when configuring them. This allows commands and playbooks to be run from RHV-M. The associated private key is in the file /etc/pki/ovirt-engine/keys/engine_id_rsa on RHV-M."
+    info="This is the private key file used to connect to the conversion host instance for cloud-user."
     label="Conversion Host SSH private key"
     labelWidth={4}
     name="conversionHostSshKey"
@@ -151,7 +151,7 @@ exports[`conversion host wizard authentication step renders correctly with SSH t
     controlWidth={7}
     help="Upload your SSH key file or paste its contents below."
     hideBody={false}
-    info="RHV-M deploys a common SSH public key on all hosts when configuring them. This allows commands and playbooks to be run from RHV-M. The associated private key is in the file /etc/pki/ovirt-engine/keys/engine_id_rsa on RHV-M."
+    info="This is the private key file used to connect to the conversion host instance for cloud-user."
     label="Conversion Host SSH private key"
     labelWidth={4}
     name="conversionHostSshKey"
@@ -229,7 +229,7 @@ exports[`conversion host wizard authentication step renders correctly with VDDK 
     controlWidth={7}
     help="Upload your SSH key file or paste its contents below."
     hideBody={false}
-    info="RHV-M deploys a common SSH public key on all hosts when configuring them. This allows commands and playbooks to be run from RHV-M. The associated private key is in the file /etc/pki/ovirt-engine/keys/engine_id_rsa on RHV-M."
+    info="This is the private key file used to connect to the conversion host instance for cloud-user."
     label="Conversion Host SSH private key"
     labelWidth={4}
     name="conversionHostSshKey"
@@ -314,7 +314,7 @@ exports[`conversion host wizard authentication step renders correctly with verif
     controlWidth={7}
     help="Upload your SSH key file or paste its contents below."
     hideBody={false}
-    info="This is the private key file used to connect to the conversion host instance for the OpenStack User."
+    info="This is the private key file used to connect to the conversion host instance for cloud-user."
     label="Conversion Host SSH private key"
     labelWidth={4}
     name="conversionHostSshKey"
@@ -392,7 +392,7 @@ exports[`conversion host wizard authentication step renders the redux-form wrapp
     controlWidth={7}
     help="Upload your SSH key file or paste its contents below."
     hideBody={false}
-    info="RHV-M deploys a common SSH public key on all hosts when configuring them. This allows commands and playbooks to be run from RHV-M. The associated private key is in the file /etc/pki/ovirt-engine/keys/engine_id_rsa on RHV-M."
+    info="This is the private key file used to connect to the conversion host instance for cloud-user."
     label="Conversion Host SSH private key"
     labelWidth={4}
     name="conversionHostSshKey"

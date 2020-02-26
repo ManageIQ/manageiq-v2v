@@ -89,7 +89,7 @@ exports[`retry conversion host confirmation modal renders correctly for a VDDK t
         controlWidth={7}
         help="Upload your SSH key file or paste its contents below."
         hideBody={false}
-        info=""
+        info="This is the private key file used to connect to the conversion host instance for cloud-user."
         label="Conversion Host SSH private key"
         labelWidth={4}
         name="conversionHostSshKey"
@@ -214,7 +214,7 @@ exports[`retry conversion host confirmation modal renders correctly for an SSH t
         controlWidth={7}
         help="Upload your SSH key file or paste its contents below."
         hideBody={false}
-        info=""
+        info="This is the private key file used to connect to the conversion host instance for cloud-user."
         label="Conversion Host SSH private key"
         labelWidth={4}
         name="conversionHostSshKey"
