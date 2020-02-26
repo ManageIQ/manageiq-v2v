@@ -1,5 +1,4 @@
 import React from 'react';
-import { i18nProviderWrapperFactory } from '../common/i18nProviderWrapperFactory';
 
 const componentRegistry = {
   registry: {},
@@ -34,15 +33,10 @@ const componentRegistry = {
     if (!currentComponent) {
       throw new Error(`Component not found:  ${name} among ${this.registeredComponents()}`);
     }
-    // FIXME: figure out a way to mock i18nProviderWrapperFactory for componentRegistry specs
-    const WrappedComponent = window.it
-      ? currentComponent.type
-      : i18nProviderWrapperFactory(new Date())(currentComponent.type);
-
     // todo: should component registry `markup` actually merge {data} instead?
     // it would be nice to account for `ownProps` (assuming props are not always coming from store)
     return (
-      <WrappedComponent
+      <currentComponent.type
         data={currentComponent.data ? Object.assign({}, data, currentComponent.data) : undefined}
         store={currentComponent.store ? store : undefined}
       />
