@@ -1,10 +1,10 @@
 # ManageIQ V2V plugin
 
 [![Gem Version](https://badge.fury.io/rb/manageiq-v2v.svg)](http://badge.fury.io/rb/manageiq-v2v)
-[![Build Status](https://travis-ci.org/ManageIQ/manageiq-v2v.svg?branch=master)](https://travis-ci.org/ManageIQ/manageiq-v2v)
+[![Build Status](https://travis-ci.org/ManageIQ/manageiq-v2v.svg?branch=jansa)](https://travis-ci.org/ManageIQ/manageiq-v2v)
 [![Code Climate](https://codeclimate.com/github/ManageIQ/manageiq-v2v.svg)](https://codeclimate.com/github/ManageIQ/manageiq-v2v)
 [![Test Coverage](https://codeclimate.com/github/ManageIQ/manageiq-v2v/badges/coverage.svg)](https://codeclimate.com/github/ManageIQ/manageiq-v2v/coverage)
-[![Security](https://hakiri.io/github/ManageIQ/manageiq-v2v/master.svg)](https://hakiri.io/github/ManageIQ/manageiq-v2v/master)
+[![Security](https://hakiri.io/github/ManageIQ/manageiq-v2v/jansa.svg)](https://hakiri.io/github/ManageIQ/manageiq-v2v/jansa)
 
 [![Chat](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ManageIQ/v2v?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Translate](https://img.shields.io/badge/translate-zanata-blue.svg)](https://translate.zanata.org/zanata/project/view/manageiq-v2v)
