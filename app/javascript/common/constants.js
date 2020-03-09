@@ -36,8 +36,6 @@ export const V2V_TARGET_PROVIDERS = [
 ];
 
 export const CONVERSION_HOST_TYPES = {
-  // With UCI support, all new conversion hosts must be VMs. But, RHV conversion hosts
-  // could have been configured pre-UCI on a Host, so those are still valid when checking for CHs.
-  [RHV]: ['ManageIQ::Providers::Redhat::InfraManager::Vm', 'ManageIQ::Providers::Redhat::InfraManager::Host'],
-  [OPENSTACK]: ['ManageIQ::Providers::Openstack::CloudManager::Vm']
+  [RHV]: 'ManageIQ::Providers::Redhat::InfraManager::Host',
+  [OPENSTACK]: 'ManageIQ::Providers::Openstack::CloudManager::Vm'
 };
