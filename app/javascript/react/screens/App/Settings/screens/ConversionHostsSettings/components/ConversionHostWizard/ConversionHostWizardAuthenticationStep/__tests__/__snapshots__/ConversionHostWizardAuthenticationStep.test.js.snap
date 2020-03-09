@@ -8,6 +8,21 @@ exports[`conversion host wizard authentication step renders correctly in the ini
   horizontal={false}
   inline={false}
 >
+  <Field
+    component={[Function]}
+    controlId="openstack-user-input"
+    controlWidth={7}
+    label="OpenStack User"
+    labelWidth={4}
+    name="openstackUser"
+    required={true}
+    type="text"
+    validate={
+      Array [
+        [Function],
+      ]
+    }
+  />
   <TextFileField
     controlId="host-ssh-key-input"
     controlWidth={7}
@@ -313,6 +328,21 @@ exports[`conversion host wizard authentication step renders correctly with verif
   horizontal={false}
   inline={false}
 >
+  <Field
+    component={[Function]}
+    controlId="openstack-user-input"
+    controlWidth={7}
+    label="OpenStack User"
+    labelWidth={4}
+    name="openstackUser"
+    required={true}
+    type="text"
+    validate={
+      Array [
+        [Function],
+      ]
+    }
+  />
   <TextFileField
     controlId="host-ssh-key-input"
     controlWidth={7}
@@ -401,6 +431,7 @@ exports[`conversion host wizard authentication step renders the redux-form wrapp
         "body": "",
         "filename": "",
       },
+      "openstackUser": "cloud-user",
       "transformationMethod": "VDDK",
       "verifyCaCerts": false,
       "vmwareSshKey": Object {
