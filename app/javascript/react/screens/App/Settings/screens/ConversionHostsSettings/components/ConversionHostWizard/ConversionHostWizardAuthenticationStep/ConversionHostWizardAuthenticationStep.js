@@ -15,7 +15,7 @@ const requiredWithMessage = required({ msg: __('This field is required') });
 const ConversionHostWizardAuthenticationStep = ({
   selectedProviderType,
   selectedTransformationMethod,
-  verifyCaCerts
+  verifyOpenstackCerts
 }) => {
   const fieldBaseProps = { labelWidth: 4, controlWidth: 7 };
 
@@ -78,38 +78,40 @@ const ConversionHostWizardAuthenticationStep = ({
           validate={[requiredWithMessage]}
         />
       )}
-      <React.Fragment>
-        <Field
-          {...fieldBaseProps}
-          name="verifyCaCerts"
-          label={__('Verify TLS Certificates')}
-          component={FormField}
-          controlId="verify-ca-certs"
-          style={{ marginTop: 25 }}
-          validate={() => undefined} // Force redux-form to re-run validation when this field changes, since it can unmount openstackCaCerts
-        >
-          {({ input: { value, onChange } }) => (
-            <Switch
-              bsSize="normal"
-              id="verify-ca-certs-switch"
-              onText={__('Yes')}
-              offText={__('No')}
-              defaultValue={false}
-              value={value}
-              onChange={(element, state) => onChange(state)}
+      {selectedProviderType === OPENSTACK && (
+        <React.Fragment>
+          <Field
+            {...fieldBaseProps}
+            name="verifyOpenstackCerts"
+            label={__('Verify TLS Certificates for OpenStack')}
+            component={FormField}
+            controlId="verify-openstack-certs"
+            style={{ marginTop: 25 }}
+            validate={() => undefined} // Force redux-form to re-run validation when this field changes, since it can unmount openstackCaCerts
+          >
+            {({ input: { value, onChange } }) => (
+              <Switch
+                bsSize="normal"
+                id="verify-openstack-certs-switch"
+                onText={__('Yes')}
+                offText={__('No')}
+                defaultValue={false}
+                value={value}
+                onChange={(element, state) => onChange(state)}
+              />
+            )}
+          </Field>
+          {verifyOpenstackCerts && (
+            <TextFileField
+              {...fieldBaseProps}
+              name="openstackCaCerts"
+              label={__('OpenStack Trusted CA Certificates')}
+              help={__('Upload your certificates file, in PEM format, or paste its contents below.')}
+              controlId="openstack-ca-certs-input"
             />
           )}
-        </Field>
-        {verifyCaCerts && (
-          <TextFileField
-            {...fieldBaseProps}
-            name="caCerts"
-            label={__('Trusted CA Certificates')}
-            help={__('Upload your certificates file, in PEM format, or paste its contents below.')}
-            controlId="ca-certs-input"
-          />
-        )}
-      </React.Fragment>
+        </React.Fragment>
+      )}
     </Form>
   );
 };
@@ -117,7 +119,7 @@ const ConversionHostWizardAuthenticationStep = ({
 ConversionHostWizardAuthenticationStep.propTypes = {
   selectedProviderType: PropTypes.string,
   selectedTransformationMethod: PropTypes.string,
-  verifyCaCerts: PropTypes.bool
+  verifyOpenstackCerts: PropTypes.bool
 };
 
 export default reduxForm({
@@ -129,7 +131,7 @@ export default reduxForm({
     conversionHostSshKey: { filename: '', body: '' },
     transformationMethod: VDDK,
     vmwareSshKey: { filename: '', body: '' },
-    caCerts: { filename: '', body: '' },
-    verifyCaCerts: false
+    openstackCaCerts: { filename: '', body: '' },
+    verifyOpenstackCerts: false
   }
 })(ConversionHostWizardAuthenticationStep);
