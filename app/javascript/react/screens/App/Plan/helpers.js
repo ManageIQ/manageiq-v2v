@@ -10,6 +10,8 @@ const taskCompletedUnsuccessfully = task => task.state === 'finished' && task.st
 
 const processVMTasks = vmTasks => {
   const tasks = [];
+  // FIXME (maybe someday): this is a mess, we shouldn't be altering the structure of the task object,
+  // we should just pass the task objects directly through, perhaps omitting some keys.
   vmTasks.forEach(task => {
     const taskDetails = {
       id: task.id,
@@ -40,6 +42,7 @@ const processVMTasks = vmTasks => {
 
     taskDetails.options.progress = task.options.progress;
     taskDetails.options.virtv2v_wrapper = task.options.virtv2v_wrapper;
+    taskDetails.options.virtv2v_disks = task.options.virtv2v_disks;
 
     if (!task.diskSpaceCompletedGb) {
       taskDetails.diskSpaceCompletedGb = '0';

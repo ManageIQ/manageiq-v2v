@@ -322,6 +322,7 @@ const MigrationInProgressListItem = ({
     <InProgressRow
       {...baseRowProps}
       additionalInfo={[
+        // TODO this bar shouldn't appear for warm migrations, precopy status should instead?
         <ListViewTable.InfoItem key="migration-progress">
           <div id={`vm-progress-bar-${plan.id}`} className="vm-progress-bar">
             <UtilizationBar

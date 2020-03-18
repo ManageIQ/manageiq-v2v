@@ -89,6 +89,8 @@ const PlanRequestDetailListItem = ({
 
   const taskIsSelectedForCancel = !!selectedTasksForCancel.find(t => t.id === task.id);
 
+  console.log('task: ', task);
+
   return (
     <ListViewTable.Row
       key={task.id}
