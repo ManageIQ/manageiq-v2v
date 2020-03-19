@@ -22,6 +22,7 @@ import ScheduleMigrationButton from './ScheduleMigrationButton';
 import CutoverTimeInfoItem from './CutoverTimeInfoItem';
 import StopPropagationOnClick from '../../../common/StopPropagationOnClick';
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
+import { getPlanCopySummary } from '../../../common/warmMigrationHelpers';
 
 const MigrationInProgressListItem = ({
   plan,
@@ -51,12 +52,10 @@ const MigrationInProgressListItem = ({
   const isInitiating = reloadCard || !mostRecentRequest || mostRecentRequest.request_state === 'pending';
 
   const isWarmMigration = !!plan.options.config_info.warm_migration;
-  const isBeforeCutover = isWarmMigration && !!plan.fake; // TODO replace with real logic
 
   const showScheduleMigrationButton =
     isWarmMigration && mostRecentRequest && !mostRecentRequest.options.cutover_datetime;
   const showWarmMigrationKebab = isWarmMigration && mostRecentRequest && mostRecentRequest.options.cutover_datetime;
-  // TODO replace with real cutover_datetime property (on plan request)
 
   // Plan request state: initiating
   if (isInitiating) {
@@ -143,7 +142,7 @@ const MigrationInProgressListItem = ({
 
   // UX business rule: reflect failed immediately if any single task has failed
   // in the most recent request
-  const numFailedVms = countFailedVms(mostRecentRequest); // TODO consider warm migration case, what changes for detecting failure?
+  const numFailedVms = countFailedVms(mostRecentRequest);
 
   // UX business rule: aggregrate the tasks across requests reflecting current status of all tasks,
   // (gather the last status for the vm, gather the last storage for use in UX bussiness rule 3)
@@ -258,101 +257,68 @@ const MigrationInProgressListItem = ({
     );
   }
 
-  // TODO maybe get rid of this case entirely and use the base return case with conditonals
-  // or, deduplicate the stuff used in both
-  if (isWarmMigration && isBeforeCutover) {
-    // TODO replace these stubs with real logic
-    let precopyStatus = <div>TODO: status here</div>;
-    let cutoverSchedule = <div>TODO: schedule here</div>;
+  const vmProgressBar = !isWarmMigration && (
+    <div id={`vm-progress-bar-${plan.id}`} className="vm-progress-bar">
+      <UtilizationBar
+        now={numCompletedVms}
+        max={numTotalVms}
+        description={__('Migrating data')}
+        label={
+          <span>
+            <span id="vms-migrated">{sprintf(__('%s of %s VMs'), numCompletedVms, numTotalVms)}</span> {__('migrated')}
+          </span>
+        }
+        descriptionPlacementTop
+        availableTooltipFunction={() => (
+          <ProgressBarTooltip id={`available-vm-${plan.id}`} max={numTotalVms} now={numCompletedVms} />
+        )}
+        usedTooltipFunction={() => (
+          <ProgressBarTooltip id={`used-vm-${plan.id}`} max={numTotalVms} now={numCompletedVms} />
+        )}
+      />
+      <div className="info-with-inline-icon">
+        <Icon type="fa" name="clock-o" />
+        <TickingIsoElapsedTime startTime={mostRecentRequest.created_on} />
+      </div>
+    </div>
+  );
 
-    if (plan.fake === 'initial-with-schedule' || plan.fake === 'initial-unscheduled') {
-      precopyStatus = (
+  let warmMigrationStatus = null;
+  if (isWarmMigration) {
+    const { isPreCopyingAllVms, hasInitialCopyFinished } = getPlanCopySummary(mostRecentRequest);
+    if (isPreCopyingAllVms && !hasInitialCopyFinished) {
+      warmMigrationStatus = (
         <div className="info-with-inline-icon">
           <Spinner size="sm" inline loading />
           <div>{__('Initial pre-copy in progress')}</div>
         </div>
       );
-    } else if (plan.fake === 'last-failed') {
-      precopyStatus = (
+    } else {
+      // TODO also render the warning/error case?
+      /*
         <div className="info-with-inline-icon">
           <Icon type="pf" name="warning-triangle-o" />
           <div>{__('Last pre-copy failed for one or more VMs')}</div>
         </div>
-      );
-    } else if (plan.fake === 'last-succeeded') {
-      precopyStatus = (
+      */
+      warmMigrationStatus = (
         <div className="info-with-inline-icon">
           <Icon type="pf" name="ok" />
           <div>{__('Last pre-copy succeeded')}</div>
         </div>
       );
     }
-
-    if (plan.fake === 'initial-with-schedule' || plan.fake === 'last-succeeded') {
-      cutoverSchedule = (
-        <div>
-          {__('Scheduled for cutover:')}
-          <br />
-          {__('November 28th 2019, 2:00 am')}
-          <Icon className="edit-schedule" type="pf" name="edit" />
-        </div>
-      );
-    } else {
-      cutoverSchedule = null;
-    }
-
-    return (
-      <InProgressRow
-        {...baseRowProps}
-        additionalInfo={[
-          <ListViewTable.InfoItem key="migration-progress">
-            {cutoverSchedule ? (
-              <div className="precopy-status-with-schedule">
-                {precopyStatus}
-                {cutoverSchedule}
-              </div>
-            ) : (
-              precopyStatus
-            )}
-          </ListViewTable.InfoItem>
-        ]} // TODO replace this crap with the real CutoverTimeInfoItem and maybe consolidate the kebab stuff?
-        actions={!cutoverSchedule ? <Button onClick={() => alert('TODO')}>{__('Schedule Cutover')}</Button> : <div />}
-      />
-    );
+    // TODO also render the post-cutover cases?
   }
 
   return (
     <InProgressRow
       {...baseRowProps}
       additionalInfo={[
-        // TODO this bar shouldn't appear for warm migrations, precopy status should instead?
         <ListViewTable.InfoItem key="migration-progress">
-          <div id={`vm-progress-bar-${plan.id}`} className="vm-progress-bar">
-            <UtilizationBar
-              now={numCompletedVms}
-              max={numTotalVms}
-              description={__('Migrating data')}
-              label={
-                <span>
-                  <span id="vms-migrated">{sprintf(__('%s of %s VMs'), numCompletedVms, numTotalVms)}</span>{' '}
-                  {__('migrated')}
-                </span>
-              }
-              descriptionPlacementTop
-              availableTooltipFunction={() => (
-                <ProgressBarTooltip id={`available-vm-${plan.id}`} max={numTotalVms} now={numCompletedVms} />
-              )}
-              usedTooltipFunction={() => (
-                <ProgressBarTooltip id={`used-vm-${plan.id}`} max={numTotalVms} now={numCompletedVms} />
-              )}
-            />
-            <div className="info-with-inline-icon">
-              <Icon type="fa" name="clock-o" />
-              <TickingIsoElapsedTime startTime={mostRecentRequest.created_on} />
-            </div>
-          </div>
+          {vmProgressBar || warmMigrationStatus}
         </ListViewTable.InfoItem>,
-        <CutoverTimeInfoItem plan={plan} planRequest={mostRecentRequest} />
+        <CutoverTimeInfoItem plan={plan} planRequest={mostRecentRequest} /> // TODO if we get colspan working, don't render this unless warm migration
       ]}
       actions={
         <div>

@@ -87,6 +87,7 @@ const BaseListViewTableRow = ({
       )}
       {additionalInfo &&
         additionalInfo.map((infoItem, index) => (
+          // TODO may need to make it possible to use a colspan here for the progress bar
           <td
             key={`info-item-${index}`}
             className={classNames('list-view-pf-main-info', { 'empty-info-item': !infoItem })}

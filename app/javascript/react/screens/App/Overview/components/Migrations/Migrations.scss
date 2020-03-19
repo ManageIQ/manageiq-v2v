@@ -28,25 +28,5 @@
         margin-bottom: 5px;
       }
     }
-
-    .precopy-status-with-schedule {
-      display: flex;
-      width: 100%;
-      align-items: center;
-
-      > div {
-        flex-grow: 1;
-        text-align: left;
-
-        + div {
-          padding-left: 15px;
-        }
-      }
-
-      .edit-schedule {
-        font-size: 14px;
-        margin-left: 5px;
-      }
-    }
   }
 }
