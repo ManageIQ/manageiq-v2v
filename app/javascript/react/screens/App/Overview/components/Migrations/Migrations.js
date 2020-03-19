@@ -82,37 +82,40 @@ class Migrations extends React.Component {
 
     // TODO remove this fake data
     const firstPlan = activeTransformationPlans[0];
-    const fakeWarmPlan = {
-      ...firstPlan,
-      options: { ...firstPlan.options, config_info: { ...firstPlan.options.config_info, warm_migration: true } }
-    };
-    const fakeActiveTransformationPlans = [
-      ...activeTransformationPlans,
-      {
-        ...fakeWarmPlan,
-        fake: 'initial-with-schedule',
-        name: 'Warm migration test 1',
-        description: ''
-      },
-      {
-        ...fakeWarmPlan,
-        fake: 'initial-unscheduled',
-        name: 'Warm migration test 2',
-        description: ''
-      },
-      {
-        ...fakeWarmPlan,
-        fake: 'last-failed',
-        name: 'Warm migration test 3',
-        description: ''
-      },
-      {
-        ...fakeWarmPlan,
-        fake: 'last-succeeded',
-        name: 'Warm migration test 4',
-        description: ''
-      }
-    ];
+    let fakeActiveTransformationPlans = [];
+    if (firstPlan) {
+      const fakeWarmPlan = {
+        ...firstPlan,
+        options: { ...firstPlan.options, config_info: { ...firstPlan.options.config_info, warm_migration: true } }
+      };
+      fakeActiveTransformationPlans = [
+        ...activeTransformationPlans,
+        {
+          ...fakeWarmPlan,
+          fake: 'initial-with-schedule',
+          name: 'Warm migration test 1',
+          description: ''
+        },
+        {
+          ...fakeWarmPlan,
+          fake: 'initial-unscheduled',
+          name: 'Warm migration test 2',
+          description: ''
+        },
+        {
+          ...fakeWarmPlan,
+          fake: 'last-failed',
+          name: 'Warm migration test 3',
+          description: ''
+        },
+        {
+          ...fakeWarmPlan,
+          fake: 'last-succeeded',
+          name: 'Warm migration test 4',
+          description: ''
+        }
+      ];
+    }
 
     return (
       <React.Fragment>
@@ -175,7 +178,7 @@ class Migrations extends React.Component {
             )}
             {activeFilter === MIGRATIONS_FILTERS.inProgress && (
               <MigrationsInProgressList
-                activeTransformationPlans={fakeActiveTransformationPlans} // TODO remove fake data
+                activeTransformationPlans={activeTransformationPlans.length > 0 ? fakeActiveTransformationPlans : []} // TODO remove fake data
                 serviceTemplatePlaybooks={serviceTemplatePlaybooks}
                 allRequestsWithTasks={allRequestsWithTasks}
                 reloadCard={reloadCard}
