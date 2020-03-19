@@ -80,25 +80,6 @@ class Migrations extends React.Component {
 
     const plansExist = transformationPlans.length > 0 || archivedTransformationPlans.length > 0;
 
-    // TODO remove this fake data
-    const firstPlan = activeTransformationPlans[0];
-    let fakeActiveTransformationPlans = [];
-    if (firstPlan) {
-      const fakeColdPlan = {
-        ...firstPlan,
-        options: { ...firstPlan.options, config_info: { ...firstPlan.options.config_info, warm_migration: false } }
-      };
-      fakeActiveTransformationPlans = [
-        ...activeTransformationPlans,
-        {
-          ...fakeColdPlan,
-          fake: 'cold',
-          name: 'Fake cold migration',
-          description: ''
-        }
-      ];
-    }
-
     return (
       <React.Fragment>
         <Grid.Col xs={12} style={{ backgroundColor: '#fff' }}>
@@ -160,7 +141,7 @@ class Migrations extends React.Component {
             )}
             {activeFilter === MIGRATIONS_FILTERS.inProgress && (
               <MigrationsInProgressList
-                activeTransformationPlans={activeTransformationPlans.length > 0 ? fakeActiveTransformationPlans : []} // TODO remove fake data
+                activeTransformationPlans={activeTransformationPlans}
                 serviceTemplatePlaybooks={serviceTemplatePlaybooks}
                 allRequestsWithTasks={allRequestsWithTasks}
                 reloadCard={reloadCard}
