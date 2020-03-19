@@ -34,8 +34,6 @@ class ScheduleMigrationModal extends React.Component {
       scheduleMigrationPlan.miq_requests &&
       getMostRecentRequest(scheduleMigrationPlan.miq_requests);
 
-    console.log({ mostRecentRequest });
-
     const handleDatepickerChange = event => {
       this.setState({ dateTimeInput: event });
     };
@@ -72,7 +70,10 @@ class ScheduleMigrationModal extends React.Component {
 
     const modalBodyStrings = plan => [MODAL_STRINGS[modalMode(plan)][1], MODAL_STRINGS[modalMode(plan)][2]];
 
-    const { migrationScheduled, migrationCutover } = getPlanScheduleInfo(scheduleMigrationPlan);
+    const { migrationScheduled, migrationCutover } = getPlanScheduleInfo({
+      plan: scheduleMigrationPlan,
+      planRequest: mostRecentRequest
+    });
     const defaultDate = isPlanWarmMigration(scheduleMigrationPlan)
       ? new Date(migrationCutover)
       : new Date(migrationScheduled);

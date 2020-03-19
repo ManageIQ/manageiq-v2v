@@ -53,8 +53,9 @@ const MigrationInProgressListItem = ({
   const isWarmMigration = !!plan.options.config_info.warm_migration;
   const isBeforeCutover = isWarmMigration && !!plan.fake; // TODO replace with real logic
 
-  const showScheduleMigrationButton = isWarmMigration && !plan.options.config_info.warm_migration_cutover_datetime;
-  const showWarmMigrationKebab = isWarmMigration && plan.options.config_info.warm_migration_cutover_datetime;
+  const showScheduleMigrationButton =
+    isWarmMigration && mostRecentRequest && !mostRecentRequest.options.cutover_datetime;
+  const showWarmMigrationKebab = isWarmMigration && mostRecentRequest && mostRecentRequest.options.cutover_datetime;
   // TODO replace with real cutover_datetime property (on plan request)
 
   // Plan request state: initiating
@@ -67,7 +68,7 @@ const MigrationInProgressListItem = ({
             <Spinner size="sm" inline loading />
             {__('Initiating migration. This might take a few minutes.')}
           </ListViewTable.InfoItem>,
-          <CutoverTimeInfoItem plan={plan} />
+          <CutoverTimeInfoItem plan={plan} planRequest={mostRecentRequest} />
         ]}
       />
     );
@@ -99,7 +100,7 @@ const MigrationInProgressListItem = ({
               {__('Waiting for an available conversion host. You can continue waiting or go to the Migration Settings page to increase the number of migrations per host.') /* prettier-ignore */}
             </EllipsisWithTooltip>
           </ListViewTable.InfoItem>,
-          <CutoverTimeInfoItem plan={plan} />
+          <CutoverTimeInfoItem plan={plan} planRequest={mostRecentRequest} />
         ]}
         actions={
           <Button disabled={cancelButtonDisabled} onClick={onCancelClick}>
@@ -129,7 +130,7 @@ const MigrationInProgressListItem = ({
               {__('See the product documentation for information on configuring conversion hosts.')}
             </EllipsisWithTooltip>
           </ListViewTable.InfoItem>,
-          <CutoverTimeInfoItem plan={plan} />
+          <CutoverTimeInfoItem plan={plan} planRequest={mostRecentRequest} />
         ]}
         actions={
           <Button disabled={isEditingPlanRequest} onClick={onCancelClick}>
@@ -169,7 +170,7 @@ const MigrationInProgressListItem = ({
         {sprintf(
           __('Are you sure you want to unschedule cutover for plan %s targeted to run on %s ?'),
           plan.name,
-          formatDateTime(plan.options.config_info.warm_migration_cutover_datetime) // TODO use time from plan request here too
+          formatDateTime(mostRecentRequest.options.cutover_datetime)
         )}
       </p>
     </React.Fragment>
@@ -212,7 +213,7 @@ const MigrationInProgressListItem = ({
             <Spinner size="sm" inline loading />
             {sprintf(__('Running playbook service %s. This might take a few minutes.'), playbookName)}
           </ListViewTable.InfoItem>,
-          <CutoverTimeInfoItem plan={plan} />
+          <CutoverTimeInfoItem plan={plan} planRequest={mostRecentRequest} />
         ]}
         actions={
           <div>
@@ -351,7 +352,7 @@ const MigrationInProgressListItem = ({
             </div>
           </div>
         </ListViewTable.InfoItem>,
-        <CutoverTimeInfoItem plan={plan} />
+        <CutoverTimeInfoItem plan={plan} planRequest={mostRecentRequest} />
       ]}
       actions={
         <div>

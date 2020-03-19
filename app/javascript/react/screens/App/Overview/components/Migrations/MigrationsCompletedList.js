@@ -79,19 +79,19 @@ const MigrationsCompletedList = ({
                 </Grid.Row>
                 <ListViewTable className="plans-complete-list" style={{ marginTop: 10 }}>
                   {filteredSortedPaginatedListItems.items.map(plan => {
-                    const {
-                      migrationScheduled,
-                      staleMigrationSchedule,
-                      migrationStarting,
-                      showInitialScheduleButton
-                    } = getPlanScheduleInfo(plan);
-
                     const requestsOfAssociatedPlan = allRequestsWithTasks.filter(
                       request => request.source_id === plan.id
                     );
 
                     const mostRecentRequest =
                       requestsOfAssociatedPlan.length > 0 && getMostRecentRequest(requestsOfAssociatedPlan);
+
+                    const {
+                      migrationScheduled,
+                      staleMigrationSchedule,
+                      migrationStarting,
+                      showInitialScheduleButton
+                    } = getPlanScheduleInfo({ plan, planRequest: mostRecentRequest });
 
                     const failed = mostRecentRequest && mostRecentRequest.status === 'Error';
                     const denied = mostRecentRequest && mostRecentRequest.status === 'Denied';

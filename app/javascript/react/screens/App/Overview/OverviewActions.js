@@ -197,7 +197,6 @@ export const toggleScheduleMigrationModal = plan => ({
   payload: plan
 });
 
-// TODO look for other instances of warm_migration_cutover_datetime
 export const scheduleCutover = ({ planRequest, cutoverTime }) => dispatch =>
   dispatch({
     type: V2V_SCHEDULE_MIGRATION,
@@ -219,7 +218,7 @@ export const scheduleCutover = ({ planRequest, cutoverTime }) => dispatch =>
               ? __('Migration cutover successfully unscheduled')
               : sprintf(
                   __('Migration cutover successfully scheduled for %s'),
-                  formatDateTime(response.data.options.config_info.warm_migration_cutover_datetime)
+                  formatDateTime(response.data.options.cutover_datetime)
                 );
           dispatch({
             type: V2V_NOTIFICATION_ADD,

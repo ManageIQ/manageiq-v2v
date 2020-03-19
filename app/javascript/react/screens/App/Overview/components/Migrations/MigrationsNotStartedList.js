@@ -63,9 +63,9 @@ const MigrationsNotStartedList = ({
                 </Grid.Row>
                 <ListViewTable className="plans-not-started-list" style={{ marginTop: 10 }}>
                   {filteredSortedPaginatedListItems.items.map(plan => {
-                    const { migrationScheduled, migrationStarting, showInitialScheduleButton } = getPlanScheduleInfo(
+                    const { migrationScheduled, migrationStarting, showInitialScheduleButton } = getPlanScheduleInfo({
                       plan
-                    );
+                    });
                     const isMissingMapping = !plan.infraMappingName;
 
                     const editPlanDisabled = loading === plan.href;
