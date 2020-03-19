@@ -55,20 +55,32 @@ const MigrationInProgressListItem = ({
 
   const showScheduleMigrationButton =
     isWarmMigration && mostRecentRequest && !mostRecentRequest.options.cutover_datetime;
-  const showWarmMigrationKebab = isWarmMigration && mostRecentRequest && mostRecentRequest.options.cutover_datetime;
+  const warmMigrationCutoverScheduled =
+    isWarmMigration && mostRecentRequest && mostRecentRequest.options.cutover_datetime;
+
+  // The cutover time info item takes up space that we otherwise want to use to expand the preceding cell.
+  // This helper will render either one cell with colSpan={2}, or two cells with colSpan={1}.
+  const renderWithColspanOrCutoverTime = child => [
+    {
+      tdProps: { colSpan: warmMigrationCutoverScheduled ? 1 : 2 },
+      child
+    },
+    ...(warmMigrationCutoverScheduled
+      ? [<CutoverTimeInfoItem key="cutover-time" plan={plan} planRequest={mostRecentRequest} />]
+      : [])
+  ];
 
   // Plan request state: initiating
   if (isInitiating) {
     return (
       <InProgressRow
         plan={plan}
-        additionalInfo={[
+        additionalInfo={renderWithColspanOrCutoverTime(
           <ListViewTable.InfoItem key="initiating">
             <Spinner size="sm" inline loading />
             {__('Initiating migration. This might take a few minutes.')}
-          </ListViewTable.InfoItem>,
-          <CutoverTimeInfoItem plan={plan} planRequest={mostRecentRequest} />
-        ]}
+          </ListViewTable.InfoItem>
+        )}
       />
     );
   }
@@ -92,15 +104,14 @@ const MigrationInProgressListItem = ({
     return (
       <InProgressRow
         plan={plan}
-        additionalInfo={[
+        additionalInfo={renderWithColspanOrCutoverTime(
           <ListViewTable.InfoItem key="waiting-for-host">
             <Spinner size="sm" inline loading />
             <EllipsisWithTooltip style={{ maxWidth: 300 }}>
               {__('Waiting for an available conversion host. You can continue waiting or go to the Migration Settings page to increase the number of migrations per host.') /* prettier-ignore */}
             </EllipsisWithTooltip>
-          </ListViewTable.InfoItem>,
-          <CutoverTimeInfoItem plan={plan} planRequest={mostRecentRequest} />
-        ]}
+          </ListViewTable.InfoItem>
+        )}
         actions={
           <Button disabled={cancelButtonDisabled} onClick={onCancelClick}>
             {__('Cancel Migration')}
@@ -121,16 +132,15 @@ const MigrationInProgressListItem = ({
     return (
       <InProgressRow
         plan={plan}
-        additionalInfo={[
+        additionalInfo={renderWithColspanOrCutoverTime(
           <ListViewTable.InfoItem key="denied">
             <Icon type="pf" name="error-circle-o" />
             <EllipsisWithTooltip style={{ maxWidth: 300 }}>
               {__('Unable to migrate VMs because no conversion host was configured at the time of the attempted migration.') /* prettier-ignore */}{' '}
               {__('See the product documentation for information on configuring conversion hosts.')}
             </EllipsisWithTooltip>
-          </ListViewTable.InfoItem>,
-          <CutoverTimeInfoItem plan={plan} planRequest={mostRecentRequest} />
-        ]}
+          </ListViewTable.InfoItem>
+        )}
         actions={
           <Button disabled={isEditingPlanRequest} onClick={onCancelClick}>
             {__('Cancel Migration')}
@@ -207,13 +217,12 @@ const MigrationInProgressListItem = ({
     return (
       <InProgressRow
         {...baseRowProps}
-        additionalInfo={[
+        additionalInfo={renderWithColspanOrCutoverTime(
           <ListViewTable.InfoItem key="running-playbook">
             <Spinner size="sm" inline loading />
             {sprintf(__('Running playbook service %s. This might take a few minutes.'), playbookName)}
-          </ListViewTable.InfoItem>,
-          <CutoverTimeInfoItem plan={plan} planRequest={mostRecentRequest} />
-        ]}
+          </ListViewTable.InfoItem>
+        )}
         actions={
           <div>
             {showScheduleMigrationButton && (
@@ -224,7 +233,7 @@ const MigrationInProgressListItem = ({
                 isMissingMapping={!plan.infraMappingName}
               />
             )}
-            {showWarmMigrationKebab && (
+            {warmMigrationCutoverScheduled && (
               <StopPropagationOnClick>
                 <DropdownKebab id={`${plan.id}-kebab`} pullRight>
                   <MenuItem
@@ -314,12 +323,9 @@ const MigrationInProgressListItem = ({
   return (
     <InProgressRow
       {...baseRowProps}
-      additionalInfo={[
-        <ListViewTable.InfoItem key="migration-progress">
-          {vmProgressBar || warmMigrationStatus}
-        </ListViewTable.InfoItem>,
-        <CutoverTimeInfoItem plan={plan} planRequest={mostRecentRequest} /> // TODO if we get colspan working, don't render this unless warm migration
-      ]}
+      additionalInfo={renderWithColspanOrCutoverTime(
+        <ListViewTable.InfoItem key="migration-progress">{vmProgressBar || warmMigrationStatus}</ListViewTable.InfoItem>
+      )}
       actions={
         <div>
           {showScheduleMigrationButton && (
@@ -330,7 +336,7 @@ const MigrationInProgressListItem = ({
               isMissingMapping={!plan.infraMappingName}
             />
           )}
-          {showWarmMigrationKebab && (
+          {warmMigrationCutoverScheduled && (
             <StopPropagationOnClick>
               <DropdownKebab id={`${plan.id}-kebab`} pullRight>
                 <MenuItem

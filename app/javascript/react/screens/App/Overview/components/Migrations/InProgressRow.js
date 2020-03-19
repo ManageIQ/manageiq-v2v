@@ -35,7 +35,7 @@ const InProgressRow = ({ plan, numFailedVms, numTotalVms, onClick, additionalInf
 
 InProgressRow.propTypes = {
   plan: PropTypes.shape({ name: PropTypes.node, description: PropTypes.node }).isRequired,
-  additionalInfo: PropTypes.arrayOf(PropTypes.node).isRequired,
+  additionalInfo: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.node, PropTypes.object])).isRequired,
   onClick: PropTypes.func,
   numFailedVms: PropTypes.number,
   numTotalVms: PropTypes.number,

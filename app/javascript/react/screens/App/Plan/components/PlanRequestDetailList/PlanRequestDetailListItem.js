@@ -126,26 +126,29 @@ const PlanRequestDetailListItem = ({
         isWarmMigration ? (
           <ListViewTable.InfoItem key={`${task.id}-num-precopies`}>3 {__('Pre-copies')}</ListViewTable.InfoItem>
         ) : null,
-        <ListViewTable.InfoItem key={`${task.id}-times`}>
-          <UtilizationBar
-            now={task.percentComplete}
-            min={0}
-            max={100}
-            description={label}
-            label=" "
-            usedTooltipFunction={(max, now) => (
-              <Tooltip id={Date.now()}>
-                {now} % {__('Migrated')}
-              </Tooltip>
-            )}
-            availableTooltipFunction={(max, now) => (
-              <Tooltip id={Date.now()}>
-                {max - now} % {__('Remaining')}
-              </Tooltip>
-            )}
-            descriptionPlacementTop
-          />
-        </ListViewTable.InfoItem>
+        // TODO when do we actually use a UtilizationBar in a warm migration, if ever?
+        !isWarmMigration ? (
+          <ListViewTable.InfoItem key={`${task.id}-times`}>
+            <UtilizationBar
+              now={task.percentComplete}
+              min={0}
+              max={100}
+              description={label}
+              label=" "
+              usedTooltipFunction={(max, now) => (
+                <Tooltip id={Date.now()}>
+                  {now} % {__('Migrated')}
+                </Tooltip>
+              )}
+              availableTooltipFunction={(max, now) => (
+                <Tooltip id={Date.now()}>
+                  {max - now} % {__('Remaining')}
+                </Tooltip>
+              )}
+              descriptionPlacementTop
+            />
+          </ListViewTable.InfoItem>
+        ) : null
       ]}
       actions={
         <DropdownButton

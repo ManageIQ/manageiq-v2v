@@ -5,8 +5,6 @@ import { ListView, Icon, noop } from 'patternfly-react';
 import { ListViewTableContext } from './ListViewTable';
 import StopPropagationOnClick from '../StopPropagationOnClick';
 
-// TODO implement expandable support
-
 const BaseListViewTableRow = ({
   className,
   stacked,
@@ -86,15 +84,19 @@ const BaseListViewTableRow = ({
         </td>
       )}
       {additionalInfo &&
-        additionalInfo.map((infoItem, index) => (
-          // TODO may need to make it possible to use a colspan here for the progress bar
-          <td
-            key={`info-item-${index}`}
-            className={classNames('list-view-pf-main-info', { 'empty-info-item': !infoItem })}
-          >
-            {infoItem}
-          </td>
-        ))}
+        additionalInfo.map((infoItem, index) => {
+          const hasTdProps = infoItem && !React.isValidElement(infoItem) && infoItem.child && infoItem.tdProps;
+          const { child, tdProps } = hasTdProps ? infoItem : { child: infoItem, tdProps: {} };
+          return (
+            <td
+              key={`info-item-${index}`}
+              className={classNames('list-view-pf-main-info', { 'empty-info-item': !infoItem })}
+              {...tdProps}
+            >
+              {child}
+            </td>
+          );
+        })}
       {actions && (
         <td>
           <ListView.Actions>
@@ -138,6 +140,7 @@ const BaseListViewTableRow = ({
 
 BaseListViewTableRow.propTypes = {
   ...ListView.Item.propTypes,
+  additionalInfo: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.node, PropTypes.object])),
   expanded: PropTypes.bool.isRequired,
   toggleExpanded: PropTypes.func.isRequired
 };
@@ -179,7 +182,8 @@ class ListViewTableRow extends React.Component {
 }
 
 ListViewTableRow.propTypes = {
-  ...ListView.Item.propTypes
+  ...ListView.Item.propTypes,
+  additionalInfo: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.node, PropTypes.object]))
 };
 
 ListViewTableRow.defaultProps = {
