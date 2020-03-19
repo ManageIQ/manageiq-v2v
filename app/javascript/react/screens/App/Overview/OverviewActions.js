@@ -197,32 +197,33 @@ export const toggleScheduleMigrationModal = plan => ({
   payload: plan
 });
 
-export const scheduleCutover = payload => dispatch =>
+// TODO look for other instances of warm_migration_cutover_datetime
+export const scheduleCutover = ({ planRequest, cutoverTime }) => dispatch =>
   dispatch({
     type: V2V_SCHEDULE_MIGRATION,
     payload: new Promise((resolve, reject) => {
-      const {
-        cutoverTime,
-        plan: { id: planId }
-      } = payload;
-      const url = `/api/service_templates/${planId}`;
+      const url = planRequest.href;
       const body = {
         action: 'edit',
         resource: {
-          config_info: {
-            warm_migration_cutover_datetime: cutoverTime
+          options: {
+            cutover_datetime: cutoverTime
           }
         }
       };
       return API.post(url, body)
         .then(response => {
           resolve(response);
+          const message =
+            cutoverTime === null
+              ? __('Migration cutover successfully unscheduled')
+              : sprintf(
+                  __('Migration cutover successfully scheduled for %s'),
+                  formatDateTime(response.data.options.config_info.warm_migration_cutover_datetime)
+                );
           dispatch({
             type: V2V_NOTIFICATION_ADD,
-            message: sprintf(
-              __('Migration cutover successfully scheduled for %s'),
-              formatDateTime(response.data.options.config_info.warm_migration_cutover_datetime)
-            ),
+            message,
             notificationType: 'success',
             actionEnabled: false
           });

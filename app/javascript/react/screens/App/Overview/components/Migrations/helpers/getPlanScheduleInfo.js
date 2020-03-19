@@ -8,7 +8,7 @@ const getPlanScheduleInfo = plan => {
       plan.options &&
       plan.options.config_info &&
       plan.options.config_info.warm_migration &&
-      plan.options.config_info.warm_migration_cutover_datetime) ||
+      plan.options.config_info.warm_migration_cutover_datetime) || // TODO ?? use plan request here?
     0;
   return {
     migrationScheduled,

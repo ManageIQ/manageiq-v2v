@@ -169,7 +169,7 @@ const MigrationInProgressListItem = ({
         {sprintf(
           __('Are you sure you want to unschedule cutover for plan %s targeted to run on %s ?'),
           plan.name,
-          formatDateTime(plan.options.config_info.warm_migration_cutover_datetime)
+          formatDateTime(plan.options.config_info.warm_migration_cutover_datetime) // TODO use time from plan request here too
         )}
       </p>
     </React.Fragment>
@@ -184,7 +184,7 @@ const MigrationInProgressListItem = ({
 
   const onConfirm = () => {
     scheduleCutover({
-      plan,
+      planRequest: mostRecentRequest,
       cutoverTime: null
     }).then(() => {
       fetchTransformationPlansAction({
@@ -257,10 +257,12 @@ const MigrationInProgressListItem = ({
     );
   }
 
+  // TODO maybe get rid of this case entirely and use the base return case with conditonals
+  // or, deduplicate the stuff used in both
   if (isWarmMigration && isBeforeCutover) {
     // TODO replace these stubs with real logic
     let precopyStatus = <div>TODO: status here</div>;
-    let cutoverSchedule = <div>TODO: schedule here</div>; // TODO null if no scheduled time
+    let cutoverSchedule = <div>TODO: schedule here</div>;
 
     if (plan.fake === 'initial-with-schedule' || plan.fake === 'initial-unscheduled') {
       precopyStatus = (
@@ -312,7 +314,7 @@ const MigrationInProgressListItem = ({
               precopyStatus
             )}
           </ListViewTable.InfoItem>
-        ]} // TODO handle real schedule action here
+        ]} // TODO replace this crap with the real CutoverTimeInfoItem and maybe consolidate the kebab stuff?
         actions={!cutoverSchedule ? <Button onClick={() => alert('TODO')}>{__('Schedule Cutover')}</Button> : <div />}
       />
     );

@@ -4,6 +4,7 @@ import { Icon } from 'patternfly-react';
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
 import ListViewTable from '../../../common/ListViewTable/ListViewTable';
 
+// TODO we'll need to pass the plan request into here and use request.cutover_datetime instead of warm_migration_cutover_datetime
 const CutoverTimeInfoItem = ({ plan }) => {
   if (
     !plan.options.config_info.warm_migration ||
