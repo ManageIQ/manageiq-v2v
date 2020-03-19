@@ -84,34 +84,16 @@ class Migrations extends React.Component {
     const firstPlan = activeTransformationPlans[0];
     let fakeActiveTransformationPlans = [];
     if (firstPlan) {
-      const fakeWarmPlan = {
+      const fakeColdPlan = {
         ...firstPlan,
-        options: { ...firstPlan.options, config_info: { ...firstPlan.options.config_info, warm_migration: true } }
+        options: { ...firstPlan.options, config_info: { ...firstPlan.options.config_info, warm_migration: false } }
       };
       fakeActiveTransformationPlans = [
         ...activeTransformationPlans,
         {
-          ...fakeWarmPlan,
-          fake: 'initial-with-schedule',
-          name: 'Warm migration test 1',
-          description: ''
-        },
-        {
-          ...fakeWarmPlan,
-          fake: 'initial-unscheduled',
-          name: 'Warm migration test 2',
-          description: ''
-        },
-        {
-          ...fakeWarmPlan,
-          fake: 'last-failed',
-          name: 'Warm migration test 3',
-          description: ''
-        },
-        {
-          ...fakeWarmPlan,
-          fake: 'last-succeeded',
-          name: 'Warm migration test 4',
+          ...fakeColdPlan,
+          fake: 'cold',
+          name: 'Fake cold migration',
           description: ''
         }
       ];
