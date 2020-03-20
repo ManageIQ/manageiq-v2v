@@ -58,14 +58,28 @@ const MigrationInProgressListItem = ({
   const warmMigrationCutoverScheduled =
     isWarmMigration && mostRecentRequest && mostRecentRequest.options.cutover_datetime;
 
+  const {
+    isPreCopyingAllVms,
+    hasInitialCopyFinished,
+    lastPreCopyFailedForSomeTask,
+    hasCutoverStarted
+  } = isWarmMigration
+    ? getPlanCopySummary(mostRecentRequest)
+    : {
+        isPreCopyingAllVms: false,
+        hasInitialCopyFinished: false,
+        lastPreCopyFailedForSomeTask: false,
+        hasCutoverStarted: false
+      };
+
   // The cutover time info item takes up space that we otherwise want to use to expand the preceding cell.
   // This helper will render either one cell with colSpan={2}, or two cells with colSpan={1}.
   const renderWithColspanOrCutoverTime = child => [
     {
-      tdProps: { colSpan: warmMigrationCutoverScheduled ? 1 : 2 },
+      tdProps: { colSpan: warmMigrationCutoverScheduled && !hasCutoverStarted ? 1 : 2 },
       child
     },
-    ...(warmMigrationCutoverScheduled
+    ...(warmMigrationCutoverScheduled && !hasCutoverStarted
       ? [<CutoverTimeInfoItem key="cutover-time" plan={plan} planRequest={mostRecentRequest} />]
       : [])
   ];
@@ -205,6 +219,35 @@ const MigrationInProgressListItem = ({
     hideConfirmModalAction();
   };
 
+  const warmMigrationCutoverKebab = warmMigrationCutoverScheduled &&
+    !hasCutoverStarted && (
+      <StopPropagationOnClick>
+        <DropdownKebab id={`${plan.id}-kebab`} pullRight>
+          <MenuItem
+            id={`edit_cutover_${plan.id}`}
+            onClick={e => {
+              e.stopPropagation();
+              toggleScheduleMigrationModal({ plan });
+            }}
+          >
+            {__('Edit Cutover')}
+          </MenuItem>
+          <MenuItem
+            id={`delete_cutover_${plan.id}`}
+            onClick={e => {
+              e.stopPropagation();
+              showConfirmModalAction({
+                ...confirmModalProps,
+                onConfirm
+              });
+            }}
+          >
+            {__('Delete Scheduled Cutover')}
+          </MenuItem>
+        </DropdownKebab>
+      </StopPropagationOnClick>
+    );
+
   // UX business rule: if there are any pre migration playbooks running,
   // or if all disks have been migrated and we have a post migration playbook running, show this instead
   if (
@@ -233,33 +276,7 @@ const MigrationInProgressListItem = ({
                 isMissingMapping={!plan.infraMappingName}
               />
             )}
-            {warmMigrationCutoverScheduled && (
-              <StopPropagationOnClick>
-                <DropdownKebab id={`${plan.id}-kebab`} pullRight>
-                  <MenuItem
-                    id={`edit_cutover_${plan.id}`}
-                    onClick={e => {
-                      e.stopPropagation();
-                      toggleScheduleMigrationModal({ plan });
-                    }}
-                  >
-                    {__('Edit Cutover')}
-                  </MenuItem>
-                  <MenuItem
-                    id={`delete_cutover_${plan.id}`}
-                    onClick={e => {
-                      e.stopPropagation();
-                      showConfirmModalAction({
-                        ...confirmModalProps,
-                        onConfirm
-                      });
-                    }}
-                  >
-                    {__('Delete Scheduled Cutover')}
-                  </MenuItem>
-                </DropdownKebab>
-              </StopPropagationOnClick>
-            )}
+            {warmMigrationCutoverKebab}
           </div>
         }
       />
@@ -294,9 +311,6 @@ const MigrationInProgressListItem = ({
 
   let warmMigrationStatus = null;
   if (isWarmMigration) {
-    const { isPreCopyingAllVms, hasInitialCopyFinished, lastPreCopyFailedForSomeTask } = getPlanCopySummary(
-      mostRecentRequest
-    );
     if (isPreCopyingAllVms && !hasInitialCopyFinished) {
       warmMigrationStatus = (
         <div className="info-with-inline-icon">
@@ -311,6 +325,13 @@ const MigrationInProgressListItem = ({
           <div>{__('Last pre-copy failed for one or more VMs')}</div>
         </div>
       );
+    } else if (hasCutoverStarted) {
+      warmMigrationStatus = (
+        <div className="info-with-inline-icon">
+          <Spinner size="sm" inline loading />
+          <div>{__('Cutover in progress')}</div>
+        </div>
+      );
     } else {
       warmMigrationStatus = (
         <div className="info-with-inline-icon">
@@ -319,7 +340,6 @@ const MigrationInProgressListItem = ({
         </div>
       );
     }
-    // TODO also render the post-cutover cases (in both views)
   }
 
   return (
@@ -338,33 +358,7 @@ const MigrationInProgressListItem = ({
               isMissingMapping={!plan.infraMappingName}
             />
           )}
-          {warmMigrationCutoverScheduled && (
-            <StopPropagationOnClick>
-              <DropdownKebab id={`${plan.id}-kebab`} pullRight>
-                <MenuItem
-                  id={`edit_cutover_${plan.id}`}
-                  onClick={e => {
-                    e.stopPropagation();
-                    toggleScheduleMigrationModal({ plan });
-                  }}
-                >
-                  {__('Edit Cutover')}
-                </MenuItem>
-                <MenuItem
-                  id={`delete_cutover_${plan.id}`}
-                  onClick={e => {
-                    e.stopPropagation();
-                    showConfirmModalAction({
-                      ...confirmModalProps,
-                      onConfirm
-                    });
-                  }}
-                >
-                  {__('Delete Scheduled Cutover')}
-                </MenuItem>
-              </DropdownKebab>
-            </StopPropagationOnClick>
-          )}
+          {warmMigrationCutoverKebab}
         </div>
       }
     />

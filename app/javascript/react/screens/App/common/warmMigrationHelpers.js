@@ -52,15 +52,21 @@ export const getPlanCopySummary = planRequestWithTasks => {
   const isPreCopyingAllVms = tasks.every(
     task => task.options && task.options.progress && task.options.progress.current_state === PRECOPYING_DISKS
   );
+  const isPreCopyingNoVms = tasks.every(
+    task => task.options && task.options.progress && task.options.progress.current_state !== PRECOPYING_DISKS
+  );
   const allCopiesByTask = tasks.map(task => reduceCopiesFromTask(task));
   const hasInitialCopyFinished =
     allCopiesByTask.length > 0 &&
     allCopiesByTask.every(reducedCopies => reducedCopies.some(copy => !!copy.latestEndTime));
   const lastPreCopyFailedForSomeTask = allCopiesByTask.some(reducedCopies => reducedCopies[0].finishedWithErrors);
+  const hasCutoverTimePassed = new Date(planRequestWithTasks.options.cutover_datetime) < new Date();
+  const hasCutoverStarted = isPreCopyingNoVms && hasCutoverTimePassed;
   return {
     isPreCopyingAllVms,
     allCopiesByTask,
     hasInitialCopyFinished,
-    lastPreCopyFailedForSomeTask
+    lastPreCopyFailedForSomeTask,
+    hasCutoverStarted
   };
 };
