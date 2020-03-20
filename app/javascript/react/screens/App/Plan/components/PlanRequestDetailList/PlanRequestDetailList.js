@@ -129,6 +129,7 @@ class PlanRequestDetailList extends React.Component {
     const { showConfirmCancel } = this.state;
 
     const {
+      plan,
       downloadLogInProgressTaskIds,
       ansiblePlaybookTemplate,
       planRequestTasks,
@@ -141,6 +142,8 @@ class PlanRequestDetailList extends React.Component {
       renderPaginationRow,
       conversionHosts
     } = this.props;
+
+    const isWarmMigration = !!plan.options.config_info.warm_migration;
 
     const { allSelected, noneSelected } = this.getCancelSelectionState();
 
@@ -192,11 +195,9 @@ class PlanRequestDetailList extends React.Component {
         <div style={{ overflow: 'auto', paddingBottom: 300, height: '100%' }}>
           <ListViewTable className="plan-request-details-list">
             {filteredSortedPaginatedListItems.items.map(task => (
-              // TODO set up mock data for testing
-
               <PlanRequestDetailListItem
                 task={task}
-                isWarmMigration // TODO use actual plan property?
+                isWarmMigration={isWarmMigration}
                 conversionHosts={conversionHosts}
                 downloadLogInProgressTaskIds={downloadLogInProgressTaskIds}
                 ansiblePlaybookTemplate={ansiblePlaybookTemplate}
