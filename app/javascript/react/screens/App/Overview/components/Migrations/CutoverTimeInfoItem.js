@@ -4,10 +4,10 @@ import { Icon } from 'patternfly-react';
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
 import ListViewTable from '../../../common/ListViewTable/ListViewTable';
 
-const CutoverTimeInfoItem = ({ plan }) => {
+const CutoverTimeInfoItem = ({ plan, planRequest }) => {
   if (
     !plan.options.config_info.warm_migration ||
-    (plan.options.config_info.warm_migration && !plan.options.config_info.warm_migration_cutover_datetime)
+    (plan.options.config_info.warm_migration && (!planRequest || !planRequest.options.cutover_datetime))
   ) {
     return null;
   }
@@ -17,13 +17,14 @@ const CutoverTimeInfoItem = ({ plan }) => {
       <Icon type="fa" name="clock-o" />
       {__('Cutover scheduled')}
       <br />
-      {formatDateTime(plan.options.config_info.warm_migration_cutover_datetime)}
+      {formatDateTime(planRequest.options.cutover_datetime)}
     </ListViewTable.InfoItem>
   );
 };
 
 CutoverTimeInfoItem.propTypes = {
-  plan: PropTypes.object
+  plan: PropTypes.object,
+  planRequest: PropTypes.object
 };
 
 export default CutoverTimeInfoItem;

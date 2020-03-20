@@ -56,7 +56,7 @@ export const MIGRATION_STATUS_MESSAGE_MAP = {
   VM_MIGRATED: { apiString: 'Virtual machine migrated', text: __('Virtual machine migrated') },
   VM_TRANSFORMATIONS_FAILED: { apiString: 'VM Transformations failed', text: __('VM migrations failed') },
   CANCELLED: { apiString: 'VM cancelled', text: __('VM cancelled') },
-  PRECOPYING: { apiString: 'Precopying disks', text: __('Precopying disks') },
+  PRECOPYING: { apiString: 'Precopying disks', text: __('Pre-copying disks') },
   WAITING_FOR_IP: { apiString: 'Waiting for VM IP address', text: __('Waiting for VM IP address') },
   WAITING_FOR_INVENTORY_REFRESH: { apiString: 'Identify destination VM', text: __('Waiting for inventory refresh') },
   APPLYING_RIGHT_SIZING: {

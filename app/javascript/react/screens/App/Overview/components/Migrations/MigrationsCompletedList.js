@@ -77,19 +77,19 @@ const MigrationsCompletedList = ({
                 </Grid.Row>
                 <ListViewTable className="plans-complete-list" style={{ marginTop: 10 }}>
                   {filteredSortedPaginatedListItems.items.map(plan => {
-                    const {
-                      migrationScheduled,
-                      staleMigrationSchedule,
-                      migrationStarting,
-                      showInitialScheduleButton
-                    } = getPlanScheduleInfo(plan);
-
                     const requestsOfAssociatedPlan = allRequestsWithTasks.filter(
                       request => request.source_id === plan.id
                     );
 
                     const mostRecentRequest =
                       requestsOfAssociatedPlan.length > 0 && getMostRecentRequest(requestsOfAssociatedPlan);
+
+                    const {
+                      migrationScheduled,
+                      staleMigrationSchedule,
+                      migrationStarting,
+                      showInitialScheduleButton
+                    } = getPlanScheduleInfo({ plan, planRequest: mostRecentRequest });
 
                     const failed = mostRecentRequest && mostRecentRequest.status === 'Error';
                     const denied = mostRecentRequest && mostRecentRequest.status === 'Denied';
@@ -214,26 +214,26 @@ const MigrationsCompletedList = ({
                         heading={plan.name}
                         description={plan.description}
                         additionalInfo={[
+                          <MappingNameInfoItem key={`${plan.id}-mappingName`} plan={plan} />,
                           <ListViewTable.InfoItem className="num-vms-migrated" key={`${plan.id}-migrated`}>
-                            <ListView.Icon type="pf" size="lg" name="screen" />
+                            <ListView.Icon type="pf" size="lg" name="virtual-machine" />
                             <strong>{succeedCount}</strong>
                             {__('of')}
                             <strong className="total">{Object.keys(tasks).length} </strong>
-                            {__('VMs successfully migrated.')}
+                            {__('VMs migrated.')}
                           </ListViewTable.InfoItem>,
-                          <MappingNameInfoItem key={`${plan.id}-mappingName`} plan={plan} />,
-                          !denied ? (
-                            <ListViewTable.InfoItem key={`${plan.id}-elapsed`}>
-                              <ListView.Icon type="fa" size="lg" name="clock-o" />
-                              {elapsedTime}
-                            </ListViewTable.InfoItem>
-                          ) : null,
                           !denied && !showScheduledTime && mostRecentRequest.fulfilled_on ? (
                             <ListViewTable.InfoItem key={`${plan.id}-completed`} style={{ textAlign: 'left' }}>
                               <Icon type="fa" name="clock-o" />
                               {__('Completed:')}
                               <br />
                               {formatDateTime(mostRecentRequest.fulfilled_on)}
+                            </ListViewTable.InfoItem>
+                          ) : null,
+                          !denied ? (
+                            <ListViewTable.InfoItem key={`${plan.id}-elapsed`}>
+                              <ListView.Icon type="fa" size="lg" name="clock-o" />
+                              {elapsedTime}
                             </ListViewTable.InfoItem>
                           ) : null,
                           <ScheduledTimeInfoItem

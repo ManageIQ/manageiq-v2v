@@ -508,8 +508,7 @@ export const transformationPlans = Immutable({
         config_info: {
           transformation_mapping_id: '1',
           actions: [{ vm_id: '1' }, { vm_id: '3' }],
-          warm_migration: true,
-          warm_migration_cutover_datetime: '2030-08-14T02:34:56-06:00'
+          warm_migration: true
         }
       },
       created_on: '2018-05-01T12:13:50Z',
@@ -539,7 +538,8 @@ export const transformationPlans = Immutable({
             src_id: '100',
             cart_state: 'ordered',
             requester_group: 'EvmGroup-super_administrator',
-            delivered_on: '2018-04-06T12:49:30Z'
+            delivered_on: '2018-04-06T12:49:30Z',
+            cutover_datetime: '2030-08-14T02:34:56-06:00'
           },
           userid: 'admin',
           source_id: '100',
