@@ -77,16 +77,49 @@ const PlanRequestDetailListItem = ({
   } else {
     leftContent = <Spinner loading />;
   }
-  const label = sprintf(__('%s of %s Migrated'), task.diskSpaceCompletedGb, task.totalDiskSpaceGb);
 
   const conversionHostName =
     task.options.conversion_host_name || (conversionHosts[task.id] && conversionHosts[task.id].name);
 
   const taskIsSelectedForCancel = !!selectedTasksForCancel.find(t => t.id === task.id);
 
-  const preCopies = reduceCopiesFromTask(task);
-  const grandTotalCopied = preCopies.reduce((sum, copy) => sum + copy.totalCopied, 0);
-  const grandTotalCopiedGb = numeral(grandTotalCopied).format('0.00 ib');
+  let preCopies;
+  let grandTotalCopied;
+  let grandTotalCopiedGb;
+  let latestPreCopy;
+  let preCopyProgressBar;
+  if (isWarmMigration) {
+    preCopies = reduceCopiesFromTask(task);
+    grandTotalCopied = preCopies.reduce((sum, copy) => sum + copy.totalCopied, 0);
+    grandTotalCopiedGb = numeral(grandTotalCopied).format('0.00 ib');
+
+    latestPreCopy = preCopies.length > 0 && preCopies[0];
+    if (latestPreCopy) {
+      const { totalCopied, totalToCopy } = latestPreCopy;
+      const totalCopiedGb = numeral(totalCopied).format('0.00 ib');
+      const totalToCopyGb = numeral(totalToCopy).format('0.00 ib');
+      preCopyProgressBar = (
+        <UtilizationBar
+          now={totalCopied}
+          min={0}
+          max={totalToCopy}
+          description={sprintf(__('%s of %s Copied'), totalCopiedGb, totalToCopyGb)}
+          label=" "
+          usedTooltipFunction={(max, now) => (
+            <Tooltip id={Date.now()}>
+              {Math.floor((now / max) * 100)} % {__('Copied')}
+            </Tooltip>
+          )}
+          availableTooltipFunction={(max, now) => (
+            <Tooltip id={Date.now()}>
+              {Math.floor(((max - now) / max) * 100)} % {__('Remaining')}
+            </Tooltip>
+          )}
+          descriptionPlacementTop
+        />
+      );
+    }
+  }
 
   return (
     <ListViewTable.Row
@@ -125,20 +158,24 @@ const PlanRequestDetailListItem = ({
             {preCopies.length} {preCopies.length === 1 ? __('Pre-copy') : __('Pre-copies')}
           </ListViewTable.InfoItem>
         ) : null,
-        // TODO when do we actually use a UtilizationBar in a warm migration, if ever?
+        // TODO also render a progress bar for a warm migration, if the latest precopy doesn't have an end time
         isWarmMigration ? (
-          <ListViewTable.InfoItem key={`${task.id}-precopy-total`}>
-            {preCopies.length === 1
-              ? sprintf(__('%s copied during 1 pre-copy'), grandTotalCopiedGb)
-              : sprintf(__('%s copied during %s pre-copies'), grandTotalCopiedGb, preCopies.length)}
-          </ListViewTable.InfoItem>
+          latestPreCopy && !latestPreCopy.latestEndTime ? (
+            <ListViewTable.InfoItem key={`${task.id}-precopy-progress`}>{preCopyProgressBar}</ListViewTable.InfoItem>
+          ) : (
+            <ListViewTable.InfoItem key={`${task.id}-precopy-total`}>
+              {preCopies.length === 1
+                ? sprintf(__('%s copied during 1 pre-copy'), grandTotalCopiedGb)
+                : sprintf(__('%s copied during %s pre-copies'), grandTotalCopiedGb, preCopies.length)}
+            </ListViewTable.InfoItem>
+          )
         ) : (
           <ListViewTable.InfoItem key={`${task.id}-times`}>
             <UtilizationBar
               now={task.percentComplete}
               min={0}
               max={100}
-              description={label}
+              description={sprintf(__('%s of %s Migrated'), task.diskSpaceCompletedGb, task.totalDiskSpaceGb)}
               label=" "
               usedTooltipFunction={(max, now) => (
                 <Tooltip id={Date.now()}>
