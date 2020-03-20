@@ -4,6 +4,27 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
+## Ivanchuk-4
+
+### Added
+- Mapping Wizard: sort items alphabetically and allow horizontal scroll in item lists [(#1106)](https://github.com/ManageIQ/manageiq-v2v/pull/1106)
+
+### Fixed
+- Rearrange migration status messages to expose more descriptive information [(#1055)](https://github.com/ManageIQ/manageiq-v2v/pull/1055)
+- Update migration status message map to match latest backend strings [(#1076)](https://github.com/ManageIQ/manageiq-v2v/pull/1076)
+- Fix logic for providers check on Conversion Hosts Settings page [(#1086)](https://github.com/ManageIQ/manageiq-v2v/pull/1086)
+- Fix "none found" / "all mapped" messages in networks and datastores steps of mapping wizard [(#1090)](https://github.com/ManageIQ/manageiq-v2v/pull/1090)
+- Fix logic for detecting SSH transport method on a conversion host configuration task [(#1092)](https://github.com/ManageIQ/manageiq-v2v/pull/1092)
+
+## Ivanchuk-3
+
+### Added
+- Expose transformation method in the conversion hosts list [(#1060)](https://github.com/ManageIQ/manageiq-v2v/pull/1060)
+
+## Ivanchuk-2
+
+### Fixed
+- Convert data size units from GB to GiB [(#1050)](https://github.com/ManageIQ/manageiq-v2v/pull/1050)
 
 ## Ivanchuk-1
 
