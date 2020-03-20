@@ -11,10 +11,12 @@ import {
   Popover
 } from 'patternfly-react';
 import EllipsisWithTooltip from 'react-ellipsis-with-tooltip';
+import numeral from 'numeral';
 import ListViewTable from '../../../common/ListViewTable/ListViewTable';
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
 import { migrationStatusMessage } from '../../PlanConstants';
 import TickingIsoElapsedTime from '../../../../../../components/dates/TickingIsoElapsedTime';
+import { reduceCopiesFromTask } from '../../../common/warmMigrationHelpers';
 
 const PlanRequestDetailListItem = ({
   task,
@@ -49,17 +51,19 @@ const PlanRequestDetailListItem = ({
     mainStatusMessage = `${currentDescription}: ${__('Cancelled')}`;
     taskCancelled = true;
   }
-  const statusDetailMessage =
-    task.options.progress &&
-    task.options.progress.current_state &&
-    task.options.progress.states &&
-    migrationStatusMessage(task.options.progress.states[task.options.progress.current_state].message);
+  const statusDetailMessage = (() => {
+    const { progress } = task.options;
+    const currentState = progress.current_state && progress.states && progress.states[progress.current_state];
+    const message = migrationStatusMessage(currentState.message || currentState.description);
+    if (message === mainStatusMessage) return '';
+    return message;
+  })();
 
   let leftContent;
   if (task.message === 'Pending') {
     leftContent = (
       // TODO what's the deal with these width: inherit rules? maybe we can strip that out
-      <ListView.Icon type="pf" name="p`ending" size="md" style={{ width: 'inherit', backgroundColor: 'transparent' }} />
+      <ListView.Icon type="pf" name="pending" size="md" style={{ width: 'inherit', backgroundColor: 'transparent' }} />
     );
   } else if (taskCancelled && task.completed) {
     mainStatusMessage = `${currentDescription}: ${__('Migration cancelled')}`;
@@ -89,7 +93,11 @@ const PlanRequestDetailListItem = ({
 
   const taskIsSelectedForCancel = !!selectedTasksForCancel.find(t => t.id === task.id);
 
-  console.log('task: ', task);
+  const preCopies = reduceCopiesFromTask(task);
+  const grandTotalCopied = preCopies.reduce((sum, copy) => sum + copy.totalCopied, 0);
+  const grandTotalCopiedGb = numeral(grandTotalCopied).format('0.00 ib');
+
+  console.log({ task, preCopies });
 
   return (
     <ListViewTable.Row
@@ -124,10 +132,16 @@ const PlanRequestDetailListItem = ({
           </div>
         </ListViewTable.InfoItem>,
         isWarmMigration ? (
-          <ListViewTable.InfoItem key={`${task.id}-num-precopies`}>3 {__('Pre-copies')}</ListViewTable.InfoItem>
+          <ListViewTable.InfoItem key={`${task.id}-num-precopies`}>
+            {preCopies.length} {preCopies.length === 1 ? __('Pre-copy') : __('Pre-copies')}
+          </ListViewTable.InfoItem>
         ) : null,
         // TODO when do we actually use a UtilizationBar in a warm migration, if ever?
-        !isWarmMigration ? (
+        isWarmMigration ? (
+          <ListViewTable.InfoItem key={`${task.id}-precopy-total`}>
+            {sprintf(__('%s copied during %s pre-copies'), grandTotalCopiedGb, preCopies.length)}
+          </ListViewTable.InfoItem>
+        ) : (
           <ListViewTable.InfoItem key={`${task.id}-times`}>
             <UtilizationBar
               now={task.percentComplete}
@@ -148,7 +162,7 @@ const PlanRequestDetailListItem = ({
               descriptionPlacementTop
             />
           </ListViewTable.InfoItem>
-        ) : null
+        )
       ]}
       actions={
         <DropdownButton
