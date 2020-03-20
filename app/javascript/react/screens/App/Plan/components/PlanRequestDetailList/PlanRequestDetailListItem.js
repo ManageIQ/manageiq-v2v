@@ -158,7 +158,6 @@ const PlanRequestDetailListItem = ({
             {preCopies.length} {preCopies.length === 1 ? __('Pre-copy') : __('Pre-copies')}
           </ListViewTable.InfoItem>
         ) : null,
-        // TODO also render a progress bar for a warm migration, if the latest precopy doesn't have an end time
         isWarmMigration ? (
           latestPreCopy && !latestPreCopy.latestEndTime ? (
             <ListViewTable.InfoItem key={`${task.id}-precopy-progress`}>{preCopyProgressBar}</ListViewTable.InfoItem>

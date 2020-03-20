@@ -23,8 +23,6 @@ import ListViewTable from '../../../common/ListViewTable/ListViewTable';
 import ScheduledTimeInfoItem from './ScheduledTimeInfoItem';
 import MappingNameInfoItem from './MappingNameInfoItem';
 
-// TODO minor layout changes based on warm migration mockups v0.5 slide 14
-
 const MigrationsCompletedList = ({
   finishedTransformationPlans,
   allRequestsWithTasks,
@@ -216,26 +214,26 @@ const MigrationsCompletedList = ({
                         heading={plan.name}
                         description={plan.description}
                         additionalInfo={[
+                          <MappingNameInfoItem key={`${plan.id}-mappingName`} plan={plan} />,
                           <ListViewTable.InfoItem className="num-vms-migrated" key={`${plan.id}-migrated`}>
-                            <ListView.Icon type="pf" size="lg" name="screen" />
+                            <ListView.Icon type="pf" size="lg" name="virtual-machine" />
                             <strong>{succeedCount}</strong>
                             {__('of')}
                             <strong className="total">{Object.keys(tasks).length} </strong>
-                            {__('VMs successfully migrated.')}
+                            {__('VMs migrated.')}
                           </ListViewTable.InfoItem>,
-                          <MappingNameInfoItem key={`${plan.id}-mappingName`} plan={plan} />,
-                          !denied ? (
-                            <ListViewTable.InfoItem key={`${plan.id}-elapsed`}>
-                              <ListView.Icon type="fa" size="lg" name="clock-o" />
-                              {elapsedTime}
-                            </ListViewTable.InfoItem>
-                          ) : null,
                           !denied && !showScheduledTime && mostRecentRequest.fulfilled_on ? (
                             <ListViewTable.InfoItem key={`${plan.id}-completed`} style={{ textAlign: 'left' }}>
                               <Icon type="fa" name="clock-o" />
                               {__('Completed:')}
                               <br />
                               {formatDateTime(mostRecentRequest.fulfilled_on)}
+                            </ListViewTable.InfoItem>
+                          ) : null,
+                          !denied ? (
+                            <ListViewTable.InfoItem key={`${plan.id}-elapsed`}>
+                              <ListView.Icon type="fa" size="lg" name="clock-o" />
+                              {elapsedTime}
                             </ListViewTable.InfoItem>
                           ) : null,
                           <ScheduledTimeInfoItem

@@ -137,8 +137,8 @@ const MigrationsNotStartedList = ({
                           </EllipsisWithTooltip>
                         }
                         additionalInfo={[
-                          <NumVmsInfoItem key={`${plan.id}-numVms`} plan={plan} />,
                           <MappingNameInfoItem key={`${plan.id}-mappingName`} plan={plan} />,
+                          <NumVmsInfoItem key={`${plan.id}-numVms`} plan={plan} />,
                           <ScheduledTimeInfoItem
                             planId={plan.id}
                             migrationStarting={migrationStarting}
