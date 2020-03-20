@@ -22,6 +22,7 @@ import ScheduleMigrationButton from './ScheduleMigrationButton';
 import CutoverTimeInfoItem from './CutoverTimeInfoItem';
 import StopPropagationOnClick from '../../../common/StopPropagationOnClick';
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
+import { getPlanCopySummary } from '../../../common/warmMigrationHelpers';
 
 const MigrationInProgressListItem = ({
   plan,
@@ -50,23 +51,50 @@ const MigrationInProgressListItem = ({
 
   const isInitiating = reloadCard || !mostRecentRequest || mostRecentRequest.request_state === 'pending';
 
+  const isWarmMigration = !!plan.options.config_info.warm_migration;
+
   const showScheduleMigrationButton =
-    plan.options.config_info.warm_migration && !plan.options.config_info.warm_migration_cutover_datetime;
-  const showWarmMigrationKebab =
-    plan.options.config_info.warm_migration && plan.options.config_info.warm_migration_cutover_datetime;
+    isWarmMigration && mostRecentRequest && !mostRecentRequest.options.cutover_datetime;
+  const warmMigrationCutoverScheduled =
+    isWarmMigration && mostRecentRequest && mostRecentRequest.options.cutover_datetime;
+
+  const {
+    isPreCopyingAllVms,
+    hasInitialCopyFinished,
+    lastPreCopyFailedForSomeTask,
+    hasCutoverStarted
+  } = isWarmMigration
+    ? getPlanCopySummary(mostRecentRequest)
+    : {
+        isPreCopyingAllVms: false,
+        hasInitialCopyFinished: false,
+        lastPreCopyFailedForSomeTask: false,
+        hasCutoverStarted: false
+      };
+
+  // The cutover time info item takes up space that we otherwise want to use to expand the preceding cell.
+  // This helper will render either one cell with colSpan={2}, or two cells with colSpan={1}.
+  const renderWithColspanOrCutoverTime = child => [
+    {
+      tdProps: { colSpan: warmMigrationCutoverScheduled && !hasCutoverStarted ? 1 : 2 },
+      child
+    },
+    ...(warmMigrationCutoverScheduled && !hasCutoverStarted
+      ? [<CutoverTimeInfoItem key="cutover-time" plan={plan} planRequest={mostRecentRequest} />]
+      : [])
+  ];
 
   // Plan request state: initiating
   if (isInitiating) {
     return (
       <InProgressRow
         plan={plan}
-        additionalInfo={[
+        additionalInfo={renderWithColspanOrCutoverTime(
           <ListViewTable.InfoItem key="initiating">
             <Spinner size="sm" inline loading />
             {__('Initiating migration. This might take a few minutes.')}
-          </ListViewTable.InfoItem>,
-          <CutoverTimeInfoItem plan={plan} />
-        ]}
+          </ListViewTable.InfoItem>
+        )}
       />
     );
   }
@@ -90,15 +118,14 @@ const MigrationInProgressListItem = ({
     return (
       <InProgressRow
         plan={plan}
-        additionalInfo={[
+        additionalInfo={renderWithColspanOrCutoverTime(
           <ListViewTable.InfoItem key="waiting-for-host">
             <Spinner size="sm" inline loading />
             <EllipsisWithTooltip style={{ maxWidth: 300 }}>
               {__('Waiting for an available conversion host. You can continue waiting or go to the Migration Settings page to increase the number of migrations per host.') /* prettier-ignore */}
             </EllipsisWithTooltip>
-          </ListViewTable.InfoItem>,
-          <CutoverTimeInfoItem plan={plan} />
-        ]}
+          </ListViewTable.InfoItem>
+        )}
         actions={
           <Button disabled={cancelButtonDisabled} onClick={onCancelClick}>
             {__('Cancel Migration')}
@@ -119,16 +146,15 @@ const MigrationInProgressListItem = ({
     return (
       <InProgressRow
         plan={plan}
-        additionalInfo={[
+        additionalInfo={renderWithColspanOrCutoverTime(
           <ListViewTable.InfoItem key="denied">
             <Icon type="pf" name="error-circle-o" />
             <EllipsisWithTooltip style={{ maxWidth: 300 }}>
               {__('Unable to migrate VMs because no conversion host was configured at the time of the attempted migration.') /* prettier-ignore */}{' '}
               {__('See the product documentation for information on configuring conversion hosts.')}
             </EllipsisWithTooltip>
-          </ListViewTable.InfoItem>,
-          <CutoverTimeInfoItem plan={plan} />
-        ]}
+          </ListViewTable.InfoItem>
+        )}
         actions={
           <Button disabled={isEditingPlanRequest} onClick={onCancelClick}>
             {__('Cancel Migration')}
@@ -167,7 +193,7 @@ const MigrationInProgressListItem = ({
         {sprintf(
           __('Are you sure you want to unschedule cutover for plan %s targeted to run on %s ?'),
           plan.name,
-          formatDateTime(plan.options.config_info.warm_migration_cutover_datetime)
+          formatDateTime(mostRecentRequest.options.cutover_datetime)
         )}
       </p>
     </React.Fragment>
@@ -182,7 +208,7 @@ const MigrationInProgressListItem = ({
 
   const onConfirm = () => {
     scheduleCutover({
-      plan,
+      planRequest: mostRecentRequest,
       cutoverTime: null
     }).then(() => {
       fetchTransformationPlansAction({
@@ -192,6 +218,35 @@ const MigrationInProgressListItem = ({
     });
     hideConfirmModalAction();
   };
+
+  const warmMigrationCutoverKebab = warmMigrationCutoverScheduled &&
+    !hasCutoverStarted && (
+      <StopPropagationOnClick>
+        <DropdownKebab id={`${plan.id}-kebab`} pullRight>
+          <MenuItem
+            id={`edit_cutover_${plan.id}`}
+            onClick={e => {
+              e.stopPropagation();
+              toggleScheduleMigrationModal({ plan });
+            }}
+          >
+            {__('Edit Cutover')}
+          </MenuItem>
+          <MenuItem
+            id={`delete_cutover_${plan.id}`}
+            onClick={e => {
+              e.stopPropagation();
+              showConfirmModalAction({
+                ...confirmModalProps,
+                onConfirm
+              });
+            }}
+          >
+            {__('Delete Scheduled Cutover')}
+          </MenuItem>
+        </DropdownKebab>
+      </StopPropagationOnClick>
+    );
 
   // UX business rule: if there are any pre migration playbooks running,
   // or if all disks have been migrated and we have a post migration playbook running, show this instead
@@ -205,13 +260,12 @@ const MigrationInProgressListItem = ({
     return (
       <InProgressRow
         {...baseRowProps}
-        additionalInfo={[
+        additionalInfo={renderWithColspanOrCutoverTime(
           <ListViewTable.InfoItem key="running-playbook">
             <Spinner size="sm" inline loading />
             {sprintf(__('Running playbook service %s. This might take a few minutes.'), playbookName)}
-          </ListViewTable.InfoItem>,
-          <CutoverTimeInfoItem plan={plan} />
-        ]}
+          </ListViewTable.InfoItem>
+        )}
         actions={
           <div>
             {showScheduleMigrationButton && (
@@ -222,71 +276,78 @@ const MigrationInProgressListItem = ({
                 isMissingMapping={!plan.infraMappingName}
               />
             )}
-            {showWarmMigrationKebab && (
-              <StopPropagationOnClick>
-                <DropdownKebab id={`${plan.id}-kebab`} pullRight>
-                  <MenuItem
-                    id={`edit_cutover_${plan.id}`}
-                    onClick={e => {
-                      e.stopPropagation();
-                      toggleScheduleMigrationModal({ plan });
-                    }}
-                  >
-                    {__('Edit Cutover')}
-                  </MenuItem>
-                  <MenuItem
-                    id={`delete_cutover_${plan.id}`}
-                    onClick={e => {
-                      e.stopPropagation();
-                      showConfirmModalAction({
-                        ...confirmModalProps,
-                        onConfirm
-                      });
-                    }}
-                  >
-                    {__('Delete Scheduled Cutover')}
-                  </MenuItem>
-                </DropdownKebab>
-              </StopPropagationOnClick>
-            )}
+            {warmMigrationCutoverKebab}
           </div>
         }
       />
     );
   }
 
+  const vmProgressBar = !isWarmMigration && (
+    <div id={`vm-progress-bar-${plan.id}`} className="vm-progress-bar">
+      <UtilizationBar
+        now={numCompletedVms}
+        max={numTotalVms}
+        description={__('Migrating data')}
+        label={
+          <span>
+            <span id="vms-migrated">{sprintf(__('%s of %s VMs'), numCompletedVms, numTotalVms)}</span> {__('migrated')}
+          </span>
+        }
+        descriptionPlacementTop
+        availableTooltipFunction={() => (
+          <ProgressBarTooltip id={`available-vm-${plan.id}`} max={numTotalVms} now={numCompletedVms} />
+        )}
+        usedTooltipFunction={() => (
+          <ProgressBarTooltip id={`used-vm-${plan.id}`} max={numTotalVms} now={numCompletedVms} />
+        )}
+      />
+      <div className="info-with-inline-icon">
+        <Icon type="fa" name="clock-o" />
+        <TickingIsoElapsedTime startTime={mostRecentRequest.created_on} />
+      </div>
+    </div>
+  );
+
+  let warmMigrationStatus = null;
+  if (isWarmMigration) {
+    if (isPreCopyingAllVms && !hasInitialCopyFinished) {
+      warmMigrationStatus = (
+        <div className="info-with-inline-icon">
+          <Spinner size="sm" inline loading />
+          <div>{__('Initial pre-copy in progress')}</div>
+        </div>
+      );
+    } else if (lastPreCopyFailedForSomeTask) {
+      warmMigrationStatus = (
+        <div className="info-with-inline-icon">
+          <Icon type="pf" name="warning-triangle-o" />
+          <div>{__('Last pre-copy failed for one or more VMs')}</div>
+        </div>
+      );
+    } else if (hasCutoverStarted) {
+      warmMigrationStatus = (
+        <div className="info-with-inline-icon">
+          <Spinner size="sm" inline loading />
+          <div>{__('Cutover in progress')}</div>
+        </div>
+      );
+    } else {
+      warmMigrationStatus = (
+        <div className="info-with-inline-icon">
+          <Icon type="pf" name="ok" />
+          <div>{__('Last pre-copy succeeded')}</div>
+        </div>
+      );
+    }
+  }
+
   return (
     <InProgressRow
       {...baseRowProps}
-      additionalInfo={[
-        <ListViewTable.InfoItem key="migration-progress">
-          <div id={`vm-progress-bar-${plan.id}`} className="vm-progress-bar">
-            <UtilizationBar
-              now={numCompletedVms}
-              max={numTotalVms}
-              description={__('Migrating data')}
-              label={
-                <span>
-                  <span id="vms-migrated">{sprintf(__('%s of %s VMs'), numCompletedVms, numTotalVms)}</span>{' '}
-                  {__('migrated')}
-                </span>
-              }
-              descriptionPlacementTop
-              availableTooltipFunction={() => (
-                <ProgressBarTooltip id={`available-vm-${plan.id}`} max={numTotalVms} now={numCompletedVms} />
-              )}
-              usedTooltipFunction={() => (
-                <ProgressBarTooltip id={`used-vm-${plan.id}`} max={numTotalVms} now={numCompletedVms} />
-              )}
-            />
-            <div className="active-migration-elapsed-time">
-              <Icon type="fa" name="clock-o" />
-              <TickingIsoElapsedTime startTime={mostRecentRequest.created_on} />
-            </div>
-          </div>
-        </ListViewTable.InfoItem>,
-        <CutoverTimeInfoItem plan={plan} />
-      ]}
+      additionalInfo={renderWithColspanOrCutoverTime(
+        <ListViewTable.InfoItem key="migration-progress">{vmProgressBar || warmMigrationStatus}</ListViewTable.InfoItem>
+      )}
       actions={
         <div>
           {showScheduleMigrationButton && (
@@ -297,33 +358,7 @@ const MigrationInProgressListItem = ({
               isMissingMapping={!plan.infraMappingName}
             />
           )}
-          {showWarmMigrationKebab && (
-            <StopPropagationOnClick>
-              <DropdownKebab id={`${plan.id}-kebab`} pullRight>
-                <MenuItem
-                  id={`edit_cutover_${plan.id}`}
-                  onClick={e => {
-                    e.stopPropagation();
-                    toggleScheduleMigrationModal({ plan });
-                  }}
-                >
-                  {__('Edit Cutover')}
-                </MenuItem>
-                <MenuItem
-                  id={`delete_cutover_${plan.id}`}
-                  onClick={e => {
-                    e.stopPropagation();
-                    showConfirmModalAction({
-                      ...confirmModalProps,
-                      onConfirm
-                    });
-                  }}
-                >
-                  {__('Delete Scheduled Cutover')}
-                </MenuItem>
-              </DropdownKebab>
-            </StopPropagationOnClick>
-          )}
+          {warmMigrationCutoverKebab}
         </div>
       }
     />

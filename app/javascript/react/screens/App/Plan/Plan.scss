@@ -1,36 +1,53 @@
-.plan-request-details-list .list-view-pf-main-info {
-  padding: 10px 0;
+.plan-request-details-list {
+  .list-view-pf-main-info {
+    padding: 10px 0;
+  }
+
+  .list-view-pf-additional-info-item {
+    padding: 10px 0;
+  }
+
+  .task-status-messages {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .elapsed-clock-icon {
+    margin-right: 5px;
+  }
+
+  .progress-description {
+    overflow: visible;
+    text-overflow: initial;
+  }
+
+  .utilization-bar-pf {
+    width: 100%;
+    min-width: 175px;
+  }
+
+  .progress-description {
+    margin-bottom: 7px;
+  }
+
+  .progress {
+    margin-bottom: 0px;
+  }
 }
 
-.plan-request-details-list .list-view-pf-additional-info-item {
-  padding: 10px 0;
-}
+table.warm-migration-precopies {
+  width: 100%;
+  margin-top: 10px;
 
-.plan-request-details-list .progress-description {
-  overflow: visible;
-  text-overflow: initial;
-}
+  td {
+    padding: 5px;
 
-.plan-request-details-list .list-view-pf-description {
-  width: 30%;
-}
+    &.precopy-status-icon {
+      text-align: center;
 
-.plan-request-details-list .utilization-bar-pf {
-  min-width: 175px;
-}
-
-.plan-request-details-list .progress-description {
-  margin-bottom: 7px;
-}
-
-.plan-request-details-list .progress {
-  margin-bottom: 0px;
-}
-
-.task-info-popover {
-  max-width: 450px;
-}
-
-.task-info-popover .popover-title {
-  text-transform: capitalize;
+      .list-view-pf-icon-md {
+        font-size: 20px;
+      }
+    }
+  }
 }
