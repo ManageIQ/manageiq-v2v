@@ -34,7 +34,7 @@ const reduceCopies = copies => {
 };
 
 export const reduceCopiesFromTask = task => {
-  const disks = task.options.virtv2v_disks;
+  const disks = task && task.options && task.options.virtv2v_disks;
   if (!disks || disks.length === 0) return [];
   const allCopiesByDisk = disks.map(disk => (disk.copies ? filterCopies(disk.copies) : [])); // [diskIndex][copyIndex]
   const numCopies = Math.max(...allCopiesByDisk.map(copies => copies.length));
@@ -59,7 +59,9 @@ export const getPlanCopySummary = planRequestWithTasks => {
   const hasInitialCopyFinished =
     allCopiesByTask.length > 0 &&
     allCopiesByTask.every(reducedCopies => reducedCopies.some(copy => !!copy.latestEndTime));
-  const lastPreCopyFailedForSomeTask = allCopiesByTask.some(reducedCopies => reducedCopies[0].finishedWithErrors);
+  const lastPreCopyFailedForSomeTask = allCopiesByTask.some(
+    reducedCopies => reducedCopies[0] && reducedCopies[0].finishedWithErrors
+  );
   const hasCutoverTimePassed = new Date(planRequestWithTasks.options.cutover_datetime) < new Date();
   const hasCutoverStarted = isPreCopyingNoVms && hasCutoverTimePassed;
   return {
