@@ -84,11 +84,9 @@ const PlanRequestDetailListItem = ({
 
   const taskIsSelectedForCancel = !!selectedTasksForCancel.find(t => t.id === task.id);
 
-  const preCopies = reduceCopiesFromTask(task).sort((a, b) => b.earliestStartTime - a.earliestStartTime); // Latest first
+  const preCopies = reduceCopiesFromTask(task);
   const grandTotalCopied = preCopies.reduce((sum, copy) => sum + copy.totalCopied, 0);
   const grandTotalCopiedGb = numeral(grandTotalCopied).format('0.00 ib');
-
-  console.log({ task, preCopies });
 
   return (
     <ListViewTable.Row
@@ -223,13 +221,13 @@ const PlanRequestDetailListItem = ({
       {isWarmMigration && (
         <table className="warm-migration-precopies">
           <tbody>
-            {preCopies.map(({ earliestStartTime, latestEndTime, totalCopied, totalToCopy }, index) => {
+            {preCopies.map(({ earliestStartTime, latestEndTime, totalCopied, finishedWithErrors }, index) => {
               let statusIcon = <Spinner loading />;
               if (latestEndTime) {
-                if (totalCopied === totalToCopy) {
-                  statusIcon = <ListView.Icon type="pf" name="ok" size="md" />;
-                } else {
+                if (finishedWithErrors) {
                   statusIcon = <ListView.Icon type="pf" name="warning-triangle-o" size="md" />;
+                } else {
+                  statusIcon = <ListView.Icon type="pf" name="ok" size="md" />;
                 }
               }
               return (

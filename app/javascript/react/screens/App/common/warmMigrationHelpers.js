@@ -12,8 +12,8 @@ const getNumericExtreme = (values, mathFn) => {
 
 // Calculate size totals and timestamp extremes from a set of copies
 // TODO when statuses are added to copies, also include the "worst" available status
-const reduceCopies = copies =>
-  copies.reduce(
+const reduceCopies = copies => {
+  const copiesSummary = copies.reduce(
     (prev, copy) => ({
       totalCopied: prev.totalCopied + (copy.copied || 0),
       totalToCopy: prev.totalToCopy + (copy.to_copy || 0),
@@ -27,6 +27,11 @@ const reduceCopies = copies =>
       latestEndTime: null
     }
   );
+  return {
+    ...copiesSummary,
+    finishedWithErrors: !!copiesSummary.latestEndTime && copiesSummary.totalCopied !== copiesSummary.totalToCopy
+  };
+};
 
 export const reduceCopiesFromTask = task => {
   const disks = task.options.virtv2v_disks;
@@ -37,7 +42,8 @@ export const reduceCopiesFromTask = task => {
     const perDisk = allCopiesByDisk.map(diskCopies => diskCopies[copyIndex] || {});
     return { perDisk, ...reduceCopies(perDisk) };
   });
-  return reducedCopies; // One array of copies, reduced from the Nth copy of each disk
+  // One array of copies, reduced from the Nth copy of each disk, latest copy first
+  return reducedCopies.sort((a, b) => b.earliestStartTime - a.earliestStartTime);
 };
 
 export const getPlanCopySummary = planRequestWithTasks => {
@@ -50,9 +56,11 @@ export const getPlanCopySummary = planRequestWithTasks => {
   const hasInitialCopyFinished =
     allCopiesByTask.length > 0 &&
     allCopiesByTask.every(reducedCopies => reducedCopies.some(copy => !!copy.latestEndTime));
+  const lastPreCopyFailedForSomeTask = allCopiesByTask.some(reducedCopies => reducedCopies[0].finishedWithErrors);
   return {
     isPreCopyingAllVms,
     allCopiesByTask,
-    hasInitialCopyFinished
+    hasInitialCopyFinished,
+    lastPreCopyFailedForSomeTask
   };
 };

@@ -294,7 +294,9 @@ const MigrationInProgressListItem = ({
 
   let warmMigrationStatus = null;
   if (isWarmMigration) {
-    const { isPreCopyingAllVms, hasInitialCopyFinished } = getPlanCopySummary(mostRecentRequest);
+    const { isPreCopyingAllVms, hasInitialCopyFinished, lastPreCopyFailedForSomeTask } = getPlanCopySummary(
+      mostRecentRequest
+    );
     if (isPreCopyingAllVms && !hasInitialCopyFinished) {
       warmMigrationStatus = (
         <div className="info-with-inline-icon">
@@ -302,14 +304,14 @@ const MigrationInProgressListItem = ({
           <div>{__('Initial pre-copy in progress')}</div>
         </div>
       );
-    } else {
-      // TODO also render the warning/error case?
-      /*
+    } else if (lastPreCopyFailedForSomeTask) {
+      warmMigrationStatus = (
         <div className="info-with-inline-icon">
           <Icon type="pf" name="warning-triangle-o" />
           <div>{__('Last pre-copy failed for one or more VMs')}</div>
         </div>
-      */
+      );
+    } else {
       warmMigrationStatus = (
         <div className="info-with-inline-icon">
           <Icon type="pf" name="ok" />
@@ -317,7 +319,7 @@ const MigrationInProgressListItem = ({
         </div>
       );
     }
-    // TODO also render the post-cutover cases?
+    // TODO also render the post-cutover cases (in both views)
   }
 
   return (
