@@ -1,15 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  ListView,
-  Spinner,
-  Tooltip,
-  UtilizationBar,
-  DropdownButton,
-  MenuItem,
-  OverlayTrigger,
-  Popover
-} from 'patternfly-react';
+import { ListView, Spinner, Tooltip, UtilizationBar, DropdownButton, MenuItem } from 'patternfly-react';
 import EllipsisWithTooltip from 'react-ellipsis-with-tooltip';
 import numeral from 'numeral';
 import ListViewTable from '../../../common/ListViewTable/ListViewTable';
@@ -93,7 +84,7 @@ const PlanRequestDetailListItem = ({
 
   const taskIsSelectedForCancel = !!selectedTasksForCancel.find(t => t.id === task.id);
 
-  const preCopies = reduceCopiesFromTask(task);
+  const preCopies = reduceCopiesFromTask(task).sort((a, b) => b.earliestStartTime - a.earliestStartTime); // Latest first
   const grandTotalCopied = preCopies.reduce((sum, copy) => sum + copy.totalCopied, 0);
   const grandTotalCopiedGb = numeral(grandTotalCopied).format('0.00 ib');
 
@@ -139,7 +130,9 @@ const PlanRequestDetailListItem = ({
         // TODO when do we actually use a UtilizationBar in a warm migration, if ever?
         isWarmMigration ? (
           <ListViewTable.InfoItem key={`${task.id}-precopy-total`}>
-            {sprintf(__('%s copied during %s pre-copies'), grandTotalCopiedGb, preCopies.length)}
+            {preCopies.length === 1
+              ? sprintf(__('%s copied during 1 pre-copy'), grandTotalCopiedGb)
+              : sprintf(__('%s copied during %s pre-copies'), grandTotalCopiedGb, preCopies.length)}
           </ListViewTable.InfoItem>
         ) : (
           <ListViewTable.InfoItem key={`${task.id}-times`}>
@@ -230,46 +223,37 @@ const PlanRequestDetailListItem = ({
       {isWarmMigration && (
         <table className="warm-migration-precopies">
           <tbody>
-            <tr>
-              <td className="precopy-status-icon">
-                <Spinner loading />
-              </td>
-              <td>Pre-copy 3</td>
-              <td>Start: November 26th 2019, 11:36 am</td>
-              <td />
-              <td>91 GB copied</td>
-            </tr>
-            <tr>
-              <td className="precopy-status-icon">
-                <OverlayTrigger
-                  overlay={
-                    <Popover id="fake-warning">
-                      <div style={{ maxWidth: 400 }}>Pre-copy failed because (message here)</div>
-                    </Popover>
-                  }
-                  placement="top"
-                  trigger={['click']}
-                  delay={500}
-                  rootClose
-                  onClick={event => event.stopPropagation()}
-                >
-                  <ListView.Icon type="pf" name="warning-triangle-o" size="md" style={{ cursor: 'pointer' }} />
-                </OverlayTrigger>
-              </td>
-              <td>Pre-copy 2</td>
-              <td>Start: November 26th 2019, 11:35 am</td>
-              <td>End: November 26th 2019, 11:36 am</td>
-              <td>0 GB copied</td>
-            </tr>
-            <tr>
-              <td className="precopy-status-icon">
-                <ListView.Icon type="pf" name="ok" size="md" />
-              </td>
-              <td>Pre-copy 1</td>
-              <td>Start: November 26th 2019, 11:25 am</td>
-              <td>End: November 26th 2019, 11:35 am</td>
-              <td>32 GB copied</td>
-            </tr>
+            {preCopies.map(({ earliestStartTime, latestEndTime, totalCopied, totalToCopy }, index) => {
+              let statusIcon = <Spinner loading />;
+              if (latestEndTime) {
+                if (totalCopied === totalToCopy) {
+                  statusIcon = <ListView.Icon type="pf" name="ok" size="md" />;
+                } else {
+                  statusIcon = <ListView.Icon type="pf" name="warning-triangle-o" size="md" />;
+                }
+              }
+              return (
+                <tr key={earliestStartTime}>
+                  <td className="precopy-status-icon">{statusIcon}</td>
+                  <td>
+                    {__('Pre-copy')} {preCopies.length - index}
+                  </td>
+                  <td>
+                    {__('Start')}: {formatDateTime(earliestStartTime * 1000)}
+                  </td>
+                  <td>
+                    {latestEndTime && (
+                      <React.Fragment>
+                        {__('End')}: {formatDateTime(latestEndTime * 1000)}
+                      </React.Fragment>
+                    )}
+                  </td>
+                  <td>
+                    {numeral(totalCopied).format('0.00 ib')} {__('copied')}
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       )}
