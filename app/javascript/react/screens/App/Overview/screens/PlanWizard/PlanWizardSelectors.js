@@ -86,7 +86,6 @@ export const getWarmMigrationCompatibility = ({
     vms
   });
 
-  const isRhvTarget = targetProviderType === RHV;
   const isEveryVmCompatible = vms.every(vm => vm.warm_migration_compatible);
   const areConversionHostsConfigured = targetClustersInPlan.every(targetCluster =>
     getAvailableConversionHostsForCluster({ settings, targetProviderType, targetCluster }).some(
@@ -94,11 +93,10 @@ export const getWarmMigrationCompatibility = ({
     )
   );
 
-  const shouldEnableWarmMigration = isRhvTarget && isEveryVmCompatible && areConversionHostsConfigured;
+  const shouldEnableWarmMigration = isEveryVmCompatible && areConversionHostsConfigured;
 
   return {
     isFetchingTargetValidationData: false,
-    isRhvTarget,
     isEveryVmCompatible,
     areConversionHostsConfigured,
     shouldEnableWarmMigration
