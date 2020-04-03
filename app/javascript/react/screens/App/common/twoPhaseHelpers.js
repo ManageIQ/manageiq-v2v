@@ -1,4 +1,4 @@
-import { PRECOPYING_DISKS } from './warmMigrationConstants';
+import { PRECOPYING_DISKS } from './twoPhaseConstants';
 
 // Ignore copy objects that do not include progress data
 const filterCopies = copies => copies.filter(copy => copy.copied && copy.to_copy && copy.start_time);

@@ -7,7 +7,7 @@ import ListViewTable from '../../../common/ListViewTable/ListViewTable';
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
 import { migrationStatusMessage } from '../../PlanConstants';
 import TickingIsoElapsedTime from '../../../../../../components/dates/TickingIsoElapsedTime';
-import { reduceCopiesFromTask } from '../../../common/warmMigrationHelpers';
+import { reduceCopiesFromTask } from '../../../common/twoPhaseHelpers';
 
 const PlanRequestDetailListItem = ({
   task,
