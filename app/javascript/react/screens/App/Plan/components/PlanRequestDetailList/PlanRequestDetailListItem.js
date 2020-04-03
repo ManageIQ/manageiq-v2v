@@ -21,6 +21,7 @@ const PlanRequestDetailListItem = ({
   fetchDetailsForTask,
   downloadLogForTask
 }) => {
+  const isTwoPhase = !!task.options.two_phase;
   let currentDescription = task.options.progress
     ? migrationStatusMessage(task.options.progress.current_description)
     : '';
@@ -88,7 +89,7 @@ const PlanRequestDetailListItem = ({
   let grandTotalCopiedGb;
   let latestPreCopy;
   let preCopyProgressBar;
-  if (isWarmMigration) {
+  if (isWarmMigration || isTwoPhase) {
     preCopies = reduceCopiesFromTask(task);
     grandTotalCopied = preCopies.reduce((sum, copy) => sum + copy.totalCopied, 0);
     grandTotalCopiedGb = numeral(grandTotalCopied).format('0.00 ib');
@@ -170,24 +171,28 @@ const PlanRequestDetailListItem = ({
           )
         ) : (
           <ListViewTable.InfoItem key={`${task.id}-times`}>
-            <UtilizationBar
-              now={task.percentComplete}
-              min={0}
-              max={100}
-              description={sprintf(__('%s of %s Migrated'), task.diskSpaceCompletedGb, task.totalDiskSpaceGb)}
-              label=" "
-              usedTooltipFunction={(max, now) => (
-                <Tooltip id={Date.now()}>
-                  {now} % {__('Migrated')}
-                </Tooltip>
-              )}
-              availableTooltipFunction={(max, now) => (
-                <Tooltip id={Date.now()}>
-                  {max - now} % {__('Remaining')}
-                </Tooltip>
-              )}
-              descriptionPlacementTop
-            />
+            {isTwoPhase ? (
+              preCopyProgressBar
+            ) : (
+              <UtilizationBar
+                now={task.percentComplete}
+                min={0}
+                max={100}
+                description={sprintf(__('%s of %s Migrated'), task.diskSpaceCompletedGb, task.totalDiskSpaceGb)}
+                label=" "
+                usedTooltipFunction={(max, now) => (
+                  <Tooltip id={Date.now()}>
+                    {now} % {__('Migrated')}
+                  </Tooltip>
+                )}
+                availableTooltipFunction={(max, now) => (
+                  <Tooltip id={Date.now()}>
+                    {max - now} % {__('Remaining')}
+                  </Tooltip>
+                )}
+                descriptionPlacementTop
+              />
+            )}
           </ListViewTable.InfoItem>
         )
       ]}
