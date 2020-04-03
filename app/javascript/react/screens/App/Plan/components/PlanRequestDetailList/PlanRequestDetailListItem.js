@@ -95,31 +95,30 @@ const PlanRequestDetailListItem = ({
     grandTotalCopiedGb = numeral(grandTotalCopied).format('0.00 ib');
 
     latestPreCopy = preCopies.length > 0 && preCopies[0];
-    if (latestPreCopy) {
-      const { totalCopied, totalToCopy } = latestPreCopy;
-      const totalCopiedGb = numeral(totalCopied).format('0.00 ib');
-      const totalToCopyGb = numeral(totalToCopy).format('0.00 ib');
-      preCopyProgressBar = (
-        <UtilizationBar
-          now={totalCopied}
-          min={0}
-          max={totalToCopy}
-          description={sprintf(__('%s of %s Copied'), totalCopiedGb, totalToCopyGb)}
-          label=" "
-          usedTooltipFunction={(max, now) => (
-            <Tooltip id={Date.now()}>
-              {Math.floor((now / max) * 100)} % {__('Copied')}
-            </Tooltip>
-          )}
-          availableTooltipFunction={(max, now) => (
-            <Tooltip id={Date.now()}>
-              {Math.floor(((max - now) / max) * 100)} % {__('Remaining')}
-            </Tooltip>
-          )}
-          descriptionPlacementTop
-        />
-      );
-    }
+    const { totalCopied, totalToCopy } = latestPreCopy || { totalCopied: 0, totalToCopy: 0 };
+    const totalCopiedGb = numeral(totalCopied).format('0.00 ib');
+    const totalToCopyGb = totalToCopy ? numeral(totalToCopy).format('0.00 ib') : __('Unknown');
+
+    preCopyProgressBar = (
+      <UtilizationBar
+        now={totalCopied}
+        min={0}
+        max={totalToCopy}
+        description={sprintf(__('%s of %s Copied'), totalCopiedGb, totalToCopyGb)}
+        label=" "
+        usedTooltipFunction={(max, now) => (
+          <Tooltip id={`${task.id}-precopy-bar-copied-tooltip`}>
+            {max ? Math.floor((now / max) * 100) : __('Unknown')} % {__('Copied')}
+          </Tooltip>
+        )}
+        availableTooltipFunction={(max, now) => (
+          <Tooltip id={`${task.id}-precopy-bar-remaining-tooltip`}>
+            {max ? Math.floor(((max - now) / max) * 100) : __('Unknown')} % {__('Remaining')}
+          </Tooltip>
+        )}
+        descriptionPlacementTop
+      />
+    );
   }
 
   return (
@@ -181,12 +180,12 @@ const PlanRequestDetailListItem = ({
                 description={sprintf(__('%s of %s Migrated'), task.diskSpaceCompletedGb, task.totalDiskSpaceGb)}
                 label=" "
                 usedTooltipFunction={(max, now) => (
-                  <Tooltip id={Date.now()}>
+                  <Tooltip id={`${task.id}-migration-bar-migrated-tooltip`}>
                     {now} % {__('Migrated')}
                   </Tooltip>
                 )}
                 availableTooltipFunction={(max, now) => (
-                  <Tooltip id={Date.now()}>
+                  <Tooltip id={`${task.id}-migration-bar-remaining-tooltip`}>
                     {max - now} % {__('Remaining')}
                   </Tooltip>
                 )}
