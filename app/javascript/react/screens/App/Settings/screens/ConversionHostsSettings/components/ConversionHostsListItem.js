@@ -8,8 +8,6 @@ import StopPropagationOnClick from '../../../../common/StopPropagationOnClick';
 import { FINISHED, ERROR, ENABLE, DISABLE } from '../ConversionHostsSettingsConstants';
 import { getConversionHostTaskLogFile, inferTransportMethod } from '../../../helpers';
 
-const removeFailedTaskSupported = false; // TODO remove me when the Remove button works
-
 const ConversionHostsListItem = ({
   listItem,
   isTask,
@@ -72,11 +70,15 @@ const ConversionHostsListItem = ({
 
   let actionButtons;
   if (isTask) {
-    const removeButton = <Button disabled={mostRecentTask.state !== FINISHED}>{__('Remove') /* TODO */}</Button>;
+    // TODO load the miq_request so we can tell if user_acknowledged_failure on mostRecentTask and hide the row / filter it out
+    // TODO on remove click, set user_ack_failure on the request
+    const isFinished = mostRecentTask.state === FINISHED;
+    const isFailed = mostRecentTask.status === ERROR;
     const taskHasRequestParams = mostRecentTask.context_data && mostRecentTask.context_data.request_params;
     actionButtons = (
       <React.Fragment>
-        {mostRecentTask.status === ERROR &&
+        {isFinished &&
+          isFailed &&
           taskHasRequestParams && (
             <ConversionHostRetryButton
               task={mostRecentTask}
@@ -85,8 +87,9 @@ const ConversionHostsListItem = ({
               disabled={isPostingConversionHosts}
             />
           )}
-        {(mostRecentTask.state !== FINISHED || removeFailedTaskSupported) &&
-          removeButton /* currently only renders when it will be disabled. once removeFailedTaskSupported is true / removed, this button should always render. */}
+        <Button disabled={!(isFinished && isFailed)} onClick={() => alert('REMOVE FAILED HOST!')}>
+          {__('Remove')}
+        </Button>
       </React.Fragment>
     );
   } else {
