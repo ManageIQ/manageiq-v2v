@@ -6,7 +6,6 @@ describe('delete conversion host confirmation modal', () => {
   const getBaseProps = () => ({
     conversionHostToDelete: { id: '1', name: 'Mock Conversion Host' },
     deleteConversionHostAction: jest.fn(),
-    deleteConversionHostActionUrl: '/mock/delete/url',
     hideConversionHostDeleteModalAction: jest.fn(),
     conversionHostDeleteModalVisible: true,
     isDeletingConversionHost: false

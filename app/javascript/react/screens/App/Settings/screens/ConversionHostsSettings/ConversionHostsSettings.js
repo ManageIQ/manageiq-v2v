@@ -75,7 +75,6 @@ class ConversionHostsSettings extends React.Component {
       conversionHostWizardMounted,
       hideConversionHostDeleteModalAction,
       deleteConversionHostAction,
-      deleteConversionHostActionUrl,
       fetchConversionHostsAction,
       fetchConversionHostsUrl,
       conversionHostRetryModalMounted,
@@ -123,7 +122,6 @@ class ConversionHostsSettings extends React.Component {
               <ConversionHostsList
                 combinedListItems={combinedListItems}
                 deleteConversionHostAction={deleteConversionHostAction}
-                deleteConversionHostActionUrl={deleteConversionHostActionUrl}
                 fetchConversionHostsAction={fetchConversionHostsAction}
                 fetchConversionHostsUrl={fetchConversionHostsUrl}
                 setHostToDeleteAction={setHostToDeleteAction}
@@ -150,7 +148,6 @@ class ConversionHostsSettings extends React.Component {
 
 ConversionHostsSettings.propTypes = {
   deleteConversionHostAction: PropTypes.func,
-  deleteConversionHostActionUrl: PropTypes.string,
   fetchProvidersUrl: PropTypes.string,
   fetchProvidersAction: PropTypes.func,
   isFetchingProviders: PropTypes.bool,
@@ -177,7 +174,6 @@ ConversionHostsSettings.propTypes = {
 };
 
 ConversionHostsSettings.defaultProps = {
-  deleteConversionHostActionUrl: '/api/conversion_hosts',
   fetchProvidersUrl: FETCH_V2V_PROVIDERS_URL,
   fetchConversionHostsUrl: FETCH_CONVERSION_HOSTS_URL,
   fetchConversionHostTasksUrl:

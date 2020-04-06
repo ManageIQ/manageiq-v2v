@@ -10,7 +10,6 @@ const ConversionHostsList = ({
   combinedListItems,
   conversionHostToDelete,
   deleteConversionHostAction,
-  deleteConversionHostActionUrl,
   hideConversionHostDeleteModalAction,
   setHostToDeleteAction,
   conversionHostDeleteModalVisible,
@@ -73,7 +72,6 @@ const ConversionHostsList = ({
     <DeleteConversionHostConfirmationModal
       conversionHostToDelete={conversionHostToDelete}
       deleteConversionHostAction={deleteConversionHostAction}
-      deleteConversionHostActionUrl={deleteConversionHostActionUrl}
       hideConversionHostDeleteModalAction={hideConversionHostDeleteModalAction}
       conversionHostDeleteModalVisible={conversionHostDeleteModalVisible}
       isDeletingConversionHost={isDeletingConversionHost}
@@ -88,7 +86,6 @@ ConversionHostsList.propTypes = {
   combinedListItems: PropTypes.arrayOf(PropTypes.object),
   conversionHostToDelete: PropTypes.object,
   deleteConversionHostAction: PropTypes.func,
-  deleteConversionHostActionUrl: PropTypes.string,
   hideConversionHostDeleteModalAction: PropTypes.func,
   setHostToDeleteAction: PropTypes.func,
   conversionHostDeleteModalVisible: PropTypes.bool,

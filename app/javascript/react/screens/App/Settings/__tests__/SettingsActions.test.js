@@ -236,7 +236,7 @@ describe('settings actions', () => {
       status: 200,
       response: { mock: 'response' }
     });
-    return store.dispatch(actions.deleteConversionHostAction(url, host)).then(() => {
+    return store.dispatch(actions.deleteConversionHostAction(host)).then(() => {
       expect(store.getActions()).toMatchSnapshot();
     });
   });
@@ -249,7 +249,7 @@ describe('settings actions', () => {
       url: `${url}/${host.id}`,
       status: 500
     });
-    return store.dispatch(actions.deleteConversionHostAction(url, host)).catch(() => {
+    return store.dispatch(actions.deleteConversionHostAction(host)).catch(() => {
       expect(store.getActions()).toMatchSnapshot();
     });
   });
