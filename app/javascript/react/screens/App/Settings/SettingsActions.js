@@ -108,9 +108,9 @@ const _postConversionHostsActionCreator = (url, postBodies) => dispatch =>
 export const postConversionHostsAction = (url, postBodies) =>
   _postConversionHostsActionCreator(new URI(url).toString(), postBodies);
 
-export const setHostToDeleteAction = host => ({
+export const setHostToDeleteAction = hostOrTask => ({
   type: SET_V2V_CONVERSION_HOST_TO_DELETE,
-  payload: host
+  payload: hostOrTask
 });
 
 export const showConversionHostDeleteModalAction = () => ({

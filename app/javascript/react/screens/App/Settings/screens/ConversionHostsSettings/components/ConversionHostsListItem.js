@@ -70,8 +70,6 @@ const ConversionHostsListItem = ({
 
   let actionButtons;
   if (isTask) {
-    // TODO load the miq_request so we can tell if user_acknowledged_failure on mostRecentTask and hide the row / filter it out
-    // TODO on remove click, set user_ack_failure on the request
     const isFinished = mostRecentTask.state === FINISHED;
     const isFailed = mostRecentTask.status === ERROR;
     const taskHasRequestParams = mostRecentTask.context_data && mostRecentTask.context_data.request_params;
@@ -87,15 +85,18 @@ const ConversionHostsListItem = ({
               disabled={isPostingConversionHosts}
             />
           )}
-        <Button disabled={!(isFinished && isFailed)} onClick={() => alert('REMOVE FAILED HOST!')}>
-          {__('Remove')}
-        </Button>
+        <ConversionHostRemoveButton
+          hostOrTask={mostRecentTask}
+          setHostToDeleteAction={setHostToDeleteAction}
+          showConversionHostDeleteModalAction={showConversionHostDeleteModalAction}
+          disabled={!(isFinished && isFailed)}
+        />
       </React.Fragment>
     );
   } else {
     actionButtons = (
       <ConversionHostRemoveButton
-        host={listItem}
+        hostOrTask={listItem}
         setHostToDeleteAction={setHostToDeleteAction}
         showConversionHostDeleteModalAction={showConversionHostDeleteModalAction}
         disabled={mostRecentTask && mostRecentTask.meta.operation === DISABLE && mostRecentTask.state !== FINISHED}

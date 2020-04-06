@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Modal, Icon } from 'patternfly-react';
 
+// TODO if hostToDelete is a task, delete it instead
+
 const DeleteConversionHostConfirmationModal = ({
   conversionHostToDelete,
   deleteConversionHostAction,
