@@ -229,7 +229,7 @@ describe('settings actions', () => {
 
   it('should delete conversion host and return PENDING and FULFILLED action', () => {
     const url = '/api/conversion_hosts';
-    const host = { mock: 'host', id: '12345' };
+    const host = { mock: 'host', id: '12345', href: `${url}/12345` };
     mockRequest({
       method: 'POST',
       url: `${url}/${host.id}`,
@@ -243,7 +243,7 @@ describe('settings actions', () => {
 
   it('should delete conversion host and return PENDING and REJECTED action', () => {
     const url = '/api/conversion_hosts';
-    const host = { mock: 'host', id: '12345' };
+    const host = { mock: 'host', id: '12345', href: `${url}/12345` };
     mockRequest({
       method: 'POST',
       url: `${url}/${host.id}`,

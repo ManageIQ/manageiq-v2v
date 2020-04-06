@@ -34,7 +34,7 @@ describe('conversion host remove button', () => {
     component.find('Button').simulate('click', { stopPropagation });
     expect(stopPropagation).toHaveBeenCalledTimes(1);
     expect(props.setHostToDeleteAction).toHaveBeenCalledTimes(1);
-    expect(props.setHostToDeleteAction).toHaveBeenCalledWith(props.host);
+    expect(props.setHostToDeleteAction).toHaveBeenCalledWith(props.hostOrTask);
     expect(props.showConversionHostDeleteModalAction).toHaveBeenCalledTimes(1);
   });
 });

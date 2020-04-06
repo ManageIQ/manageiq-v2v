@@ -8,7 +8,7 @@ exports[`conversion hosts list item renders correctly with a conversion host bei
     >
       <ConversionHostRemoveButton
         disabled={true}
-        host={
+        hostOrTask={
           Object {
             "id": "1",
             "meta": Object {
@@ -196,6 +196,28 @@ exports[`conversion hosts list item renders correctly with a failed disable task
             }
           }
         />
+        <ConversionHostRemoveButton
+          disabled={false}
+          hostOrTask={
+            Object {
+              "context_data": Object {
+                "request_params": Object {
+                  "vmware_vddk_package_url": "foo",
+                },
+              },
+              "id": "1",
+              "message": "Example error message",
+              "meta": Object {
+                "isTask": true,
+                "operation": "disable",
+              },
+              "state": "Finished",
+              "status": "Error",
+            }
+          }
+          setHostToDeleteAction={[MockFunction]}
+          showConversionHostDeleteModalAction={[MockFunction]}
+        />
       </UNDEFINED>
       <StopPropagationOnClick>
         <DropdownKebab
@@ -328,6 +350,28 @@ exports[`conversion hosts list item renders correctly with a failed enable task 
             }
           }
         />
+        <ConversionHostRemoveButton
+          disabled={false}
+          hostOrTask={
+            Object {
+              "context_data": Object {
+                "request_params": Object {
+                  "vmware_vddk_package_url": "foo",
+                },
+              },
+              "id": "1",
+              "message": "Example error message",
+              "meta": Object {
+                "isTask": true,
+                "operation": "enable",
+              },
+              "state": "Finished",
+              "status": "Error",
+            }
+          }
+          setHostToDeleteAction={[MockFunction]}
+          showConversionHostDeleteModalAction={[MockFunction]}
+        />
       </UNDEFINED>
       <StopPropagationOnClick>
         <DropdownKebab
@@ -439,7 +483,7 @@ exports[`conversion hosts list item renders correctly with a manually enabled ho
     >
       <ConversionHostRemoveButton
         disabled={undefined}
-        host={
+        hostOrTask={
           Object {
             "id": "1",
             "meta": Object {
@@ -528,7 +572,7 @@ exports[`conversion hosts list item renders correctly with an enabled conversion
     >
       <ConversionHostRemoveButton
         disabled={false}
-        host={
+        hostOrTask={
           Object {
             "id": "1",
             "meta": Object {
@@ -680,15 +724,28 @@ exports[`conversion hosts list item renders correctly with an in-progress enable
       className="conversion-hosts-list-actions"
     >
       <UNDEFINED>
-        <Button
-          active={false}
-          block={false}
-          bsClass="btn"
-          bsStyle="default"
+        <ConversionHostRemoveButton
           disabled={true}
-        >
-          Remove
-        </Button>
+          hostOrTask={
+            Object {
+              "context_data": Object {
+                "request_params": Object {
+                  "vmware_vddk_package_url": "foo",
+                },
+              },
+              "id": "1",
+              "message": "Example progress message",
+              "meta": Object {
+                "isTask": true,
+                "operation": "enable",
+              },
+              "state": "Active",
+              "status": "Ok",
+            }
+          }
+          setHostToDeleteAction={[MockFunction]}
+          showConversionHostDeleteModalAction={[MockFunction]}
+        />
       </UNDEFINED>
       <StopPropagationOnClick>
         <DropdownKebab
