@@ -220,7 +220,6 @@ exports[`conversion hosts list renders the outer components correctly 1`] = `
     conversionHostDeleteModalVisible={false}
     conversionHostToDelete={null}
     deleteConversionHostAction={[MockFunction]}
-    deleteConversionHostActionUrl="/mock/delete/url"
     hideConversionHostDeleteModalAction={[MockFunction]}
     isDeletingConversionHost={false}
   />

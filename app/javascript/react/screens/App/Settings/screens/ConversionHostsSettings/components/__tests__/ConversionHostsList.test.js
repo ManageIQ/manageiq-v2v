@@ -9,7 +9,6 @@ describe('conversion hosts list', () => {
     combinedListItems: [{ id: '1', mock: 'task', meta: { isTask: true } }, { id: '2', mock: 'host', meta: {} }],
     conversionHostToDelete: null,
     deleteConversionHostAction: jest.fn(),
-    deleteConversionHostActionUrl: '/mock/delete/url',
     hideConversionHostDeleteModalAction: jest.fn(),
     setHostToDeleteAction: jest.fn(),
     conversionHostDeleteModalVisible: false,

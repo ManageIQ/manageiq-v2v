@@ -95,7 +95,7 @@ export const getCombinedConversionHostListItems = (conversionHosts, tasksWithMet
 export const inferTransportMethod = conversionHostsListItem => {
   const vddk = __('VDDK');
   const ssh = __('SSH');
-  if (conversionHostsListItem.meta.isTask) {
+  if (conversionHostsListItem.meta.isTask && conversionHostsListItem.context_data) {
     const { request_params } = conversionHostsListItem.context_data;
     return request_params.vmware_vddk_package_url ? vddk : ssh;
   }

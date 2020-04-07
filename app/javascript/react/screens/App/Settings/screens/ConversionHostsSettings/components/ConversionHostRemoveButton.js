@@ -2,12 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'patternfly-react';
 
-const ConversionHostRemoveButton = ({ host, setHostToDeleteAction, showConversionHostDeleteModalAction, ...props }) => (
+const ConversionHostRemoveButton = ({
+  hostOrTask,
+  setHostToDeleteAction,
+  showConversionHostDeleteModalAction,
+  ...props
+}) => (
   <Button
-    id={`remove_${host.id}`}
+    id={`remove_${hostOrTask.id}`}
     onClick={e => {
       e.stopPropagation();
-      setHostToDeleteAction(host);
+      setHostToDeleteAction(hostOrTask);
       showConversionHostDeleteModalAction();
     }}
     {...props}
@@ -17,7 +22,7 @@ const ConversionHostRemoveButton = ({ host, setHostToDeleteAction, showConversio
 );
 
 ConversionHostRemoveButton.propTypes = {
-  host: PropTypes.object,
+  hostOrTask: PropTypes.object,
   setHostToDeleteAction: PropTypes.func,
   showConversionHostDeleteModalAction: PropTypes.func
 };
