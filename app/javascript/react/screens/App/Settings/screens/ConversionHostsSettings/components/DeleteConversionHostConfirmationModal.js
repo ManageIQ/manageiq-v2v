@@ -5,7 +5,6 @@ import { Button, Modal, Icon } from 'patternfly-react';
 const DeleteConversionHostConfirmationModal = ({
   conversionHostToDelete,
   deleteConversionHostAction,
-  deleteConversionHostActionUrl,
   hideConversionHostDeleteModalAction,
   conversionHostDeleteModalVisible,
   isDeletingConversionHost
@@ -20,7 +19,9 @@ const DeleteConversionHostConfirmationModal = ({
         <Icon type="pf" name="delete" />
       </div>
       <div className="warning-modal-body--list">
-        <h4>{__('Are you sure you want to remove the following conversion host?')}</h4>
+        <h4>
+          {__('Are you sure you want to remove the following conversion host?') /* TODO different text for task? */}
+        </h4>
         <div>
           <ul>
             <h4>
@@ -38,7 +39,7 @@ const DeleteConversionHostConfirmationModal = ({
         bsStyle="primary"
         disabled={isDeletingConversionHost}
         onClick={() => {
-          deleteConversionHostAction(deleteConversionHostActionUrl, conversionHostToDelete);
+          deleteConversionHostAction(conversionHostToDelete);
         }}
       >
         {__('Remove')}
@@ -50,7 +51,6 @@ const DeleteConversionHostConfirmationModal = ({
 DeleteConversionHostConfirmationModal.propTypes = {
   conversionHostToDelete: PropTypes.object,
   deleteConversionHostAction: PropTypes.func,
-  deleteConversionHostActionUrl: PropTypes.string,
   hideConversionHostDeleteModalAction: PropTypes.func,
   conversionHostDeleteModalVisible: PropTypes.bool,
   isDeletingConversionHost: PropTypes.bool

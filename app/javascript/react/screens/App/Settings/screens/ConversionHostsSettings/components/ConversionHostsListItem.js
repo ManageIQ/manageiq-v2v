@@ -8,8 +8,6 @@ import StopPropagationOnClick from '../../../../common/StopPropagationOnClick';
 import { FINISHED, ERROR, ENABLE, DISABLE } from '../ConversionHostsSettingsConstants';
 import { getConversionHostTaskLogFile, inferTransportMethod } from '../../../helpers';
 
-const removeFailedTaskSupported = false; // TODO remove me when the Remove button works
-
 const ConversionHostsListItem = ({
   listItem,
   isTask,
@@ -72,11 +70,13 @@ const ConversionHostsListItem = ({
 
   let actionButtons;
   if (isTask) {
-    const removeButton = <Button disabled={mostRecentTask.state !== FINISHED}>{__('Remove') /* TODO */}</Button>;
+    const isFinished = mostRecentTask.state === FINISHED;
+    const isFailed = mostRecentTask.status === ERROR;
     const taskHasRequestParams = mostRecentTask.context_data && mostRecentTask.context_data.request_params;
     actionButtons = (
       <React.Fragment>
-        {mostRecentTask.status === ERROR &&
+        {isFinished &&
+          isFailed &&
           taskHasRequestParams && (
             <ConversionHostRetryButton
               task={mostRecentTask}
@@ -85,14 +85,18 @@ const ConversionHostsListItem = ({
               disabled={isPostingConversionHosts}
             />
           )}
-        {(mostRecentTask.state !== FINISHED || removeFailedTaskSupported) &&
-          removeButton /* currently only renders when it will be disabled. once removeFailedTaskSupported is true / removed, this button should always render. */}
+        <ConversionHostRemoveButton
+          hostOrTask={mostRecentTask}
+          setHostToDeleteAction={setHostToDeleteAction}
+          showConversionHostDeleteModalAction={showConversionHostDeleteModalAction}
+          disabled={!(isFinished && isFailed)}
+        />
       </React.Fragment>
     );
   } else {
     actionButtons = (
       <ConversionHostRemoveButton
-        host={listItem}
+        hostOrTask={listItem}
         setHostToDeleteAction={setHostToDeleteAction}
         showConversionHostDeleteModalAction={showConversionHostDeleteModalAction}
         disabled={mostRecentTask && mostRecentTask.meta.operation === DISABLE && mostRecentTask.state !== FINISHED}

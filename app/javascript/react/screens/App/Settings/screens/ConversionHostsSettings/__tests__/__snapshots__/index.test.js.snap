@@ -8,7 +8,6 @@ Object {
   "conversionHostToDelete": null,
   "conversionHostWizardMounted": false,
   "deleteConversionHostAction": [Function],
-  "deleteConversionHostActionUrl": "/api/conversion_hosts",
   "fetchConversionHostTasksAction": [Function],
   "fetchConversionHostTasksUrl": "/api/tasks?expand=resources&attributes=id,name,state,status,message,started_on,updated_on,pct_complete,context_data&filter[]=name=\\"%25Configuring a conversion_host%25\\"&sort_by=updated_on&sort_order=descending",
   "fetchConversionHostsAction": [Function],

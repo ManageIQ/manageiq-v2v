@@ -6,7 +6,6 @@ describe('delete conversion host confirmation modal', () => {
   const getBaseProps = () => ({
     conversionHostToDelete: { id: '1', name: 'Mock Conversion Host' },
     deleteConversionHostAction: jest.fn(),
-    deleteConversionHostActionUrl: '/mock/delete/url',
     hideConversionHostDeleteModalAction: jest.fn(),
     conversionHostDeleteModalVisible: true,
     isDeletingConversionHost: false
@@ -34,7 +33,7 @@ describe('delete conversion host confirmation modal', () => {
     const component = shallow(<DeleteConversionHostConfirmationModal {...props} />);
     component.find('Button[bsStyle="primary"]').simulate('click');
     expect(props.deleteConversionHostAction).toHaveBeenCalledTimes(1);
-    expect(props.deleteConversionHostAction).toHaveBeenCalledWith('/mock/delete/url', {
+    expect(props.deleteConversionHostAction).toHaveBeenCalledWith({
       id: '1',
       name: 'Mock Conversion Host'
     });
