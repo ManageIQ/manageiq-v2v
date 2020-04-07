@@ -229,27 +229,27 @@ describe('settings actions', () => {
 
   it('should delete conversion host and return PENDING and FULFILLED action', () => {
     const url = '/api/conversion_hosts';
-    const host = { mock: 'host', id: '12345' };
+    const host = { mock: 'host', id: '12345', href: `${url}/12345` };
     mockRequest({
       method: 'POST',
       url: `${url}/${host.id}`,
       status: 200,
       response: { mock: 'response' }
     });
-    return store.dispatch(actions.deleteConversionHostAction(url, host)).then(() => {
+    return store.dispatch(actions.deleteConversionHostAction(host)).then(() => {
       expect(store.getActions()).toMatchSnapshot();
     });
   });
 
   it('should delete conversion host and return PENDING and REJECTED action', () => {
     const url = '/api/conversion_hosts';
-    const host = { mock: 'host', id: '12345' };
+    const host = { mock: 'host', id: '12345', href: `${url}/12345` };
     mockRequest({
       method: 'POST',
       url: `${url}/${host.id}`,
       status: 500
     });
-    return store.dispatch(actions.deleteConversionHostAction(url, host)).catch(() => {
+    return store.dispatch(actions.deleteConversionHostAction(host)).catch(() => {
       expect(store.getActions()).toMatchSnapshot();
     });
   });

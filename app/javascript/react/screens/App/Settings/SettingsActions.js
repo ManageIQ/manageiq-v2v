@@ -108,9 +108,9 @@ const _postConversionHostsActionCreator = (url, postBodies) => dispatch =>
 export const postConversionHostsAction = (url, postBodies) =>
   _postConversionHostsActionCreator(new URI(url).toString(), postBodies);
 
-export const setHostToDeleteAction = host => ({
+export const setHostToDeleteAction = hostOrTask => ({
   type: SET_V2V_CONVERSION_HOST_TO_DELETE,
-  payload: host
+  payload: hostOrTask
 });
 
 export const showConversionHostDeleteModalAction = () => ({
@@ -121,11 +121,11 @@ export const hideConversionHostDeleteModalAction = () => ({
   type: HIDE_V2V_CONVERSION_HOST_DELETE_MODAL
 });
 
-export const _deleteConversionHostActionCreator = (url, host) => dispatch =>
+export const _deleteConversionHostActionCreator = url => dispatch =>
   dispatch({
     type: DELETE_V2V_CONVERSION_HOST,
     payload: new Promise((resolve, reject) => {
-      API.post(`${url}/${host.id}`, {
+      API.post(url, {
         action: 'delete'
       })
         .then(response => {
@@ -135,8 +135,8 @@ export const _deleteConversionHostActionCreator = (url, host) => dispatch =>
     })
   });
 
-export const deleteConversionHostAction = (url, host) =>
-  _deleteConversionHostActionCreator(new URI(url).toString(), host);
+export const deleteConversionHostAction = hostOrTask =>
+  _deleteConversionHostActionCreator(new URI(hostOrTask.href).toString());
 
 export const setConversionHostTaskToRetryAction = task => ({
   type: SET_V2V_CONVERSION_HOST_TASK_TO_RETRY,

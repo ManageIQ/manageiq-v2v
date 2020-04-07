@@ -4,7 +4,7 @@ import ConversionHostRemoveButton from '../ConversionHostRemoveButton';
 
 describe('conversion host remove button', () => {
   const getBaseProps = () => ({
-    host: { id: '12345', name: 'mock-host' },
+    hostOrTask: { id: '12345', name: 'mock-host' },
     setHostToDeleteAction: jest.fn(),
     showConversionHostDeleteModalAction: jest.fn()
   });
@@ -16,7 +16,9 @@ describe('conversion host remove button', () => {
 
   it('renders with a unique id for each host', () => {
     const c1 = shallow(<ConversionHostRemoveButton {...getBaseProps()} />);
-    const c2 = shallow(<ConversionHostRemoveButton {...getBaseProps()} host={{ id: '67890', name: 'mock-host' }} />);
+    const c2 = shallow(
+      <ConversionHostRemoveButton {...getBaseProps()} hostOrTask={{ id: '67890', name: 'mock-host' }} />
+    );
     expect(c1.find('Button').props().id).not.toEqual(c2.find('Button').props().id);
   });
 
@@ -32,7 +34,7 @@ describe('conversion host remove button', () => {
     component.find('Button').simulate('click', { stopPropagation });
     expect(stopPropagation).toHaveBeenCalledTimes(1);
     expect(props.setHostToDeleteAction).toHaveBeenCalledTimes(1);
-    expect(props.setHostToDeleteAction).toHaveBeenCalledWith(props.host);
+    expect(props.setHostToDeleteAction).toHaveBeenCalledWith(props.hostOrTask);
     expect(props.showConversionHostDeleteModalAction).toHaveBeenCalledTimes(1);
   });
 });
