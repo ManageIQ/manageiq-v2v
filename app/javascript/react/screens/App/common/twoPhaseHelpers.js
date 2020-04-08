@@ -1,7 +1,9 @@
-import { PRECOPYING_DISKS } from './warmMigrationConstants';
+import { PRECOPYING_DISKS } from './twoPhaseConstants';
 
 // Ignore copy objects that do not include progress data
-const filterCopies = copies => copies.filter(copy => copy.copied && copy.to_copy && copy.start_time);
+const hasProperties = (obj, propertyNames) =>
+  propertyNames.every(name => Object.prototype.hasOwnProperty.call(obj, name));
+const filterCopies = copies => copies.filter(copy => hasProperties(copy, ['copied', 'to_copy', 'start_time']));
 
 // Find Math.min or Math.max among actual number values, excluding undefined/null.
 const getNumericExtreme = (values, mathFn) => {

@@ -5,7 +5,7 @@ import { ListView, Icon, noop } from 'patternfly-react';
 import { ListViewTableContext } from './ListViewTable';
 import StopPropagationOnClick from '../StopPropagationOnClick';
 
-const isInfoItemObject = infoItem => !React.isValidElement(infoItem) && infoItem.child && infoItem.tdProps;
+const isInfoItemObject = infoItem => infoItem && !React.isValidElement(infoItem) && infoItem.child && infoItem.tdProps;
 
 const BaseListViewTableRow = ({
   className,
@@ -87,7 +87,7 @@ const BaseListViewTableRow = ({
       )}
       {additionalInfo &&
         additionalInfo.map((infoItem, index) => {
-          const hasTdProps = infoItem && isInfoItemObject(infoItem);
+          const hasTdProps = isInfoItemObject(infoItem);
           const { child, tdProps } = hasTdProps ? infoItem : { child: infoItem, tdProps: {} };
           return (
             <td
