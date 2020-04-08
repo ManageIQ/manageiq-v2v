@@ -25,6 +25,8 @@ const ConversionHostWizardHostsStep = ({
     emptyLabel = __('No VMs available for the selected project.');
   }
   const filteredHostOptions = hostOptions.filter(host => {
+    // Don't allow selection of hosts that are powered off
+    if (host.power_state === 'off') return false;
     // Don't allow selection of hosts already configured as conversion hosts
     if (conversionHosts.some(ch => ch.resource.type === host.type && ch.resource.id === host.id)) return false;
     // Don't allow selection of hosts in progress of being configured as conversion hosts
