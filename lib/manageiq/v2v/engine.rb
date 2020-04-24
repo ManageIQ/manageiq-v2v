@@ -20,7 +20,7 @@ module ManageIQ::V2V
           Menu::Item.new('plans', N_("Migration Plans"), 'migration', {:feature => 'migration', :any => true}, '/migration#/plans'),
           Menu::Item.new('mappings', N_("Infrastructure Mappings"), 'mappings', {:feature => 'mappings', :any => true}, '/migration#/mappings'),
           Menu::Item.new('settings', N_("Migration Settings"), 'migration_settings', {:feature => 'migration_settings', :any => true}, '/migration#/settings')
-        ], nil, :conf) # Place Migration before Configuration (after Compute)
+        ], nil, :con) # Place Migration before Control (after the various Provider kinds)
       )
     end
 
