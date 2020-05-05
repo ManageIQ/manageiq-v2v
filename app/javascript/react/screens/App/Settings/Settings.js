@@ -16,7 +16,7 @@ class Settings extends React.Component {
     const { match, redirectTo, productFeatures } = this.props;
 
     return (
-      <React.Fragment>
+      <div className="main-scroll-container">
         <MigrationBreadcrumbBar activeHref="#/settings" productFeatures={productFeatures} />
         <div style={{ marginTop: 10 }}>
           <Tabs id="settings-tabs" activeKey={match.path} onSelect={key => redirectTo(key)} unmountOnExit>
@@ -28,7 +28,7 @@ class Settings extends React.Component {
             </Tab>
           </Tabs>
         </div>
-      </React.Fragment>
+      </div>
     );
   }
 }

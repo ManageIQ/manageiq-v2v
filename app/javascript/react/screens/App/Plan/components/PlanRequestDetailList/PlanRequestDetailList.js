@@ -192,7 +192,7 @@ class PlanRequestDetailList extends React.Component {
             </Toolbar>
           )}
         </Grid.Row>
-        <div style={{ overflow: 'auto', paddingBottom: 300, height: '100%' }}>
+        <div className="main-body-content">
           <ListViewTable className="plan-request-details-list">
             {filteredSortedPaginatedListItems.items.map(task => (
               <PlanRequestDetailListItem
