@@ -180,7 +180,7 @@ class InfrastructureMappingsList extends React.Component {
                     {renderActiveFilters(filteredSortedPaginatedListItems)}
                   </Toolbar>
                 </Grid.Row>
-                <div style={{ overflow: 'auto', paddingBottom: 300, height: '100%' }}>
+                <div className="main-body-content">
                   <ListView style={{ marginTop: 10 }} className="infra-mappings-list-view" id="infrastructure_mappings">
                     {filteredSortedPaginatedListItems.items.map(mapping => {
                       const associatedPlansCount = mapping.service_templates && mapping.service_templates.length;

@@ -20,7 +20,7 @@ const PlanVmsList = props => (
             {renderActiveFilters(filteredSortedPaginatedListItems)}
           </Toolbar>
         </Grid.Row>
-        <div style={{ overflow: 'auto', paddingBottom: 300, height: '100%' }}>
+        <div className="main-body-content">
           <ListView className="plan-request-details-list">
             {filteredSortedPaginatedListItems.items.map((task, n) => (
               <ListView.Item
