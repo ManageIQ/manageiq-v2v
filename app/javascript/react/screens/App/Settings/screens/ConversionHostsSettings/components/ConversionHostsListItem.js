@@ -104,11 +104,21 @@ const ConversionHostsListItem = ({
     );
   }
 
+  const logDownloadEnabled =
+    mostRecentTask &&
+    mostRecentTask.state === FINISHED &&
+    mostRecentTask.context_data &&
+    !!(
+      mostRecentTask.context_data.conversion_host_enable ||
+      mostRecentTask.context_data.conversion_host_check ||
+      mostRecentTask.context_data.conversion_host_disable
+    );
+
   const kebabMenu = mostRecentTask ? (
     <StopPropagationOnClick>
       <DropdownKebab id={`task-kebab-${mostRecentTask.id}`} pullRight>
         <MenuItem
-          disabled={mostRecentTask.state !== FINISHED}
+          disabled={!logDownloadEnabled}
           onClick={() => {
             const file = getConversionHostTaskLogFile(mostRecentTask);
             if (file) saveTextFileAction(file);
