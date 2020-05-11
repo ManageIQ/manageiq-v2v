@@ -89,6 +89,7 @@ exports[`conversion hosts list renders the inner list view correctly 1`] = `
       id="conversion_hosts"
     >
       <ConversionHostsListItem
+        isInUse={false}
         isPostingConversionHosts={false}
         isTask={true}
         key="conversion-host-task-1"
@@ -108,11 +109,29 @@ exports[`conversion hosts list renders the inner list view correctly 1`] = `
         showConversionHostRetryModalAction={[MockFunction]}
       />
       <ConversionHostsListItem
+        isInUse={false}
         isPostingConversionHosts={false}
         key="conversion-host-2"
         listItem={
           Object {
             "id": "2",
+            "meta": Object {},
+            "mock": "host",
+          }
+        }
+        saveTextFileAction={[MockFunction]}
+        setConversionHostTaskToRetryAction={[MockFunction]}
+        setHostToDeleteAction={[MockFunction]}
+        showConversionHostDeleteModalAction={[MockFunction]}
+        showConversionHostRetryModalAction={[MockFunction]}
+      />
+      <ConversionHostsListItem
+        isInUse={true}
+        isPostingConversionHosts={false}
+        key="conversion-host-3"
+        listItem={
+          Object {
+            "id": "3",
             "meta": Object {},
             "mock": "host",
           }
@@ -129,8 +148,8 @@ exports[`conversion hosts list renders the inner list view correctly 1`] = `
       baseClassName="content-view-pf-pagination"
       className=""
       dropdownButtonId="pagination-row-dropdown"
-      itemCount={2}
-      itemsEnd={2}
+      itemCount={3}
+      itemsEnd={3}
       itemsStart={1}
       messages={
         Object {
@@ -195,6 +214,11 @@ exports[`conversion hosts list renders the outer components correctly 1`] = `
         },
         Object {
           "id": "2",
+          "meta": Object {},
+          "mock": "host",
+        },
+        Object {
+          "id": "3",
           "meta": Object {},
           "mock": "host",
         },
