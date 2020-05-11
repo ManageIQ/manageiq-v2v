@@ -52,6 +52,9 @@ const conversionHostDisabling = {
           id: '3',
           meta: { isTask: true, operation: 'disable' },
           updated_on: '2019-05-13T18:07:11.849Z',
+          context_data: {
+            conversion_host_disable: 'MOCK PLAYBOOK LOG OUTPUT'
+          },
           ...inProgress
         },
         {
@@ -74,13 +77,20 @@ const enableTaskInProgress = {
 const enableTaskFailed = {
   id: '1',
   meta: { isTask: true, operation: 'enable' },
-  context_data: { request_params: { vmware_vddk_package_url: 'foo' } },
+  context_data: {
+    request_params: { vmware_vddk_package_url: 'foo' },
+    conversion_host_enable: 'MOCK PLAYBOOK LOG OUTPUT',
+    conversion_host_check: 'MOCK PLAYBOOK LOG OUTPUT'
+  },
   ...failed
 };
 const disableTaskFailed = {
   id: '1',
   meta: { isTask: true, operation: 'disable' },
-  context_data: { request_params: { vmware_vddk_package_url: 'foo' } },
+  context_data: {
+    request_params: { vmware_vddk_package_url: 'foo' },
+    conversion_host_disable: 'MOCK PLAYBOOK LOG OUTPUT'
+  },
   ...failed
 };
 
@@ -167,6 +177,33 @@ describe('conversion hosts list item', () => {
         .props().disabled
     ).toBe(false);
     expect(component).toMatchSnapshot();
+  });
+
+  it('disables the download log kebab menu when the playbook is not run', () => {
+    const itemWithNoPlaybookLog = {
+      ...conversionHostEnabled,
+      meta: {
+        ...conversionHostEnabled.meta,
+        tasksByOperation: {
+          ...conversionHostEnabled.meta.tasksByOperation,
+          enable: [
+            conversionHostEnabled.meta.tasksByOperation[0],
+            {
+              ...conversionHostEnabled.meta.tasksByOperation[1],
+              context_data: {}
+            }
+          ]
+        }
+      }
+    };
+    const component = shallow(<ConversionHostsListItem {...getBaseProps()} listItem={itemWithNoPlaybookLog} isTask />);
+    const actions = shallow(component.props().actions);
+    expect(
+      actions
+        .find(DropdownKebab)
+        .find(MenuItem)
+        .props().disabled
+    ).toBe(true);
   });
 
   it('calls the correct action when downloading a log', () => {
