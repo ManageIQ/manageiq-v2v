@@ -43,7 +43,7 @@ const ConversionHostsList = ({
               {renderActiveFilters(filteredSortedPaginatedListItems)}
             </Toolbar>
           </Grid.Row>
-          <div style={{ overflow: 'auto', paddingBottom: 300, height: '100%' }}>
+          <div className="main-body-content">
             <ListView className="conversion-hosts-list" id="conversion_hosts">
               {filteredSortedPaginatedListItems.items.map(listItem => {
                 const { isTask } = listItem.meta;

@@ -176,7 +176,7 @@ class Mappings extends Component {
     } = this.props;
 
     return (
-      <React.Fragment>
+      <div className="main-scroll-container">
         <MigrationBreadcrumbBar activeHref="#/mappings" productFeatures={productFeatures} />
         <Spinner
           loading={
@@ -228,7 +228,7 @@ class Mappings extends Component {
           )}
         </Spinner>
         {mappingWizardVisible && this.mappingWizard}
-      </React.Fragment>
+      </div>
     );
   }
 }

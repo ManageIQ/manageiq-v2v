@@ -82,13 +82,7 @@ exports[`conversion hosts list renders the inner list view correctly 1`] = `
     </withContext(Toolbar)>
   </Row>
   <div
-    style={
-      Object {
-        "height": "100%",
-        "overflow": "auto",
-        "paddingBottom": 300,
-      }
-    }
+    className="main-body-content"
   >
     <ListView
       className="conversion-hosts-list"
