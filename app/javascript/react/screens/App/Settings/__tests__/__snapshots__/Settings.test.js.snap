@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Settings component renders correctly 1`] = `
-<Fragment>
+<div
+  className="main-scroll-container"
+>
   <MigrationBreadcrumbBar
     activeHref="#/settings"
   />
@@ -32,5 +34,5 @@ exports[`Settings component renders correctly 1`] = `
       </Tab>
     </Uncontrolled(Tabs)>
   </div>
-</Fragment>
+</div>
 `;
