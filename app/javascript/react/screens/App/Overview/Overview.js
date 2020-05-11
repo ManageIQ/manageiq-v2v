@@ -292,20 +292,18 @@ class Overview extends React.Component {
       productFeatures
     } = this.props;
 
+    const isMainContentLoading =
+      !requestsWithTasksPreviouslyFetched &&
+      !this.hasMadeInitialPlansFetch &&
+      (isFetchingAllRequestsWithTasks ||
+        isFetchingProviders ||
+        isFetchingTransformationPlans ||
+        isFetchingArchivedTransformationPlans ||
+        isFetchingTransformationMappings);
+
     const mainContent = (
       <React.Fragment>
-        <Spinner
-          loading={
-            !requestsWithTasksPreviouslyFetched &&
-            !this.hasMadeInitialPlansFetch &&
-            (isFetchingAllRequestsWithTasks ||
-              isFetchingProviders ||
-              isFetchingTransformationPlans ||
-              isFetchingArchivedTransformationPlans ||
-              isFetchingTransformationMappings)
-          }
-          style={{ marginTop: 200 }}
-        >
+        <Spinner loading={isMainContentLoading} style={{ marginTop: 200 }}>
           {hasSufficientProviders ? (
             !!transformationMappings.length || !!transformationPlans.length || !!archivedTransformationPlans.length ? (
               <Migrations
@@ -387,32 +385,30 @@ class Overview extends React.Component {
       (migrationsFilter === MIGRATIONS_FILTERS.archived && archivedTransformationPlans.length === 0);
 
     // Full-height grey background (.cards-pf) for empty states, otherwise only grey behind aggregate cards
-    const overviewContent = emptyStateVisible ? (
-      <div
-        className="row cards-pf"
-        style={{ overflow: 'auto', overflowX: 'hidden', paddingBottom: 50, height: '100%' }}
-      >
-        {this.renderAggregateDataCards()}
-        {mainContent}
-      </div>
-    ) : (
-      <div className="row" style={{ overflow: 'auto', overflowX: 'hidden', paddingBottom: 50, height: '100%' }}>
-        <div className="row cards-pf" style={{ marginLeft: 0, marginRight: 0 }}>
+    const overviewContent =
+      emptyStateVisible && !isMainContentLoading ? (
+        <div className="row cards-pf main-body-content">
           {this.renderAggregateDataCards()}
-        </div>
-        <div className="row" style={{ marginLeft: 0, marginRight: 0 }}>
           {mainContent}
         </div>
-      </div>
-    );
+      ) : (
+        <div className="row main-body-content">
+          <div className="row cards-pf" style={{ marginLeft: 0, marginRight: 0 }}>
+            {this.renderAggregateDataCards()}
+          </div>
+          <div className="row" style={{ marginLeft: 0, marginRight: 0 }}>
+            {mainContent}
+          </div>
+        </div>
+      );
 
     return (
-      <React.Fragment>
+      <div className="main-scroll-container">
         <MigrationBreadcrumbBar activeHref="#/plans" productFeatures={productFeatures} />
         {overviewContent}
         {mappingWizardVisible && this.mappingWizard}
         {planWizardVisible && this.planWizard}
-      </React.Fragment>
+      </div>
     );
   }
 }

@@ -163,7 +163,7 @@ class Plan extends React.Component {
       null;
 
     return (
-      <React.Fragment>
+      <div className="main-scroll-container">
         <Toolbar>
           <Breadcrumb.Item active>{__('Migration')}</Breadcrumb.Item>
           <Breadcrumb.Item href="#/plans">{__('Migration Plans')}</Breadcrumb.Item>
@@ -278,7 +278,7 @@ class Plan extends React.Component {
             }
           />
         )}
-      </React.Fragment>
+      </div>
     );
   }
 }
