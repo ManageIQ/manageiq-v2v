@@ -11,6 +11,7 @@ import { getConversionHostTaskLogFile, inferTransportMethod } from '../../../hel
 const ConversionHostsListItem = ({
   listItem,
   isTask,
+  isInUse,
   setHostToDeleteAction,
   showConversionHostDeleteModalAction,
   setConversionHostTaskToRetryAction,
@@ -89,7 +90,7 @@ const ConversionHostsListItem = ({
           hostOrTask={mostRecentTask}
           setHostToDeleteAction={setHostToDeleteAction}
           showConversionHostDeleteModalAction={showConversionHostDeleteModalAction}
-          disabled={!(isFinished && isFailed)}
+          disabled={isInUse || !(isFinished && isFailed)}
         />
       </React.Fragment>
     );
@@ -99,7 +100,9 @@ const ConversionHostsListItem = ({
         hostOrTask={listItem}
         setHostToDeleteAction={setHostToDeleteAction}
         showConversionHostDeleteModalAction={showConversionHostDeleteModalAction}
-        disabled={mostRecentTask && mostRecentTask.meta.operation === DISABLE && mostRecentTask.state !== FINISHED}
+        disabled={
+          isInUse || (mostRecentTask && mostRecentTask.meta.operation === DISABLE && mostRecentTask.state !== FINISHED)
+        }
       />
     );
   }
@@ -155,6 +158,7 @@ const ConversionHostsListItem = ({
 ConversionHostsListItem.propTypes = {
   listItem: PropTypes.object,
   isTask: PropTypes.bool,
+  isInUse: PropTypes.bool,
   setHostToDeleteAction: PropTypes.func,
   showConversionHostDeleteModalAction: PropTypes.func,
   setConversionHostTaskToRetryAction: PropTypes.func,

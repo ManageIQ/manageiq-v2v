@@ -2,12 +2,15 @@
 
 exports[`ConversionHostsSettings integration test should mount ConversionHostsSettings with mapStateToProps reduced 1`] = `
 Object {
+  "activeConversionHostIds": Array [],
   "combinedListItems": Array [],
   "conversionHostDeleteModalVisible": false,
   "conversionHostRetryModalMounted": false,
   "conversionHostToDelete": null,
   "conversionHostWizardMounted": false,
   "deleteConversionHostAction": [Function],
+  "fetchActiveMigrationTasksAction": [Function],
+  "fetchActiveMigrationTasksUrl": "/api/request_tasks?expand=resources&filter[]=request_type=transformation_plan&filter[]=state!=finished&attributes=state,conversion_host_id",
   "fetchConversionHostTasksAction": [Function],
   "fetchConversionHostTasksUrl": "/api/tasks?expand=resources&attributes=id,name,state,status,message,started_on,updated_on,pct_complete,context_data&filter[]=name=\\"%25Configuring a conversion_host%25\\"&sort_by=updated_on&sort_order=descending",
   "fetchConversionHostsAction": [Function],

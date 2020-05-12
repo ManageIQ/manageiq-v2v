@@ -9,6 +9,7 @@ import {
   V2V_PATCH_SETTINGS,
   FETCH_V2V_CONVERSION_HOSTS,
   FETCH_V2V_CONVERSION_HOST_TASKS,
+  FETCH_V2V_ACTIVE_MIGRATION_TASKS,
   SHOW_V2V_CONVERSION_HOST_WIZARD,
   HIDE_V2V_CONVERSION_HOST_WIZARD,
   V2V_CONVERSION_HOST_WIZARD_EXITED,
@@ -85,6 +86,17 @@ const _getConversionHostTasksActionCreator = url => dispatch =>
 export const fetchConversionHostTasksAction = url => {
   const uri = new URI(url);
   return _getConversionHostTasksActionCreator(uri.toString());
+};
+
+const _fetchActiveMigrationTasksActionCreator = url => dispatch =>
+  dispatch({
+    type: FETCH_V2V_ACTIVE_MIGRATION_TASKS,
+    payload: API.get(url)
+  });
+
+export const fetchActiveMigrationTasksAction = url => {
+  const uri = new URI(url);
+  return _fetchActiveMigrationTasksActionCreator(uri.toString());
 };
 
 export const showConversionHostWizardAction = () => dispatch => dispatch({ type: SHOW_V2V_CONVERSION_HOST_WIZARD });

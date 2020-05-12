@@ -92,6 +92,10 @@ export const getCombinedConversionHostListItems = (conversionHosts, tasksWithMet
   return [...activeEnableTasks, ...conversionHostsWithTasks];
 };
 
+export const getActiveConversionHostIds = activeMigrationTasks => [
+  ...new Set(activeMigrationTasks.map(task => task.conversion_host_id))
+];
+
 export const inferTransportMethod = conversionHostsListItem => {
   const vddk = __('VDDK');
   const ssh = __('SSH');
