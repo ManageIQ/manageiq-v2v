@@ -5,6 +5,7 @@ import { fetchProvidersAction } from '../../../../../../redux/common/providers/p
 import {
   fetchConversionHostsAction,
   fetchConversionHostTasksAction,
+  fetchActiveMigrationTasksAction,
   showConversionHostWizardAction,
   setHostToDeleteAction,
   deleteConversionHostAction,
@@ -24,6 +25,7 @@ const mapStateToProps = (
       conversionHosts,
       conversionHostTasks,
       conversionHostTasksByResource,
+      activeConversionHostIds,
       conversionHostWizardMounted,
       conversionHostDeleteModalVisible,
       conversionHostToDelete,
@@ -41,6 +43,7 @@ const mapStateToProps = (
     conversionHostTasks,
     conversionHostTasksByResource
   ),
+  activeConversionHostIds,
   conversionHostWizardMounted,
   conversionHostDeleteModalVisible,
   conversionHostToDelete,
@@ -58,6 +61,7 @@ export default connect(
     fetchProvidersAction,
     fetchConversionHostsAction,
     fetchConversionHostTasksAction,
+    fetchActiveMigrationTasksAction,
     showConversionHostWizardAction,
     setHostToDeleteAction,
     deleteConversionHostAction,

@@ -6,6 +6,7 @@ import {
   V2V_PATCH_SETTINGS,
   FETCH_V2V_CONVERSION_HOSTS,
   FETCH_V2V_CONVERSION_HOST_TASKS,
+  FETCH_V2V_ACTIVE_MIGRATION_TASKS,
   SHOW_V2V_CONVERSION_HOST_WIZARD,
   HIDE_V2V_CONVERSION_HOST_WIZARD,
   V2V_CONVERSION_HOST_WIZARD_EXITED,
@@ -23,13 +24,16 @@ import {
 import {
   getFormValuesFromApiSettings,
   parseConversionHostTasksMetadata,
-  indexConversionHostTasksByResource
+  indexConversionHostTasksByResource,
+  getActiveConversionHostIds
 } from './helpers';
 
 export const initialState = Immutable({
   conversionHosts: [],
   conversionHostTasks: [],
   conversionHostTasksByResource: {},
+  activeMigrationTasks: [],
+  activeConversionHostIds: [],
   conversionHostToDelete: null,
   conversionHostDeleteModalVisible: false,
   conversionHostRetryModalMounted: false,
@@ -40,6 +44,7 @@ export const initialState = Immutable({
   errorDeleteConversionHost: false,
   errorFetchingConversionHosts: null,
   errorFetchingConversionHostTasks: null,
+  errorFetchingActiveMigrationTasks: null,
   errorFetchingServers: null,
   errorFetchingSettings: null,
   errorPostingConversionHosts: null,
@@ -49,12 +54,14 @@ export const initialState = Immutable({
   isDeletingConversionHost: false,
   isFetchingConversionHosts: false,
   isFetchingConversionHostTasks: false,
+  isFetchingActiveMigrationTasks: false,
   isFetchingServers: false,
   isFetchingSettings: false,
   isPostingConversionHosts: false,
   isRejectedDeletingConversionHost: false,
   isRejectedFetchingConversionHosts: false,
   isRejectedFetchingConversionHostTasks: false,
+  isRejectedFetchingActiveMigrationTasks: false,
   isRejectedPostingConversionHosts: false,
   isSavingSettings: false,
   postConversionHostsResults: [],
@@ -153,6 +160,25 @@ export default (state = initialState, action) => {
         .set('isFetchingConversionHostTasks', false)
         .set('isRejectedFetchingConversionHostTasks', true)
         .set('errorFetchingConversionHostTasks', action.payload);
+
+    case `${FETCH_V2V_ACTIVE_MIGRATION_TASKS}_PENDING`:
+      return state
+        .set('isFetchingActiveMigrationTasks', true)
+        .set('isRejectedFetchingActiveMigrationTasks', false)
+        .set('errorFetchingActiveMigrationTasks', null);
+    case `${FETCH_V2V_ACTIVE_MIGRATION_TASKS}_FULFILLED`: {
+      return state
+        .set('activeMigrationTasks', action.payload.data.resources)
+        .set('activeConversionHostIds', getActiveConversionHostIds(action.payload.data.resources))
+        .set('isFetchingActiveMigrationTasks', false)
+        .set('isRejectedFetchingActiveMigrationTasks', false)
+        .set('errorFetchingActiveMigrationTasks', null);
+    }
+    case `${FETCH_V2V_ACTIVE_MIGRATION_TASKS}_REJECTED`:
+      return state
+        .set('isFetchingActiveMigrationTasks', false)
+        .set('isRejectedFetchingActiveMigrationTasks', true)
+        .set('errorFetchingActiveMigrationTasks', action.payload);
 
     case SHOW_V2V_CONVERSION_HOST_WIZARD:
       return state.set('conversionHostWizardMounted', true).set('conversionHostWizardVisible', true);
