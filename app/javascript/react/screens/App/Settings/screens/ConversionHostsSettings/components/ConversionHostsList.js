@@ -8,6 +8,7 @@ import RetryConversionHostConfirmationModal from './RetryConversionHostConfirmat
 
 const ConversionHostsList = ({
   combinedListItems,
+  activeConversionHostIds,
   conversionHostToDelete,
   deleteConversionHostAction,
   hideConversionHostDeleteModalAction,
@@ -48,11 +49,13 @@ const ConversionHostsList = ({
               {filteredSortedPaginatedListItems.items.map(listItem => {
                 const { isTask } = listItem.meta;
                 const itemKey = `conversion-host-${isTask ? 'task-' : ''}${listItem.id}`;
+                const isInUse = isTask ? false : !!activeConversionHostIds.find(id => id === listItem.id);
                 return (
                   <ConversionHostsListItem
                     key={itemKey}
                     listItem={listItem}
                     isTask={isTask}
+                    isInUse={isInUse}
                     setHostToDeleteAction={setHostToDeleteAction}
                     showConversionHostDeleteModalAction={showConversionHostDeleteModalAction}
                     setConversionHostTaskToRetryAction={setConversionHostTaskToRetryAction}
@@ -84,6 +87,7 @@ const ConversionHostsList = ({
 
 ConversionHostsList.propTypes = {
   combinedListItems: PropTypes.arrayOf(PropTypes.object),
+  activeConversionHostIds: PropTypes.arrayOf(PropTypes.string),
   conversionHostToDelete: PropTypes.object,
   deleteConversionHostAction: PropTypes.func,
   hideConversionHostDeleteModalAction: PropTypes.func,

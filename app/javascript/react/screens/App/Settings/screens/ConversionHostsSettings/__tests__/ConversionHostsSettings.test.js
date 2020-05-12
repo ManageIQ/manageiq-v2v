@@ -14,6 +14,7 @@ const getBaseProps = () => ({
   hasTargetProvider: true,
   fetchConversionHostsAction: jest.fn(() => Promise.resolve()),
   fetchConversionHostTasksAction: jest.fn(() => Promise.resolve()),
+  fetchActiveMigrationTasksAction: jest.fn(() => Promise.resolve()),
   combinedListItems: [],
   showConversionHostWizardAction: jest.fn(),
   conversionHostWizardMounted: false,

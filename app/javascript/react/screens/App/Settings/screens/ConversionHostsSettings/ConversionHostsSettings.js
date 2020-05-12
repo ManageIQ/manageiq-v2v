@@ -52,12 +52,15 @@ class ConversionHostsSettings extends React.Component {
       fetchConversionHostsAction,
       fetchConversionHostsUrl,
       fetchConversionHostTasksAction,
-      fetchConversionHostTasksUrl
+      fetchConversionHostTasksUrl,
+      fetchActiveMigrationTasksAction,
+      fetchActiveMigrationTasksUrl
     } = this.props;
     if (this.hasSomeModalOpen()) return Promise.resolve();
     return Promise.all([
       fetchConversionHostsAction(fetchConversionHostsUrl),
-      fetchConversionHostTasksAction(fetchConversionHostTasksUrl)
+      fetchConversionHostTasksAction(fetchConversionHostTasksUrl),
+      fetchActiveMigrationTasksAction(fetchActiveMigrationTasksUrl)
     ]);
   };
 
@@ -66,6 +69,7 @@ class ConversionHostsSettings extends React.Component {
       isFetchingProviders,
       hasTargetProvider,
       combinedListItems,
+      activeConversionHostIds,
       setHostToDeleteAction,
       showConversionHostDeleteModalAction,
       conversionHostDeleteModalVisible,
@@ -121,6 +125,7 @@ class ConversionHostsSettings extends React.Component {
             ) : (
               <ConversionHostsList
                 combinedListItems={combinedListItems}
+                activeConversionHostIds={activeConversionHostIds}
                 deleteConversionHostAction={deleteConversionHostAction}
                 fetchConversionHostsAction={fetchConversionHostsAction}
                 fetchConversionHostsUrl={fetchConversionHostsUrl}
@@ -156,6 +161,9 @@ ConversionHostsSettings.propTypes = {
   fetchConversionHostsAction: PropTypes.func,
   fetchConversionHostTasksAction: PropTypes.func,
   fetchConversionHostTasksUrl: PropTypes.string,
+  fetchActiveMigrationTasksAction: PropTypes.func,
+  fetchActiveMigrationTasksUrl: PropTypes.string,
+  activeConversionHostIds: PropTypes.arrayOf(PropTypes.string),
   combinedListItems: PropTypes.arrayOf(PropTypes.object),
   showConversionHostWizardAction: PropTypes.func,
   conversionHostWizardMounted: PropTypes.bool,
@@ -178,6 +186,8 @@ ConversionHostsSettings.defaultProps = {
   fetchConversionHostsUrl: FETCH_CONVERSION_HOSTS_URL,
   fetchConversionHostTasksUrl:
     '/api/tasks?expand=resources&attributes=id,name,state,status,message,started_on,updated_on,pct_complete,context_data&filter[]=name="%25Configuring a conversion_host%25"&sort_by=updated_on&sort_order=descending',
+  fetchActiveMigrationTasksUrl:
+    '/api/request_tasks?expand=resources&filter[]=request_type=transformation_plan&filter[]=state!=finished&attributes=state,conversion_host_id',
   postConversionHostsUrl: '/api/conversion_hosts'
 };
 
