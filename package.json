@@ -90,7 +90,6 @@
     "yup": "^0.24.1"
   },
   "jest": {
-    "globalSetup": "./.jest-global-setup.js",
     "setupFiles": [
       "raf/polyfill",
       "./.jest-setup.js",
