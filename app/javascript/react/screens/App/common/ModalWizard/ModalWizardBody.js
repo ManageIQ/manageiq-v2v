@@ -51,7 +51,7 @@ class ModalWizardBody extends React.Component {
   };
 
   render() {
-    const { loaded, steps, activeStepIndex, alerts, hideAlertAction, stepButtonsDisabled } = this.props;
+    const { loaded, steps, activeStepIndex, alertText, alertType, hideAlertAction, stepButtonsDisabled } = this.props;
     const step = steps[activeStepIndex];
 
     if (!loaded) {
@@ -60,19 +60,16 @@ class ModalWizardBody extends React.Component {
 
     const renderedStep = step && step.render && step.render(activeStepIndex, step.title);
 
+    const alertClasses = cx('modal-wizard-alert--alert', {
+      'is-visible': alertText
+    });
+
     return (
       <React.Fragment>
         <div className="modal-wizard-alert">
-          {Object.values(alerts).map(({ alertText, alertType, alertId }) => (
-            <Alert
-              key={alertId}
-              className="modal-wizard-alert--alert is-visible"
-              type={alertType}
-              onDismiss={() => hideAlertAction(alertId)}
-            >
-              {alertText}
-            </Alert>
-          ))}
+          <Alert className={alertClasses} type={alertType} onDismiss={hideAlertAction}>
+            {alertText}
+          </Alert>
         </div>
         <Wizard.Steps
           className={cx({ 'step-buttons-disabled': stepButtonsDisabled })}
@@ -116,7 +113,8 @@ ModalWizardBody.propTypes = {
   goToStep: PropTypes.func,
   stepButtonsDisabled: PropTypes.bool,
   disableNextStep: PropTypes.bool,
-  alerts: PropTypes.objectOf(PropTypes.shape({ alertText: PropTypes.node, alertType: PropTypes.string })),
+  alertText: PropTypes.string,
+  alertType: PropTypes.string,
   hideAlertAction: PropTypes.func
 };
 
@@ -131,7 +129,6 @@ ModalWizardBody.defaultProps = {
   goToStep: noop,
   stepButtonsDisabled: false,
   disableNextStep: true,
-  alerts: {},
   hideAlertAction: noop
 };
 

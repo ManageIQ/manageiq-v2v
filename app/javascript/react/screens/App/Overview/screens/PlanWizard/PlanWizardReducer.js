@@ -5,13 +5,11 @@ import {
   V2V_SET_PLAN_SCHEDULE,
   V2V_SET_PLAN_TYPE,
   V2V_PLAN_WIZARD_SHOW_ALERT,
-  V2V_PLAN_WIZARD_HIDE_ALERT,
-  SINGLETON_ALERT_ID
+  V2V_PLAN_WIZARD_HIDE_ALERT
 } from './PlanWizardConstants';
 
 const initialState = Immutable({
-  plansBody: {},
-  alerts: {}
+  plansBody: {}
 });
 
 export default (state = initialState, action) => {
@@ -22,23 +20,10 @@ export default (state = initialState, action) => {
       return state.set('planSchedule', action.payload);
     case V2V_SET_PLAN_TYPE:
       return state.set('planType', action.payload);
-    // TODO add unit tests for these handlers
     case V2V_PLAN_WIZARD_SHOW_ALERT:
-      return state.set(
-        'alerts',
-        Immutable.merge(action.payload.alertId !== SINGLETON_ALERT_ID ? state.alerts : {}, {
-          [action.payload.alertId]: { ...action.payload }
-        })
-      );
+      return Immutable.merge(state, action.payload);
     case V2V_PLAN_WIZARD_HIDE_ALERT:
-      return state.set(
-        'alerts',
-        (() => {
-          if (!action.alertId) return {};
-          const { [action.alertId]: alertBeingHidden, ...otherAlerts } = state.alerts; // eslint-disable-line no-unused-vars
-          return otherAlerts;
-        })()
-      );
+      return state.set('alertText', '');
     default:
       return state;
   }

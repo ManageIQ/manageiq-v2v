@@ -2,20 +2,19 @@ import Immutable from 'seamless-immutable';
 
 import { networkKey } from '../../../common/networkKey';
 import { MAPPING_TYPE_RESOURCE_MAP } from './InfrastructureMappingsListConstants';
-import { OPENSTACK, RHV } from '../../../../../../common/constants';
 
 export const getMappingType = transformation_mapping_items => {
   const isOSPMapping =
     transformation_mapping_items.some(item => item.destination_type === 'CloudTenant') &&
     transformation_mapping_items.some(item => item.destination_type === 'CloudVolumeType') &&
     transformation_mapping_items.some(item => item.destination_type === 'CloudNetwork');
-  if (isOSPMapping) return OPENSTACK;
-  return RHV;
+  if (isOSPMapping) return 'openstack';
+  return 'rhevm';
 };
 
 export const getHeaderText = transformation_mapping_items => {
   const mappingType = getMappingType(transformation_mapping_items);
-  if (mappingType === OPENSTACK) {
+  if (mappingType === 'openstack') {
     return {
       sourceNetworks: __('Source Provider \\ Datacenter \\ Cluster \\ Network'),
       targetNetworks: __('Target Provider \\ Project \\ Network'),
@@ -185,7 +184,7 @@ export const mapInfrastructureMappings = (
   for (const datastoreMapping of datastoreMappingItems) {
     const sourceCluster = clusters.find(c => c.id === storagesMap.rhevm[datastoreMapping.source_id]);
     const targetCluster = targetComputeMap[mappingType].find(c => {
-      if (mappingType === OPENSTACK) {
+      if (mappingType === 'openstack') {
         return storagesMap.openstack.find(item => item[datastoreMapping.destination_id] === c.id);
       }
       return c.id === storagesMap.rhevm[datastoreMapping.destination_id];
