@@ -63,12 +63,12 @@ describe('ConversionHostWizardAuthenticationStep integration test', () => {
     changeFormValue('transformationMethod', 'SSH');
     expect(form().syncErrors).toBeFalsy(); // <-------
 
-    // Turning on TLS Certificates mounts an empty required field (caCerts)
-    changeFormValue('verifyCaCerts', true);
-    expect(Object.keys(form().syncErrors)).toEqual(['caCerts']);
+    // Turning on OpenStack TLS Certificates mounts an empty required field (openstackCaCerts)
+    changeFormValue('verifyOpenstackCerts', true);
+    expect(Object.keys(form().syncErrors)).toEqual(['openstackCaCerts']);
 
-    // Turning it off unmounts caCerts while it's empty.
-    changeFormValue('verifyCaCerts', false);
+    // Turning it off unmounts openstackCaCerts while it's empty.
+    changeFormValue('verifyOpenstackCerts', false);
     expect(form().syncErrors).toBeFalsy(); // <-------
   });
 });

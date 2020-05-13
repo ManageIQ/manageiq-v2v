@@ -3,14 +3,16 @@ import { RHV, OPENSTACK } from '../../../../common/constants';
 
 export const getFormValuesFromApiSettings = payload => ({
   max_concurrent_tasks_per_conversion_host: payload.transformation.limits.max_concurrent_tasks_per_conversion_host,
-  max_concurrent_tasks_per_ems: payload.transformation.limits.max_concurrent_tasks_per_ems
+  max_concurrent_tasks_per_ems: payload.transformation.limits.max_concurrent_tasks_per_ems,
+  cpu_limit_per_host: payload.transformation.limits.cpu_limit_per_host
 });
 
 export const getApiSettingsFromFormValues = values => ({
   transformation: {
     limits: {
       max_concurrent_tasks_per_conversion_host: values.max_concurrent_tasks_per_conversion_host,
-      max_concurrent_tasks_per_ems: values.max_concurrent_tasks_per_ems
+      max_concurrent_tasks_per_ems: values.max_concurrent_tasks_per_ems,
+      cpu_limit_per_host: values.cpu_limit_per_host
     }
   }
 });

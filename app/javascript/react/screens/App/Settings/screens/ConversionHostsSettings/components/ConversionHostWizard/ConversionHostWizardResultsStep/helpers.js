@@ -13,7 +13,7 @@ export const getConfigureConversionHostPostBodies = (locationStepValues, hostsSt
       resource_id: host.id,
       conversion_host_ssh_private_key: authStepValues.conversionHostSshKey.body,
       auth_user: locationStepValues.providerType === OPENSTACK ? authStepValues.openstackUser : 'root',
-      ...(authStepValues.caCerts.body && { tls_ca_certs: authStepValues.caCerts.body }),
+      ...(authStepValues.openstackCaCerts.body && { openstack_tls_ca_certs: authStepValues.openstackCaCerts.body }),
       ...vmwareAuthProperties
     };
   });
