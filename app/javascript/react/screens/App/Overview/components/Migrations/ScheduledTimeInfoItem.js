@@ -1,21 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Icon } from 'patternfly-react';
+import { ListView, Icon } from 'patternfly-react';
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
-import ListViewTable from '../../../common/ListViewTable/ListViewTable';
 
 const ScheduledTimeInfoItem = ({ planId, migrationStarting, showScheduledTime, migrationScheduled }) =>
   migrationStarting ? (
-    <ListViewTable.InfoItem key={`${planId}-starting`} style={{ textAlign: 'left' }}>
+    <ListView.InfoItem key={`${planId}-starting`} style={{ textAlign: 'left' }}>
       {__('Migration in progress')}
-    </ListViewTable.InfoItem>
+    </ListView.InfoItem>
   ) : showScheduledTime ? (
-    <ListViewTable.InfoItem key={`${planId}-scheduledTime`} style={{ textAlign: 'left' }}>
+    <ListView.InfoItem key={`${planId}-scheduledTime`} style={{ textAlign: 'left' }}>
       <Icon type="fa" name="clock-o" />
       {__('Migration scheduled')}
       <br />
       {formatDateTime(migrationScheduled)}
-    </ListViewTable.InfoItem>
+    </ListView.InfoItem>
   ) : null;
 
 ScheduledTimeInfoItem.propTypes = {

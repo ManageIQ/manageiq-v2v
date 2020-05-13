@@ -15,13 +15,10 @@ import {
   DropdownButton,
   MenuItem
 } from 'patternfly-react';
-import EllipsisWithTooltip from 'react-ellipsis-with-tooltip';
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
 import { migrationStatusMessage, REQUEST_TASKS_URL } from '../../PlanConstants';
 import TickingIsoElapsedTime from '../../../../../../components/dates/TickingIsoElapsedTime';
 import ConfirmModal from '../../../common/ConfirmModal';
-import ListViewTable from '../../../common/ListViewTable/ListViewTable';
-import StopPropagationOnClick from '../../../common/StopPropagationOnClick';
 
 class PlanRequestDetailList extends React.Component {
   state = {
@@ -212,7 +209,7 @@ class PlanRequestDetailList extends React.Component {
           )}
         </Grid.Row>
         <div className="main-body-content">
-          <ListViewTable className="plan-request-details-list">
+          <ListView className="plan-request-details-list">
             {filteredSortedPaginatedListItems.items.map((task, n) => {
               let currentDescription = task.options.progress
                 ? migrationStatusMessage(task.options.progress.current_description)
@@ -310,7 +307,7 @@ class PlanRequestDetailList extends React.Component {
               );
 
               return (
-                <ListViewTable.Row
+                <ListView.Item
                   key={task.id}
                   checkboxInput={
                     <input
@@ -325,7 +322,7 @@ class PlanRequestDetailList extends React.Component {
                   leftContent={leftContent}
                   heading={task.vmName}
                   additionalInfo={[
-                    <ListViewTable.InfoItem
+                    <ListView.InfoItem
                       key={`${task.id}-message`}
                       style={{
                         flexDirection: 'column',
@@ -337,25 +334,21 @@ class PlanRequestDetailList extends React.Component {
                       <div>
                         <div style={{ display: 'inline-block', textAlign: 'left' }}>
                           <span>{mainStatusMessage}</span>
-                          <div style={{ maxWidth: 250 }}>
-                            <EllipsisWithTooltip>{statusDetailMessage}</EllipsisWithTooltip>
-                          </div>
+                          <div>{statusDetailMessage}</div>
                         </div>
                         &nbsp;
                         {/* Todo: revisit FieldLevelHelp props in patternfly-react to support this */}
-                        <StopPropagationOnClick>
-                          <OverlayTrigger
-                            rootClose
-                            trigger="click"
-                            onEnter={() => this.overlayTriggerClick(task)}
-                            placement="left"
-                            overlay={popoverContent}
-                          >
-                            <Button bsStyle="link">
-                              <Icon type="pf" name="info" />
-                            </Button>
-                          </OverlayTrigger>
-                        </StopPropagationOnClick>
+                        <OverlayTrigger
+                          rootClose
+                          trigger="click"
+                          onEnter={() => this.overlayTriggerClick(task)}
+                          placement="left"
+                          overlay={popoverContent}
+                        >
+                          <Button bsStyle="link">
+                            <Icon type="pf" name="info" />
+                          </Button>
+                        </OverlayTrigger>
                       </div>
                       <div>
                         <ListView.Icon type="fa" size="lg" name="clock-o" />
@@ -364,8 +357,8 @@ class PlanRequestDetailList extends React.Component {
                           endTime={task.completed ? task.lastUpdateDateTime : null}
                         />
                       </div>
-                    </ListViewTable.InfoItem>,
-                    <ListViewTable.InfoItem key={`${task.id}-times`} style={{ minWidth: 150, paddingRight: 20 }}>
+                    </ListView.InfoItem>,
+                    <ListView.InfoItem key={`${task.id}-times`} style={{ minWidth: 150, paddingRight: 20 }}>
                       <UtilizationBar
                         now={task.percentComplete}
                         min={0}
@@ -384,7 +377,7 @@ class PlanRequestDetailList extends React.Component {
                         )}
                         descriptionPlacementTop
                       />
-                    </ListViewTable.InfoItem>
+                    </ListView.InfoItem>
                   ]}
                   actions={
                     <DropdownButton
@@ -434,7 +427,7 @@ class PlanRequestDetailList extends React.Component {
                 />
               );
             })}
-          </ListViewTable>
+          </ListView>
           {renderPaginationRow(filteredSortedPaginatedListItems)}
         </div>
         <ConfirmModal

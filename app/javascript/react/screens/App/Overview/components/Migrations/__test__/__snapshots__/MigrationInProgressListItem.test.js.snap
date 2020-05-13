@@ -16,7 +16,7 @@ exports[`if there are no conversion hosts available renders an error view 1`] = 
   }
   additionalInfo={
     Array [
-      <ListViewTableInfoItem
+      <ListViewInfoItem
         className=""
         stacked={false}
       >
@@ -36,7 +36,7 @@ exports[`if there are no conversion hosts available renders an error view 1`] = 
         >
           Waiting for an available conversion host. You can continue waiting or go to the Migration Settings page to increase the number of migrations per host.
         </EllipisWithTooltip>
-      </ListViewTableInfoItem>,
+      </ListViewInfoItem>,
     ]
   }
   numFailedVms={0}
@@ -126,7 +126,7 @@ exports[`when the request is denied renders an error view 1`] = `
   }
   additionalInfo={
     Array [
-      <ListViewTableInfoItem
+      <ListViewInfoItem
         className=""
         stacked={false}
       >
@@ -145,7 +145,7 @@ exports[`when the request is denied renders an error view 1`] = `
            
           See the product documentation for information on configuring conversion hosts.
         </EllipisWithTooltip>
-      </ListViewTableInfoItem>,
+      </ListViewInfoItem>,
     ]
   }
   numFailedVms={0}
