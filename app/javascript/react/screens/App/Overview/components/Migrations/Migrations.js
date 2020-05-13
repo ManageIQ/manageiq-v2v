@@ -65,7 +65,6 @@ class Migrations extends React.Component {
       scheduleMigrationModal,
       scheduleMigrationPlan,
       scheduleMigration,
-      scheduleCutover,
       showPlanWizardEditModeAction,
       fetchTransformationMappingsUrl,
       fetchTransformationMappingsAction,
@@ -119,7 +118,7 @@ class Migrations extends React.Component {
             {activeFilter === MIGRATIONS_FILTERS.notStarted && (
               <MigrationsNotStartedList
                 notStartedPlans={Immutable.asMutable(notStartedPlans, { deep: true })}
-                scheduleMigrationNow={createTransformationPlanRequestClick}
+                migrateClick={createTransformationPlanRequestClick}
                 loading={isCreatingTransformationPlanRequest}
                 redirectTo={redirectTo}
                 showConfirmModalAction={showConfirmModalAction}
@@ -129,7 +128,6 @@ class Migrations extends React.Component {
                 scheduleMigrationModal={scheduleMigrationModal}
                 scheduleMigrationPlan={scheduleMigrationPlan}
                 scheduleMigration={scheduleMigration}
-                scheduleCutover={scheduleCutover}
                 fetchTransformationPlansAction={fetchTransformationPlansAction}
                 fetchTransformationPlansUrl={fetchTransformationPlansUrl}
                 deleteTransformationPlanAction={deleteTransformationPlanAction}
@@ -157,18 +155,10 @@ class Migrations extends React.Component {
                 cancelPlanRequestAction={cancelPlanRequestAction}
                 isCancellingPlanRequest={isCancellingPlanRequest}
                 requestsProcessingCancellation={requestsProcessingCancellation}
-                toggleScheduleMigrationModal={toggleScheduleMigrationModal}
-                scheduleMigrationModal={scheduleMigrationModal}
-                scheduleMigrationPlan={scheduleMigrationPlan}
-                scheduleMigration={scheduleMigration}
-                scheduleMigrationNow={createTransformationPlanRequestClick}
-                scheduleCutover={scheduleCutover}
               />
             )}
             {activeFilter === MIGRATIONS_FILTERS.completed && (
               <MigrationsCompletedList
-                scheduleMigrationNow={createTransformationPlanRequestClick}
-                scheduleCutover={scheduleCutover}
                 finishedTransformationPlans={Immutable.asMutable(finishedTransformationPlans, { deep: true })}
                 allRequestsWithTasks={allRequestsWithTasks}
                 retryClick={createTransformationPlanRequestClick}
@@ -254,7 +244,6 @@ Migrations.propTypes = {
   scheduleMigrationModal: PropTypes.bool,
   scheduleMigrationPlan: PropTypes.object,
   scheduleMigration: PropTypes.func,
-  scheduleCutover: PropTypes.func,
   showPlanWizardEditModeAction: PropTypes.func,
   fetchTransformationMappingsAction: PropTypes.func,
   fetchTransformationMappingsUrl: PropTypes.string,
