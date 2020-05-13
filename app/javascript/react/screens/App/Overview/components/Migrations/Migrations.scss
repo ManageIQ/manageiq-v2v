@@ -1,5 +1,29 @@
+// TODO remove card-specific styles
+
+.card-pf-multi-card-container {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  margin-bottom: 0;
+
+  .card-pf-heading h3 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .card-pf-body > .message-text {
+    font-size: 16px;
+    margin-left: 5px;
+  }
+
+  .card-pf-title {
+    padding: 2px 0;
+  }
+}
+
 .migrations {
-  .info-with-inline-icon {
+  .active-migration-elapsed-time {
     display: flex;
     align-items: center;
 
@@ -15,7 +39,7 @@
     }
 
     .spinner-sm.spinner-inline {
-      margin: 0 5px 0 0;
+      margin: 0 10px 0 0;
     }
 
     .vm-progress-bar {

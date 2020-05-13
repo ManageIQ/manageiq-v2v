@@ -16,32 +16,94 @@ exports[`if there are no conversion hosts available renders an error view 1`] = 
   }
   additionalInfo={
     Array [
-      Object {
-        "child": <ListViewTableInfoItem
+      <ListViewTableInfoItem
+        className=""
+        stacked={false}
+      >
+        <Spinner
           className=""
-          stacked={false}
-        >
-          <Spinner
-            className=""
-            inline={true}
-            inverse={false}
-            loading={true}
-            size="sm"
-          />
-          <EllipisWithTooltip
-            style={
-              Object {
-                "maxWidth": 300,
-              }
+          inline={true}
+          inverse={false}
+          loading={true}
+          size="sm"
+        />
+        <EllipisWithTooltip
+          style={
+            Object {
+              "maxWidth": 300,
             }
-          >
-            Waiting for an available conversion host. You can continue waiting or go to the Migration Settings page to increase the number of migrations per host.
-          </EllipisWithTooltip>
-        </ListViewTableInfoItem>,
-        "tdProps": Object {
-          "colSpan": 2,
-        },
-      },
+          }
+        >
+          Waiting for an available conversion host. You can continue waiting or go to the Migration Settings page to increase the number of migrations per host.
+        </EllipisWithTooltip>
+      </ListViewTableInfoItem>,
+      <CutoverTimeInfoItem
+        plan={
+          Object {
+            "configVmLength": 2,
+            "created_on": "2018-05-01T12:13:50Z",
+            "fulfilledOn": "2018-04-06T12:31:30Z",
+            "href": "http://localhost:3000/api/service_templates/60",
+            "id": "60",
+            "miq_requests": Array [
+              Object {
+                "approval_state": "approved",
+                "created_on": "2018-04-06T12:31:30Z",
+                "description": "Migration Plan F-0",
+                "destination_id": null,
+                "destination_type": null,
+                "fulfilled_on": "2018-04-06T12:31:30Z",
+                "href": "http://localhost:3000/api/service_requests/6000",
+                "id": "6000",
+                "message": "VM Transformations <SOMETHING>",
+                "options": Object {
+                  "cart_state": "ordered",
+                  "delivered_on": "2018-04-06T12:49:30Z",
+                  "dialog": null,
+                  "initiator": null,
+                  "requester_group": "EvmGroup-super_administrator",
+                  "src_id": "60",
+                  "workflow_settings": Object {
+                    "resource_action_id": "2507",
+                  },
+                },
+                "process": true,
+                "request_state": "active",
+                "request_type": "transformation_plan",
+                "requester_id": "1",
+                "requester_name": "Administrator",
+                "service_order_id": "91",
+                "source_id": "60",
+                "source_type": "ServiceTemplate",
+                "status": "Ok",
+                "tenant_id": "1",
+                "type": "ServiceTemplateTransformationPlanRequest",
+                "updated_on": "2018-04-06T12:31:30Z",
+                "userid": "admin",
+              },
+            ],
+            "name": "Migration Plan F-0",
+            "options": Object {
+              "config_info": Object {
+                "actions": Array [
+                  Object {
+                    "vm_id": "1",
+                  },
+                  Object {
+                    "vm_id": "3",
+                  },
+                ],
+                "transformation_mapping_id": "1",
+              },
+            },
+            "scheduleTime": null,
+            "status": "Ok",
+            "transformation_mapping": Object {
+              "transformation_mapping_items": Array [],
+            },
+          }
+        }
+      />,
     ]
   }
   numFailedVms={0}
@@ -153,27 +215,51 @@ exports[`warm migration with cutover date set renders an in progress view 1`] = 
   }
   additionalInfo={
     Array [
-      Object {
-        "child": <ListViewTableInfoItem
-          className=""
-          stacked={false}
+      <ListViewTableInfoItem
+        className=""
+        stacked={false}
+      >
+        <div
+          className="vm-progress-bar"
+          id="vm-progress-bar-100"
         >
+          <UtilizationBar
+            availableTooltipFunction={[Function]}
+            className={null}
+            description="Migrating data"
+            descriptionPlacementTop={true}
+            label={
+              <span>
+                <span
+                  id="vms-migrated"
+                >
+                  0 of 0 VMs
+                </span>
+                 
+                migrated
+              </span>
+            }
+            max={0}
+            min={0}
+            now={0}
+            thresholdError={null}
+            thresholdWarning={null}
+            usedTooltipFunction={[Function]}
+          />
           <div
-            className="info-with-inline-icon"
+            className="active-migration-elapsed-time"
           >
             <Icon
-              name="ok"
-              type="pf"
+              name="clock-o"
+              type="fa"
             />
-            <div>
-              Last pre-copy succeeded
-            </div>
+            <TickingIsoElapsedTime
+              endTime={null}
+              startTime="2018-04-06T12:31:30Z"
+            />
           </div>
-        </ListViewTableInfoItem>,
-        "tdProps": Object {
-          "colSpan": 1,
-        },
-      },
+        </div>
+      </ListViewTableInfoItem>,
       <CutoverTimeInfoItem
         plan={
           Object {
@@ -196,7 +282,6 @@ exports[`warm migration with cutover date set renders an in progress view 1`] = 
                 "message": "VM Transformations <SOMETHING>",
                 "options": Object {
                   "cart_state": "ordered",
-                  "cutover_datetime": "2030-08-14T02:34:56-06:00",
                   "delivered_on": "2018-04-06T12:49:30Z",
                   "dialog": null,
                   "initiator": null,
@@ -234,6 +319,7 @@ exports[`warm migration with cutover date set renders an in progress view 1`] = 
                 ],
                 "transformation_mapping_id": "1",
                 "warm_migration": true,
+                "warm_migration_cutover_datetime": "2030-08-14T02:34:56-06:00",
               },
             },
             "scheduleTime": null,
@@ -241,49 +327,6 @@ exports[`warm migration with cutover date set renders an in progress view 1`] = 
             "transformation_mapping": Object {
               "transformation_mapping_items": Array [],
             },
-          }
-        }
-        planRequest={
-          Object {
-            "approval_state": "approved",
-            "created_on": "2018-04-06T12:31:30Z",
-            "description": "Migration Plan J-0",
-            "destination_id": null,
-            "destination_type": null,
-            "fulfilled_on": "2018-04-06T12:31:30Z",
-            "href": "http://localhost:3000/api/service_requests/6000",
-            "id": "6000",
-            "message": "VM Transformations <SOMETHING>",
-            "miq_request_tasks": Array [
-              Object {
-                "conversion_host_id": 1,
-              },
-            ],
-            "options": Object {
-              "cart_state": "ordered",
-              "cutover_datetime": "2030-08-14T02:34:56-06:00",
-              "delivered_on": "2018-04-06T12:49:30Z",
-              "dialog": null,
-              "initiator": null,
-              "requester_group": "EvmGroup-super_administrator",
-              "src_id": "100",
-              "workflow_settings": Object {
-                "resource_action_id": "2507",
-              },
-            },
-            "process": true,
-            "request_state": "active",
-            "request_type": "transformation_plan",
-            "requester_id": "1",
-            "requester_name": "Administrator",
-            "service_order_id": "91",
-            "source_id": "100",
-            "source_type": "ServiceTemplate",
-            "status": "Ok",
-            "tenant_id": "1",
-            "type": "ServiceTemplateTransformationPlanRequest",
-            "updated_on": "2018-04-06T12:31:30Z",
-            "userid": "admin",
           }
         }
       />,
@@ -313,7 +356,6 @@ exports[`warm migration with cutover date set renders an in progress view 1`] = 
           "message": "VM Transformations <SOMETHING>",
           "options": Object {
             "cart_state": "ordered",
-            "cutover_datetime": "2030-08-14T02:34:56-06:00",
             "delivered_on": "2018-04-06T12:49:30Z",
             "dialog": null,
             "initiator": null,
@@ -351,6 +393,7 @@ exports[`warm migration with cutover date set renders an in progress view 1`] = 
           ],
           "transformation_mapping_id": "1",
           "warm_migration": true,
+          "warm_migration_cutover_datetime": "2030-08-14T02:34:56-06:00",
         },
       },
       "scheduleTime": null,
@@ -443,27 +486,120 @@ exports[`warm migration without cutover date set renders an in progress view 1`]
   }
   additionalInfo={
     Array [
-      Object {
-        "child": <ListViewTableInfoItem
-          className=""
-          stacked={false}
+      <ListViewTableInfoItem
+        className=""
+        stacked={false}
+      >
+        <div
+          className="vm-progress-bar"
+          id="vm-progress-bar-90"
         >
+          <UtilizationBar
+            availableTooltipFunction={[Function]}
+            className={null}
+            description="Migrating data"
+            descriptionPlacementTop={true}
+            label={
+              <span>
+                <span
+                  id="vms-migrated"
+                >
+                  0 of 0 VMs
+                </span>
+                 
+                migrated
+              </span>
+            }
+            max={0}
+            min={0}
+            now={0}
+            thresholdError={null}
+            thresholdWarning={null}
+            usedTooltipFunction={[Function]}
+          />
           <div
-            className="info-with-inline-icon"
+            className="active-migration-elapsed-time"
           >
             <Icon
-              name="ok"
-              type="pf"
+              name="clock-o"
+              type="fa"
             />
-            <div>
-              Last pre-copy succeeded
-            </div>
+            <TickingIsoElapsedTime
+              endTime={null}
+              startTime="2018-04-06T12:31:30Z"
+            />
           </div>
-        </ListViewTableInfoItem>,
-        "tdProps": Object {
-          "colSpan": 2,
-        },
-      },
+        </div>
+      </ListViewTableInfoItem>,
+      <CutoverTimeInfoItem
+        plan={
+          Object {
+            "configVmLength": 2,
+            "created_on": "2018-05-01T12:13:50Z",
+            "fulfilledOn": "2018-04-06T12:31:30Z",
+            "href": "http://localhost:3000/api/service_templates/90",
+            "id": "90",
+            "infraMappingName": "name",
+            "miq_requests": Array [
+              Object {
+                "approval_state": "approved",
+                "created_on": "2018-04-06T12:31:30Z",
+                "description": "Migration Plan I-0",
+                "destination_id": null,
+                "destination_type": null,
+                "fulfilled_on": "2018-04-06T12:31:30Z",
+                "href": "http://localhost:3000/api/service_requests/6000",
+                "id": "6000",
+                "message": "VM Transformations <SOMETHING>",
+                "options": Object {
+                  "cart_state": "ordered",
+                  "delivered_on": "2018-04-06T12:49:30Z",
+                  "dialog": null,
+                  "initiator": null,
+                  "requester_group": "EvmGroup-super_administrator",
+                  "src_id": "90",
+                  "workflow_settings": Object {
+                    "resource_action_id": "2507",
+                  },
+                },
+                "process": true,
+                "request_state": "active",
+                "request_type": "transformation_plan",
+                "requester_id": "1",
+                "requester_name": "Administrator",
+                "service_order_id": "91",
+                "source_id": "90",
+                "source_type": "ServiceTemplate",
+                "status": "Ok",
+                "tenant_id": "1",
+                "type": "ServiceTemplateTransformationPlanRequest",
+                "updated_on": "2018-04-06T12:31:30Z",
+                "userid": "admin",
+              },
+            ],
+            "name": "Migration Plan I-0",
+            "options": Object {
+              "config_info": Object {
+                "actions": Array [
+                  Object {
+                    "vm_id": "1",
+                  },
+                  Object {
+                    "vm_id": "3",
+                  },
+                ],
+                "transformation_mapping_id": "1",
+                "warm_migration": true,
+              },
+            },
+            "scheduleTime": null,
+            "status": "Ok",
+            "transformation_mapping": Object {
+              "transformation_mapping_items": Array [],
+            },
+          }
+        }
+      />,
     ]
   }
   numFailedVms={0}
@@ -555,31 +691,93 @@ exports[`when the request is denied renders an error view 1`] = `
   }
   additionalInfo={
     Array [
-      Object {
-        "child": <ListViewTableInfoItem
-          className=""
-          stacked={false}
-        >
-          <Icon
-            name="error-circle-o"
-            type="pf"
-          />
-          <EllipisWithTooltip
-            style={
-              Object {
-                "maxWidth": 300,
-              }
+      <ListViewTableInfoItem
+        className=""
+        stacked={false}
+      >
+        <Icon
+          name="error-circle-o"
+          type="pf"
+        />
+        <EllipisWithTooltip
+          style={
+            Object {
+              "maxWidth": 300,
             }
-          >
-            Unable to migrate VMs because no conversion host was configured at the time of the attempted migration.
-             
-            See the product documentation for information on configuring conversion hosts.
-          </EllipisWithTooltip>
-        </ListViewTableInfoItem>,
-        "tdProps": Object {
-          "colSpan": 2,
-        },
-      },
+          }
+        >
+          Unable to migrate VMs because no conversion host was configured at the time of the attempted migration.
+           
+          See the product documentation for information on configuring conversion hosts.
+        </EllipisWithTooltip>
+      </ListViewTableInfoItem>,
+      <CutoverTimeInfoItem
+        plan={
+          Object {
+            "configVmLength": 2,
+            "created_on": "2018-05-01T12:13:50Z",
+            "fulfilledOn": "2018-04-06T12:31:30Z",
+            "href": "http://localhost:3000/api/service_templates/80",
+            "id": "80",
+            "miq_requests": Array [
+              Object {
+                "approval_state": "denied",
+                "cancelation_status": null,
+                "created_on": "2018-04-06T12:31:30Z",
+                "description": "Migration Plan H-0",
+                "destination_id": null,
+                "destination_type": null,
+                "fulfilled_on": "2018-04-06T12:31:30Z",
+                "href": "http://localhost:3000/api/service_requests/8000",
+                "id": "8000",
+                "message": "VM Transformations <SOMETHING>",
+                "options": Object {
+                  "cart_state": "ordered",
+                  "delivered_on": "2018-04-06T12:49:30Z",
+                  "dialog": null,
+                  "initiator": null,
+                  "requester_group": "EvmGroup-super_administrator",
+                  "src_id": "60",
+                  "workflow_settings": Object {
+                    "resource_action_id": "2507",
+                  },
+                },
+                "process": true,
+                "request_state": "active",
+                "request_type": "transformation_plan",
+                "requester_id": "1",
+                "requester_name": "Administrator",
+                "service_order_id": "91",
+                "source_id": "80",
+                "source_type": "ServiceTemplate",
+                "status": "Ok",
+                "tenant_id": "1",
+                "updated_on": "2018-04-06T12:31:30Z",
+                "userid": "admin",
+              },
+            ],
+            "name": "Migration Plan H-0",
+            "options": Object {
+              "config_info": Object {
+                "actions": Array [
+                  Object {
+                    "vm_id": "1",
+                  },
+                  Object {
+                    "vm_id": "3",
+                  },
+                ],
+                "transformation_mapping_id": "1",
+              },
+            },
+            "scheduleTime": null,
+            "status": "Ok",
+            "transformation_mapping": Object {
+              "transformation_mapping_items": Array [],
+            },
+          }
+        }
+      />,
     ]
   }
   numFailedVms={0}

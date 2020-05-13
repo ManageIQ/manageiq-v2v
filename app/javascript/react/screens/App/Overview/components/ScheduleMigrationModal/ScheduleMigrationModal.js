@@ -5,7 +5,6 @@ import { Button, Modal } from 'patternfly-react';
 import ScheduleMigrationModalBody from './ScheduleMigrationModalBody';
 import getPlanScheduleInfo from '../Migrations/helpers/getPlanScheduleInfo';
 import isPlanWarmMigration from '../Migrations/helpers/isPlanWarmMigration';
-import getMostRecentRequest from '../../../common/getMostRecentRequest';
 
 class ScheduleMigrationModal extends React.Component {
   constructor(props) {
@@ -28,11 +27,6 @@ class ScheduleMigrationModal extends React.Component {
       scheduleMigrationNow,
       scheduleCutover
     } = this.props;
-
-    const mostRecentRequest =
-      scheduleMigrationPlan &&
-      scheduleMigrationPlan.miq_requests &&
-      getMostRecentRequest(scheduleMigrationPlan.miq_requests);
 
     const handleDatepickerChange = event => {
       this.setState({ dateTimeInput: event });
@@ -70,10 +64,7 @@ class ScheduleMigrationModal extends React.Component {
 
     const modalBodyStrings = plan => [MODAL_STRINGS[modalMode(plan)][1], MODAL_STRINGS[modalMode(plan)][2]];
 
-    const { migrationScheduled, migrationCutover } = getPlanScheduleInfo({
-      plan: scheduleMigrationPlan,
-      planRequest: mostRecentRequest
-    });
+    const { migrationScheduled, migrationCutover } = getPlanScheduleInfo(scheduleMigrationPlan);
     const defaultDate = isPlanWarmMigration(scheduleMigrationPlan)
       ? new Date(migrationCutover)
       : new Date(migrationScheduled);
@@ -110,7 +101,7 @@ class ScheduleMigrationModal extends React.Component {
                     .toDate();
                 }
                 scheduleCutover({
-                  planRequest: mostRecentRequest,
+                  plan: scheduleMigrationPlan,
                   cutoverTime: cutoverDatetime
                 }).then(() => {
                   fetchTransformationPlansAction({

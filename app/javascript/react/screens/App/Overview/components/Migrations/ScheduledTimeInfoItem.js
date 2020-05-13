@@ -12,7 +12,8 @@ const ScheduledTimeInfoItem = ({ planId, migrationStarting, showScheduledTime, m
   ) : showScheduledTime ? (
     <ListViewTable.InfoItem key={`${planId}-scheduledTime`} style={{ textAlign: 'left' }}>
       <Icon type="fa" name="clock-o" />
-      {__('Scheduled for migration')}:<br />
+      {__('Migration scheduled')}
+      <br />
       {formatDateTime(migrationScheduled)}
     </ListViewTable.InfoItem>
   ) : null;
