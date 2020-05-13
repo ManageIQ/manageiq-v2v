@@ -9,7 +9,6 @@ describe('Plan wizard schedule step', () => {
         targetProvider="openstack"
         migration_plan_type_radio="migration_type_cold"
         migration_plan_choice_radio="migration_plan_now"
-        enableWarmMigration
       />
     );
     expect(component).toMatchSnapshot();
@@ -21,7 +20,6 @@ describe('Plan wizard schedule step', () => {
         targetProvider="openstack"
         migration_plan_type_radio="migration_type_cold"
         migration_plan_choice_radio="migration_plan_later"
-        enableWarmMigration
       />
     );
     expect(component).toMatchSnapshot();
@@ -29,22 +27,7 @@ describe('Plan wizard schedule step', () => {
 
   it('renders with a info text when warm migration selected', () => {
     const component = shallow(
-      <PlanWizardScheduleStep
-        targetProvider="openstack"
-        migration_plan_type_radio="migration_type_warm"
-        enableWarmMigration
-      />
-    );
-    expect(component).toMatchSnapshot();
-  });
-
-  it('renders with a info text when warm migration is not available', () => {
-    const component = shallow(
-      <PlanWizardScheduleStep
-        targetProvider="openstack"
-        migration_plan_type_radio="migration_type_cold"
-        enableWarmMigration={false}
-      />
+      <PlanWizardScheduleStep targetProvider="openstack" migration_plan_type_radio="migration_type_warm" />
     );
     expect(component).toMatchSnapshot();
   });

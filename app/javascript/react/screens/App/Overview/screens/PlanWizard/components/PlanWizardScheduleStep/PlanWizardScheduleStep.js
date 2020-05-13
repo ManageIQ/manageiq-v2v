@@ -4,12 +4,7 @@ import { Field, reduxForm } from 'redux-form';
 import { Form, Icon } from 'patternfly-react';
 import { FormField } from '../../../../../common/forms/FormField';
 
-export const PlanWizardScheduleStep = ({
-  targetProvider,
-  migration_plan_type_radio,
-  migration_plan_choice_radio,
-  enableWarmMigration
-}) => (
+export const PlanWizardScheduleStep = ({ targetProvider, migration_plan_type_radio, migration_plan_choice_radio }) => (
   <Form className="form-vertical">
     <Field
       name="migration_plan_type_radio"
@@ -18,12 +13,6 @@ export const PlanWizardScheduleStep = ({
       label={__('Migration Type')}
       inline_label={false}
       controlWidth={12}
-      info={
-        enableWarmMigration
-          ? null
-          : __("Warm migration is not possible because one or more selected VMs has disks that can't be pre-copied.")
-      }
-      infoIconName="warning-triangle-o"
       options={[
         {
           id: 'migration_type_cold',
@@ -31,8 +20,7 @@ export const PlanWizardScheduleStep = ({
         },
         {
           id: 'migration_type_warm',
-          name: __('Warm Migration - VM data is iteratively pre-copied. A final, cutover migration is scheduled and run later.'), // prettier-ignore
-          disabled: !enableWarmMigration
+          name: __('Warm Migration - VM data is iteratively pre-copied. A final, cutover migration is scheduled and run later.') // prettier-ignore
         }
       ]}
     />
@@ -79,8 +67,7 @@ export const PlanWizardScheduleStep = ({
 PlanWizardScheduleStep.propTypes = {
   targetProvider: PropTypes.string,
   migration_plan_type_radio: PropTypes.string,
-  migration_plan_choice_radio: PropTypes.string,
-  enableWarmMigration: PropTypes.bool
+  migration_plan_choice_radio: PropTypes.string
 };
 
 export default reduxForm({

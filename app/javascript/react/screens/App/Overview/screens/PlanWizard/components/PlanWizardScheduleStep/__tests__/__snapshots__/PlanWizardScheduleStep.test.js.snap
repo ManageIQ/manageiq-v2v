@@ -1,64 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Plan wizard schedule step renders with a info text when warm migration is not available 1`] = `
-<Form
-  bsClass="form"
-  className="form-vertical"
-  componentClass="form"
-  horizontal={false}
-  inline={false}
->
-  <Field
-    component={[Function]}
-    controlWidth={12}
-    info="Warm migration is not possible because one or more selected VMs has disks that can't be pre-copied."
-    infoIconName="warning-triangle-o"
-    inline_label={false}
-    label="Migration Type"
-    name="migration_plan_type_radio"
-    options={
-      Array [
-        Object {
-          "id": "migration_type_cold",
-          "name": "Cold Migration - Source VMs are shut down while all of the VM data is migrated.",
-        },
-        Object {
-          "disabled": true,
-          "id": "migration_type_warm",
-          "name": "Warm Migration - VM data is iteratively pre-copied. A final, cutover migration is scheduled and run later.",
-        },
-      ]
-    }
-    type="radio"
-  />
-  <Field
-    component={[Function]}
-    help={null}
-    inline_label={false}
-    label="Schedule"
-    name="migration_plan_choice_radio"
-    options={
-      Array [
-        Object {
-          "id": "migration_plan_later",
-          "name": "Save migration plan to run later",
-        },
-        Object {
-          "id": "migration_plan_now",
-          "name": "Start migration immediately",
-        },
-      ]
-    }
-    style={
-      Object {
-        "paddingTop": "100px",
-      }
-    }
-    type="radio"
-  />
-</Form>
-`;
-
 exports[`Plan wizard schedule step renders with a info text when warm migration selected 1`] = `
 <Form
   bsClass="form"
@@ -70,8 +11,6 @@ exports[`Plan wizard schedule step renders with a info text when warm migration 
   <Field
     component={[Function]}
     controlWidth={12}
-    info={null}
-    infoIconName="warning-triangle-o"
     inline_label={false}
     label="Migration Type"
     name="migration_plan_type_radio"
@@ -82,7 +21,6 @@ exports[`Plan wizard schedule step renders with a info text when warm migration 
           "name": "Cold Migration - Source VMs are shut down while all of the VM data is migrated.",
         },
         Object {
-          "disabled": false,
           "id": "migration_type_warm",
           "name": "Warm Migration - VM data is iteratively pre-copied. A final, cutover migration is scheduled and run later.",
         },
@@ -115,8 +53,6 @@ exports[`Plan wizard schedule step renders with a warning if migrating an OSP pl
   <Field
     component={[Function]}
     controlWidth={12}
-    info={null}
-    infoIconName="warning-triangle-o"
     inline_label={false}
     label="Migration Type"
     name="migration_plan_type_radio"
@@ -127,7 +63,6 @@ exports[`Plan wizard schedule step renders with a warning if migrating an OSP pl
           "name": "Cold Migration - Source VMs are shut down while all of the VM data is migrated.",
         },
         Object {
-          "disabled": false,
           "id": "migration_type_warm",
           "name": "Warm Migration - VM data is iteratively pre-copied. A final, cutover migration is scheduled and run later.",
         },
@@ -188,8 +123,6 @@ exports[`Plan wizard schedule step renders with no warning if migrating an OSP p
   <Field
     component={[Function]}
     controlWidth={12}
-    info={null}
-    infoIconName="warning-triangle-o"
     inline_label={false}
     label="Migration Type"
     name="migration_plan_type_radio"
@@ -200,7 +133,6 @@ exports[`Plan wizard schedule step renders with no warning if migrating an OSP p
           "name": "Cold Migration - Source VMs are shut down while all of the VM data is migrated.",
         },
         Object {
-          "disabled": false,
           "id": "migration_type_warm",
           "name": "Warm Migration - VM data is iteratively pre-copied. A final, cutover migration is scheduled and run later.",
         },
