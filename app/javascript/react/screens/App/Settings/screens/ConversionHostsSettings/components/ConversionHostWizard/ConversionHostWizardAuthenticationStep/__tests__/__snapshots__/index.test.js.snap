@@ -16,6 +16,7 @@ Object {
       "body": "",
       "filename": "",
     },
+    "openstackUser": "cloud-user",
     "transformationMethod": "VDDK",
     "verifyCaCerts": false,
     "vmwareSshKey": Object {
