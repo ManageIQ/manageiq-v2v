@@ -43,7 +43,6 @@ const processVMTasks = vmTasks => {
     taskDetails.options.progress = task.options.progress;
     taskDetails.options.virtv2v_wrapper = task.options.virtv2v_wrapper;
     taskDetails.options.virtv2v_disks = task.options.virtv2v_disks;
-    taskDetails.options.two_phase = task.options.two_phase;
 
     if (!task.diskSpaceCompletedGb) {
       taskDetails.diskSpaceCompletedGb = '0';

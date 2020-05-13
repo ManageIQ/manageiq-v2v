@@ -22,7 +22,7 @@ import ScheduleMigrationButton from './ScheduleMigrationButton';
 import CutoverTimeInfoItem from './CutoverTimeInfoItem';
 import StopPropagationOnClick from '../../../common/StopPropagationOnClick';
 import { formatDateTime } from '../../../../../../components/dates/MomentDate';
-import { getPlanCopySummary } from '../../../common/twoPhaseHelpers';
+import { getPlanCopySummary } from '../../../common/warmMigrationHelpers';
 
 const MigrationInProgressListItem = ({
   plan,
