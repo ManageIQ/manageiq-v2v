@@ -20,7 +20,6 @@ export const FormField = ({
   maxLengthWarning,
   info,
   children,
-  inline_label,
   ...props
 }) => {
   const warning = maxLength && input.value.length >= maxLength && maxLengthWarning;
@@ -54,7 +53,9 @@ export const FormField = ({
           <select className="form-control" {...input}>
             <option disabled value="">{`<${__('Choose')}>`}</option>
             {options.map(val => (
-              <option key={val.optionValue}>{val.optionKey}</option>
+              <option value={val[optionKey]} key={val[optionValue]}>
+                {val[optionValue]}
+              </option>
             ))}
           </select>
         );
@@ -97,15 +98,12 @@ export const FormField = ({
 
   return (
     <Form.FormGroup {...formGroupProps}>
-      {inline_label && (
-        <Grid.Col componentClass={Form.ControlLabel} sm={Number.parseInt(labelWidth, 10) || 2}>
-          {required && <span className="required-asterisk">* </span>}
-          {label}
-          {renderInfoPopover()}
-        </Grid.Col>
-      )}
+      <Grid.Col componentClass={Form.ControlLabel} sm={Number.parseInt(labelWidth, 10) || 2}>
+        {required && <span className="required-asterisk">* </span>}
+        {label}
+        {renderInfoPopover()}
+      </Grid.Col>
       <Grid.Col sm={Number.parseInt(controlWidth, 10) || 9} id={input.name}>
-        {!inline_label && <h4>{label}</h4>}
         {renderField()}
         {(help || (touched && error) || warning) && (
           <Form.HelpBlock>
@@ -134,10 +132,5 @@ FormField.propTypes = {
   maxLength: PropTypes.number,
   maxLengthWarning: PropTypes.string,
   info: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-  children: PropTypes.func,
-  inline_label: PropTypes.bool
-};
-
-FormField.defaultProps = {
-  inline_label: true
+  children: PropTypes.func
 };

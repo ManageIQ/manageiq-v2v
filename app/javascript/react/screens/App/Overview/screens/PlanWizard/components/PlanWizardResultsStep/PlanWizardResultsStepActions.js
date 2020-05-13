@@ -22,14 +22,14 @@ const postMigrationRequestsAction = (response, dispatch) => {
   });
 };
 
-const _postMigrationPlansActionCreator = (url, migrationPlans, planSchedule, planType) => dispatch =>
+const _postMigrationPlansActionCreator = (url, migrationPlans, planSchedule) => dispatch =>
   dispatch({
     type: POST_V2V_MIGRATION_PLANS,
     payload: new Promise((resolve, reject) => {
       API.post(url, migrationPlans)
         .then(response => {
           resolve(response);
-          if (planSchedule === 'migration_plan_now' || planType === 'migration_type_warm') {
+          if (planSchedule === 'migration_plan_now') {
             postMigrationRequestsAction(response, dispatch);
           }
         })
@@ -37,10 +37,10 @@ const _postMigrationPlansActionCreator = (url, migrationPlans, planSchedule, pla
     })
   });
 
-export const postMigrationPlansAction = (url, migrationPlans, planSchedule, planType) =>
-  _postMigrationPlansActionCreator(url, migrationPlans, planSchedule, planType);
+export const postMigrationPlansAction = (url, migrationPlans, planSchedule) =>
+  _postMigrationPlansActionCreator(url, migrationPlans, planSchedule);
 
-const _editMigrationPlansActionCreator = (url, planId, migrationPlans, planSchedule, planType) => dispatch => {
+const _editMigrationPlansActionCreator = (url, planId, migrationPlans, planSchedule) => dispatch => {
   const body = {
     action: 'edit',
     resource: { ...migrationPlans }
@@ -51,7 +51,7 @@ const _editMigrationPlansActionCreator = (url, planId, migrationPlans, planSched
       API.post(`${url}/${planId}`, body)
         .then(response => {
           resolve(response);
-          if (planSchedule === 'migration_plan_now' || planType === 'migration_type_warm') {
+          if (planSchedule === 'migration_plan_now') {
             postMigrationRequestsAction(response, dispatch);
           }
         })
@@ -60,5 +60,5 @@ const _editMigrationPlansActionCreator = (url, planId, migrationPlans, planSched
   });
 };
 
-export const editMigrationPlansAction = (url, planId, migrationPlans, planSchedule, planType) =>
-  _editMigrationPlansActionCreator(url, planId, migrationPlans, planSchedule, planType);
+export const editMigrationPlansAction = (url, planId, migrationPlans, planSchedule) =>
+  _editMigrationPlansActionCreator(url, planId, migrationPlans, planSchedule);

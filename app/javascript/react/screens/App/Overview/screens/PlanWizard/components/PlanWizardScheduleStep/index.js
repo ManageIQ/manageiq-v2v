@@ -8,13 +8,8 @@ const mapStateToProps = ({ overview: { transformationMappings }, form }) => ({
     form.planWizardScheduleStep &&
     form.planWizardScheduleStep.values &&
     form.planWizardScheduleStep.values.migration_plan_choice_radio,
-  migration_plan_type_radio:
-    form.planWizardScheduleStep &&
-    form.planWizardScheduleStep.values &&
-    form.planWizardScheduleStep.values.migration_plan_type_radio,
   initialValues: {
-    migration_plan_choice_radio: 'migration_plan_later',
-    migration_plan_type_radio: 'migration_type_cold'
+    migration_plan_choice_radio: 'migration_plan_later'
   }
 });
 

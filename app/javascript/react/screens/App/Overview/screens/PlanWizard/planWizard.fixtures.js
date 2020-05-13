@@ -54,11 +54,6 @@ export const ospPlanReduxFormState = {
       postMigrationPlaybook: { name: 'postMigrationPlaybook', type: 'Field', count: 0 },
       playbookVms: { name: 'playbookVms', type: 'Field', count: 0 }
     }
-  },
-  planWizardScheduleStep: {
-    values: {
-      migration_plan_type_radio: 'migration_type_cold'
-    }
   }
 };
 
@@ -105,11 +100,6 @@ export const rhvPlanReduxFormState = {
       preMigrationPlaybook: { name: 'preMigrationPlaybook', type: 'Field', count: 0 },
       postMigrationPlaybook: { name: 'postMigrationPlaybook', type: 'Field', count: 0 },
       playbookVms: { name: 'playbookVms', type: 'Field', count: 0 }
-    }
-  },
-  planWizardScheduleStep: {
-    values: {
-      migration_plan_type_radio: 'migration_type_cold'
     }
   }
 };
