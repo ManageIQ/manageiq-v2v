@@ -5,6 +5,7 @@ import {
   attachTasksToConversionHosts,
   getCombinedConversionHostListItems,
   getConversionHostTaskLogFile,
+  getConversionHostSshKeyInfoMessage,
   inferTransportMethod
 } from '../helpers';
 
@@ -14,6 +15,7 @@ import {
   exampleConversionHosts,
   inProgress
 } from '../settings.fixtures';
+import { RHV, OPENSTACK } from '../../../../../common/constants';
 
 describe('conversion host task parsing and indexing', () => {
   it('parses tasks correctly', () => {
@@ -188,5 +190,19 @@ describe('conversion host log file helper', () => {
       context_data: {}
     };
     expect(getConversionHostTaskLogFile(task)).toBe(null);
+  });
+});
+
+describe('conversion host ssh key info message', () => {
+  it('has a message for RHV hosts', () => {
+    expect(getConversionHostSshKeyInfoMessage(RHV).length).toBeGreaterThan(0);
+  });
+
+  it('has a message for OSP hosts', () => {
+    expect(getConversionHostSshKeyInfoMessage(OPENSTACK).length).toBeGreaterThan(0);
+  });
+
+  it('returns empty string for unknown hosts', () => {
+    expect(getConversionHostSshKeyInfoMessage('unknown')).toBe('');
   });
 });

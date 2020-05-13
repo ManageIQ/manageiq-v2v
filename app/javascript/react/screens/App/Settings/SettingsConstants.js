@@ -18,5 +18,3 @@ export const HIDE_V2V_CONVERSION_HOST_RETRY_MODAL = 'HIDE_V2V_CONVERSION_HOST_RE
 export const V2V_CONVERSION_HOST_RETRY_MODAL_EXITED = 'V2V_CONVERSION_HOST_RETRY_MODAL_EXITED';
 
 export const FETCH_CONVERSION_HOSTS_URL = '/api/conversion_hosts?attributes=resource&expand=resources';
-
-export const CONVERSION_HOST_SSH_KEY_MESSAGE = __('This is the private key file used to connect to the conversion host instance for cloud-user.'); // prettier-ignore
