@@ -1,4 +1,4 @@
-export const MIGRATIONS_NOT_STARTED_SORT_FIELDS = [
+export const MIGRATIONS_IN_PROGRESS_SORT_FIELDS = [
   { id: 'name', title: __('Name'), isNumeric: false },
   {
     id: 'infraMappingName',
@@ -9,7 +9,11 @@ export const MIGRATIONS_NOT_STARTED_SORT_FIELDS = [
     id: 'configVmLength',
     title: __('Number of VMs'),
     isNumeric: true
-  },
+  }
+];
+
+export const MIGRATIONS_NOT_STARTED_SORT_FIELDS = [
+  ...MIGRATIONS_IN_PROGRESS_SORT_FIELDS,
   { id: 'scheduleTime', title: __('Scheduled Time'), isNumeric: true }
 ];
 
