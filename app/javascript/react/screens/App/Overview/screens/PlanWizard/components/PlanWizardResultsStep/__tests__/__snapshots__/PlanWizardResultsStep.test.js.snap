@@ -38,31 +38,6 @@ exports[`Plan wizard results step renders with a warning if migrating an OSP pla
 </div>
 `;
 
-exports[`Plan wizard results step renders with info message if doing warm migration 1`] = `
-<div
-  className="wizard-pf-complete blank-slate-pf"
->
-  <div
-    className="modal-wizard-results-grey-icon"
-  >
-    <span
-      className="fa fa-clock-o"
-    />
-  </div>
-  <h3
-    className="blank-slate-pf-main-action"
-    id="migration-plan-results-message"
-  >
-     Migration Plan: 'Mock Plan' is in progress
-  </h3>
-  <p
-    className="blank-slate-pf-secondary-action"
-  >
-    Iterative copies of the VM data will begin immediately. Select an action on the Migration Plans page to schedule or begin the final cutover migration.
-  </p>
-</div>
-`;
-
 exports[`Plan wizard results step renders with no warning if migrating an OSP plan immediately 1`] = `
 <div
   className="wizard-pf-complete blank-slate-pf"

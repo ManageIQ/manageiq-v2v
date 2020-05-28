@@ -1,3 +1,4 @@
+import { RHV, OPENSTACK } from '../../../../../../../../../../common/constants';
 import { getConfigureConversionHostPostBodies } from '../helpers';
 import { VDDK, SSH } from '../../ConversionHostWizardConstants';
 
@@ -7,7 +8,7 @@ describe('conversion host wizard results step helpers', () => {
   };
   const commonAuthStepValues = {
     conversionHostSshKey: { body: 'mock conversion host SSH key body' },
-    caCerts: { body: '' }
+    openstackCaCerts: { body: '' }
   };
   const vddkAuthStepValues = {
     ...commonAuthStepValues,
@@ -20,49 +21,46 @@ describe('conversion host wizard results step helpers', () => {
     vmwareSshKey: { body: 'mock vmware SSH key body' }
   };
 
-  it('constructs a POST body for a VDDK conversion host without CA certs', () => {
-    const postBodies = getConfigureConversionHostPostBodies({ hostsStepValues, authStepValues: vddkAuthStepValues });
-    expect(postBodies).toMatchSnapshot();
-  });
+  describe('for RHV hosts', () => {
+    const locationStepValues = { providerType: RHV };
 
-  it('constructs a POST body for an SSH conversion host without CA certs', () => {
-    const postBodies = getConfigureConversionHostPostBodies({ hostsStepValues, authStepValues: sshAuthStepValues });
-    expect(postBodies).toMatchSnapshot();
-  });
-
-  it('constructs a POST body for a VDDK conversion host with CA certs', () => {
-    const postBodies = getConfigureConversionHostPostBodies({
-      hostsStepValues,
-      authStepValues: {
-        ...vddkAuthStepValues,
-        verifyCaCerts: true,
-        caCerts: { body: 'mock CA certs body' }
-      }
+    it('constructs a POST body for a VDDK conversion host', () => {
+      const postBodies = getConfigureConversionHostPostBodies(locationStepValues, hostsStepValues, vddkAuthStepValues);
+      expect(postBodies).toMatchSnapshot();
     });
-    expect(postBodies).toMatchSnapshot();
+
+    it('constructs a POST body for an SSH conversion host', () => {
+      const postBodies = getConfigureConversionHostPostBodies(locationStepValues, hostsStepValues, sshAuthStepValues);
+      expect(postBodies).toMatchSnapshot();
+    });
   });
 
-  it('constructs a POST body for an SSH conversion host with CA certs', () => {
-    const postBodies = getConfigureConversionHostPostBodies({
-      hostsStepValues,
-      authStepValues: {
+  describe('for OSP hosts', () => {
+    const locationStepValues = { providerType: OPENSTACK };
+
+    it('constructs a POST body for a VDDK conversion host without CA certs', () => {
+      const postBodies = getConfigureConversionHostPostBodies(locationStepValues, hostsStepValues, {
+        ...vddkAuthStepValues,
+        openstackUser: 'cloud-user'
+      });
+      expect(postBodies).toMatchSnapshot();
+    });
+
+    it('constructs a POST body for an SSH conversion host without CA certs', () => {
+      const postBodies = getConfigureConversionHostPostBodies(locationStepValues, hostsStepValues, {
         ...sshAuthStepValues,
-        verifyCaCerts: true,
-        caCerts: { body: 'mock CA certs body' }
-      }
+        openstackUser: 'cloud-user'
+      });
+      expect(postBodies).toMatchSnapshot();
     });
-    expect(postBodies).toMatchSnapshot();
-  });
 
-  it('does not include the CA cert property if the verify certs switch is turned off even if there is form data for it', () => {
-    const postBodies = getConfigureConversionHostPostBodies({
-      hostsStepValues,
-      authStepValues: {
-        ...vddkAuthStepValues,
-        verifyCaCerts: false,
-        caCerts: { body: 'mock CA certs body' }
-      }
+    it('constructs a POST body for an SSH conversion host with CA certs', () => {
+      const postBodies = getConfigureConversionHostPostBodies(locationStepValues, hostsStepValues, {
+        ...sshAuthStepValues,
+        openstackUser: 'cloud-user',
+        openstackCaCerts: { body: 'mock openstack CA certs body' }
+      });
+      expect(postBodies).toMatchSnapshot();
     });
-    expect(postBodies[0].tls_ca_certs).toBeUndefined();
   });
 });

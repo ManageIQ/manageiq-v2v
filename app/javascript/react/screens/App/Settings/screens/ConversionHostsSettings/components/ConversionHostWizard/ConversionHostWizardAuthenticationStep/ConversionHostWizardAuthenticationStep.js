@@ -5,24 +5,41 @@ import { required } from 'redux-form-validators';
 import { Form, Switch } from 'patternfly-react';
 import { stepIDs, VDDK, SSH } from '../ConversionHostWizardConstants';
 import { FormField } from '../../../../../../common/forms/FormField';
+import { OPENSTACK } from '../../../../../../../../../common/constants';
 import { BootstrapSelect } from '../../../../../../common/forms/BootstrapSelect';
 import TextFileField from '../../../../../../common/forms/TextFileField';
-import { CONVERSION_HOST_SSH_KEY_MESSAGE } from '../../../../../SettingsConstants';
+import { getConversionHostSshKeyInfoMessage } from '../../../../../helpers';
 
 const requiredWithMessage = required({ msg: __('This field is required') });
 
-export const ConversionHostWizardAuthenticationStep = ({ selectedTransformationMethod, verifyCaCerts }) => {
+export const ConversionHostWizardAuthenticationStep = ({
+  selectedProviderType,
+  selectedTransformationMethod,
+  verifyOpenstackCerts
+}) => {
   const fieldBaseProps = { labelWidth: 4, controlWidth: 7 };
 
   return (
     <Form className="form-horizontal">
+      {selectedProviderType === OPENSTACK && (
+        <Field
+          {...fieldBaseProps}
+          name="openstackUser"
+          label={__('OpenStack User')}
+          component={FormField}
+          type="text"
+          controlId="openstack-user-input"
+          required
+          validate={[requiredWithMessage]}
+        />
+      )}
       <TextFileField
         {...fieldBaseProps}
         name="conversionHostSshKey"
         label={__('Conversion Host SSH private key')}
         help={__('Upload your SSH key file or paste its contents below.')}
         controlId="host-ssh-key-input"
-        info={CONVERSION_HOST_SSH_KEY_MESSAGE}
+        info={getConversionHostSshKeyInfoMessage(selectedProviderType)}
       />
       <Field
         {...fieldBaseProps}
@@ -61,37 +78,39 @@ export const ConversionHostWizardAuthenticationStep = ({ selectedTransformationM
           validate={[requiredWithMessage]}
         />
       )}
-      <React.Fragment>
-        <Field
-          {...fieldBaseProps}
-          name="verifyCaCerts"
-          label={__('Verify TLS Certificates')}
-          component={FormField}
-          controlId="verify-ca-certs"
-          style={{ marginTop: 25 }}
-        >
-          {({ input: { value, onChange } }) => (
-            <Switch
-              bsSize="normal"
-              id="verify-ca-certs-switch"
-              onText={__('Yes')}
-              offText={__('No')}
-              defaultValue={false}
-              value={value}
-              onChange={(element, state) => onChange(state)}
+      {selectedProviderType === OPENSTACK && (
+        <React.Fragment>
+          <Field
+            {...fieldBaseProps}
+            name="verifyOpenstackCerts"
+            label={__('Verify TLS Certificates for OpenStack')}
+            component={FormField}
+            controlId="verify-openstack-certs"
+            style={{ marginTop: 25 }}
+          >
+            {({ input: { value, onChange } }) => (
+              <Switch
+                bsSize="normal"
+                id="verify-openstack-certs-switch"
+                onText={__('Yes')}
+                offText={__('No')}
+                defaultValue={false}
+                value={value}
+                onChange={(element, state) => onChange(state)}
+              />
+            )}
+          </Field>
+          {verifyOpenstackCerts && (
+            <TextFileField
+              {...fieldBaseProps}
+              name="openstackCaCerts"
+              label={__('OpenStack Trusted CA Certificates')}
+              help={__('Upload your certificates file, in PEM format, or paste its contents below.')}
+              controlId="openstack-ca-certs-input"
             />
           )}
-        </Field>
-        {verifyCaCerts && (
-          <TextFileField
-            {...fieldBaseProps}
-            name="caCerts"
-            label={__('Trusted CA Certificates')}
-            help={__('Upload your certificates file, in PEM format, or paste its contents below.')}
-            controlId="ca-certs-input"
-          />
-        )}
-      </React.Fragment>
+        </React.Fragment>
+      )}
     </Form>
   );
 };
@@ -99,7 +118,7 @@ export const ConversionHostWizardAuthenticationStep = ({ selectedTransformationM
 ConversionHostWizardAuthenticationStep.propTypes = {
   selectedProviderType: PropTypes.string,
   selectedTransformationMethod: PropTypes.string,
-  verifyCaCerts: PropTypes.bool
+  verifyOpenstackCerts: PropTypes.bool
 };
 
 export default reduxForm({
@@ -108,10 +127,11 @@ export default reduxForm({
   forceUnregisterOnUnmount: true,
   shouldError: () => true, // Force validation to re-run on every field change so unmounted fields get excluded
   initialValues: {
+    openstackUser: 'cloud-user',
     conversionHostSshKey: { filename: '', body: '' },
     transformationMethod: VDDK,
     vmwareSshKey: { filename: '', body: '' },
-    caCerts: { filename: '', body: '' },
-    verifyCaCerts: false
+    openstackCaCerts: { filename: '', body: '' },
+    verifyOpenstackCerts: false
   }
 })(ConversionHostWizardAuthenticationStep);

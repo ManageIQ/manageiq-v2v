@@ -8,16 +8,17 @@ Object {
   "form": "conversionHostWizardAuthenticationStep",
   "getFormState": [Function],
   "initialValues": Object {
-    "caCerts": Object {
-      "body": "",
-      "filename": "",
-    },
     "conversionHostSshKey": Object {
       "body": "",
       "filename": "",
     },
+    "openstackCaCerts": Object {
+      "body": "",
+      "filename": "",
+    },
+    "openstackUser": "cloud-user",
     "transformationMethod": "VDDK",
-    "verifyCaCerts": false,
+    "verifyOpenstackCerts": false,
     "vmwareSshKey": Object {
       "body": "",
       "filename": "",
@@ -36,6 +37,6 @@ Object {
   "touchOnBlur": true,
   "touchOnChange": false,
   "updateUnregisteredFields": false,
-  "verifyCaCerts": false,
+  "verifyOpenstackCerts": false,
 }
 `;

@@ -19,9 +19,7 @@ export const FormField = ({
   maxLength,
   maxLengthWarning,
   info,
-  infoIconName,
   children,
-  inline_label,
   ...props
 }) => {
   const warning = maxLength && input.value.length >= maxLength && maxLengthWarning;
@@ -55,16 +53,18 @@ export const FormField = ({
           <select className="form-control" {...input}>
             <option disabled value="">{`<${__('Choose')}>`}</option>
             {options.map(val => (
-              <option key={val.optionValue}>{val.optionKey}</option>
+              <option value={val[optionKey]} key={val[optionValue]}>
+                {val[optionValue]}
+              </option>
             ))}
           </select>
         );
         break;
       case 'radio':
         field = options.map(val => (
-          <div key={val.id} className={val.disabled ? 'text-muted' : ''}>
+          <div key={val.id}>
             <label>
-              <Field name={input.name} component="input" type="radio" value={val.id} disabled={val.disabled} />
+              <Field name={input.name} component="input" type="radio" value={val.id} />
               {` ${val.name}`}
             </label>
             <br />
@@ -90,7 +90,7 @@ export const FormField = ({
         }
       >
         <Button bsStyle="link">
-          <Icon type="pf" name={infoIconName} />
+          <Icon type="pf" name="info" />
         </Button>
       </OverlayTrigger>
     );
@@ -98,20 +98,12 @@ export const FormField = ({
 
   return (
     <Form.FormGroup {...formGroupProps}>
-      {inline_label && (
-        <Grid.Col componentClass={Form.ControlLabel} sm={Number.parseInt(labelWidth, 10) || 2}>
-          {required && <span className="required-asterisk">* </span>}
-          {label}
-          {renderInfoPopover()}
-        </Grid.Col>
-      )}
+      <Grid.Col componentClass={Form.ControlLabel} sm={Number.parseInt(labelWidth, 10) || 2}>
+        {required && <span className="required-asterisk">* </span>}
+        {label}
+        {renderInfoPopover()}
+      </Grid.Col>
       <Grid.Col sm={Number.parseInt(controlWidth, 10) || 9} id={input.name}>
-        {!inline_label && (
-          <React.Fragment>
-            <div style={{ fontSize: '15px', display: 'inline' }}>{label}</div>
-            {renderInfoPopover()}
-          </React.Fragment>
-        )}
         {renderField()}
         {(help || (touched && error) || warning) && (
           <Form.HelpBlock>
@@ -140,12 +132,5 @@ FormField.propTypes = {
   maxLength: PropTypes.number,
   maxLengthWarning: PropTypes.string,
   info: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-  infoIconName: PropTypes.string,
-  children: PropTypes.func,
-  inline_label: PropTypes.bool
-};
-
-FormField.defaultProps = {
-  inline_label: true,
-  infoIconName: 'info'
+  children: PropTypes.func
 };

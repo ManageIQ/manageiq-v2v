@@ -23,7 +23,7 @@ exports[`conversion host wizard hosts step renders correctly in the OSP example 
           ],
         },
       },
-      "ManageIQ::Providers::Redhat::InfraManager::Vm": Object {
+      "ManageIQ::Providers::Redhat::InfraManager::Host": Object {
         "1": Object {
           "enable": Array [
             Object {
@@ -50,7 +50,7 @@ exports[`conversion host wizard hosts step renders correctly in the OSP example 
         "resource": Object {
           "id": "1",
           "name": "already-configured-host",
-          "type": "ManageIQ::Providers::Redhat::InfraManager::Vm",
+          "type": "ManageIQ::Providers::Redhat::InfraManager::Host",
         },
       },
       Object {
@@ -147,7 +147,7 @@ exports[`conversion host wizard hosts step renders correctly in the RHV example 
           ],
         },
       },
-      "ManageIQ::Providers::Redhat::InfraManager::Vm": Object {
+      "ManageIQ::Providers::Redhat::InfraManager::Host": Object {
         "1": Object {
           "enable": Array [
             Object {
@@ -174,7 +174,7 @@ exports[`conversion host wizard hosts step renders correctly in the RHV example 
         "resource": Object {
           "id": "1",
           "name": "already-configured-host",
-          "type": "ManageIQ::Providers::Redhat::InfraManager::Vm",
+          "type": "ManageIQ::Providers::Redhat::InfraManager::Host",
         },
       },
       Object {
@@ -202,29 +202,29 @@ exports[`conversion host wizard hosts step renders correctly in the RHV example 
   pure={true}
   selectedCluster={
     Object {
-      "mock": "cluster",
-      "vms": Array [
+      "hosts": Array [
         Object {
           "id": "1",
           "name": "already-configured-host",
-          "type": "ManageIQ::Providers::Redhat::InfraManager::Vm",
+          "type": "ManageIQ::Providers::Redhat::InfraManager::Host",
         },
         Object {
           "id": "2",
           "name": "host-being-configured",
-          "type": "ManageIQ::Providers::Redhat::InfraManager::Vm",
+          "type": "ManageIQ::Providers::Redhat::InfraManager::Host",
         },
         Object {
           "id": "3",
           "name": "available-host-1",
-          "type": "ManageIQ::Providers::Redhat::InfraManager::Vm",
+          "type": "ManageIQ::Providers::Redhat::InfraManager::Host",
         },
         Object {
           "id": "4",
           "name": "available-host-2",
-          "type": "ManageIQ::Providers::Redhat::InfraManager::Vm",
+          "type": "ManageIQ::Providers::Redhat::InfraManager::Host",
         },
       ],
+      "mock": "cluster",
     }
   }
   selectedProviderType="rhevm"
@@ -271,7 +271,7 @@ exports[`conversion host wizard hosts step renders correctly when there are no h
           ],
         },
       },
-      "ManageIQ::Providers::Redhat::InfraManager::Vm": Object {
+      "ManageIQ::Providers::Redhat::InfraManager::Host": Object {
         "1": Object {
           "enable": Array [
             Object {
@@ -298,7 +298,7 @@ exports[`conversion host wizard hosts step renders correctly when there are no h
         "resource": Object {
           "id": "1",
           "name": "already-configured-host",
-          "type": "ManageIQ::Providers::Redhat::InfraManager::Vm",
+          "type": "ManageIQ::Providers::Redhat::InfraManager::Host",
         },
       },
       Object {
@@ -326,7 +326,7 @@ exports[`conversion host wizard hosts step renders correctly when there are no h
   pure={true}
   selectedCluster={
     Object {
-      "vms": Array [],
+      "hosts": Array [],
     }
   }
   selectedProviderType="rhevm"
@@ -372,7 +372,7 @@ exports[`conversion host wizard hosts step renders the redux-form wrapper correc
           ],
         },
       },
-      "ManageIQ::Providers::Redhat::InfraManager::Vm": Object {
+      "ManageIQ::Providers::Redhat::InfraManager::Host": Object {
         "1": Object {
           "enable": Array [
             Object {
@@ -399,7 +399,7 @@ exports[`conversion host wizard hosts step renders the redux-form wrapper correc
         "resource": Object {
           "id": "1",
           "name": "already-configured-host",
-          "type": "ManageIQ::Providers::Redhat::InfraManager::Vm",
+          "type": "ManageIQ::Providers::Redhat::InfraManager::Host",
         },
       },
       Object {
@@ -428,29 +428,29 @@ exports[`conversion host wizard hosts step renders the redux-form wrapper correc
   pure={true}
   selectedCluster={
     Object {
-      "mock": "cluster",
-      "vms": Array [
+      "hosts": Array [
         Object {
           "id": "1",
           "name": "already-configured-host",
-          "type": "ManageIQ::Providers::Redhat::InfraManager::Vm",
+          "type": "ManageIQ::Providers::Redhat::InfraManager::Host",
         },
         Object {
           "id": "2",
           "name": "host-being-configured",
-          "type": "ManageIQ::Providers::Redhat::InfraManager::Vm",
+          "type": "ManageIQ::Providers::Redhat::InfraManager::Host",
         },
         Object {
           "id": "3",
           "name": "available-host-1",
-          "type": "ManageIQ::Providers::Redhat::InfraManager::Vm",
+          "type": "ManageIQ::Providers::Redhat::InfraManager::Host",
         },
         Object {
           "id": "4",
           "name": "available-host-2",
-          "type": "ManageIQ::Providers::Redhat::InfraManager::Vm",
+          "type": "ManageIQ::Providers::Redhat::InfraManager::Host",
         },
       ],
+      "mock": "cluster",
     }
   }
   selectedProviderType="rhevm"

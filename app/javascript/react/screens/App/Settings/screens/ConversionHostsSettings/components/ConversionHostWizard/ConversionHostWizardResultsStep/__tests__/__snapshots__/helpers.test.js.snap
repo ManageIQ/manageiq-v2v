@@ -1,20 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`conversion host wizard results step helpers constructs a POST body for a VDDK conversion host with CA certs 1`] = `
-Array [
-  Object {
-    "auth_user": "cloud-user",
-    "conversion_host_ssh_private_key": "mock conversion host SSH key body",
-    "name": "Mock Host",
-    "resource_id": "1",
-    "resource_type": "mock host type",
-    "tls_ca_certs": "mock CA certs body",
-    "vmware_vddk_package_url": "mock VDDK path",
-  },
-]
-`;
-
-exports[`conversion host wizard results step helpers constructs a POST body for a VDDK conversion host without CA certs 1`] = `
+exports[`conversion host wizard results step helpers for OSP hosts constructs a POST body for a VDDK conversion host without CA certs 1`] = `
 Array [
   Object {
     "auth_user": "cloud-user",
@@ -27,24 +13,50 @@ Array [
 ]
 `;
 
-exports[`conversion host wizard results step helpers constructs a POST body for an SSH conversion host with CA certs 1`] = `
+exports[`conversion host wizard results step helpers for OSP hosts constructs a POST body for an SSH conversion host with CA certs 1`] = `
 Array [
   Object {
     "auth_user": "cloud-user",
     "conversion_host_ssh_private_key": "mock conversion host SSH key body",
     "name": "Mock Host",
+    "openstack_tls_ca_certs": "mock openstack CA certs body",
     "resource_id": "1",
     "resource_type": "mock host type",
-    "tls_ca_certs": "mock CA certs body",
     "vmware_ssh_private_key": "mock vmware SSH key body",
   },
 ]
 `;
 
-exports[`conversion host wizard results step helpers constructs a POST body for an SSH conversion host without CA certs 1`] = `
+exports[`conversion host wizard results step helpers for OSP hosts constructs a POST body for an SSH conversion host without CA certs 1`] = `
 Array [
   Object {
     "auth_user": "cloud-user",
+    "conversion_host_ssh_private_key": "mock conversion host SSH key body",
+    "name": "Mock Host",
+    "resource_id": "1",
+    "resource_type": "mock host type",
+    "vmware_ssh_private_key": "mock vmware SSH key body",
+  },
+]
+`;
+
+exports[`conversion host wizard results step helpers for RHV hosts constructs a POST body for a VDDK conversion host 1`] = `
+Array [
+  Object {
+    "auth_user": "root",
+    "conversion_host_ssh_private_key": "mock conversion host SSH key body",
+    "name": "Mock Host",
+    "resource_id": "1",
+    "resource_type": "mock host type",
+    "vmware_vddk_package_url": "mock VDDK path",
+  },
+]
+`;
+
+exports[`conversion host wizard results step helpers for RHV hosts constructs a POST body for an SSH conversion host 1`] = `
+Array [
+  Object {
+    "auth_user": "root",
     "conversion_host_ssh_private_key": "mock conversion host SSH key body",
     "name": "Mock Host",
     "resource_id": "1",

@@ -197,40 +197,6 @@ export const toggleScheduleMigrationModal = plan => ({
   payload: plan
 });
 
-export const scheduleCutover = ({ planRequest, cutoverTime }) => dispatch =>
-  dispatch({
-    type: V2V_SCHEDULE_MIGRATION,
-    payload: new Promise((resolve, reject) => {
-      const url = planRequest.href;
-      const body = {
-        action: 'edit',
-        resource: {
-          options: {
-            cutover_datetime: cutoverTime
-          }
-        }
-      };
-      return API.post(url, body)
-        .then(response => {
-          resolve(response);
-          const message =
-            cutoverTime === null
-              ? __('Migration cutover successfully unscheduled')
-              : sprintf(
-                  __('Migration cutover successfully scheduled for %s'),
-                  formatDateTime(response.data.options.cutover_datetime)
-                );
-          dispatch({
-            type: V2V_NOTIFICATION_ADD,
-            message,
-            notificationType: 'success',
-            actionEnabled: false
-          });
-        })
-        .catch(e => reject(e));
-    })
-  });
-
 export const scheduleMigration = payload => dispatch =>
   dispatch({
     type: V2V_SCHEDULE_MIGRATION,

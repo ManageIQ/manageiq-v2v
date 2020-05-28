@@ -9,9 +9,10 @@ const mapStateToProps = ({
   form,
   settings: { isPostingConversionHosts, isRejectedPostingConversionHosts, postConversionHostsResults }
 }) => {
+  const locationStepValues = form[stepIDs.locationStep] && form[stepIDs.locationStep].values;
   const hostsStepValues = form[stepIDs.hostsStep] && form[stepIDs.hostsStep].values;
   const authStepValues = form[stepIDs.authenticationStep] && form[stepIDs.authenticationStep].values;
-  const postBodies = getConfigureConversionHostPostBodies({ hostsStepValues, authStepValues });
+  const postBodies = getConfigureConversionHostPostBodies(locationStepValues, hostsStepValues, authStepValues);
   return {
     postBodies,
     isPostingConversionHosts,

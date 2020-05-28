@@ -1,83 +1,29 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { ListView, Icon, noop } from 'patternfly-react';
+import { ListView } from 'patternfly-react';
 import { ListViewTableContext } from './ListViewTable';
-import StopPropagationOnClick from '../StopPropagationOnClick';
 
-const isInfoItemObject = infoItem => infoItem && !React.isValidElement(infoItem) && infoItem.child && infoItem.tdProps;
+// TODO implement expandable support
 
 const BaseListViewTableRow = ({
   className,
   stacked,
-  checkboxInput,
   leftContent,
   heading,
   description,
   additionalInfo,
   actions,
-  children,
-  expanded,
-  toggleExpanded,
-  hideCloseIcon,
-  compoundExpand,
-  compoundExpanded,
-  onCloseCompoundExpand,
   ...props
 }) => {
-  if (compoundExpand) {
-    // eslint-disable-next-line no-console
-    console.warn('ListViewTable does not currently support the compoundExpand props.', {
-      compoundExpand,
-      compoundExpanded,
-      onCloseCompoundExpand
-    });
-  }
-
-  const expandable = !!children;
-
-  const handleExpandClick = e => {
-    // ignore selected child elements click
-    // (this is copied from patternfly-react's ListViewGroupItemHeader)
-    if (
-      expandable &&
-      e.target.tagName !== 'BUTTON' &&
-      e.target.tagName !== 'A' &&
-      e.target.tagName !== 'INPUT' &&
-      !e.target.classList.contains('fa-ellipsis-v')
-    ) {
-      toggleExpanded();
-    }
-  };
-
-  const hasLeftContentCell = expandable || checkboxInput || leftContent;
-  const hasHeadingCell = heading || description;
-
   const row = (
     <tr
-      className={classNames(className, {
-        'list-group-item': true,
-        'list-view-pf-stacked': stacked,
-        'list-group-item-header': expandable,
-        'list-view-pf-expand-active': expanded
+      className={classNames(className, 'list-group-item', {
+        'list-view-pf-stacked': stacked
       })}
-      onClick={expandable ? handleExpandClick : noop}
       {...props}
     >
-      {hasLeftContentCell && (
-        <td
-          className={classNames('list-view-pf-left', 'list-view-pf-main-info', {
-            'contains-extra-left-content': expandable || checkboxInput
-          })}
-        >
-          <div className="list-view-table-flex">
-            {expandable && <ListView.Expand expanded={expanded} toggleExpanded={toggleExpanded} />}
-            {checkboxInput && <ListView.Checkbox>{checkboxInput}</ListView.Checkbox>}
-            {leftContent}
-          </div>
-        </td>
-      )}
-      {hasHeadingCell && (
+      {leftContent && <td className="list-view-pf-left list-view-pf-main-info">{leftContent}</td>}
+      {(heading || description) && (
         <td className="list-view-pf-main-info">
           <ListView.Description>
             {heading && <ListView.DescriptionHeading>{heading}</ListView.DescriptionHeading>}
@@ -86,113 +32,38 @@ const BaseListViewTableRow = ({
         </td>
       )}
       {additionalInfo &&
-        additionalInfo.map((infoItem, index) => {
-          const hasTdProps = isInfoItemObject(infoItem);
-          const { child, tdProps } = hasTdProps ? infoItem : { child: infoItem, tdProps: {} };
-          return (
-            <td
-              key={`info-item-${index}`}
-              className={classNames('list-view-pf-main-info', { 'empty-info-item': !infoItem })}
-              {...tdProps}
-            >
-              {child}
-            </td>
-          );
-        })}
+        additionalInfo.map((infoItem, index) => (
+          <td
+            key={`info-item-${index}`}
+            className={classNames('list-view-pf-main-info', { 'empty-info-item': !infoItem })}
+          >
+            {infoItem}
+          </td>
+        ))}
       {actions && (
         <td>
-          <ListView.Actions>
-            <StopPropagationOnClick>{actions}</StopPropagationOnClick>
-          </ListView.Actions>
+          <ListView.Actions>{actions}</ListView.Actions>
         </td>
       )}
     </tr>
   );
-
-  if (expandable && expanded) {
-    const numColumns =
-      (hasLeftContentCell ? 1 : 0) +
-      (hasHeadingCell ? 1 : 0) +
-      (additionalInfo ? additionalInfo.length : 0) +
-      (actions ? 1 : 0);
-
-    return (
-      <React.Fragment>
-        {row}
-        <tr className="list-group-expanded-container-row">
-          <td colSpan={numColumns} className="list-group-item-container">
-            {hideCloseIcon ? (
-              children
-            ) : (
-              <div className="expanded-content-flex-container">
-                <div className="expanded-content-children">{children}</div>
-                <div className="close">
-                  <Icon type="pf" name="close" onClick={toggleExpanded} />
-                </div>
-              </div>
-            )}
-          </td>
-        </tr>
-      </React.Fragment>
-    );
-  }
-
+  const numColumns = row.props.children.filter(child => !!child).length; // eslint-disable-line no-unused-vars
+  // TODO: use numColumns for colspan of expanded content
   return row;
 };
 
 BaseListViewTableRow.propTypes = {
-  ...ListView.Item.propTypes,
-  additionalInfo: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.node, PropTypes.object])),
-  expanded: PropTypes.bool.isRequired,
-  toggleExpanded: PropTypes.func.isRequired
+  ...ListView.Item.propTypes
 };
 
-class ListViewTableRow extends React.Component {
-  state = { expanded: this.props.initExpanded || false };
-  toggleExpanded = () => {
-    const { onExpand, onExpandClose } = this.props;
-    if (this.state.expanded) {
-      onExpandClose();
-    } else {
-      onExpand();
-    }
-    this.setState(prevState => ({ expanded: !prevState.expanded }));
-  };
-
-  render() {
-    // Don't pass down certain props because they are handled here by toggleExpanded
-    const { initExpanded, onExpand, onExpandClose, ...props } = this.props; // eslint-disable-line no-unused-vars
-    const { expanded } = this.state;
-
-    return (
-      <ListViewTableContext.Consumer>
-        {({ isSmallViewport }) =>
-          isSmallViewport ? (
-            <ListView.Item
-              {...props}
-              additionalInfo={props.additionalInfo.map(
-                infoItem => (isInfoItemObject(infoItem) ? infoItem.child : infoItem)
-              )}
-              initExpanded={expanded}
-              onExpand={this.toggleExpanded}
-              onExpandClose={this.toggleExpanded}
-            />
-          ) : (
-            <BaseListViewTableRow {...props} expanded={expanded} toggleExpanded={this.toggleExpanded} />
-          )
-        }
-      </ListViewTableContext.Consumer>
-    );
-  }
-}
+const ListViewTableRow = props => (
+  <ListViewTableContext.Consumer>
+    {({ isSmallViewport }) => (isSmallViewport ? <ListView.Item {...props} /> : <BaseListViewTableRow {...props} />)}
+  </ListViewTableContext.Consumer>
+);
 
 ListViewTableRow.propTypes = {
-  ...ListView.Item.propTypes,
-  additionalInfo: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.node, PropTypes.object]))
-};
-
-ListViewTableRow.defaultProps = {
-  ...ListView.Item.defaultProps
+  ...BaseListViewTableRow.propTypes
 };
 
 export default ListViewTableRow;

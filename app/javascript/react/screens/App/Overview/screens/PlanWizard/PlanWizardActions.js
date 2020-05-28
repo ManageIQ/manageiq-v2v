@@ -3,17 +3,11 @@ import { HIDE_PLAN_WIZARD, PLAN_WIZARD_EXITED, PLAN_WIZARD_NEXT, PLAN_WIZARD_BAC
 import {
   V2V_SET_PLANS_BODY,
   V2V_SET_PLAN_SCHEDULE,
-  V2V_SET_PLAN_TYPE,
   V2V_PLAN_WIZARD_SHOW_ALERT,
-  V2V_PLAN_WIZARD_HIDE_ALERT,
-  SINGLETON_ALERT_ID
+  V2V_PLAN_WIZARD_HIDE_ALERT
 } from './PlanWizardConstants';
 import { RESET_V2V_ADVANCED_OPTIONS_STEP_VMS } from './components/PlanWizardAdvancedOptionsStep/PlanWizardAdvancedOptionsStepConstants';
 import { V2V_VM_STEP_RESET } from './components/PlanWizardVMStep/PlanWizardVMStepConstants';
-import { FETCH_TARGET_COMPUTE_URLS } from '../../../../../../redux/common/targetResources/targetResourcesConstants';
-import { fetchTargetClustersAction } from '../../../../../../redux/common/targetResources/targetResourcesActions';
-import { FETCH_CONVERSION_HOSTS_URL } from '../../../Settings/SettingsConstants';
-import { fetchConversionHostsAction } from '../../../Settings/SettingsActions';
 
 export const hidePlanWizardAction = () => dispatch => {
   dispatch({
@@ -67,13 +61,6 @@ export const setPlanScheduleAction = body => dispatch => {
   });
 };
 
-export const setPlanTypeAction = body => dispatch => {
-  dispatch({
-    type: V2V_SET_PLAN_TYPE,
-    payload: body
-  });
-};
-
 export const resetVmStepAction = () => dispatch => {
   dispatch({
     type: V2V_VM_STEP_RESET
@@ -81,17 +68,16 @@ export const resetVmStepAction = () => dispatch => {
   dispatch(reset('planWizardVMStep'));
 };
 
-export const showAlertAction = ({ alertText, alertType = 'error', alertId = SINGLETON_ALERT_ID }) => dispatch => {
+export const showAlertAction = (alertText, alertType = 'error') => dispatch => {
   dispatch({
     type: V2V_PLAN_WIZARD_SHOW_ALERT,
-    payload: { alertText, alertType, alertId }
+    payload: { alertText, alertType }
   });
 };
 
-export const hideAlertAction = (alertId = null) => dispatch => {
+export const hideAlertAction = () => dispatch => {
   dispatch({
-    type: V2V_PLAN_WIZARD_HIDE_ALERT,
-    alertId
+    type: V2V_PLAN_WIZARD_HIDE_ALERT
   });
 };
 
@@ -100,9 +86,4 @@ export const resetAdvancedOptionsStepAction = () => dispatch => {
     type: RESET_V2V_ADVANCED_OPTIONS_STEP_VMS
   });
   dispatch(reset('planWizardAdvancedOptionsStep'));
-};
-
-export const fetchTargetValidationDataAction = targetProviderType => dispatch => {
-  fetchTargetClustersAction(FETCH_TARGET_COMPUTE_URLS[targetProviderType])(dispatch);
-  fetchConversionHostsAction(FETCH_CONVERSION_HOSTS_URL)(dispatch);
 };

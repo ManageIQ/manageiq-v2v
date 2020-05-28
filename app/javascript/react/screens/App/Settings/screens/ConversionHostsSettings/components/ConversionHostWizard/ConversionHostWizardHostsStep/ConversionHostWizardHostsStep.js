@@ -17,12 +17,12 @@ const ConversionHostWizardHostsStep = ({
   let hostOptions = [];
   let emptyLabel = '';
   if (selectedProviderType === RHV) {
-    hostOptions = selectedCluster.vms;
-    emptyLabel = __('No VMs available for the selected cluster.');
+    hostOptions = selectedCluster.hosts;
+    emptyLabel = __('No hosts available for the selected cluster.');
   }
   if (selectedProviderType === OPENSTACK) {
     hostOptions = selectedCluster.vms;
-    emptyLabel = __('No VMs available for the selected project.');
+    emptyLabel = __('No hosts available for the selected project.');
   }
   const filteredHostOptions = hostOptions.filter(host => {
     // Don't allow selection of hosts that are powered off
@@ -39,7 +39,7 @@ const ConversionHostWizardHostsStep = ({
   return (
     <Form className="form-vertical">
       <Form.FormGroup controlId="host-selection">
-        <Form.ControlLabel>{__('VMs to configure as conversion hosts')}</Form.ControlLabel>
+        <Form.ControlLabel>{__('Hosts to configure as conversion hosts')}</Form.ControlLabel>
         <Field
           component={TypeAheadSelectField}
           name="hosts"
@@ -48,7 +48,7 @@ const ConversionHostWizardHostsStep = ({
           clearButton
           options={filteredHostOptions}
           labelKey="name"
-          placeholder={__('Select one or more VMs...')}
+          placeholder={__('Select one or more hosts...')}
           emptyLabel={hostOptions.length === 0 ? emptyLabel : __('No matches found.')}
           highlightOnlyResult
           selectHintOnEnter

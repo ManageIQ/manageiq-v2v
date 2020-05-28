@@ -4,13 +4,7 @@ import { TypeAheadSelect } from 'patternfly-react';
 
 // Wraps TypeAheadSelect for use as the `component` prop of a redux-form Field.
 const TypeAheadSelectField = ({ input: { value, onChange }, controlId, ...props }) => (
-  <TypeAheadSelect
-    selected={value}
-    onChange={onChange}
-    inputProps={{ id: controlId }}
-    id={`typeahead-${controlId}`}
-    {...props}
-  />
+  <TypeAheadSelect selected={value} onChange={onChange} inputProps={{ id: controlId }} {...props} />
 );
 
 TypeAheadSelectField.propTypes = {
