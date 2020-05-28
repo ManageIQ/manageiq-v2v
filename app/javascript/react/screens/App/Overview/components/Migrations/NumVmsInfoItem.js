@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Icon } from 'patternfly-react';
-import ListViewTable from '../../../common/ListViewTable/ListViewTable';
+import { ListView, Icon } from 'patternfly-react';
 
 const NumVmsInfoItem = ({ plan }) => {
   const numVms =
@@ -10,10 +9,10 @@ const NumVmsInfoItem = ({ plan }) => {
     plan.options.config_info.actions &&
     plan.options.config_info.actions.length;
   return (
-    <ListViewTable.InfoItem>
+    <ListView.InfoItem>
       <Icon type="pf" name="virtual-machine" />
       <strong>{numVms}</strong> {__('VMs')}
-    </ListViewTable.InfoItem>
+    </ListView.InfoItem>
   );
 };
 

@@ -4,7 +4,6 @@ exports[`conversion host wizard body renders correctly 1`] = `
 <ModalWizardBody
   activeStep="1"
   activeStepIndex={0}
-  alerts={Object {}}
   disableNextStep={false}
   goToStep={[MockFunction]}
   hideAlertAction={[Function]}

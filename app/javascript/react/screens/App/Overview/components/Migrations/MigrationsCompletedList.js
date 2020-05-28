@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { noop, ListView, Grid, Spinner, Icon, Toolbar, DropdownKebab, MenuItem } from 'patternfly-react';
+import { noop, Button, ListView, Grid, Spinner, Icon, Toolbar, DropdownKebab, MenuItem } from 'patternfly-react';
 import { IsoElapsedTime } from '../../../../../../components/dates/IsoElapsedTime';
 import ShowWizardEmptyState from '../../../common/ShowWizardEmptyState/ShowWizardEmptyState';
 import getMostRecentRequest from '../../../common/getMostRecentRequest';
@@ -46,9 +46,7 @@ const MigrationsCompletedList = ({
   scheduleMigration,
   fetchTransformationMappingsAction,
   fetchTransformationMappingsUrl,
-  showEditPlanNameModalAction,
-  scheduleMigrationNow,
-  scheduleCutover
+  showEditPlanNameModalAction
 }) => (
   <React.Fragment>
     <Grid.Col xs={12}>
@@ -77,19 +75,19 @@ const MigrationsCompletedList = ({
                 </Grid.Row>
                 <ListViewTable className="plans-complete-list" style={{ marginTop: 10 }}>
                   {filteredSortedPaginatedListItems.items.map(plan => {
+                    const {
+                      migrationScheduled,
+                      staleMigrationSchedule,
+                      migrationStarting,
+                      showInitialScheduleButton
+                    } = getPlanScheduleInfo(plan);
+
                     const requestsOfAssociatedPlan = allRequestsWithTasks.filter(
                       request => request.source_id === plan.id
                     );
 
                     const mostRecentRequest =
                       requestsOfAssociatedPlan.length > 0 && getMostRecentRequest(requestsOfAssociatedPlan);
-
-                    const {
-                      migrationScheduled,
-                      staleMigrationSchedule,
-                      migrationStarting,
-                      showInitialScheduleButton
-                    } = getPlanScheduleInfo({ plan, planRequest: mostRecentRequest });
 
                     const failed = mostRecentRequest && mostRecentRequest.status === 'Error';
                     const denied = mostRecentRequest && mostRecentRequest.status === 'Denied';
@@ -214,27 +212,27 @@ const MigrationsCompletedList = ({
                         heading={plan.name}
                         description={plan.description}
                         additionalInfo={[
-                          <MappingNameInfoItem key={`${plan.id}-mappingName`} plan={plan} />,
-                          <ListViewTable.InfoItem className="num-vms-migrated" key={`${plan.id}-migrated`}>
-                            <ListView.Icon type="pf" size="lg" name="virtual-machine" />
+                          <ListView.InfoItem className="num-vms-migrated" key={`${plan.id}-migrated`}>
+                            <ListView.Icon type="pf" size="lg" name="screen" />
                             <strong>{succeedCount}</strong>
                             {__('of')}
                             <strong className="total">{Object.keys(tasks).length} </strong>
-                            {__('VMs migrated.')}
-                          </ListViewTable.InfoItem>,
+                            {__('VMs successfully migrated.')}
+                          </ListView.InfoItem>,
+                          <MappingNameInfoItem key={`${plan.id}-mappingName`} plan={plan} />,
+                          !denied ? (
+                            <ListView.InfoItem key={`${plan.id}-elapsed`}>
+                              <ListView.Icon type="fa" size="lg" name="clock-o" />
+                              {elapsedTime}
+                            </ListView.InfoItem>
+                          ) : null,
                           !denied && !showScheduledTime && mostRecentRequest.fulfilled_on ? (
-                            <ListViewTable.InfoItem key={`${plan.id}-completed`} style={{ textAlign: 'left' }}>
+                            <ListView.InfoItem key={`${plan.id}-completed`} style={{ textAlign: 'left' }}>
                               <Icon type="fa" name="clock-o" />
                               {__('Completed:')}
                               <br />
                               {formatDateTime(mostRecentRequest.fulfilled_on)}
-                            </ListViewTable.InfoItem>
-                          ) : null,
-                          !denied ? (
-                            <ListViewTable.InfoItem key={`${plan.id}-elapsed`}>
-                              <ListView.Icon type="fa" size="lg" name="clock-o" />
-                              {elapsedTime}
-                            </ListViewTable.InfoItem>
+                            </ListView.InfoItem>
                           ) : null,
                           <ScheduledTimeInfoItem
                             planId={plan.id}
@@ -257,6 +255,15 @@ const MigrationsCompletedList = ({
                                   isMissingMapping={isMissingMapping}
                                 />
                               </Visibility>
+                              <Button
+                                onClick={e => {
+                                  e.stopPropagation();
+                                  retryClick(plan.href, plan.id);
+                                }}
+                                disabled={isMissingMapping || loading === plan.href || migrationStarting}
+                              >
+                                {__('Retry')}
+                              </Button>
                             </Visibility>
                             <StopPropagationOnClick>
                               <DropdownKebab id={`${plan.id}-kebab`} pullRight>
@@ -341,8 +348,6 @@ const MigrationsCompletedList = ({
       scheduleMigrationModal={scheduleMigrationModal}
       scheduleMigrationPlan={scheduleMigrationPlan}
       scheduleMigration={scheduleMigration}
-      scheduleMigrationNow={scheduleMigrationNow}
-      scheduleCutover={scheduleCutover}
       fetchTransformationPlansAction={fetchTransformationPlansAction}
       fetchTransformationPlansUrl={fetchTransformationPlansUrl}
     />
@@ -350,7 +355,6 @@ const MigrationsCompletedList = ({
 );
 
 MigrationsCompletedList.propTypes = {
-  scheduleMigrationNow: PropTypes.func,
   finishedTransformationPlans: PropTypes.array,
   allRequestsWithTasks: PropTypes.array,
   retryClick: PropTypes.func,
@@ -371,14 +375,11 @@ MigrationsCompletedList.propTypes = {
   scheduleMigrationModal: PropTypes.bool,
   scheduleMigrationPlan: PropTypes.object,
   scheduleMigration: PropTypes.func,
-  scheduleCutover: PropTypes.func,
   fetchTransformationMappingsAction: PropTypes.func,
   fetchTransformationMappingsUrl: PropTypes.string,
   showEditPlanNameModalAction: PropTypes.func
 };
 MigrationsCompletedList.defaultProps = {
-  scheduleMigrationNow: noop,
-  scheduleCutover: noop,
   finishedTransformationPlans: [],
   retryClick: noop,
   loading: false

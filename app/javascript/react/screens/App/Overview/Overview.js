@@ -278,7 +278,6 @@ class Overview extends React.Component {
       scheduleMigrationModal,
       scheduleMigrationPlan,
       scheduleMigration,
-      scheduleCutover,
       fetchTransformationMappingsUrl,
       fetchTransformationMappingsAction,
       openMappingWizardOnTransitionAction,
@@ -340,7 +339,6 @@ class Overview extends React.Component {
                 scheduleMigrationModal={scheduleMigrationModal}
                 scheduleMigrationPlan={scheduleMigrationPlan}
                 scheduleMigration={scheduleMigration}
-                scheduleCutover={scheduleCutover}
                 showPlanWizardEditModeAction={this.showPlanWizardEditModeOrError}
                 fetchTransformationMappingsUrl={fetchTransformationMappingsUrl}
                 fetchTransformationMappingsAction={fetchTransformationMappingsAction}
@@ -471,7 +469,6 @@ Overview.propTypes = {
   scheduleMigrationModal: PropTypes.bool,
   scheduleMigrationPlan: PropTypes.object,
   scheduleMigration: PropTypes.func,
-  scheduleCutover: PropTypes.func,
   fetchServiceTemplateAnsiblePlaybooksAction: PropTypes.func,
   fetchServiceTemplateAnsiblePlaybooksUrl: PropTypes.string,
   serviceTemplatePlaybooks: PropTypes.array,

@@ -48,7 +48,7 @@ class PlanWizard extends React.Component {
     };
     const scheduleStep = {
       id: stepIDs.scheduleStep,
-      title: __('Type and Schedule'),
+      title: __('Schedule'),
       render: () => <PlanWizardScheduleStep />,
       disableGoto: true
     };
@@ -105,7 +105,6 @@ class PlanWizard extends React.Component {
       planWizardScheduleStep,
       setPlansBodyAction,
       setPlanScheduleAction,
-      setPlanTypeAction,
       setMigrationsFilterAction,
       showConfirmModalAction,
       hideConfirmModalAction,
@@ -122,7 +121,7 @@ class PlanWizard extends React.Component {
 
     if (activeStep.id === stepIDs.generalStep) {
       if (planWizardGeneralStep.asyncErrors) {
-        showAlertAction({ alertText: sprintf(__('Name %s already exists'), planWizardGeneralStep.values.name) });
+        showAlertAction(sprintf(__('Name %s already exists'), planWizardGeneralStep.values.name));
         return;
       }
       hideAlertAction();
@@ -167,12 +166,10 @@ class PlanWizard extends React.Component {
         planWizardVMStep,
         planWizardInstancePropertiesStep,
         planWizardAdvancedOptionsStep,
-        planWizardScheduleStep,
         isEditing
       );
 
       setPlanScheduleAction(planWizardScheduleStep.values.migration_plan_choice_radio);
-      setPlanTypeAction(planWizardScheduleStep.values.migration_plan_type_radio);
       setPlansBodyAction(plansBody);
 
       if (planWizardScheduleStep.values.migration_plan_choice_radio === 'migration_plan_now') {
@@ -204,7 +201,8 @@ class PlanWizard extends React.Component {
       hidePlanWizard,
       hidePlanWizardAction,
       planWizardExitedAction,
-      alerts,
+      alertText,
+      alertType,
       hideAlertAction,
       editingPlan
     } = this.props;
@@ -245,7 +243,8 @@ class PlanWizard extends React.Component {
             goToStep={this.goToStep}
             disableNextStep={disableNextStep}
             plansBody={plansBody}
-            alerts={alerts}
+            alertText={alertText}
+            alertType={alertType}
             hideAlertAction={hideAlertAction}
           />
         </Wizard.Body>
@@ -287,14 +286,14 @@ PlanWizard.propTypes = {
   transformationMappings: PropTypes.array,
   setPlansBodyAction: PropTypes.func,
   setPlanScheduleAction: PropTypes.func,
-  setPlanTypeAction: PropTypes.func,
   resetVmStepAction: PropTypes.func,
   setMigrationsFilterAction: PropTypes.func,
   showConfirmModalAction: PropTypes.func,
   hideConfirmModalAction: PropTypes.func,
   showAlertAction: PropTypes.func,
   hideAlertAction: PropTypes.func,
-  alerts: PropTypes.objectOf(PropTypes.shape({ alertText: PropTypes.node, alertType: PropTypes.string })),
+  alertText: PropTypes.string,
+  alertType: PropTypes.string,
   setMetadataWithBackButtonClickedAction: PropTypes.func,
   setMetadataWithNextButtonClickedAction: PropTypes.func,
   editingPlan: PropTypes.object
@@ -311,10 +310,10 @@ PlanWizard.defaultProps = {
   transformationMappings: [],
   setPlansBodyAction: noop,
   setPlanScheduleAction: noop,
-  setPlanTypeAction: noop,
   resetVmStepAction: noop,
   showAlertAction: noop,
   hideAlertAction: noop,
-  alerts: {}
+  alertText: undefined,
+  alertType: undefined
 };
 export default PlanWizard;

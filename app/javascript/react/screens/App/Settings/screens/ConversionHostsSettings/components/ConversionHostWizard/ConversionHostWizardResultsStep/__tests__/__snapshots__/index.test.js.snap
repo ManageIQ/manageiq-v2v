@@ -6,7 +6,7 @@ Object {
   "isRejectedPostingConversionHosts": false,
   "postBodies": Array [
     Object {
-      "auth_user": "cloud-user",
+      "auth_user": "root",
       "conversion_host_ssh_private_key": "mock conversion host SSH key body",
       "name": "Mock Host",
       "resource_id": "1",

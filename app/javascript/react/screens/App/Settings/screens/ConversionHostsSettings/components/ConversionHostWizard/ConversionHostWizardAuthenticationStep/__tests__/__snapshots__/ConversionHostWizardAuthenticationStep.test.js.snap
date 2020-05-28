@@ -8,12 +8,27 @@ exports[`conversion host wizard authentication step renders correctly in the ini
   horizontal={false}
   inline={false}
 >
+  <Field
+    component={[Function]}
+    controlId="openstack-user-input"
+    controlWidth={7}
+    label="OpenStack User"
+    labelWidth={4}
+    name="openstackUser"
+    required={true}
+    type="text"
+    validate={
+      Array [
+        [Function],
+      ]
+    }
+  />
   <TextFileField
     controlId="host-ssh-key-input"
     controlWidth={7}
     help="Upload your SSH key file or paste its contents below."
     hideBody={false}
-    info="This is the private key file used to connect to the conversion host instance for cloud-user."
+    info="This is the private key file used to connect to the conversion host instance for the OpenStack User."
     label="Conversion Host SSH private key"
     labelWidth={4}
     name="conversionHostSshKey"
@@ -53,11 +68,11 @@ exports[`conversion host wizard authentication step renders correctly in the ini
   />
   <Field
     component={[Function]}
-    controlId="verify-ca-certs"
+    controlId="verify-openstack-certs"
     controlWidth={7}
-    label="Verify TLS Certificates"
+    label="Verify TLS Certificates for OpenStack"
     labelWidth={4}
-    name="verifyCaCerts"
+    name="verifyOpenstackCerts"
     style={
       Object {
         "marginTop": 25,
@@ -82,7 +97,7 @@ exports[`conversion host wizard authentication step renders correctly in the ini
     controlWidth={7}
     help="Upload your SSH key file or paste its contents below."
     hideBody={false}
-    info="This is the private key file used to connect to the conversion host instance for cloud-user."
+    info="RHV-M deploys a common SSH public key on all hosts when configuring them. This allows commands and playbooks to be run from RHV-M. The associated private key is in the file /etc/pki/ovirt-engine/keys/engine_id_rsa on RHV-M."
     label="Conversion Host SSH private key"
     labelWidth={4}
     name="conversionHostSshKey"
@@ -120,21 +135,6 @@ exports[`conversion host wizard authentication step renders correctly in the ini
       ]
     }
   />
-  <Field
-    component={[Function]}
-    controlId="verify-ca-certs"
-    controlWidth={7}
-    label="Verify TLS Certificates"
-    labelWidth={4}
-    name="verifyCaCerts"
-    style={
-      Object {
-        "marginTop": 25,
-      }
-    }
-  >
-    <Component />
-  </Field>
 </Form>
 `;
 
@@ -151,7 +151,7 @@ exports[`conversion host wizard authentication step renders correctly with SSH t
     controlWidth={7}
     help="Upload your SSH key file or paste its contents below."
     hideBody={false}
-    info="This is the private key file used to connect to the conversion host instance for cloud-user."
+    info="RHV-M deploys a common SSH public key on all hosts when configuring them. This allows commands and playbooks to be run from RHV-M. The associated private key is in the file /etc/pki/ovirt-engine/keys/engine_id_rsa on RHV-M."
     label="Conversion Host SSH private key"
     labelWidth={4}
     name="conversionHostSshKey"
@@ -198,21 +198,6 @@ exports[`conversion host wizard authentication step renders correctly with SSH t
     labelWidth={4}
     name="vmwareSshKey"
   />
-  <Field
-    component={[Function]}
-    controlId="verify-ca-certs"
-    controlWidth={7}
-    label="Verify TLS Certificates"
-    labelWidth={4}
-    name="verifyCaCerts"
-    style={
-      Object {
-        "marginTop": 25,
-      }
-    }
-  >
-    <Component />
-  </Field>
 </Form>
 `;
 
@@ -229,7 +214,7 @@ exports[`conversion host wizard authentication step renders correctly with VDDK 
     controlWidth={7}
     help="Upload your SSH key file or paste its contents below."
     hideBody={false}
-    info="This is the private key file used to connect to the conversion host instance for cloud-user."
+    info="RHV-M deploys a common SSH public key on all hosts when configuring them. This allows commands and playbooks to be run from RHV-M. The associated private key is in the file /etc/pki/ovirt-engine/keys/engine_id_rsa on RHV-M."
     label="Conversion Host SSH private key"
     labelWidth={4}
     name="conversionHostSshKey"
@@ -283,25 +268,10 @@ exports[`conversion host wizard authentication step renders correctly with VDDK 
       ]
     }
   />
-  <Field
-    component={[Function]}
-    controlId="verify-ca-certs"
-    controlWidth={7}
-    label="Verify TLS Certificates"
-    labelWidth={4}
-    name="verifyCaCerts"
-    style={
-      Object {
-        "marginTop": 25,
-      }
-    }
-  >
-    <Component />
-  </Field>
 </Form>
 `;
 
-exports[`conversion host wizard authentication step renders correctly with verify TLS certs turned on 1`] = `
+exports[`conversion host wizard authentication step renders correctly with verify OSP TLS certs turned on 1`] = `
 <Form
   bsClass="form"
   className="form-horizontal"
@@ -309,12 +279,27 @@ exports[`conversion host wizard authentication step renders correctly with verif
   horizontal={false}
   inline={false}
 >
+  <Field
+    component={[Function]}
+    controlId="openstack-user-input"
+    controlWidth={7}
+    label="OpenStack User"
+    labelWidth={4}
+    name="openstackUser"
+    required={true}
+    type="text"
+    validate={
+      Array [
+        [Function],
+      ]
+    }
+  />
   <TextFileField
     controlId="host-ssh-key-input"
     controlWidth={7}
     help="Upload your SSH key file or paste its contents below."
     hideBody={false}
-    info="This is the private key file used to connect to the conversion host instance for cloud-user."
+    info="This is the private key file used to connect to the conversion host instance for the OpenStack User."
     label="Conversion Host SSH private key"
     labelWidth={4}
     name="conversionHostSshKey"
@@ -354,11 +339,11 @@ exports[`conversion host wizard authentication step renders correctly with verif
   />
   <Field
     component={[Function]}
-    controlId="verify-ca-certs"
+    controlId="verify-openstack-certs"
     controlWidth={7}
-    label="Verify TLS Certificates"
+    label="Verify TLS Certificates for OpenStack"
     labelWidth={4}
-    name="verifyCaCerts"
+    name="verifyOpenstackCerts"
     style={
       Object {
         "marginTop": 25,
@@ -368,13 +353,13 @@ exports[`conversion host wizard authentication step renders correctly with verif
     <Component />
   </Field>
   <TextFileField
-    controlId="ca-certs-input"
+    controlId="openstack-ca-certs-input"
     controlWidth={7}
     help="Upload your certificates file, in PEM format, or paste its contents below."
     hideBody={false}
-    label="Trusted CA Certificates"
+    label="OpenStack Trusted CA Certificates"
     labelWidth={4}
-    name="caCerts"
+    name="openstackCaCerts"
   />
 </Form>
 `;
@@ -392,7 +377,7 @@ exports[`conversion host wizard authentication step renders the redux-form wrapp
     controlWidth={7}
     help="Upload your SSH key file or paste its contents below."
     hideBody={false}
-    info="This is the private key file used to connect to the conversion host instance for cloud-user."
+    info="RHV-M deploys a common SSH public key on all hosts when configuring them. This allows commands and playbooks to be run from RHV-M. The associated private key is in the file /etc/pki/ovirt-engine/keys/engine_id_rsa on RHV-M."
     label="Conversion Host SSH private key"
     labelWidth={4}
     name="conversionHostSshKey"
@@ -430,20 +415,5 @@ exports[`conversion host wizard authentication step renders the redux-form wrapp
       ]
     }
   />
-  <Field
-    component={[Function]}
-    controlId="verify-ca-certs"
-    controlWidth={7}
-    label="Verify TLS Certificates"
-    labelWidth={4}
-    name="verifyCaCerts"
-    style={
-      Object {
-        "marginTop": 25,
-      }
-    }
-  >
-    <Component />
-  </Field>
 </Form>
 `;

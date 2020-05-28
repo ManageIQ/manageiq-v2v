@@ -1,26 +1,23 @@
-@keyframes slide-in-from-left {
-  from {
-    left: -1000px;
-  }
-  to {
-    left: 0px;
-  }
+.modal-wizard-alert {
+  position: absolute;
+  height: 120px;
+  width: 100%;
+  overflow: hidden;
 }
 
-.wizard-pf.modal-dialog .modal-wizard-alert {
+.modal-wizard-alert .modal-wizard-alert--alert {
   position: absolute;
-  width: 100%;
-  height: 0px;
-  overflow: visible;
+  bottom: 0px;
+  width: calc(100% - 40px);
+  left: -1000px;
+  transition: left 0.2s ease-in;
+  z-index: 1;
+  margin-bottom: 0;
+  margin-left: 20px;
+}
 
-  .modal-wizard-alert--alert {
-    width: calc(100% - 40px);
-    animation: 0.2s ease-in 0s 1 slide-in-from-left;
-    z-index: 1500;
-    margin-bottom: 0;
-    margin-left: 20px;
-    margin-top: 10px;
-  }
+.modal-wizard-alert .modal-wizard-alert--alert.is-visible {
+  left: 1px;
 }
 
 .modal-wizard-results-grey-icon {
