@@ -12,8 +12,6 @@
     "lint:fix": "eslint --fix app/javascript"
   },
   "devDependencies": {
-    "axios": "^0.18.0",
-    "axios-mock-adapter": "^1.15.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.1",
@@ -70,6 +68,7 @@
     "numeral": "^2.0.6",
     "prop-types": "^15.6.0",
     "react": "^16.9.0",
+    "react-bootstrap-typeahead": "^3.4.7",
     "react-dom": "^16.9.0",
     "react-dropzone": "^10.2.1",
     "react-ellipsis-with-tooltip": "1.0.8",
