@@ -18,7 +18,9 @@ class DatastoresStepForm extends React.Component {
   state = {
     selectedSourceDatastores: [],
     selectedTargetDatastore: null,
-    selectedNode: null
+    selectedNode: null,
+    sourceSearchText: '',
+    targetSearchText: ''
   };
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -261,6 +263,11 @@ class DatastoresStepForm extends React.Component {
       </div>
     );
 
+  noSearchResults = (results, searchText) =>
+    results.length === 0 && searchText !== '' ? (
+      <div className="dual-pane-mapper-item">{__('No datastores match your search.')}</div>
+    ) : null;
+
   render() {
     const {
       sourceDatastores,
@@ -272,7 +279,13 @@ class DatastoresStepForm extends React.Component {
       targetProvider,
       preLoadingMappings
     } = this.props;
-    const { selectedSourceDatastores, selectedTargetDatastore, selectedNode } = this.state;
+    const {
+      selectedSourceDatastores,
+      selectedTargetDatastore,
+      selectedNode,
+      sourceSearchText,
+      targetSearchText
+    } = this.state;
 
     const classes = cx('dual-pane-mapper-form', {
       'is-hidden': !selectedCluster
@@ -280,6 +293,19 @@ class DatastoresStepForm extends React.Component {
 
     const filteredSourceDatastores = sortBy(sourceDatastoreInfo)(sourceDatastoreFilter(sourceDatastores, input.value));
     const sortedTargetDatastores = sortBy(targetDatastoreInfo)(targetDatastores);
+
+    const getSearchResults = (items, searchText, getItemText) =>
+      !items
+        ? []
+        : items.filter(
+            item =>
+              searchText === '' ||
+              getItemText(item)
+                .toLowerCase()
+                .includes(searchText.toLowerCase())
+          );
+    const sourceResults = getSearchResults(filteredSourceDatastores, sourceSearchText, sourceDatastoreInfo);
+    const targetResults = getSearchResults(sortedTargetDatastores, targetSearchText, targetDatastoreInfo);
 
     const sourceCounter = (
       <DualPaneMapperCount
@@ -302,12 +328,15 @@ class DatastoresStepForm extends React.Component {
           <DualPaneMapperList
             id="source_datastores"
             listTitle={__('Source Provider \\ Datacenter \\ Datastore')}
+            searchAriaLabel="Search source datastores"
+            searchText={sourceSearchText}
+            onSearchChange={value => this.setState({ sourceSearchText: value })}
             loading={isFetchingSourceDatastores}
             counter={sourceCounter}
           >
             {sourceDatastores && (
               <React.Fragment>
-                {filteredSourceDatastores.map(item => (
+                {sourceResults.map(item => (
                   <DualPaneMapperListItem
                     item={item}
                     text={sourceDatastoreInfo(item)}
@@ -322,26 +351,34 @@ class DatastoresStepForm extends React.Component {
                 ))}
                 {this.noDatastoresFound(sourceDatastores, isFetchingSourceDatastores)}
                 {this.allDatastoresMapped(sourceDatastores, filteredSourceDatastores, isFetchingSourceDatastores)}
+                {this.noSearchResults(sourceResults, sourceSearchText)}
               </React.Fragment>
             )}
           </DualPaneMapperList>
           <DualPaneMapperList
             id="target_datastores"
             listTitle={multiProviderTargetLabel(targetProvider, 'storage')}
+            searchAriaLabel="Search target datastores"
+            searchText={targetSearchText}
+            onSearchChange={value => this.setState({ targetSearchText: value })}
             loading={isFetchingTargetDatastores}
             counter={targetCounter}
           >
-            {targetDatastores &&
-              sortedTargetDatastores.map(item => (
-                <DualPaneMapperListItem
-                  item={item}
-                  text={targetDatastoreInfo(item)}
-                  key={item.id}
-                  selected={selectedTargetDatastore && selectedTargetDatastore.id === item.id}
-                  handleClick={this.selectTargetDatastore}
-                  handleKeyPress={this.selectTargetDatastore}
-                />
-              ))}
+            {targetDatastores && (
+              <React.Fragment>
+                {targetResults.map(item => (
+                  <DualPaneMapperListItem
+                    item={item}
+                    text={targetDatastoreInfo(item)}
+                    key={item.id}
+                    selected={selectedTargetDatastore && selectedTargetDatastore.id === item.id}
+                    handleClick={this.selectTargetDatastore}
+                    handleKeyPress={this.selectTargetDatastore}
+                  />
+                ))}
+                {this.noSearchResults(targetResults, targetSearchText)}
+              </React.Fragment>
+            )}
           </DualPaneMapperList>
         </DualPaneMapper>
         <MappingWizardTreeView
