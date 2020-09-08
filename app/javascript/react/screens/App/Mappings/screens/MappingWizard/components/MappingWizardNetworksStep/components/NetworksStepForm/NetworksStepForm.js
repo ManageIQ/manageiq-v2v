@@ -359,7 +359,7 @@ class NetworksStepForm extends React.Component {
             listTitle={__('Source Provider \\ Datacenter \\ Network')}
             searchText={sourceSearchText}
             onSearchChange={value => this.setState({ sourceSearchText: value })}
-            searchAriaLabel="Search source networks"
+            searchAriaLabel={__('Search source networks')}
             loading={isFetchingSourceNetworks}
             counter={sourceCounter}
           >
@@ -389,7 +389,7 @@ class NetworksStepForm extends React.Component {
           <DualPaneMapperList
             id="target_networks"
             listTitle={multiProviderTargetLabel(targetProvider, 'network')}
-            searchAriaLabel="Search target networks"
+            searchAriaLabel={__('Search target networks')}
             searchText={targetSearchText}
             onSearchChange={value => this.setState({ targetSearchText: value })}
             loading={isFetchingTargetNetworks}

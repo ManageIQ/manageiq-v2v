@@ -28,7 +28,7 @@ const DualPaneMapperList = ({
           type="text"
           aria-label={searchAriaLabel}
           value={searchText}
-          placeholder="Search..."
+          placeholder={__('Search...')}
           onChange={event => onSearchChange(event.target.value)}
         />
         <InputGroup.Button>

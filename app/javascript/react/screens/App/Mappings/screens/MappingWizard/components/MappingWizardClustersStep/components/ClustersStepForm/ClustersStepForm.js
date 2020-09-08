@@ -178,7 +178,7 @@ class ClustersStepForm extends React.Component {
             <DualPaneMapperList
               id="source_clusters"
               listTitle={__('Source Provider \\ Datacenter \\ Cluster')}
-              searchAriaLabel="Search source clusters"
+              searchAriaLabel={__('Search source clusters')}
               searchText={sourceSearchText}
               onSearchChange={value => this.setState({ sourceSearchText: value })}
               loading={isFetchingSourceClusters}
@@ -205,7 +205,7 @@ class ClustersStepForm extends React.Component {
             <DualPaneMapperList
               id="target_clusters"
               listTitle={multiProviderTargetLabel(targetProvider, 'cluster')}
-              searchAriaLabel="Search target clusters"
+              searchAriaLabel={__('Search target clusters')}
               searchText={targetSearchText}
               onSearchChange={value => this.setState({ targetSearchText: value })}
               loading={isFetchingTargetClusters}

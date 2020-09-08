@@ -328,7 +328,7 @@ class DatastoresStepForm extends React.Component {
           <DualPaneMapperList
             id="source_datastores"
             listTitle={__('Source Provider \\ Datacenter \\ Datastore')}
-            searchAriaLabel="Search source datastores"
+            searchAriaLabel={__('Search source datastores')}
             searchText={sourceSearchText}
             onSearchChange={value => this.setState({ sourceSearchText: value })}
             loading={isFetchingSourceDatastores}
@@ -358,7 +358,7 @@ class DatastoresStepForm extends React.Component {
           <DualPaneMapperList
             id="target_datastores"
             listTitle={multiProviderTargetLabel(targetProvider, 'storage')}
-            searchAriaLabel="Search target datastores"
+            searchAriaLabel={__('Search target datastores')}
             searchText={targetSearchText}
             onSearchChange={value => this.setState({ targetSearchText: value })}
             loading={isFetchingTargetDatastores}
