@@ -29,7 +29,9 @@ class NetworksStepForm extends React.Component {
   state = {
     selectedSourceNetworks: [],
     selectedTargetNetwork: null,
-    selectedNode: null
+    selectedNode: null,
+    sourceSearchText: '',
+    targetSearchText: ''
   };
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -289,6 +291,11 @@ class NetworksStepForm extends React.Component {
       </div>
     );
 
+  noSearchResults = (results, searchText) =>
+    results.length === 0 && searchText !== '' ? (
+      <div className="dual-pane-mapper-item">{__('No networks match your search.')}</div>
+    ) : null;
+
   render() {
     const {
       groupedSourceNetworks,
@@ -300,7 +307,13 @@ class NetworksStepForm extends React.Component {
       targetProvider,
       preLoadingMappings
     } = this.props;
-    const { selectedSourceNetworks, selectedTargetNetwork, selectedNode } = this.state;
+    const {
+      selectedSourceNetworks,
+      selectedTargetNetwork,
+      selectedNode,
+      sourceSearchText,
+      targetSearchText
+    } = this.state;
 
     const classes = cx('dual-pane-mapper-form', {
       'is-hidden': !selectedCluster
@@ -310,6 +323,21 @@ class NetworksStepForm extends React.Component {
       sourceNetworksFilter(groupedSourceNetworks, input.value)
     );
     const sortedTargetNetworkReps = sortBy(targetNetworkInfo)(getRepresentatives(groupedTargetNetworks));
+
+    const getSearchResults = (items, searchText, getItemText) =>
+      !items
+        ? []
+        : items.filter(
+            item =>
+              searchText === '' ||
+              getItemText(item)
+                .toLowerCase()
+                .includes(searchText.toLowerCase())
+          );
+    const sourceResults = getSearchResults(filteredSourceNetworks, sourceSearchText, item =>
+      sourceNetworkInfo(item, selectedCluster)
+    );
+    const targetResults = getSearchResults(sortedTargetNetworkReps, targetSearchText, targetNetworkInfo);
 
     const sourceCounter = (
       <DualPaneMapperCount selectedItems={selectedSourceNetworks.length} totalItems={filteredSourceNetworks.length} />
@@ -331,12 +359,15 @@ class NetworksStepForm extends React.Component {
           <DualPaneMapperList
             id="source_networks"
             listTitle={__('Source Provider \\ Datacenter \\ Network')}
+            searchText={sourceSearchText}
+            onSearchChange={value => this.setState({ sourceSearchText: value })}
+            searchAriaLabel={__('Search source networks')}
             loading={isFetchingSourceNetworks}
             counter={sourceCounter}
           >
             {groupedSourceNetworks && (
               <React.Fragment>
-                {filteredSourceNetworks.map(sourceNetwork => (
+                {sourceResults.map(sourceNetwork => (
                   <DualPaneMapperListItem
                     item={sourceNetwork}
                     text={sourceNetworkInfo(sourceNetwork, selectedCluster)}
@@ -353,26 +384,34 @@ class NetworksStepForm extends React.Component {
                 ))}
                 {this.noNetworksFound(groupedSourceNetworks, isFetchingSourceNetworks)}
                 {this.allNetworksMapped(groupedSourceNetworks, filteredSourceNetworks, isFetchingSourceNetworks)}
+                {this.noSearchResults(sourceResults, sourceSearchText)}
               </React.Fragment>
             )}
           </DualPaneMapperList>
           <DualPaneMapperList
             id="target_networks"
             listTitle={multiProviderTargetLabel(targetProvider, 'network')}
+            searchAriaLabel={__('Search target networks')}
+            searchText={targetSearchText}
+            onSearchChange={value => this.setState({ targetSearchText: value })}
             loading={isFetchingTargetNetworks}
             counter={targetCounter}
           >
-            {groupedTargetNetworks &&
-              sortedTargetNetworkReps.map(targetNetwork => (
-                <DualPaneMapperListItem
-                  item={targetNetwork}
-                  text={targetNetworkInfo(targetNetwork)}
-                  key={targetNetwork.id}
-                  selected={selectedTargetNetwork && networkKey(selectedTargetNetwork) === networkKey(targetNetwork)}
-                  handleClick={this.selectTargetNetwork}
-                  handleKeyPress={this.selectTargetNetwork}
-                />
-              ))}
+            {groupedTargetNetworks && (
+              <React.Fragment>
+                {targetResults.map(targetNetwork => (
+                  <DualPaneMapperListItem
+                    item={targetNetwork}
+                    text={targetNetworkInfo(targetNetwork)}
+                    key={targetNetwork.id}
+                    selected={selectedTargetNetwork && networkKey(selectedTargetNetwork) === networkKey(targetNetwork)}
+                    handleClick={this.selectTargetNetwork}
+                    handleKeyPress={this.selectTargetNetwork}
+                  />
+                ))}
+                {this.noSearchResults(targetResults, targetSearchText)}
+              </React.Fragment>
+            )}
           </DualPaneMapperList>
         </DualPaneMapper>
         <MappingWizardTreeView

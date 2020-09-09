@@ -18,7 +18,9 @@ class ClustersStepForm extends React.Component {
   state = {
     selectedTargetCluster: null,
     selectedSourceClusters: [],
-    selectedMapping: null
+    selectedMapping: null,
+    sourceSearchText: '',
+    targetSearchText: ''
   };
 
   selectSourceCluster = sourceCluster => {
@@ -117,6 +119,11 @@ class ClustersStepForm extends React.Component {
       </div>
     );
 
+  noSearchResults = (results, searchText) =>
+    results.length === 0 && searchText !== '' ? (
+      <div className="dual-pane-mapper-item">{__('No clusters match your search.')}</div>
+    ) : null;
+
   render() {
     const {
       sourceClusters,
@@ -129,10 +136,28 @@ class ClustersStepForm extends React.Component {
       ospConversionHosts
     } = this.props;
 
-    const { selectedTargetCluster, selectedSourceClusters, selectedMapping } = this.state;
+    const {
+      selectedTargetCluster,
+      selectedSourceClusters,
+      selectedMapping,
+      sourceSearchText,
+      targetSearchText
+    } = this.state;
 
     const filteredSourceClusters = sortBy(clusterInfo)(sourceClustersFilter(sourceClusters, input.value));
     const sortedTargetClusters = sortBy(clusterInfo)(targetClusters);
+    const getSearchResults = (items, searchText) =>
+      !items
+        ? []
+        : items.filter(
+            item =>
+              searchText === '' ||
+              clusterInfo(item)
+                .toLowerCase()
+                .includes(searchText.toLowerCase())
+          );
+    const sourceResults = getSearchResults(filteredSourceClusters, sourceSearchText);
+    const targetResults = getSearchResults(sortedTargetClusters, targetSearchText);
 
     const sourceCounter = (
       <DualPaneMapperCount selectedItems={selectedSourceClusters.length} totalItems={filteredSourceClusters.length} />
@@ -155,10 +180,13 @@ class ClustersStepForm extends React.Component {
             <DualPaneMapperList
               id="source_clusters"
               listTitle={__('Source Provider \\ Datacenter \\ Cluster')}
+              searchAriaLabel={__('Search source clusters')}
+              searchText={sourceSearchText}
+              onSearchChange={value => this.setState({ sourceSearchText: value })}
               loading={isFetchingSourceClusters}
               counter={sourceCounter}
             >
-              {filteredSourceClusters.map(item => (
+              {sourceResults.map(item => (
                 <DualPaneMapperListItem
                   item={item}
                   text={clusterInfo(item)}
@@ -172,16 +200,20 @@ class ClustersStepForm extends React.Component {
               ))}
               {this.noClustersFound(sourceClusters, isFetchingSourceClusters)}
               {this.allClustersMapped(sourceClusters, filteredSourceClusters, isFetchingSourceClusters)}
+              {this.noSearchResults(sourceResults, sourceSearchText)}
             </DualPaneMapperList>
           )}
           {targetClusters && (
             <DualPaneMapperList
               id="target_clusters"
               listTitle={multiProviderTargetLabel(targetProvider, 'cluster')}
+              searchAriaLabel={__('Search target clusters')}
+              searchText={targetSearchText}
+              onSearchChange={value => this.setState({ targetSearchText: value })}
               loading={isFetchingTargetClusters}
               counter={targetCounter}
             >
-              {sortedTargetClusters.map(item => {
+              {targetResults.map(item => {
                 let associatedConversionHosts = [];
                 if (targetProvider === RHV) {
                   // RHV conversion hosts need to be in the target cluster itself
@@ -206,6 +238,7 @@ class ClustersStepForm extends React.Component {
                 );
               })}
               {this.noClustersFound(targetClusters, isFetchingTargetClusters)}
+              {this.noSearchResults(targetResults, targetSearchText)}
             </DualPaneMapperList>
           )}
         </DualPaneMapper>
