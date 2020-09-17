@@ -3,19 +3,20 @@ matrix:
   include:
   - name: "Node.js: 8"
     language: node_js
+    cache: yarn
     node_js:
     - '8' # current stable
-    cache: yarn
     script: yarn test --runInBand
-  - name: "Ruby: 2.4.5"
+  - name: "Ruby: 2.5.7"
     language: ruby
+    cache: bundler
     rvm:
     - 2.5.7
-    cache: bundler
     addons:
       postgresql: '10'
     install: bin/setup
-  - name: "Ruby: 2.5.5"
+    after_script: bin/ci/after_script
+  - name: "Ruby: 2.6.5"
     language: ruby
     rvm:
     - 2.6.5
@@ -23,10 +24,4 @@ matrix:
     addons:
       postgresql: '10'
     install: bin/setup
-notifications:
-  webhooks:
-    urls:
-    - https://webhooks.gitter.im/e/94b972c4ceaa07f5e666
-    on_success: change
-    on_failure: always
-    on_start: never
+    after_script: bin/ci/after_script

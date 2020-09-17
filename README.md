@@ -1,50 +1,47 @@
-# ManageIQ V2V plugin
+# ManageIQ::V2V
 
-[![Gem Version](https://badge.fury.io/rb/manageiq-v2v.svg)](http://badge.fury.io/rb/manageiq-v2v)
-[![Build Status](https://travis-ci.org/ManageIQ/manageiq-v2v.svg?branch=master)](https://travis-ci.org/ManageIQ/manageiq-v2v)
-[![Code Climate](https://codeclimate.com/github/ManageIQ/manageiq-v2v.svg)](https://codeclimate.com/github/ManageIQ/manageiq-v2v)
-[![Test Coverage](https://codeclimate.com/github/ManageIQ/manageiq-v2v/badges/coverage.svg)](https://codeclimate.com/github/ManageIQ/manageiq-v2v/coverage)
+[![Build Status](https://travis-ci.com/ManageIQ/manageiq-v2v.svg?branch=master)](https://travis-ci.com/ManageIQ/manageiq-v2v)
+[![Maintainability](https://api.codeclimate.com/v1/badges/d274780431ba0f2adc35/maintainability)](https://codeclimate.com/github/ManageIQ/manageiq-v2v/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/d274780431ba0f2adc35/test_coverage)](https://codeclimate.com/github/ManageIQ/manageiq-v2v/test_coverage)
 [![Security](https://hakiri.io/github/ManageIQ/manageiq-v2v/master.svg)](https://hakiri.io/github/ManageIQ/manageiq-v2v/master)
 
 [![Chat](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ManageIQ/v2v?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Translate](https://img.shields.io/badge/translate-zanata-blue.svg)](https://translate.zanata.org/zanata/project/view/manageiq-v2v)
 
+V2V plugin for ManageIQ.
 
 ## Purpose
 
 The purpose of this repository is to provide UI infrastructure to ManageIQ for the V2V effort. V2V is an acronym for virtual to virtual, referring to the process of importing virtual machines from one virtualization platform to another.
 
-## License
-
-The gem is available as open source under the terms of the [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0).
-
 ### Current features
 
+* Adds Compute -> Migration section to ManageIQ.
 * Define infrastructure mappings for migrating disks and lans from a source cluster to a destination cluster
 * Define migration plans for one or more VMs associated with the infrastructure mapping
-* Run a migration plan and obvserve the migration status for each VM
-
-### Architecture Goals
-
-* Use REST API communication with [ManageIQ API](http://manageiq.org/docs/api)
-* Create a [ManageIQ Plugin](https://github.com/ManageIQ/guides/blob/master/developer_setup/plugins.md)/seperate Rails Engine to handle V2V interactions
-* Use Ryan Florence's [folder structure](https://gist.github.com/ryanflorence/daafb1e3cb8ad740b346) for React apps within a Rails application.
-* Adds Compute -> Migration section to ManageIQ.
+* Run a migration plan and observe the migration status for each VM
 
 ### Technologies Used
 
 * The plugin uses [PatternFly](https://github.com/patternfly/patternfly) and [PatternFly React](https://github.com/patternfly/patternfly-react) UI dependencies
 * Uses Redux and [Redux Promise Middleware](https://github.com/pburtchaell/redux-promise-middleware) for API middleware
 * Use [Jest](https://facebook.github.io/jest/) for snapshot testing UI components
+* Use Ryan Florence's [folder structure](https://gist.github.com/ryanflorence/daafb1e3cb8ad740b346) for React apps within a Rails application.
 
-## Usage
+## Development
 
-V2V plugin is now installed in the appliance build of ManageIQ. You can find it referenced alongside other gems in the [ManageIQ Gemfile](https://github.com/ManageIQ/manageiq/blob/master/Gemfile).
+See the section on plugins in the [ManageIQ Developer Setup](http://manageiq.org/docs/guides/developer_setup/plugins)
 
-For development, you need to checkout manageiq, manageiq-ui-classic, and the v2v plugin next to each other and setup the gem overrides.
+For quick local setup run `bin/setup`, which will clone the core ManageIQ repository under the *spec* directory and setup necessary config files. If you have already cloned it, you can run `bin/update` to bring the core ManageIQ code up to date.
 
-Make sure to add this `manageiq-v2v` gem to your `bundler.d/Gemfile.dev.rb` in `manageiq`:
+## License
 
-```ruby
-override_gem 'manageiq-v2v', :path => File.expand_path('../../manageiq-v2v/', __dir__)
-```
+The gem is available as open source under the terms of the [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0).
+
+## Contributing
+
+1. Fork it
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request
+
