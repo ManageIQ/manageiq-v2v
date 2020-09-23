@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import csv from 'csv';
+import csvParse from 'csv-parse';
 import utf8 from 'utf8';
 import { Button, EmptyState } from 'patternfly-react';
 import Dropzone from 'react-dropzone';
@@ -21,7 +21,7 @@ class CSVDropzoneField extends React.Component {
     if (fileHandle) {
       const reader = new FileReader();
       reader.onload = () => {
-        csv.parse(reader.result, (err, csvRows) => {
+        csvParse(reader.result, (err, csvRows) => {
           if (csvRows && csvRows.length > 0) {
             csvRows = this.trimWhiteSpaces(csvRows);
             const headerRow = this.mapCSVColumnNameToKey(csvRows[0]);
