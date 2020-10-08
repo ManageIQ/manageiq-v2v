@@ -1,14 +1,37 @@
 ---
+version: '2'
+prepare:
+  fetch:
+  - url: https://raw.githubusercontent.com/ManageIQ/guides/master/.rubocop_base.yml
+    path: ".rubocop_base.yml"
+  - url: https://raw.githubusercontent.com/ManageIQ/guides/master/.rubocop_cc_base.yml
+    path: ".rubocop_cc_base.yml"
+checks:
+  argument-count:
+    enabled: false
+  complex-logic:
+    enabled: false
+  file-lines:
+    enabled: false
+  method-complexity:
+    config:
+      threshold: 11
+  method-count:
+    enabled: false
+  method-lines:
+    enabled: false
+  nested-control-flow:
+    enabled: false
+  return-statements:
+    enabled: false
+plugins:
+  rubocop:
+    enabled: true
+    config: ".rubocop_cc.yml"
+    channel: 'rubocop-0-69'
 exclude_patterns:
-- ".git/"
-- "**.gif"
-- "**.html"
-- "**.json"
-- "**.png"
-- "**.svg"
-- "**.xml"
-- "**.yaml"
-- "**.yml"
-- "locale/"
-- "docs/"
-- "**/*.fixtures.js"
+- node_modules/
+- spec/
+- test/
+- tmp/
+- vendor/
