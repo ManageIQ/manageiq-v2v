@@ -1,4 +1,3 @@
-dist: xenial
 matrix:
   include:
   - name: "Node.js: 8"
