@@ -1,26 +1,15 @@
-matrix:
-  include:
-  - name: "Node.js: 12"
-    language: node_js
-    cache: yarn
-    node_js:
-    - '12' # current stable
-    script: yarn test --runInBand
-  - name: "Ruby: 2.5.8"
-    language: ruby
-    cache: bundler
-    rvm:
-    - 2.5.8
-    addons:
-      postgresql: '10'
-    install: bin/setup
-    after_script: bin/ci/after_script
-  - name: "Ruby: 2.6.6"
-    language: ruby
-    rvm:
-    - 2.6.6
-    cache: bundler
-    addons:
-      postgresql: '10'
-    install: bin/setup
-    after_script: bin/ci/after_script
+---
+language: ruby
+cache:
+- bundler
+- yarn
+addons:
+  postgresql: '10'
+env:
+  matrix:
+  - TEST_SUITE=javascript
+  - TEST_SUITE=rails
+before_install: source bin/ci/before_install.sh
+install: source bin/ci/install.sh
+script: source bin/ci/script.sh
+after_script: bin/ci/after_script
