@@ -3,6 +3,8 @@ language: ruby
 cache:
 - bundler
 - yarn
+rvm:
+- 2.6.6
 addons:
   postgresql: '10'
 env:
