@@ -16,3 +16,4 @@ before_install: source bin/ci/before_install.sh
 install: source bin/ci/install.sh
 script: source bin/ci/script.sh
 after_script: bin/ci/after_script
+dist: bionic
