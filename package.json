@@ -111,5 +111,6 @@
     "trailingComma": "none",
     "printWidth": 120
   },
-  "license": "Apache-2.0"
+  "license": "Apache-2.0",
+  "packageManager": "yarn@3.0.2"
 }
