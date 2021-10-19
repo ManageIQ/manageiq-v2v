@@ -1,6 +1,6 @@
 if [ "$TEST_SUITE" = "javascript" ]
 then
-  npm install
+  yarn
 else
   bin/setup
 fi
