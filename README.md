@@ -1,6 +1,6 @@
 # ManageIQ::V2V
 
-[![Build Status](https://travis-ci.com/ManageIQ/manageiq-v2v.svg?branch=master)](https://travis-ci.com/ManageIQ/manageiq-v2v)
+[![Build Status](https://travis-ci.com/ManageIQ/manageiq-v2v.svg?branch=master)](https://travis-ci.com/github/ManageIQ/manageiq-v2v)
 [![Maintainability](https://api.codeclimate.com/v1/badges/d274780431ba0f2adc35/maintainability)](https://codeclimate.com/github/ManageIQ/manageiq-v2v/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/d274780431ba0f2adc35/test_coverage)](https://codeclimate.com/github/ManageIQ/manageiq-v2v/test_coverage)
 [![Security](https://hakiri.io/github/ManageIQ/manageiq-v2v/master.svg)](https://hakiri.io/github/ManageIQ/manageiq-v2v/master)
